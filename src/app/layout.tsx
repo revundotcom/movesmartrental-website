@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
+import { Inter, Plus_Jakarta_Sans, DM_Serif_Display } from 'next/font/google'
 import { GoogleTagManager } from '@next/third-parties/google'
 import Script from 'next/script'
 import './globals.css'
@@ -21,6 +21,15 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   preload: true,
   variable: '--font-heading',
   weight: ['400', '500', '600', '700', '800'],
+})
+
+const dmSerifDisplay = DM_Serif_Display({
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+  variable: '--font-display',
+  weight: '400',
+  style: ['normal', 'italic'],
 })
 
 export const metadata: Metadata = {
@@ -52,7 +61,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${plusJakartaSans.variable} font-sans`}>
+      <body className={`${inter.variable} ${plusJakartaSans.variable} ${dmSerifDisplay.variable} font-sans`}>
         {process.env.NEXT_PUBLIC_GTM_ID && (
           <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
         )}
