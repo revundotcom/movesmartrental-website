@@ -38,10 +38,10 @@
 ### Page Templates (22+)
 
 - [x] **TMPL-01**: Homepage template (routing page with all contract-required sections)
-- [ ] **TMPL-02**: Owners hub template
+- [x] **TMPL-02**: Owners hub template
 - [x] **TMPL-03**: Tenants hub template
-- [ ] **TMPL-04**: Services hub template
-- [ ] **TMPL-05**: Locations hub template
+- [x] **TMPL-04**: Services hub template
+- [x] **TMPL-05**: Locations hub template
 - [x] **TMPL-06**: Pricing page template
 - [x] **TMPL-07**: Resources hub template
 - [x] **TMPL-08**: Franchising page template
@@ -51,7 +51,7 @@
 - [x] **TMPL-12**: Blog/guide template
 - [ ] **TMPL-13**: Province/state template
 - [ ] **TMPL-14**: City template
-- [ ] **TMPL-15**: Service template
+- [x] **TMPL-15**: Service template
 - [x] **TMPL-16**: Service-plus-city template (highest-value SEO page)
 - [x] **TMPL-17**: Legal guide template
 - [x] **TMPL-18**: Market guide template
@@ -63,11 +63,11 @@
 
 ### Owner-Lead SEO System
 
-- [ ] **OWN-01**: Owner-facing pages targeting landlord, investor, property-owner search intent
-- [ ] **OWN-02**: Commercial service pages: tenant placement, leasing services, tenant screening, rent guarantee, rental preparation, rental marketing, portal technology, pricing
+- [x] **OWN-01**: Owner-facing pages targeting landlord, investor, property-owner search intent
+- [x] **OWN-02**: Commercial service pages: tenant placement, leasing services, tenant screening, rent guarantee, rental preparation, rental marketing, portal technology, pricing
 - [ ] **OWN-03**: Localized service pages for each Ontario Tier-1 city (20 cities x 8 services = 160 pages)
 - [x] **OWN-04**: Owner-facing CTAs: Create Free Account, Submit Property, Book a Call, Request Services
-- [ ] **OWN-05**: Contract-required owner messaging: nothing upfront, self-serve online, dedicated account manager, tech + brick-and-mortar, portal visibility, property prep, MLS distribution, structured screening, rent protection
+- [x] **OWN-05**: Contract-required owner messaging: nothing upfront, self-serve online, dedicated account manager, tech + brick-and-mortar, portal visibility, property prep, MLS distribution, structured screening, rent protection
 
 ### Tenant-Lead SEO System
 
@@ -115,7 +115,7 @@
 - [x] **SCHEMA-01**: Organization schema on homepage
 - [ ] **SCHEMA-02**: LocalBusiness/RealEstateAgent schema on city pages
 - [x] **SCHEMA-03**: FAQ schema on all pages with FAQ sections
-- [ ] **SCHEMA-04**: Service schema on service pages
+- [x] **SCHEMA-04**: Service schema on service pages
 - [x] **SCHEMA-05**: Article/BlogPosting schema on blog/guide pages
 - [x] **SCHEMA-06**: BreadcrumbList schema on all pages
 - [x] **SCHEMA-07**: RealEstateListing schema on property detail pages
@@ -214,10 +214,10 @@
 | SEO-05 | Phase 1 | Complete |
 | SEO-07 | Phase 1 | Complete |
 | TMPL-01 | Phase 2 | Complete |
-| TMPL-02 | Phase 2 | Pending |
+| TMPL-02 | Phase 2 | Complete |
 | TMPL-03 | Phase 2 | Complete |
-| TMPL-04 | Phase 2 | Pending |
-| TMPL-05 | Phase 2 | Pending |
+| TMPL-04 | Phase 2 | Complete |
+| TMPL-05 | Phase 2 | Complete |
 | TMPL-06 | Phase 2 | Complete |
 | TMPL-07 | Phase 2 | Complete |
 | TMPL-08 | Phase 2 | Complete |
@@ -227,7 +227,7 @@
 | TMPL-12 | Phase 2 | Complete |
 | TMPL-13 | Phase 2 | Pending |
 | TMPL-14 | Phase 2 | Pending |
-| TMPL-15 | Phase 2 | Pending |
+| TMPL-15 | Phase 2 | Complete |
 | TMPL-16 | Phase 2 | Complete |
 | TMPL-17 | Phase 2 | Complete |
 | TMPL-18 | Phase 2 | Complete |
@@ -236,11 +236,11 @@
 | TMPL-21 | Phase 2 | Complete |
 | TMPL-22 | Phase 2 | Complete |
 | TMPL-23 | Phase 2 | Complete |
-| OWN-01 | Phase 2 | Pending |
-| OWN-02 | Phase 2 | Pending |
+| OWN-01 | Phase 2 | Complete |
+| OWN-02 | Phase 2 | Complete |
 | OWN-03 | Phase 2 | Pending |
 | OWN-04 | Phase 2 | Complete |
-| OWN-05 | Phase 2 | Pending |
+| OWN-05 | Phase 2 | Complete |
 | TEN-01 | Phase 2 | Complete |
 | TEN-02 | Phase 2 | Complete |
 | TEN-03 | Phase 2 | Complete |
@@ -254,7 +254,7 @@
 | SCHEMA-01 | Phase 2 | Complete |
 | SCHEMA-02 | Phase 2 | Pending |
 | SCHEMA-03 | Phase 2 | Complete |
-| SCHEMA-04 | Phase 2 | Pending |
+| SCHEMA-04 | Phase 2 | Complete |
 | SCHEMA-05 | Phase 2 | Complete |
 | SCHEMA-06 | Phase 2 | Complete |
 | SCHEMA-07 | Phase 2 | Complete |

@@ -55,7 +55,7 @@ Plans:
 - [x] 02-01-PLAN.md — GROQ queries for all page templates + Portable Text component
 - [x] 02-02-PLAN.md — New route files (property category, bedroom, property detail, FAQ) + 404 enhancement
 - [ ] 02-03-PLAN.md — Homepage template with all 9 contract sections + Organization JSON-LD
-- [ ] 02-04-PLAN.md — Owners hub, Services hub, Service detail, Locations hub templates
+- [x] 02-04-PLAN.md — Owners hub, Services hub, Service detail, Locations hub templates
 - [ ] 02-05-PLAN.md — Tenants hub, Property category, Bedroom count, Property detail templates
 - [ ] 02-06-PLAN.md — Province, City hub, CityService (highest-value SEO) templates
 - [ ] 02-07-PLAN.md — Resources hub + Blog/Guide/Comparison/Case study content templates
