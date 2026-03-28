@@ -26,13 +26,14 @@ export function CityGridBlock({
   cities,
   province,
   columns = 3,
+  showHeading = true,
 }: CityGridBlockProps) {
   if (cities.length === 0) return null
 
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-7xl px-4">
-        {province && (
+        {showHeading && province && (
           <div className="mb-12 text-center">
             <h2 className="font-heading text-3xl font-bold tracking-tight text-[#0B1D3A] sm:text-4xl">
               {province}

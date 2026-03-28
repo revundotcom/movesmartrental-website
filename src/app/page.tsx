@@ -171,7 +171,7 @@ export default async function HomePage() {
             </p>
           </div>
         </div>
-        <ServiceGridBlock services={data.featuredServices} columns={4} />
+        <ServiceGridBlock services={data.featuredServices} columns={4} showHeading={false} />
       </section>
 
       {/* ── SECTION 4: How It Works (7 Steps) ── */}
@@ -445,7 +445,7 @@ export default async function HomePage() {
             </p>
           </div>
         </div>
-        <CityGridBlock cities={data.featuredCities} columns={4} />
+        <CityGridBlock cities={data.featuredCities} columns={4} showHeading={false} />
       </section>
 
       {/* ── SECTION 8: Franchising Preview ── */}

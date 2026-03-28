@@ -8,19 +8,21 @@ const SOLUTION_ICONS = [CheckCircle, ShieldCheck, ThumbsUp, Wrench]
 export function PainPointBlock({
   painPoints,
   title = 'Common Challenges & Our Solutions',
+  showHeading = true,
 }: PainPointBlockProps) {
   if (!painPoints || painPoints.length === 0) return null
 
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-6xl px-4">
-        {/* Section heading with emerald underline */}
-        <div className="mb-12 text-center">
-          <h2 className="font-heading text-3xl font-bold tracking-tight text-[#0B1D3A] sm:text-4xl">
-            {title}
-          </h2>
-          <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-[#10B981]" />
-        </div>
+        {showHeading && (
+          <div className="mb-12 text-center">
+            <h2 className="font-heading text-3xl font-bold tracking-tight text-[#0B1D3A] sm:text-4xl">
+              {title}
+            </h2>
+            <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-[#10B981]" />
+          </div>
+        )}
 
         <div className="space-y-6">
           {painPoints.map((painPoint, index) => {

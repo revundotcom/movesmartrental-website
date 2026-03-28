@@ -108,12 +108,16 @@ export interface ServiceGridBlockProps {
   columns?: 2 | 3 | 4
   /** Override link base path (e.g. "/ca/ontario/toronto" for city-context links) */
   basePath?: string
+  /** Whether to render the block's own heading (default true) */
+  showHeading?: boolean
 }
 
 export interface CityGridBlockProps {
   cities: CityCardData[]
   province?: string
   columns?: 2 | 3 | 4
+  /** Whether to render the block's own heading (default true) */
+  showHeading?: boolean
 }
 
 export interface PropertyCardBlockProps {
@@ -134,6 +138,8 @@ export interface HowItWorksBlockProps {
 export interface PainPointBlockProps {
   painPoints: PainPointData[]
   title?: string
+  /** Whether to render the block's own heading (default true) */
+  showHeading?: boolean
 }
 
 export interface BenefitsBlockProps {

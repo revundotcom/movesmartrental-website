@@ -130,6 +130,7 @@ export default async function OwnersPage() {
           </div>
         </div>
         <PainPointBlock
+          showHeading={false}
           painPoints={[
             {
               problem:
