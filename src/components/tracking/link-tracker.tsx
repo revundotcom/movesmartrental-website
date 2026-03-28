@@ -41,7 +41,7 @@ export function LinkTracker() {
       }
     }
 
-    document.addEventListener('click', handleClick)
+    document.addEventListener('click', handleClick, { passive: true })
     return () => document.removeEventListener('click', handleClick)
   }, [pathname])
 

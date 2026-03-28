@@ -8,7 +8,7 @@ import { Footer } from '@/components/layout/footer'
 import { ScrollDepthTracker } from '@/components/tracking/gtm-events'
 import { LinkTracker } from '@/components/tracking/link-tracker'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'], display: 'swap', preload: true })
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'),
