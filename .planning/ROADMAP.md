@@ -12,7 +12,7 @@ Four phases aligned to the four contract milestone dates. Phase 1 locks in all i
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Architecture and CMS Foundation** - Next.js + Sanity scaffold, all 9 CMS schemas, 10 block components, URL structure, ISR strategy, and technical SEO baseline — due April 3
+- [x] **Phase 1: Architecture and CMS Foundation** - Next.js + Sanity scaffold, all 9 CMS schemas, 10 block components, URL structure, ISR strategy, and technical SEO baseline — due April 3
 - [ ] **Phase 2: Core Build — Templates and Top Cities** - All 22+ page templates, owner/tenant hubs, top 20 Ontario cities, all 7 schema types, dynamic sitemaps — due April 10
 - [ ] **Phase 3: Scale, Integrations, and Content System** - Remaining cities and US state pages, analytics, SalesIQ, AI discoverability, content production SOP — due April 17
 - [ ] **Phase 4: Audit, Hardening, and Handoff** - Core Web Vitals remediation, cross-browser testing, credential transfer, training, 30-day warranty commencement — due April 24
@@ -49,7 +49,19 @@ Plans:
   3. A tenant can browse the Tenants hub, navigate to any of the 20 Ontario Tier-1 city pages, and see property-type category pages (apartments, condos, houses, townhouses) with crawlable HTML listings — not JS-hidden content
   4. Google's Rich Results Test returns valid structured data for at least one city page (LocalBusiness + FAQ + BreadcrumbList), one service page (Service schema), and the homepage (Organization schema)
   5. The dynamic XML sitemap returns at least the 20 Ontario city URLs and all service page URLs, and robots.txt references the sitemap correctly
-**Plans**: TBD
+**Plans:** 10 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — GROQ queries for all page templates + Portable Text component
+- [ ] 02-02-PLAN.md — New route files (property category, bedroom, property detail, FAQ) + 404 enhancement
+- [ ] 02-03-PLAN.md — Homepage template with all 9 contract sections + Organization JSON-LD
+- [ ] 02-04-PLAN.md — Owners hub, Services hub, Service detail, Locations hub templates
+- [ ] 02-05-PLAN.md — Tenants hub, Property category, Bedroom count, Property detail templates
+- [ ] 02-06-PLAN.md — Province, City hub, CityService (highest-value SEO) templates
+- [ ] 02-07-PLAN.md — Resources hub + Blog/Guide/Comparison/Case study content templates
+- [ ] 02-08-PLAN.md — Pricing, About, Contact (with form), Franchising, FAQ hub templates
+- [ ] 02-09-PLAN.md — Dynamic XML sitemaps with 6 segments
+- [ ] 02-10-PLAN.md — Ontario Tier-1 cities CMS content seeding (20 cities x 8 services)
 
 ### Phase 3: Scale, Integrations, and Content System
 **Goal**: The Ontario city coverage expands to the full Tier-1 set with the full 16+ page family per city, US state framework pages are live for all 10 states, all analytics events fire correctly, Zoho SalesIQ is integrated without blocking render, and the content team has a self-service system to publish and expand without developer intervention.
@@ -83,6 +95,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Architecture and CMS Foundation | 6/6 | Complete | 2026-03-28 |
-| 2. Core Build — Templates and Top Cities | 0/TBD | Not started | - |
+| 2. Core Build — Templates and Top Cities | 0/10 | Not started | - |
 | 3. Scale, Integrations, and Content System | 0/TBD | Not started | - |
 | 4. Audit, Hardening, and Handoff | 0/TBD | Not started | - |
