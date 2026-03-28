@@ -32,12 +32,12 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans:** 6 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Project scaffold, URL routing, middleware, SEO baseline
+- [x] 01-01-PLAN.md — Project scaffold, URL routing, middleware, SEO baseline
 - [x] 01-02-PLAN.md — All 9 Sanity CMS schemas with required fields and publishing controls
-- [ ] 01-03-PLAN.md — Sanity data pipeline, ISR revalidation, SEO metadata, JSON-LD builders
+- [x] 01-03-PLAN.md — Sanity data pipeline, ISR revalidation, SEO metadata, JSON-LD builders
 - [x] 01-04-PLAN.md — Navigation (header, footer, mobile nav, breadcrumbs)
 - [x] 01-05-PLAN.md — Block components batch 1 (Hero, CTA, FAQ, ServiceGrid, CityGrid)
-- [ ] 01-06-PLAN.md — Block components batch 2 (PropertyCard, Trust, HowItWorks, PainPoint, Benefits)
+- [x] 01-06-PLAN.md — Block components batch 2 (PropertyCard, Trust, HowItWorks, PainPoint, Benefits)
 
 ### Phase 2: Core Build — Templates and Top Cities
 **Goal**: Every page template type is built and live, owner- and tenant-facing hubs are complete with all required sections, the top 20 Ontario Tier-1 cities have meaningful localized content, and all 7 JSON-LD schema types are validated — delivering the full contractual site scope ahead of the April 10 milestone.
@@ -82,7 +82,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Architecture and CMS Foundation | 5/6 | In Progress | - |
+| 1. Architecture and CMS Foundation | 6/6 | Complete | 2026-03-28 |
 | 2. Core Build — Templates and Top Cities | 0/TBD | Not started | - |
 | 3. Scale, Integrations, and Content System | 0/TBD | Not started | - |
 | 4. Audit, Hardening, and Handoff | 0/TBD | Not started | - |

@@ -12,7 +12,7 @@
 - [x] **FOUND-03**: Vercel deployment with automatic SSL, edge CDN, ISR support
 - [x] **FOUND-04**: GitHub repo in client's REVUN account with full source code
 - [x] **FOUND-05**: URL architecture implemented: /ca/{province}/{city}/{service}/ and /us/{state}/{city}/{service}/
-- [ ] **FOUND-06**: On-demand ISR strategy with Sanity webhook-triggered revalidation (revalidateTag)
+- [x] **FOUND-06**: On-demand ISR strategy with Sanity webhook-triggered revalidation (revalidateTag)
 - [x] **FOUND-07**: metadataBase set in root layout, trailing-slash normalization, lowercase URL enforcement
 
 ### Navigation & Layout
@@ -102,8 +102,8 @@
 - [x] **SEO-01**: SSL/HTTPS enforced
 - [ ] **SEO-02**: XML sitemaps segmented by page type (ca-cities, us-cities, ca-services, us-services, blog, listings, resources)
 - [x] **SEO-03**: Robots.txt with sitemap reference and indexing controls
-- [ ] **SEO-04**: Canonical tags on all pages (self-referencing)
-- [ ] **SEO-05**: Open Graph fields (og:title, og:description, og:image) on every page
+- [x] **SEO-04**: Canonical tags on all pages (self-referencing)
+- [x] **SEO-05**: Open Graph fields (og:title, og:description, og:image) on every page
 - [ ] **SEO-06**: Meta titles 50-60 chars, meta descriptions 140-160 chars, one H1 per page
 - [x] **SEO-07**: Image alt text describing actual image with location/service when relevant
 - [ ] **SEO-08**: 404 handling with custom error page, redirect logic
@@ -189,7 +189,7 @@
 | FOUND-03 | Phase 1 | Complete |
 | FOUND-04 | Phase 1 | Complete |
 | FOUND-05 | Phase 1 | Complete |
-| FOUND-06 | Phase 1 | Pending |
+| FOUND-06 | Phase 1 | Complete |
 | FOUND-07 | Phase 1 | Complete |
 | NAV-01 | Phase 1 | Complete |
 | NAV-02 | Phase 1 | Complete |
@@ -210,8 +210,8 @@
 | CMS-03 | Phase 1 | Complete |
 | SEO-01 | Phase 1 | Complete |
 | SEO-03 | Phase 1 | Complete |
-| SEO-04 | Phase 1 | Pending |
-| SEO-05 | Phase 1 | Pending |
+| SEO-04 | Phase 1 | Complete |
+| SEO-05 | Phase 1 | Complete |
 | SEO-07 | Phase 1 | Complete |
 | TMPL-01 | Phase 2 | Pending |
 | TMPL-02 | Phase 2 | Pending |

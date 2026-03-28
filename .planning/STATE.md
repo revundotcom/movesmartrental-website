@@ -52,6 +52,7 @@ Progress: [██████████] 100%
 *Updated after each plan completion*
 | Phase 01 P01 | 13min | 2 tasks | 39 files |
 | Phase 01 P02 | 14min | 2 tasks | 14 files |
+| Phase 01 P03 | 9min | 2 tasks | 21 files |
 | Phase 01 P04 | 4min | 2 tasks | 5 files |
 | Phase 01 P05 | 4min | 2 tasks | 6 files |
 | Phase 01 P06 | 4min | 2 tasks | 6 files |
@@ -72,6 +73,10 @@ Recent decisions affecting current work:
 - [Phase 01]: CityService uses fieldset grouping for Studio UX (references, denormalized, localContent, hero, blocks)
 - [Phase 01]: neighbourhoodNames requires min(3) items to enforce content depth on city-service pages
 - [Phase 01]: Portable text link annotations include allowRelative: true for internal navigation
+- [Phase 01]: sanityFetch() is the single CMS data access point -- all page queries go through it for tag-based ISR revalidation
+- [Phase 01]: Sanity Studio layout overrides root layout for full-screen embed at /studio
+- [Phase 01]: CityService GROQ queries filter by city+service+province triple-slug for geographic disambiguation
+- [Phase 01]: JSON-LD sanitization escapes < as \\u003c to prevent XSS via script injection
 - [Phase 01]: Used base-ui render prop for NavigationMenuLink and BreadcrumbLink composition with next/link
 - [Phase 01]: BreadcrumbNav uses inline script tag for JSON-LD (Plan 03 JsonLd component may not exist yet)
 - [Phase 01]: Created src/types/blocks.ts as Rule 3 auto-fix since Plan 05 not yet executed -- shared type definitions for all 10 blocks
