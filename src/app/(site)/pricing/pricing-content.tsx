@@ -29,8 +29,8 @@ const PRICING_TIERS = [
   },
   {
     name: 'Full Service',
-    price: 'Success-Based',
-    priceNote: 'fee on placement',
+    price: 'One Month\'s Rent',
+    priceNote: 'one-time placement fee',
     description:
       'Professional tenant placement with screening and marketing.',
     features: [
@@ -46,8 +46,8 @@ const PRICING_TIERS = [
   },
   {
     name: 'Premium',
-    price: 'All-Inclusive',
-    priceNote: 'full management',
+    price: '8–10% / Month',
+    priceNote: 'of collected rent',
     description:
       'Everything in Full Service plus ongoing property management.',
     features: [

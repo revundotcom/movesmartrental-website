@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -24,7 +25,7 @@ const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email'),
   phone: z.string().optional(),
-  message: z.string().min(10, 'Message must be at least 10 characters'),
+  message: z.string().min(5, 'Message must be at least 5 characters'),
 })
 
 type ContactFormData = z.infer<typeof contactSchema>
@@ -41,6 +42,11 @@ const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const searchParams = useSearchParams()
+  const typeParam = searchParams.get('type') as ContactFormData['type'] | null
+  const validTypes = ['owner', 'tenant', 'franchise', 'other'] as const
+  const defaultType: ContactFormData['type'] =
+    typeParam && (validTypes as readonly string[]).includes(typeParam) ? typeParam : 'owner'
 
   useEffect(() => {
     if (!RECAPTCHA_SITE_KEY) return
@@ -62,7 +68,7 @@ export function ContactForm() {
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
-      type: 'owner',
+      type: defaultType,
       name: '',
       email: '',
       phone: '',
@@ -122,11 +128,17 @@ export function ContactForm() {
   if (submitted) {
     return (
       <div className="rounded-lg border border-green-200 bg-green-50 p-8 text-center">
+        <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-green-100">
+          <svg className="size-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
         <h3 className="text-lg font-semibold text-green-800">
-          Thank you for reaching out!
+          Message received!
         </h3>
         <p className="mt-2 text-sm text-green-700">
-          We have received your message and will respond within 24 hours.
+          A member of our team will call or email you within 2 business hours. If you need immediate assistance, call us at{' '}
+          <a href="tel:+14372957688" className="font-semibold underline">+1 (437) 295-7688</a>.
         </p>
       </div>
     )

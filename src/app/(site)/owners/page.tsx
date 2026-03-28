@@ -8,6 +8,7 @@ import { HeroBlock } from '@/components/blocks/hero-block'
 import { OwnersFeaturesBento } from '@/components/blocks/owners-features-bento'
 import { PainPointBlock } from '@/components/blocks/pain-point-block'
 import { ServiceGridBlock } from '@/components/blocks/service-grid-block'
+import { TestimonialsSection } from '@/components/blocks/testimonials-section'
 import { sanityFetch } from '@/sanity/fetch'
 import { SERVICE_OWNER_QUERY } from '@/sanity/queries/service'
 import type { ServiceCardData } from '@/types/blocks'
@@ -102,8 +103,8 @@ export default async function OwnersPage() {
       <HeroBlock
         headline="Hands-Off Leasing. Maximum Results."
         subheadline="White-glove leasing execution with zero upfront cost. We only succeed when your property is rented."
-        cta1={{ label: 'Get Started', href: '/contact/' }}
-        cta2={{ label: 'Submit a Property', href: '/contact/' }}
+        cta1={{ label: 'Get Started Free', href: '/contact/?type=owner' }}
+        cta2={{ label: 'Book a Free Call', href: '/contact/?type=owner&intent=call' }}
         priority
       />
 
@@ -223,7 +224,22 @@ export default async function OwnersPage() {
         </div>
       </section>
 
-      {/* ── SECTION 6: FAQ ── */}
+      {/* ── SECTION 6: Testimonials ── */}
+      <section className="bg-slate-50 py-20">
+        <div className="mx-auto max-w-3xl px-4">
+          <div className="text-center">
+            <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
+              Owner Stories
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy">
+              What Our Owners Say
+            </h2>
+          </div>
+          <TestimonialsSection />
+        </div>
+      </section>
+
+      {/* ── SECTION 7: FAQ ── */}
       <FAQBlock
         title="Owner FAQs"
         questions={[

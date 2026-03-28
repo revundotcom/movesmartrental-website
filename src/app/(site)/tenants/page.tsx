@@ -93,8 +93,8 @@ export default async function TenantsPage() {
       <HeroBlock
         headline="Find Your Next Rental Home"
         subheadline="Browse verified listings in 20+ Ontario cities"
-        cta1={{ label: 'Browse Cities', href: '#cities' }}
-        cta2={{ label: 'How It Works', href: '#how-it-works' }}
+        cta1={{ label: 'Browse Rentals', href: '/locations/' }}
+        cta2={{ label: 'Apply Now', href: '/contact/?type=tenant' }}
       />
 
       {/* Property Types — bento grid */}

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { Mail, MapPin, Phone, Clock } from 'lucide-react'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
@@ -86,7 +87,9 @@ export default function ContactPage() {
               </h2>
               <p className="mt-4 text-lg text-slate-600">We respond within 24 hours. Tell us about your property and goals.</p>
               <div className="mt-8">
-                <ContactForm />
+                <Suspense fallback={<div className="h-96 animate-pulse rounded-lg bg-slate-100" />}>
+                  <ContactForm />
+                </Suspense>
               </div>
             </div>
 
