@@ -284,8 +284,12 @@ export default async function HomePage() {
       </section>
 
       {/* ── SECTION 5: Portal / Technology ── */}
-      <section className="bg-brand-navy py-24 text-white">
-        <div className="mx-auto max-w-6xl px-4">
+      <section className="relative overflow-hidden bg-brand-navy py-24 text-white">
+        {/* Background grid */}
+        <div className="absolute inset-0 opacity-[0.035]" aria-hidden="true"
+          style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '28px 28px' }}
+        />
+        <div className="relative z-10 mx-auto max-w-6xl px-4">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
               Technology
@@ -293,50 +297,57 @@ export default async function HomePage() {
             <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight sm:text-4xl">
               Your Property Management Portal
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-white/70">
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-white/65">
               MoveSmart Rentals combines a self-serve online account, a dedicated
               account manager, and tech-enabled brick-and-mortar service to give
               you full control and total peace of mind.
             </p>
           </div>
 
-          <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
             {[
               {
                 icon: Monitor,
                 title: 'Self-Serve Online',
                 description:
                   'View statements, track maintenance, and manage your properties from any device, any time.',
+                tag: 'Always Available',
               },
               {
                 icon: User,
                 title: 'Dedicated Account Manager',
                 description:
                   'One point of contact who knows your portfolio and handles every detail personally.',
+                tag: 'Personal Service',
               },
               {
                 icon: Building,
                 title: 'Tech + Brick-and-Mortar',
                 description:
                   'The convenience of modern technology backed by real people and local offices you can visit.',
+                tag: 'Local Presence',
               },
             ].map((item) => {
               const Icon = item.icon
               return (
                 <div
                   key={item.title}
-                  className="rounded-xl border border-white/10 bg-white/5 p-8 text-center backdrop-blur-sm transition-colors hover:bg-white/10"
+                  className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-8 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10 hover:shadow-lg hover:shadow-black/20"
                 >
-                  <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-brand-emerald/20">
-                    <Icon
-                      className="size-7 text-brand-emerald"
-                      aria-hidden="true"
-                    />
+                  {/* Shine on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/0 to-white/0 transition-all duration-500 group-hover:from-brand-emerald/5 group-hover:via-transparent group-hover:to-transparent" aria-hidden="true" />
+                  <div className="relative z-10">
+                    <div className="mx-auto flex size-14 items-center justify-center rounded-2xl border border-brand-emerald/20 bg-brand-emerald/15">
+                      <Icon className="size-7 text-brand-emerald" aria-hidden="true" />
+                    </div>
+                    <span className="mt-4 inline-block rounded-full bg-brand-emerald/10 px-3 py-0.5 text-xs font-semibold text-brand-emerald">
+                      {item.tag}
+                    </span>
+                    <h3 className="mt-3 text-lg font-bold">{item.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-white/65">
+                      {item.description}
+                    </p>
                   </div>
-                  <h3 className="mt-5 text-lg font-semibold">{item.title}</h3>
-                  <p className="mt-3 text-sm text-white/70">
-                    {item.description}
-                  </p>
                 </div>
               )
             })}
@@ -346,6 +357,7 @@ export default async function HomePage() {
             <Button
               variant="default"
               size="lg"
+              className="cursor-pointer"
               render={<Link href="/owners/" />}
             >
               Explore Owner Portal
@@ -364,9 +376,12 @@ export default async function HomePage() {
             <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-brand-navy sm:text-4xl">
               What Property Owners Say
             </h2>
+            <p className="mt-4 text-base text-muted-foreground">
+              Real results from real landlords across Ontario.
+            </p>
           </div>
 
-          <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
             {[
               {
                 quote:
@@ -374,6 +389,7 @@ export default async function HomePage() {
                 name: 'Michael R.',
                 city: 'Toronto, ON',
                 outcome: 'Unit rented in 10 days',
+                initials: 'MR',
               },
               {
                 quote:
@@ -381,6 +397,7 @@ export default async function HomePage() {
                 name: 'Sarah L.',
                 city: 'Ottawa, ON',
                 outcome: 'Zero missed payments in 2 years',
+                initials: 'SL',
               },
               {
                 quote:
@@ -388,36 +405,59 @@ export default async function HomePage() {
                 name: 'James K.',
                 city: 'Hamilton, ON',
                 outcome: '12 units, 100% occupancy',
+                initials: 'JK',
               },
             ].map((testimonial) => (
               <div
                 key={testimonial.name}
-                className="flex flex-col rounded-xl border border-border bg-slate-50 p-8"
+                className="group relative flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-navy/6"
               >
-                <div className="mb-4 flex gap-1">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      className="size-4 fill-brand-gold text-brand-gold"
-                      aria-hidden="true"
-                    />
-                  ))}
+                {/* Top accent */}
+                <div className="absolute inset-x-0 top-0 h-0.5 rounded-t-2xl bg-gradient-to-r from-brand-emerald/60 via-brand-emerald to-brand-emerald/60" aria-hidden="true" />
+
+                <div className="mb-4 flex items-center justify-between">
+                  <div className="flex gap-0.5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star
+                        key={i}
+                        className="size-4 fill-brand-gold text-brand-gold"
+                        aria-hidden="true"
+                      />
+                    ))}
+                  </div>
+                  {/* Quote mark */}
+                  <svg className="size-8 text-brand-emerald/15" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                  </svg>
                 </div>
-                <blockquote className="flex-1 text-sm leading-relaxed text-muted-foreground">
+
+                <blockquote className="flex-1 text-sm leading-relaxed text-slate-600">
                   &ldquo;{testimonial.quote}&rdquo;
                 </blockquote>
+
                 {testimonial.outcome && (
-                  <p className="mt-4 rounded-md bg-brand-emerald/10 px-3 py-2 text-sm font-semibold text-brand-emerald">
-                    {testimonial.outcome}
-                  </p>
+                  <div className="mt-5 flex items-center gap-2 rounded-xl bg-emerald-50 px-3 py-2.5">
+                    <svg className="size-4 shrink-0 text-emerald-600" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
+                    </svg>
+                    <p className="text-sm font-semibold text-emerald-700">
+                      {testimonial.outcome}
+                    </p>
+                  </div>
                 )}
-                <div className="mt-4 border-t border-border pt-4">
-                  <p className="font-semibold text-brand-navy">
-                    {testimonial.name}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {testimonial.city}
-                  </p>
+
+                <div className="mt-5 flex items-center gap-3 border-t border-border/50 pt-4">
+                  <div className="flex size-9 items-center justify-center rounded-full bg-brand-navy text-xs font-bold text-white">
+                    {testimonial.initials}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-brand-navy">
+                      {testimonial.name}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {testimonial.city}
+                    </p>
+                  </div>
                 </div>
               </div>
             ))}

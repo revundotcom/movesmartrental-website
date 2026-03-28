@@ -20,28 +20,43 @@ export function CTABannerBlock({
   service,
 }: CTABannerBlockProps) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-r from-[#0B1D3A] via-[#0F2847] to-[#10B981]">
-      {/* Geometric decorative shapes */}
-      <div className="absolute inset-0" aria-hidden="true">
-        <div className="absolute -left-20 -top-20 size-72 rounded-full bg-white/[0.03]" />
-        <div className="absolute -bottom-16 right-1/4 size-48 rounded-full bg-white/[0.03]" />
-        <div className="absolute right-10 top-10 size-24 rotate-45 rounded-lg bg-white/[0.02]" />
-        <div className="absolute bottom-8 left-1/3 size-16 rotate-12 rounded-lg bg-white/[0.02]" />
+    <section className="animate-gradient relative overflow-hidden bg-gradient-to-r from-[#0B1D3A] via-[#0d2340] to-[#064e3b]" style={{ backgroundSize: '200% 200%' }}>
+      {/* Decorative orbs */}
+      <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div className="absolute -left-24 -top-24 size-96 rounded-full bg-white/[0.025] blur-3xl" />
+        <div className="absolute -bottom-24 right-0 size-80 rounded-full bg-[#10B981]/10 blur-3xl" />
+        <div className="absolute right-1/4 top-1/2 size-64 -translate-y-1/2 rounded-full bg-white/[0.02] blur-2xl" />
+        {/* Grid dots pattern */}
+        <div className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)',
+            backgroundSize: '32px 32px',
+          }}
+        />
       </div>
 
       <div className="relative z-10 mx-auto max-w-4xl px-4 py-20 text-center md:py-24">
-        <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
+        {/* Eyebrow */}
+        <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-sm">
+          <svg className="size-3.5 text-[#10B981]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
+          </svg>
+          <span className="text-xs font-semibold uppercase tracking-widest text-white/70">
+            Zero Upfront Cost
+          </span>
+        </div>
+
+        <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
           {headline}
         </h2>
 
         {description && (
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-white/80">
+          <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/70">
             {description}
           </p>
         )}
 
         {variant === 'form' ? (
-          /* Lead capture form variant */
           <form
             className="mx-auto mt-10 flex max-w-md flex-col gap-3 sm:flex-row"
             action="/api/lead"
@@ -57,21 +72,23 @@ export function CTABannerBlock({
             <Button
               type="submit"
               size="lg"
-              className="border-transparent bg-[#10B981] px-8 text-base font-semibold text-white shadow-lg shadow-emerald-900/30 transition-all duration-300 hover:bg-[#059669]"
+              className="cursor-pointer border-transparent bg-[#10B981] px-8 text-base font-semibold text-white shadow-lg shadow-emerald-900/30 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#059669]"
             >
               {primaryCta.label}
             </Button>
           </form>
         ) : (
-          /* Default button variant */
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <CTATracker eventType={inferCTAType(primaryCta.href)} city={city} service={service}>
               <Button
                 size="lg"
-                className="min-w-[180px] border-transparent bg-[#10B981] px-8 py-6 text-base font-semibold text-white shadow-lg shadow-emerald-900/30 transition-all duration-300 hover:bg-[#059669] hover:shadow-xl"
+                className="group/cb min-w-[180px] cursor-pointer border-transparent bg-[#10B981] px-8 py-6 text-base font-semibold text-white shadow-lg shadow-emerald-900/30 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#059669] hover:shadow-xl"
                 render={<Link href={primaryCta.href} />}
               >
                 {primaryCta.label}
+                <svg className="ml-2 size-4 transition-transform duration-200 group-hover/cb:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
               </Button>
             </CTATracker>
             {secondaryCta && (
@@ -79,7 +96,7 @@ export function CTABannerBlock({
                 <Button
                   variant="outline"
                   size="lg"
-                  className="min-w-[180px] border-2 border-white/50 bg-transparent px-8 py-6 text-base font-semibold text-white transition-all duration-300 hover:border-white hover:bg-white/10"
+                  className="min-w-[180px] cursor-pointer border-2 border-white/40 bg-transparent px-8 py-6 text-base font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-white/80 hover:bg-white/8"
                   render={<Link href={secondaryCta.href} />}
                 >
                   {secondaryCta.label}

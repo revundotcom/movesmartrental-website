@@ -60,25 +60,28 @@ export function ServiceGridBlock({
               <Link
                 key={service.slug}
                 href={basePath ? `${basePath}/${service.slug}/` : `/services/${service.slug}/`}
-                className="group"
+                className="group cursor-pointer"
               >
-                <div className="flex h-full flex-col rounded-xl border border-[#0B1D3A]/10 bg-white p-6 shadow-sm transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-t-2 group-hover:border-t-[#10B981] group-hover:shadow-lg">
+                <div className="relative flex h-full flex-col overflow-hidden rounded-xl border border-[#0B1D3A]/8 bg-white p-6 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-xl group-hover:shadow-[#0B1D3A]/8">
+                  {/* Top emerald accent bar on hover */}
+                  <div className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 rounded-t-xl bg-gradient-to-r from-[#10B981] to-[#34D399] transition-transform duration-300 group-hover:scale-x-100" aria-hidden="true" />
+
                   {Icon && (
-                    <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-emerald-100">
+                    <div className="mb-5 flex size-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-50 to-emerald-100 shadow-sm shadow-emerald-200/50 transition-all duration-300 group-hover:from-emerald-100 group-hover:to-emerald-200">
                       <Icon className="size-6 text-emerald-600" aria-hidden="true" />
                     </div>
                   )}
-                  <h3 className="text-lg font-semibold text-[#0B1D3A]">
+                  <h3 className="text-lg font-semibold text-[#0B1D3A] transition-colors duration-200 group-hover:text-emerald-700">
                     {service.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  <p className="mt-2 text-sm leading-relaxed text-slate-500">
                     {service.shortDescription}
                   </p>
-                  <div className="mt-auto pt-4">
-                    <span className="inline-flex items-center text-sm font-medium text-[#10B981] transition-colors group-hover:text-[#059669]">
+                  <div className="mt-auto pt-5">
+                    <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#10B981] transition-all duration-200 group-hover:gap-2 group-hover:text-[#059669]">
                       Learn more
-                      <svg className="ml-1 size-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                      <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                       </svg>
                     </span>
                   </div>

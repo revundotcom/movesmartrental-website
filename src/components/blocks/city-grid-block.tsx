@@ -49,48 +49,56 @@ export function CityGridBlock({
             <Link
               key={city.slug}
               href={`/ca/${city.provinceSlug}/${city.slug}/`}
-              className="group"
+              className="group cursor-pointer"
             >
-              <div className="relative h-full overflow-hidden rounded-xl shadow-sm transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg">
+              <div className="relative h-full overflow-hidden rounded-2xl shadow-md transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-xl group-hover:shadow-[#0B1D3A]/15">
                 {/* Image area */}
                 {city.heroImageUrl ? (
-                  <div className="relative h-56 w-full overflow-hidden">
+                  <div className="relative h-60 w-full overflow-hidden">
                     <Image
                       src={city.heroImageUrl}
                       alt={city.heroImageAlt ?? `${city.title} skyline`}
                       fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="object-cover transition-transform duration-500 group-hover:scale-107"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
-                    {/* Navy gradient overlay at bottom for text readability */}
-                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0B1D3A] to-transparent" />
+                    {/* Rich gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B1D3A]/90 via-[#0B1D3A]/20 to-transparent transition-all duration-300 group-hover:from-[#0B1D3A]/95" />
                   </div>
                 ) : (
-                  <div className="relative flex h-56 w-full items-end bg-gradient-to-br from-[#0B1D3A] to-[#132B4F]">
-                    <MapPin className="absolute right-4 top-4 size-8 text-white/10" />
+                  <div className="relative flex h-60 w-full items-end bg-gradient-to-br from-[#0B1D3A] to-[#132B4F]">
+                    <MapPin className="absolute right-4 top-4 size-8 text-white/10" aria-hidden="true" />
                   </div>
                 )}
 
-                {/* Text overlay on bottom of image */}
+                {/* Text overlay */}
                 <div className="absolute inset-x-0 bottom-0 p-5">
-                  <h3 className="text-xl font-bold text-white">
-                    {city.title}
-                  </h3>
-
-                  {/* Data badges */}
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {city.population != null && (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
-                        <Users className="size-3" />
-                        Pop. {formatPopulation(city.population)}
-                      </span>
-                    )}
-                    {city.medianRent != null && (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-[#10B981]/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
-                        <DollarSign className="size-3" />
-                        Median Rent {formatCurrency(city.medianRent)}
-                      </span>
-                    )}
+                  <div className="flex items-end justify-between gap-2">
+                    <div>
+                      <h3 className="text-xl font-bold text-white transition-colors duration-200 group-hover:text-emerald-300">
+                        {city.title}
+                      </h3>
+                      <div className="mt-2 flex flex-wrap gap-1.5">
+                        {city.population != null && (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                            <Users className="size-3" aria-hidden="true" />
+                            {formatPopulation(city.population)}
+                          </span>
+                        )}
+                        {city.medianRent != null && (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-[#10B981]/25 px-2.5 py-1 text-xs font-medium text-emerald-200 backdrop-blur-sm">
+                            <DollarSign className="size-3" aria-hidden="true" />
+                            {formatCurrency(city.medianRent)}/mo
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    {/* Arrow */}
+                    <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-emerald-500/0 transition-all duration-300 group-hover:bg-emerald-500/20">
+                      <svg className="size-4 -translate-x-0.5 text-white/0 transition-all duration-300 group-hover:translate-x-0 group-hover:text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
               </div>

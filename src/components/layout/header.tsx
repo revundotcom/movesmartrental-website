@@ -103,8 +103,8 @@ export function Header() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 w-full border-b border-transparent bg-white/95 backdrop-blur-md transition-shadow duration-300',
-        scrolled && 'border-border/40 shadow-sm'
+        'sticky top-0 z-50 w-full border-b border-transparent bg-white/95 backdrop-blur-md transition-all duration-300',
+        scrolled ? 'border-border/40 shadow-[0_1px_12px_rgba(11,29,58,0.08)]' : 'shadow-none'
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-[72px] lg:px-8">
@@ -113,24 +113,25 @@ export function Header() {
 
         {/* Desktop navigation — center */}
         <NavigationMenu className="hidden lg:flex" align="center">
-          <NavigationMenuList className="gap-1">
+          <NavigationMenuList className="gap-0.5">
             {NAV_GROUPS.map((group) => (
               <NavigationMenuItem key={group.label}>
-                <NavigationMenuTrigger className="text-[#0B1D3A]/80 hover:text-[#0B1D3A] data-popup-open:text-[#0B1D3A]">
+                <NavigationMenuTrigger className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-[#0B1D3A]/70 transition-all duration-200 hover:bg-[#0B1D3A]/5 hover:text-[#0B1D3A] data-popup-open:bg-[#0B1D3A]/5 data-popup-open:text-[#0B1D3A]">
                   {group.label}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="min-w-[280px]">
-                  <ul className="grid gap-1 p-2">
+                  <ul className="grid gap-0.5 p-1.5">
                     {group.items.map((item) => (
                       <li key={item.href}>
                         <NavigationMenuLink
                           render={<Link href={item.href} />}
-                          className="group/link block rounded-lg px-3 py-2.5 transition-colors hover:bg-emerald-50"
+                          className="group/link block cursor-pointer rounded-lg px-3 py-2.5 transition-all duration-150 hover:bg-emerald-50"
                         >
-                          <div className="text-sm font-medium text-[#0B1D3A] group-hover/link:text-emerald-700">
+                          <div className="flex items-center gap-2 text-sm font-semibold text-[#0B1D3A] group-hover/link:text-emerald-700">
+                            <span className="inline-block size-1.5 rounded-full bg-emerald-400 opacity-0 transition-opacity duration-150 group-hover/link:opacity-100" aria-hidden="true" />
                             {item.title}
                           </div>
-                          <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
+                          <p className="mt-0.5 pl-3.5 text-xs leading-relaxed text-muted-foreground">
                             {item.description}
                           </p>
                         </NavigationMenuLink>
@@ -144,16 +145,16 @@ export function Header() {
         </NavigationMenu>
 
         {/* Desktop CTA buttons — right */}
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-2 lg:flex">
           <Link
             href="/contact/"
-            className="rounded-lg border border-[#0B1D3A]/20 px-4 py-2 text-sm font-medium text-[#0B1D3A] transition-colors hover:border-[#0B1D3A]/40 hover:bg-[#0B1D3A]/5"
+            className="cursor-pointer rounded-lg border border-[#0B1D3A]/15 px-4 py-2 text-sm font-medium text-[#0B1D3A] transition-all duration-200 hover:border-[#0B1D3A]/30 hover:bg-[#0B1D3A]/5"
           >
             Book a Call
           </Link>
           <Link
             href="/contact/"
-            className="rounded-lg bg-brand-emerald px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-emerald-dark"
+            className="cursor-pointer rounded-lg bg-brand-emerald px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-emerald-900/20 transition-all duration-200 hover:-translate-y-px hover:bg-brand-emerald-dark hover:shadow-md hover:shadow-emerald-900/25"
           >
             Get Started
           </Link>

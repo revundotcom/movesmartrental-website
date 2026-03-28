@@ -47,7 +47,8 @@ export function HeroBlock({
         </>
       ) : (
         <div
-          className="absolute inset-0 bg-gradient-to-br from-[#0B1D3A] via-[#132B4F] to-[#0B1D3A]"
+          className="animate-gradient absolute inset-0 bg-gradient-to-br from-[#0B1D3A] via-[#0F2847] to-[#0d2340]"
+          style={{ backgroundSize: '200% 200%' }}
           aria-hidden="true"
         />
       )}
@@ -67,28 +68,42 @@ export function HeroBlock({
 
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-4xl px-4 py-20 text-center text-white md:py-28">
-        <h1 className="font-heading text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+        {/* Eyebrow badge */}
+        <div className="animate-fade-up mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/8 px-4 py-1.5 backdrop-blur-sm">
+          <span className="animate-pulse-dot inline-block size-1.5 rounded-full bg-[#10B981]" />
+          <span className="text-xs font-semibold uppercase tracking-widest text-white/80">
+            Ontario&apos;s #1 Leasing Partner
+          </span>
+        </div>
+
+        <h1 className="animate-fade-up delay-100 font-heading text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
           {leadingWords}{' '}
-          <span className="text-[#10B981]">{lastWord}</span>
+          <span className="relative inline-block">
+            <span className="text-[#10B981]">{lastWord}</span>
+            <span className="absolute -bottom-1 left-0 h-0.5 w-full rounded-full bg-[#10B981]/40" aria-hidden="true" />
+          </span>
         </h1>
 
         {subheadline && (
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80 md:text-xl lg:text-2xl">
+          <p className="animate-fade-up delay-200 mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/75 md:text-xl lg:text-2xl">
             {subheadline}
           </p>
         )}
 
         {(cta1 || cta2) && (
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="animate-fade-up delay-300 mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             {cta1 && (
               <CTATracker eventType={inferCTAType(cta1.href)} city={city} service={service}>
                 <Button
                   variant="default"
                   size="lg"
-                  className="min-w-[200px] border-transparent bg-[#10B981] px-8 py-6 text-base font-semibold text-white shadow-lg shadow-emerald-900/30 transition-all duration-300 hover:bg-[#059669] hover:shadow-xl hover:shadow-emerald-900/40"
+                  className="group/btn min-w-[200px] cursor-pointer border-transparent bg-[#10B981] px-8 py-6 text-base font-semibold text-white shadow-lg shadow-emerald-900/30 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#059669] hover:shadow-xl hover:shadow-emerald-900/40"
                   render={<Link href={cta1.href} />}
                 >
                   {cta1.label}
+                  <svg className="ml-2 size-4 transition-transform duration-200 group-hover/btn:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
                 </Button>
               </CTATracker>
             )}
@@ -97,7 +112,7 @@ export function HeroBlock({
                 <Button
                   variant="outline"
                   size="lg"
-                  className="min-w-[200px] border-2 border-white/60 bg-transparent px-8 py-6 text-base font-semibold text-white transition-all duration-300 hover:border-white hover:bg-white/10"
+                  className="min-w-[200px] cursor-pointer border-2 border-white/50 bg-transparent px-8 py-6 text-base font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/10"
                   render={<Link href={cta2.href} />}
                 >
                   {cta2.label}
@@ -108,21 +123,21 @@ export function HeroBlock({
         )}
 
         {/* Trust strip */}
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-medium text-white/60">
-          <span className="flex items-center gap-1.5">
-            <span className="inline-block size-1.5 rounded-full bg-[#10B981]" />
-            500+ Properties
-          </span>
-          <span className="hidden h-4 w-px bg-white/20 sm:inline-block" />
-          <span className="flex items-center gap-1.5">
-            <span className="inline-block size-1.5 rounded-full bg-[#10B981]" />
-            20+ Ontario Cities
-          </span>
-          <span className="hidden h-4 w-px bg-white/20 sm:inline-block" />
-          <span className="flex items-center gap-1.5">
-            <span className="inline-block size-1.5 rounded-full bg-[#10B981]" />
-            98% Occupancy Rate
-          </span>
+        <div className="animate-fade-up delay-400 mt-12 flex flex-wrap items-center justify-center gap-x-1 gap-y-3">
+          {[
+            { value: '500+', label: 'Properties' },
+            { value: '20+', label: 'Ontario Cities' },
+            { value: '98%', label: 'Occupancy Rate' },
+            { value: '14 Days', label: 'Avg. Fill Time' },
+          ].map((stat, i) => (
+            <div key={stat.label} className="flex items-center">
+              <div className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-center backdrop-blur-sm">
+                <p className="text-sm font-bold text-[#10B981]">{stat.value}</p>
+                <p className="text-xs text-white/60">{stat.label}</p>
+              </div>
+              {i < 3 && <span className="mx-1 h-8 w-px bg-white/10" aria-hidden="true" />}
+            </div>
+          ))}
         </div>
       </div>
     </section>
