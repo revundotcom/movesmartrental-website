@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Bed, Bath, Maximize, MapPin } from 'lucide-react'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Bed, Bath, Maximize, MapPin, ArrowRight } from 'lucide-react'
 import type { PropertyCardBlockProps } from '@/types/blocks'
 
 function formatPrice(price: number): string {
@@ -14,7 +13,7 @@ export function PropertyCardBlock({ listings }: PropertyCardBlockProps) {
   }
 
   return (
-    <section className="py-12">
+    <section className="py-12 md:py-16">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {listings.map((listing) => (
           <Link
@@ -22,9 +21,10 @@ export function PropertyCardBlock({ listings }: PropertyCardBlockProps) {
             href={`/ca/${listing.provinceSlug}/${listing.citySlug}/rentals/${listing.slug}/`}
             className="group block"
           >
-            <Card className="transition-shadow duration-300 group-hover:shadow-lg">
-              {listing.imageUrl && (
-                <div className="relative aspect-video w-full overflow-hidden rounded-t-xl">
+            <div className="overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-lg">
+              {/* Image area */}
+              {listing.imageUrl ? (
+                <div className="relative aspect-video w-full overflow-hidden">
                   <Image
                     src={listing.imageUrl}
                     alt={listing.imageAlt || listing.title}
@@ -32,46 +32,81 @@ export function PropertyCardBlock({ listings }: PropertyCardBlockProps) {
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
+                  {/* Availability badge on image */}
+                  <div className="absolute left-3 top-3">
+                    <span
+                      className={`inline-block rounded-full px-3 py-1 text-xs font-semibold shadow-sm ${
+                        listing.available
+                          ? 'bg-[#10B981] text-white'
+                          : 'bg-slate-600 text-white'
+                      }`}
+                    >
+                      {listing.available ? 'Available' : 'Not Available'}
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <div className="relative flex aspect-video w-full items-center justify-center bg-slate-100">
+                  <div className="text-center">
+                    <MapPin className="mx-auto size-8 text-slate-300" />
+                    <p className="mt-1 text-xs text-slate-400">No image</p>
+                  </div>
+                  {/* Availability badge */}
+                  <div className="absolute left-3 top-3">
+                    <span
+                      className={`inline-block rounded-full px-3 py-1 text-xs font-semibold shadow-sm ${
+                        listing.available
+                          ? 'bg-[#10B981] text-white'
+                          : 'bg-slate-600 text-white'
+                      }`}
+                    >
+                      {listing.available ? 'Available' : 'Not Available'}
+                    </span>
+                  </div>
                 </div>
               )}
-              <CardHeader>
-                <p className="text-2xl font-bold text-primary">
+
+              {/* Details */}
+              <div className="p-5">
+                {/* Price - prominent emerald */}
+                <p className="text-2xl font-bold text-[#10B981]">
                   {formatPrice(listing.price)}
                 </p>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                  <span className="flex items-center gap-1">
-                    <Bed className="size-4" />
+
+                {/* Bedroom / bathroom badges */}
+                <div className="mt-3 flex flex-wrap items-center gap-3">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-[#0B1D3A]">
+                    <Bed className="size-3.5" />
                     {listing.bedrooms} {listing.bedrooms === 1 ? 'Bed' : 'Beds'}
                   </span>
-                  <span className="flex items-center gap-1">
-                    <Bath className="size-4" />
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-[#0B1D3A]">
+                    <Bath className="size-3.5" />
                     {listing.bathrooms}{' '}
                     {listing.bathrooms === 1 ? 'Bath' : 'Baths'}
                   </span>
                   {listing.sqft && (
-                    <span className="flex items-center gap-1">
-                      <Maximize className="size-4" />
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-[#0B1D3A]">
+                      <Maximize className="size-3.5" />
                       {listing.sqft.toLocaleString('en-CA')} sqft
                     </span>
                   )}
                 </div>
-                <p className="flex items-center gap-1 text-sm text-muted-foreground">
-                  <MapPin className="size-4 shrink-0" />
+
+                {/* Address */}
+                <p className="mt-3 flex items-center gap-1.5 text-sm text-slate-500">
+                  <MapPin className="size-4 shrink-0 text-slate-400" />
                   {listing.address}
                 </p>
-                <span
-                  className={`inline-block rounded-full px-3 py-1 text-xs font-medium ${
-                    listing.available
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-gray-100 text-gray-500'
-                  }`}
-                >
-                  {listing.available ? 'Available' : 'Not Available'}
-                </span>
-              </CardContent>
-            </Card>
+
+                {/* View Details link */}
+                <div className="mt-4 border-t border-slate-100 pt-4">
+                  <span className="inline-flex items-center text-sm font-medium text-[#10B981] transition-colors group-hover:text-[#059669]">
+                    View Details
+                    <ArrowRight className="ml-1.5 size-4 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </div>
+              </div>
+            </div>
           </Link>
         ))}
       </div>
