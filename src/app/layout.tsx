@@ -35,20 +35,52 @@ const dmSerifDisplay = DM_Serif_Display({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'),
   title: {
-    default: 'MoveSmart Rentals - Property Management Services',
+    default: 'MoveSmart Rentals | White-Glove Property Management Ontario',
     template: '%s | MoveSmart Rentals',
   },
   description:
-    'Professional property management services across Ontario and the US. Tenant placement, screening, rent protection, and full-service property management.',
+    'White-glove property management across Ontario. Tenant placement, screening, rent protection, and full-service leasing with zero upfront cost.',
+  keywords: ['property management Ontario', 'tenant placement', 'rental management', 'rent protection', 'landlord services Ontario'],
+  authors: [{ name: 'MoveSmart Rentals', url: 'https://movesmartrentals.com' }],
+  creator: 'MoveSmart Rentals',
+  publisher: 'MoveSmart Rentals',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     type: 'website',
     locale: 'en_CA',
     siteName: 'MoveSmart Rentals',
-    images: ['/og-default.png'],
+    images: [
+      {
+        url: '/og-default.png',
+        width: 1200,
+        height: 630,
+        alt: 'MoveSmart Rentals - White-Glove Property Management Ontario',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
+    site: '@MoveSmart',
+    creator: '@MoveSmart',
     images: ['/og-default.png'],
+  },
+  alternates: {
+    canonical: '/',
+    languages: {
+      'en-CA': '/',
+      'en-US': '/us/',
+      'x-default': '/',
+    },
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GSC_VERIFICATION || '',
@@ -60,7 +92,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en-CA">
       <body className={`${inter.variable} ${plusJakartaSans.variable} ${dmSerifDisplay.variable} font-sans`}>
         {process.env.NEXT_PUBLIC_GTM_ID && (
           <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />

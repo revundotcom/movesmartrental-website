@@ -21,6 +21,8 @@ import { PortalChips } from '@/components/blocks/portal-chips'
 import { TestimonialsSection } from '@/components/blocks/testimonials-section'
 import { JsonLd } from '@/components/json-ld'
 import { buildOrganizationSchema } from '@/lib/schema-builders/organization'
+import { buildWebSiteSchema } from '@/lib/schema-builders/website'
+import { buildLocalBusinessSchema } from '@/lib/schema-builders/local-business'
 import { generatePageMetadata } from '@/lib/metadata'
 import { sanityFetch } from '@/sanity/fetch'
 import { HOMEPAGE_QUERY } from '@/sanity/queries/homepage'
@@ -75,12 +77,40 @@ export default async function HomePage() {
     description:
       'White-glove leasing execution for serious rental operators. Tenant placement, screening, rent protection, and full-service property management with zero upfront cost.',
     contactEmail: 'info@movesmartrentals.com',
+    socialLinks: [
+      'https://www.facebook.com/movesmartrentals',
+      'https://www.instagram.com/movesmartrentals',
+      'https://www.linkedin.com/company/movesmartrentals',
+    ],
+  })
+
+  const webSiteSchema = buildWebSiteSchema({
+    url: siteUrl,
+    name: 'MoveSmart Rentals',
+  })
+
+  const localBusinessSchema = buildLocalBusinessSchema({
+    name: 'MoveSmart Rentals',
+    description: 'White-glove property management for Ontario landlords. Tenant placement, screening, rent protection, and full-service leasing with zero upfront cost.',
+    url: siteUrl,
+    phone: '+14372957688',
+    address: {
+      streetAddress: '123 King Street West',
+      city: 'Toronto',
+      province: 'ON',
+      postalCode: 'M5H 1A1',
+      country: 'CA',
+    },
+    areaServed: 'Ontario, Canada',
+    openingHours: ['Mo-Fr 09:00-18:00'],
   })
 
   return (
     <>
-      {/* Organization JSON-LD */}
+      {/* JSON-LD structured data */}
       <JsonLd data={organizationSchema} />
+      <JsonLd data={webSiteSchema} />
+      <JsonLd data={localBusinessSchema} />
 
       {/* ── SECTION 1: Hero ── */}
       <HeroBlock

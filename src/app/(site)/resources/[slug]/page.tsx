@@ -295,7 +295,7 @@ export default async function ResourcePage({
     description:
       doc.seo?.metaDescription || doc.excerpt || doc.outcome || doc.title,
     image: heroImageRef ? sanityImageUrl(heroImageRef) : undefined,
-    url: `https://movesmartrentals.com/resources/${slug}/`,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'}/resources/${slug}/`,
     isBlogPost: doc._type === 'blogGuide' && doc.category === 'blog',
   })
 

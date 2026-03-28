@@ -14,10 +14,16 @@ import { CASE_STUDY_LIST_QUERY } from '@/sanity/queries/case-study'
 // ---------------------------------------------------------------------------
 
 export const metadata: Metadata = {
-  title: 'Resources',
+  title: 'Ontario Rental Market Resources | Guides, Reports & Case Studies',
   description:
-    'Guides, market reports, case studies, and FAQs for property owners and tenants in Ontario.',
+    'Free guides, Ontario rental market reports, property management case studies, and landlord FAQs. Expert resources for property owners and tenants.',
   alternates: { canonical: '/resources/' },
+  openGraph: {
+    title: 'Ontario Rental Market Resources | MoveSmart Rentals',
+    description:
+      'Free guides, Ontario rental market reports, property management case studies, and landlord FAQs.',
+    images: ['/og-default.png'],
+  },
 }
 
 // ---------------------------------------------------------------------------

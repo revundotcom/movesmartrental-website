@@ -7,9 +7,18 @@ import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { ContactForm } from '@/components/contact-form'
 
 export const metadata: Metadata = {
-  title: 'Contact Us',
+  title: 'Contact Us | Get a Free Property Management Consultation',
   description:
-    'Get in touch with MoveSmart Rentals. Submit a property, request a consultation, or ask about our services. We respond within 24 hours.',
+    'Contact MoveSmart Rentals for a free consultation. Submit a property, book a call, or ask about our Ontario property management services. We respond within 24 hours.',
+  alternates: {
+    canonical: '/contact/',
+  },
+  openGraph: {
+    title: 'Contact MoveSmart Rentals | Free Consultation',
+    description:
+      'Contact MoveSmart Rentals for a free consultation. Submit a property, book a call, or ask about our Ontario property management services.',
+    images: ['/og-default.png'],
+  },
 }
 
 const CONTACT_INFO = [
@@ -21,8 +30,8 @@ const CONTACT_INFO = [
   {
     icon: Phone,
     label: 'Phone',
-    value: '(416) 555-0199',
-    href: 'tel:+14165550199',
+    value: '+1 (437) 295-7688',
+    href: 'tel:+14372957688',
   },
   {
     icon: Mail,
@@ -125,7 +134,7 @@ export default function ContactPage() {
       <CTABannerBlock
         headline="Prefer to Call?"
         description="Our team is available Monday to Friday, 9 AM to 6 PM Eastern Time."
-        primaryCta={{ label: 'Call (416) 555-0199', href: 'tel:+14165550199' }}
+        primaryCta={{ label: 'Call +1 (437) 295-7688', href: 'tel:+14372957688' }}
       />
     </main>
   )

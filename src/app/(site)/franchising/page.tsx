@@ -8,9 +8,18 @@ import { FAQBlock } from '@/components/blocks/faq-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 
 export const metadata: Metadata = {
-  title: 'Franchising',
+  title: 'Property Management Franchise Opportunity Canada & US',
   description:
-    'Join the MoveSmart Rentals franchise network. Expand property management into your market with proven systems, technology, and support.',
+    'Join the MoveSmart Rentals franchise network. Expand white-glove property management into your market with proven systems, full technology platform, and dedicated support.',
+  alternates: {
+    canonical: '/franchising/',
+  },
+  openGraph: {
+    title: 'Property Management Franchise Canada & US | MoveSmart Rentals',
+    description:
+      'Join the MoveSmart Rentals franchise network. Expand white-glove property management into your market with proven systems, full technology platform, and dedicated support.',
+    images: ['/og-default.png'],
+  },
 }
 
 const FRANCHISE_BENEFITS = [

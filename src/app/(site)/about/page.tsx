@@ -6,15 +6,24 @@ import { BenefitsBlock } from '@/components/blocks/benefits-block'
 import { TrustBlock } from '@/components/blocks/trust-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { JsonLd } from '@/components/json-ld'
-import { buildOrganizationSchema } from '@/lib/schema-builders'
+import { buildOrganizationSchema, buildLocalBusinessSchema } from '@/lib/schema-builders'
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
 
 export const metadata: Metadata = {
-  title: 'About MoveSmart Rentals',
+  title: 'About Us | Ontario Property Management Company',
   description:
-    'MoveSmart Rentals provides professional property management across Ontario with zero upfront cost, modern technology, and local expertise.',
+    'MoveSmart Rentals: Ontario\'s white-glove property management company. Zero upfront cost, 500+ properties managed, 98% occupancy rate, and dedicated account managers.',
+  alternates: {
+    canonical: '/about/',
+  },
+  openGraph: {
+    title: 'About MoveSmart Rentals | Ontario Property Management',
+    description:
+      'Ontario\'s white-glove property management company. Zero upfront cost, 500+ properties managed, 98% occupancy rate, and dedicated account managers.',
+    images: ['/og-default.png'],
+  },
 }
 
 const organizationSchema = buildOrganizationSchema({
@@ -24,6 +33,22 @@ const organizationSchema = buildOrganizationSchema({
   description:
     'Professional property management across Ontario with zero upfront cost, modern technology, and local expertise.',
   contactEmail: 'info@movesmartrentals.com',
+})
+
+const localBusinessSchema = buildLocalBusinessSchema({
+  name: 'MoveSmart Rentals',
+  description: 'White-glove property management for Ontario landlords. Tenant placement, screening, rent protection, and full-service leasing with zero upfront cost.',
+  url: SITE_URL,
+  phone: '+14372957688',
+  address: {
+    streetAddress: '123 King Street West',
+    city: 'Toronto',
+    province: 'ON',
+    postalCode: 'M5H 1A1',
+    country: 'CA',
+  },
+  areaServed: 'Ontario, Canada',
+  openingHours: ['Mo-Fr 09:00-18:00'],
 })
 
 const DIFFERENTIATORS = [
@@ -64,6 +89,7 @@ export default function AboutPage() {
   return (
     <main>
       <JsonLd data={organizationSchema} />
+      <JsonLd data={localBusinessSchema} />
 
       <div className="mx-auto max-w-7xl px-4 pt-8">
         <BreadcrumbNav

@@ -13,16 +13,17 @@ import { SERVICE_OWNER_QUERY } from '@/sanity/queries/service'
 import type { ServiceCardData } from '@/types/blocks'
 
 export const metadata: Metadata = {
-  title: 'Property Owners',
+  title: 'Property Management for Landlords Ontario | Hands-Off Leasing',
   description:
-    'Hands-off leasing with maximum results. Zero upfront cost, dedicated account manager, tenant screening, rent protection, and full leasing execution for Ontario landlords.',
+    'Hands-off property management for Ontario landlords. Zero upfront cost, dedicated account manager, tenant screening, rent protection, and full leasing execution.',
   alternates: {
     canonical: '/owners/',
   },
   openGraph: {
-    title: 'Property Owners',
+    title: 'Property Management for Landlords Ontario | MoveSmart Rentals',
     description:
-      'Hands-off leasing with maximum results. Zero upfront cost, dedicated account manager, tenant screening, rent protection, and full leasing execution for Ontario landlords.',
+      'Hands-off property management for Ontario landlords. Zero upfront cost, dedicated account manager, tenant screening, and rent protection.',
+    images: ['/og-default.png'],
   },
 }
 

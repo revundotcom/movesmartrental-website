@@ -292,6 +292,11 @@ html {
   animation-play-state: paused;
 }
 
+/* Hide scrollbar for city carousel */
+.overflow-x-auto::-webkit-scrollbar {
+  display: none;
+}
+
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

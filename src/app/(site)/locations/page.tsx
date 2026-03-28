@@ -9,16 +9,17 @@ import { PROVINCES_WITH_CITIES_QUERY } from '@/sanity/queries/province'
 import type { CityCardData } from '@/types/blocks'
 
 export const metadata: Metadata = {
-  title: 'Locations',
+  title: 'Property Management Locations Ontario | 20+ Cities Served',
   description:
-    'Professional property management across Ontario. Find MoveSmart Rentals services in your city.',
+    'MoveSmart Rentals serves 20+ Ontario cities including Toronto, Ottawa, Mississauga, Hamilton, Brampton, London, Kitchener, Waterloo, Barrie, and Oakville. Find your city.',
   alternates: {
     canonical: '/locations/',
   },
   openGraph: {
-    title: 'Locations',
+    title: 'Property Management Locations Ontario | MoveSmart Rentals',
     description:
-      'Professional property management across Ontario. Find MoveSmart Rentals services in your city.',
+      'MoveSmart Rentals serves 20+ Ontario cities. Find professional property management in Toronto, Ottawa, Mississauga, Hamilton, Brampton, London, and more.',
+    images: ['/og-default.png'],
   },
 }
 

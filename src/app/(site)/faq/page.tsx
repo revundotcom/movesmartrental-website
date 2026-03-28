@@ -10,16 +10,16 @@ import { sanityFetch } from '@/sanity/fetch'
 import { AGGREGATED_FAQ_QUERY } from '@/sanity/queries/faq'
 
 export const metadata: Metadata = {
-  title: 'FAQ',
+  title: 'Property Management FAQ Ontario | Common Questions Answered',
   description:
-    'Frequently asked questions about MoveSmart Rentals property management services for owners, tenants, and franchise partners.',
+    'Answers to frequently asked questions about MoveSmart Rentals property management: pricing, tenant screening, rent protection, cities served, and more.',
   alternates: {
     canonical: '/faq/',
   },
   openGraph: {
-    title: 'FAQ | MoveSmart Rentals',
+    title: 'Property Management FAQ Ontario | MoveSmart Rentals',
     description:
-      'Frequently asked questions about MoveSmart Rentals property management services for owners, tenants, and franchise partners.',
+      'Answers to frequently asked questions about MoveSmart Rentals property management: pricing, tenant screening, rent protection, cities served, and more.',
     images: ['/og-default.png'],
   },
 }

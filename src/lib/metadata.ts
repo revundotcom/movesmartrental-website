@@ -30,9 +30,13 @@ export function generatePageMetadata({
     openGraph: {
       title,
       description,
-      images: seo?.ogImage
-        ? [{ url: seo.ogImage.asset._ref }]
-        : ['/og-default.png'],
+      images: ['/og-default.png'],
+    },
+    twitter: {
+      card: 'summary_large_image' as const,
+      title,
+      description,
+      images: ['/og-default.png'],
     },
   }
 }

@@ -9,16 +9,17 @@ import { SERVICE_ALL_QUERY } from '@/sanity/queries/service'
 import type { ServiceCardData } from '@/types/blocks'
 
 export const metadata: Metadata = {
-  title: 'Our Services',
+  title: 'Property Management Services Ontario | 8 Expert Services',
   description:
-    'Explore our 8 professional property management services. From tenant screening and rent collection to property preparation and MLS distribution.',
+    '8 professional property management services for Ontario landlords. Tenant screening, rent collection, MLS distribution, property prep, and rent protection. Zero upfront cost.',
   alternates: {
     canonical: '/services/',
   },
   openGraph: {
-    title: 'Our Services',
+    title: 'Property Management Services Ontario | MoveSmart Rentals',
     description:
-      'Explore our 8 professional property management services. From tenant screening and rent collection to property preparation and MLS distribution.',
+      '8 professional property management services for Ontario landlords. Tenant screening, rent collection, MLS distribution, property prep, and rent protection.',
+    images: ['/og-default.png'],
   },
 }
 

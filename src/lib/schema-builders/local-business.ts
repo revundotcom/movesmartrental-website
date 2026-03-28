@@ -20,6 +20,7 @@ export function buildLocalBusinessSchema(data: {
   }
   areaServed?: string
   openingHours?: string[]
+  priceRange?: string
 }) {
   return {
     '@context': 'https://schema.org',
@@ -28,6 +29,8 @@ export function buildLocalBusinessSchema(data: {
     description: data.description,
     url: data.url,
     telephone: data.phone,
+    email: 'info@movesmartrentals.com',
+    priceRange: data.priceRange || 'Success-based fee — $0 upfront',
     address: {
       '@type': 'PostalAddress',
       streetAddress: data.address.streetAddress,
@@ -44,6 +47,20 @@ export function buildLocalBusinessSchema(data: {
         }
       : undefined,
     areaServed: data.areaServed,
-    openingHoursSpecification: data.openingHours,
+    openingHoursSpecification: data.openingHours
+      ? data.openingHours.map(() => ({
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+          opens: '09:00',
+          closes: '18:00',
+        }))
+      : undefined,
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '87',
+      bestRating: '5',
+      worstRating: '1',
+    },
   }
 }

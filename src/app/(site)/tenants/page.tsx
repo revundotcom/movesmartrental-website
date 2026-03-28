@@ -12,16 +12,16 @@ import { HOMEPAGE_QUERY } from '@/sanity/queries/homepage'
 import type { CityCardData } from '@/types/blocks'
 
 export const metadata: Metadata = {
-  title: 'Tenants | Find Rentals',
+  title: 'Rental Homes Ontario | Apartments, Condos & Houses for Rent',
   description:
-    'Browse verified rental listings across Ontario. Apartments, condos, houses, and townhouses available in 20+ cities.',
+    'Browse verified rental listings across Ontario. Apartments, condos, houses, and townhouses in Toronto, Mississauga, Ottawa, Hamilton, and 20+ cities. Apply online in minutes.',
   alternates: {
     canonical: '/tenants/',
   },
   openGraph: {
-    title: 'Find Your Next Rental Home | MoveSmart Rentals',
+    title: 'Rental Homes Ontario | MoveSmart Rentals',
     description:
-      'Browse verified rental listings across Ontario. Apartments, condos, houses, and townhouses available in 20+ cities.',
+      'Browse verified rental listings across Ontario. Apartments, condos, houses, and townhouses in Toronto, Mississauga, Ottawa, Hamilton, and 20+ cities.',
     images: ['/og-default.png'],
   },
 }
