@@ -47,20 +47,25 @@ export function Header() {
   const [navValue, setNavValue] = useState<string | null>(null)
 
   useEffect(() => {
+    let rafId = 0
     let ticking = false
     const onScroll = () => {
-      setScrolled(window.scrollY > 8)
       if (!ticking) {
-        requestAnimationFrame(() => {
-          setNavValue(null) // Close dropdown on scroll
+        rafId = requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 8)
+          setNavValue(null)
           ticking = false
         })
         ticking = true
       }
     }
-    onScroll()
+    // Sync on mount so SSR hydration matches without waiting for a RAF
+    setScrolled(window.scrollY > 8)
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(rafId)
+    }
   }, [])
 
   return (
