@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-03-PLAN.md
-last_updated: "2026-03-28T16:05:12.577Z"
-last_activity: 2026-03-28 — Completed 03-05-PLAN.md (reCAPTCHA v3 on contact form + llms.txt AI discoverability)
+stopped_at: Completed 03-07-PLAN.md
+last_updated: "2026-03-28T16:05:00Z"
+last_activity: 2026-03-28 — Completed 03-07-PLAN.md (Content system: publishing SOP, prompt framework, weak-page refresh)
 progress:
   total_phases: 4
   completed_phases: 2
   total_plans: 24
-  completed_plans: 20
-  percent: 79
+  completed_plans: 22
+  percent: 92
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 ## Current Position
 
 Phase: 3 of 4 (Scale, Integrations, and Content System)
-Plan: 6 of 8 in current phase
+Plan: 8 of 8 in current phase
 Status: Executing
-Last activity: 2026-03-28 — Completed 03-05-PLAN.md (reCAPTCHA v3 on contact form + llms.txt AI discoverability)
+Last activity: 2026-03-28 — Completed 03-07-PLAN.md (Content system: publishing SOP, prompt framework, weak-page refresh)
 
-Progress: [████████░░] 79%
+Progress: [█████████░] 92%
 
 ## Performance Metrics
 
@@ -68,7 +68,9 @@ Progress: [████████░░] 79%
 | Phase 02 P10 | 10min | 2 tasks | 2 files |
 | Phase 03 P04 | 2min | 2 tasks | 3 files |
 | Phase 03 P05 | 2min | 2 tasks | 3 files |
+| Phase 03 P01 | 4min | 2 tasks | 5 files |
 | Phase 03 P03 | 4min | 2 tasks | 3 files |
+| Phase 03 P07 | 5min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -131,6 +133,13 @@ Recent decisions affecting current work:
 - [Phase 03]: Priority scoring: tier 40%, population 30%, service coverage 30% -- tier weighted highest for established service pages
 - [Phase 03]: Static CSV baseline with all 73 known cities pre-populated; script regenerates from live CMS data on demand
 - [Phase 03]: US city slugs prefixed with state abbreviation (fl-miami, tx-houston) matching 03-02 deterministic ID convention
+- [Phase 03]: Country hub pages use hardcoded intro sections (not CMS) since they are thin geographic entry points
+- [Phase 03]: US hub page reuses COUNTRY_PROVINCES_QUERY with country='us' param for architectural symmetry with Canada hub
+- [Phase 03]: Non-Ontario provinces seeded as Tier-2 cities since they are secondary market cities
+- [Phase 03]: Publishing workflow references actual Sanity schema field names (metaTitle, localBody, neighbourhoodNames, etc.) for SOP accuracy
+- [Phase 03]: Each prompt template maps output to specific Sanity CMS fields so editors paste directly into correct fields
+- [Phase 03]: Weak-page refresh uses 4 distinct GSC patterns (CTR, position, indexing, bounce) with tiered priority matrix
+- [Phase 03]: Refresh frequency tiered by business importance: Tier-1 monthly, Tier-2 quarterly, blogs semi-annually
 
 ### Pending Todos
 
@@ -144,6 +153,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T16:05:01.139Z
-Stopped at: Completed 03-03-PLAN.md
+Last session: 2026-03-28T16:05:00Z
+Stopped at: Completed 03-07-PLAN.md
 Resume file: None
