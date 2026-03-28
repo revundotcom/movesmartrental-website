@@ -1,0 +1,58 @@
+# MoveSmart Rentals
+
+> Professional property management services across Canada and the United States. Tenant placement, screening, rent protection, and full-service property management for landlords and property owners.
+
+## About
+MoveSmart Rentals is a property management company operating across Ontario, Canada and expanding to the United States. We provide tenant placement, tenant screening, rent guarantee, leasing services, rental preparation, rental marketing, and portal technology for property owners and landlords.
+
+## Services
+- [Tenant Placement](/services/tenant-placement/): Full-service tenant placement including marketing, showings, and lease signing
+- [Tenant Screening](/services/tenant-screening/): Comprehensive credit, employment, and reference verification
+- [Rent Guarantee](/services/rent-guarantee/): Guaranteed rent protection for property owners
+- [Leasing Services](/services/leasing-services/): End-to-end lease management and renewal
+- [Rental Preparation](/services/rental-preparation/): Property preparation for the rental market
+- [Rental Marketing](/services/rental-marketing/): Multi-platform listing distribution including MLS
+- [Portal Technology](/services/portal-technology/): Owner and tenant self-service portal
+- [Pricing](/pricing/): Transparent pricing with no upfront costs
+
+## Locations
+
+### Canada
+- [Ontario](/ca/ontario/): Toronto, Mississauga, Brampton, Hamilton, Ottawa, London, and 14 more cities
+- [Quebec](/ca/quebec/): Montreal, Quebec City, Laval, Gatineau, Longueuil
+- [British Columbia](/ca/british-columbia/): Vancouver, Surrey, Burnaby, Richmond, Victoria
+- [Alberta](/ca/alberta/): Calgary, Edmonton, Red Deer, Lethbridge
+- [Nova Scotia](/ca/nova-scotia/): Halifax, Dartmouth, Sydney
+
+### United States
+- [Florida](/us/florida/): Miami, Orlando, Tampa, Jacksonville, Fort Lauderdale
+- [Texas](/us/texas/): Houston, Dallas, Austin, San Antonio, Fort Worth
+- [California](/us/california/): Los Angeles, San Francisco, San Diego, Sacramento, San Jose
+- [New York](/us/new-york/): New York City, Buffalo, Rochester, Albany
+- [Illinois](/us/illinois/): Chicago, Aurora, Naperville
+- [Georgia](/us/georgia/): Atlanta, Savannah, Augusta
+- [North Carolina](/us/north-carolina/): Charlotte, Raleigh, Durham
+- [Arizona](/us/arizona/): Phoenix, Tucson, Scottsdale
+- [Colorado](/us/colorado/): Denver, Colorado Springs, Boulder
+- [New Jersey](/us/new-jersey/): Newark, Jersey City, Hoboken
+
+## Resources
+- [Blog & Guides](/resources/): Rental market guides, legal guides, comparisons, and case studies
+- [FAQ](/faq/): Frequently asked questions for owners and tenants
+- [About Us](/about/): Company information and differentiators
+- [Contact](/contact/): Get in touch with our team
+- [Franchising](/franchising/): Franchise opportunities
+
+## For Property Owners
+- No upfront costs — success-fee model
+- Dedicated account manager for every property
+- MLS distribution for maximum exposure
+- Structured tenant screening process
+- Rent guarantee protection available
+- Self-serve online portal
+
+## For Tenants
+- Browse rentals by city and property type
+- Apartments, condos, houses, and townhouses
+- Filter by bedroom count
+- Apply online with streamlined process
