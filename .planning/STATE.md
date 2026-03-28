@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-01-PLAN.md
-last_updated: "2026-03-28T15:15:49.977Z"
-last_activity: 2026-03-28 — Completed 02-01-PLAN.md (8 GROQ query files + Portable Text component)
+stopped_at: Completed 02-02-PLAN.md
+last_updated: "2026-03-28T15:15:35Z"
+last_activity: 2026-03-28 — Completed 02-02-PLAN.md (3 new route skeletons + enhanced 404 with navigation cards)
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 16
-  completed_plans: 7
-  percent: 44
+  completed_plans: 8
+  percent: 50
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 ## Current Position
 
 Phase: 2 of 4 (Core Build: Templates and Top Cities)
-Plan: 1 of 10 in current phase
+Plan: 2 of 10 in current phase
 Status: Executing
-Last activity: 2026-03-28 — Completed 02-01-PLAN.md (8 GROQ query files + Portable Text component)
+Last activity: 2026-03-28 — Completed 02-02-PLAN.md (3 new route skeletons + enhanced 404 with navigation cards)
 
-Progress: [████░░░░░░] 44%
+Progress: [█████░░░░░] 50%
 
 ## Performance Metrics
 
@@ -57,6 +57,7 @@ Progress: [████░░░░░░] 44%
 | Phase 01 P05 | 4min | 2 tasks | 6 files |
 | Phase 01 P06 | 4min | 2 tasks | 6 files |
 | Phase 02 P01 | 2min | 2 tasks | 9 files |
+| Phase 02 P02 | 4min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -85,6 +86,8 @@ Recent decisions affecting current work:
 - [Phase 01]: Used base-ui render prop (render={<Link>}) for Button-as-Link composition in HeroBlock and CTABannerBlock
 - [Phase 01]: FAQBlock schemaEnabled defaults to true for SEO-first approach
 - [Phase 01]: ServiceGridBlock uses static ICON_MAP lookup (8 Lucide icons) to stay as Server Component
+- [Phase 02]: Bedroom route placed under [service] segment (not [propertyType]) to avoid Next.js dynamic segment name conflict
+- [Phase 02]: Property type pages served by existing [service] dynamic segment since both occupy same URL level
 - [Phase 02]: Sanity image URL built from asset _ref without @sanity/image-url package (zero added deps)
 - [Phase 02]: Blog/guide list query uses GROQ select() for optional category filtering in a single query
 - [Phase 02]: Aggregated FAQ query uses GROQ spread operator to flatten FAQ items from services and cityServices
@@ -102,6 +105,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T15:15:49.974Z
-Stopped at: Completed 02-01-PLAN.md
+Last session: 2026-03-28T15:15:35Z
+Stopped at: Completed 02-02-PLAN.md
 Resume file: None

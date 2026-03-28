@@ -52,8 +52,8 @@ Plans:
 **Plans:** 10 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — GROQ queries for all page templates + Portable Text component
-- [ ] 02-02-PLAN.md — New route files (property category, bedroom, property detail, FAQ) + 404 enhancement
+- [x] 02-01-PLAN.md — GROQ queries for all page templates + Portable Text component
+- [x] 02-02-PLAN.md — New route files (property category, bedroom, property detail, FAQ) + 404 enhancement
 - [ ] 02-03-PLAN.md — Homepage template with all 9 contract sections + Organization JSON-LD
 - [ ] 02-04-PLAN.md — Owners hub, Services hub, Service detail, Locations hub templates
 - [ ] 02-05-PLAN.md — Tenants hub, Property category, Bedroom count, Property detail templates
@@ -95,6 +95,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Architecture and CMS Foundation | 6/6 | Complete | 2026-03-28 |
-| 2. Core Build — Templates and Top Cities | 0/10 | Not started | - |
+| 2. Core Build — Templates and Top Cities | 2/10 | In Progress | - |
 | 3. Scale, Integrations, and Content System | 0/TBD | Not started | - |
 | 4. Audit, Hardening, and Handoff | 0/TBD | Not started | - |

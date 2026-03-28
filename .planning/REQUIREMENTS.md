@@ -106,7 +106,7 @@
 - [x] **SEO-05**: Open Graph fields (og:title, og:description, og:image) on every page
 - [ ] **SEO-06**: Meta titles 50-60 chars, meta descriptions 140-160 chars, one H1 per page
 - [x] **SEO-07**: Image alt text describing actual image with location/service when relevant
-- [ ] **SEO-08**: 404 handling with custom error page, redirect logic
+- [x] **SEO-08**: 404 handling with custom error page, redirect logic
 - [ ] **SEO-09**: Core Web Vitals: LCP <2.5s, INP <200ms, CLS <0.1
 - [ ] **SEO-10**: Image compression, lazy loading (not for LCP image), WebP/AVIF via next/image
 
@@ -250,7 +250,7 @@
 | GEO-06 | Phase 2 | Pending |
 | SEO-02 | Phase 2 | Pending |
 | SEO-06 | Phase 2 | Pending |
-| SEO-08 | Phase 2 | Pending |
+| SEO-08 | Phase 2 | Complete |
 | SCHEMA-01 | Phase 2 | Pending |
 | SCHEMA-02 | Phase 2 | Pending |
 | SCHEMA-03 | Phase 2 | Pending |
