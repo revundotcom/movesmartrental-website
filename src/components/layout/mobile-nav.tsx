@@ -142,13 +142,13 @@ export function MobileNav() {
             variant="ghost"
             size="icon"
             aria-label="Open navigation menu"
-            className="text-white hover:bg-white/10 hover:text-white"
+            className="text-white hover:bg-white/10 hover:text-white size-11"
           >
             <Menu className="size-5" />
           </Button>
         }
       />
-      <SheetContent side="right" className="flex w-[85vw] max-w-80 flex-col p-0">
+      <SheetContent side="right" className="flex flex-col gap-0 p-0 !w-[85vw] max-w-80">
         {/* Header with logo */}
         <SheetHeader className="border-b border-border/60 px-5 py-4 pr-12">
           <SheetTitle className="sr-only">Navigation</SheetTitle>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -43,6 +44,7 @@ const NAV_GROUPS = [
 ] as const
 
 export function Header() {
+  const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [navValue, setNavValue] = useState<string | null>(null)
 
@@ -92,7 +94,7 @@ export function Header() {
             {NAV_GROUPS.map((group) => (
               <NavigationMenuItem key={group.label}>
                 <NavigationMenuTrigger
-                  className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-white/80 transition-all duration-200 hover:bg-white/10 hover:text-white data-popup-open:bg-white/10 data-popup-open:text-white data-open:bg-white/10 data-open:text-white"
+                  className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-white/80 transition-all duration-200 hover:bg-white/10 hover:text-white data-popup-open:bg-white/10 data-popup-open:text-white"
                 >
                   {group.label}
                 </NavigationMenuTrigger>
@@ -102,7 +104,8 @@ export function Header() {
                       <li key={item.href}>
                         <NavigationMenuLink
                           render={<Link href={item.href} />}
-                          className="group/link block cursor-pointer rounded-lg px-3 py-2.5 transition-all duration-150 hover:bg-emerald-50"
+                          active={pathname === item.href}
+                          className="group/link block cursor-pointer rounded-lg px-3 py-2.5 transition-all duration-150 hover:bg-emerald-50 focus:bg-emerald-50 data-active:bg-emerald-50 data-active:text-emerald-700"
                         >
                           <div className="flex items-center gap-2 text-sm font-semibold text-[#0B1D3A] group-hover/link:text-emerald-700">
                             <span
