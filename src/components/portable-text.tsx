@@ -56,6 +56,7 @@ export const portableTextComponents: PortableTextComponents = {
             width={800}
             height={400}
             className="w-full rounded-lg"
+            sizes="(max-width: 768px) 100vw, 672px"
           />
           {value.alt && (
             <figcaption className="mt-2 text-center text-sm text-muted-foreground">
