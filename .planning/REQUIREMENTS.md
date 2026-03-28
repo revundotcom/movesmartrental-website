@@ -130,7 +130,7 @@
 - [ ] **TRACK-06**: Event tracking: contact form submissions by page/city
 - [ ] **TRACK-07**: Event tracking: scroll depth, outbound clicks, phone/email clicks
 - [ ] **TRACK-08**: Event tracking: city-to-service CTR, service-to-account conversion
-- [ ] **TRACK-09**: Reporting dashboard (Looker Studio or equivalent free tool)
+- [x] **TRACK-09**: Reporting dashboard (Looker Studio or equivalent free tool)
 
 ### Integrations
 
@@ -277,7 +277,7 @@
 | TRACK-06 | Phase 3 | Pending |
 | TRACK-07 | Phase 3 | Pending |
 | TRACK-08 | Phase 3 | Pending |
-| TRACK-09 | Phase 3 | Pending |
+| TRACK-09 | Phase 3 | Complete |
 | INT-01 | Phase 3 | Complete |
 | INT-02 | Phase 3 | Complete |
 | AI-03 | Phase 3 | Complete |
