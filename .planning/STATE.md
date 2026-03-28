@@ -107,6 +107,9 @@ Recent decisions affecting current work:
 - [Phase 02]: FAQ hub falls back to hardcoded categorized FAQs when CMS is empty
 - [Phase 02]: FAQBlock schemaEnabled=false on FAQ hub -- single FAQPage JSON-LD injected via JsonLd for aggregated set
 - [Phase 02]: TMPL-21 Portal/Technology satisfied by Owners hub section (Plan 04) -- no dedicated page
+- [Phase 02]: SERVICE_PAGE_QUERY enhanced with availableCities sub-query joining through cityService documents
+- [Phase 02]: Owner hub messaging hardcoded (not CMS) because contract-required points must always render
+- [Phase 02]: Locations hub uses single PROVINCES_WITH_CITIES_QUERY for all provinces with nested cities in one request
 
 ### Pending Todos
 

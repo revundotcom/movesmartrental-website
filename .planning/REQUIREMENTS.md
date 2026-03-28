@@ -42,12 +42,12 @@
 - [x] **TMPL-03**: Tenants hub template
 - [ ] **TMPL-04**: Services hub template
 - [ ] **TMPL-05**: Locations hub template
-- [ ] **TMPL-06**: Pricing page template
+- [x] **TMPL-06**: Pricing page template
 - [x] **TMPL-07**: Resources hub template
-- [ ] **TMPL-08**: Franchising page template
-- [ ] **TMPL-09**: About page template
-- [ ] **TMPL-10**: Contact page template
-- [ ] **TMPL-11**: FAQ hub template
+- [x] **TMPL-08**: Franchising page template
+- [x] **TMPL-09**: About page template
+- [x] **TMPL-10**: Contact page template
+- [x] **TMPL-11**: FAQ hub template
 - [x] **TMPL-12**: Blog/guide template
 - [ ] **TMPL-13**: Province/state template
 - [ ] **TMPL-14**: City template
@@ -57,7 +57,7 @@
 - [x] **TMPL-18**: Market guide template
 - [x] **TMPL-19**: Comparison template
 - [x] **TMPL-20**: Case study/testimonial template
-- [ ] **TMPL-21**: Portal-and-technology template
+- [x] **TMPL-21**: Portal-and-technology template
 - [x] **TMPL-22**: Property category template (tenant searches)
 - [x] **TMPL-23**: Property detail template
 
@@ -104,7 +104,7 @@
 - [x] **SEO-03**: Robots.txt with sitemap reference and indexing controls
 - [x] **SEO-04**: Canonical tags on all pages (self-referencing)
 - [x] **SEO-05**: Open Graph fields (og:title, og:description, og:image) on every page
-- [ ] **SEO-06**: Meta titles 50-60 chars, meta descriptions 140-160 chars, one H1 per page
+- [x] **SEO-06**: Meta titles 50-60 chars, meta descriptions 140-160 chars, one H1 per page
 - [x] **SEO-07**: Image alt text describing actual image with location/service when relevant
 - [x] **SEO-08**: 404 handling with custom error page, redirect logic
 - [ ] **SEO-09**: Core Web Vitals: LCP <2.5s, INP <200ms, CLS <0.1
@@ -114,7 +114,7 @@
 
 - [x] **SCHEMA-01**: Organization schema on homepage
 - [ ] **SCHEMA-02**: LocalBusiness/RealEstateAgent schema on city pages
-- [ ] **SCHEMA-03**: FAQ schema on all pages with FAQ sections
+- [x] **SCHEMA-03**: FAQ schema on all pages with FAQ sections
 - [ ] **SCHEMA-04**: Service schema on service pages
 - [x] **SCHEMA-05**: Article/BlogPosting schema on blog/guide pages
 - [x] **SCHEMA-06**: BreadcrumbList schema on all pages
@@ -218,12 +218,12 @@
 | TMPL-03 | Phase 2 | Complete |
 | TMPL-04 | Phase 2 | Pending |
 | TMPL-05 | Phase 2 | Pending |
-| TMPL-06 | Phase 2 | Pending |
+| TMPL-06 | Phase 2 | Complete |
 | TMPL-07 | Phase 2 | Complete |
-| TMPL-08 | Phase 2 | Pending |
-| TMPL-09 | Phase 2 | Pending |
-| TMPL-10 | Phase 2 | Pending |
-| TMPL-11 | Phase 2 | Pending |
+| TMPL-08 | Phase 2 | Complete |
+| TMPL-09 | Phase 2 | Complete |
+| TMPL-10 | Phase 2 | Complete |
+| TMPL-11 | Phase 2 | Complete |
 | TMPL-12 | Phase 2 | Complete |
 | TMPL-13 | Phase 2 | Pending |
 | TMPL-14 | Phase 2 | Pending |
@@ -233,7 +233,7 @@
 | TMPL-18 | Phase 2 | Complete |
 | TMPL-19 | Phase 2 | Complete |
 | TMPL-20 | Phase 2 | Complete |
-| TMPL-21 | Phase 2 | Pending |
+| TMPL-21 | Phase 2 | Complete |
 | TMPL-22 | Phase 2 | Complete |
 | TMPL-23 | Phase 2 | Complete |
 | OWN-01 | Phase 2 | Pending |
@@ -249,11 +249,11 @@
 | GEO-05 | Phase 2 | Pending |
 | GEO-06 | Phase 2 | Pending |
 | SEO-02 | Phase 2 | Pending |
-| SEO-06 | Phase 2 | Pending |
+| SEO-06 | Phase 2 | Complete |
 | SEO-08 | Phase 2 | Complete |
 | SCHEMA-01 | Phase 2 | Complete |
 | SCHEMA-02 | Phase 2 | Pending |
-| SCHEMA-03 | Phase 2 | Pending |
+| SCHEMA-03 | Phase 2 | Complete |
 | SCHEMA-04 | Phase 2 | Pending |
 | SCHEMA-05 | Phase 2 | Complete |
 | SCHEMA-06 | Phase 2 | Complete |
