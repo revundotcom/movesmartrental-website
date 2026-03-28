@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-03-PLAN.md
-last_updated: "2026-03-28T15:24:00Z"
-last_activity: 2026-03-28 — Completed 02-03-PLAN.md (homepage with 9 contract sections, Organization JSON-LD, dual CTAs)
+stopped_at: Completed 02-07-PLAN.md
+last_updated: "2026-03-28T15:26:42Z"
+last_activity: 2026-03-28 — Completed 02-07-PLAN.md (Resources hub + universal content detail template with Article JSON-LD)
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 16
-  completed_plans: 9
-  percent: 56
+  completed_plans: 13
+  percent: 81
 ---
 
 # Project State
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 ## Current Position
 
 Phase: 2 of 4 (Core Build: Templates and Top Cities)
-Plan: 3 of 10 in current phase
+Plan: 5 of 10 in current phase
 Status: Executing
-Last activity: 2026-03-28 — Completed 02-03-PLAN.md (homepage with 9 contract sections, Organization JSON-LD, dual CTAs)
+Last activity: 2026-03-28 — Completed 02-05-PLAN.md (tenant hub, property category, bedroom count, property detail templates with JSON-LD)
 
 Progress: [██████░░░░] 56%
 
@@ -59,6 +59,7 @@ Progress: [██████░░░░] 56%
 | Phase 02 P01 | 2min | 2 tasks | 9 files |
 | Phase 02 P02 | 4min | 2 tasks | 4 files |
 | Phase 02 P03 | 2min | 1 tasks | 1 files |
+| Phase 02 P05 | 5min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -95,6 +96,8 @@ Recent decisions affecting current work:
 - [Phase 02]: PortableTextBody is a Server Component (no use client) since @portabletext/react supports RSC
 - [Phase 02]: Homepage portal and franchising sections are custom inline JSX (not block components) since they are homepage-specific
 - [Phase 02]: Homepage FAQ uses 6 hardcoded general questions with schemaEnabled for FAQ JSON-LD
+- [Phase 02]: Property category template placed in [service]/page.tsx per 02-02 resolution -- Next.js shares segment for services and property types
+- [Phase 02]: Bedroom slug parsed via regex with notFound() for invalid formats
 
 ### Pending Todos
 
@@ -108,6 +111,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T15:24:00Z
-Stopped at: Completed 02-03-PLAN.md
+Last session: 2026-03-28T15:28:26.249Z
+Stopped at: Completed 02-05-PLAN.md
 Resume file: None

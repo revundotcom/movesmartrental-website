@@ -49,7 +49,7 @@ Plans:
   3. A tenant can browse the Tenants hub, navigate to any of the 20 Ontario Tier-1 city pages, and see property-type category pages (apartments, condos, houses, townhouses) with crawlable HTML listings — not JS-hidden content
   4. Google's Rich Results Test returns valid structured data for at least one city page (LocalBusiness + FAQ + BreadcrumbList), one service page (Service schema), and the homepage (Organization schema)
   5. The dynamic XML sitemap returns at least the 20 Ontario city URLs and all service page URLs, and robots.txt references the sitemap correctly
-**Plans:** 3/10 plans executed
+**Plans:** 6/10 plans executed
 
 Plans:
 - [x] 02-01-PLAN.md — GROQ queries for all page templates + Portable Text component
@@ -95,6 +95,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Architecture and CMS Foundation | 6/6 | Complete | 2026-03-28 |
-| 2. Core Build — Templates and Top Cities | 3/10 | In Progress|  |
+| 2. Core Build — Templates and Top Cities | 6/10 | In Progress|  |
 | 3. Scale, Integrations, and Content System | 0/TBD | Not started | - |
 | 4. Audit, Hardening, and Handoff | 0/TBD | Not started | - |

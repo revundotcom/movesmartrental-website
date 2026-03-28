@@ -39,7 +39,7 @@
 
 - [x] **TMPL-01**: Homepage template (routing page with all contract-required sections)
 - [ ] **TMPL-02**: Owners hub template
-- [ ] **TMPL-03**: Tenants hub template
+- [x] **TMPL-03**: Tenants hub template
 - [ ] **TMPL-04**: Services hub template
 - [ ] **TMPL-05**: Locations hub template
 - [ ] **TMPL-06**: Pricing page template
@@ -58,8 +58,8 @@
 - [ ] **TMPL-19**: Comparison template
 - [ ] **TMPL-20**: Case study/testimonial template
 - [ ] **TMPL-21**: Portal-and-technology template
-- [ ] **TMPL-22**: Property category template (tenant searches)
-- [ ] **TMPL-23**: Property detail template
+- [x] **TMPL-22**: Property category template (tenant searches)
+- [x] **TMPL-23**: Property detail template
 
 ### Owner-Lead SEO System
 
@@ -71,11 +71,11 @@
 
 ### Tenant-Lead SEO System
 
-- [ ] **TEN-01**: Tenant hub with city rental pages, property type categories
-- [ ] **TEN-02**: Property type category pages per city: apartments-for-rent, condos-for-rent, houses-for-rent, townhouses-for-rent
-- [ ] **TEN-03**: Bedroom-count pages where inventory supports: 1-bedroom, 2-bedroom, 3-bedroom apartments
+- [x] **TEN-01**: Tenant hub with city rental pages, property type categories
+- [x] **TEN-02**: Property type category pages per city: apartments-for-rent, condos-for-rent, houses-for-rent, townhouses-for-rent
+- [x] **TEN-03**: Bedroom-count pages where inventory supports: 1-bedroom, 2-bedroom, 3-bedroom apartments
 - [ ] **TEN-04**: Tenant FAQ, application flow, tenant insurance, guarantor/co-signer pages
-- [ ] **TEN-05**: Search/filter experience with critical listing info in crawlable rendered HTML (NOT JS-hidden)
+- [x] **TEN-05**: Search/filter experience with critical listing info in crawlable rendered HTML (NOT JS-hidden)
 
 ### Geographic Rollout
 
@@ -118,7 +118,7 @@
 - [ ] **SCHEMA-04**: Service schema on service pages
 - [ ] **SCHEMA-05**: Article/BlogPosting schema on blog/guide pages
 - [x] **SCHEMA-06**: BreadcrumbList schema on all pages
-- [ ] **SCHEMA-07**: RealEstateListing schema on property detail pages
+- [x] **SCHEMA-07**: RealEstateListing schema on property detail pages
 
 ### Analytics & Tracking
 
@@ -215,7 +215,7 @@
 | SEO-07 | Phase 1 | Complete |
 | TMPL-01 | Phase 2 | Complete |
 | TMPL-02 | Phase 2 | Pending |
-| TMPL-03 | Phase 2 | Pending |
+| TMPL-03 | Phase 2 | Complete |
 | TMPL-04 | Phase 2 | Pending |
 | TMPL-05 | Phase 2 | Pending |
 | TMPL-06 | Phase 2 | Pending |
@@ -234,18 +234,18 @@
 | TMPL-19 | Phase 2 | Pending |
 | TMPL-20 | Phase 2 | Pending |
 | TMPL-21 | Phase 2 | Pending |
-| TMPL-22 | Phase 2 | Pending |
-| TMPL-23 | Phase 2 | Pending |
+| TMPL-22 | Phase 2 | Complete |
+| TMPL-23 | Phase 2 | Complete |
 | OWN-01 | Phase 2 | Pending |
 | OWN-02 | Phase 2 | Pending |
 | OWN-03 | Phase 2 | Pending |
 | OWN-04 | Phase 2 | Complete |
 | OWN-05 | Phase 2 | Pending |
-| TEN-01 | Phase 2 | Pending |
-| TEN-02 | Phase 2 | Pending |
-| TEN-03 | Phase 2 | Pending |
+| TEN-01 | Phase 2 | Complete |
+| TEN-02 | Phase 2 | Complete |
+| TEN-03 | Phase 2 | Complete |
 | TEN-04 | Phase 2 | Pending |
-| TEN-05 | Phase 2 | Pending |
+| TEN-05 | Phase 2 | Complete |
 | GEO-05 | Phase 2 | Pending |
 | GEO-06 | Phase 2 | Pending |
 | SEO-02 | Phase 2 | Pending |
@@ -257,7 +257,7 @@
 | SCHEMA-04 | Phase 2 | Pending |
 | SCHEMA-05 | Phase 2 | Pending |
 | SCHEMA-06 | Phase 2 | Complete |
-| SCHEMA-07 | Phase 2 | Pending |
+| SCHEMA-07 | Phase 2 | Complete |
 | AI-01 | Phase 2 | Pending |
 | AI-02 | Phase 2 | Complete |
 | GEO-01 | Phase 3 | Pending |
