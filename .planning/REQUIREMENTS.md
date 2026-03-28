@@ -122,9 +122,9 @@
 
 ### Analytics & Tracking
 
-- [ ] **TRACK-01**: GA4 property configured and connected via GTM
-- [ ] **TRACK-02**: Google Search Console verified and connected
-- [ ] **TRACK-03**: Bing Webmaster Tools verified
+- [x] **TRACK-01**: GA4 property configured and connected via GTM
+- [x] **TRACK-02**: Google Search Console verified and connected
+- [x] **TRACK-03**: Bing Webmaster Tools verified
 - [ ] **TRACK-04**: Event tracking: account-creation clicks by page/city
 - [ ] **TRACK-05**: Event tracking: book-a-call clicks by page/city
 - [ ] **TRACK-06**: Event tracking: contact form submissions by page/city
@@ -134,7 +134,7 @@
 
 ### Integrations
 
-- [ ] **INT-01**: Zoho SalesIQ chat widget integrated via Script tag (lazyOnload)
+- [x] **INT-01**: Zoho SalesIQ chat widget integrated via Script tag (lazyOnload)
 - [ ] **INT-02**: Google reCAPTCHA on contact/lead forms
 
 ### AI Discoverability
@@ -269,16 +269,16 @@
 | CMS-04 | Phase 3 | Pending |
 | CMS-05 | Phase 3 | Pending |
 | CMS-06 | Phase 3 | Pending |
-| TRACK-01 | Phase 3 | Pending |
-| TRACK-02 | Phase 3 | Pending |
-| TRACK-03 | Phase 3 | Pending |
+| TRACK-01 | Phase 3 | Complete |
+| TRACK-02 | Phase 3 | Complete |
+| TRACK-03 | Phase 3 | Complete |
 | TRACK-04 | Phase 3 | Pending |
 | TRACK-05 | Phase 3 | Pending |
 | TRACK-06 | Phase 3 | Pending |
 | TRACK-07 | Phase 3 | Pending |
 | TRACK-08 | Phase 3 | Pending |
 | TRACK-09 | Phase 3 | Pending |
-| INT-01 | Phase 3 | Pending |
+| INT-01 | Phase 3 | Complete |
 | INT-02 | Phase 3 | Pending |
 | AI-03 | Phase 3 | Pending |
 | SEO-09 | Phase 4 | Pending |

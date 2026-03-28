@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-10-PLAN.md
-last_updated: "2026-03-28T15:45:54.068Z"
-last_activity: 2026-03-28 — Completed 02-10-PLAN.md (CMS content seeding scripts for Ontario Tier-1 cities and services)
+stopped_at: Completed 03-04-PLAN.md
+last_updated: "2026-03-28T16:03:20.621Z"
+last_activity: 2026-03-28 — Completed 03-05-PLAN.md (reCAPTCHA v3 on contact form + llms.txt AI discoverability)
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 16
-  completed_plans: 16
-  percent: 100
+  total_plans: 24
+  completed_plans: 18
+  percent: 79
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-28)
 
 **Core value:** A search-dominant acquisition system that attracts property owners and tenants organically and scales to new local markets without rebuilding the architecture.
-**Current focus:** Phase 2 — Core Build: Templates and Top Cities
+**Current focus:** Phase 3 — Scale, Integrations, and Content System
 
 ## Current Position
 
-Phase: 2 of 4 (Core Build: Templates and Top Cities)
-Plan: 10 of 10 in current phase
+Phase: 3 of 4 (Scale, Integrations, and Content System)
+Plan: 6 of 8 in current phase
 Status: Executing
-Last activity: 2026-03-28 — Completed 02-10-PLAN.md (CMS content seeding scripts for Ontario Tier-1 cities and services)
+Last activity: 2026-03-28 — Completed 03-05-PLAN.md (reCAPTCHA v3 on contact form + llms.txt AI discoverability)
 
-Progress: [██████████] 100%
+Progress: [████████░░] 79%
 
 ## Performance Metrics
 
@@ -66,6 +66,8 @@ Progress: [██████████] 100%
 | Phase 02 P06 | 10min | 2 tasks | 5 files |
 | Phase 02 P09 | 1min | 1 tasks | 1 files |
 | Phase 02 P10 | 10min | 2 tasks | 2 files |
+| Phase 03 P04 | 2min | 2 tasks | 3 files |
+| Phase 03 P05 | 2min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -121,6 +123,10 @@ Recent decisions affecting current work:
 - [Phase 02]: Region-based content grouping (6 regions) for genuinely unique CityService content differentiation
 - [Phase 02]: Batched Sanity transactions at 30 docs/batch for API efficiency without rate limits
 - [Phase 02]: Deterministic IDs (city-toronto, cityservice-toronto-tenant-placement) for idempotent seeding re-runs
+- [Phase 03]: Removed duplicate Window.dataLayer declaration to avoid conflict with @next/third-parties type definitions
+- [Phase 03]: reCAPTCHA v3 script loaded dynamically via useEffect (not global script tag) to avoid loading on non-form pages
+- [Phase 03]: Graceful degradation when RECAPTCHA env vars not set -- form works without spam protection in local dev
+- [Phase 03]: Server-side zod validation duplicated in API route for defense-in-depth (not imported to keep API route self-contained)
 
 ### Pending Todos
 
@@ -134,6 +140,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T15:45:11.380Z
-Stopped at: Completed 02-10-PLAN.md
+Last session: 2026-03-28T16:02:49.515Z
+Stopped at: Completed 03-04-PLAN.md
 Resume file: None
