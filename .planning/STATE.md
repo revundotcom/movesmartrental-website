@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-01-PLAN.md
-last_updated: "2026-03-28T13:49:37.764Z"
-last_activity: 2026-03-28 — Completed 01-01-PLAN.md (Project scaffold, URL routing, middleware, SEO baseline)
+stopped_at: Completed 01-02-PLAN.md
+last_updated: "2026-03-28T13:49:00.000Z"
+last_activity: 2026-03-28 — Completed 01-02-PLAN.md (9 Sanity CMS schemas, reusable SEO/publishing fieldsets, TypeScript types)
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 6
-  completed_plans: 1
-  percent: 17
+  completed_plans: 2
+  percent: 33
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 ## Current Position
 
 Phase: 1 of 4 (Architecture and CMS Foundation)
-Plan: 1 of 6 in current phase
+Plan: 2 of 6 in current phase
 Status: Executing
-Last activity: 2026-03-28 — Completed 01-01-PLAN.md (Project scaffold, URL routing, middleware, SEO baseline)
+Last activity: 2026-03-28 — Completed 01-02-PLAN.md (9 Sanity CMS schemas, reusable SEO/publishing fieldsets, TypeScript types)
 
-Progress: [██░░░░░░░░] 17%
+Progress: [████░░░░░░] 33%
 
 ## Performance Metrics
 
@@ -51,6 +51,7 @@ Progress: [██░░░░░░░░] 17%
 
 *Updated after each plan completion*
 | Phase 01 P01 | 13min | 2 tasks | 39 files |
+| Phase 01 P02 | 14min | 2 tasks | 14 files |
 
 ## Accumulated Context
 
@@ -65,6 +66,9 @@ Recent decisions affecting current work:
 - [Pre-Phase 1]: CMS required-field enforcement must be Phase 1 — cannot be retrofitted after city pages are published (thin content deindexing risk)
 - [Phase 01]: Used next-sanity@11.6.12 with sanity@4.22.0 for Next.js 15 compatibility (latest v12 requires Next.js 16)
 - [Phase 01]: Organized public routes under (site) route group for shared layout in plan 01-04
+- [Phase 01]: CityService uses fieldset grouping for Studio UX (references, denormalized, localContent, hero, blocks)
+- [Phase 01]: neighbourhoodNames requires min(3) items to enforce content depth on city-service pages
+- [Phase 01]: Portable text link annotations include allowRelative: true for internal navigation
 
 ### Pending Todos
 
@@ -78,6 +82,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T13:49:37.762Z
-Stopped at: Completed 01-01-PLAN.md
+Last session: 2026-03-28T13:49:00.000Z
+Stopped at: Completed 01-02-PLAN.md
 Resume file: None

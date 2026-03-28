@@ -8,7 +8,7 @@
 ### Foundation & Architecture
 
 - [x] **FOUND-01**: Next.js 15 App Router project scaffolded with TypeScript, Tailwind v4, shadcn/ui
-- [ ] **FOUND-02**: Sanity Studio v3 (Free Tier) configured with all 9 content types and structured field schemas
+- [x] **FOUND-02**: Sanity Studio v3 (Free Tier) configured with all 9 content types and structured field schemas
 - [x] **FOUND-03**: Vercel deployment with automatic SSL, edge CDN, ISR support
 - [x] **FOUND-04**: GitHub repo in client's REVUN account with full source code
 - [x] **FOUND-05**: URL architecture implemented: /ca/{province}/{city}/{service}/ and /us/{state}/{city}/{service}/
@@ -90,9 +90,9 @@
 
 ### CMS & Content Engine
 
-- [ ] **CMS-01**: 9 structured content types in Sanity: Province/State, City, Service, ServiceCity, Blog/Guide, Comparison, CaseStudy, PropertyCategory, PropertyDetail
-- [ ] **CMS-02**: 15-20+ fields per content type including SEO title, meta description, OG fields, slug, keywords, hero, intro, pain-point, benefits, how-it-works, trust, FAQ, internal links, schema, images, CTA
-- [ ] **CMS-03**: Publishing controls: canonical, index/noindex, sitemap inclusion, redirect, author, dates
+- [x] **CMS-01**: 9 structured content types in Sanity: Province/State, City, Service, ServiceCity, Blog/Guide, Comparison, CaseStudy, PropertyCategory, PropertyDetail
+- [x] **CMS-02**: 15-20+ fields per content type including SEO title, meta description, OG fields, slug, keywords, hero, intro, pain-point, benefits, how-it-works, trust, FAQ, internal links, schema, images, CTA
+- [x] **CMS-03**: Publishing controls: canonical, index/noindex, sitemap inclusion, redirect, author, dates
 - [ ] **CMS-04**: Non-developer daily publishing workflow (content team can publish without dev tickets)
 - [ ] **CMS-05**: Prompt framework for first-draft content generation
 - [ ] **CMS-06**: Weak-page refresh workflow using impressions, CTR, rank position data
@@ -105,7 +105,7 @@
 - [ ] **SEO-04**: Canonical tags on all pages (self-referencing)
 - [ ] **SEO-05**: Open Graph fields (og:title, og:description, og:image) on every page
 - [ ] **SEO-06**: Meta titles 50-60 chars, meta descriptions 140-160 chars, one H1 per page
-- [ ] **SEO-07**: Image alt text describing actual image with location/service when relevant
+- [x] **SEO-07**: Image alt text describing actual image with location/service when relevant
 - [ ] **SEO-08**: 404 handling with custom error page, redirect logic
 - [ ] **SEO-09**: Core Web Vitals: LCP <2.5s, INP <200ms, CLS <0.1
 - [ ] **SEO-10**: Image compression, lazy loading (not for LCP image), WebP/AVIF via next/image
@@ -185,7 +185,7 @@
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | FOUND-01 | Phase 1 | Complete |
-| FOUND-02 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Complete |
 | FOUND-03 | Phase 1 | Complete |
 | FOUND-04 | Phase 1 | Complete |
 | FOUND-05 | Phase 1 | Complete |
@@ -205,14 +205,14 @@
 | BLOCK-08 | Phase 1 | Pending |
 | BLOCK-09 | Phase 1 | Pending |
 | BLOCK-10 | Phase 1 | Pending |
-| CMS-01 | Phase 1 | Pending |
-| CMS-02 | Phase 1 | Pending |
-| CMS-03 | Phase 1 | Pending |
+| CMS-01 | Phase 1 | Complete |
+| CMS-02 | Phase 1 | Complete |
+| CMS-03 | Phase 1 | Complete |
 | SEO-01 | Phase 1 | Complete |
 | SEO-03 | Phase 1 | Complete |
 | SEO-04 | Phase 1 | Pending |
 | SEO-05 | Phase 1 | Pending |
-| SEO-07 | Phase 1 | Pending |
+| SEO-07 | Phase 1 | Complete |
 | TMPL-01 | Phase 2 | Pending |
 | TMPL-02 | Phase 2 | Pending |
 | TMPL-03 | Phase 2 | Pending |
