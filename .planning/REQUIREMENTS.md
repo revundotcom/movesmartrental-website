@@ -93,9 +93,9 @@
 - [x] **CMS-01**: 9 structured content types in Sanity: Province/State, City, Service, ServiceCity, Blog/Guide, Comparison, CaseStudy, PropertyCategory, PropertyDetail
 - [x] **CMS-02**: 15-20+ fields per content type including SEO title, meta description, OG fields, slug, keywords, hero, intro, pain-point, benefits, how-it-works, trust, FAQ, internal links, schema, images, CTA
 - [x] **CMS-03**: Publishing controls: canonical, index/noindex, sitemap inclusion, redirect, author, dates
-- [ ] **CMS-04**: Non-developer daily publishing workflow (content team can publish without dev tickets)
-- [ ] **CMS-05**: Prompt framework for first-draft content generation
-- [ ] **CMS-06**: Weak-page refresh workflow using impressions, CTR, rank position data
+- [x] **CMS-04**: Non-developer daily publishing workflow (content team can publish without dev tickets)
+- [x] **CMS-05**: Prompt framework for first-draft content generation
+- [x] **CMS-06**: Weak-page refresh workflow using impressions, CTR, rank position data
 
 ### Technical SEO
 
@@ -266,9 +266,9 @@
 | GEO-04 | Phase 3 | Pending |
 | GEO-07 | Phase 3 | Complete |
 | GEO-08 | Phase 3 | Pending |
-| CMS-04 | Phase 3 | Pending |
-| CMS-05 | Phase 3 | Pending |
-| CMS-06 | Phase 3 | Pending |
+| CMS-04 | Phase 3 | Complete |
+| CMS-05 | Phase 3 | Complete |
+| CMS-06 | Phase 3 | Complete |
 | TRACK-01 | Phase 3 | Complete |
 | TRACK-02 | Phase 3 | Complete |
 | TRACK-03 | Phase 3 | Complete |
