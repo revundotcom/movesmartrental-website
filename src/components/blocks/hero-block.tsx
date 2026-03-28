@@ -67,7 +67,7 @@ export function HeroBlock({
 
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-4xl px-4 py-20 text-center text-white md:py-28">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+        <h1 className="font-heading text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
           {leadingWords}{' '}
           <span className="text-[#10B981]">{lastWord}</span>
         </h1>
