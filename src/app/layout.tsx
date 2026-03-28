@@ -59,7 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ScrollDepthTracker />
         <LinkTracker />
         <Header />
-        <main>{children}</main>
+        {children}
         <Footer />
         {process.env.NEXT_PUBLIC_SALESIQ_WIDGET_CODE && (
           <Script

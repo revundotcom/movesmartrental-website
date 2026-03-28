@@ -19,6 +19,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/tenants/',
   },
+  openGraph: {
+    title: 'Find Your Next Rental Home | MoveSmart Rentals',
+    description:
+      'Browse verified rental listings across Ontario. Apartments, condos, houses, and townhouses available in 20+ cities.',
+    images: ['/og-default.png'],
+  },
 }
 
 const PROPERTY_TYPES = [

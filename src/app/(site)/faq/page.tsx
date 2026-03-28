@@ -13,6 +13,15 @@ export const metadata: Metadata = {
   title: 'FAQ',
   description:
     'Frequently asked questions about MoveSmart Rentals property management services for owners, tenants, and franchise partners.',
+  alternates: {
+    canonical: '/faq/',
+  },
+  openGraph: {
+    title: 'FAQ | MoveSmart Rentals',
+    description:
+      'Frequently asked questions about MoveSmart Rentals property management services for owners, tenants, and franchise partners.',
+    images: ['/og-default.png'],
+  },
 }
 
 interface AggregatedFaqItem {
@@ -63,7 +72,7 @@ const FALLBACK_FAQS = {
     {
       question: 'How do I contact MoveSmart Rentals?',
       answer:
-        'You can reach us by phone at (416) 555-0199, by email at info@movesmartrentals.com, or through the contact form on our website. Our team responds within 24 hours.',
+        'You can reach us by phone at +1 (437) 295-7688, by email at info@movesmartrentals.com, or through the contact form on our website. Our team responds within 24 hours.',
     },
   ],
 }

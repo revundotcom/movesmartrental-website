@@ -32,7 +32,7 @@ export function generatePageMetadata({
       description,
       images: seo?.ogImage
         ? [{ url: seo.ogImage.asset._ref }]
-        : [],
+        : ['/og-default.png'],
     },
   }
 }
