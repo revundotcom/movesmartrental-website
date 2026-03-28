@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Menu, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Logo } from '@/components/brand/logo'
@@ -92,7 +93,7 @@ function NavSection({
           open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
         )}
       >
-        <div className="overflow-hidden">
+        <div className="overflow-hidden min-h-0">
           <ul className="space-y-0.5 px-3 pb-3">
             {items.map((item) => (
               <li key={item.href}>
@@ -118,6 +119,18 @@ function NavSection({
 
 export function MobileNav() {
   const [open, setOpen] = useState(false)
+  const navRef = useRef<HTMLElement>(null)
+  const pathname = usePathname()
+
+  useEffect(() => {
+    if (open && navRef.current) {
+      navRef.current.scrollTop = 0
+    }
+  }, [open])
+
+  useEffect(() => {
+    setOpen(false)
+  }, [pathname])
 
   const handleNavigate = () => setOpen(false)
 
@@ -129,7 +142,7 @@ export function MobileNav() {
             variant="ghost"
             size="icon"
             aria-label="Open navigation menu"
-            className="text-white"
+            className="text-white hover:bg-white/10 hover:text-white"
           >
             <Menu className="size-5" />
           </Button>
@@ -137,13 +150,13 @@ export function MobileNav() {
       />
       <SheetContent side="right" className="flex w-[85vw] max-w-80 flex-col p-0">
         {/* Header with logo */}
-        <SheetHeader className="border-b border-border/60 px-5 py-4">
+        <SheetHeader className="border-b border-border/60 px-5 py-4 pr-12">
           <SheetTitle className="sr-only">Navigation</SheetTitle>
           <Logo />
         </SheetHeader>
 
         {/* Scrollable nav sections */}
-        <nav className="flex-1 overflow-y-auto py-2" aria-label="Mobile navigation">
+        <nav ref={navRef} className="flex-1 overflow-y-auto py-2" aria-label="Mobile navigation">
           {MOBILE_NAV_SECTIONS.map((section) => (
             <NavSection
               key={section.label}
@@ -160,7 +173,7 @@ export function MobileNav() {
           <Link
             href="/contact/"
             onClick={handleNavigate}
-            className="flex w-full items-center justify-center rounded-lg border border-[#0B1D3A]/20 px-4 py-2.5 text-sm font-medium text-[#0B1D3A] transition-colors hover:border-[#0B1D3A]/40 hover:bg-[#0B1D3A]/5"
+            className="flex w-full items-center justify-center rounded-lg border border-[#0B1D3A]/20 px-4 py-3 text-sm font-medium text-[#0B1D3A] transition-colors hover:border-[#0B1D3A]/40 hover:bg-[#0B1D3A]/5"
           >
             Book a Call
           </Link>

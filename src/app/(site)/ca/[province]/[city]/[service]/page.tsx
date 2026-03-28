@@ -281,14 +281,16 @@ function CityServiceView({
       name: `MoveSmart Rentals - ${cityTitle}`,
       description: `Professional ${serviceTitle.toLowerCase()} services in ${cityTitle}, ${provinceName}.`,
       url: pageUrl,
+      phone: '+14372957688',
       address: {
-        streetAddress: '',
+        streetAddress: cityTitle,
         city: cityTitle,
         province: provinceAbbr,
         postalCode: '',
         country: 'CA',
       },
       areaServed: cityTitle,
+      openingHours: ['Mo-Fr 09:00-18:00'],
     })
   )
 

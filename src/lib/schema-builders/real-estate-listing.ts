@@ -36,7 +36,7 @@ export function buildRealEstateListingSchema(data: {
       ? {
           '@type': 'QuantitativeValue',
           value: data.sqft,
-          unitCode: 'FTK',
+          unitCode: 'FT2',
         }
       : undefined,
     image: data.images || [],
