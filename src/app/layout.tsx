@@ -6,6 +6,7 @@ import './globals.css'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { ScrollDepthTracker } from '@/components/tracking/gtm-events'
+import { LinkTracker } from '@/components/tracking/link-tracker'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
         )}
         <ScrollDepthTracker />
+        <LinkTracker />
         <Header />
         <main>{children}</main>
         <Footer />
