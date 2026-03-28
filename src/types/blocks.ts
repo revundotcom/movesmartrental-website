@@ -91,6 +91,7 @@ export interface CTABannerBlockProps {
 
 export interface FAQBlockProps {
   questions: FaqItem[]
+  title?: string
   schemaEnabled?: boolean // inject FAQPage JSON-LD
 }
 
