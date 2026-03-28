@@ -80,7 +80,7 @@ Plans:
 - [ ] 03-02-PLAN.md — US state seeding (10 states, 37 cities) + US page template enhancement
 - [ ] 03-03-PLAN.md — City-priority matrix, slug map, content-status tracker
 - [ ] 03-04-PLAN.md — GTM + GA4 + GSC/Bing verification + SalesIQ integration
-- [ ] 03-05-PLAN.md — reCAPTCHA v3 on contact form + llms.txt AI discoverability
+- [x] 03-05-PLAN.md — reCAPTCHA v3 on contact form + llms.txt AI discoverability
 - [ ] 03-06-PLAN.md — Event tracking layer (9 GTM event types wired to UI)
 - [ ] 03-07-PLAN.md — Content system: publishing SOP, prompt framework, weak-page refresh
 - [ ] 03-08-PLAN.md — Reporting dashboard (Looker Studio guide) + analytics API
@@ -106,5 +106,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Architecture and CMS Foundation | 6/6 | Complete | 2026-03-28 |
 | 2. Core Build — Templates and Top Cities | 8/10 | In Progress|  |
-| 3. Scale, Integrations, and Content System | 0/8 | Not started | - |
+| 3. Scale, Integrations, and Content System | 2/8 | In Progress | - |
 | 4. Audit, Hardening, and Handoff | 0/TBD | Not started | - |

@@ -135,13 +135,13 @@
 ### Integrations
 
 - [x] **INT-01**: Zoho SalesIQ chat widget integrated via Script tag (lazyOnload)
-- [ ] **INT-02**: Google reCAPTCHA on contact/lead forms
+- [x] **INT-02**: Google reCAPTCHA on contact/lead forms
 
 ### AI Discoverability
 
 - [x] **AI-01**: Content structured for AI citation: direct answers in first 40-60 words, data points every 150-200 words
 - [x] **AI-02**: Entity clarity: consistent "MoveSmart Rentals" naming, Organization schema
-- [ ] **AI-03**: llms.txt file for AI crawler guidance
+- [x] **AI-03**: llms.txt file for AI crawler guidance
 
 ### Handoff & Documentation
 
@@ -279,8 +279,8 @@
 | TRACK-08 | Phase 3 | Pending |
 | TRACK-09 | Phase 3 | Pending |
 | INT-01 | Phase 3 | Complete |
-| INT-02 | Phase 3 | Pending |
-| AI-03 | Phase 3 | Pending |
+| INT-02 | Phase 3 | Complete |
+| AI-03 | Phase 3 | Complete |
 | SEO-09 | Phase 4 | Pending |
 | SEO-10 | Phase 4 | Pending |
 | HAND-01 | Phase 4 | Pending |
