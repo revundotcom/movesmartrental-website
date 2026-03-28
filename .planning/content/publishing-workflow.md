@@ -8,6 +8,20 @@ A step-by-step standard operating procedure (SOP) for content editors to publish
 
 ---
 
+## Quick Start
+
+Already familiar with Sanity Studio? Here is the 5-step summary for publishing a new city:
+
+1. **Create the City document** -- Fill in title, slug, province reference, and tier. Add market data (population, median rent, vacancy rate) and at least 3 neighbourhoods.
+2. **Create 8 CityService documents** -- One for each service (tenant-placement through pricing). Fill in the Required Local Content fieldset: `localMedianRent`, `localVacancyRate`, `neighbourhoodNames` (min 3), `localRegulatory`, `localBody` (200+ words), and `heroHeadline`.
+3. **Set SEO fields on every document** -- `metaTitle` (max 60 chars), `metaDescription` (max 160 chars). Include the city name and service name.
+4. **Set Publishing Controls** -- Ensure "Include in Sitemap" is ON, "Noindex" is OFF, and "Published At" is set to today.
+5. **Click "Publish" and verify** -- Wait 60 seconds for ISR revalidation, then visit the live URL to confirm the page renders correctly.
+
+For blog posts and guides, the process is simpler: create a Blog / Guide document, fill in title, slug, body, SEO fields, and publish. See Workflow B below.
+
+---
+
 ## Prerequisites
 
 Before publishing any content, ensure you have:
@@ -340,6 +354,73 @@ All document types share these publishing controls:
 
 ---
 
+## Common Mistakes
+
+The five most frequent errors editors make, and how to fix them.
+
+### 1. Copy-pasting content between cities and only changing the city name
+
+**Problem:** Google detects near-duplicate content across city pages. Pages with duplicate content can be flagged as "thin" and may be excluded from the index, wasting all the effort spent creating them.
+
+**Fix:** Write unique `localBody` content for each CityService document. Reference specific neighbourhoods, local regulations, and market data that differ between cities. Use the [Prompt Framework](./prompt-framework.md) to generate unique first drafts for each city+service combination.
+
+### 2. Forgetting to fill in the SEO fields (metaTitle and metaDescription)
+
+**Problem:** Without a `metaTitle`, the page title in Google search results defaults to the raw HTML title tag, which may not be optimized for clicks. Without a `metaDescription`, Google auto-generates a snippet that is often irrelevant or poorly formatted.
+
+**Fix:** Always expand the SEO section before publishing. Keep `metaTitle` to 50-60 characters and include the city name and service. Keep `metaDescription` to 140-160 characters with a clear value proposition. Both fields show a character counter in Sanity Studio.
+
+### 3. Publishing a CityService page without the minimum 3 neighbourhoods
+
+**Problem:** The `neighbourhoodNames` field requires a minimum of 3 items. If you only add 1-2 and try to publish, Sanity will block the publish with a validation error. Some editors skip this field entirely, which also blocks publishing.
+
+**Fix:** Research at least 3 prominent neighbourhoods in the target city before creating the CityService document. Check local real estate sites, Google Maps, or the city's official website for neighbourhood names. Add each one as a separate item in the array field.
+
+### 4. Editing a draft but not clicking "Publish"
+
+**Problem:** Sanity Studio has two states: draft and published. Editing a document creates or updates a draft, but the live website only shows the published version. If you make changes and navigate away without clicking "Publish", your changes exist only as a draft and are not visible on the website.
+
+**Fix:** After making any edits, always click the "Publish" button in the bottom-right corner of the editor. You can tell a document has unpublished changes when Sanity shows a yellow "Edited" badge next to the document title.
+
+### 5. Using H1 headings inside the rich text body
+
+**Problem:** Each page already has an H1 heading generated from the document title (or `heroHeadline` for CityService pages). Adding another H1 inside the body content creates multiple H1 tags on the page, which is an SEO anti-pattern that confuses search engines about the primary topic.
+
+**Fix:** Use only H2, H3, and H4 headings in the Portable Text editor body. These are available in the style dropdown. The H1 is always generated automatically from the title field.
+
+---
+
+## Glossary
+
+Terms used throughout this document and in Sanity Studio, explained for non-technical readers.
+
+| Term | Definition |
+|---|---|
+| **CMS** | Content Management System. The software (Sanity Studio) where you create and edit website content without writing code. |
+| **Sanity Studio** | The visual editing interface for the MoveSmart Rentals CMS, accessed at `/studio` on the live site. |
+| **Document** | A single content entry in Sanity (e.g., one City, one Blog Post, one CityService page). |
+| **Schema** | The blueprint that defines what fields a document type has, what types of data they accept, and which ones are required. |
+| **Slug** | The URL-friendly version of a title, used in the page address. Generated automatically from the title. Example: "Richmond Hill" becomes `richmond-hill`. |
+| **ISR** | Incremental Static Regeneration. The system that updates pages on the live website after you publish changes in the CMS. Pages typically refresh within 60 seconds. |
+| **Revalidation** | The process of ISR refreshing a page with new content after a publish event. Happens automatically -- you do not need to do anything. |
+| **GROQ** | Graph-Relational Object Queries. The query language Sanity uses internally to fetch content. You will not write GROQ queries -- this is handled by the website code. |
+| **Portable Text** | Sanity's rich text format used for body content fields. Supports headings, lists, bold, italic, links, and inline images. |
+| **Canonical URL** | The "official" URL for a page. Tells search engines which version of a page to index when duplicates exist. By default, each page's canonical URL is itself. |
+| **Noindex** | A directive that tells search engines not to include a page in their search results. Use this only for internal or test pages you do not want the public to find. |
+| **Sitemap** | An XML file listing all public pages on the site, submitted to Google to help with discovery and indexing. |
+| **Meta Title** | The page title shown in Google search results and in the browser tab. Different from the visible H1 on the page. |
+| **Meta Description** | The short summary shown below the page title in Google search results. A good description increases click-through rate. |
+| **Alt Text** | A text description of an image, read by screen readers for accessibility and used by search engines to understand image content. |
+| **Hotspot** | A crop setting on images in Sanity that lets you set the focal point. The site automatically crops around the hotspot for different screen sizes. |
+| **OG Image** | Open Graph image. The image that appears when someone shares a page link on social media (Facebook, LinkedIn, Twitter/X). |
+| **Reference** | A link from one document to another in Sanity (e.g., a CityService referencing a City document). Shown as dropdown selectors in the editor. |
+| **Fieldset** | A visual grouping of related fields in Sanity Studio. Some fieldsets are collapsible to reduce clutter in the editor. |
+| **Tier** | A classification for cities: Tier 1 = core markets (pre-rendered for speed), Tier 2 = expansion markets (rendered on demand), Tier 3 = future markets (not yet active). |
+| **Thin Content** | Pages with too little unique, valuable content. Google may penalize thin content pages by lowering their search rankings. The 3-neighbourhood minimum and required `localBody` field exist to prevent this. |
+| **CDN** | Content Delivery Network. A global network of servers that delivers images and files quickly by serving them from the server closest to the visitor. All Sanity images are stored on a CDN. |
+
+---
+
 *Last updated: 2026-03-28*
-*Part of: Content Production System (Plan 03-07)*
-*See also: [Prompt Framework](./prompt-framework.md) | [Weak Page Refresh](./weak-page-refresh.md)*
+*Part of: Content Production System (Plan 03-07) | Polished for client handoff (Phase 04, Plan 03)*
+*See also: [Prompt Framework](./prompt-framework.md) | [Weak Page Refresh](./weak-page-refresh.md) | [CMS Content Model Reference](../handoff/cms-content-model-reference.md)*
