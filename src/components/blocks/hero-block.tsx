@@ -31,7 +31,7 @@ export function HeroBlock({
   const leadingWords = words.join(' ')
 
   return (
-    <section className="relative flex min-h-[90vh] items-center overflow-hidden md:min-h-screen">
+    <section className="relative flex min-h-[90vh] items-center overflow-hidden bg-[#0B1D3A] md:min-h-screen">
       {/* Background */}
       {backgroundImageUrl ? (
         <>
@@ -50,19 +50,86 @@ export function HeroBlock({
         </>
       ) : (
         <>
+          {/* Rich multi-stop gradient: warm deep blue → forest green tint at bottom */}
           <div
             className="absolute inset-0"
             style={{
-              background: 'radial-gradient(ellipse at 20% 50%, #0F2847 0%, #0B1D3A 50%, #071228 100%)',
+              background: 'linear-gradient(160deg, #071830 0%, #0B1D3A 35%, #0a2535 60%, #071f2e 80%, #061a1a 100%)',
             }}
             aria-hidden="true"
           />
-          {/* Noise texture */}
+          {/* Subtle warm horizon glow at bottom center */}
           <div
-            className="absolute inset-0 opacity-[0.025]"
+            className="absolute bottom-0 left-1/2 h-[40%] w-[80%] -translate-x-1/2"
+            style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(16,185,129,0.12) 0%, rgba(10,40,30,0.08) 40%, transparent 70%)' }}
+            aria-hidden="true"
+          />
+          {/* City skyline silhouette — bottom of hero */}
+          <svg
+            className="absolute bottom-0 left-0 w-full opacity-[0.07]"
+            viewBox="0 0 1440 220"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="xMidYMax slice"
+            aria-hidden="true"
+          >
+            {/* Far background buildings */}
+            <rect x="0" y="120" width="60" height="100" fill="white" />
+            <rect x="10" y="95" width="8" height="26" fill="white" />
+            <rect x="25" y="100" width="8" height="20" fill="white" />
+            <rect x="65" y="110" width="45" height="110" fill="white" />
+            <rect x="75" y="85" width="10" height="26" fill="white" />
+            <rect x="115" y="130" width="30" height="90" fill="white" />
+            <rect x="150" y="105" width="55" height="115" fill="white" />
+            <rect x="165" y="80" width="10" height="26" fill="white" />
+            <rect x="210" y="115" width="40" height="105" fill="white" />
+            <rect x="255" y="95" width="70" height="125" fill="white" />
+            <rect x="270" y="70" width="12" height="26" fill="white" />
+            <rect x="285" y="65" width="8" height="32" fill="white" />
+            <rect x="330" y="120" width="35" height="100" fill="white" />
+            <rect x="370" y="100" width="50" height="120" fill="white" />
+            <rect x="375" y="75" width="10" height="26" fill="white" />
+            <rect x="425" y="90" width="65" height="130" fill="white" />
+            <rect x="440" y="60" width="12" height="32" fill="white" />
+            <rect x="455" y="55" width="8" height="37" fill="white" />
+            <rect x="495" y="115" width="40" height="105" fill="white" />
+            <rect x="540" y="105" width="55" height="115" fill="white" />
+            <rect x="555" y="80" width="10" height="26" fill="white" />
+            {/* CN Tower silhouette center */}
+            <rect x="690" y="10" width="6" height="210" fill="white" />
+            <ellipse cx="693" cy="75" rx="18" ry="8" fill="white" />
+            <rect x="685" y="60" width="16" height="90" fill="white" />
+            <rect x="680" y="100" width="26" height="6" fill="white" />
+            <rect x="670" y="140" width="46" height="80" fill="white" />
+            {/* Right side buildings */}
+            <rect x="720" y="100" width="55" height="120" fill="white" />
+            <rect x="730" y="75" width="10" height="26" fill="white" />
+            <rect x="780" y="115" width="40" height="105" fill="white" />
+            <rect x="825" y="95" width="65" height="125" fill="white" />
+            <rect x="840" y="65" width="12" height="32" fill="white" />
+            <rect x="895" y="110" width="45" height="110" fill="white" />
+            <rect x="945" y="100" width="55" height="120" fill="white" />
+            <rect x="960" y="75" width="8" height="26" fill="white" />
+            <rect x="1005" y="120" width="35" height="100" fill="white" />
+            <rect x="1045" y="105" width="50" height="115" fill="white" />
+            <rect x="1100" y="115" width="40" height="105" fill="white" />
+            <rect x="1145" y="95" width="60" height="125" fill="white" />
+            <rect x="1160" y="70" width="10" height="26" fill="white" />
+            <rect x="1210" y="110" width="45" height="110" fill="white" />
+            <rect x="1260" y="100" width="50" height="120" fill="white" />
+            <rect x="1315" y="120" width="35" height="100" fill="white" />
+            <rect x="1355" y="105" width="85" height="115" fill="white" />
+            <rect x="1365" y="80" width="10" height="26" fill="white" />
+            {/* Foreground ground */}
+            <rect x="0" y="200" width="1440" height="20" fill="white" />
+          </svg>
+          {/* Subtle film grain for texture depth */}
+          <div
+            className="absolute inset-0 opacity-[0.035] mix-blend-overlay"
             aria-hidden="true"
             style={{
-              backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")',
+              backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.75\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")',
+              backgroundSize: '200px 200px',
             }}
           />
         </>
@@ -109,26 +176,56 @@ export function HeroBlock({
           {/* Left: text content */}
           <div>
             {/* Eyebrow badge */}
-            <div className="animate-fade-up mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-1.5 backdrop-blur-sm">
+            <motion.div
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-1.5 backdrop-blur-sm"
+              initial={{ opacity: 0, y: 32 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            >
               <span className="animate-pulse-dot inline-block size-1.5 rounded-full bg-[#10B981]" />
               <span className="text-xs font-semibold uppercase tracking-widest text-white/75">
                 Ontario&apos;s #1 Leasing Partner
               </span>
-            </div>
+            </motion.div>
 
-            <h1 className="animate-fade-up delay-100 font-display text-4xl font-normal leading-[1.1] tracking-tight text-white sm:text-5xl md:text-6xl">
+            <motion.h1
+              className="font-display text-4xl font-normal leading-[1.1] tracking-tight text-white sm:text-5xl md:text-6xl"
+              initial={{ opacity: 0, y: 32 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            >
               {leadingWords}{' '}
-              <span className="font-display italic text-brand-emerald">{lastWord}</span>
-            </h1>
+              <span className="relative inline-block font-display italic text-brand-emerald">
+                {lastWord}
+                <motion.span
+                  className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-brand-emerald"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ delay: 0.8, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ originX: 0 }}
+                  aria-hidden="true"
+                />
+              </span>
+            </motion.h1>
 
             {subheadline && (
-              <p className="animate-fade-up delay-200 mt-6 max-w-xl text-lg leading-relaxed text-white/65 md:text-xl">
+              <motion.p
+                className="mt-6 max-w-xl text-lg leading-relaxed text-white/65 md:text-xl"
+                initial={{ opacity: 0, y: 32 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              >
                 {subheadline}
-              </p>
+              </motion.p>
             )}
 
             {(cta1 || cta2) && (
-              <div className="animate-fade-up delay-300 mt-10 flex flex-col gap-4 sm:flex-row">
+              <motion.div
+                className="mt-10 flex flex-col gap-4 sm:flex-row"
+                initial={{ opacity: 0, y: 32 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              >
                 {cta1 && (
                   <CTATracker eventType={inferCTAType(cta1.href)} city={city} service={service}>
                     <Button
@@ -159,11 +256,16 @@ export function HeroBlock({
                     </Button>
                   </CTATracker>
                 )}
-              </div>
+              </motion.div>
             )}
 
             {/* Trust strip */}
-            <div className="animate-fade-up delay-400 mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <motion.div
+              className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4"
+              initial={{ opacity: 0, y: 32 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            >
               {[
                 { value: '500+', label: 'Properties' },
                 { value: '20+', label: 'Ontario Cities' },
@@ -178,11 +280,16 @@ export function HeroBlock({
                   <p className="mt-0.5 text-[10px] leading-tight text-white/50">{stat.label}</p>
                 </div>
               ))}
-            </div>
+            </motion.div>
           </div>
 
           {/* Right: illustration */}
-          <div className="animate-fade-up delay-200 hidden lg:flex lg:items-center lg:justify-center">
+          <motion.div
+            className="hidden lg:flex lg:items-center lg:justify-center"
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          >
             <div className="relative w-full max-w-[520px]">
               {/* Glow behind illustration */}
               <div
@@ -191,8 +298,23 @@ export function HeroBlock({
                 aria-hidden="true"
               />
               <HeroIllustration className="relative w-full drop-shadow-2xl" />
+              {/* Floating badge chip — animates with perpetual float */}
+              <motion.div
+                className="absolute -right-4 top-8 flex items-center gap-2 rounded-2xl border border-white/10 bg-white/8 px-4 py-2.5 shadow-xl backdrop-blur-md"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                aria-hidden="true"
+              >
+                <span className="flex size-6 items-center justify-center rounded-full bg-brand-emerald/20 text-xs">
+                  💰
+                </span>
+                <div>
+                  <p className="text-[11px] font-bold leading-none text-white">Rent Received</p>
+                  <p className="mt-0.5 text-[9px] leading-none text-white/50">On time, every month</p>
+                </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 

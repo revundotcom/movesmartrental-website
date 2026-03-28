@@ -105,13 +105,13 @@ export function Header() {
       className={cn(
         'sticky top-0 z-50 w-full transition-all duration-300',
         scrolled
-          ? 'border-b border-border/40 bg-brand-navy shadow-[0_1px_12px_rgba(11,29,58,0.15)] backdrop-blur-md'
+          ? 'border-b border-border/40 bg-brand-navy/95 shadow-[0_1px_12px_rgba(11,29,58,0.3)] backdrop-blur-md'
           : 'border-b border-transparent bg-transparent'
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-[72px] lg:px-8">
-        {/* Logo */}
-        <Logo />
+        {/* Logo — white when transparent, navy when solid */}
+        <Logo variant="white" />
 
         {/* Desktop navigation — center */}
         <NavigationMenu className="hidden lg:flex" align="center">
