@@ -35,6 +35,11 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_CA',
     siteName: 'MoveSmart Rentals',
+    images: ['/og-default.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og-default.png'],
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GSC_VERIFICATION || '',

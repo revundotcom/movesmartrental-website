@@ -1,7 +1,8 @@
 'use client'
 
+import Link from 'next/link'
+
 export default function GlobalError({
-  error,
   reset,
 }: {
   error: Error & { digest?: string }
@@ -50,7 +51,7 @@ export default function GlobalError({
             >
               Try again
             </button>
-            <a
+            <Link
               href="/"
               style={{
                 display: 'inline-block',
@@ -64,7 +65,7 @@ export default function GlobalError({
               }}
             >
               Go to homepage
-            </a>
+            </Link>
           </div>
         </div>
       </body>

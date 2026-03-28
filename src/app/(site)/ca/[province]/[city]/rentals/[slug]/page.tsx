@@ -297,13 +297,13 @@ export default async function PropertyDetailPage({
               <span
                 className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium ${
                   listing.available
-                    ? 'bg-green-100 text-green-700'
-                    : 'bg-gray-100 text-gray-500'
+                    ? 'bg-brand-emerald/10 text-green-700'
+                    : 'bg-muted text-muted-foreground'
                 }`}
               >
                 <span
                   className={`size-2 rounded-full ${
-                    listing.available ? 'bg-green-500' : 'bg-gray-400'
+                    listing.available ? 'bg-brand-emerald' : 'bg-muted-foreground'
                   }`}
                 />
                 {listing.available

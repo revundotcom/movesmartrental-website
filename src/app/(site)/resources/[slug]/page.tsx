@@ -224,7 +224,7 @@ function ComparisonTable({ competitor }: { competitor: CompetitorComparison }) {
       </h3>
       <table className="w-full border-collapse text-left text-sm">
         <thead>
-          <tr className="border-b-2 border-gray-200">
+          <tr className="border-b-2 border-border">
             <th className="px-4 py-3 font-semibold">Feature</th>
             <th className="px-4 py-3 font-semibold text-primary">
               MoveSmart Rentals
@@ -236,7 +236,7 @@ function ComparisonTable({ competitor }: { competitor: CompetitorComparison }) {
           {competitor.features?.map((row, i) => (
             <tr
               key={row.feature}
-              className={i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}
+              className={i % 2 === 0 ? 'bg-muted/50' : 'bg-white'}
             >
               <td className="border-b px-4 py-3 font-medium">{row.feature}</td>
               <td className="border-b px-4 py-3">{row.us}</td>

@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect } from 'react'
 
 export default function SiteError({
@@ -46,12 +47,12 @@ export default function SiteError({
           >
             Try again
           </button>
-          <a
+          <Link
             href="/"
             className="inline-flex items-center justify-center rounded-lg border border-[#0A2647] px-6 py-3 text-sm font-semibold text-[#0A2647] transition-colors hover:bg-[#0A2647] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#0A2647] focus:ring-offset-2"
           >
             Go to homepage
-          </a>
+          </Link>
         </div>
       </div>
     </div>
