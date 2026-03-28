@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-02-PLAN.md
-last_updated: "2026-03-28T15:15:35Z"
-last_activity: 2026-03-28 — Completed 02-02-PLAN.md (3 new route skeletons + enhanced 404 with navigation cards)
+stopped_at: Completed 02-03-PLAN.md
+last_updated: "2026-03-28T15:24:00Z"
+last_activity: 2026-03-28 — Completed 02-03-PLAN.md (homepage with 9 contract sections, Organization JSON-LD, dual CTAs)
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 16
-  completed_plans: 8
-  percent: 50
+  completed_plans: 9
+  percent: 56
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 ## Current Position
 
 Phase: 2 of 4 (Core Build: Templates and Top Cities)
-Plan: 2 of 10 in current phase
+Plan: 3 of 10 in current phase
 Status: Executing
-Last activity: 2026-03-28 — Completed 02-02-PLAN.md (3 new route skeletons + enhanced 404 with navigation cards)
+Last activity: 2026-03-28 — Completed 02-03-PLAN.md (homepage with 9 contract sections, Organization JSON-LD, dual CTAs)
 
-Progress: [█████░░░░░] 50%
+Progress: [██████░░░░] 56%
 
 ## Performance Metrics
 
@@ -58,6 +58,7 @@ Progress: [█████░░░░░] 50%
 | Phase 01 P06 | 4min | 2 tasks | 6 files |
 | Phase 02 P01 | 2min | 2 tasks | 9 files |
 | Phase 02 P02 | 4min | 2 tasks | 4 files |
+| Phase 02 P03 | 2min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -92,6 +93,8 @@ Recent decisions affecting current work:
 - [Phase 02]: Blog/guide list query uses GROQ select() for optional category filtering in a single query
 - [Phase 02]: Aggregated FAQ query uses GROQ spread operator to flatten FAQ items from services and cityServices
 - [Phase 02]: PortableTextBody is a Server Component (no use client) since @portabletext/react supports RSC
+- [Phase 02]: Homepage portal and franchising sections are custom inline JSX (not block components) since they are homepage-specific
+- [Phase 02]: Homepage FAQ uses 6 hardcoded general questions with schemaEnabled for FAQ JSON-LD
 
 ### Pending Todos
 
@@ -105,6 +108,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T15:15:35Z
-Stopped at: Completed 02-02-PLAN.md
+Last session: 2026-03-28T15:24:00Z
+Stopped at: Completed 02-03-PLAN.md
 Resume file: None

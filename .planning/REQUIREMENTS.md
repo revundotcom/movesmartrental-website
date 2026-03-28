@@ -37,7 +37,7 @@
 
 ### Page Templates (22+)
 
-- [ ] **TMPL-01**: Homepage template (routing page with all contract-required sections)
+- [x] **TMPL-01**: Homepage template (routing page with all contract-required sections)
 - [ ] **TMPL-02**: Owners hub template
 - [ ] **TMPL-03**: Tenants hub template
 - [ ] **TMPL-04**: Services hub template
@@ -66,7 +66,7 @@
 - [ ] **OWN-01**: Owner-facing pages targeting landlord, investor, property-owner search intent
 - [ ] **OWN-02**: Commercial service pages: tenant placement, leasing services, tenant screening, rent guarantee, rental preparation, rental marketing, portal technology, pricing
 - [ ] **OWN-03**: Localized service pages for each Ontario Tier-1 city (20 cities x 8 services = 160 pages)
-- [ ] **OWN-04**: Owner-facing CTAs: Create Free Account, Submit Property, Book a Call, Request Services
+- [x] **OWN-04**: Owner-facing CTAs: Create Free Account, Submit Property, Book a Call, Request Services
 - [ ] **OWN-05**: Contract-required owner messaging: nothing upfront, self-serve online, dedicated account manager, tech + brick-and-mortar, portal visibility, property prep, MLS distribution, structured screening, rent protection
 
 ### Tenant-Lead SEO System
@@ -112,7 +112,7 @@
 
 ### Schema Markup
 
-- [ ] **SCHEMA-01**: Organization schema on homepage
+- [x] **SCHEMA-01**: Organization schema on homepage
 - [ ] **SCHEMA-02**: LocalBusiness/RealEstateAgent schema on city pages
 - [ ] **SCHEMA-03**: FAQ schema on all pages with FAQ sections
 - [ ] **SCHEMA-04**: Service schema on service pages
@@ -140,7 +140,7 @@
 ### AI Discoverability
 
 - [ ] **AI-01**: Content structured for AI citation: direct answers in first 40-60 words, data points every 150-200 words
-- [ ] **AI-02**: Entity clarity: consistent "MoveSmart Rentals" naming, Organization schema
+- [x] **AI-02**: Entity clarity: consistent "MoveSmart Rentals" naming, Organization schema
 - [ ] **AI-03**: llms.txt file for AI crawler guidance
 
 ### Handoff & Documentation
@@ -213,7 +213,7 @@
 | SEO-04 | Phase 1 | Complete |
 | SEO-05 | Phase 1 | Complete |
 | SEO-07 | Phase 1 | Complete |
-| TMPL-01 | Phase 2 | Pending |
+| TMPL-01 | Phase 2 | Complete |
 | TMPL-02 | Phase 2 | Pending |
 | TMPL-03 | Phase 2 | Pending |
 | TMPL-04 | Phase 2 | Pending |
@@ -239,7 +239,7 @@
 | OWN-01 | Phase 2 | Pending |
 | OWN-02 | Phase 2 | Pending |
 | OWN-03 | Phase 2 | Pending |
-| OWN-04 | Phase 2 | Pending |
+| OWN-04 | Phase 2 | Complete |
 | OWN-05 | Phase 2 | Pending |
 | TEN-01 | Phase 2 | Pending |
 | TEN-02 | Phase 2 | Pending |
@@ -251,7 +251,7 @@
 | SEO-02 | Phase 2 | Pending |
 | SEO-06 | Phase 2 | Pending |
 | SEO-08 | Phase 2 | Complete |
-| SCHEMA-01 | Phase 2 | Pending |
+| SCHEMA-01 | Phase 2 | Complete |
 | SCHEMA-02 | Phase 2 | Pending |
 | SCHEMA-03 | Phase 2 | Pending |
 | SCHEMA-04 | Phase 2 | Pending |
@@ -259,7 +259,7 @@
 | SCHEMA-06 | Phase 2 | Complete |
 | SCHEMA-07 | Phase 2 | Pending |
 | AI-01 | Phase 2 | Pending |
-| AI-02 | Phase 2 | Pending |
+| AI-02 | Phase 2 | Complete |
 | GEO-01 | Phase 3 | Pending |
 | GEO-02 | Phase 3 | Pending |
 | GEO-03 | Phase 3 | Pending |
