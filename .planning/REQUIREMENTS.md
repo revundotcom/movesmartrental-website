@@ -100,7 +100,7 @@
 ### Technical SEO
 
 - [x] **SEO-01**: SSL/HTTPS enforced
-- [ ] **SEO-02**: XML sitemaps segmented by page type (ca-cities, us-cities, ca-services, us-services, blog, listings, resources)
+- [x] **SEO-02**: XML sitemaps segmented by page type (ca-cities, us-cities, ca-services, us-services, blog, listings, resources)
 - [x] **SEO-03**: Robots.txt with sitemap reference and indexing controls
 - [x] **SEO-04**: Canonical tags on all pages (self-referencing)
 - [x] **SEO-05**: Open Graph fields (og:title, og:description, og:image) on every page
@@ -248,7 +248,7 @@
 | TEN-05 | Phase 2 | Complete |
 | GEO-05 | Phase 2 | Complete |
 | GEO-06 | Phase 2 | Complete |
-| SEO-02 | Phase 2 | Pending |
+| SEO-02 | Phase 2 | Complete |
 | SEO-06 | Phase 2 | Complete |
 | SEO-08 | Phase 2 | Complete |
 | SCHEMA-01 | Phase 2 | Complete |

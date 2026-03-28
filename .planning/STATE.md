@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-06-PLAN.md
-last_updated: "2026-03-28T15:31:33.914Z"
-last_activity: 2026-03-28 — Completed 02-07-PLAN.md (Resources hub + universal content detail template with Article JSON-LD)
+stopped_at: Completed 02-09-PLAN.md
+last_updated: "2026-03-28T15:34:18Z"
+last_activity: 2026-03-28 — Completed 02-09-PLAN.md (Dynamic XML sitemaps with 6 segments)
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 16
-  completed_plans: 14
-  percent: 81
+  completed_plans: 15
+  percent: 94
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 ## Current Position
 
 Phase: 2 of 4 (Core Build: Templates and Top Cities)
-Plan: 7 of 10 in current phase
+Plan: 9 of 10 in current phase
 Status: Executing
-Last activity: 2026-03-28 — Completed 02-07-PLAN.md (Resources hub + universal content detail template with Article JSON-LD)
+Last activity: 2026-03-28 — Completed 02-09-PLAN.md (Dynamic XML sitemaps with 6 segments)
 
-Progress: [████████░░] 81%
+Progress: [█████████░] 94%
 
 ## Performance Metrics
 
@@ -64,6 +64,7 @@ Progress: [████████░░] 81%
 | Phase 02 P04 | 6min | 2 tasks | 6 files |
 | Phase 02 P08 | 8min | 2 tasks | 6 files |
 | Phase 02 P06 | 10min | 2 tasks | 5 files |
+| Phase 02 P09 | 1min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -113,6 +114,9 @@ Recent decisions affecting current work:
 - [Phase 02]: Locations hub uses single PROVINCES_WITH_CITIES_QUERY for all provinces with nested cities in one request
 - [Phase 02]: CityService and PropertyCategory coexist in [service] segment via dispatch pattern (CityService checked first)
 - [Phase 02]: ServiceGridBlock extended with basePath prop for city-context geographic links
+- [Phase 02]: Sitemap uses inline minimal GROQ projections (slug-only) instead of importing page queries to minimize CMS payload
+- [Phase 02]: Tier-based sitemap priority scoring: Tier-1 cities 0.8-0.9, others 0.6-0.7 for crawl budget optimization
+- [Phase 02]: Blog guides and comparisons/case studies in separate sitemap segments (blog vs resources) despite shared /resources/ URL prefix
 
 ### Pending Todos
 
@@ -126,6 +130,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T15:31:33.913Z
-Stopped at: Completed 02-06-PLAN.md
+Last session: 2026-03-28T15:34:18Z
+Stopped at: Completed 02-09-PLAN.md
 Resume file: None
