@@ -125,11 +125,11 @@
 - [x] **TRACK-01**: GA4 property configured and connected via GTM
 - [x] **TRACK-02**: Google Search Console verified and connected
 - [x] **TRACK-03**: Bing Webmaster Tools verified
-- [ ] **TRACK-04**: Event tracking: account-creation clicks by page/city
-- [ ] **TRACK-05**: Event tracking: book-a-call clicks by page/city
-- [ ] **TRACK-06**: Event tracking: contact form submissions by page/city
-- [ ] **TRACK-07**: Event tracking: scroll depth, outbound clicks, phone/email clicks
-- [ ] **TRACK-08**: Event tracking: city-to-service CTR, service-to-account conversion
+- [x] **TRACK-04**: Event tracking: account-creation clicks by page/city
+- [x] **TRACK-05**: Event tracking: book-a-call clicks by page/city
+- [x] **TRACK-06**: Event tracking: contact form submissions by page/city
+- [x] **TRACK-07**: Event tracking: scroll depth, outbound clicks, phone/email clicks
+- [x] **TRACK-08**: Event tracking: city-to-service CTR, service-to-account conversion
 - [x] **TRACK-09**: Reporting dashboard (Looker Studio or equivalent free tool)
 
 ### Integrations
@@ -272,11 +272,11 @@
 | TRACK-01 | Phase 3 | Complete |
 | TRACK-02 | Phase 3 | Complete |
 | TRACK-03 | Phase 3 | Complete |
-| TRACK-04 | Phase 3 | Pending |
-| TRACK-05 | Phase 3 | Pending |
-| TRACK-06 | Phase 3 | Pending |
-| TRACK-07 | Phase 3 | Pending |
-| TRACK-08 | Phase 3 | Pending |
+| TRACK-04 | Phase 3 | Complete |
+| TRACK-05 | Phase 3 | Complete |
+| TRACK-06 | Phase 3 | Complete |
+| TRACK-07 | Phase 3 | Complete |
+| TRACK-08 | Phase 3 | Complete |
 | TRACK-09 | Phase 3 | Complete |
 | INT-01 | Phase 3 | Complete |
 | INT-02 | Phase 3 | Complete |

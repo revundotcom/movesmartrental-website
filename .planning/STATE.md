@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-08-PLAN.md
-last_updated: "2026-03-28T16:12:57.477Z"
-last_activity: "2026-03-28 — Completed 03-07-PLAN.md (Content system: publishing SOP, prompt framework, weak-page refresh)"
+stopped_at: Completed 03-06-PLAN.md
+last_updated: "2026-03-28T16:14:25.483Z"
+last_activity: "2026-03-28 — Completed 03-06-PLAN.md (Event tracking wiring: CTA tracker, link tracker, contact form events)"
 progress:
   total_phases: 4
   completed_phases: 3
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 Phase: 3 of 4 (Scale, Integrations, and Content System)
 Plan: 8 of 8 in current phase
 Status: Executing
-Last activity: 2026-03-28 — Completed 03-07-PLAN.md (Content system: publishing SOP, prompt framework, weak-page refresh)
+Last activity: 2026-03-28 — Completed 03-06-PLAN.md (Event tracking wiring: CTA tracker, link tracker, contact form events)
 
 Progress: [█████████░] 92%
 
@@ -72,6 +72,7 @@ Progress: [█████████░] 92%
 | Phase 03 P03 | 4min | 2 tasks | 3 files |
 | Phase 03 P07 | 5min | 2 tasks | 3 files |
 | Phase 03 P02 | 7min | 2 tasks | 5 files |
+| Phase 03 P06 | 2min | 2 tasks | 7 files |
 | Phase 03 P08 | 1min | 2 tasks | 2 files |
 
 ## Accumulated Context
@@ -147,6 +148,8 @@ Recent decisions affecting current work:
 - [Phase 03]: US service pages show Coming Soon fallback when no CityService data exists
 - [Phase 03]: Sitemap CA queries now explicitly filter country=ca to prevent US data leaking into CA segments
 - [Phase 03]: Dashboard guide covers all 9 GA4 event types plus engagement events; Analytics API returns CMS counts only (user analytics in Looker Studio)
+- [Phase 03]: CTATracker wraps Server Component CTAs as Client Component span with onClick -- composition avoids converting parent to Client Component
+- [Phase 03]: CTA event type inferred from href pattern (account/signup -> account_creation, else book_a_call)
 
 ### Pending Todos
 
@@ -160,6 +163,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T16:12:57.475Z
-Stopped at: Completed 03-08-PLAN.md
+Last session: 2026-03-28T16:14:12.442Z
+Stopped at: Completed 03-06-PLAN.md
 Resume file: None

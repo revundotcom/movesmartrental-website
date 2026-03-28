@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Architecture and CMS Foundation** - Next.js + Sanity scaffold, all 9 CMS schemas, 10 block components, URL structure, ISR strategy, and technical SEO baseline — due April 3
 - [ ] **Phase 2: Core Build — Templates and Top Cities** - All 22+ page templates, owner/tenant hubs, top 20 Ontario cities, all 7 schema types, dynamic sitemaps — due April 10
-- [ ] **Phase 3: Scale, Integrations, and Content System** - Remaining cities and US state pages, analytics, SalesIQ, AI discoverability, content production SOP — due April 17
+- [x] **Phase 3: Scale, Integrations, and Content System** - Remaining cities and US state pages, analytics, SalesIQ, AI discoverability, content production SOP — due April 17 (completed 2026-03-28)
 - [ ] **Phase 4: Audit, Hardening, and Handoff** - Core Web Vitals remediation, cross-browser testing, credential transfer, training, 30-day warranty commencement — due April 24
 
 ## Phase Details
@@ -73,7 +73,7 @@ Plans:
   3. Google Search Console shows the property as verified, the XML sitemap is submitted and accepted, and Bing Webmaster Tools shows the site as verified
   4. A non-developer content editor can log into Sanity Studio, create a new City document with all required local data fields completed, publish it, and see the page live on the site within 60 seconds without filing a dev ticket
   5. The Zoho SalesIQ chat widget appears on all pages and does not block page load (LCP measurement unaffected by the widget script)
-**Plans:** 5/8 plans executed
+**Plans:** 8/8 plans complete
 
 Plans:
 - [x] 03-01-PLAN.md — /ca/ and /us/ country hub pages + Canadian province CMS seeding
@@ -106,5 +106,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Architecture and CMS Foundation | 6/6 | Complete | 2026-03-28 |
 | 2. Core Build — Templates and Top Cities | 8/10 | In Progress|  |
-| 3. Scale, Integrations, and Content System | 5/8 | In Progress|  |
+| 3. Scale, Integrations, and Content System | 8/8 | Complete   | 2026-03-28 |
 | 4. Audit, Hardening, and Handoff | 0/TBD | Not started | - |
