@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Menu, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -54,12 +54,19 @@ function NavSection({
   label,
   items,
   onNavigate,
+  isSheetOpen,
 }: {
   label: string
   items: ReadonlyArray<{ title: string; href: string }>
   onNavigate: () => void
+  isSheetOpen: boolean
 }) {
   const [open, setOpen] = useState(false)
+  const sectionId = `mobile-nav-${label.toLowerCase().replace(/\s+/g, '-')}`
+
+  useEffect(() => {
+    if (!isSheetOpen) setOpen(false)
+  }, [isSheetOpen])
 
   return (
     <div className="border-b border-border/60 last:border-b-0">
@@ -68,6 +75,7 @@ function NavSection({
         onClick={() => setOpen(!open)}
         className="flex w-full items-center justify-between px-5 py-3.5 text-sm font-semibold uppercase tracking-wider text-[#0B1D3A]/60 transition-colors hover:text-[#0B1D3A]"
         aria-expanded={open}
+        aria-controls={sectionId}
       >
         {label}
         <ChevronDown
@@ -78,6 +86,7 @@ function NavSection({
         />
       </button>
       <div
+        id={sectionId}
         className={cn(
           'grid transition-[grid-template-rows] duration-200 ease-in-out',
           open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
@@ -126,7 +135,7 @@ export function MobileNav() {
           </Button>
         }
       />
-      <SheetContent side="right" className="flex w-80 flex-col p-0 sm:max-w-sm">
+      <SheetContent side="right" className="flex w-[85vw] max-w-80 flex-col p-0">
         {/* Header with logo */}
         <SheetHeader className="border-b border-border/60 px-5 py-4">
           <SheetTitle className="sr-only">Navigation</SheetTitle>
@@ -141,6 +150,7 @@ export function MobileNav() {
               label={section.label}
               items={section.items}
               onNavigate={handleNavigate}
+              isSheetOpen={open}
             />
           ))}
         </nav>

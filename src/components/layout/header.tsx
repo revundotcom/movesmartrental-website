@@ -44,21 +44,15 @@ const NAV_GROUPS = [
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
+  const [navValue, setNavValue] = useState<string | null>(null)
 
   useEffect(() => {
     let ticking = false
     const onScroll = () => {
       setScrolled(window.scrollY > 8)
-      // Close any open dropdown when the user scrolls by dispatching a
-      // synthetic mousedown on the document — base-ui treats this as a
-      // click-outside event and closes the active navigation menu popup.
       if (!ticking) {
         requestAnimationFrame(() => {
-          const activeEl = document.activeElement as HTMLElement | null
-          if (activeEl && activeEl.closest('[data-slot="navigation-menu"]')) {
-            activeEl.blur()
-          }
-          document.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }))
+          setNavValue(null) // Close dropdown on scroll
           ticking = false
         })
         ticking = true
@@ -72,7 +66,7 @@ export function Header() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 w-full bg-brand-navy transition-all duration-300',
+        'sticky top-0 z-50 w-full bg-brand-navy transition-[border-color,box-shadow] duration-300',
         scrolled
           ? 'border-b border-white/10 shadow-[0_1px_16px_rgba(11,29,58,0.4)]'
           : 'border-b border-white/5',
@@ -83,12 +77,17 @@ export function Header() {
         <Logo variant="white" />
 
         {/* Desktop navigation */}
-        <NavigationMenu className="hidden lg:flex" align="center">
+        <NavigationMenu
+          className="hidden lg:flex"
+          align="center"
+          value={navValue}
+          onValueChange={(val) => setNavValue(val)}
+        >
           <NavigationMenuList className="gap-0.5">
             {NAV_GROUPS.map((group) => (
               <NavigationMenuItem key={group.label}>
                 <NavigationMenuTrigger
-                  className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-white/80 transition-all duration-200 hover:bg-white/10 hover:text-white data-popup-open:bg-white/10 data-popup-open:text-white"
+                  className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-white/80 transition-all duration-200 hover:bg-white/10 hover:text-white data-popup-open:bg-white/10 data-popup-open:text-white data-open:bg-white/10 data-open:text-white"
                 >
                   {group.label}
                 </NavigationMenuTrigger>
