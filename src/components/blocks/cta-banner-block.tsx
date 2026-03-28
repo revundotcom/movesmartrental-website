@@ -30,7 +30,7 @@ export function CTABannerBlock({
       </div>
 
       <div className="relative z-10 mx-auto max-w-4xl px-4 py-20 text-center md:py-24">
-        <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+        <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
           {headline}
         </h2>
 
