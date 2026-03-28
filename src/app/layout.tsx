@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import { GoogleTagManager } from '@next/third-parties/google'
 import Script from 'next/script'
 import './globals.css'
@@ -8,7 +8,20 @@ import { Footer } from '@/components/layout/footer'
 import { ScrollDepthTracker } from '@/components/tracking/gtm-events'
 import { LinkTracker } from '@/components/tracking/link-tracker'
 
-const inter = Inter({ subsets: ['latin'], display: 'swap', preload: true })
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+  variable: '--font-sans',
+})
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+  variable: '--font-heading',
+  weight: ['400', '500', '600', '700', '800'],
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'),
@@ -34,7 +47,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${plusJakartaSans.variable} font-sans`}>
         {process.env.NEXT_PUBLIC_GTM_ID && (
           <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
         )}
