@@ -157,7 +157,7 @@ export function MobileNav() {
           <Link
             href="/contact/"
             onClick={handleNavigate}
-            className="flex w-full items-center justify-center rounded-lg bg-emerald-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-700"
+            className="flex w-full items-center justify-center rounded-lg bg-brand-emerald px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-emerald-dark"
           >
             Get Started
           </Link>

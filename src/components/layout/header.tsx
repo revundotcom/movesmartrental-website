@@ -153,7 +153,7 @@ export function Header() {
           </Link>
           <Link
             href="/contact/"
-            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-700"
+            className="rounded-lg bg-brand-emerald px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-emerald-dark"
           >
             Get Started
           </Link>
