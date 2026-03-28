@@ -8,7 +8,7 @@ import { ContactForm } from '@/components/contact-form'
 import { Card, CardContent } from '@/components/ui/card'
 
 export const metadata: Metadata = {
-  title: 'Contact Us | MoveSmart Rentals',
+  title: 'Contact Us',
   description:
     'Get in touch with MoveSmart Rentals. Submit a property, request a consultation, or ask about our services. We respond within 24 hours.',
 }

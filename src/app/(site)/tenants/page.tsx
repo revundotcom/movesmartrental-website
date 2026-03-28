@@ -13,7 +13,7 @@ import { HOMEPAGE_QUERY } from '@/sanity/queries/homepage'
 import type { CityCardData } from '@/types/blocks'
 
 export const metadata: Metadata = {
-  title: 'Tenants | Find Rentals | MoveSmart Rentals',
+  title: 'Tenants | Find Rentals',
   description:
     'Browse verified rental listings across Ontario. Apartments, condos, houses, and townhouses available in 20+ cities.',
   alternates: {

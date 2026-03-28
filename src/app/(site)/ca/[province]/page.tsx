@@ -56,7 +56,7 @@ export async function generateMetadata({
   return generatePageMetadata({
     seo: data?.seo,
     path: `/ca/${province}`,
-    fallbackTitle: `${data?.title ?? province} Property Management | MoveSmart Rentals`,
+    fallbackTitle: `${data?.title ?? province} Property Management`,
     fallbackDescription: `Professional property management services in ${data?.title ?? province}. Find MoveSmart Rentals in cities across ${data?.title ?? province}.`,
   })
 }

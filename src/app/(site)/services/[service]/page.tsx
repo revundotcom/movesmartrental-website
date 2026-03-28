@@ -76,13 +76,13 @@ export async function generateMetadata({
   })
 
   if (!service) {
-    return { title: 'Service Not Found | MoveSmart Rentals' }
+    return { title: 'Service Not Found' }
   }
 
   return generatePageMetadata({
     seo: service.seo,
     path: `/services/${slug}`,
-    fallbackTitle: `${service.title} | MoveSmart Rentals`,
+    fallbackTitle: service.title,
     fallbackDescription: service.shortDescription,
   })
 }

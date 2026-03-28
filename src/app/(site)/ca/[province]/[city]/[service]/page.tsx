@@ -196,7 +196,7 @@ export async function generateMetadata({
     return generatePageMetadata({
       seo: csData.seo,
       path: `/ca/${province}/${city}/${service}`,
-      fallbackTitle: `${csData.serviceTitle} in ${csData.cityTitle} | MoveSmart Rentals`,
+      fallbackTitle: `${csData.serviceTitle} in ${csData.cityTitle} `,
       fallbackDescription: `Professional ${csData.serviceTitle.toLowerCase()} services in ${csData.cityTitle}, ${csData.provinceName}. MoveSmart Rentals provides expert property management with zero upfront cost.`,
     })
   }

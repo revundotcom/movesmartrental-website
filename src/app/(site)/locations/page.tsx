@@ -9,14 +9,14 @@ import { PROVINCES_WITH_CITIES_QUERY } from '@/sanity/queries/province'
 import type { CityCardData } from '@/types/blocks'
 
 export const metadata: Metadata = {
-  title: 'Locations | MoveSmart Rentals',
+  title: 'Locations',
   description:
     'Professional property management across Ontario. Find MoveSmart Rentals services in your city.',
   alternates: {
     canonical: '/locations/',
   },
   openGraph: {
-    title: 'Locations | MoveSmart Rentals',
+    title: 'Locations',
     description:
       'Professional property management across Ontario. Find MoveSmart Rentals services in your city.',
   },

@@ -193,7 +193,7 @@ export async function generateMetadata({
   })
 
   if (!doc) {
-    return { title: 'Resource Not Found | MoveSmart Rentals' }
+    return { title: 'Resource Not Found' }
   }
 
   const typeLabel =
@@ -206,7 +206,7 @@ export async function generateMetadata({
   return generatePageMetadata({
     seo: doc.seo,
     path: `/resources/${slug}`,
-    fallbackTitle: `${doc.title} | ${typeLabel} | MoveSmart Rentals`,
+    fallbackTitle: `${doc.title} | ${typeLabel}`,
     fallbackDescription:
       doc.excerpt || doc.outcome || `${typeLabel}: ${doc.title}`,
   })

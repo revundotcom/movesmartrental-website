@@ -8,7 +8,7 @@ import { FAQBlock } from '@/components/blocks/faq-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 
 export const metadata: Metadata = {
-  title: 'Franchising | MoveSmart Rentals',
+  title: 'Franchising',
   description:
     'Join the MoveSmart Rentals franchise network. Expand property management into your market with proven systems, technology, and support.',
 }

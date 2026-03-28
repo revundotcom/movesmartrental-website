@@ -25,14 +25,14 @@ interface StateCard {
 // ---------------------------------------------------------------------------
 
 export const metadata: Metadata = {
-  title: 'Property Management in the United States | MoveSmart Rentals',
+  title: 'Property Management in the United States',
   description:
     'Professional property management across the United States. Explore our services in Florida, Texas, California, New York, and more.',
   alternates: {
     canonical: '/us/',
   },
   openGraph: {
-    title: 'Property Management in the United States | MoveSmart Rentals',
+    title: 'Property Management in the United States',
     description:
       'Professional property management across the United States. Explore our services in Florida, Texas, California, New York, and more.',
   },

@@ -9,7 +9,7 @@ import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
-  title: 'Pricing | MoveSmart Rentals',
+  title: 'Pricing',
   description:
     'Zero upfront cost property management. Success-based pricing with no hidden fees. See our service tiers and what is included.',
   alternates: {

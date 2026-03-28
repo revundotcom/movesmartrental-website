@@ -25,14 +25,14 @@ interface ProvinceCard {
 // ---------------------------------------------------------------------------
 
 export const metadata: Metadata = {
-  title: 'Property Management in Canada | MoveSmart Rentals',
+  title: 'Property Management in Canada',
   description:
     'Professional property management across Canada. Explore our services in Ontario, Quebec, British Columbia, Alberta, Nova Scotia, and more.',
   alternates: {
     canonical: '/ca/',
   },
   openGraph: {
-    title: 'Property Management in Canada | MoveSmart Rentals',
+    title: 'Property Management in Canada',
     description:
       'Professional property management across Canada. Explore our services in Ontario, Quebec, British Columbia, Alberta, Nova Scotia, and more.',
   },

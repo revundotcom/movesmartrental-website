@@ -14,7 +14,7 @@ import { CASE_STUDY_LIST_QUERY } from '@/sanity/queries/case-study'
 // ---------------------------------------------------------------------------
 
 export const metadata: Metadata = {
-  title: 'Resources | MoveSmart Rentals',
+  title: 'Resources',
   description:
     'Guides, market reports, case studies, and FAQs for property owners and tenants in Ontario.',
   alternates: { canonical: '/resources/' },

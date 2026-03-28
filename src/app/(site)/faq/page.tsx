@@ -10,7 +10,7 @@ import { sanityFetch } from '@/sanity/fetch'
 import { AGGREGATED_FAQ_QUERY } from '@/sanity/queries/faq'
 
 export const metadata: Metadata = {
-  title: 'FAQ | MoveSmart Rentals',
+  title: 'FAQ',
   description:
     'Frequently asked questions about MoveSmart Rentals property management services for owners, tenants, and franchise partners.',
 }

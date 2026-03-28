@@ -13,7 +13,7 @@ import {
 import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
-  title: 'Page Not Found | MoveSmart Rentals',
+  title: 'Page Not Found',
 }
 
 const navigationLinks = [

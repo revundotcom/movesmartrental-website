@@ -24,14 +24,14 @@ import { SERVICE_OWNER_QUERY } from '@/sanity/queries/service'
 import type { ServiceCardData } from '@/types/blocks'
 
 export const metadata: Metadata = {
-  title: 'Property Owners | MoveSmart Rentals',
+  title: 'Property Owners',
   description:
     'Hands-off leasing with maximum results. Zero upfront cost, dedicated account manager, tenant screening, rent protection, and full leasing execution for Ontario landlords.',
   alternates: {
     canonical: '/owners/',
   },
   openGraph: {
-    title: 'Property Owners | MoveSmart Rentals',
+    title: 'Property Owners',
     description:
       'Hands-off leasing with maximum results. Zero upfront cost, dedicated account manager, tenant screening, rent protection, and full leasing execution for Ontario landlords.',
   },
@@ -218,7 +218,7 @@ export default async function OwnersPage() {
             </p>
           </div>
         </div>
-        <ServiceGridBlock services={services} columns={3} />
+        <ServiceGridBlock services={services} columns={3} showHeading={false} />
       </section>
 
       {/* ── SECTION 5: Trust / Stats (Navy Background) ── */}

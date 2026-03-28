@@ -9,14 +9,14 @@ import { SERVICE_ALL_QUERY } from '@/sanity/queries/service'
 import type { ServiceCardData } from '@/types/blocks'
 
 export const metadata: Metadata = {
-  title: 'Our Services | MoveSmart Rentals',
+  title: 'Our Services',
   description:
     'Explore our 8 professional property management services. From tenant screening and rent collection to property preparation and MLS distribution.',
   alternates: {
     canonical: '/services/',
   },
   openGraph: {
-    title: 'Our Services | MoveSmart Rentals',
+    title: 'Our Services',
     description:
       'Explore our 8 professional property management services. From tenant screening and rent collection to property preparation and MLS distribution.',
   },
