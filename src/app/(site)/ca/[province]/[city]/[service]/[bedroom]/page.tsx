@@ -6,18 +6,18 @@ export default async function BedroomPage({
   params: Promise<{
     province: string
     city: string
-    propertyType: string
+    service: string
     bedroom: string
   }>
 }) {
-  const { province, city, propertyType, bedroom } = await params
+  const { province, city, service, bedroom } = await params
   return (
     <main className="mx-auto max-w-4xl px-4 py-16">
       <h1 className="text-4xl font-bold">
-        {bedroom} {propertyType} in {city}, {province}
+        {bedroom} {service} in {city}, {province}
       </h1>
       <p className="mt-4 text-lg text-muted-foreground">
-        Browse {bedroom} {propertyType} listings in {city}.
+        Browse {bedroom} {service} listings in {city}.
       </p>
     </main>
   )
