@@ -49,8 +49,8 @@
 - [x] **TMPL-10**: Contact page template
 - [x] **TMPL-11**: FAQ hub template
 - [x] **TMPL-12**: Blog/guide template
-- [ ] **TMPL-13**: Province/state template
-- [ ] **TMPL-14**: City template
+- [x] **TMPL-13**: Province/state template
+- [x] **TMPL-14**: City template
 - [x] **TMPL-15**: Service template
 - [x] **TMPL-16**: Service-plus-city template (highest-value SEO page)
 - [x] **TMPL-17**: Legal guide template
@@ -65,7 +65,7 @@
 
 - [x] **OWN-01**: Owner-facing pages targeting landlord, investor, property-owner search intent
 - [x] **OWN-02**: Commercial service pages: tenant placement, leasing services, tenant screening, rent guarantee, rental preparation, rental marketing, portal technology, pricing
-- [ ] **OWN-03**: Localized service pages for each Ontario Tier-1 city (20 cities x 8 services = 160 pages)
+- [x] **OWN-03**: Localized service pages for each Ontario Tier-1 city (20 cities x 8 services = 160 pages)
 - [x] **OWN-04**: Owner-facing CTAs: Create Free Account, Submit Property, Book a Call, Request Services
 - [x] **OWN-05**: Contract-required owner messaging: nothing upfront, self-serve online, dedicated account manager, tech + brick-and-mortar, portal visibility, property prep, MLS distribution, structured screening, rent protection
 
@@ -83,8 +83,8 @@
 - [ ] **GEO-02**: 5 Canadian province pages: Ontario, Quebec, British Columbia, Alberta, Nova Scotia
 - [ ] **GEO-03**: /us/ country hub page
 - [ ] **GEO-04**: 10 US state pages: Florida, Texas, California, New York, Illinois, Georgia, North Carolina, Arizona, Colorado, New Jersey
-- [ ] **GEO-05**: 20 Ontario Tier-1 city pages with full page families (Toronto, Mississauga, Brampton, Hamilton, Ottawa, London, Vaughan, Markham, Richmond Hill, Oakville, Burlington, Kitchener, Waterloo, Cambridge, Guelph, Barrie, Milton, Oshawa, Ajax, Pickering)
-- [ ] **GEO-06**: 16+ page families per Ontario city with localized content (not city-name-swaps)
+- [x] **GEO-05**: 20 Ontario Tier-1 city pages with full page families (Toronto, Mississauga, Brampton, Hamilton, Ottawa, London, Vaughan, Markham, Richmond Hill, Oakville, Burlington, Kitchener, Waterloo, Cambridge, Guelph, Barrie, Milton, Oshawa, Ajax, Pickering)
+- [x] **GEO-06**: 16+ page families per Ontario city with localized content (not city-name-swaps)
 - [ ] **GEO-07**: City-priority matrix, slug map, page-status tracker, content-status tracker
 - [ ] **GEO-08**: US state pages with city database, URL patterns, and publish-ready content architecture
 
@@ -113,7 +113,7 @@
 ### Schema Markup
 
 - [x] **SCHEMA-01**: Organization schema on homepage
-- [ ] **SCHEMA-02**: LocalBusiness/RealEstateAgent schema on city pages
+- [x] **SCHEMA-02**: LocalBusiness/RealEstateAgent schema on city pages
 - [x] **SCHEMA-03**: FAQ schema on all pages with FAQ sections
 - [x] **SCHEMA-04**: Service schema on service pages
 - [x] **SCHEMA-05**: Article/BlogPosting schema on blog/guide pages
@@ -139,7 +139,7 @@
 
 ### AI Discoverability
 
-- [ ] **AI-01**: Content structured for AI citation: direct answers in first 40-60 words, data points every 150-200 words
+- [x] **AI-01**: Content structured for AI citation: direct answers in first 40-60 words, data points every 150-200 words
 - [x] **AI-02**: Entity clarity: consistent "MoveSmart Rentals" naming, Organization schema
 - [ ] **AI-03**: llms.txt file for AI crawler guidance
 
@@ -225,8 +225,8 @@
 | TMPL-10 | Phase 2 | Complete |
 | TMPL-11 | Phase 2 | Complete |
 | TMPL-12 | Phase 2 | Complete |
-| TMPL-13 | Phase 2 | Pending |
-| TMPL-14 | Phase 2 | Pending |
+| TMPL-13 | Phase 2 | Complete |
+| TMPL-14 | Phase 2 | Complete |
 | TMPL-15 | Phase 2 | Complete |
 | TMPL-16 | Phase 2 | Complete |
 | TMPL-17 | Phase 2 | Complete |
@@ -238,7 +238,7 @@
 | TMPL-23 | Phase 2 | Complete |
 | OWN-01 | Phase 2 | Complete |
 | OWN-02 | Phase 2 | Complete |
-| OWN-03 | Phase 2 | Pending |
+| OWN-03 | Phase 2 | Complete |
 | OWN-04 | Phase 2 | Complete |
 | OWN-05 | Phase 2 | Complete |
 | TEN-01 | Phase 2 | Complete |
@@ -246,19 +246,19 @@
 | TEN-03 | Phase 2 | Complete |
 | TEN-04 | Phase 2 | Complete |
 | TEN-05 | Phase 2 | Complete |
-| GEO-05 | Phase 2 | Pending |
-| GEO-06 | Phase 2 | Pending |
+| GEO-05 | Phase 2 | Complete |
+| GEO-06 | Phase 2 | Complete |
 | SEO-02 | Phase 2 | Pending |
 | SEO-06 | Phase 2 | Complete |
 | SEO-08 | Phase 2 | Complete |
 | SCHEMA-01 | Phase 2 | Complete |
-| SCHEMA-02 | Phase 2 | Pending |
+| SCHEMA-02 | Phase 2 | Complete |
 | SCHEMA-03 | Phase 2 | Complete |
 | SCHEMA-04 | Phase 2 | Complete |
 | SCHEMA-05 | Phase 2 | Complete |
 | SCHEMA-06 | Phase 2 | Complete |
 | SCHEMA-07 | Phase 2 | Complete |
-| AI-01 | Phase 2 | Pending |
+| AI-01 | Phase 2 | Complete |
 | AI-02 | Phase 2 | Complete |
 | GEO-01 | Phase 3 | Pending |
 | GEO-02 | Phase 3 | Pending |
