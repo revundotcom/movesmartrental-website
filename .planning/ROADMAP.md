@@ -73,7 +73,7 @@ Plans:
   3. Google Search Console shows the property as verified, the XML sitemap is submitted and accepted, and Bing Webmaster Tools shows the site as verified
   4. A non-developer content editor can log into Sanity Studio, create a new City document with all required local data fields completed, publish it, and see the page live on the site within 60 seconds without filing a dev ticket
   5. The Zoho SalesIQ chat widget appears on all pages and does not block page load (LCP measurement unaffected by the widget script)
-**Plans:** 8 plans
+**Plans:** 3/8 plans executed
 
 Plans:
 - [ ] 03-01-PLAN.md — /ca/ and /us/ country hub pages + Canadian province CMS seeding
@@ -106,5 +106,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Architecture and CMS Foundation | 6/6 | Complete | 2026-03-28 |
 | 2. Core Build — Templates and Top Cities | 8/10 | In Progress|  |
-| 3. Scale, Integrations, and Content System | 2/8 | In Progress | - |
+| 3. Scale, Integrations, and Content System | 3/8 | In Progress|  |
 | 4. Audit, Hardening, and Handoff | 0/TBD | Not started | - |
