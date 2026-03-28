@@ -2,7 +2,13 @@ import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { CTATracker } from '@/components/tracking/cta-tracker'
 import type { CTABannerBlockProps } from '@/types/blocks'
+
+function inferCTAType(href: string): 'account_creation' | 'book_a_call' {
+  if (/account|sign-up|signup|register/i.test(href)) return 'account_creation'
+  return 'book_a_call'
+}
 
 export function CTABannerBlock({
   headline,
@@ -10,6 +16,8 @@ export function CTABannerBlock({
   primaryCta,
   secondaryCta,
   variant = 'default',
+  city,
+  service,
 }: CTABannerBlockProps) {
   return (
     <section className="bg-primary text-primary-foreground">
@@ -49,23 +57,27 @@ export function CTABannerBlock({
         ) : (
           /* Default button variant */
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button
-              variant={primaryCta.variant ?? 'secondary'}
-              size="lg"
-              className="min-w-[160px]"
-              render={<Link href={primaryCta.href} />}
-            >
-              {primaryCta.label}
-            </Button>
-            {secondaryCta && (
+            <CTATracker eventType={inferCTAType(primaryCta.href)} city={city} service={service}>
               <Button
-                variant={secondaryCta.variant ?? 'outline'}
+                variant={primaryCta.variant ?? 'secondary'}
                 size="lg"
-                className="min-w-[160px] border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
-                render={<Link href={secondaryCta.href} />}
+                className="min-w-[160px]"
+                render={<Link href={primaryCta.href} />}
               >
-                {secondaryCta.label}
+                {primaryCta.label}
               </Button>
+            </CTATracker>
+            {secondaryCta && (
+              <CTATracker eventType={inferCTAType(secondaryCta.href)} city={city} service={service}>
+                <Button
+                  variant={secondaryCta.variant ?? 'outline'}
+                  size="lg"
+                  className="min-w-[160px] border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+                  render={<Link href={secondaryCta.href} />}
+                >
+                  {secondaryCta.label}
+                </Button>
+              </CTATracker>
             )}
           </div>
         )}

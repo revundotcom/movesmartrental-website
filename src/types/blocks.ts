@@ -79,6 +79,10 @@ export interface HeroBlockProps {
   backgroundImageUrl?: string
   backgroundImageAlt?: string
   priority?: boolean // true for above-fold images (LCP)
+  /** City context for CTA event tracking */
+  city?: string
+  /** Service context for CTA event tracking */
+  service?: string
 }
 
 export interface CTABannerBlockProps {
@@ -87,6 +91,10 @@ export interface CTABannerBlockProps {
   primaryCta: CtaButton
   secondaryCta?: CtaButton
   variant?: 'default' | 'form' // form variant shows email input
+  /** City context for CTA event tracking */
+  city?: string
+  /** Service context for CTA event tracking */
+  service?: string
 }
 
 export interface FAQBlockProps {

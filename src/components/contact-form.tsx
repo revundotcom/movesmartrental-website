@@ -8,6 +8,7 @@ import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { pushEvent } from '@/lib/analytics'
 
 declare global {
   interface Window {
@@ -100,6 +101,13 @@ export function ContactForm() {
         const result = await response.json()
         throw new Error(result.error || 'Something went wrong. Please try again.')
       }
+
+      // Track successful form submission
+      pushEvent({
+        event: 'contact_form_submit',
+        page: window.location.pathname,
+        inquiry_type: data.type,
+      })
 
       setSubmitted(true)
     } catch (error) {
