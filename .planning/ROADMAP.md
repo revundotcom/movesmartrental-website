@@ -36,7 +36,7 @@ Plans:
 - [x] 01-02-PLAN.md — All 9 Sanity CMS schemas with required fields and publishing controls
 - [ ] 01-03-PLAN.md — Sanity data pipeline, ISR revalidation, SEO metadata, JSON-LD builders
 - [x] 01-04-PLAN.md — Navigation (header, footer, mobile nav, breadcrumbs)
-- [ ] 01-05-PLAN.md — Block components batch 1 (Hero, CTA, FAQ, ServiceGrid, CityGrid)
+- [x] 01-05-PLAN.md — Block components batch 1 (Hero, CTA, FAQ, ServiceGrid, CityGrid)
 - [ ] 01-06-PLAN.md — Block components batch 2 (PropertyCard, Trust, HowItWorks, PainPoint, Benefits)
 
 ### Phase 2: Core Build — Templates and Top Cities

@@ -24,11 +24,11 @@
 
 ### Composable Block System
 
-- [ ] **BLOCK-01**: Hero block (headline, subheadline, CTAs, background image)
-- [ ] **BLOCK-02**: CTA block (primary + secondary call-to-action with form variant)
-- [ ] **BLOCK-03**: FAQ block with FAQ schema markup
-- [ ] **BLOCK-04**: ServiceGrid block (linked service cards)
-- [ ] **BLOCK-05**: CityGrid block (linked city cards with location data)
+- [x] **BLOCK-01**: Hero block (headline, subheadline, CTAs, background image)
+- [x] **BLOCK-02**: CTA block (primary + secondary call-to-action with form variant)
+- [x] **BLOCK-03**: FAQ block with FAQ schema markup
+- [x] **BLOCK-04**: ServiceGrid block (linked service cards)
+- [x] **BLOCK-05**: CityGrid block (linked city cards with location data)
 - [x] **BLOCK-06**: PropertyCard block (listing preview with key details)
 - [x] **BLOCK-07**: TrustBlock (social proof, stats, testimonials)
 - [x] **BLOCK-08**: HowItWorks block (numbered steps process)
@@ -195,11 +195,11 @@
 | NAV-02 | Phase 1 | Complete |
 | NAV-03 | Phase 1 | Complete |
 | NAV-04 | Phase 1 | Complete |
-| BLOCK-01 | Phase 1 | Pending |
-| BLOCK-02 | Phase 1 | Pending |
-| BLOCK-03 | Phase 1 | Pending |
-| BLOCK-04 | Phase 1 | Pending |
-| BLOCK-05 | Phase 1 | Pending |
+| BLOCK-01 | Phase 1 | Complete |
+| BLOCK-02 | Phase 1 | Complete |
+| BLOCK-03 | Phase 1 | Complete |
+| BLOCK-04 | Phase 1 | Complete |
+| BLOCK-05 | Phase 1 | Complete |
 | BLOCK-06 | Phase 1 | Complete |
 | BLOCK-07 | Phase 1 | Complete |
 | BLOCK-08 | Phase 1 | Complete |
