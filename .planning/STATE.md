@@ -173,6 +173,7 @@ None yet.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 1 | Implement all 10 design improvements from DESIGN_AUDIT.md — animated orb hero, DM Serif Display font, transparent nav, scroll reveals, bento grid, CTA shadows, floating chips, trust bar, SVG waves, counting stats | 2026-03-28 | eb61c6f | [1-implement-all-10-design-improvements-fro](./quick/1-implement-all-10-design-improvements-fro/) |
+| 2 | L-shape "How It Works" section — asymmetric grid (1fr + 380px), sticky illustration column, 2-col step grid, stat chips, vertical divider. Build clean (218 pages). Deployed to Vercel production. | 2026-03-29 | a919bd6 | [2-fix-all-build-errors-and-deploy-l-shape-](./quick/2-fix-all-build-errors-and-deploy-l-shape-/) |
 
 ### Blockers/Concerns
 
@@ -182,6 +183,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T16:34:55.116Z
-Stopped at: Completed 04-04-PLAN.md
+Last session: 2026-03-29T03:48:00.000Z
+Stopped at: Completed Quick Task 2 — L-shape layout deployed to Vercel production
 Resume file: None
