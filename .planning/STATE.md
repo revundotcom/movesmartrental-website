@@ -1,3 +1,19 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: executing
+stopped_at: Completed 01-01-PLAN.md
+last_updated: "2026-03-28T13:49:37.764Z"
+last_activity: 2026-03-28 — Completed 01-01-PLAN.md (Project scaffold, URL routing, middleware, SEO baseline)
+progress:
+  total_phases: 4
+  completed_phases: 0
+  total_plans: 6
+  completed_plans: 1
+  percent: 17
+---
+
 # Project State
 
 ## Project Reference
@@ -10,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 ## Current Position
 
 Phase: 1 of 4 (Architecture and CMS Foundation)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-03-28 — ROADMAP.md and STATE.md created; roadmap approved
+Plan: 1 of 6 in current phase
+Status: Executing
+Last activity: 2026-03-28 — Completed 01-01-PLAN.md (Project scaffold, URL routing, middleware, SEO baseline)
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██░░░░░░░░] 17%
 
 ## Performance Metrics
 
@@ -34,6 +50,7 @@ Progress: [░░░░░░░░░░] 0%
 - Trend: —
 
 *Updated after each plan completion*
+| Phase 01 P01 | 13min | 2 tasks | 39 files |
 
 ## Accumulated Context
 
@@ -46,6 +63,8 @@ Recent decisions affecting current work:
 - [Pre-Phase 1]: Sanity Free Tier ($0) confirmed — 500K API req/mo and 20GB bandwidth sufficient for launch
 - [Pre-Phase 1]: Ontario-first ISR strategy — pre-render only Tier-1 ~320 pages at build time; on-demand ISR for remainder (avoids 45-min Vercel build timeout)
 - [Pre-Phase 1]: CMS required-field enforcement must be Phase 1 — cannot be retrofitted after city pages are published (thin content deindexing risk)
+- [Phase 01]: Used next-sanity@11.6.12 with sanity@4.22.0 for Next.js 15 compatibility (latest v12 requires Next.js 16)
+- [Phase 01]: Organized public routes under (site) route group for shared layout in plan 01-04
 
 ### Pending Todos
 
@@ -59,6 +78,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28
-Stopped at: Roadmap created — ready to run /gsd:plan-phase 1
+Last session: 2026-03-28T13:49:37.762Z
+Stopped at: Completed 01-01-PLAN.md
 Resume file: None

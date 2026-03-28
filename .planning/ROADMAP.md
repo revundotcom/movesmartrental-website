@@ -82,7 +82,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Architecture and CMS Foundation | 0/6 | Planning complete | - |
+| 1. Architecture and CMS Foundation | 1/6 | In Progress | - |
 | 2. Core Build — Templates and Top Cities | 0/TBD | Not started | - |
 | 3. Scale, Integrations, and Content System | 0/TBD | Not started | - |
 | 4. Audit, Hardening, and Handoff | 0/TBD | Not started | - |

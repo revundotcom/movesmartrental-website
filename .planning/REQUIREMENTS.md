@@ -7,13 +7,13 @@
 
 ### Foundation & Architecture
 
-- [ ] **FOUND-01**: Next.js 15 App Router project scaffolded with TypeScript, Tailwind v4, shadcn/ui
+- [x] **FOUND-01**: Next.js 15 App Router project scaffolded with TypeScript, Tailwind v4, shadcn/ui
 - [ ] **FOUND-02**: Sanity Studio v3 (Free Tier) configured with all 9 content types and structured field schemas
-- [ ] **FOUND-03**: Vercel deployment with automatic SSL, edge CDN, ISR support
-- [ ] **FOUND-04**: GitHub repo in client's REVUN account with full source code
-- [ ] **FOUND-05**: URL architecture implemented: /ca/{province}/{city}/{service}/ and /us/{state}/{city}/{service}/
+- [x] **FOUND-03**: Vercel deployment with automatic SSL, edge CDN, ISR support
+- [x] **FOUND-04**: GitHub repo in client's REVUN account with full source code
+- [x] **FOUND-05**: URL architecture implemented: /ca/{province}/{city}/{service}/ and /us/{state}/{city}/{service}/
 - [ ] **FOUND-06**: On-demand ISR strategy with Sanity webhook-triggered revalidation (revalidateTag)
-- [ ] **FOUND-07**: metadataBase set in root layout, trailing-slash normalization, lowercase URL enforcement
+- [x] **FOUND-07**: metadataBase set in root layout, trailing-slash normalization, lowercase URL enforcement
 
 ### Navigation & Layout
 
@@ -99,9 +99,9 @@
 
 ### Technical SEO
 
-- [ ] **SEO-01**: SSL/HTTPS enforced
+- [x] **SEO-01**: SSL/HTTPS enforced
 - [ ] **SEO-02**: XML sitemaps segmented by page type (ca-cities, us-cities, ca-services, us-services, blog, listings, resources)
-- [ ] **SEO-03**: Robots.txt with sitemap reference and indexing controls
+- [x] **SEO-03**: Robots.txt with sitemap reference and indexing controls
 - [ ] **SEO-04**: Canonical tags on all pages (self-referencing)
 - [ ] **SEO-05**: Open Graph fields (og:title, og:description, og:image) on every page
 - [ ] **SEO-06**: Meta titles 50-60 chars, meta descriptions 140-160 chars, one H1 per page
@@ -184,13 +184,13 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | Phase 1 | Pending |
+| FOUND-01 | Phase 1 | Complete |
 | FOUND-02 | Phase 1 | Pending |
-| FOUND-03 | Phase 1 | Pending |
-| FOUND-04 | Phase 1 | Pending |
-| FOUND-05 | Phase 1 | Pending |
+| FOUND-03 | Phase 1 | Complete |
+| FOUND-04 | Phase 1 | Complete |
+| FOUND-05 | Phase 1 | Complete |
 | FOUND-06 | Phase 1 | Pending |
-| FOUND-07 | Phase 1 | Pending |
+| FOUND-07 | Phase 1 | Complete |
 | NAV-01 | Phase 1 | Pending |
 | NAV-02 | Phase 1 | Pending |
 | NAV-03 | Phase 1 | Pending |
@@ -208,8 +208,8 @@
 | CMS-01 | Phase 1 | Pending |
 | CMS-02 | Phase 1 | Pending |
 | CMS-03 | Phase 1 | Pending |
-| SEO-01 | Phase 1 | Pending |
-| SEO-03 | Phase 1 | Pending |
+| SEO-01 | Phase 1 | Complete |
+| SEO-03 | Phase 1 | Complete |
 | SEO-04 | Phase 1 | Pending |
 | SEO-05 | Phase 1 | Pending |
 | SEO-07 | Phase 1 | Pending |
