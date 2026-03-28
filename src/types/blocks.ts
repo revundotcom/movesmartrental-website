@@ -98,6 +98,8 @@ export interface FAQBlockProps {
 export interface ServiceGridBlockProps {
   services: ServiceCardData[]
   columns?: 2 | 3 | 4
+  /** Override link base path (e.g. "/ca/ontario/toronto" for city-context links) */
+  basePath?: string
 }
 
 export interface CityGridBlockProps {

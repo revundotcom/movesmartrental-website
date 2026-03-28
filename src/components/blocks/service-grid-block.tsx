@@ -40,6 +40,7 @@ const COLUMN_CLASSES: Record<number, string> = {
 export function ServiceGridBlock({
   services,
   columns = 3,
+  basePath,
 }: ServiceGridBlockProps) {
   if (services.length === 0) return null
 
@@ -54,7 +55,7 @@ export function ServiceGridBlock({
           return (
             <Link
               key={service.slug}
-              href={`/services/${service.slug}/`}
+              href={basePath ? `${basePath}/${service.slug}/` : `/services/${service.slug}/`}
               className="group"
             >
               <Card className="h-full transition-all duration-200 group-hover:-translate-y-1 group-hover:shadow-lg">
