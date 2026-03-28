@@ -1,19 +1,23 @@
 import type { Metadata } from 'next'
 import { Check, X } from 'lucide-react'
+import Link from 'next/link'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { HeroBlock } from '@/components/blocks/hero-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Pricing | MoveSmart Rentals',
   description:
     'Zero upfront cost property management. Success-based pricing with no hidden fees. See our service tiers and what is included.',
+  alternates: {
+    canonical: '/pricing/',
+  },
 }
+
+/* ---------- Data ---------- */
 
 const PRICING_TIERS = [
   {
@@ -68,17 +72,72 @@ const PRICING_TIERS = [
 ] as const
 
 const COMPARISON_FEATURES = [
-  { feature: 'Portal Listing', selfServe: true, fullService: true, premium: true },
-  { feature: 'Professional Photography', selfServe: false, fullService: true, premium: true },
-  { feature: 'MLS Listing', selfServe: false, fullService: true, premium: true },
-  { feature: 'Tenant Screening', selfServe: false, fullService: true, premium: true },
-  { feature: 'Lease Preparation', selfServe: false, fullService: true, premium: true },
-  { feature: 'Dedicated Specialist', selfServe: false, fullService: true, premium: true },
-  { feature: 'Account Manager', selfServe: false, fullService: false, premium: true },
-  { feature: 'Rent Protection', selfServe: false, fullService: false, premium: true },
-  { feature: 'Property Prep', selfServe: false, fullService: false, premium: true },
-  { feature: 'Maintenance Coordination', selfServe: false, fullService: false, premium: true },
-  { feature: '24/7 Emergency Support', selfServe: false, fullService: false, premium: true },
+  {
+    feature: 'Portal Listing',
+    selfServe: true,
+    fullService: true,
+    premium: true,
+  },
+  {
+    feature: 'Professional Photography',
+    selfServe: false,
+    fullService: true,
+    premium: true,
+  },
+  {
+    feature: 'MLS Listing',
+    selfServe: false,
+    fullService: true,
+    premium: true,
+  },
+  {
+    feature: 'Tenant Screening',
+    selfServe: false,
+    fullService: true,
+    premium: true,
+  },
+  {
+    feature: 'Lease Preparation',
+    selfServe: false,
+    fullService: true,
+    premium: true,
+  },
+  {
+    feature: 'Dedicated Specialist',
+    selfServe: false,
+    fullService: true,
+    premium: true,
+  },
+  {
+    feature: 'Account Manager',
+    selfServe: false,
+    fullService: false,
+    premium: true,
+  },
+  {
+    feature: 'Rent Protection',
+    selfServe: false,
+    fullService: false,
+    premium: true,
+  },
+  {
+    feature: 'Property Prep',
+    selfServe: false,
+    fullService: false,
+    premium: true,
+  },
+  {
+    feature: 'Maintenance Coordination',
+    selfServe: false,
+    fullService: false,
+    premium: true,
+  },
+  {
+    feature: '24/7 Emergency Support',
+    selfServe: false,
+    fullService: false,
+    premium: true,
+  },
 ] as const
 
 const PRICING_FAQS = [
@@ -109,17 +168,36 @@ const PRICING_FAQS = [
   },
 ]
 
+/* ---------- Helper components ---------- */
+
 function CheckIcon() {
-  return <Check className="mx-auto size-5 text-green-600" aria-label="Included" />
+  return (
+    <div className="mx-auto flex size-6 items-center justify-center rounded-full bg-brand-emerald/10">
+      <Check
+        className="size-4 text-brand-emerald"
+        aria-label="Included"
+      />
+    </div>
+  )
 }
 
 function XIcon() {
-  return <X className="mx-auto size-5 text-muted-foreground/40" aria-label="Not included" />
+  return (
+    <div className="mx-auto flex size-6 items-center justify-center">
+      <X
+        className="size-4 text-slate-300"
+        aria-label="Not included"
+      />
+    </div>
+  )
 }
+
+/* ---------- Page ---------- */
 
 export default function PricingPage() {
   return (
     <main>
+      {/* Breadcrumb */}
       <div className="mx-auto max-w-7xl px-4 pt-8">
         <BreadcrumbNav
           crumbs={[
@@ -129,100 +207,136 @@ export default function PricingPage() {
         />
       </div>
 
+      {/* ── SECTION 1: Hero ── */}
       <HeroBlock
         headline="Simple, Transparent Pricing"
-        subheadline="Nothing upfront. We only succeed when you do."
+        subheadline="Nothing upfront. We only succeed when you do. No hidden fees, no surprises."
       />
 
-      {/* Pricing Tiers */}
-      <section className="py-16">
+      {/* ── SECTION 2: Pricing Tiers ── */}
+      <section className="bg-white py-24">
         <div className="mx-auto max-w-6xl px-4">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             {PRICING_TIERS.map((tier) => (
-              <Card
+              <div
                 key={tier.name}
-                className={`relative flex flex-col ${
+                className={`relative flex flex-col rounded-2xl border-2 bg-white p-8 transition-shadow ${
                   tier.highlighted
-                    ? 'border-primary shadow-lg ring-2 ring-primary'
-                    : ''
+                    ? 'border-brand-emerald shadow-xl shadow-brand-emerald/10 ring-1 ring-brand-emerald'
+                    : 'border-border hover:shadow-lg'
                 }`}
               >
+                {/* Most Popular badge */}
                 {tier.highlighted && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1 text-xs font-semibold text-primary-foreground">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-brand-emerald px-5 py-1.5 text-xs font-bold uppercase tracking-wider text-white shadow-md">
                     Most Popular
                   </div>
                 )}
-                <CardHeader className="text-center">
-                  <CardTitle className="text-xl">{tier.name}</CardTitle>
-                  <div className="mt-2">
-                    <span className="text-3xl font-bold">{tier.price}</span>
+
+                {/* Tier header */}
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold text-brand-navy">
+                    {tier.name}
+                  </h3>
+                  <div className="mt-4">
+                    <span className="text-4xl font-bold text-brand-navy">
+                      {tier.price}
+                    </span>
                     <p className="mt-1 text-sm text-muted-foreground">
                       {tier.priceNote}
                     </p>
                   </div>
-                  <p className="mt-3 text-sm text-muted-foreground">
+                  <p className="mt-4 text-sm text-muted-foreground">
                     {tier.description}
                   </p>
-                </CardHeader>
-                <CardContent className="flex flex-1 flex-col">
-                  <ul className="flex-1 space-y-3">
-                    {tier.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-2">
-                        <Check className="mt-0.5 size-4 shrink-0 text-green-600" />
-                        <span className="text-sm">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-6">
-                    <Button
-                      variant={tier.highlighted ? 'default' : 'outline'}
-                      size="lg"
-                      className="w-full"
-                      render={<Link href={tier.cta.href} />}
-                    >
-                      {tier.cta.label}
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+                </div>
+
+                {/* Divider */}
+                <div className="my-6 h-px bg-border" />
+
+                {/* Features */}
+                <ul className="flex-1 space-y-3">
+                  {tier.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-3">
+                      <div className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-emerald/10">
+                        <Check className="size-3 text-brand-emerald" />
+                      </div>
+                      <span className="text-sm text-foreground">
+                        {feature}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTA */}
+                <div className="mt-8">
+                  <Button
+                    variant={tier.highlighted ? 'default' : 'outline'}
+                    size="lg"
+                    className={`w-full ${
+                      tier.highlighted
+                        ? ''
+                        : 'border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white'
+                    }`}
+                    render={<Link href={tier.cta.href} />}
+                  >
+                    {tier.cta.label}
+                  </Button>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Feature Comparison Table */}
-      <section className="bg-gray-50 py-16">
+      {/* ── SECTION 3: Feature Comparison Table ── */}
+      <section className="bg-slate-50 py-24">
         <div className="mx-auto max-w-4xl px-4">
-          <h2 className="mb-8 text-center text-2xl font-bold tracking-tight sm:text-3xl">
-            Compare Plans
-          </h2>
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-sm">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
+              Detailed Comparison
+            </p>
+            <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-brand-navy sm:text-4xl">
+              Compare Plans
+            </h2>
+          </div>
+
+          <div className="mt-12 overflow-x-auto rounded-xl border border-border bg-white shadow-sm">
+            <table className="w-full text-sm">
               <thead>
-                <tr className="border-b">
-                  <th className="py-3 pr-4 text-left font-semibold">Feature</th>
-                  <th className="px-4 py-3 text-center font-semibold">
+                <tr className="border-b-2 border-border bg-slate-50">
+                  <th className="px-6 py-4 text-left font-semibold text-brand-navy">
+                    Feature
+                  </th>
+                  <th className="px-4 py-4 text-center font-semibold text-brand-navy">
                     Self-Serve
                   </th>
-                  <th className="px-4 py-3 text-center font-semibold">
+                  <th className="px-4 py-4 text-center font-semibold text-brand-emerald">
                     Full Service
                   </th>
-                  <th className="px-4 py-3 text-center font-semibold">
+                  <th className="px-4 py-4 text-center font-semibold text-brand-navy">
                     Premium
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {COMPARISON_FEATURES.map((row) => (
-                  <tr key={row.feature} className="border-b">
-                    <td className="py-3 pr-4">{row.feature}</td>
-                    <td className="px-4 py-3 text-center">
+                {COMPARISON_FEATURES.map((row, index) => (
+                  <tr
+                    key={row.feature}
+                    className={`border-b border-border transition-colors last:border-b-0 ${
+                      index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'
+                    }`}
+                  >
+                    <td className="px-6 py-4 font-medium text-foreground">
+                      {row.feature}
+                    </td>
+                    <td className="px-4 py-4 text-center">
                       {row.selfServe ? <CheckIcon /> : <XIcon />}
                     </td>
-                    <td className="px-4 py-3 text-center">
+                    <td className="px-4 py-4 text-center">
                       {row.fullService ? <CheckIcon /> : <XIcon />}
                     </td>
-                    <td className="px-4 py-3 text-center">
+                    <td className="px-4 py-4 text-center">
                       {row.premium ? <CheckIcon /> : <XIcon />}
                     </td>
                   </tr>
@@ -233,12 +347,15 @@ export default function PricingPage() {
         </div>
       </section>
 
+      {/* ── SECTION 4: FAQ ── */}
       <FAQBlock questions={PRICING_FAQS} title="Pricing FAQ" />
 
+      {/* ── SECTION 5: CTA ── */}
       <CTABannerBlock
         headline="Start with Zero Risk"
         description="List your property for free. Only pay when we find you a qualified tenant."
-        primaryCta={{ label: 'Create Free Account', href: '/contact/' }}
+        primaryCta={{ label: 'Get Started', href: '/contact/' }}
+        secondaryCta={{ label: 'Book a Call', href: '/contact/' }}
       />
     </main>
   )
