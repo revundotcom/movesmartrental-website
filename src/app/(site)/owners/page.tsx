@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { HeroBlock } from '@/components/blocks/hero-block'
+import { OwnersFeaturesBento } from '@/components/blocks/owners-features-bento'
 import { PainPointBlock } from '@/components/blocks/pain-point-block'
 import { ServiceGridBlock } from '@/components/blocks/service-grid-block'
 import { sanityFetch } from '@/sanity/fetch'
@@ -124,8 +125,8 @@ export default async function OwnersPage() {
             <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
               The Problem
             </p>
-            <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-brand-navy sm:text-4xl">
-              Common Challenges Landlords Face
+            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
+              The <span className="font-display italic text-brand-emerald">Landlord Pain</span> Points
             </h2>
           </div>
         </div>
@@ -161,47 +162,7 @@ export default async function OwnersPage() {
       </section>
 
       {/* ── SECTION 3: 9 Contract-Required Messaging Points ── */}
-      <section className="bg-slate-50 py-24">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
-              Why MoveSmart
-            </p>
-            <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-brand-navy sm:text-4xl">
-              Everything You Need, Nothing You Don&apos;t
-            </h2>
-            <p className="mt-4 text-lg text-muted-foreground">
-              Nine reasons property owners across Ontario trust MoveSmart Rentals
-              for their leasing execution.
-            </p>
-          </div>
-
-          <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {CONTRACT_MESSAGING.map((item) => {
-              const Icon = item.icon
-              return (
-                <div
-                  key={item.title}
-                  className="rounded-xl border border-border bg-white p-6 transition-shadow hover:shadow-lg"
-                >
-                  <div className="flex size-12 items-center justify-center rounded-lg bg-brand-emerald/10">
-                    <Icon
-                      className="size-6 text-brand-emerald"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <h3 className="mt-4 text-base font-semibold text-brand-navy">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {item.description}
-                  </p>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
+      <OwnersFeaturesBento features={CONTRACT_MESSAGING} />
 
       {/* ── SECTION 4: Service Grid (from CMS) ── */}
       <section className="bg-white py-24">
@@ -210,8 +171,8 @@ export default async function OwnersPage() {
             <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
               Services
             </p>
-            <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-brand-navy sm:text-4xl">
-              Our Owner Services
+            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+              Our <span className="font-display italic text-brand-emerald">Owner Services</span>
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
               Comprehensive property management services tailored for landlords
@@ -223,29 +184,38 @@ export default async function OwnersPage() {
       </section>
 
       {/* ── SECTION 5: Trust / Stats (Navy Background) ── */}
-      <section className="bg-brand-navy py-24 text-white">
-        <div className="mx-auto max-w-6xl px-4">
+      <section className="relative overflow-hidden bg-brand-navy py-28 text-white">
+        <div
+          className="absolute inset-0 opacity-[0.04]"
+          aria-hidden="true"
+          style={{
+            backgroundImage: 'linear-gradient(#10B981 1px, transparent 1px), linear-gradient(90deg, #10B981 1px, transparent 1px)',
+            backgroundSize: '50px 50px',
+          }}
+        />
+        <div className="absolute -right-40 -top-40 size-[500px] rounded-full bg-brand-emerald/8 blur-3xl" aria-hidden="true" />
+        <div className="absolute -bottom-40 -left-40 size-[400px] rounded-full bg-brand-emerald/6 blur-3xl" aria-hidden="true" />
+
+        <div className="relative z-10 mx-auto max-w-6xl px-4">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
+            <p className="text-sm font-black uppercase tracking-[0.2em] text-brand-emerald">
               By The Numbers
             </p>
-            <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight sm:text-4xl">
+            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight sm:text-4xl md:text-5xl">
               Trusted by Property Owners
             </h2>
           </div>
 
-          <div className="mt-16 grid grid-cols-2 gap-8 md:grid-cols-4">
+          <div className="mt-16 grid grid-cols-2 gap-6 md:grid-cols-4">
             {[
               { value: '500+', label: 'Properties Managed' },
               { value: '98%', label: 'Tenant Satisfaction' },
-              { value: '14 days', label: 'Avg. Placement Time' },
+              { value: '14 Days', label: 'Avg. Placement Time' },
               { value: '20+', label: 'Cities Served' },
             ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <p className="text-4xl font-bold text-brand-emerald md:text-5xl">
-                  {stat.value}
-                </p>
-                <p className="mt-2 text-sm text-white/70">{stat.label}</p>
+              <div key={stat.label} className="rounded-2xl border border-white/8 bg-white/4 p-8 text-center backdrop-blur-sm transition-all duration-300 hover:border-brand-emerald/30 hover:bg-white/6">
+                <p className="text-4xl font-black text-brand-emerald md:text-5xl">{stat.value}</p>
+                <p className="mt-2 text-xs font-bold uppercase tracking-wider text-white/50">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -254,6 +224,8 @@ export default async function OwnersPage() {
             <Button
               variant="default"
               size="lg"
+              className="cta-primary-shadow cursor-pointer font-bold"
+              style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}
               render={<Link href="/contact/" />}
             >
               Join Our Owners

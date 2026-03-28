@@ -39,7 +39,7 @@ export function CityGridBlock({
         {showHeading && province && (
           <RevealOnScroll>
             <motion.div variants={revealItem} className="mb-12 text-center">
-              <h2 className="font-heading text-3xl font-bold tracking-tight text-[#0B1D3A] sm:text-4xl">
+              <h2 className="font-display text-3xl font-normal tracking-tight text-[#0B1D3A] sm:text-4xl">
                 {province}
               </h2>
               <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-[#10B981]" />

@@ -99,26 +99,22 @@ export default async function HomePage() {
           {/* Counting stats row */}
           <StatGrid />
 
-          {/* Media / trust logo bar */}
+          {/* Media / trust logo marquee */}
           <div className="mt-8 border-t border-slate-100 pt-8">
             <p className="text-center text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/50">
               As seen in
             </p>
-            <div className="mt-5 flex flex-wrap items-center justify-center gap-8 opacity-40 grayscale">
-              {[
-                'Toronto Star',
-                'Globe and Mail',
-                'REIC',
-                'FRPO',
-                'REP Magazine',
-              ].map((name) => (
-                <span
-                  key={name}
-                  className="text-sm font-bold tracking-tight text-slate-600"
-                >
-                  {name}
-                </span>
-              ))}
+            <div className="relative mt-5 overflow-hidden">
+              {/* Fade edges */}
+              <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-white to-transparent" aria-hidden="true" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-white to-transparent" aria-hidden="true" />
+              <div className="flex animate-marquee items-center gap-16 whitespace-nowrap opacity-40 grayscale">
+                {['Toronto Star', 'Globe and Mail', 'REIC', 'FRPO', 'REP Magazine', 'Toronto Star', 'Globe and Mail', 'REIC', 'FRPO', 'REP Magazine'].map((name, i) => (
+                  <span key={i} className="shrink-0 text-sm font-bold tracking-tight text-slate-600">
+                    {name}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -404,6 +400,9 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Wave divider: Section 6 (slate-50) → Section 7 (white) */}
+      <WaveDivider fill="#ffffff" />
+
       {/* ── SECTION 7: Featured Ontario Cities ── */}
       <section className="relative overflow-hidden bg-white py-28">
         {/* Dot pattern */}
@@ -457,6 +456,9 @@ export default async function HomePage() {
         </div>
         <CityGridBlock cities={data.featuredCities} columns={4} showHeading={false} />
       </section>
+
+      {/* Wave divider: Section 7 (white) → Section 8 (navy) */}
+      <WaveDivider fill="#0B1D3A" />
 
       {/* ── SECTION 8: Franchising Preview ── */}
       <section className="relative overflow-hidden bg-brand-navy py-28 text-white">
@@ -543,6 +545,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Wave divider: Section 8 (navy) → Section 9 (white/FAQ) */}
+      <WaveDivider fill="#ffffff" flip={true} />
 
       {/* ── SECTION 9: FAQ ── */}
       <FAQBlock

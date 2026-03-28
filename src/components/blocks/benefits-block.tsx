@@ -54,7 +54,7 @@ export function BenefitsBlock({
   }
 
   return (
-    <section className="relative bg-slate-50 overflow-hidden">
+    <section className="relative bg-slate-50 overflow-hidden py-28">
       {/* Dot grid overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -72,7 +72,7 @@ export function BenefitsBlock({
       <div className="mx-auto max-w-6xl px-4">
         {/* Section heading with emerald underline */}
         <RevealOnScroll>
-          <motion.div variants={revealItem} className="mb-12 text-center">
+          <motion.div variants={revealItem} className="mb-16 text-center">
             <h2 className="font-display text-3xl font-normal tracking-tight text-[#0B1D3A] sm:text-4xl">
               {title}
             </h2>
@@ -93,15 +93,21 @@ export function BenefitsBlock({
               <motion.div
                 key={index}
                 variants={revealItem}
-                className="rounded-xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-7 shadow-[0_2px_12px_rgba(11,29,58,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-emerald/30 hover:shadow-[0_12px_40px_rgba(11,29,58,0.12)]"
               >
-                <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-emerald-100">
+                {/* Top accent bar on hover */}
+                <div
+                  className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 rounded-t-2xl transition-transform duration-300 group-hover:scale-x-100"
+                  style={{ background: 'linear-gradient(90deg, #10B981, #34D399)' }}
+                  aria-hidden="true"
+                />
+                <div className="mb-5 flex size-13 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-100 shadow-sm transition-all duration-300 group-hover:scale-110 group-hover:shadow-md">
                   <IconComponent className="size-6 text-emerald-600" />
                 </div>
-                <h3 className="text-lg font-semibold text-[#0B1D3A]">
+                <h3 className="text-lg font-bold text-brand-navy transition-colors duration-200 group-hover:text-brand-emerald">
                   {benefit.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-500">
                   {benefit.description}
                 </p>
               </motion.div>

@@ -81,6 +81,8 @@ interface CityPageData {
   vacancyRate?: number
   neighbourhoods?: string[]
   transitInfo?: string
+  heroImageUrl?: string
+  heroImageAlt?: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   description?: string | any[] // Could be string or PortableTextBlock[]
   province: {
@@ -234,49 +236,94 @@ export default async function CityPage({
             ? (data.description as string).slice(0, 160)
             : `Professional property management and tenant placement in ${data.title}, ${data.province.title}.`
         }
+        backgroundImageUrl={data.heroImageUrl}
+        backgroundImageAlt={data.heroImageAlt}
         priority
       />
 
-      {/* Local Data Section -- prominently displayed */}
-      <section className="mx-auto max-w-4xl px-4 py-12">
-        <h2 className="mb-6 text-2xl font-bold tracking-tight sm:text-3xl">
-          {data.title} at a Glance
-        </h2>
-        <div className="grid grid-cols-1 gap-4 rounded-lg bg-muted p-6 sm:grid-cols-2 lg:grid-cols-4">
-          {data.population != null && (
-            <div>
-              <p className="text-sm text-muted-foreground">Population</p>
-              <p className="text-2xl font-bold">
-                {formatPopulation(data.population)}
-              </p>
-            </div>
-          )}
-          {data.medianRent != null && (
-            <div>
-              <p className="text-sm text-muted-foreground">Median Rent</p>
-              <p className="text-2xl font-bold">
-                {formatCurrency(data.medianRent)}
-              </p>
-            </div>
-          )}
-          {data.vacancyRate != null && (
-            <div>
-              <p className="text-sm text-muted-foreground">Vacancy Rate</p>
-              <p className="text-2xl font-bold">
-                {formatPercentage(data.vacancyRate)}
-              </p>
-            </div>
-          )}
-          {data.neighbourhoods && data.neighbourhoods.length > 0 && (
-            <div className="sm:col-span-2 lg:col-span-1">
-              <p className="text-sm text-muted-foreground">
-                Top Neighbourhoods
-              </p>
-              <p className="font-bold">{data.neighbourhoods.join(', ')}</p>
-            </div>
-          )}
+      {/* Premium Local Data Section */}
+      <section className="relative overflow-hidden bg-white py-20">
+        {/* Dot-grid background */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          aria-hidden="true"
+          style={{
+            backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)',
+            backgroundSize: '24px 24px',
+          }}
+        />
+        <div
+          className="absolute -right-32 top-0 size-[360px] rounded-full bg-brand-emerald/6 blur-3xl"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-4">
+          <div className="mb-10 text-center">
+            <p className="text-sm font-black uppercase tracking-[0.2em] text-brand-emerald">
+              Market Overview
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+              {data.title}{' '}
+              <span className="font-display italic text-brand-emerald">
+                at a Glance
+              </span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {data.population != null && (
+              <div className="flex flex-col items-center justify-center rounded-3xl bg-brand-navy p-8 text-center">
+                <p className="text-3xl font-black text-brand-emerald">
+                  {formatPopulation(data.population)}
+                </p>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-white/50">
+                  Population
+                </p>
+              </div>
+            )}
+            {data.medianRent != null && (
+              <div className="flex flex-col items-center justify-center rounded-3xl bg-brand-emerald/10 p-8 text-center">
+                <p className="text-3xl font-black text-brand-navy">
+                  {formatCurrency(data.medianRent)}
+                </p>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  Median Rent
+                </p>
+              </div>
+            )}
+            {data.vacancyRate != null && (
+              <div className="flex flex-col items-center justify-center rounded-3xl bg-brand-emerald/10 p-8 text-center">
+                <p className="text-3xl font-black text-brand-navy">
+                  {formatPercentage(data.vacancyRate)}
+                </p>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  Vacancy Rate
+                </p>
+              </div>
+            )}
+            {data.neighbourhoods && data.neighbourhoods.length > 0 && (
+              <div className="flex flex-col items-center justify-center rounded-3xl bg-brand-navy p-8 text-center">
+                <p className="text-3xl font-black text-brand-emerald">
+                  {data.neighbourhoods.length}+
+                </p>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-white/50">
+                  Neighbourhoods
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </section>
+
+      {/* Getting Around */}
+      {data.transitInfo && (
+        <section className="py-10 bg-slate-50">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <h2 className="text-2xl font-bold text-[#0B1D3A] mb-4">Getting Around {data.title}</h2>
+            <p className="text-slate-600 leading-relaxed">{data.transitInfo}</p>
+          </div>
+        </section>
+      )}
 
       {/* City Description */}
       {data.description && (
@@ -294,37 +341,70 @@ export default async function CityPage({
       {/* Services Grid */}
       {services.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 py-12">
-          <h2 className="mb-8 text-center text-2xl font-bold tracking-tight sm:text-3xl">
-            Our Services in {data.title}
-          </h2>
+          <div className="mx-auto max-w-2xl text-center mb-12">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
+              Available in {data.title}
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+              Full-Service Leasing in{' '}
+              <span className="font-display italic text-brand-emerald">
+                {data.title}
+              </span>
+            </h2>
+          </div>
           <ServiceGridBlock
             services={services}
             columns={3}
             basePath={`/ca/${province}/${city}`}
+            showHeading={false}
           />
         </section>
       )}
 
       {/* Property Type Links */}
-      <section className="mx-auto max-w-7xl px-4 py-12">
-        <h2 className="mb-8 text-center text-2xl font-bold tracking-tight sm:text-3xl">
-          Browse Rentals in {data.title}
-        </h2>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {PROPERTY_TYPES.map((pt) => (
-            <Link
-              key={pt.slug}
-              href={`/ca/${province}/${city}/${pt.slug}/`}
-              className="group rounded-lg border bg-card p-6 text-center transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
-            >
-              <h3 className="text-lg font-semibold group-hover:text-primary">
-                {pt.label}
-              </h3>
-              <p className="mt-1 text-sm text-muted-foreground">
-                in {data.title}
-              </p>
-            </Link>
-          ))}
+      <section className="relative overflow-hidden bg-slate-50 py-20">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+          style={{
+            backgroundImage: 'radial-gradient(#0B1D3A0d 1px, transparent 1px)',
+            backgroundSize: '24px 24px',
+          }}
+        />
+        <div className="relative z-10 mx-auto max-w-7xl px-4">
+          <div className="mx-auto max-w-2xl text-center mb-12">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
+              Rental Listings
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+              Browse Rentals in{' '}
+              <span className="font-display italic text-brand-emerald">
+                {data.title}
+              </span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {PROPERTY_TYPES.map((pt) => (
+              <Link
+                key={pt.slug}
+                href={`/ca/${province}/${city}/${pt.slug}/`}
+                className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-6 text-center shadow-[0_2px_12px_rgba(11,29,58,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-emerald/30 hover:shadow-[0_12px_40px_rgba(11,29,58,0.12)]"
+              >
+                {/* Top accent bar on hover */}
+                <div
+                  className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 rounded-t-2xl transition-transform duration-300 group-hover:scale-x-100"
+                  style={{ background: 'linear-gradient(90deg, #10B981, #34D399)' }}
+                  aria-hidden="true"
+                />
+                <h3 className="text-lg font-bold text-brand-navy transition-colors duration-200 group-hover:text-brand-emerald">
+                  {pt.label}
+                </h3>
+                <p className="mt-1 text-sm text-slate-500">
+                  in {data.title}
+                </p>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

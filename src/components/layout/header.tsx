@@ -94,7 +94,8 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8)
+    // Transition to solid at 60px — enough to clear the hero eyebrow badge
+    const onScroll = () => setScrolled(window.scrollY > 60)
     onScroll() // set initial state
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -105,13 +106,13 @@ export function Header() {
       className={cn(
         'sticky top-0 z-50 w-full transition-all duration-300',
         scrolled
-          ? 'border-b border-border/40 bg-brand-navy/95 shadow-[0_1px_12px_rgba(11,29,58,0.3)] backdrop-blur-md'
-          : 'border-b border-transparent bg-transparent'
+          ? 'border-b border-border/40 bg-white/95 shadow-sm backdrop-blur-md'
+          : 'border-b border-transparent bg-transparent',
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-[72px] lg:px-8">
-        {/* Logo — white when transparent, navy when solid */}
-        <Logo variant="white" />
+        {/* Logo — white when transparent over dark hero, navy when solid on white */}
+        <Logo variant={scrolled ? 'default' : 'white'} />
 
         {/* Desktop navigation — center */}
         <NavigationMenu className="hidden lg:flex" align="center">
@@ -122,8 +123,8 @@ export function Header() {
                   className={cn(
                     'cursor-pointer rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200',
                     scrolled
-                      ? 'text-white/80 hover:bg-white/10 hover:text-white data-popup-open:bg-white/10 data-popup-open:text-white'
-                      : 'text-white/90 hover:bg-white/10 hover:text-white data-popup-open:bg-white/10 data-popup-open:text-white'
+                      ? 'text-brand-navy/80 hover:bg-brand-navy/5 hover:text-brand-navy data-popup-open:bg-brand-navy/5 data-popup-open:text-brand-navy'
+                      : 'text-white/90 hover:bg-white/10 hover:text-white data-popup-open:bg-white/10 data-popup-open:text-white',
                   )}
                 >
                   {group.label}
@@ -137,7 +138,10 @@ export function Header() {
                           className="group/link block cursor-pointer rounded-lg px-3 py-2.5 transition-all duration-150 hover:bg-emerald-50"
                         >
                           <div className="flex items-center gap-2 text-sm font-semibold text-[#0B1D3A] group-hover/link:text-emerald-700">
-                            <span className="inline-block size-1.5 rounded-full bg-emerald-400 opacity-0 transition-opacity duration-150 group-hover/link:opacity-100" aria-hidden="true" />
+                            <span
+                              className="inline-block size-1.5 rounded-full bg-emerald-400 opacity-0 transition-opacity duration-150 group-hover/link:opacity-100"
+                              aria-hidden="true"
+                            />
                             {item.title}
                           </div>
                           <p className="mt-0.5 pl-3.5 text-xs leading-relaxed text-muted-foreground">
@@ -160,8 +164,8 @@ export function Header() {
             className={cn(
               'cursor-pointer rounded-lg border px-4 py-2 text-sm font-medium transition-all duration-200',
               scrolled
-                ? 'border-white/20 text-white/80 hover:border-white/40 hover:bg-white/10 hover:text-white'
-                : 'border-white/30 text-white hover:border-white/60 hover:bg-white/10'
+                ? 'border-brand-navy/20 text-brand-navy/80 hover:border-brand-navy/40 hover:bg-brand-navy/5 hover:text-brand-navy'
+                : 'border-white/30 text-white hover:border-white/60 hover:bg-white/10',
             )}
           >
             Book a Call

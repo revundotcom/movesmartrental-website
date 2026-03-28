@@ -1,21 +1,14 @@
-import type { Metadata } from 'next'
+'use client'
 import { Check, X } from 'lucide-react'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { HeroBlock } from '@/components/blocks/hero-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { Button } from '@/components/ui/button'
-
-export const metadata: Metadata = {
-  title: 'Pricing',
-  description:
-    'Zero upfront cost property management. Success-based pricing with no hidden fees. See our service tiers and what is included.',
-  alternates: {
-    canonical: '/pricing/',
-  },
-}
+import { RevealOnScroll, revealItem } from '@/components/ui/reveal-on-scroll'
 
 /* ---------- Data ---------- */
 
@@ -173,10 +166,7 @@ const PRICING_FAQS = [
 function CheckIcon() {
   return (
     <div className="mx-auto flex size-6 items-center justify-center rounded-full bg-brand-emerald/10">
-      <Check
-        className="size-4 text-brand-emerald"
-        aria-label="Included"
-      />
+      <Check className="size-4 text-brand-emerald" aria-label="Included" />
     </div>
   )
 }
@@ -184,10 +174,7 @@ function CheckIcon() {
 function XIcon() {
   return (
     <div className="mx-auto flex size-6 items-center justify-center">
-      <X
-        className="size-4 text-slate-300"
-        aria-label="Not included"
-      />
+      <X className="size-4 text-slate-300" aria-label="Not included" />
     </div>
   )
 }
@@ -214,136 +201,226 @@ export default function PricingPage() {
       />
 
       {/* ── SECTION 2: Pricing Tiers ── */}
-      <section className="bg-white py-24">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-            {PRICING_TIERS.map((tier) => (
-              <div
-                key={tier.name}
-                className={`relative flex flex-col rounded-2xl border-2 bg-white p-8 transition-shadow ${
-                  tier.highlighted
-                    ? 'border-brand-emerald shadow-xl shadow-brand-emerald/10 ring-1 ring-brand-emerald'
-                    : 'border-border hover:shadow-lg'
-                }`}
-              >
-                {/* Most Popular badge */}
-                {tier.highlighted && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-brand-emerald px-5 py-1.5 text-xs font-bold uppercase tracking-wider text-white shadow-md">
+      <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-28">
+        {/* Dot-grid overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)',
+            backgroundSize: '24px 24px',
+          }}
+        />
+
+        <div className="relative mx-auto max-w-6xl px-4">
+          {/* Section header */}
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-black uppercase tracking-widest text-brand-emerald">
+              Plans &amp; Pricing
+            </p>
+            <h2 className="mt-3 font-display text-4xl font-normal text-brand-navy">
+              Pick the plan that fits your goals
+            </h2>
+            <p className="mt-4 text-base text-slate-500">
+              All plans are risk-free. We only earn when you do — no upfront
+              charges, ever.
+            </p>
+          </div>
+
+          {/* Tier cards */}
+          <RevealOnScroll className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-3">
+            {PRICING_TIERS.map((tier) =>
+              tier.highlighted ? (
+                /* ── Highlighted card ── */
+                <motion.div
+                  key={tier.name}
+                  variants={revealItem}
+                  className="relative flex flex-col"
+                >
+                  {/* Glow behind card */}
+                  <div className="absolute -inset-4 rounded-3xl bg-brand-emerald/5 blur-xl" />
+
+                  {/* Most Popular badge */}
+                  <div className="absolute -top-4 left-1/2 z-10 -translate-x-1/2 rounded-full bg-brand-emerald px-5 py-1.5 text-xs font-black uppercase tracking-wider text-white shadow-lg">
                     Most Popular
                   </div>
-                )}
 
-                {/* Tier header */}
-                <div className="text-center">
-                  <h3 className="text-lg font-semibold text-brand-navy">
-                    {tier.name}
-                  </h3>
-                  <div className="mt-4">
-                    <span className="text-4xl font-bold text-brand-navy">
-                      {tier.price}
-                    </span>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {tier.priceNote}
+                  <div className="relative flex flex-1 flex-col rounded-3xl bg-gradient-to-b from-[#0f2044] to-[#082a20] p-8 text-white shadow-2xl shadow-brand-navy/40 ring-2 ring-brand-emerald/50 scale-105">
+                    {/* Tier name */}
+                    <p className="text-xs font-black uppercase tracking-widest text-brand-emerald">
+                      {tier.name}
                     </p>
+
+                    {/* Price */}
+                    <p className="mt-4 text-5xl font-black text-white">
+                      {tier.price}
+                    </p>
+                    <p className="text-sm text-white/50">{tier.priceNote}</p>
+
+                    {/* Description */}
+                    <p className="mt-4 text-sm text-white/70">
+                      {tier.description}
+                    </p>
+
+                    {/* Divider */}
+                    <div className="my-6 h-px bg-white/10" />
+
+                    {/* Features */}
+                    <ul className="flex-1 space-y-3">
+                      {tier.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-3">
+                          <div className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-emerald/20">
+                            <Check className="size-3 text-brand-emerald" />
+                          </div>
+                          <span className="text-sm text-white/80">
+                            {feature}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* CTA */}
+                    <div className="mt-8">
+                      <Button
+                        size="lg"
+                        className="w-full bg-brand-emerald font-bold text-white hover:-translate-y-0.5 hover:bg-brand-emerald/90"
+                        render={<Link href={tier.cta.href} />}
+                      >
+                        {tier.cta.label}
+                      </Button>
+                    </div>
                   </div>
-                  <p className="mt-4 text-sm text-muted-foreground">
-                    {tier.description}
-                  </p>
-                </div>
+                </motion.div>
+              ) : (
+                /* ── Standard cards ── */
+                <motion.div
+                  key={tier.name}
+                  variants={revealItem}
+                  className="group relative flex flex-col"
+                >
+                  {/* Top accent bar */}
+                  <div className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 rounded-t-3xl bg-gradient-to-r from-brand-emerald to-emerald-400 transition-transform duration-300 group-hover:scale-x-100" />
 
-                {/* Divider */}
-                <div className="my-6 h-px bg-border" />
+                  <div className="flex flex-1 flex-col rounded-3xl border-2 border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-emerald/30 hover:shadow-xl hover:shadow-brand-navy/10">
+                    {/* Tier name */}
+                    <p className="text-xs font-black uppercase tracking-widest text-brand-emerald">
+                      {tier.name}
+                    </p>
 
-                {/* Features */}
-                <ul className="flex-1 space-y-3">
-                  {tier.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3">
-                      <div className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-emerald/10">
-                        <Check className="size-3 text-brand-emerald" />
-                      </div>
-                      <span className="text-sm text-foreground">
-                        {feature}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                    {/* Price */}
+                    <p className="mt-4 text-5xl font-black text-brand-navy">
+                      {tier.price}
+                    </p>
+                    <p className="text-sm text-slate-400">{tier.priceNote}</p>
 
-                {/* CTA */}
-                <div className="mt-8">
-                  <Button
-                    variant={tier.highlighted ? 'default' : 'outline'}
-                    size="lg"
-                    className={`w-full ${
-                      tier.highlighted
-                        ? ''
-                        : 'border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white'
-                    }`}
-                    render={<Link href={tier.cta.href} />}
-                  >
-                    {tier.cta.label}
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
+                    {/* Description */}
+                    <p className="mt-4 text-sm text-slate-500">
+                      {tier.description}
+                    </p>
+
+                    {/* Divider */}
+                    <div className="my-6 h-px bg-slate-100" />
+
+                    {/* Features */}
+                    <ul className="flex-1 space-y-3">
+                      {tier.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-3">
+                          <div className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-emerald/10">
+                            <Check className="size-3 text-brand-emerald" />
+                          </div>
+                          <span className="text-sm text-slate-700">
+                            {feature}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* CTA */}
+                    <div className="mt-8">
+                      <Button
+                        variant="outline"
+                        size="lg"
+                        className="w-full border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white"
+                        render={<Link href={tier.cta.href} />}
+                      >
+                        {tier.cta.label}
+                      </Button>
+                    </div>
+                  </div>
+                </motion.div>
+              ),
+            )}
+          </RevealOnScroll>
         </div>
       </section>
 
       {/* ── SECTION 3: Feature Comparison Table ── */}
-      <section className="bg-slate-50 py-24">
+      <section className="relative bg-white py-24">
         <div className="mx-auto max-w-4xl px-4">
+          {/* Section header */}
           <div className="mx-auto max-w-2xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
+            <p className="text-xs font-black uppercase tracking-widest text-brand-emerald">
               Detailed Comparison
             </p>
-            <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-brand-navy sm:text-4xl">
-              Compare Plans
+            <h2 className="mt-3 font-display text-3xl font-normal text-brand-navy">
+              Compare Plans Side by Side
             </h2>
+            <p className="mt-4 text-base text-slate-500">
+              Every feature, clearly laid out — so you can choose with
+              confidence.
+            </p>
           </div>
 
-          <div className="mt-12 overflow-x-auto rounded-xl border border-border bg-white shadow-sm">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b-2 border-border bg-slate-50">
-                  <th className="px-6 py-4 text-left font-semibold text-brand-navy">
-                    Feature
-                  </th>
-                  <th className="px-4 py-4 text-center font-semibold text-brand-navy">
-                    Self-Serve
-                  </th>
-                  <th className="px-4 py-4 text-center font-semibold text-brand-emerald">
-                    Full Service
-                  </th>
-                  <th className="px-4 py-4 text-center font-semibold text-brand-navy">
-                    Premium
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {COMPARISON_FEATURES.map((row, index) => (
-                  <tr
-                    key={row.feature}
-                    className={`border-b border-border transition-colors last:border-b-0 ${
-                      index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'
-                    }`}
-                  >
-                    <td className="px-6 py-4 font-medium text-foreground">
-                      {row.feature}
-                    </td>
-                    <td className="px-4 py-4 text-center">
-                      {row.selfServe ? <CheckIcon /> : <XIcon />}
-                    </td>
-                    <td className="px-4 py-4 text-center">
-                      {row.fullService ? <CheckIcon /> : <XIcon />}
-                    </td>
-                    <td className="px-4 py-4 text-center">
-                      {row.premium ? <CheckIcon /> : <XIcon />}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          {/* Table */}
+          <RevealOnScroll>
+            <motion.div
+              variants={revealItem}
+              className="mt-12 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl shadow-brand-navy/8"
+            >
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="bg-brand-navy text-white">
+                      <th className="px-6 py-5 text-left text-sm font-semibold text-white/80">
+                        Feature
+                      </th>
+                      <th className="px-4 py-5 text-center text-sm font-semibold text-white/80">
+                        Self-Serve
+                      </th>
+                      <th className="bg-brand-emerald/20 px-4 py-5 text-center text-sm font-bold text-brand-emerald">
+                        Full Service
+                      </th>
+                      <th className="px-4 py-5 text-center text-sm font-semibold text-white/80">
+                        Premium
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {COMPARISON_FEATURES.map((row, index) => (
+                      <tr
+                        key={row.feature}
+                        className={`border-b border-slate-100 transition-colors last:border-b-0 ${
+                          index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'
+                        }`}
+                      >
+                        <td className="px-6 py-4 font-medium text-slate-800">
+                          {row.feature}
+                        </td>
+                        <td className="px-4 py-4 text-center">
+                          {row.selfServe ? <CheckIcon /> : <XIcon />}
+                        </td>
+                        <td className="bg-brand-emerald/[0.03] px-4 py-4 text-center">
+                          {row.fullService ? <CheckIcon /> : <XIcon />}
+                        </td>
+                        <td className="px-4 py-4 text-center">
+                          {row.premium ? <CheckIcon /> : <XIcon />}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </motion.div>
+          </RevealOnScroll>
         </div>
       </section>
 

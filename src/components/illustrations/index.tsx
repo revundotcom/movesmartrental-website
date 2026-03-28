@@ -1001,3 +1001,168 @@ export function IllustrationPropertyManagement({ className }: { className?: stri
     </svg>
   )
 }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   PRICING: Premium pricing / value visual
+   ────────────────────────────────────────────────────────────────────────── */
+
+export function PricingIllustration({ className = '' }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 400 320"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Background glow */}
+      <ellipse cx="200" cy="280" rx="160" ry="30" fill="#10B981" fillOpacity="0.06" />
+
+      {/* Pricing card - center */}
+      <rect x="80" y="40" width="240" height="200" rx="16" fill="white" fillOpacity="0.08" stroke="white" strokeOpacity="0.15" strokeWidth="1.5" />
+
+      {/* Card header */}
+      <rect x="80" y="40" width="240" height="60" rx="16" fill="#10B981" fillOpacity="0.15" />
+      <rect x="80" y="76" width="240" height="24" fill="#10B981" fillOpacity="0.15" />
+
+      {/* "Full Service" label */}
+      <rect x="120" y="58" width="80" height="8" rx="4" fill="#10B981" fillOpacity="0.8" />
+      <text x="200" y="67" textAnchor="middle" fill="#10B981" fontSize="10" fontWeight="bold" fontFamily="sans-serif" opacity="0.9">FULL SERVICE</text>
+
+      {/* Big price */}
+      <text x="200" y="105" textAnchor="middle" fill="white" fontSize="28" fontWeight="900" fontFamily="sans-serif" opacity="0.9">Success</text>
+      <text x="200" y="122" textAnchor="middle" fill="white" fontSize="11" fontFamily="sans-serif" opacity="0.5">Based pricing</text>
+
+      {/* Feature list items */}
+      {[0,1,2,3,4].map((i) => (
+        <g key={i} transform={`translate(0, ${i * 22})`}>
+          <circle cx="110" cy="152" r="6" fill="#10B981" fillOpacity="0.3" />
+          <path d="M107 152 L109.5 154.5 L113 150" stroke="#10B981" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.9" />
+          <rect x="122" y="148" width={60 + (i % 3) * 20} height="8" rx="4" fill="white" fillOpacity="0.15" />
+        </g>
+      ))}
+
+      {/* CTA button */}
+      <rect x="100" y="212" width="200" height="20" rx="10" fill="#10B981" fillOpacity="0.8" />
+
+      {/* Floating badge: "Zero Risk" */}
+      <rect x="240" y="20" width="110" height="36" rx="10" fill="#0B1D3A" stroke="#10B981" strokeWidth="1" strokeOpacity="0.4" />
+      <circle cx="258" cy="38" r="5" fill="#10B981" fillOpacity="0.4" />
+      <rect x="268" y="32" width="50" height="7" rx="3" fill="white" fillOpacity="0.5" />
+      <rect x="268" y="42" width="35" height="6" rx="3" fill="white" fillOpacity="0.25" />
+
+      {/* Floating badge: "No Hidden Fees" */}
+      <rect x="50" y="170" width="120" height="36" rx="10" fill="#0B1D3A" stroke="#10B981" strokeWidth="1" strokeOpacity="0.3" />
+      <rect x="65" y="181" width="45" height="7" rx="3" fill="#10B981" fillOpacity="0.6" />
+      <rect x="65" y="191" width="72" height="6" rx="3" fill="white" fillOpacity="0.2" />
+
+      {/* Star cluster */}
+      {[-20, -8, 4, 16, 28].map((x, i) => (
+        <polygon key={i} points={`${300+x},${26} ${302+x},${22} ${304+x},${26} ${308+x},${26} ${305+x},${29} ${306+x},${33} ${302+x},${30} ${298+x},${33} ${299+x},${29} ${296+x},${26}`} fill="#D4A853" fillOpacity={0.6 + i * 0.05} />
+      ))}
+    </svg>
+  )
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   ABOUT: Team / trust visual
+   ────────────────────────────────────────────────────────────────────────── */
+
+export function AboutIllustration({ className = '' }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 400 320"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Background glow */}
+      <ellipse cx="200" cy="300" rx="150" ry="25" fill="#10B981" fillOpacity="0.06" />
+
+      {/* Office building */}
+      <rect x="120" y="80" width="160" height="200" rx="8" fill="white" fillOpacity="0.06" stroke="white" strokeOpacity="0.12" strokeWidth="1.5" />
+      {/* Windows grid */}
+      {[0,1,2,3,4].map((row) =>
+        [0,1,2].map((col) => (
+          <rect key={`${row}-${col}`} x={138 + col * 36} y={100 + row * 30} width="18" height="14" rx="2" fill="#10B981" fillOpacity={0.15 + (row + col) * 0.05} />
+        ))
+      )}
+      {/* Door */}
+      <rect x="178" y="240" width="44" height="40" rx="4" fill="#10B981" fillOpacity="0.2" />
+      <circle cx="214" cy="260" r="3" fill="#D4A853" fillOpacity="0.8" />
+
+      {/* Person 1 — left */}
+      <circle cx="90" cy="200" r="22" fill="#0B1D3A" stroke="#10B981" strokeWidth="1.5" strokeOpacity="0.4" />
+      <circle cx="90" cy="193" r="9" fill="white" fillOpacity="0.2" />
+      <path d="M70 222 Q90 210 110 222" stroke="white" strokeWidth="1.5" strokeOpacity="0.3" fill="none" />
+
+      {/* Person 2 — right */}
+      <circle cx="310" cy="200" r="22" fill="#0B1D3A" stroke="#10B981" strokeWidth="1.5" strokeOpacity="0.4" />
+      <circle cx="310" cy="193" r="9" fill="white" fillOpacity="0.2" />
+      <path d="M290 222 Q310 210 330 222" stroke="white" strokeWidth="1.5" strokeOpacity="0.3" fill="none" />
+
+      {/* Connecting lines */}
+      <path d="M112 200 L120 200" stroke="#10B981" strokeWidth="1" strokeOpacity="0.4" strokeDasharray="4 3" />
+      <path d="M280 200 L288 200" stroke="#10B981" strokeWidth="1" strokeOpacity="0.4" strokeDasharray="4 3" />
+
+      {/* Trust badge */}
+      <rect x="140" y="30" width="120" height="40" rx="12" fill="#10B981" fillOpacity="0.15" stroke="#10B981" strokeWidth="1" strokeOpacity="0.3" />
+      <text x="200" y="48" textAnchor="middle" fill="#10B981" fontSize="10" fontWeight="bold" fontFamily="sans-serif" opacity="0.9">TRUSTED SINCE 2020</text>
+      <text x="200" y="62" textAnchor="middle" fill="white" fontSize="9" fontFamily="sans-serif" opacity="0.4">500+ Properties</text>
+
+      {/* Stars */}
+      {[160, 175, 190, 205, 220].map((x, i) => (
+        <polygon key={i} points={`${x},${18} ${x+2},${14} ${x+4},${18} ${x+8},${18} ${x+5},${21} ${x+6},${25} ${x+2},${22} ${x-2},${25} ${x-1},${21} ${x-4},${18}`} fill="#D4A853" fillOpacity="0.7" />
+      ))}
+    </svg>
+  )
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   CONTACT: Message / communication visual
+   ────────────────────────────────────────────────────────────────────────── */
+
+export function ContactIllustration({ className = '' }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 400 320"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Background glow */}
+      <ellipse cx="200" cy="290" rx="140" ry="28" fill="#10B981" fillOpacity="0.07" />
+
+      {/* Main message card */}
+      <rect x="60" y="60" width="280" height="180" rx="16" fill="white" fillOpacity="0.07" stroke="white" strokeOpacity="0.12" strokeWidth="1.5" />
+
+      {/* Message lines */}
+      {[0,1,2,3].map((i) => (
+        <rect key={i} x="80" y={90 + i * 28} width={180 - i * 20} height="10" rx="5" fill="white" fillOpacity={0.12 + i * 0.03} />
+      ))}
+
+      {/* Send button area */}
+      <rect x="80" y="212" width="120" height="20" rx="10" fill="#10B981" fillOpacity="0.6" />
+      <path d="M208 222 L220 222 M216 218 L220 222 L216 226" stroke="#10B981" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.7" />
+
+      {/* Reply bubble — floating */}
+      <rect x="240" y="40" width="130" height="60" rx="12" fill="#0B1D3A" stroke="#10B981" strokeWidth="1" strokeOpacity="0.4" />
+      <path d="M260 100 L250 115 L275 100" fill="#0B1D3A" />
+      <rect x="255" y="54" width="80" height="8" rx="4" fill="white" fillOpacity="0.4" />
+      <rect x="255" y="67" width="60" height="7" rx="3" fill="white" fillOpacity="0.25" />
+      <rect x="255" y="78" width="70" height="7" rx="3" fill="#10B981" fillOpacity="0.4" />
+
+      {/* 24hr badge */}
+      <rect x="30" y="160" width="110" height="44" rx="12" fill="#0B1D3A" stroke="#10B981" strokeWidth="1" strokeOpacity="0.35" />
+      <text x="85" y="177" textAnchor="middle" fill="#10B981" fontSize="14" fontWeight="900" fontFamily="sans-serif">24hrs</text>
+      <text x="85" y="193" textAnchor="middle" fill="white" fontSize="8" fontFamily="sans-serif" opacity="0.4">Response Time</text>
+
+      {/* Floating dots */}
+      {[[340, 140], [350, 160], [330, 155]].map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y} r="4" fill="#10B981" fillOpacity={0.3 + i * 0.1} />
+      ))}
+    </svg>
+  )
+}

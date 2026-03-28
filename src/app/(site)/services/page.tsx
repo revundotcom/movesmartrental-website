@@ -45,8 +45,43 @@ export default async function ServicesPage() {
         subheadline="Comprehensive property management solutions designed to maximize your rental income and minimize your workload."
       />
 
-      {/* Service Grid */}
-      <ServiceGridBlock services={services} columns={3} />
+      {/* Premium Service Grid Section */}
+      <section className="relative overflow-hidden bg-slate-50 py-4">
+        {/* Dot-grid overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+          style={{
+            backgroundImage: 'radial-gradient(#0B1D3A0d 1px, transparent 1px)',
+            backgroundSize: '24px 24px',
+          }}
+        />
+        {/* Emerald glow */}
+        <div
+          className="absolute -right-32 top-0 size-[400px] rounded-full bg-brand-emerald/6 blur-3xl pointer-events-none"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-4 pt-12">
+          <div className="mx-auto max-w-2xl text-center mb-2">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
+              What We Offer
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+              Eight Services.{' '}
+              <span className="font-display italic text-brand-emerald">
+                One Platform.
+              </span>
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-slate-600">
+              From finding your first tenant to managing a full portfolio — every service
+              is designed for Canadian landlords and renters.
+            </p>
+          </div>
+        </div>
+
+        <ServiceGridBlock services={services} columns={3} showHeading={false} />
+      </section>
 
       {/* CTA */}
       <CTABannerBlock

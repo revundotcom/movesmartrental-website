@@ -298,19 +298,36 @@ export function HeroBlock({
                 aria-hidden="true"
               />
               <HeroIllustration className="relative w-full drop-shadow-2xl" />
-              {/* Floating badge chip — animates with perpetual float */}
+              {/* Floating badge 1 — top right: Rent Received */}
               <motion.div
-                className="absolute -right-4 top-8 flex items-center gap-2 rounded-2xl border border-white/10 bg-white/8 px-4 py-2.5 shadow-xl backdrop-blur-md"
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute -right-4 top-8 flex items-center gap-2 rounded-2xl border border-white/10 bg-brand-navy/80 px-4 py-2.5 shadow-xl backdrop-blur-md"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0, y: [0, -8, 0] }}
+                transition={{ opacity: { delay: 0.9, duration: 0.5 }, x: { delay: 0.9, duration: 0.5 }, y: { duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 1 } }}
                 aria-hidden="true"
               >
-                <span className="flex size-6 items-center justify-center rounded-full bg-brand-emerald/20 text-xs">
-                  💰
+                <span className="flex size-6 items-center justify-center rounded-full bg-brand-emerald/20">
+                  <svg viewBox="0 0 16 16" className="size-3.5 text-brand-emerald" fill="currentColor" aria-hidden="true"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm.75 10.5h-1.5v-4.5h1.5v4.5zm0-6h-1.5V4h1.5v1.5z" /></svg>
                 </span>
                 <div>
                   <p className="text-[11px] font-bold leading-none text-white">Rent Received</p>
                   <p className="mt-0.5 text-[9px] leading-none text-white/50">On time, every month</p>
+                </div>
+              </motion.div>
+              {/* Floating badge 2 — bottom left: tenant placed */}
+              <motion.div
+                className="absolute -left-4 bottom-12 flex items-center gap-2 rounded-2xl border border-white/10 bg-brand-navy/80 px-4 py-2.5 shadow-xl backdrop-blur-md"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0, y: [0, 8, 0] }}
+                transition={{ opacity: { delay: 1.1, duration: 0.5 }, x: { delay: 1.1, duration: 0.5 }, y: { duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 1.2 } }}
+                aria-hidden="true"
+              >
+                <span className="flex size-6 items-center justify-center rounded-full bg-brand-emerald/20">
+                  <svg viewBox="0 0 20 20" className="size-3.5 text-brand-emerald" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" /></svg>
+                </span>
+                <div>
+                  <p className="text-[11px] font-bold leading-none text-white">Tenant Placed</p>
+                  <p className="mt-0.5 text-[9px] leading-none text-emerald-400">14-day avg. fill</p>
                 </div>
               </motion.div>
             </div>

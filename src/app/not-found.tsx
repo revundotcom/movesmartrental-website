@@ -72,7 +72,7 @@ export default function NotFound() {
           </span>
         </div>
 
-        <h1 className="font-heading text-2xl font-bold text-brand-navy sm:text-3xl">
+        <h1 className="font-display text-2xl font-normal text-brand-navy sm:text-3xl">
           Page Not Found
         </h1>
         <p className="mx-auto mt-4 max-w-md text-lg text-muted-foreground">

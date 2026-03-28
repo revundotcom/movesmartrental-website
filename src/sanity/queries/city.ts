@@ -13,11 +13,8 @@ export const CITY_PAGE_QUERY = groq`
     vacancyRate,
     neighbourhoods,
     transitInfo,
-    heroImage {
-      asset,
-      alt,
-      hotspot
-    },
+    "heroImageUrl": heroImage.asset->url,
+    "heroImageAlt": heroImage.alt,
     description,
     "province": province-> {
       title,

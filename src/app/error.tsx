@@ -33,7 +33,7 @@ export default function Error({
             />
           </svg>
         </div>
-        <h1 className="font-heading text-2xl font-bold text-[#0A2647]">
+        <h1 className="font-display text-2xl font-normal text-[#0A2647]">
           Something went wrong
         </h1>
         <p className="mt-3 text-muted-foreground">

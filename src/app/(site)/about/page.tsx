@@ -79,32 +79,46 @@ export default function AboutPage() {
         subheadline="Professional property management built on technology, transparency, and trust."
       />
 
-      {/* Company Story */}
-      <section className="py-16">
-        <div className="mx-auto max-w-3xl px-4">
-          <h2 className="mb-6 text-2xl font-bold tracking-tight sm:text-3xl">
-            Our Mission
-          </h2>
-          <div className="space-y-4 text-muted-foreground">
-            <p>
-              MoveSmart Rentals was founded on a simple idea: property management
-              should be accessible, transparent, and results-driven. Too many
-              property owners face opaque pricing, slow tenant placement, and
-              outdated processes. We set out to change that.
-            </p>
-            <p>
-              By combining modern technology with local market knowledge,
-              MoveSmart Rentals delivers a property management experience that
-              works for owners and tenants alike. Our success-based model means
-              we only earn when we deliver results, aligning our interests with
-              yours from day one.
-            </p>
-            <p>
-              Today, MoveSmart Rentals serves property owners across Ontario and
-              is expanding into new markets across Canada. Every city we enter
-              gets the same commitment: professional service, fair pricing, and a
-              team that treats your property as if it were their own.
-            </p>
+      {/* ── Company Story ── */}
+      <section className="relative overflow-hidden bg-white py-28">
+        {/* Dot-grid */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          aria-hidden="true"
+          style={{ backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)', backgroundSize: '24px 24px' }}
+        />
+        {/* Emerald glow */}
+        <div className="absolute -right-40 top-20 size-[400px] rounded-full bg-brand-emerald/6 blur-3xl" aria-hidden="true" />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-4">
+          <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
+            {/* Left: story */}
+            <div>
+              <p className="text-sm font-black uppercase tracking-[0.2em] text-brand-emerald">Our Story</p>
+              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
+                Built to Solve the<br /><span className="font-display italic text-brand-emerald">Right Problem</span>
+              </h2>
+              <div className="mt-6 space-y-4 text-lg leading-relaxed text-slate-600">
+                <p>MoveSmart Rentals was founded on a simple idea: property management should be accessible, transparent, and results-driven. Too many property owners face opaque pricing, slow tenant placement, and outdated processes.</p>
+                <p>By combining modern technology with local market knowledge, MoveSmart Rentals delivers a property management experience that works for owners and tenants alike. Our success-based model means we only earn when we deliver results.</p>
+                <p>Today, MoveSmart Rentals serves property owners across Ontario and is expanding into new markets. Every city gets the same commitment: professional service, fair pricing, and a team that treats your property as their own.</p>
+              </div>
+            </div>
+
+            {/* Right: stat bento grid */}
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { value: '500+', label: 'Properties\nManaged', color: 'bg-brand-navy text-white' },
+                { value: '25+', label: 'Ontario\nCities', color: 'bg-brand-emerald/10 text-brand-navy' },
+                { value: '98%', label: 'Occupancy\nRate', color: 'bg-brand-emerald/10 text-brand-navy' },
+                { value: '14 Days', label: 'Average Fill\nTime', color: 'bg-brand-navy text-white' },
+              ].map((stat) => (
+                <div key={stat.label} className={`flex flex-col items-center justify-center rounded-3xl p-8 text-center ${stat.color}`}>
+                  <p className={`text-4xl font-black ${stat.color.includes('text-white') ? 'text-brand-emerald' : 'text-brand-navy'}`}>{stat.value}</p>
+                  <p className={`mt-1 text-xs font-semibold uppercase tracking-wider whitespace-pre-line ${stat.color.includes('text-white') ? 'text-white/60' : 'text-slate-500'}`}>{stat.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

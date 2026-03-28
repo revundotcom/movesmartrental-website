@@ -5,7 +5,6 @@ import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { HeroBlock } from '@/components/blocks/hero-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { ContactForm } from '@/components/contact-form'
-import { Card, CardContent } from '@/components/ui/card'
 
 export const metadata: Metadata = {
   title: 'Contact Us',
@@ -55,47 +54,70 @@ export default function ContactPage() {
         subheadline="We respond within 24 hours"
       />
 
-      {/* Contact Form + Info Grid */}
-      <section className="py-16">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-4 lg:grid-cols-2">
-          {/* Left: Form */}
-          <div>
-            <h2 className="mb-6 text-2xl font-bold">Send Us a Message</h2>
-            <ContactForm />
-          </div>
+      {/* Contact main section */}
+      <section className="relative overflow-hidden bg-white py-28">
+        {/* Dot grid */}
+        <div
+          className="absolute inset-0 opacity-[0.025]"
+          aria-hidden="true"
+          style={{ backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)', backgroundSize: '24px 24px' }}
+        />
+        {/* Emerald glow top-right */}
+        <div className="absolute -right-20 -top-20 size-[400px] rounded-full bg-brand-emerald/6 blur-3xl" aria-hidden="true" />
 
-          {/* Right: Contact Info Cards */}
-          <div>
-            <h2 className="mb-6 text-2xl font-bold">Contact Information</h2>
-            <div className="space-y-4">
+        <div className="relative z-10 mx-auto max-w-7xl px-4">
+          <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:items-start">
+
+            {/* Left: Form */}
+            <div>
+              <p className="text-sm font-black uppercase tracking-[0.2em] text-brand-emerald">Get in Touch</p>
+              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+                Let&apos;s Start a<br />
+                <span className="font-display italic text-brand-emerald">Conversation</span>
+              </h2>
+              <p className="mt-4 text-lg text-slate-600">We respond within 24 hours. Tell us about your property and goals.</p>
+              <div className="mt-8">
+                <ContactForm />
+              </div>
+            </div>
+
+            {/* Right: Info cards */}
+            <div className="space-y-4 lg:pt-16">
               {CONTACT_INFO.map((item) => {
                 const IconComponent = item.icon
-                return (
-                  <Card key={item.label}>
-                    <CardContent className="flex items-start gap-4 pt-6">
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                        <IconComponent className="size-5 text-primary" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-muted-foreground">
-                          {item.label}
-                        </p>
-                        {'href' in item && item.href ? (
-                          <a
-                            href={item.href}
-                            className="font-semibold text-primary hover:underline"
-                          >
-                            {item.value}
-                          </a>
-                        ) : (
-                          <p className="font-semibold">{item.value}</p>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
+                const content = (
+                  <div className="group flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-emerald/30 hover:shadow-md">
+                    <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-brand-emerald/10 transition-colors duration-300 group-hover:bg-brand-emerald/20">
+                      <IconComponent className="size-5 text-brand-emerald" aria-hidden="true" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-black uppercase tracking-wider text-slate-400">{item.label}</p>
+                      <p className="mt-1 text-base font-semibold text-brand-navy">{item.value}</p>
+                    </div>
+                  </div>
                 )
+                if ('href' in item && item.href) {
+                  return <a key={item.label} href={item.href}>{content}</a>
+                }
+                return <div key={item.label}>{content}</div>
               })}
+
+              {/* Response time promise */}
+              <div className="rounded-2xl bg-brand-navy p-6">
+                <div className="flex items-center gap-3">
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-brand-emerald/20">
+                    <svg viewBox="0 0 24 24" className="size-5 text-brand-emerald" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-white">24-Hour Response Promise</p>
+                    <p className="text-xs text-white/50">We respond to every inquiry within one business day</p>
+                  </div>
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
       </section>

@@ -378,62 +378,108 @@ function CityServiceView({
         priority
       />
 
-      {/* AI-01: Content section -- direct answer in first 40-60 words */}
-      {data.localBody && (
-        <section className="mx-auto max-w-4xl px-4 py-12">
-          <PortableTextBody value={data.localBody} />
-        </section>
-      )}
+      {/* Premium Local Market Section — two-column layout */}
+      <section className="relative overflow-hidden bg-white py-24">
+        {/* Dot-grid background */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          aria-hidden="true"
+          style={{
+            backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)',
+            backgroundSize: '24px 24px',
+          }}
+        />
+        {/* Emerald glow */}
+        <div
+          className="absolute -left-32 top-10 size-[360px] rounded-full bg-brand-emerald/6 blur-3xl"
+          aria-hidden="true"
+        />
 
-      {/* Local Data Display -- CRITICAL for content differentiation */}
-      <section className="mx-auto max-w-4xl px-4 py-8">
-        <h2 className="mb-6 text-2xl font-bold tracking-tight">
-          {cityTitle} Rental Market Data
-        </h2>
-        <div className="rounded-lg bg-muted p-8">
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="relative z-10 mx-auto max-w-7xl px-4">
+          <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-2">
+            {/* Left: local body content */}
             <div>
-              <p className="text-sm font-medium text-muted-foreground">
-                Median Rent
+              <p className="text-sm font-black uppercase tracking-[0.2em] text-brand-emerald">
+                Local Market Insight
               </p>
-              <p className="mt-1 text-3xl font-bold">
-                {formatCurrency(data.localMedianRent)}
-              </p>
-              <p className="mt-1 text-xs text-muted-foreground">per month</p>
+              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+                {serviceTitle} in{' '}
+                <span className="font-display italic text-brand-emerald">
+                  {cityTitle}
+                </span>
+              </h2>
+
+              {data.localBody ? (
+                <div className="mt-6 text-lg leading-relaxed text-slate-600">
+                  <PortableTextBody value={data.localBody} />
+                </div>
+              ) : (
+                <p className="mt-6 text-lg leading-relaxed text-slate-600">
+                  MoveSmart Rentals provides professional {serviceTitle.toLowerCase()} services
+                  in {cityTitle}, {provinceName}. Our local team understands the {cityTitle}{' '}
+                  rental market and delivers results-driven property management with zero upfront cost.
+                </p>
+              )}
+
+              {data.localRegulatory && (
+                <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                  <p className="text-xs font-black uppercase tracking-wider text-slate-400">
+                    Local Regulations
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                    {data.localRegulatory}
+                  </p>
+                </div>
+              )}
             </div>
 
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">
-                Vacancy Rate
-              </p>
-              <p className="mt-1 text-3xl font-bold">
-                {formatPercentage(data.localVacancyRate)}
-              </p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                current market rate
-              </p>
-            </div>
+            {/* Right: stat bento grid */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col items-center justify-center rounded-3xl bg-brand-navy p-8 text-center">
+                <p className="text-4xl font-black text-brand-emerald">
+                  {formatCurrency(data.localMedianRent)}
+                </p>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-white/50">
+                  Median Rent / Mo
+                </p>
+              </div>
 
-            <div className="sm:col-span-2 lg:col-span-1">
-              <p className="text-sm font-medium text-muted-foreground">
-                Key Neighbourhoods
-              </p>
-              <p className="mt-1 text-lg font-bold">
-                {data.neighbourhoodNames.join(', ')}
-              </p>
+              <div className="flex flex-col items-center justify-center rounded-3xl bg-brand-emerald/10 p-8 text-center">
+                <p className="text-4xl font-black text-brand-navy">
+                  {formatPercentage(data.localVacancyRate)}
+                </p>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  Vacancy Rate
+                </p>
+              </div>
+
+              <div className="flex flex-col items-center justify-center rounded-3xl bg-brand-emerald/10 p-8 text-center">
+                <p className="text-4xl font-black text-brand-navy">
+                  {data.city.population
+                    ? data.city.population >= 1_000_000
+                      ? `${(data.city.population / 1_000_000).toFixed(1)}M`
+                      : data.city.population >= 1_000
+                        ? `${Math.round(data.city.population / 1_000)}K`
+                        : String(data.city.population)
+                    : '—'}
+                </p>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  Population
+                </p>
+              </div>
+
+              <div className="flex flex-col items-center justify-center rounded-3xl bg-brand-navy p-8 text-center">
+                <p className="text-4xl font-black text-brand-emerald">
+                  {data.neighbourhoodNames.length > 0
+                    ? `${data.neighbourhoodNames.length}+`
+                    : '10+'}
+                </p>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-white/50">
+                  Neighbourhoods
+                </p>
+              </div>
             </div>
           </div>
-
-          {data.localRegulatory && (
-            <div className="mt-6 border-t pt-6">
-              <p className="text-sm font-medium text-muted-foreground">
-                Local Regulatory Information
-              </p>
-              <p className="mt-2 text-sm leading-relaxed">
-                {data.localRegulatory}
-              </p>
-            </div>
-          )}
         </div>
       </section>
 
@@ -460,13 +506,22 @@ function CityServiceView({
       {/* Related Services */}
       {relatedServices.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 py-12">
-          <h2 className="mb-8 text-center text-2xl font-bold tracking-tight sm:text-3xl">
-            Related Services in {cityTitle}
-          </h2>
+          <div className="mx-auto max-w-2xl text-center mb-12">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
+              More Services
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+              Related Services in{' '}
+              <span className="font-display italic text-brand-emerald">
+                {cityTitle}
+              </span>
+            </h2>
+          </div>
           <ServiceGridBlock
             services={relatedServices}
             columns={3}
             basePath={`/ca/${province}/${city}`}
+            showHeading={false}
           />
         </section>
       )}
