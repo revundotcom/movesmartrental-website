@@ -701,3 +701,303 @@ export function FranchiseIllustration({ className = '' }: { className?: string }
     </svg>
   )
 }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   KEY HANDOFF: Hand passing keys to another hand, house silhouette above
+   ────────────────────────────────────────────────────────────────────────── */
+
+export function IllustrationKeyHandoff({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 240 200"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Background circle */}
+      <circle cx="120" cy="100" r="88" fill="#E2F8F1" />
+
+      {/* House silhouette */}
+      <path d="M90 88 L120 62 L150 88 L150 118 L90 118 Z" fill="#0B1D3A" />
+      <rect x="108" y="96" width="14" height="22" rx="2" fill="#10B981" />
+      <rect x="90" y="88" width="60" height="30" fill="none" />
+      {/* Chimney */}
+      <rect x="136" y="58" width="8" height="16" rx="1" fill="#0B1D3A" />
+
+      {/* Left hand (giving) — simplified palm shape */}
+      <path
+        d="M52 138 C52 132 56 128 62 128 L78 128 C82 128 84 130 84 134 L84 150 C84 156 80 160 74 160 L58 160 C54 160 52 157 52 153 Z"
+        fill="#0B1D3A"
+      />
+      {/* Fingers on left hand */}
+      <rect x="62" y="116" width="8" height="16" rx="4" fill="#0B1D3A" />
+      <rect x="72" y="114" width="8" height="18" rx="4" fill="#0B1D3A" />
+      <rect x="82" y="118" width="7" height="14" rx="3.5" fill="#0B1D3A" />
+
+      {/* Right hand (receiving) */}
+      <path
+        d="M156 138 C156 132 160 128 166 128 L182 128 C186 128 188 130 188 134 L188 150 C188 156 184 160 178 160 L162 160 C158 160 156 157 156 153 Z"
+        fill="#10B981"
+      />
+      {/* Fingers on right hand */}
+      <rect x="160" y="116" width="8" height="16" rx="4" fill="#10B981" />
+      <rect x="170" y="114" width="8" height="18" rx="4" fill="#10B981" />
+      <rect x="180" y="118" width="7" height="14" rx="3.5" fill="#10B981" />
+
+      {/* Key — being transferred between hands */}
+      <circle cx="120" cy="140" r="10" stroke="#D4A853" strokeWidth="3" fill="none" />
+      <circle cx="120" cy="140" r="4" fill="#D4A853" fillOpacity="0.4" />
+      <line x1="128" y1="147" x2="146" y2="163" stroke="#D4A853" strokeWidth="3" strokeLinecap="round" />
+      <line x1="136" y1="155" x2="132" y2="160" stroke="#D4A853" strokeWidth="2.5" strokeLinecap="round" />
+      <line x1="141" y1="160" x2="137" y2="165" stroke="#D4A853" strokeWidth="2.5" strokeLinecap="round" />
+
+      {/* Subtle motion arc */}
+      <path d="M88 142 Q120 125 152 142" stroke="#10B981" strokeWidth="1.5" strokeOpacity="0.4" fill="none" strokeDasharray="4 4" />
+    </svg>
+  )
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   PROPERTY SEARCH: Person with magnifying glass examining a building
+   ────────────────────────────────────────────────────────────────────────── */
+
+export function IllustrationPropertySearch({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 240 200"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Background */}
+      <circle cx="120" cy="100" r="88" fill="#F0F4F8" />
+
+      {/* Building */}
+      <rect x="50" y="60" width="100" height="120" rx="4" fill="#0B1D3A" />
+      {/* Roof parapet */}
+      <rect x="46" y="56" width="108" height="12" rx="2" fill="#0B1D3A" />
+      {/* Windows grid */}
+      <rect x="62" y="78" width="18" height="16" rx="2" fill="#10B981" fillOpacity="0.5" />
+      <rect x="86" y="78" width="18" height="16" rx="2" fill="#10B981" fillOpacity="0.7" />
+      <rect x="110" y="78" width="18" height="16" rx="2" fill="#10B981" fillOpacity="0.4" />
+      <rect x="62" y="104" width="18" height="16" rx="2" fill="white" fillOpacity="0.15" />
+      <rect x="86" y="104" width="18" height="16" rx="2" fill="#10B981" fillOpacity="0.5" />
+      <rect x="110" y="104" width="18" height="16" rx="2" fill="white" fillOpacity="0.2" />
+      <rect x="62" y="130" width="18" height="16" rx="2" fill="white" fillOpacity="0.1" />
+      <rect x="86" y="130" width="18" height="16" rx="2" fill="#10B981" fillOpacity="0.3" />
+      <rect x="110" y="130" width="18" height="16" rx="2" fill="white" fillOpacity="0.15" />
+      {/* Door */}
+      <rect x="90" y="156" width="20" height="24" rx="2" fill="#10B981" fillOpacity="0.5" />
+
+      {/* Person silhouette */}
+      <circle cx="186" cy="96" r="12" fill="#0B1D3A" />
+      <path d="M174 130 C174 118 178 112 186 112 C194 112 198 118 198 130 L198 150 L174 150 Z" fill="#0B1D3A" />
+
+      {/* Magnifying glass */}
+      <circle cx="168" cy="128" r="18" fill="white" fillOpacity="0.9" stroke="#10B981" strokeWidth="3" />
+      <circle cx="168" cy="128" r="12" fill="#E2F8F1" />
+      {/* Glass content — mini house */}
+      <path d="M162 131 L168 125 L174 131 L174 137 L162 137 Z" fill="#10B981" />
+      {/* Handle */}
+      <line x1="181" y1="141" x2="194" y2="154" stroke="#10B981" strokeWidth="4" strokeLinecap="round" />
+
+      {/* Location pin accent */}
+      <path d="M100 52 C100 44 110 38 120 38 C130 38 140 44 140 52 C140 63 120 76 120 76 C120 76 100 63 100 52 Z" fill="#10B981" />
+      <circle cx="120" cy="52" r="6" fill="white" />
+    </svg>
+  )
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   LEASE AGREEMENT: Document + pen + checkmarks + handshake
+   ────────────────────────────────────────────────────────────────────────── */
+
+export function IllustrationLeaseAgreement({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 240 200"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Background */}
+      <circle cx="120" cy="100" r="88" fill="#E2F8F1" />
+
+      {/* Document */}
+      <rect x="58" y="30" width="110" height="140" rx="6" fill="white" stroke="#E2F8F1" strokeWidth="2" />
+      {/* Document header bar */}
+      <rect x="58" y="30" width="110" height="28" rx="6" fill="#0B1D3A" />
+      <rect x="58" y="48" width="110" height="10" fill="#0B1D3A" />
+      <text x="113" y="49" textAnchor="middle" fill="white" fontSize="7" fontWeight="700">LEASE AGREEMENT</text>
+
+      {/* Document lines */}
+      <rect x="70" y="70" width="86" height="4" rx="2" fill="#E2E8F0" />
+      <rect x="70" y="80" width="70" height="4" rx="2" fill="#E2E8F0" />
+      <rect x="70" y="90" width="80" height="4" rx="2" fill="#E2E8F0" />
+      <rect x="70" y="100" width="60" height="4" rx="2" fill="#E2E8F0" />
+
+      {/* Gold accent bar */}
+      <rect x="70" y="112" width="86" height="3" rx="1.5" fill="#D4A853" fillOpacity="0.6" />
+
+      {/* Checklist */}
+      <circle cx="76" cy="126" r="6" fill="#10B981" fillOpacity="0.2" />
+      <path d="M73 126 L75.5 128.5 L80 123.5" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="86" y="123" width="54" height="4" rx="2" fill="#E2E8F0" />
+
+      <circle cx="76" cy="142" r="6" fill="#10B981" fillOpacity="0.2" />
+      <path d="M73 142 L75.5 144.5 L80 139.5" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="86" y="139" width="40" height="4" rx="2" fill="#E2E8F0" />
+
+      {/* Signature line */}
+      <line x1="70" y1="162" x2="155" y2="162" stroke="#D4A853" strokeWidth="1.5" strokeOpacity="0.7" />
+
+      {/* Pen */}
+      <g transform="translate(140, 100) rotate(35)">
+        <rect x="0" y="0" width="8" height="52" rx="2" fill="#0B1D3A" />
+        <polygon points="0,52 8,52 4,64" fill="#D4A853" />
+        <rect x="1" y="2" width="6" height="8" rx="1" fill="#10B981" fillOpacity="0.6" />
+      </g>
+
+      {/* Handshake — bottom center */}
+      {/* Left arm */}
+      <path d="M78 180 C82 174 90 170 100 170 L118 170" stroke="#0B1D3A" strokeWidth="6" strokeLinecap="round" />
+      {/* Right arm */}
+      <path d="M162 180 C158 174 150 170 140 170 L122 170" stroke="#10B981" strokeWidth="6" strokeLinecap="round" />
+      {/* Clasped hands */}
+      <circle cx="120" cy="170" r="10" fill="#D4A853" fillOpacity="0.3" stroke="#D4A853" strokeWidth="2" />
+      <path d="M114 170 L120 165 L126 170 L120 175 Z" fill="#D4A853" />
+    </svg>
+  )
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   TENANT SCREENING: Person silhouette with shield and verification checkmark
+   ────────────────────────────────────────────────────────────────────────── */
+
+export function IllustrationTenantScreening({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 240 200"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Background */}
+      <circle cx="120" cy="100" r="88" fill="#F0F4F8" />
+
+      {/* Person silhouette */}
+      <circle cx="120" cy="72" r="26" fill="#0B1D3A" />
+      <path d="M76 158 C76 134 96 118 120 118 C144 118 164 134 164 158 L164 170 L76 170 Z" fill="#0B1D3A" />
+
+      {/* Shield overlay — centered on person */}
+      <path
+        d="M120 60 L150 72 L150 104 C150 124 136 136 120 142 C104 136 90 124 90 104 L90 72 Z"
+        fill="#10B981"
+        fillOpacity="0.2"
+        stroke="#10B981"
+        strokeWidth="2.5"
+      />
+      {/* Shield inner glow */}
+      <path
+        d="M120 68 L144 78 L144 104 C144 119 133 129 120 134 C107 129 96 119 96 104 L96 78 Z"
+        fill="#10B981"
+        fillOpacity="0.1"
+      />
+      {/* Check inside shield */}
+      <path
+        d="M108 100 L117 110 L134 88"
+        stroke="#10B981"
+        strokeWidth="4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+
+      {/* Verified badge — lower right */}
+      <circle cx="158" cy="144" r="18" fill="#0B1D3A" stroke="#10B981" strokeWidth="2" />
+      <path d="M150 144 L156 150 L167 138" stroke="#10B981" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+
+      {/* Trust stars — decorative */}
+      <circle cx="68" cy="90" r="5" fill="#D4A853" fillOpacity="0.7" />
+      <circle cx="56" cy="106" r="4" fill="#D4A853" fillOpacity="0.5" />
+      <circle cx="172" cy="90" r="5" fill="#D4A853" fillOpacity="0.7" />
+      <circle cx="184" cy="106" r="4" fill="#D4A853" fillOpacity="0.5" />
+
+      {/* Label */}
+      <rect x="82" y="176" width="76" height="16" rx="8" fill="#10B981" fillOpacity="0.15" />
+      <text x="120" y="188" textAnchor="middle" fill="#10B981" fontSize="8" fontWeight="700">VERIFIED TENANT</text>
+    </svg>
+  )
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   PROPERTY MANAGEMENT: Apartment block with chart, wrench, people icons
+   ────────────────────────────────────────────────────────────────────────── */
+
+export function IllustrationPropertyManagement({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 240 200"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Background */}
+      <circle cx="120" cy="100" r="88" fill="#E2F8F1" />
+
+      {/* Main apartment block */}
+      <rect x="60" y="50" width="120" height="130" rx="4" fill="#0B1D3A" />
+      {/* Parapet */}
+      <rect x="56" y="46" width="128" height="12" rx="3" fill="#0B1D3A" />
+      {/* Entrance canopy */}
+      <rect x="96" y="160" width="48" height="8" rx="2" fill="#10B981" fillOpacity="0.7" />
+      {/* Door */}
+      <rect x="102" y="156" width="36" height="24" rx="2" fill="#10B981" fillOpacity="0.4" />
+      <circle cx="132" cy="168" r="2.5" fill="#D4A853" />
+
+      {/* Window grid — 3 columns × 3 rows */}
+      {[0, 1, 2].map((col) =>
+        [0, 1, 2].map((row) => (
+          <rect
+            key={`w-${col}-${row}`}
+            x={72 + col * 34}
+            y={68 + row * 28}
+            width="22"
+            height="18"
+            rx="2"
+            fill={col === 1 && row === 1 ? '#10B981' : col === 0 && row === 0 ? '#10B981' : 'white'}
+            fillOpacity={col === 1 && row === 1 ? 0.7 : col === 0 && row === 0 ? 0.5 : 0.12}
+          />
+        ))
+      )}
+
+      {/* Chart icon — top right floating card */}
+      <rect x="168" y="44" width="46" height="40" rx="8" fill="white" stroke="#10B981" strokeWidth="1.5" />
+      <rect x="176" y="68" width="6" height="10" rx="1" fill="#10B981" fillOpacity="0.5" />
+      <rect x="184" y="62" width="6" height="16" rx="1" fill="#10B981" fillOpacity="0.8" />
+      <rect x="192" y="65" width="6" height="13" rx="1" fill="#D4A853" fillOpacity="0.8" />
+      <line x1="174" y1="78" x2="200" y2="78" stroke="#E2E8F0" strokeWidth="1" />
+
+      {/* Wrench icon — bottom left floating card */}
+      <rect x="26" y="120" width="42" height="40" rx="8" fill="white" stroke="#10B981" strokeWidth="1.5" />
+      {/* Wrench shape */}
+      <path d="M47 128 C42 128 38 132 38 137 C38 140 40 143 43 144 L50 152 C51 153 52 153 53 152 C54 151 54 150 53 149 L46 142 C48 141 50 139 50 137 C50 132 52 128 47 128 Z" fill="#10B981" />
+      <circle cx="47" cy="136" r="3" fill="white" />
+
+      {/* People icon — right side floating card */}
+      <rect x="172" y="112" width="44" height="40" rx="8" fill="white" stroke="#10B981" strokeWidth="1.5" />
+      {/* Two person silhouettes */}
+      <circle cx="188" cy="122" r="5" fill="#0B1D3A" />
+      <path d="M181 146 C181 136 185 132 188 132 C191 132 195 136 195 146 Z" fill="#0B1D3A" />
+      <circle cx="200" cy="122" r="5" fill="#10B981" fillOpacity="0.7" />
+      <path d="M193 146 C193 136 197 132 200 132 C203 132 207 136 207 146 Z" fill="#10B981" fillOpacity="0.7" />
+
+      {/* Ground shadow */}
+      <ellipse cx="120" cy="185" rx="64" ry="6" fill="#0B1D3A" fillOpacity="0.08" />
+    </svg>
+  )
+}

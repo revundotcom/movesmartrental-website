@@ -1,3 +1,4 @@
+'use client'
 import {
   DollarSign,
   FileText,
@@ -10,7 +11,9 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 
+import { RevealOnScroll, revealItem } from '@/components/ui/reveal-on-scroll'
 import type { ServiceGridBlockProps } from '@/types/blocks'
 
 const ICON_MAP: Record<string, LucideIcon> = {
@@ -93,12 +96,6 @@ function CardDecor({ index }: { index: number }) {
   return patterns[index % patterns.length] ?? null
 }
 
-const COLUMN_CLASSES: Record<number, string> = {
-  2: 'lg:grid-cols-2',
-  3: 'lg:grid-cols-3',
-  4: 'lg:grid-cols-4',
-}
-
 /* Gradient per card — cycles through 4 variants */
 const ICON_GRADIENTS = [
   'from-emerald-50 to-teal-100',
@@ -110,7 +107,7 @@ const ICON_COLORS = ['text-emerald-600', 'text-indigo-600', 'text-amber-600', 't
 
 export function ServiceGridBlock({
   services,
-  columns = 3,
+  columns: _columns = 3, // eslint-disable-line @typescript-eslint/no-unused-vars
   basePath,
   showHeading = true,
 }: ServiceGridBlockProps) {
@@ -121,77 +118,121 @@ export function ServiceGridBlock({
       <div className="mx-auto max-w-7xl px-4 pb-12">
         {showHeading && (
           <div className="mb-12 text-center">
-            <h2 className="font-heading text-3xl font-extrabold tracking-tight text-brand-navy sm:text-4xl">
+            <h2 className="font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
               Our Services
             </h2>
             <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-brand-emerald" />
           </div>
         )}
 
-        <div
-          className={`grid grid-cols-1 gap-5 md:grid-cols-2 ${COLUMN_CLASSES[columns] ?? 'lg:grid-cols-3'}`}
-        >
+        <RevealOnScroll className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:auto-rows-[1fr]">
           {services.map((service, index) => {
             const Icon = service.icon ? ICON_MAP[service.icon] : null
             const gradClass = ICON_GRADIENTS[index % ICON_GRADIENTS.length]
             const iconColor = ICON_COLORS[index % ICON_COLORS.length]
+            const isHero = index === 0 // First service is the dominant bento cell
 
-            return (
-              <Link
-                key={service.slug}
-                href={basePath ? `${basePath}/${service.slug}/` : `/services/${service.slug}/`}
-                className="group cursor-pointer"
-              >
-                <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 group-hover:-translate-y-1.5 group-hover:border-brand-emerald/20 group-hover:shadow-xl group-hover:shadow-brand-navy/8">
-                  {/* Decorative SVG per card */}
-                  <CardDecor index={index} />
-
-                  {/* Bottom gradient sweep on hover */}
-                  <div
-                    className="absolute inset-0 bg-gradient-to-br from-brand-emerald/0 to-brand-emerald/0 transition-all duration-500 group-hover:from-brand-emerald/3 group-hover:to-transparent"
-                    aria-hidden="true"
-                  />
-
-                  {/* Top accent bar */}
-                  <div
-                    className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 rounded-t-2xl transition-transform duration-300 group-hover:scale-x-100"
-                    style={{ background: 'linear-gradient(90deg, #10B981, #34D399)' }}
-                    aria-hidden="true"
-                  />
-
-                  <div className="relative z-10 flex flex-1 flex-col">
-                    {Icon && (
-                      <div className={`mb-5 flex size-13 items-center justify-center rounded-xl bg-gradient-to-br ${gradClass} shadow-sm transition-all duration-300 group-hover:scale-105`}>
-                        <Icon className={`size-6 ${iconColor}`} aria-hidden="true" />
+            if (isHero) {
+              return (
+                <motion.div key={service.slug} variants={revealItem} className="lg:col-span-2 lg:row-span-2">
+                  <Link
+                    href={basePath ? `${basePath}/${service.slug}/` : `/services/${service.slug}/`}
+                    className="group cursor-pointer h-full block"
+                  >
+                    <div className="relative flex h-full min-h-[260px] flex-col overflow-hidden rounded-3xl bg-gradient-to-br from-[#0f2044] via-[#0d2d50] to-[#082a20] p-8 text-white transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-2xl group-hover:shadow-brand-navy/40">
+                      <CardDecor index={0} />
+                      {/* Glow */}
+                      <div className="absolute -right-10 -top-10 size-[200px] rounded-full bg-brand-emerald/10 blur-3xl" aria-hidden="true" />
+                      <div className="relative z-10 flex flex-1 flex-col">
+                        {Icon && (
+                          <div className="mb-6 flex size-14 items-center justify-center rounded-2xl bg-brand-emerald/20">
+                            <Icon className="size-7 text-brand-emerald" aria-hidden="true" />
+                          </div>
+                        )}
+                        <p className="text-4xl font-black text-brand-emerald">500+</p>
+                        <p className="text-sm text-white/40">Tenants placed</p>
+                        <h3 className="mt-4 font-display text-2xl font-normal text-white">{service.title}</h3>
+                        <p className="mt-2 flex-1 text-sm leading-relaxed text-white/60">{service.shortDescription}</p>
+                        <div className="mt-6 flex items-center gap-1.5">
+                          <span className="text-sm font-bold text-brand-emerald">Learn more</span>
+                          <svg
+                            className="size-4 text-brand-emerald transition-transform duration-200 group-hover:translate-x-1"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2.5}
+                            aria-hidden="true"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          </svg>
+                        </div>
                       </div>
-                    )}
-                    <h3 className="text-base font-bold text-brand-navy transition-colors duration-200 group-hover:text-brand-emerald">
-                      {service.title}
-                    </h3>
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-500">
-                      {service.shortDescription}
-                    </p>
-                    <div className="mt-5 flex items-center gap-1.5">
-                      <span className="text-sm font-bold text-brand-emerald transition-all duration-200 group-hover:text-brand-emerald-dark">
-                        Learn more
-                      </span>
-                      <svg
-                        className="size-4 text-brand-emerald transition-transform duration-200 group-hover:translate-x-1"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2.5}
-                        aria-hidden="true"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
+                    </div>
+                  </Link>
+                </motion.div>
+              )
+            }
+
+            // Standard bento cells
+            return (
+              <motion.div key={service.slug} variants={revealItem}>
+                <Link
+                  href={basePath ? `${basePath}/${service.slug}/` : `/services/${service.slug}/`}
+                  className="group cursor-pointer"
+                >
+                  <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-6 shadow-[0_2px_12px_rgba(11,29,58,0.06)] transition-all duration-300 group-hover:-translate-y-1.5 group-hover:border-brand-emerald/30 group-hover:shadow-[0_12px_40px_rgba(11,29,58,0.12),0_2px_8px_rgba(16,185,129,0.08)]">
+                    {/* Decorative SVG per card */}
+                    <CardDecor index={index} />
+
+                    {/* Bottom gradient sweep on hover */}
+                    <div
+                      className="absolute inset-0 bg-gradient-to-br from-brand-emerald/0 to-brand-emerald/0 transition-all duration-500 group-hover:from-brand-emerald/3 group-hover:to-transparent"
+                      aria-hidden="true"
+                    />
+
+                    {/* Top accent bar */}
+                    <div
+                      className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 rounded-t-2xl transition-transform duration-300 group-hover:scale-x-100"
+                      style={{ background: 'linear-gradient(90deg, #10B981, #34D399)' }}
+                      aria-hidden="true"
+                    />
+
+                    <div className="relative z-10 flex flex-1 flex-col">
+                      {Icon && (
+                        <div
+                          className={`mb-5 flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br ${gradClass} shadow-sm transition-all duration-300 group-hover:scale-110 group-hover:shadow-md`}
+                        >
+                          <Icon className={`size-6 ${iconColor}`} aria-hidden="true" />
+                        </div>
+                      )}
+                      <h3 className="text-base font-bold text-brand-navy transition-colors duration-200 group-hover:text-brand-emerald">
+                        {service.title}
+                      </h3>
+                      <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-500">
+                        {service.shortDescription}
+                      </p>
+                      <div className="mt-5 flex items-center gap-1.5">
+                        <span className="text-sm font-bold text-brand-emerald transition-all duration-200 group-hover:text-brand-emerald-dark">
+                          Learn more
+                        </span>
+                        <svg
+                          className="size-4 text-brand-emerald transition-transform duration-200 group-hover:translate-x-1"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2.5}
+                          aria-hidden="true"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </motion.div>
             )
           })}
-        </div>
+        </RevealOnScroll>
       </div>
     </section>
   )

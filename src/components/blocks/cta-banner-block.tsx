@@ -82,7 +82,7 @@ export function CTABannerBlock({
           </span>
         </div>
 
-        <h2 className="font-heading text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+        <h2 className="font-display text-3xl font-normal tracking-tight text-white sm:text-4xl lg:text-5xl">
           {headline}
         </h2>
 

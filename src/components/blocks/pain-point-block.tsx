@@ -1,4 +1,7 @@
+'use client'
 import { XCircle, CheckCircle, AlertTriangle, ShieldCheck, Clock, Ban, ThumbsUp, Wrench } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { RevealOnScroll, revealItem } from '@/components/ui/reveal-on-scroll'
 import type { PainPointBlockProps } from '@/types/blocks'
 
 // Rotate through problem/solution icon pairs for visual variety
@@ -13,26 +16,37 @@ export function PainPointBlock({
   if (!painPoints || painPoints.length === 0) return null
 
   return (
-    <section className="bg-white">
+    <section className="relative bg-white overflow-hidden">
+      <div
+        className="absolute inset-0 pointer-events-none"
+        aria-hidden="true"
+        style={{
+          backgroundImage: 'radial-gradient(#10B98108 1px, transparent 1px)',
+          backgroundSize: '32px 32px',
+        }}
+      />
       <div className="mx-auto max-w-6xl px-4">
         {showHeading && (
-          <div className="mb-12 text-center">
-            <h2 className="font-heading text-3xl font-bold tracking-tight text-[#0B1D3A] sm:text-4xl">
-              {title}
-            </h2>
-            <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-[#10B981]" />
-          </div>
+          <RevealOnScroll>
+            <motion.div variants={revealItem} className="mb-12 text-center">
+              <h2 className="font-display text-3xl font-normal tracking-tight text-[#0B1D3A] sm:text-4xl">
+                {title}
+              </h2>
+              <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-[#10B981]" />
+            </motion.div>
+          </RevealOnScroll>
         )}
 
-        <div className="space-y-6">
+        <RevealOnScroll className="space-y-6" stagger={0.1}>
           {painPoints.map((painPoint, index) => {
             const ProblemIcon = PROBLEM_ICONS[index % PROBLEM_ICONS.length]
             const SolutionIcon = SOLUTION_ICONS[index % SOLUTION_ICONS.length]
             const isReversed = index % 2 === 1
 
             return (
-              <div
+              <motion.div
                 key={index}
+                variants={revealItem}
                 className={`grid grid-cols-1 gap-4 md:grid-cols-2 ${
                   isReversed ? 'md:[&>:first-child]:order-2' : ''
                 }`}
@@ -66,10 +80,10 @@ export function PainPointBlock({
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )
           })}
-        </div>
+        </RevealOnScroll>
       </div>
     </section>
   )

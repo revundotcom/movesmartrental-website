@@ -1,4 +1,8 @@
+'use client'
+import { motion } from 'framer-motion'
+import { RevealOnScroll, revealItem } from '@/components/ui/reveal-on-scroll'
 import type { HowItWorksBlockProps } from '@/types/blocks'
+import { IllustrationLeaseAgreement } from '@/components/illustrations'
 
 export function HowItWorksBlock({
   steps,
@@ -9,20 +13,34 @@ export function HowItWorksBlock({
   const displaySteps = steps.slice(0, 6)
 
   return (
-    <section className="bg-slate-50">
+    <section className="relative bg-slate-50 overflow-hidden">
+      {/* Dot grid overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        aria-hidden="true"
+        style={{
+          backgroundImage: 'radial-gradient(#0B1D3A0d 1px, transparent 1px)',
+          backgroundSize: '24px 24px',
+        }}
+      />
       <div className="mx-auto max-w-6xl px-4">
         {/* Section heading with emerald underline */}
-        <div className="mb-14 text-center">
-          <h2 className="font-heading text-3xl font-bold tracking-tight text-[#0B1D3A] sm:text-4xl">
-            {title}
-          </h2>
-          <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-[#10B981]" />
-        </div>
+        <RevealOnScroll>
+          <motion.div variants={revealItem} className="mb-14 text-center">
+            <h2 className="font-display text-3xl font-normal tracking-tight text-[#0B1D3A] sm:text-4xl">
+              {title}
+            </h2>
+            <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-[#10B981]" />
+            <div className="mt-8 flex justify-center opacity-80">
+              <IllustrationLeaseAgreement className="h-32 w-auto" />
+            </div>
+          </motion.div>
+        </RevealOnScroll>
 
         {/* Desktop: horizontal timeline */}
         <div className="hidden md:block">
           <div className="relative flex items-start justify-between">
-            {/* Connecting line in emerald-200 */}
+            {/* Connecting line in emerald-200 — outside RevealOnScroll so it stays static */}
             {displaySteps.length > 1 && (
               <div
                 className="absolute top-7 h-0.5 bg-emerald-200"
@@ -33,55 +51,64 @@ export function HowItWorksBlock({
               />
             )}
 
-            {displaySteps.map((step, index) => (
-              <div
-                key={index}
-                className="relative flex flex-col items-center text-center"
-                style={{ width: `${100 / displaySteps.length}%` }}
-              >
-                {/* Emerald numbered circle */}
-                <div className="relative z-10 flex size-14 items-center justify-center rounded-full bg-[#10B981] text-lg font-bold text-white shadow-lg shadow-emerald-200">
-                  {step.stepNumber}
-                </div>
+            <RevealOnScroll className="contents" stagger={0.1}>
+              {displaySteps.map((step, index) => (
+                <motion.div
+                  key={index}
+                  variants={revealItem}
+                  className="relative flex flex-col items-center text-center"
+                  style={{ width: `${100 / displaySteps.length}%` }}
+                >
+                  {/* Emerald numbered circle */}
+                  <div className="relative z-10 flex size-14 items-center justify-center rounded-full bg-[#10B981] text-lg font-bold text-white shadow-lg shadow-emerald-300/50 ring-4 ring-emerald-200/40">
+                    {step.stepNumber}
+                  </div>
 
-                {/* Step card */}
-                <div className="mt-5 w-full max-w-[220px] rounded-xl bg-white p-4 shadow-sm">
-                  <h3 className="text-base font-semibold text-[#0B1D3A]">
-                    {step.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-            ))}
+                  {/* Step card */}
+                  <div className="mt-5 w-full max-w-[220px] rounded-xl bg-white p-4 shadow-sm">
+                    <h3 className="text-base font-semibold text-[#0B1D3A]">
+                      {step.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                      {step.description}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </RevealOnScroll>
           </div>
         </div>
 
         {/* Mobile: vertical timeline */}
         <div className="md:hidden">
-          <div className="relative space-y-0">
-            {/* Vertical connecting line */}
+          <div className="relative">
+            {/* Vertical connecting line — outside RevealOnScroll so it stays static */}
             <div className="absolute left-7 top-0 bottom-0 w-0.5 bg-emerald-200" />
 
-            {displaySteps.map((step, index) => (
-              <div key={index} className="relative flex gap-5 pb-8 last:pb-0">
-                {/* Emerald numbered circle */}
-                <div className="relative z-10 flex size-14 shrink-0 items-center justify-center rounded-full bg-[#10B981] text-lg font-bold text-white shadow-lg shadow-emerald-200">
-                  {step.stepNumber}
-                </div>
+            <RevealOnScroll className="relative space-y-0" stagger={0.1}>
+              {displaySteps.map((step, index) => (
+                <motion.div
+                  key={index}
+                  variants={revealItem}
+                  className="relative flex gap-5 pb-8 last:pb-0"
+                >
+                  {/* Emerald numbered circle */}
+                  <div className="relative z-10 flex size-14 shrink-0 items-center justify-center rounded-full bg-[#10B981] text-lg font-bold text-white shadow-lg shadow-emerald-300/50 ring-4 ring-emerald-200/40">
+                    {step.stepNumber}
+                  </div>
 
-                {/* Step card */}
-                <div className="flex-1 rounded-xl bg-white p-4 shadow-sm">
-                  <h3 className="text-base font-semibold text-[#0B1D3A]">
-                    {step.title}
-                  </h3>
-                  <p className="mt-1 text-sm leading-relaxed text-slate-600">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-            ))}
+                  {/* Step card */}
+                  <div className="flex-1 rounded-xl bg-white p-4 shadow-sm">
+                    <h3 className="text-base font-semibold text-[#0B1D3A]">
+                      {step.title}
+                    </h3>
+                    <p className="mt-1 text-sm leading-relaxed text-slate-600">
+                      {step.description}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </RevealOnScroll>
           </div>
         </div>
 
