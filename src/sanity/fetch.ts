@@ -9,7 +9,12 @@ export async function sanityFetch<T>({
   params?: Record<string, unknown>
   tags?: string[]
 }): Promise<T> {
-  return client.fetch<T>(query, params, {
-    next: { tags },
-  })
+  try {
+    return await client.fetch<T>(query, params, {
+      next: { tags },
+    })
+  } catch (error) {
+    console.error('Sanity fetch error:', error)
+    return null as T
+  }
 }
