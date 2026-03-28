@@ -16,7 +16,6 @@ import {
   Award,
   type LucideIcon,
 } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import type { BenefitsBlockProps } from '@/types/blocks'
 
 const ICON_MAP: Record<string, LucideIcon> = {
@@ -44,16 +43,22 @@ export function BenefitsBlock({
 }: BenefitsBlockProps) {
   if (!benefits || benefits.length === 0) return null
 
-  const gridCols = {
+  const gridCols: Record<number, string> = {
     2: 'lg:grid-cols-2',
     3: 'lg:grid-cols-3',
     4: 'lg:grid-cols-4',
   }
 
   return (
-    <section className="py-16">
+    <section className="bg-slate-50 py-16 md:py-20">
       <div className="mx-auto max-w-6xl px-4">
-        <h2 className="mb-12 text-center text-3xl font-bold">{title}</h2>
+        {/* Section heading with emerald underline */}
+        <div className="mb-12 text-center">
+          <h2 className="text-3xl font-bold tracking-tight text-[#0B1D3A] sm:text-4xl">
+            {title}
+          </h2>
+          <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-[#10B981]" />
+        </div>
 
         <div
           className={`grid grid-cols-1 gap-6 md:grid-cols-2 ${gridCols[columns]}`}
@@ -64,20 +69,20 @@ export function BenefitsBlock({
               : Star
 
             return (
-              <Card
+              <div
                 key={index}
-                className="transition-shadow duration-300 hover:shadow-lg"
+                className="rounded-xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
               >
-                <CardHeader>
-                  <IconComponent className="mb-2 size-8 text-primary" />
-                  <CardTitle>{benefit.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">
-                    {benefit.description}
-                  </p>
-                </CardContent>
-              </Card>
+                <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-emerald-100">
+                  <IconComponent className="size-6 text-emerald-600" />
+                </div>
+                <h3 className="text-lg font-semibold text-[#0B1D3A]">
+                  {benefit.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  {benefit.description}
+                </p>
+              </div>
             )
           })}
         </div>

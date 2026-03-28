@@ -9,17 +9,23 @@ export function HowItWorksBlock({
   const displaySteps = steps.slice(0, 6)
 
   return (
-    <section className="py-16">
+    <section className="bg-slate-50 py-16 md:py-20">
       <div className="mx-auto max-w-6xl px-4">
-        <h2 className="mb-12 text-center text-3xl font-bold">{title}</h2>
+        {/* Section heading with emerald underline */}
+        <div className="mb-14 text-center">
+          <h2 className="text-3xl font-bold tracking-tight text-[#0B1D3A] sm:text-4xl">
+            {title}
+          </h2>
+          <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-[#10B981]" />
+        </div>
 
         {/* Desktop: horizontal timeline */}
         <div className="hidden md:block">
           <div className="relative flex items-start justify-between">
-            {/* Connecting line */}
+            {/* Connecting line in emerald-200 */}
             {displaySteps.length > 1 && (
               <div
-                className="absolute top-6 h-0.5 bg-border"
+                className="absolute top-7 h-0.5 bg-emerald-200"
                 style={{
                   left: `calc(${100 / displaySteps.length / 2}%)`,
                   right: `calc(${100 / displaySteps.length / 2}%)`,
@@ -33,39 +39,54 @@ export function HowItWorksBlock({
                 className="relative flex flex-col items-center text-center"
                 style={{ width: `${100 / displaySteps.length}%` }}
               >
-                <div className="relative z-10 flex size-12 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground">
+                {/* Emerald numbered circle */}
+                <div className="relative z-10 flex size-14 items-center justify-center rounded-full bg-[#10B981] text-lg font-bold text-white shadow-lg shadow-emerald-200">
                   {step.stepNumber}
                 </div>
-                <h3 className="mt-4 text-lg font-semibold">{step.title}</h3>
-                <p className="mt-2 max-w-[200px] text-sm text-muted-foreground">
-                  {step.description}
-                </p>
+
+                {/* Step card */}
+                <div className="mt-5 w-full max-w-[220px] rounded-xl bg-white p-4 shadow-sm">
+                  <h3 className="text-base font-semibold text-[#0B1D3A]">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                    {step.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Mobile: vertical list */}
-        <div className="space-y-8 md:hidden">
-          {displaySteps.map((step, index) => (
-            <div key={index} className="flex gap-4">
-              <div className="flex shrink-0 items-start">
-                <div className="flex size-12 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground">
+        {/* Mobile: vertical timeline */}
+        <div className="md:hidden">
+          <div className="relative space-y-0">
+            {/* Vertical connecting line */}
+            <div className="absolute left-7 top-0 bottom-0 w-0.5 bg-emerald-200" />
+
+            {displaySteps.map((step, index) => (
+              <div key={index} className="relative flex gap-5 pb-8 last:pb-0">
+                {/* Emerald numbered circle */}
+                <div className="relative z-10 flex size-14 shrink-0 items-center justify-center rounded-full bg-[#10B981] text-lg font-bold text-white shadow-lg shadow-emerald-200">
                   {step.stepNumber}
                 </div>
+
+                {/* Step card */}
+                <div className="flex-1 rounded-xl bg-white p-4 shadow-sm">
+                  <h3 className="text-base font-semibold text-[#0B1D3A]">
+                    {step.title}
+                  </h3>
+                  <p className="mt-1 text-sm leading-relaxed text-slate-600">
+                    {step.description}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-lg font-semibold">{step.title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {step.description}
-                </p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {steps.length > 6 && (
-          <p className="mt-4 text-center text-sm text-muted-foreground">
+          <p className="mt-6 text-center text-sm text-slate-500">
             Showing first 6 of {steps.length} steps
           </p>
         )}
