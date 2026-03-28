@@ -1,5 +1,8 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 
 import { Button } from '@/components/ui/button'
 import { CTATracker } from '@/components/tracking/cta-tracker'
@@ -48,10 +51,9 @@ export function HeroBlock({
       ) : (
         <>
           <div
-            className="animate-gradient absolute inset-0"
+            className="absolute inset-0"
             style={{
               background: 'radial-gradient(ellipse at 20% 50%, #0F2847 0%, #0B1D3A 50%, #071228 100%)',
-              backgroundSize: '200% 200%',
             }}
             aria-hidden="true"
           />
@@ -66,14 +68,28 @@ export function HeroBlock({
         </>
       )}
 
-      {/* Radial glow top-left */}
-      <div
-        className="absolute -left-32 -top-32 size-[500px] rounded-full bg-[#10B981]/8 blur-3xl"
+      {/* Animated orb 1: emerald top-left — 12s cycle */}
+      <motion.div
+        className="pointer-events-none absolute size-[600px] rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.18)_0%,transparent_70%)] blur-[80px]"
+        style={{ top: -200, left: -100 }}
+        animate={{ x: [0, 80, -40, 0], y: [0, 60, 80, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
         aria-hidden="true"
       />
-      {/* Radial glow bottom-right */}
-      <div
-        className="absolute -bottom-20 -right-20 size-[400px] rounded-full bg-[#132D54]/60 blur-3xl"
+      {/* Animated orb 2: navy-light bottom-right — 16s cycle */}
+      <motion.div
+        className="pointer-events-none absolute size-[700px] rounded-full bg-[radial-gradient(circle,rgba(20,60,100,0.5)_0%,transparent_70%)] blur-[100px]"
+        style={{ bottom: -200, right: -150 }}
+        animate={{ x: [0, -60, 40, 0], y: [0, -80, -40, 0] }}
+        transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
+        aria-hidden="true"
+      />
+      {/* Animated orb 3: gold center-right — 8s cycle */}
+      <motion.div
+        className="pointer-events-none absolute size-[400px] rounded-full bg-[radial-gradient(circle,rgba(212,168,83,0.08)_0%,transparent_70%)] blur-[60px]"
+        style={{ top: '30%', right: '10%' }}
+        animate={{ x: [0, 40, -20, 0], y: [0, -40, 20, 0] }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
         aria-hidden="true"
       />
 
@@ -100,26 +116,9 @@ export function HeroBlock({
               </span>
             </div>
 
-            <h1 className="animate-fade-up delay-100 font-heading text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl md:text-6xl">
+            <h1 className="animate-fade-up delay-100 font-display text-4xl font-normal leading-[1.1] tracking-tight text-white sm:text-5xl md:text-6xl">
               {leadingWords}{' '}
-              <span className="relative inline-block">
-                <span
-                  className="relative z-10"
-                  style={{
-                    background: 'linear-gradient(135deg, #10B981 0%, #34D399 50%, #10B981 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                  }}
-                >
-                  {lastWord}
-                </span>
-                <span
-                  className="absolute -bottom-2 left-0 h-[3px] w-full rounded-full"
-                  style={{ background: 'linear-gradient(90deg, #10B981, #34D399, #10B981)' }}
-                  aria-hidden="true"
-                />
-              </span>
+              <span className="font-display italic text-brand-emerald">{lastWord}</span>
             </h1>
 
             {subheadline && (
@@ -135,10 +134,9 @@ export function HeroBlock({
                     <Button
                       variant="default"
                       size="lg"
-                      className="group/btn cursor-pointer border-transparent px-8 py-6 text-base font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-2xl"
+                      className="cta-primary-shadow group/btn cursor-pointer border-transparent px-8 py-6 text-base font-bold text-white transition-all duration-300 hover:-translate-y-0.5"
                       style={{
                         background: 'linear-gradient(135deg, #10B981, #059669)',
-                        boxShadow: '0 8px 32px rgba(16, 185, 129, 0.3)',
                       }}
                       render={<Link href={cta1.href} />}
                     >

@@ -103,8 +103,10 @@ export function Header() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 w-full border-b border-transparent bg-white/95 backdrop-blur-md transition-all duration-300',
-        scrolled ? 'border-border/40 shadow-[0_1px_12px_rgba(11,29,58,0.08)]' : 'shadow-none'
+        'sticky top-0 z-50 w-full transition-all duration-300',
+        scrolled
+          ? 'border-b border-border/40 bg-brand-navy shadow-[0_1px_12px_rgba(11,29,58,0.15)] backdrop-blur-md'
+          : 'border-b border-transparent bg-transparent'
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-[72px] lg:px-8">
@@ -116,7 +118,14 @@ export function Header() {
           <NavigationMenuList className="gap-0.5">
             {NAV_GROUPS.map((group) => (
               <NavigationMenuItem key={group.label}>
-                <NavigationMenuTrigger className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-[#0B1D3A]/70 transition-all duration-200 hover:bg-[#0B1D3A]/5 hover:text-[#0B1D3A] data-popup-open:bg-[#0B1D3A]/5 data-popup-open:text-[#0B1D3A]">
+                <NavigationMenuTrigger
+                  className={cn(
+                    'cursor-pointer rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200',
+                    scrolled
+                      ? 'text-white/80 hover:bg-white/10 hover:text-white data-popup-open:bg-white/10 data-popup-open:text-white'
+                      : 'text-white/90 hover:bg-white/10 hover:text-white data-popup-open:bg-white/10 data-popup-open:text-white'
+                  )}
+                >
                   {group.label}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="min-w-[280px]">
@@ -148,7 +157,12 @@ export function Header() {
         <div className="hidden items-center gap-2 lg:flex">
           <Link
             href="/contact/"
-            className="cursor-pointer rounded-lg border border-[#0B1D3A]/15 px-4 py-2 text-sm font-medium text-[#0B1D3A] transition-all duration-200 hover:border-[#0B1D3A]/30 hover:bg-[#0B1D3A]/5"
+            className={cn(
+              'cursor-pointer rounded-lg border px-4 py-2 text-sm font-medium transition-all duration-200',
+              scrolled
+                ? 'border-white/20 text-white/80 hover:border-white/40 hover:bg-white/10 hover:text-white'
+                : 'border-white/30 text-white hover:border-white/60 hover:bg-white/10'
+            )}
           >
             Book a Call
           </Link>
