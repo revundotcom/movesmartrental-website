@@ -74,12 +74,9 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Log form submission (email integration is out of scope for this plan)
+    // Log form submission without PII
     console.log('Contact form submission received:', {
       type: formData.type,
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone || '(not provided)',
       messageLength: formData.message.length,
       timestamp: new Date().toISOString(),
     })
