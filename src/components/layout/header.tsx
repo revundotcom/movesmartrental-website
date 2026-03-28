@@ -14,89 +14,40 @@ import { Logo } from '@/components/brand/logo'
 import { MobileNav } from '@/components/layout/mobile-nav'
 import { cn } from '@/lib/utils'
 
-/* ------------------------------------------------------------------ */
-/*  Navigation structure — grouped for clarity                        */
-/* ------------------------------------------------------------------ */
-
 const NAV_GROUPS = [
   {
     label: 'For Owners',
     items: [
-      {
-        title: 'Owner Hub',
-        href: '/owners/',
-        description: 'Dashboard and resources for property owners',
-      },
-      {
-        title: 'Services',
-        href: '/services/',
-        description: 'Full-service property management solutions',
-      },
-      {
-        title: 'Pricing',
-        href: '/pricing/',
-        description: 'Transparent pricing with no hidden fees',
-      },
-      {
-        title: 'Franchising',
-        href: '/franchising/',
-        description: 'Grow with the MoveSmart brand',
-      },
+      { title: 'Owner Hub', href: '/owners/', description: 'Dashboard and resources for property owners' },
+      { title: 'Services', href: '/services/', description: 'Full-service property management solutions' },
+      { title: 'Pricing', href: '/pricing/', description: 'Transparent pricing with no hidden fees' },
+      { title: 'Franchising', href: '/franchising/', description: 'Grow with the MoveSmart brand' },
     ],
   },
   {
     label: 'For Tenants',
     items: [
-      {
-        title: 'Tenant Hub',
-        href: '/tenants/',
-        description: 'Everything tenants need in one place',
-      },
-      {
-        title: 'Locations',
-        href: '/locations/',
-        description: 'Browse available rental properties',
-      },
-      {
-        title: 'Resources',
-        href: '/resources/',
-        description: 'Guides, FAQs, and helpful articles',
-      },
+      { title: 'Tenant Hub', href: '/tenants/', description: 'Everything tenants need in one place' },
+      { title: 'Locations', href: '/locations/', description: 'Browse available rental properties' },
+      { title: 'Resources', href: '/resources/', description: 'Guides, FAQs, and helpful articles' },
     ],
   },
   {
     label: 'About',
     items: [
-      {
-        title: 'About Us',
-        href: '/about/',
-        description: 'Our story, mission, and team',
-      },
-      {
-        title: 'Contact',
-        href: '/contact/',
-        description: 'Get in touch with our team',
-      },
-      {
-        title: 'FAQ',
-        href: '/resources/faq/',
-        description: 'Answers to commonly asked questions',
-      },
+      { title: 'About Us', href: '/about/', description: 'Our story, mission, and team' },
+      { title: 'Contact', href: '/contact/', description: 'Get in touch with our team' },
+      { title: 'FAQ', href: '/resources/faq/', description: 'Answers to commonly asked questions' },
     ],
   },
 ] as const
-
-/* ------------------------------------------------------------------ */
-/*  Header component                                                  */
-/* ------------------------------------------------------------------ */
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    // Transition to solid at 60px — enough to clear the hero eyebrow badge
-    const onScroll = () => setScrolled(window.scrollY > 60)
-    onScroll() // set initial state
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -104,28 +55,23 @@ export function Header() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 w-full transition-all duration-300',
+        'sticky top-0 z-50 w-full bg-brand-navy transition-all duration-300',
         scrolled
-          ? 'border-b border-border/40 bg-white/95 shadow-sm backdrop-blur-md'
-          : 'border-b border-transparent bg-transparent',
+          ? 'border-b border-white/10 shadow-[0_1px_16px_rgba(11,29,58,0.4)]'
+          : 'border-b border-white/5',
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-[72px] lg:px-8">
-        {/* Logo — white when transparent over dark hero, navy when solid on white */}
-        <Logo variant={scrolled ? 'default' : 'white'} />
+        {/* Logo — always white on dark navy */}
+        <Logo variant="white" />
 
-        {/* Desktop navigation — center */}
+        {/* Desktop navigation */}
         <NavigationMenu className="hidden lg:flex" align="center">
           <NavigationMenuList className="gap-0.5">
             {NAV_GROUPS.map((group) => (
               <NavigationMenuItem key={group.label}>
                 <NavigationMenuTrigger
-                  className={cn(
-                    'cursor-pointer rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200',
-                    scrolled
-                      ? 'text-brand-navy/80 hover:bg-brand-navy/5 hover:text-brand-navy data-popup-open:bg-brand-navy/5 data-popup-open:text-brand-navy'
-                      : 'text-white/90 hover:bg-white/10 hover:text-white data-popup-open:bg-white/10 data-popup-open:text-white',
-                  )}
+                  className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-white/80 transition-all duration-200 hover:bg-white/10 hover:text-white data-popup-open:bg-white/10 data-popup-open:text-white"
                 >
                   {group.label}
                 </NavigationMenuTrigger>
@@ -157,22 +103,17 @@ export function Header() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* Desktop CTA buttons — right */}
+        {/* Desktop CTA buttons */}
         <div className="hidden items-center gap-2 lg:flex">
           <Link
             href="/contact/"
-            className={cn(
-              'cursor-pointer rounded-lg border px-4 py-2 text-sm font-medium transition-all duration-200',
-              scrolled
-                ? 'border-brand-navy/20 text-brand-navy/80 hover:border-brand-navy/40 hover:bg-brand-navy/5 hover:text-brand-navy'
-                : 'border-white/30 text-white hover:border-white/60 hover:bg-white/10',
-            )}
+            className="cursor-pointer rounded-lg border border-white/20 px-4 py-2 text-sm font-medium text-white/80 transition-all duration-200 hover:border-white/40 hover:bg-white/10 hover:text-white"
           >
             Book a Call
           </Link>
           <Link
             href="/contact/"
-            className="cursor-pointer rounded-lg bg-brand-emerald px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-emerald-900/20 transition-all duration-200 hover:-translate-y-px hover:bg-brand-emerald-dark hover:shadow-md hover:shadow-emerald-900/25"
+            className="cursor-pointer rounded-lg bg-brand-emerald px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-emerald-900/20 transition-all duration-200 hover:-translate-y-px hover:bg-emerald-600 hover:shadow-md"
           >
             Get Started
           </Link>
