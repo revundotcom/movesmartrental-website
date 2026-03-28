@@ -2,8 +2,9 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Menu } from 'lucide-react'
+import { Menu, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Logo } from '@/components/brand/logo'
 import {
   Sheet,
   SheetContent,
@@ -11,39 +12,156 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
+import { cn } from '@/lib/utils'
 
-interface MobileNavProps {
-  items: Array<{ label: string; href: string }>
+/* ------------------------------------------------------------------ */
+/*  Mobile navigation structure                                       */
+/* ------------------------------------------------------------------ */
+
+const MOBILE_NAV_SECTIONS = [
+  {
+    label: 'For Owners',
+    items: [
+      { title: 'Owner Hub', href: '/owners/' },
+      { title: 'Services', href: '/services/' },
+      { title: 'Pricing', href: '/pricing/' },
+      { title: 'Franchising', href: '/franchising/' },
+    ],
+  },
+  {
+    label: 'For Tenants',
+    items: [
+      { title: 'Tenant Hub', href: '/tenants/' },
+      { title: 'Locations', href: '/locations/' },
+      { title: 'Resources', href: '/resources/' },
+    ],
+  },
+  {
+    label: 'About',
+    items: [
+      { title: 'About Us', href: '/about/' },
+      { title: 'Contact', href: '/contact/' },
+      { title: 'FAQ', href: '/resources/faq/' },
+    ],
+  },
+] as const
+
+/* ------------------------------------------------------------------ */
+/*  Collapsible section                                                */
+/* ------------------------------------------------------------------ */
+
+function NavSection({
+  label,
+  items,
+  onNavigate,
+}: {
+  label: string
+  items: ReadonlyArray<{ title: string; href: string }>
+  onNavigate: () => void
+}) {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <div className="border-b border-border/60 last:border-b-0">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="flex w-full items-center justify-between px-5 py-3.5 text-sm font-semibold uppercase tracking-wider text-[#0B1D3A]/60 transition-colors hover:text-[#0B1D3A]"
+        aria-expanded={open}
+      >
+        {label}
+        <ChevronDown
+          className={cn(
+            'size-4 transition-transform duration-200',
+            open && 'rotate-180'
+          )}
+        />
+      </button>
+      <div
+        className={cn(
+          'grid transition-[grid-template-rows] duration-200 ease-in-out',
+          open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+        )}
+      >
+        <div className="overflow-hidden">
+          <ul className="space-y-0.5 px-3 pb-3">
+            {items.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={onNavigate}
+                  className="block rounded-lg px-3 py-2.5 text-[15px] font-medium text-[#0B1D3A] transition-colors hover:bg-emerald-50 hover:text-emerald-700"
+                >
+                  {item.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  )
 }
 
-export function MobileNav({ items }: MobileNavProps) {
+/* ------------------------------------------------------------------ */
+/*  Mobile nav component                                              */
+/* ------------------------------------------------------------------ */
+
+export function MobileNav() {
   const [open, setOpen] = useState(false)
+
+  const handleNavigate = () => setOpen(false)
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger
         render={
-          <Button variant="ghost" size="icon" aria-label="Open navigation menu">
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Open navigation menu"
+            className="text-[#0B1D3A]"
+          >
             <Menu className="size-5" />
           </Button>
         }
       />
-      <SheetContent side="right" className="w-72">
-        <SheetHeader>
-          <SheetTitle>Navigation</SheetTitle>
+      <SheetContent side="right" className="flex w-80 flex-col p-0 sm:max-w-sm">
+        {/* Header with logo */}
+        <SheetHeader className="border-b border-border/60 px-5 py-4">
+          <SheetTitle className="sr-only">Navigation</SheetTitle>
+          <Logo />
         </SheetHeader>
-        <nav className="flex flex-col gap-1 px-4">
-          {items.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              className="rounded-md px-3 py-2 text-base font-medium text-foreground transition-colors hover:bg-muted"
-            >
-              {item.label}
-            </Link>
+
+        {/* Scrollable nav sections */}
+        <nav className="flex-1 overflow-y-auto py-2" aria-label="Mobile navigation">
+          {MOBILE_NAV_SECTIONS.map((section) => (
+            <NavSection
+              key={section.label}
+              label={section.label}
+              items={section.items}
+              onNavigate={handleNavigate}
+            />
           ))}
         </nav>
+
+        {/* Bottom CTA */}
+        <div className="border-t border-border/60 p-5 space-y-3">
+          <Link
+            href="/contact/"
+            onClick={handleNavigate}
+            className="flex w-full items-center justify-center rounded-lg border border-[#0B1D3A]/20 px-4 py-2.5 text-sm font-medium text-[#0B1D3A] transition-colors hover:border-[#0B1D3A]/40 hover:bg-[#0B1D3A]/5"
+          >
+            Book a Call
+          </Link>
+          <Link
+            href="/contact/"
+            onClick={handleNavigate}
+            className="flex w-full items-center justify-center rounded-lg bg-emerald-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-700"
+          >
+            Get Started
+          </Link>
+        </div>
       </SheetContent>
     </Sheet>
   )
