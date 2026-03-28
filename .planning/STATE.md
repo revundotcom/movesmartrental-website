@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-05-PLAN.md
-last_updated: "2026-03-28T14:05:40.350Z"
-last_activity: 2026-03-28 — Completed 01-05-PLAN.md (5 block components - Hero, CTA Banner, FAQ with JSON-LD, ServiceGrid, CityGrid)
+stopped_at: Completed 02-01-PLAN.md
+last_updated: "2026-03-28T15:15:49.977Z"
+last_activity: 2026-03-28 — Completed 02-01-PLAN.md (8 GROQ query files + Portable Text component)
 progress:
   total_phases: 4
   completed_phases: 1
-  total_plans: 6
-  completed_plans: 6
-  percent: 100
+  total_plans: 16
+  completed_plans: 7
+  percent: 44
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-28)
 
 **Core value:** A search-dominant acquisition system that attracts property owners and tenants organically and scales to new local markets without rebuilding the architecture.
-**Current focus:** Phase 1 — Architecture and CMS Foundation (due April 3)
+**Current focus:** Phase 2 — Core Build: Templates and Top Cities
 
 ## Current Position
 
-Phase: 1 of 4 (Architecture and CMS Foundation)
-Plan: 6 of 6 in current phase
+Phase: 2 of 4 (Core Build: Templates and Top Cities)
+Plan: 1 of 10 in current phase
 Status: Executing
-Last activity: 2026-03-28 — Completed 01-05-PLAN.md (5 block components - Hero, CTA Banner, FAQ with JSON-LD, ServiceGrid, CityGrid)
+Last activity: 2026-03-28 — Completed 02-01-PLAN.md (8 GROQ query files + Portable Text component)
 
-Progress: [██████████] 100%
+Progress: [████░░░░░░] 44%
 
 ## Performance Metrics
 
@@ -56,6 +56,7 @@ Progress: [██████████] 100%
 | Phase 01 P04 | 4min | 2 tasks | 5 files |
 | Phase 01 P05 | 4min | 2 tasks | 6 files |
 | Phase 01 P06 | 4min | 2 tasks | 6 files |
+| Phase 02 P01 | 2min | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -84,6 +85,10 @@ Recent decisions affecting current work:
 - [Phase 01]: Used base-ui render prop (render={<Link>}) for Button-as-Link composition in HeroBlock and CTABannerBlock
 - [Phase 01]: FAQBlock schemaEnabled defaults to true for SEO-first approach
 - [Phase 01]: ServiceGridBlock uses static ICON_MAP lookup (8 Lucide icons) to stay as Server Component
+- [Phase 02]: Sanity image URL built from asset _ref without @sanity/image-url package (zero added deps)
+- [Phase 02]: Blog/guide list query uses GROQ select() for optional category filtering in a single query
+- [Phase 02]: Aggregated FAQ query uses GROQ spread operator to flatten FAQ items from services and cityServices
+- [Phase 02]: PortableTextBody is a Server Component (no use client) since @portabletext/react supports RSC
 
 ### Pending Todos
 
@@ -97,6 +102,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T13:58:27Z
-Stopped at: Completed 01-05-PLAN.md
+Last session: 2026-03-28T15:15:49.974Z
+Stopped at: Completed 02-01-PLAN.md
 Resume file: None

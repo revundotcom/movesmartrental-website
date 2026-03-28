@@ -52,7 +52,7 @@
 - [ ] **TMPL-13**: Province/state template
 - [ ] **TMPL-14**: City template
 - [ ] **TMPL-15**: Service template
-- [ ] **TMPL-16**: Service-plus-city template (highest-value SEO page)
+- [x] **TMPL-16**: Service-plus-city template (highest-value SEO page)
 - [ ] **TMPL-17**: Legal guide template
 - [ ] **TMPL-18**: Market guide template
 - [ ] **TMPL-19**: Comparison template
@@ -117,7 +117,7 @@
 - [ ] **SCHEMA-03**: FAQ schema on all pages with FAQ sections
 - [ ] **SCHEMA-04**: Service schema on service pages
 - [ ] **SCHEMA-05**: Article/BlogPosting schema on blog/guide pages
-- [ ] **SCHEMA-06**: BreadcrumbList schema on all pages
+- [x] **SCHEMA-06**: BreadcrumbList schema on all pages
 - [ ] **SCHEMA-07**: RealEstateListing schema on property detail pages
 
 ### Analytics & Tracking
@@ -228,7 +228,7 @@
 | TMPL-13 | Phase 2 | Pending |
 | TMPL-14 | Phase 2 | Pending |
 | TMPL-15 | Phase 2 | Pending |
-| TMPL-16 | Phase 2 | Pending |
+| TMPL-16 | Phase 2 | Complete |
 | TMPL-17 | Phase 2 | Pending |
 | TMPL-18 | Phase 2 | Pending |
 | TMPL-19 | Phase 2 | Pending |
@@ -256,7 +256,7 @@
 | SCHEMA-03 | Phase 2 | Pending |
 | SCHEMA-04 | Phase 2 | Pending |
 | SCHEMA-05 | Phase 2 | Pending |
-| SCHEMA-06 | Phase 2 | Pending |
+| SCHEMA-06 | Phase 2 | Complete |
 | SCHEMA-07 | Phase 2 | Pending |
 | AI-01 | Phase 2 | Pending |
 | AI-02 | Phase 2 | Pending |
