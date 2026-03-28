@@ -36,6 +36,26 @@ export const PROVINCE_LIST_QUERY = groq`
   }
 `
 
+/** All provinces with their cities for Locations hub */
+export const PROVINCES_WITH_CITIES_QUERY = groq`
+  *[_type == "province"] | order(title asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    country,
+    "cities": *[_type == "city" && province._ref == ^._id] | order(tier asc, title asc) {
+      title,
+      "slug": slug.current,
+      tier,
+      population,
+      medianRent,
+      "provinceSlug": ^.slug.current,
+      "heroImageUrl": heroImage.asset->url,
+      "heroImageAlt": heroImage.alt
+    }
+  }
+`
+
 /** Cities by province slug for CityGridBlock */
 export const PROVINCE_CITIES_QUERY = groq`
   *[_type == "city" && province->slug.current == $provinceSlug] | order(tier asc, title asc) {
