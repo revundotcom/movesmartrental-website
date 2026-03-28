@@ -14,6 +14,8 @@ export async function generateSitemaps() {
     { id: 'static' },
     { id: 'ca-cities' },
     { id: 'ca-services' },
+    { id: 'us-cities' },
+    { id: 'us-services' },
     { id: 'blog' },
     { id: 'listings' },
     { id: 'resources' },
@@ -24,23 +26,46 @@ export async function generateSitemaps() {
 /*  GROQ queries (sitemap-specific minimal projections)               */
 /* ------------------------------------------------------------------ */
 
-const SITEMAP_CITIES_QUERY = groq`
-  *[_type == "city"] {
+const SITEMAP_CA_CITIES_QUERY = groq`
+  *[_type == "city" && province->country == "ca"] {
     "slug": slug.current,
     tier,
     "provinceSlug": province->slug.current
   }
 `
 
-const SITEMAP_PROVINCES_QUERY = groq`
-  *[_type == "province"] {
+const SITEMAP_CA_PROVINCES_QUERY = groq`
+  *[_type == "province" && country == "ca"] {
     "slug": slug.current
   }
 `
 
-const SITEMAP_CITY_SERVICES_QUERY = groq`
-  *[_type == "cityService"] {
+const SITEMAP_CA_CITY_SERVICES_QUERY = groq`
+  *[_type == "cityService" && city->province->country == "ca"] {
     "provinceSlug": city->province->slug.current,
+    "citySlug": city->slug.current,
+    "serviceSlug": service->slug.current,
+    "cityTier": city->tier
+  }
+`
+
+const SITEMAP_US_CITIES_QUERY = groq`
+  *[_type == "city" && province->country == "us"] {
+    "slug": slug.current,
+    tier,
+    "stateSlug": province->slug.current
+  }
+`
+
+const SITEMAP_US_STATES_QUERY = groq`
+  *[_type == "province" && country == "us"] {
+    "slug": slug.current
+  }
+`
+
+const SITEMAP_US_CITY_SERVICES_QUERY = groq`
+  *[_type == "cityService" && city->province->country == "us"] {
+    "stateSlug": city->province->slug.current,
     "citySlug": city->slug.current,
     "serviceSlug": service->slug.current,
     "cityTier": city->tier
@@ -99,6 +124,13 @@ type SitemapCityService = {
   serviceSlug: string
   cityTier: number
 }
+type SitemapUSCity = { slug: string; tier: number; stateSlug: string }
+type SitemapUSCityService = {
+  stateSlug: string
+  citySlug: string
+  serviceSlug: string
+  cityTier: number
+}
 type SitemapService = { slug: string }
 type SitemapSlug = { slug: string }
 type SitemapPropertyCategory = {
@@ -140,11 +172,11 @@ async function buildCaCitiesSegment(): Promise<MetadataRoute.Sitemap> {
 
   const [provinces, cities] = await Promise.all([
     sanityFetch<SitemapProvince[]>({
-      query: SITEMAP_PROVINCES_QUERY,
+      query: SITEMAP_CA_PROVINCES_QUERY,
       tags: ['province'],
     }),
     sanityFetch<SitemapCity[]>({
-      query: SITEMAP_CITIES_QUERY,
+      query: SITEMAP_CA_CITIES_QUERY,
       tags: ['city'],
     }),
   ])
@@ -179,7 +211,7 @@ async function buildCaServicesSegment(): Promise<MetadataRoute.Sitemap> {
 
   const [cityServices, services] = await Promise.all([
     sanityFetch<SitemapCityService[]>({
-      query: SITEMAP_CITY_SERVICES_QUERY,
+      query: SITEMAP_CA_CITY_SERVICES_QUERY,
       tags: ['cityService', 'service'],
     }),
     sanityFetch<SitemapService[]>({
@@ -306,6 +338,72 @@ async function buildResourcesSegment(): Promise<MetadataRoute.Sitemap> {
 }
 
 /* ------------------------------------------------------------------ */
+/*  US segment builders                                               */
+/* ------------------------------------------------------------------ */
+
+async function buildUsCitiesSegment(): Promise<MetadataRoute.Sitemap> {
+  const now = new Date()
+
+  const [states, cities] = await Promise.all([
+    sanityFetch<SitemapProvince[]>({
+      query: SITEMAP_US_STATES_QUERY,
+      tags: ['province'],
+    }),
+    sanityFetch<SitemapUSCity[]>({
+      query: SITEMAP_US_CITIES_QUERY,
+      tags: ['city'],
+    }),
+  ])
+
+  const entries: MetadataRoute.Sitemap = []
+
+  // State pages
+  for (const state of states) {
+    entries.push({
+      url: `${siteUrl}/us/${state.slug}/`,
+      lastModified: now,
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    })
+  }
+
+  // City hub pages
+  for (const city of cities) {
+    entries.push({
+      url: `${siteUrl}/us/${city.stateSlug}/${city.slug}/`,
+      lastModified: now,
+      changeFrequency: 'weekly' as const,
+      priority: city.tier === 1 ? 0.8 : 0.6,
+    })
+  }
+
+  return entries
+}
+
+async function buildUsServicesSegment(): Promise<MetadataRoute.Sitemap> {
+  const now = new Date()
+
+  const usCityServices = await sanityFetch<SitemapUSCityService[]>({
+    query: SITEMAP_US_CITY_SERVICES_QUERY,
+    tags: ['cityService'],
+  })
+
+  const entries: MetadataRoute.Sitemap = []
+
+  // US CityService pages (may be empty for now)
+  for (const cs of usCityServices ?? []) {
+    entries.push({
+      url: `${siteUrl}/us/${cs.stateSlug}/${cs.citySlug}/${cs.serviceSlug}/`,
+      lastModified: now,
+      changeFrequency: 'weekly' as const,
+      priority: cs.cityTier === 1 ? 0.9 : 0.7,
+    })
+  }
+
+  return entries
+}
+
+/* ------------------------------------------------------------------ */
 /*  Main sitemap function                                             */
 /* ------------------------------------------------------------------ */
 
@@ -321,6 +419,10 @@ export default async function sitemap({
       return buildCaCitiesSegment()
     case 'ca-services':
       return buildCaServicesSegment()
+    case 'us-cities':
+      return buildUsCitiesSegment()
+    case 'us-services':
+      return buildUsServicesSegment()
     case 'blog':
       return buildBlogSegment()
     case 'listings':
