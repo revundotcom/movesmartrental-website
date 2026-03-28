@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -8,6 +8,15 @@ import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+
+declare global {
+  interface Window {
+    grecaptcha: {
+      ready: (cb: () => void) => void
+      execute: (siteKey: string, options: { action: string }) => Promise<string>
+    }
+  }
+}
 
 const contactSchema = z.object({
   type: z.enum(['owner', 'tenant', 'franchise', 'other']),
@@ -26,8 +35,24 @@ const INQUIRY_TYPES = [
   { value: 'other', label: 'Other' },
 ] as const
 
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!RECAPTCHA_SITE_KEY) return
+
+    const script = document.createElement('script')
+    script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`
+    script.async = true
+    document.head.appendChild(script)
+
+    return () => {
+      document.head.removeChild(script)
+    }
+  }, [])
 
   const {
     register,
@@ -45,11 +70,45 @@ export function ContactForm() {
   })
 
   async function onSubmit(data: ContactFormData) {
-    // Phase 3+: Replace with actual API submission
-    console.log('Contact form submission:', data)
-    // Simulate brief network delay
-    await new Promise((resolve) => setTimeout(resolve, 500))
-    setSubmitted(true)
+    setErrorMessage(null)
+
+    try {
+      let recaptchaToken: string | undefined
+
+      // Get reCAPTCHA token if configured
+      if (RECAPTCHA_SITE_KEY && window.grecaptcha) {
+        recaptchaToken = await new Promise<string>((resolve, reject) => {
+          window.grecaptcha.ready(() => {
+            window.grecaptcha
+              .execute(RECAPTCHA_SITE_KEY, { action: 'contact_form' })
+              .then(resolve)
+              .catch(reject)
+          })
+        })
+      }
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...data,
+          recaptchaToken,
+        }),
+      })
+
+      if (!response.ok) {
+        const result = await response.json()
+        throw new Error(result.error || 'Something went wrong. Please try again.')
+      }
+
+      setSubmitted(true)
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : 'Something went wrong. Please try again.'
+      )
+    }
   }
 
   if (submitted) {
@@ -67,6 +126,13 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      {/* Error Banner */}
+      {errorMessage && (
+        <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+          {errorMessage}
+        </div>
+      )}
+
       {/* Inquiry Type */}
       <div className="space-y-2">
         <Label htmlFor="type">Inquiry Type</Label>
