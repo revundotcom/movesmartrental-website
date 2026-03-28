@@ -35,6 +35,14 @@ export const metadata: Metadata = {
     title: 'Property Management in the United States',
     description:
       'Professional property management across the United States. Explore our services in Florida, Texas, California, New York, and more.',
+    images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'MoveSmart Rentals United States' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Property Management in the United States | MoveSmart Rentals',
+    description:
+      'Professional property management across the United States. Explore our services in Florida, Texas, California, New York, and more.',
+    images: ['/og-default.png'],
   },
 }
 

@@ -35,6 +35,14 @@ export const metadata: Metadata = {
     title: 'Property Management in Canada',
     description:
       'Professional property management across Canada. Explore our services in Ontario, Quebec, British Columbia, Alberta, Nova Scotia, and more.',
+    images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'MoveSmart Rentals Canada' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Property Management in Canada | MoveSmart Rentals',
+    description:
+      'Professional property management across Canada. Explore our services in Ontario, Quebec, British Columbia, Alberta, Nova Scotia, and more.',
+    images: ['/og-default.png'],
   },
 }
 

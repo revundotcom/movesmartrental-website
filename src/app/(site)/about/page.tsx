@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 const organizationSchema = buildOrganizationSchema({
   name: 'MoveSmart Rentals',
   url: SITE_URL,
-  logo: `${SITE_URL}/logo.png`,
+  logo: `${SITE_URL}/og-default.png`,
   description:
     'Professional property management across Ontario with zero upfront cost, modern technology, and local expertise.',
   contactEmail: 'info@movesmartrentals.com',

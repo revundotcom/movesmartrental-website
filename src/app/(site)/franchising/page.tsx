@@ -6,6 +6,8 @@ import { BenefitsBlock } from '@/components/blocks/benefits-block'
 import { HowItWorksBlock } from '@/components/blocks/how-it-works-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
+import { JsonLd } from '@/components/json-ld'
+import { buildFaqPageSchema } from '@/lib/schema-builders'
 
 export const metadata: Metadata = {
   title: 'Property Management Franchise Opportunity Canada & US',
@@ -15,6 +17,13 @@ export const metadata: Metadata = {
     canonical: '/franchising/',
   },
   openGraph: {
+    title: 'Property Management Franchise Canada & US | MoveSmart Rentals',
+    description:
+      'Join the MoveSmart Rentals franchise network. Expand white-glove property management into your market with proven systems, full technology platform, and dedicated support.',
+    images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'MoveSmart Rentals Franchise Opportunity' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
     title: 'Property Management Franchise Canada & US | MoveSmart Rentals',
     description:
       'Join the MoveSmart Rentals franchise network. Expand white-glove property management into your market with proven systems, full technology platform, and dedicated support.',
@@ -112,8 +121,11 @@ const FRANCHISE_FAQS = [
 ]
 
 export default function FranchisingPage() {
+  const faqSchema = buildFaqPageSchema({ questions: FRANCHISE_FAQS })
+
   return (
     <main>
+      <JsonLd data={faqSchema} />
       <div className="mx-auto max-w-7xl px-4 pt-8">
         <BreadcrumbNav
           crumbs={[

@@ -18,6 +18,13 @@ export const metadata: Metadata = {
     title: 'Contact MoveSmart Rentals | Free Consultation',
     description:
       'Contact MoveSmart Rentals for a free consultation. Submit a property, book a call, or ask about our Ontario property management services.',
+    images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'Contact MoveSmart Rentals' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Contact MoveSmart Rentals | Free Consultation',
+    description:
+      'Contact MoveSmart Rentals for a free consultation. Submit a property, book a call, or ask about our Ontario property management services.',
     images: ['/og-default.png'],
   },
 }

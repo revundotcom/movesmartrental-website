@@ -73,7 +73,7 @@ export default async function HomePage() {
   const organizationSchema = buildOrganizationSchema({
     name: 'MoveSmart Rentals',
     url: siteUrl,
-    logo: `${siteUrl}/logo.png`,
+    logo: `${siteUrl}/og-default.png`,
     description:
       'White-glove leasing execution for serious rental operators. Tenant placement, screening, rent protection, and full-service property management with zero upfront cost.',
     contactEmail: 'info@movesmartrentals.com',
@@ -197,8 +197,8 @@ export default async function HomePage() {
         <ServiceGridBlock services={data.featuredServices} columns={4} showHeading={false} />
       </section>
 
-      {/* ── SECTION 4: How It Works (7 Steps) ── */}
-      <section className="relative overflow-hidden bg-brand-navy py-28 text-white">
+      {/* ── SECTION 4: How It Works (7 Steps) — L-shape layout ── */}
+      <section className="relative overflow-hidden bg-brand-navy text-white">
         {/* Background grid */}
         <div
           className="absolute inset-0 opacity-[0.04]"
@@ -208,44 +208,97 @@ export default async function HomePage() {
             backgroundSize: '50px 50px',
           }}
         />
-        {/* Corner glow */}
+        {/* Ambient glows */}
         <div className="absolute -right-40 -top-40 size-[500px] rounded-full bg-brand-emerald/8 blur-3xl" aria-hidden="true" />
         <div className="absolute -bottom-40 -left-40 size-[400px] rounded-full bg-brand-emerald/6 blur-3xl" aria-hidden="true" />
 
         <div className="relative z-10 mx-auto max-w-7xl px-4">
-          {/* Two-col: text left + screening illustration right */}
-          <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
-                Our Process
-              </p>
-              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight sm:text-4xl md:text-5xl">
-                7 Steps From{' '}
-                <span className="text-brand-emerald">Listing</span>{' '}
-                to Move-In
-              </h2>
-              <p className="mt-5 text-lg leading-relaxed text-white/60">
-                Seven disciplined steps handled entirely by our team. Every detail managed, nothing left to chance.
-              </p>
+          {/*
+            L-SHAPE LAYOUT
+            ┌─────────────────────────────┬──────────────────┐
+            │  Eyebrow + H2 + description │                  │
+            │  (horizontal bar of L)      │  Illustration    │
+            ├──────────┬──────────────────│  card  (tall,    │
+            │  Steps   │  Steps           │  vertical bar)   │
+            │  col 1   │  col 2           │                  │
+            └──────────┴──────────────────┴──────────────────┘
+          */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px]">
 
-              {/* Steps list — animated stagger */}
-              <HowItWorksSteps />
+            {/* LEFT COLUMN */}
+            <div className="flex flex-col py-20 lg:py-24 lg:pr-16">
+
+              {/* Header block — wide, spans left col */}
+              <div className="mb-12 border-b border-white/8 pb-10">
+                <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
+                  Our Process
+                </p>
+                <h2 className="mt-3 font-display text-3xl font-normal tracking-tight sm:text-4xl md:text-5xl">
+                  7 Steps From{' '}
+                  <span className="text-brand-emerald">Listing</span>{' '}
+                  to Move-In
+                </h2>
+                <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/60">
+                  Seven disciplined steps handled entirely by our team. Every detail managed, nothing left to chance.
+                </p>
+              </div>
+
+              {/* Steps in a 2-column grid — fills the horizontal bar of L */}
+              <HowItWorksSteps variant="grid" />
             </div>
 
-            {/* Right: Screening illustration */}
-            <div className="flex items-center justify-center">
-              <div className="relative w-full max-w-[400px]">
-                {/* Glow */}
+            {/* RIGHT COLUMN — vertical bar of L, full section height */}
+            <div className="relative hidden lg:block">
+              {/* Left edge line — corner of the L */}
+              <div className="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-brand-emerald/25 to-transparent" aria-hidden="true" />
+
+              <div className="sticky top-24 flex flex-col gap-6 py-24 pl-10">
+                {/* Glow behind card */}
                 <div
-                  className="absolute inset-0 rounded-3xl blur-3xl"
-                  style={{ background: 'radial-gradient(ellipse, rgba(16,185,129,0.18) 0%, transparent 70%)' }}
+                  className="pointer-events-none absolute -inset-8 rounded-3xl"
+                  style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(16,185,129,0.14) 0%, transparent 65%)' }}
                   aria-hidden="true"
                 />
-                {/* Card wrapper */}
+
+                {/* Screening card */}
+                <div className="relative">
+                  <div className="relative overflow-hidden rounded-3xl border border-white/8 bg-white/4 p-2 backdrop-blur-sm shadow-2xl">
+                    <ScreeningIllustration className="w-full" />
+                  </div>
+                  {/* Floating badge */}
+                  <div className="absolute -bottom-4 -left-4 flex items-center gap-2 rounded-2xl border border-white/10 bg-brand-navy/90 px-4 py-3 shadow-xl backdrop-blur-sm">
+                    <div className="flex size-8 items-center justify-center rounded-xl bg-brand-emerald/20">
+                      <svg viewBox="0 0 20 20" className="size-4 text-brand-emerald" fill="currentColor" aria-hidden="true">
+                        <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-white">Fully Vetted</p>
+                      <p className="text-[10px] text-white/50">Every tenant, every time</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Stat chips — weight the vertical bar */}
+                <div className="mt-8 grid grid-cols-2 gap-3">
+                  <div className="rounded-2xl border border-white/8 bg-white/4 px-4 py-4 backdrop-blur-sm">
+                    <p className="text-2xl font-black text-brand-emerald">98%</p>
+                    <p className="mt-0.5 text-xs text-white/50">Tenant retention</p>
+                  </div>
+                  <div className="rounded-2xl border border-white/8 bg-white/4 px-4 py-4 backdrop-blur-sm">
+                    <p className="text-2xl font-black text-brand-emerald">14d</p>
+                    <p className="mt-0.5 text-xs text-white/50">Avg. days to lease</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile-only illustration (below steps) */}
+            <div className="pb-16 lg:hidden">
+              <div className="relative mx-auto max-w-sm">
                 <div className="relative overflow-hidden rounded-3xl border border-white/8 bg-white/4 p-2 backdrop-blur-sm">
                   <ScreeningIllustration className="w-full" />
                 </div>
-                {/* Floating badge */}
                 <div className="absolute -bottom-4 -left-4 flex items-center gap-2 rounded-2xl border border-white/10 bg-brand-navy/90 px-4 py-3 shadow-xl backdrop-blur-sm">
                   <div className="flex size-8 items-center justify-center rounded-xl bg-brand-emerald/20">
                     <svg viewBox="0 0 20 20" className="size-4 text-brand-emerald" fill="currentColor" aria-hidden="true">
@@ -259,6 +312,7 @@ export default async function HomePage() {
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </section>

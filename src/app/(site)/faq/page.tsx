@@ -17,6 +17,13 @@ export const metadata: Metadata = {
     title: 'Property Management FAQ Ontario | MoveSmart Rentals',
     description:
       'Answers to frequently asked questions about MoveSmart Rentals property management: pricing, tenant screening, rent protection, cities served, and more.',
+    images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'MoveSmart Rentals FAQ' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Property Management FAQ Ontario | MoveSmart Rentals',
+    description:
+      'Answers to frequently asked questions about MoveSmart Rentals property management: pricing, tenant screening, rent protection, cities served, and more.',
     images: ['/og-default.png'],
   },
 }

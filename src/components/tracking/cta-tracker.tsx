@@ -26,7 +26,12 @@ export function CTATracker({ eventType, city, service, children, className }: CT
   }
 
   return (
-    <span onClick={handleClick} className={className}>
+    <span
+      onClick={handleClick}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleClick() }}
+      role="presentation"
+      className={className}
+    >
       {children}
     </span>
   )
