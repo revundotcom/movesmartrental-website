@@ -1,12 +1,24 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
+import {
+  CheckCircle,
+  DollarSign,
+  Monitor,
+  Users,
+  Megaphone,
+  Shield,
+  Paintbrush,
+  TrendingUp,
+  Zap,
+  type LucideIcon,
+} from 'lucide-react'
 
-import { BenefitsBlock } from '@/components/blocks/benefits-block'
+import { Button } from '@/components/ui/button'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { HeroBlock } from '@/components/blocks/hero-block'
 import { PainPointBlock } from '@/components/blocks/pain-point-block'
 import { ServiceGridBlock } from '@/components/blocks/service-grid-block'
-import { TrustBlock } from '@/components/blocks/trust-block'
 import { sanityFetch } from '@/sanity/fetch'
 import { SERVICE_OWNER_QUERY } from '@/sanity/queries/service'
 import type { ServiceCardData } from '@/types/blocks'
@@ -14,16 +26,79 @@ import type { ServiceCardData } from '@/types/blocks'
 export const metadata: Metadata = {
   title: 'Property Owners | MoveSmart Rentals',
   description:
-    'Professional property management for Ontario landlords and investors. Zero upfront cost, dedicated account manager, tenant screening, and rent protection.',
+    'Hands-off leasing with maximum results. Zero upfront cost, dedicated account manager, tenant screening, rent protection, and full leasing execution for Ontario landlords.',
   alternates: {
     canonical: '/owners/',
   },
   openGraph: {
     title: 'Property Owners | MoveSmart Rentals',
     description:
-      'Professional property management for Ontario landlords and investors. Zero upfront cost, dedicated account manager, tenant screening, and rent protection.',
+      'Hands-off leasing with maximum results. Zero upfront cost, dedicated account manager, tenant screening, rent protection, and full leasing execution for Ontario landlords.',
   },
 }
+
+/* ---------- Contract-required messaging (9 points) ---------- */
+
+const CONTRACT_MESSAGING: Array<{
+  icon: LucideIcon
+  title: string
+  description: string
+}> = [
+  {
+    icon: DollarSign,
+    title: 'Nothing Upfront',
+    description:
+      'Our success-based model means you pay nothing until your property is rented. No setup fees, ever.',
+  },
+  {
+    icon: Monitor,
+    title: 'Self-Serve Online Portal',
+    description:
+      'Manage your properties, view financial reports, and communicate through your dedicated online portal.',
+  },
+  {
+    icon: Users,
+    title: 'Dedicated Account Manager',
+    description:
+      'A single point of contact who knows your properties inside and out and handles every detail.',
+  },
+  {
+    icon: Megaphone,
+    title: 'MLS Distribution',
+    description:
+      'Your listings appear on MLS, Realtor.ca, and 50+ rental sites for maximum exposure and faster fills.',
+  },
+  {
+    icon: Shield,
+    title: 'Structured Screening',
+    description:
+      'Credit checks, employment verification, references, and full rental history review for every applicant.',
+  },
+  {
+    icon: CheckCircle,
+    title: 'Rent Protection',
+    description:
+      'Our rent guarantee program protects your income from missed payments. Consistent cash flow, guaranteed.',
+  },
+  {
+    icon: Paintbrush,
+    title: 'Property Preparation',
+    description:
+      'Professional cleaning, staging, and photography before listing to attract quality tenants fast.',
+  },
+  {
+    icon: TrendingUp,
+    title: 'Real-Time Visibility',
+    description:
+      'Track applications, maintenance requests, and rent payments in real time from any device.',
+  },
+  {
+    icon: Zap,
+    title: 'Tech + Brick-and-Mortar',
+    description:
+      'Modern technology backed by local market expertise and real people you can meet in person.',
+  },
+]
 
 export default async function OwnersPage() {
   const services = await sanityFetch<ServiceCardData[]>({
@@ -33,123 +108,160 @@ export default async function OwnersPage() {
 
   return (
     <main>
-      {/* 1. Hero */}
+      {/* ── SECTION 1: Hero ── */}
       <HeroBlock
-        headline="Property Management That Pays for Itself"
-        subheadline="Zero upfront cost. We only succeed when your property is rented. Professional management for Ontario landlords and investors."
-        cta1={{ label: 'Create Free Account', href: '/contact/' }}
-        cta2={{ label: 'Submit Property', href: '/contact/' }}
+        headline="Hands-Off Leasing. Maximum Results."
+        subheadline="White-glove leasing execution with zero upfront cost. We only succeed when your property is rented."
+        cta1={{ label: 'Get Started', href: '/contact/' }}
+        cta2={{ label: 'Submit a Property', href: '/contact/' }}
         priority
       />
 
-      {/* 2. Pain Points */}
-      <PainPointBlock
-        title="Common Challenges Landlords Face"
-        painPoints={[
-          {
-            problem:
-              'Vacant units sitting empty for weeks, costing you thousands in lost rental income every month.',
-            solution:
-              'Our MLS distribution and 50+ rental site syndication fills vacancies in an average of 14 days.',
-          },
-          {
-            problem:
-              'Difficult tenants who damage property, pay late, or cause disputes with neighbours.',
-            solution:
-              'Structured screening with credit checks, employment verification, references, and full rental history review for every applicant.',
-          },
-          {
-            problem:
-              'Spending evenings and weekends handling maintenance calls, tenant complaints, and property inspections.',
-            solution:
-              'Your dedicated account manager handles everything. Track it all from your online portal without lifting a finger.',
-          },
-          {
-            problem:
-              'Hidden fees and unclear pricing from property management companies that eat into your returns.',
-            solution:
-              'Nothing upfront. Our transparent, success-based model means you pay nothing until your property is rented.',
-          },
-        ]}
-      />
+      {/* ── SECTION 2: Pain Points ── */}
+      <section className="bg-white py-24">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
+              The Problem
+            </p>
+            <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-brand-navy sm:text-4xl">
+              Common Challenges Landlords Face
+            </h2>
+          </div>
+        </div>
+        <PainPointBlock
+          painPoints={[
+            {
+              problem:
+                'Vacant units sitting empty for weeks, costing you thousands in lost rental income every month.',
+              solution:
+                'Our MLS distribution and 50+ rental site syndication fills vacancies in an average of 14 days.',
+            },
+            {
+              problem:
+                'Difficult tenants who damage property, pay late, or cause disputes with neighbours.',
+              solution:
+                'Structured screening with credit checks, employment verification, references, and full rental history review for every applicant.',
+            },
+            {
+              problem:
+                'Spending evenings and weekends handling maintenance calls, tenant complaints, and property inspections.',
+              solution:
+                'Your dedicated account manager handles everything. Track it all from your online portal without lifting a finger.',
+            },
+            {
+              problem:
+                'Hidden fees and unclear pricing from property management companies that eat into your returns.',
+              solution:
+                'Nothing upfront. Our transparent, success-based model means you pay nothing until your property is rented.',
+            },
+          ]}
+        />
+      </section>
 
-      {/* 3. Benefits -- OWN-05 contract messaging */}
-      <BenefitsBlock
-        title="Why Owners Choose MoveSmart"
-        columns={3}
-        benefits={[
-          {
-            title: 'Nothing Upfront',
-            description:
-              'Our success-based model means you pay nothing until your property is rented.',
-            icon: 'dollar-sign',
-          },
-          {
-            title: 'Self-Serve Online',
-            description:
-              'Manage your properties, view reports, and communicate through your online portal.',
-            icon: 'monitor',
-          },
-          {
-            title: 'Dedicated Account Manager',
-            description:
-              'A single point of contact who knows your properties inside and out.',
-            icon: 'users',
-          },
-          {
-            title: 'MLS Distribution',
-            description:
-              'Your listings appear on MLS, Realtor.ca, and 50+ rental sites for maximum exposure.',
-            icon: 'megaphone',
-          },
-          {
-            title: 'Structured Screening',
-            description:
-              'Credit checks, employment verification, references, and rental history for every applicant.',
-            icon: 'shield',
-          },
-          {
-            title: 'Rent Protection',
-            description:
-              'Our rent guarantee program protects your income from missed payments.',
-            icon: 'check-circle',
-          },
-          {
-            title: 'Property Preparation',
-            description:
-              'Professional cleaning, staging, and photography before listing.',
-            icon: 'paintbrush',
-          },
-          {
-            title: 'Portal Visibility',
-            description:
-              'Track applications, maintenance, and rent payments in real time.',
-            icon: 'trending-up',
-          },
-          {
-            title: 'Tech + Brick-and-Mortar',
-            description:
-              'Local market expertise backed by modern technology.',
-            icon: 'zap',
-          },
-        ]}
-      />
+      {/* ── SECTION 3: 9 Contract-Required Messaging Points ── */}
+      <section className="bg-slate-50 py-24">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
+              Why MoveSmart
+            </p>
+            <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-brand-navy sm:text-4xl">
+              Everything You Need, Nothing You Don&apos;t
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Nine reasons property owners across Ontario trust MoveSmart Rentals
+              for their leasing execution.
+            </p>
+          </div>
 
-      {/* 4. Service Grid -- filtered owner services from CMS */}
-      <ServiceGridBlock services={services} columns={3} />
+          <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {CONTRACT_MESSAGING.map((item) => {
+              const Icon = item.icon
+              return (
+                <div
+                  key={item.title}
+                  className="rounded-xl border border-border bg-white p-6 transition-shadow hover:shadow-lg"
+                >
+                  <div className="flex size-12 items-center justify-center rounded-lg bg-brand-emerald/10">
+                    <Icon
+                      className="size-6 text-brand-emerald"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <h3 className="mt-4 text-base font-semibold text-brand-navy">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {item.description}
+                  </p>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
 
-      {/* 5. Trust -- stats variant */}
-      <TrustBlock
-        variant="stats"
-        stats={[
-          { label: 'Properties Managed', value: '500+' },
-          { label: 'Tenant Satisfaction', value: '98%' },
-          { label: 'Avg. Placement Time', value: '14 days' },
-          { label: 'Cities Served', value: '20+' },
-        ]}
-      />
+      {/* ── SECTION 4: Service Grid (from CMS) ── */}
+      <section className="bg-white py-24">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
+              Services
+            </p>
+            <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-brand-navy sm:text-4xl">
+              Our Owner Services
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Comprehensive property management services tailored for landlords
+              and investors.
+            </p>
+          </div>
+        </div>
+        <ServiceGridBlock services={services} columns={3} />
+      </section>
 
-      {/* 6. FAQ -- owner-specific */}
+      {/* ── SECTION 5: Trust / Stats (Navy Background) ── */}
+      <section className="bg-brand-navy py-24 text-white">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
+              By The Numbers
+            </p>
+            <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight sm:text-4xl">
+              Trusted by Property Owners
+            </h2>
+          </div>
+
+          <div className="mt-16 grid grid-cols-2 gap-8 md:grid-cols-4">
+            {[
+              { value: '500+', label: 'Properties Managed' },
+              { value: '98%', label: 'Tenant Satisfaction' },
+              { value: '14 days', label: 'Avg. Placement Time' },
+              { value: '20+', label: 'Cities Served' },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center">
+                <p className="text-4xl font-bold text-brand-emerald md:text-5xl">
+                  {stat.value}
+                </p>
+                <p className="mt-2 text-sm text-white/70">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-16 text-center">
+            <Button
+              variant="default"
+              size="lg"
+              render={<Link href="/contact/" />}
+            >
+              Join Our Owners
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 6: FAQ ── */}
       <FAQBlock
         title="Owner FAQs"
         questions={[
@@ -181,10 +293,11 @@ export default async function OwnersPage() {
         ]}
       />
 
-      {/* 7. CTA Banner */}
+      {/* ── SECTION 7: CTA Banner ── */}
       <CTABannerBlock
-        headline="Start Managing Smarter Today"
-        primaryCta={{ label: 'Create Free Account', href: '/contact/' }}
+        headline="Ready for Hands-Off Leasing?"
+        description="Join 500+ property owners who trust MoveSmart Rentals for white-glove leasing execution."
+        primaryCta={{ label: 'Get Started', href: '/contact/' }}
         secondaryCta={{ label: 'Book a Call', href: '/contact/' }}
       />
     </main>
