@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-02-PLAN.md
-last_updated: "2026-03-28T13:49:00.000Z"
-last_activity: 2026-03-28 — Completed 01-02-PLAN.md (9 Sanity CMS schemas, reusable SEO/publishing fieldsets, TypeScript types)
+stopped_at: Completed 01-06-PLAN.md
+last_updated: "2026-03-28T13:59:37.608Z"
+last_activity: 2026-03-28 — Completed 01-04-PLAN.md (Header, footer, mobile nav, breadcrumbs with JSON-LD)
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 6
-  completed_plans: 2
-  percent: 33
+  completed_plans: 5
+  percent: 50
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 ## Current Position
 
 Phase: 1 of 4 (Architecture and CMS Foundation)
-Plan: 2 of 6 in current phase
+Plan: 4 of 6 in current phase
 Status: Executing
-Last activity: 2026-03-28 — Completed 01-02-PLAN.md (9 Sanity CMS schemas, reusable SEO/publishing fieldsets, TypeScript types)
+Last activity: 2026-03-28 — Completed 01-04-PLAN.md (Header, footer, mobile nav, breadcrumbs with JSON-LD)
 
-Progress: [████░░░░░░] 33%
+Progress: [█████░░░░░] 50%
 
 ## Performance Metrics
 
@@ -52,6 +52,8 @@ Progress: [████░░░░░░] 33%
 *Updated after each plan completion*
 | Phase 01 P01 | 13min | 2 tasks | 39 files |
 | Phase 01 P02 | 14min | 2 tasks | 14 files |
+| Phase 01 P04 | 4min | 2 tasks | 5 files |
+| Phase 01 P06 | 4min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -69,6 +71,10 @@ Recent decisions affecting current work:
 - [Phase 01]: CityService uses fieldset grouping for Studio UX (references, denormalized, localContent, hero, blocks)
 - [Phase 01]: neighbourhoodNames requires min(3) items to enforce content depth on city-service pages
 - [Phase 01]: Portable text link annotations include allowRelative: true for internal navigation
+- [Phase 01]: Used base-ui render prop for NavigationMenuLink and BreadcrumbLink composition with next/link
+- [Phase 01]: BreadcrumbNav uses inline script tag for JSON-LD (Plan 03 JsonLd component may not exist yet)
+- [Phase 01]: Created src/types/blocks.ts as Rule 3 auto-fix since Plan 05 not yet executed -- shared type definitions for all 10 blocks
+- [Phase 01]: PropertyCardBlock uses placeholder URL /ca/{province}/{city}/rentals/{slug}/ pattern for listing links
 
 ### Pending Todos
 
@@ -82,6 +88,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T13:49:00.000Z
-Stopped at: Completed 01-02-PLAN.md
+Last session: 2026-03-28T13:59:37.606Z
+Stopped at: Completed 01-06-PLAN.md
 Resume file: None

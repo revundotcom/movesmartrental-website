@@ -29,11 +29,11 @@
 - [ ] **BLOCK-03**: FAQ block with FAQ schema markup
 - [ ] **BLOCK-04**: ServiceGrid block (linked service cards)
 - [ ] **BLOCK-05**: CityGrid block (linked city cards with location data)
-- [ ] **BLOCK-06**: PropertyCard block (listing preview with key details)
-- [ ] **BLOCK-07**: TrustBlock (social proof, stats, testimonials)
-- [ ] **BLOCK-08**: HowItWorks block (numbered steps process)
-- [ ] **BLOCK-09**: PainPoint block (problem/solution layout)
-- [ ] **BLOCK-10**: BenefitsBlock (feature/benefit cards)
+- [x] **BLOCK-06**: PropertyCard block (listing preview with key details)
+- [x] **BLOCK-07**: TrustBlock (social proof, stats, testimonials)
+- [x] **BLOCK-08**: HowItWorks block (numbered steps process)
+- [x] **BLOCK-09**: PainPoint block (problem/solution layout)
+- [x] **BLOCK-10**: BenefitsBlock (feature/benefit cards)
 
 ### Page Templates (22+)
 
@@ -200,11 +200,11 @@
 | BLOCK-03 | Phase 1 | Pending |
 | BLOCK-04 | Phase 1 | Pending |
 | BLOCK-05 | Phase 1 | Pending |
-| BLOCK-06 | Phase 1 | Pending |
-| BLOCK-07 | Phase 1 | Pending |
-| BLOCK-08 | Phase 1 | Pending |
-| BLOCK-09 | Phase 1 | Pending |
-| BLOCK-10 | Phase 1 | Pending |
+| BLOCK-06 | Phase 1 | Complete |
+| BLOCK-07 | Phase 1 | Complete |
+| BLOCK-08 | Phase 1 | Complete |
+| BLOCK-09 | Phase 1 | Complete |
+| BLOCK-10 | Phase 1 | Complete |
 | CMS-01 | Phase 1 | Complete |
 | CMS-02 | Phase 1 | Complete |
 | CMS-03 | Phase 1 | Complete |
