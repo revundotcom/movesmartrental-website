@@ -73,7 +73,17 @@ Plans:
   3. Google Search Console shows the property as verified, the XML sitemap is submitted and accepted, and Bing Webmaster Tools shows the site as verified
   4. A non-developer content editor can log into Sanity Studio, create a new City document with all required local data fields completed, publish it, and see the page live on the site within 60 seconds without filing a dev ticket
   5. The Zoho SalesIQ chat widget appears on all pages and does not block page load (LCP measurement unaffected by the widget script)
-**Plans**: TBD
+**Plans:** 8 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — /ca/ and /us/ country hub pages + Canadian province CMS seeding
+- [ ] 03-02-PLAN.md — US state seeding (10 states, 37 cities) + US page template enhancement
+- [ ] 03-03-PLAN.md — City-priority matrix, slug map, content-status tracker
+- [ ] 03-04-PLAN.md — GTM + GA4 + GSC/Bing verification + SalesIQ integration
+- [ ] 03-05-PLAN.md — reCAPTCHA v3 on contact form + llms.txt AI discoverability
+- [ ] 03-06-PLAN.md — Event tracking layer (9 GTM event types wired to UI)
+- [ ] 03-07-PLAN.md — Content system: publishing SOP, prompt framework, weak-page refresh
+- [ ] 03-08-PLAN.md — Reporting dashboard (Looker Studio guide) + analytics API
 
 ### Phase 4: Audit, Hardening, and Handoff
 **Goal**: The site passes Core Web Vitals thresholds on real deployed pages, all defects found in cross-browser and mobile testing are resolved, and the client is independently operational — with all credentials transferred, all code in the REVUN GitHub account, and a training session delivered — before the April 24 hard deadline.
@@ -96,5 +106,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Architecture and CMS Foundation | 6/6 | Complete | 2026-03-28 |
 | 2. Core Build — Templates and Top Cities | 8/10 | In Progress|  |
-| 3. Scale, Integrations, and Content System | 0/TBD | Not started | - |
+| 3. Scale, Integrations, and Content System | 0/8 | Not started | - |
 | 4. Audit, Hardening, and Handoff | 0/TBD | Not started | - |
