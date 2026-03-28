@@ -37,7 +37,7 @@ const NAV_GROUPS = [
     items: [
       { title: 'About Us', href: '/about/', description: 'Our story, mission, and team' },
       { title: 'Contact', href: '/contact/', description: 'Get in touch with our team' },
-      { title: 'FAQ', href: '/resources/faq/', description: 'Answers to commonly asked questions' },
+      { title: 'FAQ', href: '/faq/', description: 'Answers to commonly asked questions' },
     ],
   },
 ] as const
@@ -46,7 +46,24 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8)
+    let ticking = false
+    const onScroll = () => {
+      setScrolled(window.scrollY > 8)
+      // Close any open dropdown when the user scrolls by dispatching a
+      // synthetic mousedown on the document — base-ui treats this as a
+      // click-outside event and closes the active navigation menu popup.
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const activeEl = document.activeElement as HTMLElement | null
+          if (activeEl && activeEl.closest('[data-slot="navigation-menu"]')) {
+            activeEl.blur()
+          }
+          document.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }))
+          ticking = false
+        })
+        ticking = true
+      }
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)

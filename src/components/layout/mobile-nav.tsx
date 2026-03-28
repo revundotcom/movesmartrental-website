@@ -41,7 +41,7 @@ const MOBILE_NAV_SECTIONS = [
     items: [
       { title: 'About Us', href: '/about/' },
       { title: 'Contact', href: '/contact/' },
-      { title: 'FAQ', href: '/resources/faq/' },
+      { title: 'FAQ', href: '/faq/' },
     ],
   },
 ] as const
@@ -120,7 +120,7 @@ export function MobileNav() {
             variant="ghost"
             size="icon"
             aria-label="Open navigation menu"
-            className="text-[#0B1D3A]"
+            className="text-white"
           >
             <Menu className="size-5" />
           </Button>

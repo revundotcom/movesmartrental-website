@@ -33,7 +33,7 @@ const FOOTER_COLUMNS = [
     links: [
       { label: 'Tenant Hub', href: '/tenants/' },
       { label: 'Search Rentals', href: '/locations/' },
-      { label: 'Tenant FAQ', href: '/resources/tenant-faq/' },
+      { label: 'Tenant FAQ', href: '/faq/' },
       { label: 'Apply Now', href: '/contact/' },
     ],
   },
