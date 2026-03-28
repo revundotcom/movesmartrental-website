@@ -32,7 +32,7 @@ export async function GET() {
       content: counts,
       timestamp: new Date().toISOString(),
     })
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { status: 'error', message: 'Failed to fetch content counts' },
       { status: 500 }

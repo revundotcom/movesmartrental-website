@@ -11,7 +11,7 @@ import { PortableTextBody } from '@/components/portable-text'
 import { generatePageMetadata } from '@/lib/metadata'
 import { buildLocalBusinessSchema } from '@/lib/schema-builders'
 import { sanityFetch } from '@/sanity/fetch'
-import { CITY_PAGE_QUERY, CITY_LIST_QUERY } from '@/sanity/queries/city'
+import { CITY_PAGE_QUERY } from '@/sanity/queries/city'
 import type { ServiceCardData } from '@/types/blocks'
 
 // ---------------------------------------------------------------------------
