@@ -74,7 +74,7 @@ export function FAQBlock({
   }
 
   return (
-    <section className="bg-white py-16 md:py-20">
+    <section className="bg-white">
       <div className="mx-auto max-w-3xl px-4">
         {/* Section heading with emerald underline */}
         <div className="mb-10 text-center">

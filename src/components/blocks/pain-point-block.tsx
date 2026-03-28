@@ -12,7 +12,7 @@ export function PainPointBlock({
   if (!painPoints || painPoints.length === 0) return null
 
   return (
-    <section className="bg-white py-16 md:py-20">
+    <section className="bg-white">
       <div className="mx-auto max-w-6xl px-4">
         {/* Section heading with emerald underline */}
         <div className="mb-12 text-center">

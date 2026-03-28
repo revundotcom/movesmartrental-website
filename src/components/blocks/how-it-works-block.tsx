@@ -9,7 +9,7 @@ export function HowItWorksBlock({
   const displaySteps = steps.slice(0, 6)
 
   return (
-    <section className="bg-slate-50 py-16 md:py-20">
+    <section className="bg-slate-50">
       <div className="mx-auto max-w-6xl px-4">
         {/* Section heading with emerald underline */}
         <div className="mb-14 text-center">
