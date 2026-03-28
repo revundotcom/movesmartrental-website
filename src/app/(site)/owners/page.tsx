@@ -1,17 +1,5 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import {
-  CheckCircle,
-  DollarSign,
-  Monitor,
-  Users,
-  Megaphone,
-  Shield,
-  Paintbrush,
-  TrendingUp,
-  Zap,
-  type LucideIcon,
-} from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
@@ -41,60 +29,60 @@ export const metadata: Metadata = {
 /* ---------- Contract-required messaging (9 points) ---------- */
 
 const CONTRACT_MESSAGING: Array<{
-  icon: LucideIcon
+  iconKey: string
   title: string
   description: string
 }> = [
   {
-    icon: DollarSign,
+    iconKey: 'DollarSign',
     title: 'Nothing Upfront',
     description:
       'Our success-based model means you pay nothing until your property is rented. No setup fees, ever.',
   },
   {
-    icon: Monitor,
+    iconKey: 'Monitor',
     title: 'Self-Serve Online Portal',
     description:
       'Manage your properties, view financial reports, and communicate through your dedicated online portal.',
   },
   {
-    icon: Users,
+    iconKey: 'Users',
     title: 'Dedicated Account Manager',
     description:
       'A single point of contact who knows your properties inside and out and handles every detail.',
   },
   {
-    icon: Megaphone,
+    iconKey: 'Megaphone',
     title: 'MLS Distribution',
     description:
       'Your listings appear on MLS, Realtor.ca, and 50+ rental sites for maximum exposure and faster fills.',
   },
   {
-    icon: Shield,
+    iconKey: 'Shield',
     title: 'Structured Screening',
     description:
       'Credit checks, employment verification, references, and full rental history review for every applicant.',
   },
   {
-    icon: CheckCircle,
+    iconKey: 'CheckCircle',
     title: 'Rent Protection',
     description:
       'Our rent guarantee program protects your income from missed payments. Consistent cash flow, guaranteed.',
   },
   {
-    icon: Paintbrush,
+    iconKey: 'Paintbrush',
     title: 'Property Preparation',
     description:
       'Professional cleaning, staging, and photography before listing to attract quality tenants fast.',
   },
   {
-    icon: TrendingUp,
+    iconKey: 'TrendingUp',
     title: 'Real-Time Visibility',
     description:
       'Track applications, maintenance requests, and rent payments in real time from any device.',
   },
   {
-    icon: Zap,
+    iconKey: 'Zap',
     title: 'Tech + Brick-and-Mortar',
     description:
       'Modern technology backed by local market expertise and real people you can meet in person.',
