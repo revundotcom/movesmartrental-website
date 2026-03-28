@@ -25,7 +25,9 @@ export const SERVICE_PAGE_QUERY = groq`
       "slug": city->slug.current,
       "provinceSlug": city->province->slug.current,
       "population": city->population,
-      "medianRent": city->medianRent
+      "medianRent": city->medianRent,
+      "heroImageUrl": city->heroImage.asset->url,
+      "heroImageAlt": city->heroImage.alt
     }
   }
 `
