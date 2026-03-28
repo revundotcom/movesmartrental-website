@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 Phase: 4 of 4 (Audit, Hardening, and Handoff)
 Plan: 4 of 4 in current phase
 Status: Complete
-Last activity: 2026-03-28 — Completed 04-04-PLAN.md (source code transfer checklist, clone-deploy verification)
+Last activity: 2026-03-28 - Completed quick task 1: Implement all 10 design improvements from DESIGN_AUDIT.md
 
 Progress: [██████████] 100%
 
@@ -167,6 +167,12 @@ Recent decisions affecting current work:
 ### Pending Todos
 
 None yet.
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 1 | Implement all 10 design improvements from DESIGN_AUDIT.md — animated orb hero, DM Serif Display font, transparent nav, scroll reveals, bento grid, CTA shadows, floating chips, trust bar, SVG waves, counting stats | 2026-03-28 | eb61c6f | [1-implement-all-10-design-improvements-fro](./quick/1-implement-all-10-design-improvements-fro/) |
 
 ### Blockers/Concerns
 
