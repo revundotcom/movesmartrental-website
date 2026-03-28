@@ -85,17 +85,19 @@ A search-dominant acquisition system that attracts both property owners and tena
 - **Indexable Content**: Critical listing info must be in rendered HTML, not hidden behind JS
 - **SalesIQ**: Must be fully implemented as current chat layer
 - **30-Day Warranty**: Post-launch defect correction at no additional charge
+- **Zero Paid Tools**: All services must be free tier or completely free. No monthly costs. Sanity Free Tier ($0), Vercel Free/Hobby or Pro trial, free analytics tools only.
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Next.js 15 + Sanity + Vercel stack | Only combo that can approach timeline — Sanity is managed (no DevOps), Vercel is zero-config, composable blocks create 22+ templates from ~10 components | — Pending |
+| Next.js 15 + Sanity Free + Vercel stack | Sanity Free Tier ($0 -- 3 users, 500K API req/mo, 20GB bandwidth) is managed (no DevOps), Vercel is zero-config, composable blocks create 22+ templates from ~10 components | — Pending |
 | Composable block system | Build ~10 reusable content blocks (Hero, CTA, FAQ, ServiceGrid, etc.) and compose into 22+ page templates | — Pending |
 | Programmatic city page generation | Use generateStaticParams() with ISR for geography pages — cannot hand-build 1000+ pages | — Pending |
 | Ontario-first rollout | Focus on 20 Tier-1 Ontario cities first, then expand to other provinces and US states | — Pending |
-| Sanity.io Growth Plan | $374/mo for 5-person team, supports 20+ custom fields, non-developer publishing, real estate CMS support | — Pending |
+| Sanity Free Tier (NOT paid) | $0/month, 3 users, 500K API requests/month, 20GB bandwidth, 10GB assets — more than enough for launch. Zero cost constraint. Upgrade only if project outgrows free tier. | — Pending |
 | Tailwind CSS v4 + shadcn/ui | Rapid UI development with consistent design system, accessible components | — Pending |
+| No paid tools policy | All tools must be free or have free tiers sufficient for this project. No monthly costs unless absolutely necessary. | — Pending |
 
 ---
 *Last updated: 2026-03-28 after initialization*
