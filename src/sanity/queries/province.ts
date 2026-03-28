@@ -56,6 +56,14 @@ export const PROVINCES_WITH_CITIES_QUERY = groq`
   }
 `
 
+/** Provinces by country for country hub pages */
+export const COUNTRY_PROVINCES_QUERY = groq`
+  *[_type == "province" && country == $country] | order(title asc) {
+    _id, title, "slug": slug.current, abbreviation, description,
+    "cityCount": count(*[_type == "city" && province._ref == ^._id])
+  }
+`
+
 /** Cities by province slug for CityGridBlock */
 export const PROVINCE_CITIES_QUERY = groq`
   *[_type == "city" && province->slug.current == $provinceSlug] | order(tier asc, title asc) {
