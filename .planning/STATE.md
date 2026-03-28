@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 ## Current Position
 
 Phase: 2 of 4 (Core Build: Templates and Top Cities)
-Plan: 5 of 10 in current phase
+Plan: 7 of 10 in current phase
 Status: Executing
-Last activity: 2026-03-28 — Completed 02-05-PLAN.md (tenant hub, property category, bedroom count, property detail templates with JSON-LD)
+Last activity: 2026-03-28 — Completed 02-07-PLAN.md (Resources hub + universal content detail template with Article JSON-LD)
 
-Progress: [██████░░░░] 56%
+Progress: [████████░░] 81%
 
 ## Performance Metrics
 
@@ -60,6 +60,9 @@ Progress: [██████░░░░] 56%
 | Phase 02 P02 | 4min | 2 tasks | 4 files |
 | Phase 02 P03 | 2min | 1 tasks | 1 files |
 | Phase 02 P05 | 5min | 2 tasks | 4 files |
+| Phase 02 P07 | 5min | 2 tasks | 2 files |
+| Phase 02 P04 | 6min | 2 tasks | 6 files |
+| Phase 02 P08 | 8min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -98,6 +101,12 @@ Recent decisions affecting current work:
 - [Phase 02]: Homepage FAQ uses 6 hardcoded general questions with schemaEnabled for FAQ JSON-LD
 - [Phase 02]: Property category template placed in [service]/page.tsx per 02-02 resolution -- Next.js shares segment for services and property types
 - [Phase 02]: Bedroom slug parsed via regex with notFound() for invalid formats
+- [Phase 02]: UNIVERSAL_RESOURCE_QUERY uses GROQ conditional projection for multi-type slug resolution in a single query
+- [Phase 02]: Comparison table uses semantic HTML table with Tailwind alternating row colors
+- [Phase 02]: Contact form uses native HTML select/textarea (not Radix) to avoid unnecessary complexity
+- [Phase 02]: FAQ hub falls back to hardcoded categorized FAQs when CMS is empty
+- [Phase 02]: FAQBlock schemaEnabled=false on FAQ hub -- single FAQPage JSON-LD injected via JsonLd for aggregated set
+- [Phase 02]: TMPL-21 Portal/Technology satisfied by Owners hub section (Plan 04) -- no dedicated page
 
 ### Pending Todos
 
@@ -111,6 +120,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T15:28:26.249Z
-Stopped at: Completed 02-05-PLAN.md
+Last session: 2026-03-28T15:26:42Z
+Stopped at: Completed 02-07-PLAN.md
 Resume file: None
