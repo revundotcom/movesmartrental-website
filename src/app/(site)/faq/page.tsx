@@ -1,13 +1,10 @@
 import type { Metadata } from 'next'
-
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
-import { HeroBlock } from '@/components/blocks/hero-block'
-import { FAQBlock } from '@/components/blocks/faq-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { JsonLd } from '@/components/json-ld'
 import { buildFaqPageSchema } from '@/lib/schema-builders'
-import { sanityFetch } from '@/sanity/fetch'
-import { AGGREGATED_FAQ_QUERY } from '@/sanity/queries/faq'
+import { FAQPageClient } from './faq-client'
+import { FAQ_TABS } from './faq-data'
 
 export const metadata: Metadata = {
   title: 'Property Management FAQ Ontario | Common Questions Answered',
@@ -24,98 +21,18 @@ export const metadata: Metadata = {
   },
 }
 
-interface AggregatedFaqItem {
-  question: string
-  answer: string
-  source: string
-  sourceTitle: string
-  sourceSlug: string
-}
+/* ------------------------------------------------------------------ */
+/*  Curated FAQ content — organized by audience + category            */
+/*  City-specific FAQs live on individual city/service pages          */
+/* ------------------------------------------------------------------ */
 
-/** Hardcoded fallback FAQs when CMS has no data */
-const FALLBACK_FAQS = {
-  owner: [
-    {
-      question: 'How does MoveSmart Rentals work for property owners?',
-      answer:
-        'We handle everything from listing your property and screening tenants to lease signing. You pay nothing upfront and our success-based fee is only charged after a qualified tenant is placed.',
-    },
-    {
-      question: 'What areas does MoveSmart Rentals serve?',
-      answer:
-        'MoveSmart Rentals currently serves property owners across Ontario, with coverage in major cities including Toronto, Ottawa, Hamilton, London, and more. We are expanding into new markets regularly.',
-    },
-    {
-      question: 'How long does it take to find a tenant?',
-      answer:
-        'Our average tenant placement time is 14 days. This varies by market and property type, but our technology-driven approach and multi-channel marketing ensure fast, quality placements.',
-    },
-  ],
-  tenant: [
-    {
-      question: 'How do I apply for a rental?',
-      answer:
-        'Browse available listings on our website, select a property you are interested in, and submit an application online. Our screening process is fast and you will hear back within 48 hours.',
-    },
-    {
-      question: 'What do I need for a tenant application?',
-      answer:
-        'You will need valid government ID, proof of income or employment, references from previous landlords, and consent for a credit check. All information is handled securely.',
-    },
-  ],
-  general: [
-    {
-      question: 'Is MoveSmart Rentals free for tenants?',
-      answer:
-        'Yes. Tenants never pay any fees to MoveSmart Rentals. Our services are funded by property owners through our success-based fee model.',
-    },
-    {
-      question: 'How do I contact MoveSmart Rentals?',
-      answer:
-        'You can reach us by phone at +1 (437) 295-7688, by email at info@movesmartrentals.com, or through the contact form on our website. Our team responds within 24 hours.',
-    },
-  ],
-}
 
-function groupFaqsBySource(faqs: AggregatedFaqItem[]) {
-  const groups: Record<string, AggregatedFaqItem[]> = {}
+const ALL_FAQ_ITEMS = FAQ_TABS.flatMap((tab) =>
+  tab.categories.flatMap((cat) => cat.questions)
+)
 
-  for (const faq of faqs) {
-    const groupKey =
-      faq.source === 'service'
-        ? 'Service Questions'
-        : faq.source === 'cityService'
-          ? 'City-Specific Questions'
-          : 'General Questions'
-
-    if (!groups[groupKey]) {
-      groups[groupKey] = []
-    }
-    groups[groupKey].push(faq)
-  }
-
-  return groups
-}
-
-export default async function FAQPage() {
-  const data = await sanityFetch<{ faqs: AggregatedFaqItem[] }>({
-    query: AGGREGATED_FAQ_QUERY,
-    tags: ['service', 'cityService', 'blogGuide'],
-  })
-
-  const hasCmsData = data?.faqs && data.faqs.length > 0
-  const cmsFaqs = hasCmsData ? data.faqs : []
-
-  // Build all FAQ items for JSON-LD (either CMS or fallback)
-  const allFaqItems = hasCmsData
-    ? cmsFaqs.map((f) => ({ question: f.question, answer: f.answer }))
-    : [
-        ...FALLBACK_FAQS.owner,
-        ...FALLBACK_FAQS.tenant,
-        ...FALLBACK_FAQS.general,
-      ]
-
-  const faqPageSchema = buildFaqPageSchema({ questions: allFaqItems })
+export default function FAQPage() {
+  const faqPageSchema = buildFaqPageSchema({ questions: ALL_FAQ_ITEMS })
 
   return (
     <main>
@@ -130,47 +47,47 @@ export default async function FAQPage() {
         />
       </div>
 
-      <HeroBlock
-        headline="Frequently Asked Questions"
-        subheadline="Find answers to common questions about our property management services"
-      />
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-[#0B1D3A] py-16 sm:py-20">
+        {/* Dot grid background */}
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: 'radial-gradient(#10B98133 1px, transparent 1px)',
+            backgroundSize: '28px 28px',
+          }}
+          aria-hidden="true"
+        />
+        <div className="relative mx-auto max-w-3xl px-4 text-center">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-emerald-400">
+            Help Center
+          </p>
+          <h1 className="font-display text-4xl font-normal tracking-tight text-white sm:text-5xl">
+            Frequently Asked Questions
+          </h1>
+          <p className="mt-4 text-lg leading-relaxed text-slate-300">
+            Everything you need to know about MoveSmart Rentals — organized by who you are and what you need.
+          </p>
+          {/* Stats row */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-slate-400">
+            <span className="flex items-center gap-1.5">
+              <span className="size-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
+              {ALL_FAQ_ITEMS.length} answers
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="size-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
+              3 audience sections
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="size-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
+              Updated for 2025/2026
+            </span>
+          </div>
+        </div>
+      </section>
 
-      {hasCmsData ? (
-        /* CMS data: grouped by source */
-        (() => {
-          const groups = groupFaqsBySource(cmsFaqs)
-          return Object.entries(groups).map(([groupTitle, items]) => (
-            <FAQBlock
-              key={groupTitle}
-              questions={items.map((f) => ({
-                question: f.question,
-                answer: f.answer,
-              }))}
-              title={groupTitle}
-              schemaEnabled={false}
-            />
-          ))
-        })()
-      ) : (
-        /* Fallback: hardcoded FAQs grouped by category */
-        <>
-          <FAQBlock
-            questions={FALLBACK_FAQS.owner}
-            title="Owner Questions"
-            schemaEnabled={false}
-          />
-          <FAQBlock
-            questions={FALLBACK_FAQS.tenant}
-            title="Tenant Questions"
-            schemaEnabled={false}
-          />
-          <FAQBlock
-            questions={FALLBACK_FAQS.general}
-            title="General Questions"
-            schemaEnabled={false}
-          />
-        </>
-      )}
+      {/* Main FAQ interactive section */}
+      <FAQPageClient tabs={FAQ_TABS} />
 
       <CTABannerBlock
         headline="Still Have Questions?"
