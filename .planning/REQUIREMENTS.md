@@ -184,26 +184,123 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 through FOUND-07 | Phase 1 | Pending |
-| NAV-01 through NAV-04 | Phase 2 | Pending |
-| BLOCK-01 through BLOCK-10 | Phase 1 | Pending |
-| TMPL-01 through TMPL-23 | Phase 2 | Pending |
-| OWN-01 through OWN-05 | Phase 2 | Pending |
-| TEN-01 through TEN-05 | Phase 2 | Pending |
-| GEO-01 through GEO-08 | Phase 3 | Pending |
-| CMS-01 through CMS-06 | Phase 1-2 | Pending |
-| SEO-01 through SEO-10 | Phase 1-2 | Pending |
-| SCHEMA-01 through SCHEMA-07 | Phase 2 | Pending |
-| TRACK-01 through TRACK-09 | Phase 3 | Pending |
-| INT-01 through INT-02 | Phase 3 | Pending |
-| AI-01 through AI-03 | Phase 2 | Pending |
-| HAND-01 through HAND-06 | Phase 4 | Pending |
+| FOUND-01 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Pending |
+| FOUND-03 | Phase 1 | Pending |
+| FOUND-04 | Phase 1 | Pending |
+| FOUND-05 | Phase 1 | Pending |
+| FOUND-06 | Phase 1 | Pending |
+| FOUND-07 | Phase 1 | Pending |
+| NAV-01 | Phase 1 | Pending |
+| NAV-02 | Phase 1 | Pending |
+| NAV-03 | Phase 1 | Pending |
+| NAV-04 | Phase 1 | Pending |
+| BLOCK-01 | Phase 1 | Pending |
+| BLOCK-02 | Phase 1 | Pending |
+| BLOCK-03 | Phase 1 | Pending |
+| BLOCK-04 | Phase 1 | Pending |
+| BLOCK-05 | Phase 1 | Pending |
+| BLOCK-06 | Phase 1 | Pending |
+| BLOCK-07 | Phase 1 | Pending |
+| BLOCK-08 | Phase 1 | Pending |
+| BLOCK-09 | Phase 1 | Pending |
+| BLOCK-10 | Phase 1 | Pending |
+| CMS-01 | Phase 1 | Pending |
+| CMS-02 | Phase 1 | Pending |
+| CMS-03 | Phase 1 | Pending |
+| SEO-01 | Phase 1 | Pending |
+| SEO-03 | Phase 1 | Pending |
+| SEO-04 | Phase 1 | Pending |
+| SEO-05 | Phase 1 | Pending |
+| SEO-07 | Phase 1 | Pending |
+| TMPL-01 | Phase 2 | Pending |
+| TMPL-02 | Phase 2 | Pending |
+| TMPL-03 | Phase 2 | Pending |
+| TMPL-04 | Phase 2 | Pending |
+| TMPL-05 | Phase 2 | Pending |
+| TMPL-06 | Phase 2 | Pending |
+| TMPL-07 | Phase 2 | Pending |
+| TMPL-08 | Phase 2 | Pending |
+| TMPL-09 | Phase 2 | Pending |
+| TMPL-10 | Phase 2 | Pending |
+| TMPL-11 | Phase 2 | Pending |
+| TMPL-12 | Phase 2 | Pending |
+| TMPL-13 | Phase 2 | Pending |
+| TMPL-14 | Phase 2 | Pending |
+| TMPL-15 | Phase 2 | Pending |
+| TMPL-16 | Phase 2 | Pending |
+| TMPL-17 | Phase 2 | Pending |
+| TMPL-18 | Phase 2 | Pending |
+| TMPL-19 | Phase 2 | Pending |
+| TMPL-20 | Phase 2 | Pending |
+| TMPL-21 | Phase 2 | Pending |
+| TMPL-22 | Phase 2 | Pending |
+| TMPL-23 | Phase 2 | Pending |
+| OWN-01 | Phase 2 | Pending |
+| OWN-02 | Phase 2 | Pending |
+| OWN-03 | Phase 2 | Pending |
+| OWN-04 | Phase 2 | Pending |
+| OWN-05 | Phase 2 | Pending |
+| TEN-01 | Phase 2 | Pending |
+| TEN-02 | Phase 2 | Pending |
+| TEN-03 | Phase 2 | Pending |
+| TEN-04 | Phase 2 | Pending |
+| TEN-05 | Phase 2 | Pending |
+| GEO-05 | Phase 2 | Pending |
+| GEO-06 | Phase 2 | Pending |
+| SEO-02 | Phase 2 | Pending |
+| SEO-06 | Phase 2 | Pending |
+| SEO-08 | Phase 2 | Pending |
+| SCHEMA-01 | Phase 2 | Pending |
+| SCHEMA-02 | Phase 2 | Pending |
+| SCHEMA-03 | Phase 2 | Pending |
+| SCHEMA-04 | Phase 2 | Pending |
+| SCHEMA-05 | Phase 2 | Pending |
+| SCHEMA-06 | Phase 2 | Pending |
+| SCHEMA-07 | Phase 2 | Pending |
+| AI-01 | Phase 2 | Pending |
+| AI-02 | Phase 2 | Pending |
+| GEO-01 | Phase 3 | Pending |
+| GEO-02 | Phase 3 | Pending |
+| GEO-03 | Phase 3 | Pending |
+| GEO-04 | Phase 3 | Pending |
+| GEO-07 | Phase 3 | Pending |
+| GEO-08 | Phase 3 | Pending |
+| CMS-04 | Phase 3 | Pending |
+| CMS-05 | Phase 3 | Pending |
+| CMS-06 | Phase 3 | Pending |
+| TRACK-01 | Phase 3 | Pending |
+| TRACK-02 | Phase 3 | Pending |
+| TRACK-03 | Phase 3 | Pending |
+| TRACK-04 | Phase 3 | Pending |
+| TRACK-05 | Phase 3 | Pending |
+| TRACK-06 | Phase 3 | Pending |
+| TRACK-07 | Phase 3 | Pending |
+| TRACK-08 | Phase 3 | Pending |
+| TRACK-09 | Phase 3 | Pending |
+| INT-01 | Phase 3 | Pending |
+| INT-02 | Phase 3 | Pending |
+| AI-03 | Phase 3 | Pending |
+| SEO-09 | Phase 4 | Pending |
+| SEO-10 | Phase 4 | Pending |
+| HAND-01 | Phase 4 | Pending |
+| HAND-02 | Phase 4 | Pending |
+| HAND-03 | Phase 4 | Pending |
+| HAND-04 | Phase 4 | Pending |
+| HAND-05 | Phase 4 | Pending |
+| HAND-06 | Phase 4 | Pending |
 
 **Coverage:**
-- v1 requirements: 89 total
-- Mapped to phases: 89
-- Unmapped: 0 ✓
+- v1 requirements: 105 total
+- Mapped to phases: 105
+- Unmapped: 0
+
+Phase breakdown:
+- Phase 1: 29 requirements (FOUND-01-07, NAV-01-04, BLOCK-01-10, CMS-01-03, SEO-01/03/04/05/07)
+- Phase 2: 47 requirements (TMPL-01-23, OWN-01-05, TEN-01-05, GEO-05-06, SEO-02/06/08, SCHEMA-01-07, AI-01-02)
+- Phase 3: 21 requirements (GEO-01-04/07-08, CMS-04-06, TRACK-01-09, INT-01-02, AI-03)
+- Phase 4: 8 requirements (SEO-09-10, HAND-01-06)
 
 ---
 *Requirements defined: 2026-03-28*
-*Last updated: 2026-03-28 after initial definition*
+*Last updated: 2026-03-28 — traceability updated after roadmap creation*
