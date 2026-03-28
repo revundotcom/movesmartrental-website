@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-06-PLAN.md
-last_updated: "2026-03-28T16:14:58.053Z"
-last_activity: "2026-03-28 — Completed 03-06-PLAN.md (Event tracking wiring: CTA tracker, link tracker, contact form events)"
+stopped_at: Completed 04-02-PLAN.md
+last_updated: "2026-03-28T16:28:06.866Z"
+last_activity: "2026-03-28 — Completed 04-01-PLAN.md (CWV & image optimization: AVIF/WebP, font swap, passive listeners)"
 progress:
   total_phases: 4
   completed_phases: 3
-  total_plans: 24
-  completed_plans: 24
-  percent: 92
+  total_plans: 28
+  completed_plans: 26
+  percent: 93
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-28)
 
 **Core value:** A search-dominant acquisition system that attracts property owners and tenants organically and scales to new local markets without rebuilding the architecture.
-**Current focus:** Phase 3 — Scale, Integrations, and Content System
+**Current focus:** Phase 4 — Audit, Hardening, and Handoff
 
 ## Current Position
 
-Phase: 3 of 4 (Scale, Integrations, and Content System)
-Plan: 8 of 8 in current phase
+Phase: 4 of 4 (Audit, Hardening, and Handoff)
+Plan: 1 of 4 in current phase
 Status: Executing
-Last activity: 2026-03-28 — Completed 03-06-PLAN.md (Event tracking wiring: CTA tracker, link tracker, contact form events)
+Last activity: 2026-03-28 — Completed 04-01-PLAN.md (CWV & image optimization: AVIF/WebP, font swap, passive listeners)
 
-Progress: [█████████░] 92%
+Progress: [█████████░] 93%
 
 ## Performance Metrics
 
@@ -74,6 +74,8 @@ Progress: [█████████░] 92%
 | Phase 03 P02 | 7min | 2 tasks | 5 files |
 | Phase 03 P06 | 2min | 2 tasks | 7 files |
 | Phase 03 P08 | 1min | 2 tasks | 2 files |
+| Phase 04 P01 | 3min | 2 tasks | 4 files |
+| Phase 04 P02 | 3min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -150,6 +152,9 @@ Recent decisions affecting current work:
 - [Phase 03]: Dashboard guide covers all 9 GA4 event types plus engagement events; Analytics API returns CMS counts only (user analytics in Looker Studio)
 - [Phase 03]: CTATracker wraps Server Component CTAs as Client Component span with onClick -- composition avoids converting parent to Client Component
 - [Phase 03]: CTA event type inferred from href pattern (account/signup -> account_creation, else book_a_call)
+- [Phase 04]: AVIF listed before WebP in formats array for best compression with automatic fallback
+- [Phase 04]: Explicit deviceSizes and imageSizes in next.config.ts to survive future config changes
+- [Phase 04]: Passive: true added to LinkTracker click listener since handler never calls preventDefault()
 
 ### Pending Todos
 
@@ -163,6 +168,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T16:14:12.442Z
-Stopped at: Completed 03-06-PLAN.md
+Last session: 2026-03-28T16:28:01.891Z
+Stopped at: Completed 04-02-PLAN.md
 Resume file: None

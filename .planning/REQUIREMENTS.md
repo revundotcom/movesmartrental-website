@@ -107,8 +107,8 @@
 - [x] **SEO-06**: Meta titles 50-60 chars, meta descriptions 140-160 chars, one H1 per page
 - [x] **SEO-07**: Image alt text describing actual image with location/service when relevant
 - [x] **SEO-08**: 404 handling with custom error page, redirect logic
-- [ ] **SEO-09**: Core Web Vitals: LCP <2.5s, INP <200ms, CLS <0.1
-- [ ] **SEO-10**: Image compression, lazy loading (not for LCP image), WebP/AVIF via next/image
+- [x] **SEO-09**: Core Web Vitals: LCP <2.5s, INP <200ms, CLS <0.1
+- [x] **SEO-10**: Image compression, lazy loading (not for LCP image), WebP/AVIF via next/image
 
 ### Schema Markup
 
@@ -281,8 +281,8 @@
 | INT-01 | Phase 3 | Complete |
 | INT-02 | Phase 3 | Complete |
 | AI-03 | Phase 3 | Complete |
-| SEO-09 | Phase 4 | Pending |
-| SEO-10 | Phase 4 | Pending |
+| SEO-09 | Phase 4 | Complete |
+| SEO-10 | Phase 4 | Complete |
 | HAND-01 | Phase 4 | Pending |
 | HAND-02 | Phase 4 | Pending |
 | HAND-03 | Phase 4 | Pending |
