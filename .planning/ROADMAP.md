@@ -100,7 +100,7 @@ Plans:
 Plans:
 - [ ] 04-01-PLAN.md — Core Web Vitals optimization + image delivery (WebP/AVIF, sizes, priority)
 - [x] 04-02-PLAN.md — Environment documentation + credentials transfer document
-- [ ] 04-03-PLAN.md — CMS content model reference + publishing SOP polish + training session guide
+- [x] 04-03-PLAN.md — CMS content model reference + publishing SOP polish + training session guide
 - [ ] 04-04-PLAN.md — Source code transfer checklist + clone-deploy verification
 
 ## Progress
@@ -113,4 +113,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 1. Architecture and CMS Foundation | 6/6 | Complete | 2026-03-28 |
 | 2. Core Build — Templates and Top Cities | 8/10 | In Progress|  |
 | 3. Scale, Integrations, and Content System | 8/8 | Complete   | 2026-03-28 |
-| 4. Audit, Hardening, and Handoff | 0/4 | Not started | - |
+| 4. Audit, Hardening, and Handoff | 3/4 | In Progress | - |

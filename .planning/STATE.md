@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-02-PLAN.md
-last_updated: "2026-03-28T16:28:11.526Z"
-last_activity: "2026-03-28 — Completed 04-02-PLAN.md (Environment documentation + credentials transfer document)"
+stopped_at: Completed 04-03-PLAN.md
+last_updated: "2026-03-28T16:28:51.000Z"
+last_activity: "2026-03-28 — Completed 04-03-PLAN.md (CMS content model reference, polished publishing SOP, training session guide)"
 progress:
   total_phases: 4
   completed_phases: 3
   total_plans: 28
-  completed_plans: 26
-  percent: 93
+  completed_plans: 27
+  percent: 96
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 ## Current Position
 
 Phase: 4 of 4 (Audit, Hardening, and Handoff)
-Plan: 2 of 4 in current phase
+Plan: 3 of 4 in current phase
 Status: Executing
-Last activity: 2026-03-28 — Completed 04-02-PLAN.md (Environment documentation + credentials transfer document)
+Last activity: 2026-03-28 — Completed 04-03-PLAN.md (CMS content model reference, polished publishing SOP, training session guide)
 
-Progress: [█████████░] 93%
+Progress: [█████████░] 96%
 
 ## Performance Metrics
 
@@ -76,6 +76,7 @@ Progress: [█████████░] 93%
 | Phase 03 P08 | 1min | 2 tasks | 2 files |
 | Phase 04 P01 | 3min | 2 tasks | 4 files |
 | Phase 04 P02 | 3min | 2 tasks | 3 files |
+| Phase 04 P03 | 5min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -157,6 +158,9 @@ Recent decisions affecting current work:
 - [Phase 04]: Passive: true added to LinkTracker click listener since handler never calls preventDefault()
 - [Phase 04]: Grouped env vars by service in .env.example with inline comments for self-documenting config
 - [Phase 04]: Credentials doc uses checklist format with post-transfer verification and security notes
+- [Phase 04]: CMS content model reference documents schemas in frequency-of-use order (City first, PropertyListing last) for editor convenience
+- [Phase 04]: Training session structured as 3 modules (20+30+20 min) targeting 60-90 minute delivery window
+- [Phase 04]: Glossary defines 20 terms using non-technical language (ISR, GROQ, canonical, slug, thin content, CDN, etc.)
 
 ### Pending Todos
 
@@ -170,6 +174,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T16:28:01.891Z
-Stopped at: Completed 04-02-PLAN.md
+Last session: 2026-03-28T16:28:51.000Z
+Stopped at: Completed 04-03-PLAN.md
 Resume file: None

@@ -147,10 +147,10 @@
 
 - [ ] **HAND-01**: Full source code in client's REVUN GitHub account
 - [x] **HAND-02**: Environment documentation (architecture, env vars, deployment process)
-- [ ] **HAND-03**: CMS content model reference document
-- [ ] **HAND-04**: Content production SOP with publishing workflow
+- [x] **HAND-03**: CMS content model reference document
+- [x] **HAND-04**: Content production SOP with publishing workflow
 - [x] **HAND-05**: All credentials transferred (hosting, CMS, analytics, search console, tag manager)
-- [ ] **HAND-06**: Training session delivered (CMS usage, content publishing, basic troubleshooting)
+- [x] **HAND-06**: Training session delivered (CMS usage, content publishing, basic troubleshooting)
 
 ## v2 Requirements
 
@@ -285,10 +285,10 @@
 | SEO-10 | Phase 4 | Complete |
 | HAND-01 | Phase 4 | Pending |
 | HAND-02 | Phase 4 | Complete |
-| HAND-03 | Phase 4 | Pending |
-| HAND-04 | Phase 4 | Pending |
+| HAND-03 | Phase 4 | Complete |
+| HAND-04 | Phase 4 | Complete |
 | HAND-05 | Phase 4 | Complete |
-| HAND-06 | Phase 4 | Pending |
+| HAND-06 | Phase 4 | Complete |
 
 **Coverage:**
 - v1 requirements: 105 total
