@@ -1,0 +1,74 @@
+rank,city,province_state,country,tier,population,slug,provinceSlug,url,priorityScore,servicePages,categoryPages,listingPages,status
+1,Toronto,Ontario,CA,1,2794356,toronto,ontario,/ca/ontario/toronto/,100,8,0,0,partial
+2,Ottawa,Ontario,CA,1,1017449,ottawa,ontario,/ca/ontario/ottawa/,80.9,8,0,0,partial
+3,Mississauga,Ontario,CA,1,717961,mississauga,ontario,/ca/ontario/mississauga/,77.7,8,0,0,partial
+4,Brampton,Ontario,CA,1,656480,brampton,ontario,/ca/ontario/brampton/,77,8,0,0,partial
+5,Hamilton,Ontario,CA,1,569353,hamilton,ontario,/ca/ontario/hamilton/,76.1,8,0,0,partial
+6,London,Ontario,CA,1,422324,london,ontario,/ca/ontario/london/,74.5,8,0,0,partial
+7,Markham,Ontario,CA,1,338503,markham,ontario,/ca/ontario/markham/,73.6,8,0,0,partial
+8,Vaughan,Ontario,CA,1,323103,vaughan,ontario,/ca/ontario/vaughan/,73.5,8,0,0,partial
+9,Kitchener,Ontario,CA,1,270927,kitchener,ontario,/ca/ontario/kitchener/,72.9,8,0,0,partial
+10,Oakville,Ontario,CA,1,213759,oakville,ontario,/ca/ontario/oakville/,72.3,8,0,0,partial
+11,Richmond Hill,Ontario,CA,1,202022,richmond-hill,ontario,/ca/ontario/richmond-hill/,72.2,8,0,0,partial
+12,Burlington,Ontario,CA,1,186948,burlington,ontario,/ca/ontario/burlington/,72,8,0,0,partial
+13,Oshawa,Ontario,CA,1,175383,oshawa,ontario,/ca/ontario/oshawa/,71.9,8,0,0,partial
+14,Barrie,Ontario,CA,1,147829,barrie,ontario,/ca/ontario/barrie/,71.6,8,0,0,partial
+15,Guelph,Ontario,CA,1,143740,guelph,ontario,/ca/ontario/guelph/,71.5,8,0,0,partial
+16,Cambridge,Ontario,CA,1,138479,cambridge,ontario,/ca/ontario/cambridge/,71.5,8,0,0,partial
+17,Milton,Ontario,CA,1,132979,milton,ontario,/ca/ontario/milton/,71.4,8,0,0,partial
+18,Ajax,Ontario,CA,1,126666,ajax,ontario,/ca/ontario/ajax/,71.4,8,0,0,partial
+19,Waterloo,Ontario,CA,1,113520,waterloo,ontario,/ca/ontario/waterloo/,71.2,8,0,0,partial
+20,Pickering,Ontario,CA,1,99186,pickering,ontario,/ca/ontario/pickering/,71.1,8,0,0,partial
+21,Montreal,Quebec,CA,2,1762949,montreal,quebec,/ca/quebec/montreal/,38.9,0,0,0,stub
+22,Vancouver,British Columbia,CA,2,662248,vancouver,british-columbia,/ca/british-columbia/vancouver/,27.1,0,0,0,stub
+23,Calgary,Alberta,CA,2,1306784,calgary,alberta,/ca/alberta/calgary/,34,0,0,0,stub
+24,Edmonton,Alberta,CA,2,1010899,edmonton,alberta,/ca/alberta/edmonton/,30.8,0,0,0,stub
+25,Quebec City,Quebec,CA,2,549459,quebec-city,quebec,/ca/quebec/quebec-city/,25.9,0,0,0,stub
+26,Laval,Quebec,CA,2,438366,laval,quebec,/ca/quebec/laval/,24.7,0,0,0,stub
+27,Surrey,British Columbia,CA,2,568322,surrey,british-columbia,/ca/british-columbia/surrey/,26.1,0,0,0,stub
+28,Halifax,Nova Scotia,CA,2,439819,halifax,nova-scotia,/ca/nova-scotia/halifax/,24.7,0,0,0,stub
+29,Gatineau,Quebec,CA,2,291641,gatineau,quebec,/ca/quebec/gatineau/,23.1,0,0,0,stub
+30,Burnaby,British Columbia,CA,2,249125,burnaby,british-columbia,/ca/british-columbia/burnaby/,22.7,0,0,0,stub
+31,Longueuil,Quebec,CA,2,249277,longueuil,quebec,/ca/quebec/longueuil/,22.7,0,0,0,stub
+32,Richmond,British Columbia,CA,2,209937,richmond,british-columbia,/ca/british-columbia/richmond/,22.3,0,0,0,stub
+33,Victoria,British Columbia,CA,2,397237,victoria,british-columbia,/ca/british-columbia/victoria/,24.3,0,0,0,stub
+34,Red Deer,Alberta,CA,3,100807,red-deer,alberta,/ca/alberta/red-deer/,11.1,0,0,0,stub
+35,Lethbridge,Alberta,CA,3,101482,lethbridge,alberta,/ca/alberta/lethbridge/,11.1,0,0,0,stub
+36,Dartmouth,Nova Scotia,CA,3,93671,dartmouth,nova-scotia,/ca/nova-scotia/dartmouth/,11,0,0,0,stub
+37,Miami,Florida,US,2,442241,fl-miami,florida,/us/florida/fl-miami/,24.7,0,0,0,stub
+38,Orlando,Florida,US,2,307573,fl-orlando,florida,/us/florida/fl-orlando/,23.3,0,0,0,stub
+39,Tampa,Florida,US,2,384959,fl-tampa,florida,/us/florida/fl-tampa/,24.1,0,0,0,stub
+40,Jacksonville,Florida,US,2,949611,fl-jacksonville,florida,/us/florida/fl-jacksonville/,30.2,0,0,0,stub
+41,Fort Lauderdale,Florida,US,2,182760,fl-fort-lauderdale,florida,/us/florida/fl-fort-lauderdale/,22,0,0,0,stub
+42,Houston,Texas,US,2,2304580,tx-houston,texas,/us/texas/tx-houston/,44.7,0,0,0,stub
+43,Dallas,Texas,US,2,1304379,tx-dallas,texas,/us/texas/tx-dallas/,34,0,0,0,stub
+44,Austin,Texas,US,2,979882,tx-austin,texas,/us/texas/tx-austin/,30.5,0,0,0,stub
+45,San Antonio,Texas,US,2,1434625,tx-san-antonio,texas,/us/texas/tx-san-antonio/,35.4,0,0,0,stub
+46,Fort Worth,Texas,US,2,918698,tx-fort-worth,texas,/us/texas/tx-fort-worth/,29.9,0,0,0,stub
+47,Los Angeles,California,US,2,3898747,ca-los-angeles,california,/us/california/ca-los-angeles/,61.8,0,0,0,stub
+48,San Francisco,California,US,2,873965,ca-san-francisco,california,/us/california/ca-san-francisco/,29.4,0,0,0,stub
+49,San Diego,California,US,2,1386932,ca-san-diego,california,/us/california/ca-san-diego/,34.9,0,0,0,stub
+50,Sacramento,California,US,2,524943,ca-sacramento,california,/us/california/ca-sacramento/,25.6,0,0,0,stub
+51,San Jose,California,US,2,1013240,ca-san-jose,california,/us/california/ca-san-jose/,30.9,0,0,0,stub
+52,New York City,New York,US,2,8336817,ny-new-york-city,new-york,/us/new-york/ny-new-york-city/,109.5,0,0,0,stub
+53,Buffalo,New York,US,2,278349,ny-buffalo,new-york,/us/new-york/ny-buffalo/,23,0,0,0,stub
+54,Rochester,New York,US,2,211328,ny-rochester,new-york,/us/new-york/ny-rochester/,22.3,0,0,0,stub
+55,Albany,New York,US,2,99224,ny-albany,new-york,/us/new-york/ny-albany/,21.1,0,0,0,stub
+56,Chicago,Illinois,US,2,2696555,il-chicago,illinois,/us/illinois/il-chicago/,48.9,0,0,0,stub
+57,Aurora,Illinois,US,2,180542,il-aurora,illinois,/us/illinois/il-aurora/,21.9,0,0,0,stub
+58,Naperville,Illinois,US,2,149540,il-naperville,illinois,/us/illinois/il-naperville/,21.6,0,0,0,stub
+59,Atlanta,Georgia,US,2,498715,ga-atlanta,georgia,/us/georgia/ga-atlanta/,25.4,0,0,0,stub
+60,Savannah,Georgia,US,2,147780,ga-savannah,georgia,/us/georgia/ga-savannah/,21.6,0,0,0,stub
+61,Augusta,Georgia,US,2,202081,ga-augusta,georgia,/us/georgia/ga-augusta/,22.2,0,0,0,stub
+62,Charlotte,North Carolina,US,2,874579,nc-charlotte,north-carolina,/us/north-carolina/nc-charlotte/,29.4,0,0,0,stub
+63,Raleigh,North Carolina,US,2,467665,nc-raleigh,north-carolina,/us/north-carolina/nc-raleigh/,25,0,0,0,stub
+64,Durham,North Carolina,US,2,283506,nc-durham,north-carolina,/us/north-carolina/nc-durham/,23,0,0,0,stub
+65,Phoenix,Arizona,US,2,1608139,az-phoenix,arizona,/us/arizona/az-phoenix/,37.3,0,0,0,stub
+66,Tucson,Arizona,US,2,542629,az-tucson,arizona,/us/arizona/az-tucson/,25.8,0,0,0,stub
+67,Scottsdale,Arizona,US,2,241361,az-scottsdale,arizona,/us/arizona/az-scottsdale/,22.6,0,0,0,stub
+68,Denver,Colorado,US,2,715522,co-denver,colorado,/us/colorado/co-denver/,27.7,0,0,0,stub
+69,Colorado Springs,Colorado,US,2,478961,co-colorado-springs,colorado,/us/colorado/co-colorado-springs/,25.1,0,0,0,stub
+70,Boulder,Colorado,US,2,105673,co-boulder,colorado,/us/colorado/co-boulder/,21.1,0,0,0,stub
+71,Newark,New Jersey,US,2,311549,nj-newark,new-jersey,/us/new-jersey/nj-newark/,23.3,0,0,0,stub
+72,Jersey City,New Jersey,US,2,292449,nj-jersey-city,new-jersey,/us/new-jersey/nj-jersey-city/,23.1,0,0,0,stub
+73,Hoboken,New Jersey,US,2,60419,nj-hoboken,new-jersey,/us/new-jersey/nj-hoboken/,20.6,0,0,0,stub
