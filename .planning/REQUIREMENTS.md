@@ -146,10 +146,10 @@
 ### Handoff & Documentation
 
 - [ ] **HAND-01**: Full source code in client's REVUN GitHub account
-- [ ] **HAND-02**: Environment documentation (architecture, env vars, deployment process)
+- [x] **HAND-02**: Environment documentation (architecture, env vars, deployment process)
 - [ ] **HAND-03**: CMS content model reference document
 - [ ] **HAND-04**: Content production SOP with publishing workflow
-- [ ] **HAND-05**: All credentials transferred (hosting, CMS, analytics, search console, tag manager)
+- [x] **HAND-05**: All credentials transferred (hosting, CMS, analytics, search console, tag manager)
 - [ ] **HAND-06**: Training session delivered (CMS usage, content publishing, basic troubleshooting)
 
 ## v2 Requirements
@@ -284,10 +284,10 @@
 | SEO-09 | Phase 4 | Complete |
 | SEO-10 | Phase 4 | Complete |
 | HAND-01 | Phase 4 | Pending |
-| HAND-02 | Phase 4 | Pending |
+| HAND-02 | Phase 4 | Complete |
 | HAND-03 | Phase 4 | Pending |
 | HAND-04 | Phase 4 | Pending |
-| HAND-05 | Phase 4 | Pending |
+| HAND-05 | Phase 4 | Complete |
 | HAND-06 | Phase 4 | Pending |
 
 **Coverage:**

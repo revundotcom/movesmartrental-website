@@ -99,7 +99,7 @@ Plans:
 
 Plans:
 - [ ] 04-01-PLAN.md — Core Web Vitals optimization + image delivery (WebP/AVIF, sizes, priority)
-- [ ] 04-02-PLAN.md — Environment documentation + credentials transfer document
+- [x] 04-02-PLAN.md — Environment documentation + credentials transfer document
 - [ ] 04-03-PLAN.md — CMS content model reference + publishing SOP polish + training session guide
 - [ ] 04-04-PLAN.md — Source code transfer checklist + clone-deploy verification
 

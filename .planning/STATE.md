@@ -4,8 +4,8 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Completed 04-02-PLAN.md
-last_updated: "2026-03-28T16:28:06.866Z"
-last_activity: "2026-03-28 — Completed 04-01-PLAN.md (CWV & image optimization: AVIF/WebP, font swap, passive listeners)"
+last_updated: "2026-03-28T16:28:11.526Z"
+last_activity: "2026-03-28 — Completed 04-02-PLAN.md (Environment documentation + credentials transfer document)"
 progress:
   total_phases: 4
   completed_phases: 3
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 ## Current Position
 
 Phase: 4 of 4 (Audit, Hardening, and Handoff)
-Plan: 1 of 4 in current phase
+Plan: 2 of 4 in current phase
 Status: Executing
-Last activity: 2026-03-28 — Completed 04-01-PLAN.md (CWV & image optimization: AVIF/WebP, font swap, passive listeners)
+Last activity: 2026-03-28 — Completed 04-02-PLAN.md (Environment documentation + credentials transfer document)
 
 Progress: [█████████░] 93%
 
@@ -155,6 +155,8 @@ Recent decisions affecting current work:
 - [Phase 04]: AVIF listed before WebP in formats array for best compression with automatic fallback
 - [Phase 04]: Explicit deviceSizes and imageSizes in next.config.ts to survive future config changes
 - [Phase 04]: Passive: true added to LinkTracker click listener since handler never calls preventDefault()
+- [Phase 04]: Grouped env vars by service in .env.example with inline comments for self-documenting config
+- [Phase 04]: Credentials doc uses checklist format with post-transfer verification and security notes
 
 ### Pending Todos
 
