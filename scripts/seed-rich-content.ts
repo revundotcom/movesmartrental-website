@@ -210,15 +210,23 @@ async function loadBatch(batchNum: number): Promise<BatchModule> {
 // ---------------------------------------------------------------------------
 
 const SERVICE_SLUG_MAP: Record<string, string> = {
-  'tenant-placement':   'tenant-placement',
-  'tenant-screening':   'tenant-screening',
+  // New city files (batch 2-4) slugs
+  'tenant-placement':    'tenant-placement',
+  'tenant-screening':    'tenant-screening',
   'property-management': 'rental-preparation',
-  'rent-collection':    'rent-guarantee',
-  'maintenance-repair': 'portal-technology',
-  'lease-management':   'leasing-services',
+  'rent-collection':     'rent-guarantee',
+  'maintenance-repair':  'portal-technology',
+  'lease-management':    'leasing-services',
   'financial-reporting': 'pricing',
-  'eviction-services':  'rental-marketing',
+  'eviction-services':   'rental-marketing',
+  // Batch-1 (Toronto/Mississauga) variant slugs
+  'maintenance-repairs': 'portal-technology',
+  'lease-renewals':      'leasing-services',
+  'vacancy-marketing':   'rental-marketing',
 }
+
+// Batch-1 slugs with no Sanity target (skip silently)
+const SKIP_SLUGS = new Set(['eviction-support'])
 
 function remapServiceSlug(slug: string): string {
   return SERVICE_SLUG_MAP[slug] ?? slug
@@ -238,6 +246,10 @@ async function patchCityServiceDocuments(
 
     await Promise.all(
       chunk.map(async (entry) => {
+        if (SKIP_SLUGS.has(entry.serviceSlug)) {
+          console.log(`  ⏭ Skipped ${entry.citySlug}/${entry.serviceSlug} (no Sanity target)`)
+          return
+        }
         const sanitySlug = remapServiceSlug(entry.serviceSlug)
         const docId = `cityservice-${entry.citySlug}-${sanitySlug}`
 
