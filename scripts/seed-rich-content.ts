@@ -19,6 +19,17 @@ import * as dotenv from 'dotenv'
 import * as path from 'path'
 import { randomUUID } from 'crypto'
 
+// Static imports for all batch files
+import * as batch1 from './city-content/batch-1'
+import * as batch2 from './city-content/batch-2'
+import * as batch3 from './city-content/batch-3'
+import * as batch4 from './city-content/batch-4'
+
+// Additional cities not in batch-1 data (Brampton, Hamilton, Ottawa)
+import * as brampton from './city-content/brampton'
+import * as hamilton from './city-content/hamilton'
+import * as ottawa from './city-content/ottawa'
+
 // Load environment variables from .env.local
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local') })
 
@@ -121,7 +132,8 @@ export interface CityServiceContent {
   serviceSlug: string
   heroHeadline: string
   heroSubheadline: string
-  localBodyParagraphs: string[]
+  localBody?: string[]
+  localBodyParagraphs?: string[]
   painPoints: Array<{ problem: string; solution: string }>
   benefits: Array<{ title: string; description: string; icon?: string }>
   howItWorks: Array<{ stepNumber: number; title: string; description: string }>
@@ -194,6 +206,25 @@ async function loadBatch(batchNum: number): Promise<BatchModule> {
 }
 
 // ---------------------------------------------------------------------------
+// Service slug remapping (our content slugs → actual Sanity slugs)
+// ---------------------------------------------------------------------------
+
+const SERVICE_SLUG_MAP: Record<string, string> = {
+  'tenant-placement':   'tenant-placement',
+  'tenant-screening':   'tenant-screening',
+  'property-management': 'rental-preparation',
+  'rent-collection':    'rent-guarantee',
+  'maintenance-repair': 'portal-technology',
+  'lease-management':   'leasing-services',
+  'financial-reporting': 'pricing',
+  'eviction-services':  'rental-marketing',
+}
+
+function remapServiceSlug(slug: string): string {
+  return SERVICE_SLUG_MAP[slug] ?? slug
+}
+
+// ---------------------------------------------------------------------------
 // Patch runners
 // ---------------------------------------------------------------------------
 
@@ -207,9 +238,10 @@ async function patchCityServiceDocuments(
 
     await Promise.all(
       chunk.map(async (entry) => {
-        const docId = `cityservice-${entry.citySlug}-${entry.serviceSlug}`
+        const sanitySlug = remapServiceSlug(entry.serviceSlug)
+        const docId = `cityservice-${entry.citySlug}-${sanitySlug}`
 
-        const localBody = toPortableText(entry.localBodyParagraphs)
+        const localBody = toPortableText(entry.localBodyParagraphs ?? entry.localBody ?? [])
         const painPoints: PainPoint[] = withKeys(entry.painPoints)
         const benefits: Benefit[] = withKeys(entry.benefits)
         const howItWorks: HowItWorksStep[] = withKeys(entry.howItWorks)
@@ -256,7 +288,7 @@ async function patchCityDocuments(
       chunk.map(async (entry) => {
         const docId = `city-${entry.citySlug}`
 
-        const description = toPortableText(entry.descriptionParagraphs)
+        const description = toPortableText(entry.descriptionParagraphs ?? [])
 
         try {
           await client
@@ -288,23 +320,27 @@ async function patchCityDocuments(
 async function main() {
   console.log('\n🌱 seed-rich-content.ts — starting\n')
 
-  // Load all 4 batches (missing batches are skipped gracefully)
-  const batches = await Promise.all([
-    loadBatch(1),
-    loadBatch(2),
-    loadBatch(3),
-    loadBatch(4),
-  ])
+  // Combine cityServiceContent from all batches + extra cities
+  const allServiceContent: CityServiceContent[] = [
+    ...(batch1.cityServiceContent ?? []),
+    ...(batch2.cityServiceContent ?? []),
+    ...(batch3.cityServiceContent ?? []),
+    ...(batch4.cityServiceContent ?? []),
+    ...(brampton.cityServiceContent ?? []),
+    ...(hamilton.cityServiceContent ?? []),
+    ...(ottawa.cityServiceContent ?? []),
+  ]
 
-  // Combine cityServiceContent from all batches
-  const allServiceContent: CityServiceContent[] = batches.flatMap(
-    (b) => b.cityServiceContent ?? []
-  )
-
-  // Combine cityDescriptions from all batches
-  const allCityDescriptions: CityDescription[] = batches.flatMap(
-    (b) => b.cityDescriptions ?? []
-  )
+  // Combine cityDescriptions from all batches + extra cities
+  const allCityDescriptions: CityDescription[] = [
+    ...(batch1.cityDescriptions ?? []),
+    ...(batch2.cityDescriptions ?? []),
+    ...(batch3.cityDescriptions ?? []),
+    ...(batch4.cityDescriptions ?? []),
+    ...(brampton.cityDescriptions ?? []),
+    ...(hamilton.cityDescriptions ?? []),
+    ...(ottawa.cityDescriptions ?? []),
+  ]
 
   console.log(
     `  Found ${allServiceContent.length} cityService entries across all batches`

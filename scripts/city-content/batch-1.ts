@@ -6,7 +6,8 @@ export interface CityServiceContent {
   serviceSlug: string
   heroHeadline: string
   heroSubheadline: string
-  localBody: string[]
+  localBody?: string[]
+  localBodyParagraphs?: string[]
   painPoints: Array<{ problem: string; solution: string }>
   benefits: Array<{ title: string; description: string; icon: string }>
   howItWorks: Array<{ stepNumber: number; title: string; description: string }>
@@ -627,5 +628,4 @@ export const cityServiceContent: CityServiceContent[] = [
     ],
   },
 ]
-// Note: Brampton, Hamilton, Ottawa entries follow same pattern — see seed-rich-content.ts for merge logic
-// Full entries for those cities are embedded directly in the seed runner to avoid file size issues
+
