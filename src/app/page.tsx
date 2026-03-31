@@ -6,6 +6,16 @@ import {
   Building,
   ArrowRight,
   MapPin,
+  DollarSign,
+  Megaphone,
+  Shield,
+  CheckCircle,
+  Paintbrush,
+  Eye,
+  Search,
+  FileCheck,
+  ThumbsUp,
+  Home,
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -53,9 +63,9 @@ export async function generateMetadata(): Promise<Metadata> {
   return generatePageMetadata({
     path: '/',
     fallbackTitle:
-      'MoveSmart Rentals | White-Glove Leasing Execution for Ontario',
+      'MoveSmart Rentals | Full-Service Rental and Leasing Across Ontario',
     fallbackDescription:
-      'White-glove leasing execution for serious rental operators. Tenant placement, screening, rent protection, and dedicated account management with zero upfront cost.',
+      'Full-service rental and leasing company helping properties get rented to qualified tenants. MLS advertising on 50+ platforms, professional screening, rent protection, and zero upfront cost.',
   })
 }
 
@@ -75,7 +85,7 @@ export default async function HomePage() {
     url: siteUrl,
     logo: `${siteUrl}/og-default.png`,
     description:
-      'White-glove leasing execution for serious rental operators. Tenant placement, screening, rent protection, and full-service property management with zero upfront cost.',
+      'Full-service rental and leasing company helping properties get rented to qualified tenants through broad advertising exposure, professional screening, technology-driven transparency, and zero upfront cost.',
     contactEmail: 'info@movesmartrentals.com',
     socialLinks: [
       'https://www.facebook.com/movesmartrentals',
@@ -91,7 +101,7 @@ export default async function HomePage() {
 
   const localBusinessSchema = buildLocalBusinessSchema({
     name: 'MoveSmart Rentals',
-    description: 'White-glove property management for Ontario landlords. Tenant placement, screening, rent protection, and full-service leasing with zero upfront cost.',
+    description: 'Full-service rental and leasing company for Ontario landlords. Tenant placement, professional screening, rent protection, and end-to-end leasing support with zero upfront cost.',
     url: siteUrl,
     phone: '+14372957688',
     address: {
@@ -114,10 +124,10 @@ export default async function HomePage() {
 
       {/* ── SECTION 1: Hero ── */}
       <HeroBlock
-        headline="White-Glove Leasing Execution for Serious Rental Operators"
-        subheadline="Peace of Mind Through Execution. We handle pricing, marketing, showings, qualification, and lease execution so you never lift a finger."
-        cta1={{ label: 'Get Started', href: '/contact/' }}
-        cta2={{ label: 'See How It Works', href: '/owners/' }}
+        headline="Get Your Property Rented to Qualified Tenants, Fast"
+        subheadline="MoveSmart Rentals is a full-service rental and leasing company. We advertise on MLS and 50+ platforms, screen every applicant, and handle every step from listing to move-in. Nothing due upfront."
+        cta1={{ label: 'Create a Free Account', href: '/contact/' }}
+        cta2={{ label: 'Book a Call', href: '/contact/?intent=call' }}
         priority
       />
 
@@ -150,11 +160,64 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Wave divider: Section 2 (slate-50/white) → Section 3 (white) */}
+      {/* Wave divider: Section 2 → Section 2b (owner problem/solution) */}
       <WaveDivider fill="#ffffff" />
 
+      {/* ── SECTION 2b: Owner Problem/Solution Overview ── */}
+      <section className="relative overflow-hidden bg-white py-24">
+        <div className="relative z-10 mx-auto max-w-6xl px-4">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
+              The Problem We Solve
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
+              Landlord Challenges,{' '}
+              <span className="font-display italic text-brand-emerald">Solved</span>
+            </h2>
+          </div>
+
+          <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2">
+            {[
+              {
+                problem: 'Vacant units sitting empty for weeks, costing you thousands in lost rental income.',
+                solution: 'We list on MLS and 50+ rental platforms simultaneously, filling vacancies in an average of 14 days.',
+              },
+              {
+                problem: 'Unreliable tenants who pay late, damage your property, or cause disputes.',
+                solution: 'Every applicant goes through structured screening: credit checks, employment verification, references, and full rental history review.',
+              },
+              {
+                problem: 'Spending evenings and weekends on showings, maintenance calls, and tenant complaints.',
+                solution: 'Your dedicated account manager handles everything. Track progress in real time from your self-serve online portal.',
+              },
+              {
+                problem: 'Hidden fees and unclear pricing from property management companies that eat into returns.',
+                solution: 'Nothing due upfront. Our success-based leasing model means you only pay when your property is rented.',
+              },
+            ].map((item, i) => (
+              <div key={i} className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+                <div className="flex items-start gap-3">
+                  <div className="mt-1 flex size-6 shrink-0 items-center justify-center rounded-full bg-red-100">
+                    <span className="text-xs font-bold text-red-500">!</span>
+                  </div>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{item.problem}</p>
+                </div>
+                <div className="mt-4 flex items-start gap-3">
+                  <div className="mt-1 flex size-6 shrink-0 items-center justify-center rounded-full bg-brand-emerald/10">
+                    <svg viewBox="0 0 12 12" className="size-3 text-brand-emerald" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M2 6l3 3 5-5" />
+                    </svg>
+                  </div>
+                  <p className="text-sm font-medium leading-relaxed text-brand-navy">{item.solution}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── SECTION 3: Services ── */}
-      <section className="relative overflow-hidden bg-white py-28">
+      <section className="relative overflow-hidden bg-slate-50 py-28">
         {/* Decorative accent top-left */}
         <div
           className="absolute -left-10 top-10 size-[200px] rounded-full"
@@ -320,7 +383,7 @@ export default async function HomePage() {
       {/* Wave divider: Section 4 (brand-navy) → Section 5 (white) */}
       <WaveDivider fill="#ffffff" />
 
-      {/* ── SECTION 5: Portal / Technology ── */}
+      {/* ── SECTION 5: Portal / Technology + Full Owner Messaging ── */}
       <section className="relative overflow-hidden bg-white py-28">
         {/* Decorative background: diagonal stripe */}
         <div
@@ -355,14 +418,14 @@ export default async function HomePage() {
             {/* Right: content */}
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
-                Owner Portal
+                Technology-Driven Transparency
               </p>
               <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
                 Full Control.{' '}
                 <span className="font-display italic text-brand-emerald">Zero Hassle.</span>
               </h2>
               <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-                MoveSmart combines a self-serve portal, a dedicated account manager, and local offices — giving you total peace of mind.
+                MoveSmart combines a self-serve portal, a dedicated account manager, and local offices, giving you total peace of mind and complete visibility into every step.
               </p>
 
               <div className="mt-10 space-y-4">
@@ -370,7 +433,7 @@ export default async function HomePage() {
                   {
                     icon: Monitor,
                     title: 'Self-Serve Online Portal',
-                    description: 'View statements, track maintenance requests, and manage your portfolio from any device.',
+                    description: 'View statements, track showings, and manage your portfolio from any device.',
                     color: 'bg-brand-emerald/10',
                     textColor: 'text-brand-emerald',
                   },
@@ -419,6 +482,67 @@ export default async function HomePage() {
                   <ArrowRight className="ml-2 size-4" aria-hidden="true" />
                 </Button>
               </div>
+            </div>
+          </div>
+
+          {/* Full 9-point owner messaging grid */}
+          <div className="mt-20 border-t border-slate-100 pt-16">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
+                Why Owners Choose MoveSmart
+              </p>
+              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+                Everything You Need,{' '}
+                <span className="font-display italic text-brand-emerald">Nothing You Don&apos;t</span>
+              </h2>
+            </div>
+            <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                {
+                  icon: DollarSign,
+                  title: 'Nothing Due Upfront',
+                  description: 'Our success-based leasing model means you pay nothing until your property is rented to a qualified tenant. No setup fees, ever.',
+                },
+                {
+                  icon: Megaphone,
+                  title: 'MLS + 50-Platform Distribution',
+                  description: 'Your listing appears on MLS, Realtor.ca, and 50+ rental sites for maximum exposure and faster fills.',
+                },
+                {
+                  icon: Shield,
+                  title: 'Structured, Documented Screening',
+                  description: 'Credit checks, employment verification, references, and full rental history review. Every applicant, every time.',
+                },
+                {
+                  icon: CheckCircle,
+                  title: 'Rent Protection + Insurance Pathways',
+                  description: 'Our rent guarantee program protects your income from missed payments. Partner insurance pathways available where applicable.',
+                },
+                {
+                  icon: Paintbrush,
+                  title: 'Property Preparation Services',
+                  description: 'Professional cleaning, staging, photography, and repairs before listing to attract quality tenants fast.',
+                },
+                {
+                  icon: Eye,
+                  title: 'Full Visibility Into Every Step',
+                  description: 'Track showings, applications, screening, approvals, inspections, and communications in real time from your portal.',
+                },
+              ].map((item) => {
+                const Icon = item.icon
+                return (
+                  <div
+                    key={item.title}
+                    className="group rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-emerald/20 hover:shadow-md"
+                  >
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-brand-emerald/10">
+                      <Icon className="size-5 text-brand-emerald" aria-hidden="true" />
+                    </div>
+                    <h3 className="mt-4 text-sm font-bold text-brand-navy">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>
@@ -484,11 +608,63 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Wave divider: Section 6 (slate-50) → Section 7 (white) */}
+      {/* Wave divider: Section 6 (slate-50) → Section 6b (white, tenant journey) */}
       <WaveDivider fill="#ffffff" />
 
+      {/* ── SECTION 6b: Tenant Journey ── */}
+      <section className="relative overflow-hidden bg-white py-24">
+        <div className="relative z-10 mx-auto max-w-6xl px-4">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
+              For Tenants
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
+              Find Your Next{' '}
+              <span className="font-display italic text-brand-emerald">Rental Home</span>
+            </h2>
+            <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+              Browse verified listings, apply online, and move in with confidence. Simple, transparent, and stress-free.
+            </p>
+          </div>
+
+          <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { icon: Search, step: '01', title: 'Browse Rentals', description: 'Search verified listings by city, property type, and bedroom count across Ontario.' },
+              { icon: FileCheck, step: '02', title: 'Apply Online', description: 'Submit your application through our secure online portal in minutes.' },
+              { icon: ThumbsUp, step: '03', title: 'Get Approved', description: 'Our team reviews your application and connects you with the property owner.' },
+              { icon: Home, step: '04', title: 'Move In', description: 'Sign your lease, complete the move-in inspection, and enjoy your new home.' },
+            ].map((item) => {
+              const Icon = item.icon
+              return (
+                <div key={item.step} className="group relative rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-emerald/20 hover:shadow-md">
+                  <span className="text-4xl font-black text-brand-emerald/15">{item.step}</span>
+                  <div className="mt-2 flex size-10 items-center justify-center rounded-xl bg-brand-emerald/10">
+                    <Icon className="size-5 text-brand-emerald" aria-hidden="true" />
+                  </div>
+                  <h3 className="mt-4 text-sm font-bold text-brand-navy">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+                </div>
+              )
+            })}
+          </div>
+
+          <div className="mt-10 text-center">
+            <Button
+              variant="default"
+              size="lg"
+              className="cta-primary-shadow cursor-pointer font-bold"
+              style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}
+              render={<Link href="/tenants/" />}
+            >
+              Explore Tenant Hub
+              <ArrowRight className="ml-2 size-4" aria-hidden="true" />
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* ── SECTION 7: Featured Ontario Cities ── */}
-      <section className="relative overflow-hidden bg-white py-28">
+      <section className="relative overflow-hidden bg-slate-50 py-28">
         {/* Dot pattern */}
         <div
           className="absolute inset-0 opacity-[0.03]"
@@ -510,7 +686,7 @@ export default async function HomePage() {
                 Cities
               </h2>
               <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-                Professional leasing execution in major markets across Ontario — and actively expanding to new cities.
+                Full-service rental and leasing across major Ontario markets, with active expansion across Canada and the United States.
               </p>
               <div className="mt-8 flex flex-wrap gap-2">
                 {['Toronto', 'Ottawa', 'Mississauga', 'Hamilton', 'Brampton', 'Kitchener', 'London', 'Barrie', 'Oakville', '+12 more'].map((city) => (
@@ -541,7 +717,7 @@ export default async function HomePage() {
         <CityGridBlock cities={data.featuredCities} columns={4} showHeading={false} />
       </section>
 
-      {/* Wave divider: Section 7 (white) → Section 8 (navy) */}
+      {/* Wave divider: Section 7 (slate-50) → Section 8 (navy) */}
       <WaveDivider fill="#0B1D3A" />
 
       {/* ── SECTION 8: Franchising Preview ── */}
@@ -582,7 +758,7 @@ export default async function HomePage() {
                 <span className="font-display italic text-brand-emerald">MoveSmart</span>
               </h2>
               <p className="mt-5 text-lg leading-relaxed text-white/65">
-                MoveSmart Rentals is expanding across Canada and the United States. Join our network and bring white-glove leasing execution to your local market.
+                MoveSmart Rentals is expanding across Canada and the United States. Join our network and bring full-service leasing execution to your local market.
               </p>
 
               {/* 3 value props */}
@@ -641,42 +817,42 @@ export default async function HomePage() {
           {
             question: 'What does MoveSmart Rentals do?',
             answer:
-              'MoveSmart Rentals provides white-glove leasing execution for serious rental operators across Ontario. We handle competitive pricing analysis, professional marketing, managed showings, tenant qualification, lease execution, and move-in coordination so you can earn passive income without the day-to-day hassle.',
+              'MoveSmart Rentals is a full-service rental and leasing company that helps properties get rented to qualified tenants. We handle competitive pricing analysis, professional marketing across MLS and 50+ platforms, managed showings, structured tenant screening, lease execution, and move-in coordination so you can earn passive income without the day-to-day hassle.',
           },
           {
             question: 'How much does it cost?',
             answer:
-              'Nothing upfront. MoveSmart Rentals operates on a success-based model -- you only pay when we deliver results. There are no setup fees, no hidden charges, and no long-term contracts required.',
+              'Nothing upfront. MoveSmart Rentals operates on a success-based leasing model. You only pay when we deliver results. There are no setup fees, no hidden charges, and no long-term contracts required.',
           },
           {
             question: 'Which cities do you serve?',
             answer:
-              'MoveSmart Rentals currently serves major cities across Ontario including Toronto, Ottawa, Mississauga, Hamilton, Brampton, London, Kitchener, Windsor, and more. We are actively expanding to additional markets.',
+              'MoveSmart Rentals currently serves 20+ cities across Ontario including Toronto, Ottawa, Mississauga, Hamilton, Brampton, London, Kitchener, Barrie, and more. We are actively expanding across Canada and into the United States.',
           },
           {
             question: 'How do you screen tenants?',
             answer:
-              'Our structured screening process includes credit checks, employment and income verification, rental history review, and reference checks. Every applicant goes through the same rigorous process to protect your property and rental income.',
+              'Our structured, documented screening process includes credit checks, employment and income verification, rental history review, and reference checks. Every applicant goes through the same rigorous, transparent process to protect your property and rental income.',
           },
           {
             question: 'Do you guarantee rent?',
             answer:
-              'Yes. MoveSmart Rentals offers rent protection as part of our property management service. If a qualified tenant misses a payment, our rent guarantee program ensures your cash flow stays consistent.',
+              'Yes. MoveSmart Rentals offers rent protection as part of our leasing service. If a qualified tenant misses a payment, our rent guarantee program ensures your cash flow stays consistent. Partner insurance pathways are also available where applicable.',
           },
           {
             question: 'Can I manage my property online?',
             answer:
-              'Absolutely. MoveSmart Rentals provides a self-serve online portal where you can view financial statements, track maintenance requests, communicate with your account manager, and manage your properties from any device.',
+              'Absolutely. MoveSmart Rentals provides a self-serve online portal where you can track showings, applications, screening results, approvals, inspections, and communications. View financial statements and manage your properties from any device.',
           },
         ]}
       />
 
       {/* ── SECTION 10: Final CTA ── */}
       <CTABannerBlock
-        headline="Ready to Experience White-Glove Leasing?"
-        description="Join 100+ property owners who trust MoveSmart Rentals for hands-off leasing execution."
-        primaryCta={{ label: 'Get Started', href: '/contact/' }}
-        secondaryCta={{ label: 'Book a Call', href: '/contact/' }}
+        headline="Ready to Get Your Property Rented?"
+        description="Join 500+ property owners who trust MoveSmart Rentals for full-service leasing with zero upfront cost."
+        primaryCta={{ label: 'Create a Free Account', href: '/contact/' }}
+        secondaryCta={{ label: 'Book a Call', href: '/contact/?intent=call' }}
       />
     </>
   )

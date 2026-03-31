@@ -91,6 +91,15 @@ export function Header() {
           onValueChange={(val) => setNavValue(val)}
         >
           <NavigationMenuList className="gap-0.5">
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                render={<Link href="/" />}
+                active={pathname === '/'}
+                className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-white/80 transition-all duration-200 hover:bg-white/10 hover:text-white data-active:text-white"
+              >
+                Home
+              </NavigationMenuLink>
+            </NavigationMenuItem>
             {NAV_GROUPS.map((group) => (
               <NavigationMenuItem key={group.label}>
                 <NavigationMenuTrigger

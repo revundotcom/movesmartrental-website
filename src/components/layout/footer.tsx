@@ -13,9 +13,8 @@ const FOOTER_COLUMNS = [
       { label: 'Tenant Screening', href: '/services/tenant-screening/' },
       { label: 'Rent Guarantee', href: '/services/rent-guarantee/' },
       { label: 'Rental Preparation', href: '/services/rental-preparation/' },
-      { label: 'Rental Marketing', href: '/services/rental-marketing/' },
       { label: 'Leasing Services', href: '/services/leasing-services/' },
-      { label: 'Portal Technology', href: '/services/portal-technology/' },
+      { label: 'Portal & Technology', href: '/portal-and-technology/' },
       { label: 'Pricing', href: '/pricing/' },
     ],
   },
@@ -24,8 +23,8 @@ const FOOTER_COLUMNS = [
     links: [
       { label: 'Owner Hub', href: '/owners/' },
       { label: 'Create Free Account', href: '/contact/' },
-      { label: 'Book a Call', href: '/contact/' },
-      { label: 'Submit Property', href: '/contact/' },
+      { label: 'Book a Call', href: '/contact/?intent=call' },
+      { label: 'Reviews', href: '/reviews/' },
     ],
   },
   {
@@ -38,11 +37,35 @@ const FOOTER_COLUMNS = [
     ],
   },
   {
+    title: 'Ontario',
+    links: [
+      { label: 'Toronto', href: '/ca/ontario/toronto/' },
+      { label: 'Ottawa', href: '/ca/ontario/ottawa/' },
+      { label: 'Mississauga', href: '/ca/ontario/mississauga/' },
+      { label: 'Hamilton', href: '/ca/ontario/hamilton/' },
+      { label: 'Brampton', href: '/ca/ontario/brampton/' },
+      { label: 'London', href: '/ca/ontario/london/' },
+      { label: 'Kitchener', href: '/ca/ontario/kitchener/' },
+      { label: 'All Ontario Cities', href: '/ca/ontario/' },
+    ],
+  },
+  {
+    title: 'United States',
+    links: [
+      { label: 'Florida', href: '/us/florida/' },
+      { label: 'Texas', href: '/us/texas/' },
+      { label: 'California', href: '/us/california/' },
+      { label: 'New York', href: '/us/new-york/' },
+      { label: 'Illinois', href: '/us/illinois/' },
+      { label: 'All US States', href: '/us/' },
+    ],
+  },
+  {
     title: 'Company',
     links: [
       { label: 'About Us', href: '/about/' },
       { label: 'Franchising', href: '/franchising/' },
-      { label: 'Blog', href: '/resources/' },
+      { label: 'Resources', href: '/resources/' },
       { label: 'Contact', href: '/contact/' },
     ],
   },
@@ -179,7 +202,7 @@ export function Footer() {
             </div>
 
             {/* Link columns */}
-            <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:col-span-8">
+            <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-8 lg:grid-cols-6">
               {FOOTER_COLUMNS.map((column) => (
                 <div key={column.title}>
                   <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-emerald-400">

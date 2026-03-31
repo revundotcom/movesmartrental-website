@@ -67,9 +67,9 @@ const CONTRACT_MESSAGING: Array<{
   },
   {
     iconKey: 'CheckCircle',
-    title: 'Rent Protection',
+    title: 'Rent Protection + Insurance Pathways',
     description:
-      'Our rent guarantee program protects your income from missed payments. Consistent cash flow, guaranteed.',
+      'Our rent guarantee program protects your income from missed payments. Partner insurance pathways available where applicable.',
   },
   {
     iconKey: 'Paintbrush',
@@ -79,9 +79,9 @@ const CONTRACT_MESSAGING: Array<{
   },
   {
     iconKey: 'TrendingUp',
-    title: 'Real-Time Visibility',
+    title: 'Full Visibility Into Every Step',
     description:
-      'Track applications, maintenance requests, and rent payments in real time from any device.',
+      'Track showings, applications, screening, approvals, inspections, and communications in real time from your portal.',
   },
   {
     iconKey: 'Zap',
@@ -103,8 +103,8 @@ export default async function OwnersPage() {
       <HeroBlock
         headline="Hands-Off Leasing. Maximum Results."
         subheadline="White-glove leasing execution with zero upfront cost. We only succeed when your property is rented."
-        cta1={{ label: 'Get Started Free', href: '/contact/?type=owner' }}
-        cta2={{ label: 'Book a Free Call', href: '/contact/?type=owner&intent=call' }}
+        cta1={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
+        cta2={{ label: 'Book a Call', href: '/contact/?type=owner&intent=call' }}
         priority
       />
 
@@ -275,8 +275,8 @@ export default async function OwnersPage() {
       <CTABannerBlock
         headline="Ready for Hands-Off Leasing?"
         description="Join 500+ property owners who trust MoveSmart Rentals for white-glove leasing execution."
-        primaryCta={{ label: 'Get Started', href: '/contact/' }}
-        secondaryCta={{ label: 'Book a Call', href: '/contact/' }}
+        primaryCta={{ label: 'Create a Free Account', href: '/contact/' }}
+        secondaryCta={{ label: 'Book a Call', href: '/contact/?intent=call' }}
       />
     </main>
   )
