@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
@@ -28,43 +30,12 @@ export function CTABannerBlock({
         aria-hidden="true"
       />
 
-      {/* Grid lines */}
+      {/* Diagonal accent stripe */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute bottom-0 left-0 h-[2px] w-2/3"
+        style={{ background: 'linear-gradient(90deg, #10B981 0%, #34D399 40%, transparent 100%)', transform: 'skewX(-20deg)', transformOrigin: 'bottom left' }}
         aria-hidden="true"
-        style={{
-          backgroundImage: 'linear-gradient(#10B981 1px, transparent 1px), linear-gradient(90deg, #10B981 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
-        }}
       />
-
-      {/* Glow orbs */}
-      <div className="absolute -left-20 top-1/2 size-[300px] -translate-y-1/2 rounded-full bg-brand-emerald/10 blur-3xl" aria-hidden="true" />
-      <div className="absolute -right-20 top-1/2 size-[300px] -translate-y-1/2 rounded-full bg-brand-emerald/8 blur-3xl" aria-hidden="true" />
-
-      {/* Decorative left illustration */}
-      <svg
-        className="absolute left-0 top-1/2 h-full -translate-y-1/2 opacity-10"
-        viewBox="0 0 200 300"
-        fill="none"
-        aria-hidden="true"
-      >
-        <circle cx="0" cy="150" r="120" stroke="#10B981" strokeWidth="1" fill="none" strokeDasharray="8 8" />
-        <circle cx="0" cy="150" r="80" stroke="#10B981" strokeWidth="0.8" fill="none" />
-        <circle cx="0" cy="150" r="40" stroke="#10B981" strokeWidth="0.5" fill="none" />
-      </svg>
-
-      {/* Decorative right illustration */}
-      <svg
-        className="absolute right-0 top-1/2 h-full -translate-y-1/2 opacity-10"
-        viewBox="0 0 200 300"
-        fill="none"
-        aria-hidden="true"
-      >
-        <circle cx="200" cy="150" r="120" stroke="#10B981" strokeWidth="1" fill="none" strokeDasharray="8 8" />
-        <circle cx="200" cy="150" r="80" stroke="#10B981" strokeWidth="0.8" fill="none" />
-        <circle cx="200" cy="150" r="40" stroke="#10B981" strokeWidth="0.5" fill="none" />
-      </svg>
 
       {/* Top emerald stripe */}
       <div

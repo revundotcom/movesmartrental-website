@@ -17,14 +17,6 @@ export function PainPointBlock({
 
   return (
     <section className="relative bg-white overflow-hidden">
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          backgroundImage: 'radial-gradient(#10B98108 1px, transparent 1px)',
-          backgroundSize: '32px 32px',
-        }}
-      />
       <div className="mx-auto max-w-6xl px-4">
         {showHeading && (
           <RevealOnScroll>

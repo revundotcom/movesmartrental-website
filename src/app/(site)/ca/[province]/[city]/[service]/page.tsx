@@ -226,7 +226,8 @@ export async function generateMetadata({
 // Formatting Helpers
 // ---------------------------------------------------------------------------
 
-function formatCurrency(amount: number): string {
+function formatCurrency(amount: number | null | undefined): string {
+  if (amount == null) return 'N/A'
   return new Intl.NumberFormat('en-CA', {
     style: 'currency',
     currency: 'CAD',
@@ -234,7 +235,8 @@ function formatCurrency(amount: number): string {
   }).format(amount)
 }
 
-function formatPercentage(rate: number): string {
+function formatPercentage(rate: number | null | undefined): string {
+  if (rate == null) return 'N/A'
   return `${rate.toFixed(1)}%`
 }
 

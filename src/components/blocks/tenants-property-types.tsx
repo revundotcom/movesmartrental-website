@@ -18,7 +18,7 @@ const PROPERTY_TYPES: PropertyType[] = [
     description:
       'Find affordable apartment rentals with verified listings and transparent pricing.',
     icon: Building2,
-    href: '/tenants/#apartments',
+    href: '/tenants/',
     id: 'apartments',
   },
   {
@@ -26,7 +26,7 @@ const PROPERTY_TYPES: PropertyType[] = [
     description:
       'Browse modern condo rentals with amenities like gyms, pools, and concierge services.',
     icon: Building,
-    href: '/tenants/#condos',
+    href: '/tenants/',
     id: 'condos',
   },
   {
@@ -34,7 +34,7 @@ const PROPERTY_TYPES: PropertyType[] = [
     description:
       'Discover spacious house rentals with yards, garages, and family-friendly neighbourhoods.',
     icon: Home,
-    href: '/tenants/#houses',
+    href: '/tenants/',
     id: 'houses',
   },
   {
@@ -42,7 +42,7 @@ const PROPERTY_TYPES: PropertyType[] = [
     description:
       'Explore townhouse rentals that combine the space of a house with low-maintenance living.',
     icon: Castle,
-    href: '/tenants/#townhouses',
+    href: '/tenants/',
     id: 'townhouses',
   },
 ]
@@ -50,16 +50,6 @@ const PROPERTY_TYPES: PropertyType[] = [
 export function TenantsPropertyTypes() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-28">
-      {/* Dot-grid background */}
-      <div
-        className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
-        }}
-        aria-hidden="true"
-      />
-
       <div className="relative z-10 mx-auto max-w-7xl px-4">
         {/* Section header */}
         <div className="mx-auto max-w-2xl text-center mb-16">
@@ -67,8 +57,7 @@ export function TenantsPropertyTypes() {
             Browse by Property Type
           </p>
           <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
-            Find Your{' '}
-            <span className="font-display italic text-brand-emerald">Perfect Home</span>
+            Find Your Perfect Home
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
             From downtown condos to suburban houses — verified listings across Ontario with

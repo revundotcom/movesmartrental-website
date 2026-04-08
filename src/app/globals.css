@@ -2,7 +2,6 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-/* Smooth scrolling globally */
 html {
   scroll-behavior: smooth;
 }
@@ -12,173 +11,170 @@ html {
 /*
  * MoveSmart Rentals — Brand Design System
  * ========================================
- * Primary:     Deep Navy   #0B1D3A
- * Accent:      Emerald     #10B981
- * Gold:        Premium     #D4A853
- * Secondary:   Soft Blue   #F0F4F8
- * Destructive: Red         #DC2626
  *
- * Personality: Strategic, Professional, Concierge
- * Tone: Premium but not flashy. Clean and disciplined.
+ * COLOR PALETTE
+ * -------------
+ * Navy:     #0B1D3A — Primary brand, trust, authority
+ * Emerald:  #10B981 — Growth, success, CTA actions
+ * Gold:     #D4A853 — Premium accent, highlights
+ * Slate:    Neutral scale for text and backgrounds
+ *
+ * TYPOGRAPHY
+ * ----------
+ * Display:  DM Serif Display — Hero headlines
+ * Heading:  Plus Jakarta Sans 600-800 — Section headings
+ * Body:     Inter 400-500 — Body text, UI
  */
 
 :root {
-  /* Brand custom properties */
+  /* ─── Brand Core ─── */
   --brand-navy: #0B1D3A;
   --brand-navy-light: #132D54;
-  --brand-navy-muted: #1E3A5F;
+  --brand-navy-dark: #071228;
   --brand-emerald: #10B981;
+  --brand-emerald-hover: #059669;
   --brand-emerald-dark: #059669;
   --brand-emerald-light: #34D399;
+  --brand-emerald-muted: #D1FAE5;
+  --brand-navy-muted: #1E3A5F;
   --brand-gold: #D4A853;
-  --brand-gold-light: #E4C580;
+  --brand-gold-light: #E5C17C;
+  --brand-gold-muted: #FEF3C7;
 
-  /* Shadcn semantic tokens — light mode */
+  /* ─── Semantic Colors ─── */
+  --color-success: #22C55E;
+  --color-success-light: #BBF7D0;
+  --color-success-bg: #F0FDF4;
+  --color-warning: #F59E0B;
+  --color-warning-light: #FDE68A;
+  --color-warning-bg: #FFFBEB;
+  --color-error: #EF4444;
+  --color-error-light: #FECACA;
+  --color-error-bg: #FEF2F2;
+  --color-info: #3B82F6;
+  --color-info-light: #BFDBFE;
+  --color-info-bg: #EFF6FF;
+
+  /* ─── Shadcn Semantic Tokens ─── */
   --background: #FFFFFF;
   --foreground: #0B1D3A;
-
-  --card: #FDFEFE;
+  --card: #FAFAFB;
   --card-foreground: #0B1D3A;
-
   --popover: #FFFFFF;
   --popover-foreground: #0B1D3A;
-
   --primary: #10B981;
   --primary-foreground: #FFFFFF;
-
-  --secondary: #F0F4F8;
+  --secondary: #F0FDF4;
   --secondary-foreground: #0B1D3A;
-
-  --muted: #F5F5F0;
-  --muted-foreground: #5A6578;
-
-  --accent: #10B981;
-  --accent-foreground: #FFFFFF;
-
-  --destructive: #DC2626;
-
-  --border: #D8DDE4;
-  --input: #D8DDE4;
+  --muted: #F8FAFC;
+  --muted-foreground: #64748B;
+  --accent: #D4A853;
+  --accent-foreground: #0B1D3A;
+  --destructive: #EF4444;
+  --border: #E2E8F0;
+  --input: #CBD5E1;
   --ring: #10B981;
 
-  /* Chart palette — navy to emerald spectrum */
+  /* ─── Chart Palette ─── */
   --chart-1: #10B981;
   --chart-2: #0B1D3A;
   --chart-3: #D4A853;
-  --chart-4: #1E3A5F;
-  --chart-5: #34D399;
+  --chart-4: #3B82F6;
+  --chart-5: #8B5CF6;
 
-  --radius: 0.5rem;
+  --radius: 0.625rem;
 
-  /* Sidebar — navy-tinted */
-  --sidebar: #F0F4F8;
+  /* ─── Sidebar ─── */
+  --sidebar: #F8FAFC;
   --sidebar-foreground: #0B1D3A;
   --sidebar-primary: #10B981;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #E8EFF6;
+  --sidebar-accent: #D1FAE5;
   --sidebar-accent-foreground: #0B1D3A;
-  --sidebar-border: #D8DDE4;
+  --sidebar-border: #E2E8F0;
   --sidebar-ring: #10B981;
+
+  /* ─── Shadows ─── */
+  --shadow-xs: 0 1px 2px rgba(11, 29, 58, 0.05);
+  --shadow-sm: 0 1px 3px rgba(11, 29, 58, 0.06), 0 1px 2px rgba(11, 29, 58, 0.04);
+  --shadow-md: 0 4px 6px rgba(11, 29, 58, 0.05), 0 2px 4px rgba(11, 29, 58, 0.03);
+  --shadow-lg: 0 10px 15px rgba(11, 29, 58, 0.06), 0 4px 6px rgba(11, 29, 58, 0.04);
+  --shadow-xl: 0 20px 25px rgba(11, 29, 58, 0.07), 0 8px 10px rgba(11, 29, 58, 0.04);
+  --shadow-card: 0 1px 3px rgba(11, 29, 58, 0.04), 0 1px 2px rgba(11, 29, 58, 0.02);
+  --shadow-card-hover: 0 8px 24px rgba(11, 29, 58, 0.08), 0 2px 8px rgba(11, 29, 58, 0.04);
+  --shadow-button-primary: 0 2px 4px rgba(16, 185, 129, 0.3), 0 0px 0px 1px rgba(16, 185, 129, 0.15);
+
+  /* ─── Spacing ─── */
+  --section-py-sm: 3rem;
+  --section-py-md: 5rem;
+  --section-py-lg: 7rem;
+  --section-py-xl: 9rem;
+  --grid-gutter: 1.5rem;
+  --grid-gutter-lg: 2rem;
+  --container-max: 80rem;
+  --container-narrow: 48rem;
 }
 
 @theme inline {
+  /* ─── Shadcn Semantic Mappings ─── */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* ─── Font Family Tokens ─── */
   --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-heading);
   --font-display: var(--font-display);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
 
-  /* Brand colors available as Tailwind utilities (bg-brand-navy, text-brand-emerald, etc.) */
+  /* ─── Border Radius ─── */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.25rem;
+
+  /* ─── Brand Colors as Tailwind Utilities ─── */
   --color-brand-navy: var(--brand-navy);
   --color-brand-navy-light: var(--brand-navy-light);
-  --color-brand-navy-muted: var(--brand-navy-muted);
+  --color-brand-navy-dark: var(--brand-navy-dark);
   --color-brand-emerald: var(--brand-emerald);
+  --color-brand-emerald-hover: var(--brand-emerald-hover);
   --color-brand-emerald-dark: var(--brand-emerald-dark);
   --color-brand-emerald-light: var(--brand-emerald-light);
+  --color-brand-emerald-muted: var(--brand-emerald-muted);
+  --color-brand-navy-muted: var(--brand-navy-muted);
   --color-brand-gold: var(--brand-gold);
   --color-brand-gold-light: var(--brand-gold-light);
-}
-
-/* Dark mode — deep navy backgrounds, NOT pure black */
-.dark {
-  --background: #0B1D3A;
-  --foreground: #F0F4F8;
-
-  --card: #132D54;
-  --card-foreground: #F0F4F8;
-
-  --popover: #132D54;
-  --popover-foreground: #F0F4F8;
-
-  --primary: #10B981;
-  --primary-foreground: #FFFFFF;
-
-  --secondary: #1E3A5F;
-  --secondary-foreground: #F0F4F8;
-
-  --muted: #1E3A5F;
-  --muted-foreground: #94A3B8;
-
-  --accent: #10B981;
-  --accent-foreground: #FFFFFF;
-
-  --destructive: #EF4444;
-
-  --border: rgba(255, 255, 255, 0.1);
-  --input: rgba(255, 255, 255, 0.15);
-  --ring: #10B981;
-
-  --chart-1: #34D399;
-  --chart-2: #94A3B8;
-  --chart-3: #D4A853;
-  --chart-4: #5A6578;
-  --chart-5: #1E3A5F;
-
-  --sidebar: #132D54;
-  --sidebar-foreground: #F0F4F8;
-  --sidebar-primary: #10B981;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #1E3A5F;
-  --sidebar-accent-foreground: #F0F4F8;
-  --sidebar-border: rgba(255, 255, 255, 0.1);
-  --sidebar-ring: #10B981;
+  --color-brand-gold-muted: var(--brand-gold-muted);
 }
 
 @layer base {
@@ -195,19 +191,56 @@ html {
     @apply font-sans;
   }
 
-  /* Brand selection colour */
   ::selection {
-    background-color: rgba(16, 185, 129, 0.25);
+    background-color: rgba(16, 185, 129, 0.2);
     color: #0B1D3A;
   }
 
-  /* Smooth focus rings */
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-ring;
   }
+
+  h1, h2, h3, h4 {
+    @apply font-heading;
+    text-wrap: balance;
+  }
 }
 
-/* ── Keyframe animations ── */
+/* ─── Card with Hover Elevation ─── */
+.card-elevated {
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.card-elevated:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+/* ─── CTA Primary Button Shadow ─── */
+.cta-primary-shadow {
+  box-shadow: var(--shadow-button-primary);
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+.cta-primary-shadow:hover {
+  box-shadow: 0 0px 20px rgba(16, 185, 129, 0.25), 0 0px 40px rgba(16, 185, 129, 0.1);
+  transform: translateY(-1px);
+}
+
+/* ─── Section Padding ─── */
+.section-sm { padding-top: var(--section-py-sm); padding-bottom: var(--section-py-sm); }
+.section-md { padding-top: var(--section-py-md); padding-bottom: var(--section-py-md); }
+.section-lg { padding-top: var(--section-py-lg); padding-bottom: var(--section-py-lg); }
+
+/* ─── Container ─── */
+.container-site {
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--grid-gutter);
+  padding-right: var(--grid-gutter);
+}
+
+/* ─── Keyframe Animations ─── */
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -216,86 +249,35 @@ html {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
-@keyframes slide-in-right {
-  from { opacity: 0; transform: translateX(24px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-@keyframes shimmer {
-  from { background-position: -200% center; }
-  to   { background-position: 200% center; }
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-8px); }
-}
-@keyframes gradient-shift {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.6; transform: scale(0.85); }
 }
-
-/* ── Animation utility classes ── */
-.animate-fade-up {
-  animation: fade-up 0.6s ease both;
+@keyframes slide-up-fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-.animate-fade-in {
-  animation: fade-in 0.5s ease both;
-}
-.animate-slide-in-right {
-  animation: slide-in-right 0.6s ease both;
-}
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 6s ease infinite;
-}
-.animate-shimmer {
-  background-size: 200% auto;
-  animation: shimmer 2.5s linear infinite;
-}
-.animate-pulse-dot {
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-
-/* Animation delays */
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
-.delay-500 { animation-delay: 500ms; }
-
-/* ── CTA primary shadow (two-layer brand glow) ── */
-.cta-primary-shadow {
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3), 0 1px 4px rgba(16, 185, 129, 0.2);
-  transition: box-shadow 0.2s ease;
-}
-.cta-primary-shadow:hover {
-  box-shadow: 0 8px 28px rgba(16, 185, 129, 0.5), 0 2px 8px rgba(16, 185, 129, 0.25);
-}
-
-/* ── Marquee (infinite scroll for trust logo bar) ── */
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
+
+.animate-fade-up { animation: fade-up 0.6s ease both; }
+.animate-fade-in { animation: fade-in 0.5s ease both; }
+.animate-pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+.animate-slide-up-fade { animation: slide-up-fade 0.3s ease both; }
 .animate-marquee {
   animation: marquee 22s linear infinite;
   will-change: transform;
 }
-.animate-marquee:hover {
-  animation-play-state: paused;
-}
+.animate-marquee:hover { animation-play-state: paused; }
 
-/* Hide scrollbar for city carousel */
-.overflow-x-auto::-webkit-scrollbar {
-  display: none;
-}
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+
+/* Hide scrollbar for carousels */
+.overflow-x-auto::-webkit-scrollbar { display: none; }
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {

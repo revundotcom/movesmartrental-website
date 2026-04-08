@@ -162,6 +162,8 @@ function buildStaticSegment(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/about/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.5 },
     { url: `${siteUrl}/contact/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.5 },
     { url: `${siteUrl}/faq/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.6 },
+    { url: `${siteUrl}/reviews/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 },
+    { url: `${siteUrl}/portal-and-technology/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 },
     { url: `${siteUrl}/ca/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.8 },
     { url: `${siteUrl}/us/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.8 },
   ]

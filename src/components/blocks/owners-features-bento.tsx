@@ -36,8 +36,6 @@ interface Feature {
 export function OwnersFeaturesBento({ features }: { features: Feature[] }) {
   return (
     <section className="relative overflow-hidden bg-white py-28">
-      {/* Dot-grid */}
-      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)', backgroundSize: '28px 28px' }} aria-hidden="true" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-emerald/30 to-transparent" aria-hidden="true" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4">
@@ -67,12 +65,6 @@ export function OwnersFeaturesBento({ features }: { features: Feature[] }) {
               >
                 {!isHero && (
                   <div className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 rounded-t-3xl bg-gradient-to-r from-brand-emerald to-emerald-400 transition-transform duration-300 group-hover:scale-x-100" />
-                )}
-                {isHero && (
-                  <>
-                    <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(#10B981 1px, transparent 1px)', backgroundSize: '32px 32px' }} aria-hidden="true" />
-                    <div className="pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-brand-emerald/15 blur-3xl" aria-hidden="true" />
-                  </>
                 )}
                 <div className={`relative z-10 mb-5 flex size-13 items-center justify-center rounded-2xl transition-all duration-300 group-hover:scale-110 ${isHero ? 'bg-brand-emerald/20' : 'bg-brand-emerald/10 group-hover:bg-brand-emerald/15 group-hover:shadow-md'}`}>
                   <Icon className="size-6 text-brand-emerald" aria-hidden="true" />

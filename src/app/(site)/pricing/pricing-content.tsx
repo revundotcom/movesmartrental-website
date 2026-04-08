@@ -202,15 +202,6 @@ export function PricingContent() {
 
       {/* ── SECTION 2: Pricing Tiers ── */}
       <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-28">
-        {/* Dot-grid overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)',
-            backgroundSize: '24px 24px',
-          }}
-        />
-
         <div className="relative mx-auto max-w-6xl px-4">
           {/* Section header */}
           <div className="mx-auto max-w-2xl text-center">

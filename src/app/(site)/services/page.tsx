@@ -21,6 +21,12 @@ export const metadata: Metadata = {
       '8 professional property management services for Ontario landlords. Tenant screening, rent collection, MLS distribution, property prep, and rent protection.',
     images: ['/og-default.png'],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Property Management Services Ontario | MoveSmart Rentals',
+    description:
+      '8 professional property management services for Ontario landlords. Tenant screening, rent collection, MLS distribution, property prep, and rent protection.',
+  },
 }
 
 export default async function ServicesPage() {
@@ -48,21 +54,6 @@ export default async function ServicesPage() {
 
       {/* Premium Service Grid Section */}
       <section className="relative overflow-hidden bg-slate-50 py-4">
-        {/* Dot-grid overlay */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          aria-hidden="true"
-          style={{
-            backgroundImage: 'radial-gradient(#0B1D3A0d 1px, transparent 1px)',
-            backgroundSize: '24px 24px',
-          }}
-        />
-        {/* Emerald glow */}
-        <div
-          className="absolute -right-32 top-0 size-[400px] rounded-full bg-brand-emerald/6 blur-3xl pointer-events-none"
-          aria-hidden="true"
-        />
-
         <div className="relative z-10 mx-auto max-w-7xl px-4 pt-12">
           <div className="mx-auto max-w-2xl text-center mb-2">
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">

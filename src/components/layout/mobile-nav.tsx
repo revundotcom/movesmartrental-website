@@ -26,6 +26,8 @@ const MOBILE_NAV_SECTIONS = [
       { title: 'Owner Hub', href: '/owners/' },
       { title: 'Services', href: '/services/' },
       { title: 'Pricing', href: '/pricing/' },
+      { title: 'Portal & Technology', href: '/portal-and-technology/' },
+      { title: 'Reviews', href: '/reviews/' },
       { title: 'Franchising', href: '/franchising/' },
     ],
   },
@@ -56,11 +58,13 @@ function NavSection({
   items,
   onNavigate,
   isSheetOpen,
+  pathname,
 }: {
   label: string
   items: ReadonlyArray<{ title: string; href: string }>
   onNavigate: () => void
   isSheetOpen: boolean
+  pathname: string
 }) {
   const [open, setOpen] = useState(false)
   const sectionId = `mobile-nav-${label.toLowerCase().replace(/\s+/g, '-')}`
@@ -95,17 +99,25 @@ function NavSection({
       >
         <div className="overflow-hidden min-h-0">
           <ul className="space-y-0.5 px-3 pb-3">
-            {items.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  onClick={onNavigate}
-                  className="block rounded-lg px-3 py-2.5 text-[15px] font-medium text-[#0B1D3A] transition-colors hover:bg-emerald-50 hover:text-emerald-700"
-                >
-                  {item.title}
-                </Link>
-              </li>
-            ))}
+            {items.map((item) => {
+              const isActive = pathname === item.href
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={onNavigate}
+                    className={cn(
+                      'block rounded-lg px-3 py-2.5 text-[15px] font-medium transition-colors hover:bg-emerald-50 hover:text-emerald-700',
+                      isActive
+                        ? 'text-brand-emerald font-bold'
+                        : 'text-[#0B1D3A]'
+                    )}
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
         </div>
       </div>
@@ -157,6 +169,22 @@ export function MobileNav() {
 
         {/* Scrollable nav sections */}
         <nav ref={navRef} className="flex-1 overflow-y-auto py-2" aria-label="Mobile navigation">
+          {/* Home link */}
+          <div className="border-b border-border/60 px-5 py-3.5">
+            <Link
+              href="/"
+              onClick={handleNavigate}
+              className={cn(
+                'block text-sm font-semibold uppercase tracking-wider transition-colors',
+                pathname === '/'
+                  ? 'text-brand-emerald font-bold'
+                  : 'text-[#0B1D3A]/60 hover:text-[#0B1D3A]'
+              )}
+            >
+              Home
+            </Link>
+          </div>
+
           {MOBILE_NAV_SECTIONS.map((section) => (
             <NavSection
               key={section.label}
@@ -164,6 +192,7 @@ export function MobileNav() {
               items={section.items}
               onNavigate={handleNavigate}
               isSheetOpen={open}
+              pathname={pathname}
             />
           ))}
         </nav>
@@ -171,7 +200,7 @@ export function MobileNav() {
         {/* Bottom CTA */}
         <div className="border-t border-border/60 p-5 space-y-3">
           <Link
-            href="/contact/"
+            href="/contact/?intent=call"
             onClick={handleNavigate}
             className="flex w-full items-center justify-center rounded-lg border border-[#0B1D3A]/20 px-4 py-3 text-sm font-medium text-[#0B1D3A] transition-colors hover:border-[#0B1D3A]/40 hover:bg-[#0B1D3A]/5"
           >

@@ -14,23 +14,12 @@ export function HowItWorksBlock({
 
   return (
     <section className="relative bg-slate-50 overflow-hidden">
-      {/* Dot grid overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          backgroundImage: 'radial-gradient(#0B1D3A0d 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
-        }}
-      />
       <div className="mx-auto max-w-6xl px-4">
-        {/* Section heading with emerald underline */}
         <RevealOnScroll>
           <motion.div variants={revealItem} className="mb-14 text-center">
             <h2 className="font-display text-3xl font-normal tracking-tight text-[#0B1D3A] sm:text-4xl">
               {title}
             </h2>
-            <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-[#10B981]" />
             <div className="mt-8 flex justify-center opacity-80">
               <IllustrationLeaseAgreement className="h-32 w-auto" />
             </div>

@@ -55,28 +55,17 @@ export function BenefitsBlock({
 
   return (
     <section className="relative bg-slate-50 overflow-hidden py-28">
-      {/* Dot grid overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          backgroundImage: 'radial-gradient(#0B1D3A0d 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
-        }}
-      />
       {/* Section illustration - hidden on mobile, decorative accent on desktop */}
       <div className="absolute -right-8 top-8 hidden opacity-20 xl:block" aria-hidden="true">
         <IllustrationPropertyManagement className="h-48 w-48" />
       </div>
 
       <div className="mx-auto max-w-6xl px-4">
-        {/* Section heading with emerald underline */}
         <RevealOnScroll>
-          <motion.div variants={revealItem} className="mb-16 text-center">
+          <motion.div variants={revealItem} className="mb-16">
             <h2 className="font-display text-3xl font-normal tracking-tight text-[#0B1D3A] sm:text-4xl">
               {title}
             </h2>
-            <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-[#10B981]" />
           </motion.div>
         </RevealOnScroll>
 

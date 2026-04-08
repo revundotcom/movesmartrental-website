@@ -24,6 +24,12 @@ export const metadata: Metadata = {
       'Browse verified rental listings across Ontario. Apartments, condos, houses, and townhouses in Toronto, Mississauga, Ottawa, Hamilton, and 20+ cities.',
     images: ['/og-default.png'],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Rental Homes Ontario | MoveSmart Rentals',
+    description:
+      'Browse verified rental listings across Ontario. Apartments, condos, houses, and townhouses in Toronto, Mississauga, Ottawa, Hamilton, and 20+ cities.',
+  },
 }
 
 

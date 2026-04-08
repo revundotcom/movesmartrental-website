@@ -11,7 +11,7 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
 
 export const metadata: Metadata = {
-  title: 'Reviews & Testimonials | MoveSmart Rentals',
+  title: 'Reviews & Testimonials',
   description:
     'Real results from real property owners. Read reviews and testimonials from landlords who trust MoveSmart Rentals for tenant placement, property management, and hands-off leasing across Ontario.',
   alternates: {
@@ -22,6 +22,12 @@ export const metadata: Metadata = {
     description:
       'Real results from real property owners. Read reviews from landlords who trust MoveSmart Rentals for hands-off leasing across Ontario.',
     images: ['/og-default.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Reviews & Testimonials | MoveSmart Rentals',
+    description:
+      'Real results from real property owners. Read reviews from landlords who trust MoveSmart Rentals for hands-off leasing across Ontario.',
   },
 }
 

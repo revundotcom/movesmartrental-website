@@ -24,6 +24,12 @@ export const metadata: Metadata = {
       'Ontario\'s white-glove property management company. Zero upfront cost, 500+ properties managed, 98% occupancy rate, and dedicated account managers.',
     images: ['/og-default.png'],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About MoveSmart Rentals | Ontario Property Management',
+    description:
+      'Ontario\'s white-glove property management company. Zero upfront cost, 500+ properties managed, 98% occupancy rate, and dedicated account managers.',
+  },
 }
 
 const organizationSchema = buildOrganizationSchema({
@@ -41,7 +47,7 @@ const localBusinessSchema = buildLocalBusinessSchema({
   url: SITE_URL,
   phone: '+14372957688',
   address: {
-    streetAddress: '123 King Street West',
+    streetAddress: '1 King St W, Suite 4801',
     city: 'Toronto',
     province: 'ON',
     postalCode: 'M5H 1A1',
@@ -81,7 +87,7 @@ const DIFFERENTIATORS = [
 const COMPANY_STATS = [
   { label: 'Properties Managed', value: '500+' },
   { label: 'Cities Served', value: '25+' },
-  { label: 'Tenant Satisfaction', value: '96%' },
+  { label: 'Tenant Satisfaction', value: '98%' },
   { label: 'Avg. Placement Time', value: '14 Days' },
 ]
 
@@ -107,15 +113,6 @@ export default function AboutPage() {
 
       {/* ── Company Story ── */}
       <section className="relative overflow-hidden bg-white py-28">
-        {/* Dot-grid */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          aria-hidden="true"
-          style={{ backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)', backgroundSize: '24px 24px' }}
-        />
-        {/* Emerald glow */}
-        <div className="absolute -right-40 top-20 size-[400px] rounded-full bg-brand-emerald/6 blur-3xl" aria-hidden="true" />
-
         <div className="relative z-10 mx-auto max-w-7xl px-4">
           <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
             {/* Left: story */}

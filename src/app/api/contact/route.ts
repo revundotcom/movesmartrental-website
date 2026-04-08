@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const { recaptchaToken, ...formData } = parsed.data
+    const { recaptchaToken } = parsed.data
 
     // Verify reCAPTCHA token if provided
     if (recaptchaToken) {
@@ -73,13 +73,6 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       )
     }
-
-    // Log form submission without PII
-    console.log('Contact form submission received:', {
-      type: formData.type,
-      messageLength: formData.message.length,
-      timestamp: new Date().toISOString(),
-    })
 
     // TODO: Add rate limiting per IP in a future enhancement
     // TODO: Add email notification integration (e.g., SendGrid, Resend)

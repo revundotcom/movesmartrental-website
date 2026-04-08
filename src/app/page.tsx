@@ -105,7 +105,7 @@ export default async function HomePage() {
     url: siteUrl,
     phone: '+14372957688',
     address: {
-      streetAddress: '123 King Street West',
+      streetAddress: '1 King St W, Suite 4801',
       city: 'Toronto',
       province: 'ON',
       postalCode: 'M5H 1A1',

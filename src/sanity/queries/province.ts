@@ -21,7 +21,7 @@ export const PROVINCE_PAGE_QUERY = groq`
       tier,
       population,
       medianRent,
-      "provinceSlug": ^.slug.current
+      "provinceSlug": province->slug.current
     },
     seo,
     publishing
@@ -49,7 +49,7 @@ export const PROVINCES_WITH_CITIES_QUERY = groq`
       tier,
       population,
       medianRent,
-      "provinceSlug": ^.slug.current,
+      "provinceSlug": province->slug.current,
       "heroImageUrl": heroImage.asset->url,
       "heroImageAlt": heroImage.alt
     }

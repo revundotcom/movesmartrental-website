@@ -26,6 +26,12 @@ export const metadata: Metadata = {
       'Hands-off property management for Ontario landlords. Zero upfront cost, dedicated account manager, tenant screening, and rent protection.',
     images: ['/og-default.png'],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Property Management for Landlords Ontario | MoveSmart Rentals',
+    description:
+      'Hands-off property management for Ontario landlords. Zero upfront cost, dedicated account manager, tenant screening, and rent protection.',
+  },
 }
 
 /* ---------- Contract-required messaging (9 points) ---------- */
@@ -157,12 +163,9 @@ export default async function OwnersPage() {
       {/* ── SECTION 4: Service Grid (from CMS) ── */}
       <section className="bg-white py-24">
         <div className="mx-auto max-w-7xl px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
-              Services
-            </p>
-            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
-              Our <span className="font-display italic text-brand-emerald">Owner Services</span>
+          <div className="max-w-2xl">
+            <h2 className="font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+              Owner Services
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
               Comprehensive property management services tailored for landlords
@@ -174,19 +177,8 @@ export default async function OwnersPage() {
       </section>
 
       {/* ── SECTION 5: Trust / Stats (Navy Background) ── */}
-      <section className="relative overflow-hidden bg-brand-navy py-28 text-white">
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          aria-hidden="true"
-          style={{
-            backgroundImage: 'linear-gradient(#10B981 1px, transparent 1px), linear-gradient(90deg, #10B981 1px, transparent 1px)',
-            backgroundSize: '50px 50px',
-          }}
-        />
-        <div className="absolute -right-40 -top-40 size-[500px] rounded-full bg-brand-emerald/8 blur-3xl" aria-hidden="true" />
-        <div className="absolute -bottom-40 -left-40 size-[400px] rounded-full bg-brand-emerald/6 blur-3xl" aria-hidden="true" />
-
-        <div className="relative z-10 mx-auto max-w-6xl px-4">
+      <section className="bg-brand-navy py-28 text-white">
+        <div className="mx-auto max-w-6xl px-4">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-sm font-black uppercase tracking-[0.2em] text-brand-emerald">
               By The Numbers
@@ -203,7 +195,7 @@ export default async function OwnersPage() {
               { value: '14 Days', label: 'Avg. Placement Time' },
               { value: '20+', label: 'Cities Served' },
             ].map((stat) => (
-              <div key={stat.label} className="rounded-2xl border border-white/8 bg-white/4 p-8 text-center backdrop-blur-sm transition-all duration-300 hover:border-brand-emerald/30 hover:bg-white/6">
+              <div key={stat.label} className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center transition-all duration-300 hover:border-brand-emerald/30 hover:bg-white/8">
                 <p className="text-4xl font-black text-brand-emerald md:text-5xl">{stat.value}</p>
                 <p className="mt-2 text-xs font-bold uppercase tracking-wider text-white/50">{stat.label}</p>
               </div>

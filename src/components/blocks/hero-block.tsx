@@ -259,28 +259,6 @@ export function HeroBlock({
               </motion.div>
             )}
 
-            {/* Trust strip */}
-            <motion.div
-              className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4"
-              initial={{ opacity: 0, y: 32 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {[
-                { value: '500+', label: 'Properties' },
-                { value: '20+', label: 'Ontario Cities' },
-                { value: '98%', label: 'Occupancy Rate' },
-                { value: '14 Days', label: 'Avg. Fill Time' },
-              ].map((stat) => (
-                <div
-                  key={stat.label}
-                  className="rounded-xl border border-white/8 bg-white/4 p-3 text-center backdrop-blur-sm"
-                >
-                  <p className="text-base font-extrabold text-[#10B981]">{stat.value}</p>
-                  <p className="mt-0.5 text-[10px] leading-tight text-white/50">{stat.label}</p>
-                </div>
-              ))}
-            </motion.div>
           </div>
 
           {/* Right: illustration */}

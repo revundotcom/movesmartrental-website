@@ -22,6 +22,8 @@ const NAV_GROUPS = [
       { title: 'Owner Hub', href: '/owners/', description: 'Dashboard and resources for property owners' },
       { title: 'Services', href: '/services/', description: 'Full-service property management solutions' },
       { title: 'Pricing', href: '/pricing/', description: 'Transparent pricing with no hidden fees' },
+      { title: 'Portal & Technology', href: '/portal-and-technology/', description: 'Owner portal and technology platform' },
+      { title: 'Reviews', href: '/reviews/', description: 'See what our clients say about us' },
       { title: 'Franchising', href: '/franchising/', description: 'Grow with the MoveSmart brand' },
     ],
   },
@@ -139,7 +141,7 @@ export function Header() {
         {/* Desktop CTA buttons */}
         <div className="hidden items-center gap-2 lg:flex">
           <Link
-            href="/contact/"
+            href="/contact/?intent=call"
             className="cursor-pointer rounded-lg border border-white/20 px-4 py-2 text-sm font-medium text-white/80 transition-all duration-200 hover:border-white/40 hover:bg-white/10 hover:text-white"
           >
             Book a Call

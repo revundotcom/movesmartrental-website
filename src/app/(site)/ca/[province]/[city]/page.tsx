@@ -23,16 +23,18 @@ export const dynamicParams = true
 
 export async function generateStaticParams() {
   const cities = await sanityFetch<
-    Array<{ slug: { current: string }; provinceSlug: string }>
+    Array<{ slug: { current: string }; provinceSlug: string; country: string }>
   >({
     query: CITY_LIST_QUERY,
     tags: ['city'],
   })
 
-  return cities.map((c) => ({
-    province: c.provinceSlug,
-    city: c.slug.current,
-  }))
+  return cities
+    .filter((c) => c.country === 'ca')
+    .map((c) => ({
+      province: c.provinceSlug,
+      city: c.slug.current,
+    }))
 }
 
 // ---------------------------------------------------------------------------

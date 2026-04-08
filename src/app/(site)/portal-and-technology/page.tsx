@@ -135,26 +135,8 @@ export default function PortalAndTechnologyPage() {
       </section>
 
       {/* -- SECTION 3: Technology + Human Expertise -- */}
-      <section className="relative overflow-hidden bg-brand-navy py-28 text-white">
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          aria-hidden="true"
-          style={{
-            backgroundImage:
-              'linear-gradient(#10B981 1px, transparent 1px), linear-gradient(90deg, #10B981 1px, transparent 1px)',
-            backgroundSize: '50px 50px',
-          }}
-        />
-        <div
-          className="absolute -right-40 -top-40 size-[500px] rounded-full bg-brand-emerald/8 blur-3xl"
-          aria-hidden="true"
-        />
-        <div
-          className="absolute -bottom-40 -left-40 size-[400px] rounded-full bg-brand-emerald/6 blur-3xl"
-          aria-hidden="true"
-        />
-
-        <div className="relative z-10 mx-auto max-w-6xl px-4">
+      <section className="bg-brand-navy py-28 text-white">
+        <div className="mx-auto max-w-6xl px-4">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-black uppercase tracking-[0.2em] text-brand-emerald">
               Our Approach

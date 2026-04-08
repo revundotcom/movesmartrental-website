@@ -21,6 +21,12 @@ export const metadata: Metadata = {
       'MoveSmart Rentals serves 20+ Ontario cities. Find professional property management in Toronto, Ottawa, Mississauga, Hamilton, Brampton, London, and more.',
     images: ['/og-default.png'],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Property Management Locations Ontario | MoveSmart Rentals',
+    description:
+      'MoveSmart Rentals serves 20+ Ontario cities. Find professional property management in Toronto, Ottawa, Mississauga, Hamilton, Brampton, London, and more.',
+  },
 }
 
 interface ProvinceWithCities {

@@ -24,6 +24,12 @@ export const metadata: Metadata = {
       'Free guides, Ontario rental market reports, property management case studies, and landlord FAQs.',
     images: ['/og-default.png'],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ontario Rental Market Resources | MoveSmart Rentals',
+    description:
+      'Free guides, Ontario rental market reports, property management case studies, and landlord FAQs.',
+  },
 }
 
 // ---------------------------------------------------------------------------
@@ -340,7 +346,7 @@ export default async function ResourcesPage() {
         headline="Have Questions?"
         description="Our team is ready to help you find the right property management solution."
         primaryCta={{ label: 'Contact Us', href: '/contact/' }}
-        secondaryCta={{ label: 'View Services', href: '/services/property-management/' }}
+        secondaryCta={{ label: 'View Services', href: '/services/' }}
       />
     </main>
   )

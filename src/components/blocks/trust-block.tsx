@@ -46,27 +46,8 @@ function StatsRow({ stats }: { stats: TrustBlockProps['stats'] }) {
   if (!stats || stats.length === 0) return null
 
   return (
-    <div className="relative overflow-hidden rounded-3xl px-6 py-14 md:px-12 bg-gradient-to-br from-[#0B1D3A] via-[#0d2d50] to-[#082a20]">
-      {/* Dot-grid overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage: 'radial-gradient(#10B981 1px, transparent 1px)',
-          backgroundSize: '32px 32px',
-        }}
-        aria-hidden="true"
-      />
-      {/* Glow orbs */}
-      <div
-        className="absolute -top-20 -left-20 h-64 w-64 rounded-full bg-brand-emerald/10 blur-3xl pointer-events-none"
-        aria-hidden="true"
-      />
-      <div
-        className="absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-brand-emerald/10 blur-3xl pointer-events-none"
-        aria-hidden="true"
-      />
-
-      <RevealOnScroll className="relative z-10 flex flex-wrap items-center justify-center gap-x-16 gap-y-10">
+    <div className="rounded-3xl px-6 py-14 md:px-12 bg-brand-navy">
+      <RevealOnScroll className="flex flex-wrap items-center justify-center gap-x-16 gap-y-10">
         {stats.map((stat, index) => (
           <motion.div key={index} variants={revealItem} className="text-center">
             <p className="text-5xl font-black text-brand-emerald">

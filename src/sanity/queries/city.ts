@@ -31,6 +31,7 @@ export const CITY_PAGE_QUERY = groq`
 export const CITY_LIST_QUERY = groq`
   *[_type == "city"] {
     slug,
-    "provinceSlug": province->slug.current
+    "provinceSlug": province->slug.current,
+    "country": province->country
   }
 `

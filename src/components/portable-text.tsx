@@ -34,12 +34,14 @@ interface SanityImageValue {
   _type: 'image'
   asset: { _ref: string; _type: 'reference' }
   alt?: string
+  caption?: string
 }
 
 interface LinkMark {
   _type: 'link'
   _key: string
   href: string
+  blank?: boolean
 }
 
 /** Portable Text component configuration with custom renderers */
@@ -58,9 +60,9 @@ export const portableTextComponents: PortableTextComponents = {
             className="w-full rounded-lg"
             sizes="(max-width: 768px) 100vw, 672px"
           />
-          {value.alt && (
+          {(value.caption || value.alt) && (
             <figcaption className="mt-2 text-center text-sm text-muted-foreground">
-              {value.alt}
+              {value.caption || value.alt}
             </figcaption>
           )}
         </figure>
@@ -71,7 +73,7 @@ export const portableTextComponents: PortableTextComponents = {
   marks: {
     link: ({ value, children }: PortableTextMarkComponentProps<LinkMark>) => {
       const href = value?.href || '#'
-      const isExternal = href.startsWith('http')
+      const isExternal = value?.blank || href.startsWith('http')
       return (
         <a
           href={href}
@@ -90,6 +92,9 @@ export const portableTextComponents: PortableTextComponents = {
     em: ({ children }: PortableTextMarkComponentProps) => (
       <em>{children}</em>
     ),
+    underline: ({ children }: PortableTextMarkComponentProps) => (
+      <span className="underline">{children}</span>
+    ),
   },
 
   block: {
@@ -98,6 +103,9 @@ export const portableTextComponents: PortableTextComponents = {
     ),
     h3: ({ children }) => (
       <h3 className="text-xl font-semibold mt-6 mb-3">{children}</h3>
+    ),
+    h4: ({ children }) => (
+      <h4 className="text-lg font-semibold mt-4 mb-2">{children}</h4>
     ),
     blockquote: ({ children }) => (
       <blockquote className="border-l-4 border-primary/30 pl-4 my-6 italic text-muted-foreground">

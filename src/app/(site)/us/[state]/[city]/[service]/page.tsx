@@ -71,7 +71,7 @@ export async function generateMetadata({
     return generatePageMetadata({
       seo: csData.seo,
       path: `/us/${state}/${city}/${service}`,
-      fallbackTitle: `${csData.serviceTitle} in ${csData.cityTitle} `,
+      fallbackTitle: `${csData.serviceTitle} in ${csData.cityTitle}`,
       fallbackDescription: `Professional ${csData.serviceTitle.toLowerCase()} services in ${csData.cityTitle}, ${csData.provinceName}. MoveSmart Rentals provides expert property management with zero upfront cost.`,
     })
   }
@@ -88,7 +88,7 @@ export async function generateMetadata({
 
   return generatePageMetadata({
     path: `/us/${state}/${city}/${service}`,
-    fallbackTitle: `${formattedService} in ${formattedCity} `,
+    fallbackTitle: `${formattedService} in ${formattedCity}`,
     fallbackDescription: `${formattedService} services coming soon to ${formattedCity}. MoveSmart Rentals is expanding property management across the United States.`,
   })
 }

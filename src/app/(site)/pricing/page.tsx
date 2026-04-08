@@ -14,6 +14,12 @@ export const metadata: Metadata = {
       'Simple, transparent pricing for Ontario property management. Zero upfront cost — pay only when your property is rented.',
     images: ['/og-default.png'],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Property Management Pricing Ontario | MoveSmart Rentals',
+    description:
+      'Simple, transparent pricing for Ontario property management. Zero upfront cost — pay only when your property is rented.',
+  },
 }
 
 export default function PricingPage() {
