@@ -15,6 +15,7 @@ import Link from 'next/link'
 import { motion, type Variants } from 'framer-motion'
 
 import type { ServiceGridBlockProps } from '@/types/blocks'
+import { SERVICE_VISUAL_MAP } from '@/components/illustrations/service-visuals'
 
 const ICON_MAP: Record<string, LucideIcon> = {
   home: Home,
@@ -154,8 +155,18 @@ export function ServiceGridBlock({
                     </span>
 
                     <div className="relative z-10 flex h-full flex-col">
-                      {/* Icon */}
-                      {Icon && (
+                      {/* Service visual — shown when a matching visual exists */}
+                      {(() => {
+                        const Visual = SERVICE_VISUAL_MAP[service.slug]
+                        return Visual ? (
+                          <div className="mb-4 h-[160px] w-full overflow-hidden rounded-2xl">
+                            <Visual />
+                          </div>
+                        ) : null
+                      })()}
+
+                      {/* Icon — only shown when no visual */}
+                      {Icon && !SERVICE_VISUAL_MAP[service.slug] && (
                         <div className={`mb-5 inline-flex size-12 items-center justify-center rounded-2xl ${style.iconWrap} transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
                           <Icon className={`size-6 ${style.iconColor}`} aria-hidden="true" />
                         </div>
@@ -210,7 +221,17 @@ export function ServiceGridBlock({
                       <div className="pointer-events-none absolute -right-8 -top-8 size-40 rounded-full bg-emerald-500/10 blur-3xl" aria-hidden="true" />
                     )}
                     <div className="relative z-10 flex flex-1 flex-col">
-                      {Icon && (
+                      {/* Service visual (mobile) */}
+                      {(() => {
+                        const Visual = SERVICE_VISUAL_MAP[service.slug]
+                        return Visual ? (
+                          <div className="mb-3 h-[130px] w-full overflow-hidden rounded-xl">
+                            <Visual />
+                          </div>
+                        ) : null
+                      })()}
+
+                      {Icon && !SERVICE_VISUAL_MAP[service.slug] && (
                         <div className={`mb-4 inline-flex size-11 items-center justify-center rounded-2xl ${style.iconWrap} transition-transform duration-300 group-hover:scale-110`}>
                           <Icon className={`size-5 ${style.iconColor}`} aria-hidden="true" />
                         </div>

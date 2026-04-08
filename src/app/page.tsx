@@ -40,10 +40,10 @@ import type { ServiceCardData, CityCardData } from '@/types/blocks'
 import {
   OwnerIllustration,
   PortalIllustration,
-  OntarioMapIllustration,
   FranchiseIllustration,
   ScreeningIllustration,
 } from '@/components/illustrations'
+import { OntarioMap } from '@/components/illustrations/ontario-map'
 
 /* ---------- Types ---------- */
 
@@ -123,13 +123,21 @@ export default async function HomePage() {
       <JsonLd data={localBusinessSchema} />
 
       {/* ── SECTION 1: Hero ── */}
-      <HeroBlock
-        headline="Get Your Property Rented to Qualified Tenants, Fast"
-        subheadline="MoveSmart Rentals is a full-service rental and leasing company. We advertise on MLS and 50+ platforms, screen every applicant, and handle every step from listing to move-in. Nothing due upfront."
-        cta1={{ label: 'Create a Free Account', href: '/contact/' }}
-        cta2={{ label: 'Book a Call', href: '/contact/?intent=call' }}
-        priority
-      />
+      <section className="relative overflow-hidden">
+        {/* Ambient blur blobs */}
+        <div className="pointer-events-none absolute inset-0 z-[2]">
+          <div className="absolute top-[-80px] left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full bg-brand-emerald/10 blur-[120px]" />
+          <div className="absolute top-10 left-[8%] w-72 h-72 rounded-full bg-brand-emerald/8 blur-[90px]" />
+          <div className="absolute top-0 right-[8%] w-80 h-80 rounded-full bg-brand-gold/10 blur-[100px]" />
+        </div>
+        <HeroBlock
+          headline="Get Your Property Rented to Qualified Tenants, Fast"
+          subheadline="MoveSmart Rentals is a full-service rental and leasing company. We advertise on MLS and 50+ platforms, screen every applicant, and handle every step from listing to move-in. Nothing due upfront."
+          cta1={{ label: 'Create a Free Account', href: '/contact/' }}
+          cta2={{ label: 'Book a Call', href: '/contact/?intent=call' }}
+          priority
+        />
+      </section>
 
       {/* ── SECTION 2: Trust / Stats Bar ── */}
       <section className="relative overflow-hidden border-b border-border bg-gradient-to-r from-slate-50 via-white to-slate-50 py-10">
@@ -149,11 +157,46 @@ export default async function HomePage() {
               <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-white to-transparent" aria-hidden="true" />
               <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-white to-transparent" aria-hidden="true" />
               <div className="flex animate-marquee items-center gap-16 whitespace-nowrap opacity-40 grayscale">
-                {['Toronto Star', 'Globe and Mail', 'REIC', 'FRPO', 'REP Magazine', 'Toronto Star', 'Globe and Mail', 'REIC', 'FRPO', 'REP Magazine'].map((name, i) => (
-                  <span key={i} className="shrink-0 text-sm font-bold tracking-tight text-slate-600">
-                    {name}
-                  </span>
-                ))}
+                {/* Toronto Star */}
+                <svg width="130" height="28" viewBox="0 0 130 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0" aria-label="Toronto Star">
+                  <text x="0" y="21" fontFamily="Georgia, 'Times New Roman', serif" fontSize="19" fontWeight="700" fill="#0B1D3A" letterSpacing="-0.3">Toronto</text>
+                  <text x="74" y="21" fontFamily="Georgia, 'Times New Roman', serif" fontSize="19" fontWeight="400" fill="#0B1D3A" fontStyle="italic" letterSpacing="-0.3"> Star</text>
+                </svg>
+                {/* Globe and Mail */}
+                <svg width="200" height="28" viewBox="0 0 200 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0" aria-label="Globe and Mail">
+                  <text x="0" y="21" fontFamily="'Times New Roman', Georgia, serif" fontSize="18" fontWeight="700" fill="#0B1D3A" letterSpacing="0.2">THE GLOBE AND MAIL</text>
+                </svg>
+                {/* REIC */}
+                <svg width="72" height="28" viewBox="0 0 72 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0" aria-label="REIC">
+                  <text x="0" y="21" fontFamily="Arial, Helvetica, sans-serif" fontSize="20" fontWeight="800" fill="#0B1D3A" letterSpacing="2">REIC</text>
+                </svg>
+                {/* FRPO */}
+                <svg width="72" height="28" viewBox="0 0 72 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0" aria-label="FRPO">
+                  <text x="0" y="21" fontFamily="Arial, Helvetica, sans-serif" fontSize="20" fontWeight="800" fill="#0B1D3A" letterSpacing="2">FRPO</text>
+                </svg>
+                {/* REP Magazine */}
+                <svg width="160" height="28" viewBox="0 0 160 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0" aria-label="REP Magazine">
+                  <text x="0" y="21" fontFamily="Arial, Helvetica, sans-serif" fontSize="20" fontWeight="800" fill="#0B1D3A" letterSpacing="1">REP</text>
+                  <text x="52" y="21" fontFamily="Arial, Helvetica, sans-serif" fontSize="13" fontWeight="400" fill="#0B1D3A" letterSpacing="1"> MAGAZINE</text>
+                </svg>
+                {/* Duplicate set for seamless loop */}
+                <svg width="130" height="28" viewBox="0 0 130 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0" aria-hidden="true">
+                  <text x="0" y="21" fontFamily="Georgia, 'Times New Roman', serif" fontSize="19" fontWeight="700" fill="#0B1D3A" letterSpacing="-0.3">Toronto</text>
+                  <text x="74" y="21" fontFamily="Georgia, 'Times New Roman', serif" fontSize="19" fontWeight="400" fill="#0B1D3A" fontStyle="italic" letterSpacing="-0.3"> Star</text>
+                </svg>
+                <svg width="200" height="28" viewBox="0 0 200 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0" aria-hidden="true">
+                  <text x="0" y="21" fontFamily="'Times New Roman', Georgia, serif" fontSize="18" fontWeight="700" fill="#0B1D3A" letterSpacing="0.2">THE GLOBE AND MAIL</text>
+                </svg>
+                <svg width="72" height="28" viewBox="0 0 72 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0" aria-hidden="true">
+                  <text x="0" y="21" fontFamily="Arial, Helvetica, sans-serif" fontSize="20" fontWeight="800" fill="#0B1D3A" letterSpacing="2">REIC</text>
+                </svg>
+                <svg width="72" height="28" viewBox="0 0 72 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0" aria-hidden="true">
+                  <text x="0" y="21" fontFamily="Arial, Helvetica, sans-serif" fontSize="20" fontWeight="800" fill="#0B1D3A" letterSpacing="2">FRPO</text>
+                </svg>
+                <svg width="160" height="28" viewBox="0 0 160 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0" aria-hidden="true">
+                  <text x="0" y="21" fontFamily="Arial, Helvetica, sans-serif" fontSize="20" fontWeight="800" fill="#0B1D3A" letterSpacing="1">REP</text>
+                  <text x="52" y="21" fontFamily="Arial, Helvetica, sans-serif" fontSize="13" fontWeight="400" fill="#0B1D3A" letterSpacing="1"> MAGAZINE</text>
+                </svg>
               </div>
             </div>
           </div>
@@ -708,7 +751,7 @@ export default async function HomePage() {
                   aria-hidden="true"
                 />
                 <div className="relative overflow-hidden rounded-3xl border border-slate-100 bg-brand-navy p-4 shadow-2xl shadow-brand-navy/20">
-                  <OntarioMapIllustration className="w-full" />
+                  <OntarioMap className="w-full" />
                 </div>
               </div>
             </div>

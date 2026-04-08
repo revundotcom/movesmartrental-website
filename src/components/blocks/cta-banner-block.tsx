@@ -5,11 +5,36 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { CTATracker } from '@/components/tracking/cta-tracker'
+import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 import type { CTABannerBlockProps } from '@/types/blocks'
 
 function inferCTAType(href: string): 'account_creation' | 'book_a_call' {
   if (/account|sign-up|signup|register/i.test(href)) return 'account_creation'
   return 'book_a_call'
+}
+
+const TRUST_POINTS = ['No contracts', 'No upfront fees', 'Results guaranteed']
+
+function CheckCircle() {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+      aria-hidden="true"
+      className="shrink-0"
+    >
+      <circle cx="9" cy="9" r="9" fill="rgba(255,255,255,0.2)" />
+      <path
+        d="M5.5 9l2.5 2.5 4.5-5"
+        stroke="white"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
 }
 
 export function CTABannerBlock({
@@ -23,114 +48,126 @@ export function CTABannerBlock({
 }: CTABannerBlockProps) {
   return (
     <section className="relative overflow-hidden">
-      {/* Rich gradient background */}
+      {/* Emerald gradient background */}
       <div
         className="absolute inset-0"
-        style={{ background: 'linear-gradient(135deg, #071228 0%, #0B1D3A 40%, #0d3a2a 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #059669 0%, #10B981 100%)' }}
         aria-hidden="true"
       />
 
-      {/* Diagonal accent stripe */}
+      {/* Ambient blur top-right */}
       <div
-        className="absolute bottom-0 left-0 h-[2px] w-2/3"
-        style={{ background: 'linear-gradient(90deg, #10B981 0%, #34D399 40%, transparent 100%)', transform: 'skewX(-20deg)', transformOrigin: 'bottom left' }}
+        className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 rounded-full blur-3xl"
+        style={{ background: 'rgba(255,255,255,0.10)' }}
         aria-hidden="true"
       />
 
-      {/* Top emerald stripe */}
+      {/* Ambient blur bottom-left */}
       <div
-        className="absolute left-0 top-0 h-[3px] w-full"
-        style={{ background: 'linear-gradient(90deg, transparent, #10B981 20%, #34D399 50%, #10B981 80%, transparent)' }}
+        className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-64 h-64 rounded-full blur-2xl"
+        style={{ background: 'rgba(255,255,255,0.08)' }}
         aria-hidden="true"
       />
 
-      <div className="relative z-10 mx-auto max-w-4xl px-4 py-24 text-center md:py-28">
-        {/* Eyebrow */}
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-emerald/30 bg-brand-emerald/10 px-4 py-1.5 backdrop-blur-sm">
-          <span className="animate-pulse-dot inline-block size-1.5 rounded-full bg-brand-emerald" />
-          <span className="text-xs font-bold uppercase tracking-[0.15em] text-brand-emerald">
-            Zero Upfront Cost
-          </span>
-        </div>
+      <RevealOnScroll variant="blur">
+        <div className="relative z-10 mx-auto max-w-4xl px-4 py-24 text-center md:py-28">
+          <h2 className="font-display text-4xl font-normal tracking-tight text-white md:text-5xl">
+            {headline}
+          </h2>
 
-        <h2 className="font-display text-3xl font-normal tracking-tight text-white sm:text-4xl lg:text-5xl">
-          {headline}
-        </h2>
+          {description && (
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/80">
+              {description}
+            </p>
+          )}
 
-        {description && (
-          <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/65">
-            {description}
-          </p>
-        )}
-
-        {/* Trust icons row */}
-        <div className="mx-auto mt-10 flex max-w-lg flex-wrap items-center justify-center gap-6">
-          {[
-            { label: 'No contracts', icon: '✓' },
-            { label: 'No upfront fees', icon: '✓' },
-            { label: 'Results guaranteed', icon: '✓' },
-          ].map((item) => (
-            <div key={item.label} className="flex items-center gap-1.5 text-sm text-white/50">
-              <span className="flex size-4 items-center justify-center rounded-full bg-brand-emerald/20 text-[10px] font-black text-brand-emerald">
-                {item.icon}
-              </span>
-              {item.label}
-            </div>
-          ))}
-        </div>
-
-        {variant === 'form' ? (
-          <form
-            className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row"
-            action="/api/lead"
-            method="POST"
-          >
-            <Input
-              type="email"
-              name="email"
-              placeholder="Enter your email"
-              required
-              className="flex-1 border-white/15 bg-white/8 text-white placeholder:text-white/40 focus:border-brand-emerald focus:ring-brand-emerald/30"
-            />
-            <Button
-              type="submit"
-              size="lg"
-              className="cursor-pointer border-transparent px-8 text-base font-bold text-white shadow-lg shadow-emerald-900/30 transition-all duration-300 hover:-translate-y-0.5"
-              style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}
+          {variant === 'form' ? (
+            <form
+              className="mx-auto mt-10 flex max-w-md flex-col gap-3 sm:flex-row"
+              action="/api/lead"
+              method="POST"
             >
-              {primaryCta.label}
-            </Button>
-          </form>
-        ) : (
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <CTATracker eventType={inferCTAType(primaryCta.href)} city={city} service={service}>
+              <Input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+                className="flex-1 border-white/20 bg-white/15 text-white placeholder:text-white/50 focus:border-white focus:ring-white/30"
+              />
               <Button
+                type="submit"
                 size="lg"
-                className="group/cb min-w-[180px] cursor-pointer border-transparent px-8 py-6 text-base font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
-                style={{ background: 'linear-gradient(135deg, #10B981, #059669)', boxShadow: '0 4px 24px rgba(16,185,129,0.35)' }}
-                render={<Link href={primaryCta.href} />}
+                className="cursor-pointer border-transparent px-8 text-base font-bold transition-all duration-300 hover:-translate-y-0.5"
+                style={{
+                  background: '#ffffff',
+                  color: '#0B1D3A',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+                }}
               >
                 {primaryCta.label}
-                <svg className="ml-2 size-4 transition-transform duration-200 group-hover/cb:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
               </Button>
-            </CTATracker>
-            {secondaryCta && (
-              <CTATracker eventType={inferCTAType(secondaryCta.href)} city={city} service={service}>
+            </form>
+          ) : (
+            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <CTATracker eventType={inferCTAType(primaryCta.href)} city={city} service={service}>
                 <Button
-                  variant="outline"
                   size="lg"
-                  className="min-w-[180px] cursor-pointer border-2 border-white/20 bg-white/5 px-8 py-6 text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/10"
-                  render={<Link href={secondaryCta.href} />}
+                  className="group/cb min-w-[180px] cursor-pointer border-transparent px-8 py-6 text-base font-bold transition-all duration-300 hover:-translate-y-0.5"
+                  style={{
+                    background: '#ffffff',
+                    color: '#0B1D3A',
+                    boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.boxShadow =
+                      '0 12px 32px rgba(0,0,0,0.4)'
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.boxShadow =
+                      '0 8px 24px rgba(0,0,0,0.3)'
+                  }}
+                  render={<Link href={primaryCta.href} />}
                 >
-                  {secondaryCta.label}
+                  {primaryCta.label}
+                  <svg
+                    className="ml-2 size-4 transition-transform duration-200 group-hover/cb:translate-x-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2.5}
+                    aria-hidden="true"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
                 </Button>
               </CTATracker>
-            )}
+
+              {secondaryCta && (
+                <CTATracker eventType={inferCTAType(secondaryCta.href)} city={city} service={service}>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="min-w-[180px] cursor-pointer border-2 border-white/20 bg-white/10 px-8 py-6 text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/20"
+                    render={<Link href={secondaryCta.href} />}
+                  >
+                    {secondaryCta.label}
+                  </Button>
+                </CTATracker>
+              )}
+            </div>
+          )}
+
+          {/* Trust points */}
+          <div className="mx-auto mt-10 flex max-w-lg flex-wrap items-center justify-center gap-6">
+            {TRUST_POINTS.map((label) => (
+              <div key={label} className="flex items-center gap-2 text-sm text-white/90">
+                <CheckCircle />
+                {label}
+              </div>
+            ))}
           </div>
-        )}
-      </div>
+        </div>
+      </RevealOnScroll>
     </section>
   )
 }

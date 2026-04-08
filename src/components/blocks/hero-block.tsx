@@ -6,8 +6,17 @@ import { motion } from 'framer-motion'
 
 import { Button } from '@/components/ui/button'
 import { CTATracker } from '@/components/tracking/cta-tracker'
-import { HeroIllustration } from '@/components/illustrations'
+import { HeroDashboard } from '@/components/illustrations/hero-dashboard'
+import { TextRotate } from '@/components/ui/text-rotate'
+import { VerticalCutReveal } from '@/components/ui/vertical-cut-reveal'
 import type { HeroBlockProps } from '@/types/blocks'
+
+const ROTATING_TEXTS = [
+  "Ontario's #1 Leasing Partner",
+  'Zero Upfront Cost',
+  '14-Day Avg. Fill Time',
+  '500+ Properties Managed',
+]
 
 function inferCTAType(href: string): 'account_creation' | 'book_a_call' {
   if (/account|sign-up|signup|register/i.test(href)) return 'account_creation'
@@ -175,7 +184,7 @@ export function HeroBlock({
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Left: text content */}
           <div>
-            {/* Eyebrow badge */}
+            {/* Eyebrow badge with rotating text */}
             <motion.div
               className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-1.5 backdrop-blur-sm"
               initial={{ opacity: 0, y: 32 }}
@@ -183,9 +192,11 @@ export function HeroBlock({
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
               <span className="animate-pulse-dot inline-block size-1.5 rounded-full bg-[#10B981]" />
-              <span className="text-xs font-semibold uppercase tracking-widest text-white/75">
-                Ontario&apos;s #1 Leasing Partner
-              </span>
+              <TextRotate
+                texts={ROTATING_TEXTS}
+                rotationInterval={2500}
+                className="rounded-md bg-[#10B981]/20 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-[#10B981]"
+              />
             </motion.div>
 
             <motion.h1
@@ -194,9 +205,17 @@ export function HeroBlock({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
-              {leadingWords}{' '}
+              <VerticalCutReveal
+                staggerDuration={0.1}
+                staggerFrom="first"
+                wordClassName="mr-[0.25em] last:mr-0"
+              >
+                {leadingWords}
+              </VerticalCutReveal>{' '}
               <span className="relative inline-block font-display italic text-brand-emerald">
-                {lastWord}
+                <VerticalCutReveal staggerDuration={0.08} staggerFrom="first">
+                  {lastWord ?? ''}
+                </VerticalCutReveal>
                 <motion.span
                   className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-brand-emerald"
                   initial={{ scaleX: 0 }}
@@ -275,7 +294,7 @@ export function HeroBlock({
                 style={{ background: 'radial-gradient(ellipse, rgba(16,185,129,0.15) 0%, transparent 70%)' }}
                 aria-hidden="true"
               />
-              <HeroIllustration className="relative w-full drop-shadow-2xl" />
+              <HeroDashboard />
               {/* Floating badge 1 — top right: Rent Received */}
               <motion.div
                 className="absolute -right-4 top-8 flex items-center gap-2 rounded-2xl border border-white/10 bg-brand-navy/80 px-4 py-2.5 shadow-xl backdrop-blur-md"

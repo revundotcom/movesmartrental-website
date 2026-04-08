@@ -186,6 +186,8 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    position: relative;
+    z-index: 1;
   }
   html {
     @apply font-sans;
@@ -261,6 +263,52 @@ html {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
+@keyframes bar-rise {
+  0%   { transform: scaleY(0.08); }
+  60%  { transform: scaleY(1); }
+  80%  { transform: scaleY(0.92); }
+  100% { transform: scaleY(1); }
+}
+@keyframes dash-flow {
+  from { stroke-dashoffset: 200; }
+  to   { stroke-dashoffset: -200; }
+}
+@keyframes float-y {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-5px); }
+}
+@keyframes soft-ping {
+  0%   { opacity: 0.8; transform: scale(1); }
+  70%  { opacity: 0;   transform: scale(1.4); }
+  100% { opacity: 0;   transform: scale(1.4); }
+}
+@keyframes check-pop {
+  0%   { opacity: 0; transform: scale(0) rotate(-10deg); }
+  70%  { transform: scale(1.2) rotate(2deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+@keyframes draw-line {
+  from { stroke-dashoffset: 300; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes node-ping {
+  0%   { transform: scale(1);   opacity: 0.8; }
+  50%  { transform: scale(1.5); opacity: 0.3; }
+  100% { transform: scale(1);   opacity: 0; }
+}
+@keyframes counter-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes progress-fill {
+  0%   { width: 0%; }
+  100% { width: var(--target-w); }
+}
+@keyframes milestone-pop {
+  0%   { opacity: 0; transform: scale(0.5); }
+  80%  { transform: scale(1.15); }
+  100% { opacity: 1; transform: scale(1); }
+}
 
 .animate-fade-up { animation: fade-up 0.6s ease both; }
 .animate-fade-in { animation: fade-in 0.5s ease both; }
@@ -288,3 +336,43 @@ html {
   }
   html { scroll-behavior: auto; }
 }
+
+/* ─── Global dot-grid background ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(16, 185, 129, 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+}
+
+/* ─── Service visual keyframe animations ─── */
+@keyframes bar-rise {
+  0%, 100% { transform: scaleY(0.08); }
+  50% { transform: scaleY(1); }
+}
+@keyframes dash-flow {
+  from { stroke-dashoffset: 120; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes soft-ping {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ─── Animation utility classes ─── */
+.animate-bar-rise { animation: bar-rise 2.5s cubic-bezier(0.34,1.56,0.64,1) infinite; }
+.animate-dash-flow { animation: dash-flow 2s linear infinite; }
+.animate-soft-ping { animation: soft-ping 2s ease-out infinite; }
+.animate-float-y { animation: float-y 2.8s ease-in-out infinite; }
+
+/* ─── Editorial shadow utility ─── */
+.editorial-shadow { box-shadow: 0 20px 40px rgba(11, 29, 58, 0.05); }

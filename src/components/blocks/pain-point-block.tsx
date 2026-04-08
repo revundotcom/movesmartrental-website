@@ -19,13 +19,11 @@ export function PainPointBlock({
     <section className="relative bg-white overflow-hidden">
       <div className="mx-auto max-w-6xl px-4">
         {showHeading && (
-          <RevealOnScroll>
-            <motion.div variants={revealItem} className="mb-12 text-center">
-              <h2 className="font-display text-3xl font-normal tracking-tight text-[#0B1D3A] sm:text-4xl">
-                {title}
-              </h2>
-              <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-[#10B981]" />
-            </motion.div>
+          <RevealOnScroll variant="blur" className="mb-12 text-center">
+            <h2 className="font-display text-3xl font-normal tracking-tight text-[#0B1D3A] sm:text-4xl">
+              {title}
+            </h2>
+            <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-[#10B981]" />
           </RevealOnScroll>
         )}
 

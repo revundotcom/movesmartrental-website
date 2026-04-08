@@ -61,12 +61,10 @@ export function BenefitsBlock({
       </div>
 
       <div className="mx-auto max-w-6xl px-4">
-        <RevealOnScroll>
-          <motion.div variants={revealItem} className="mb-16">
-            <h2 className="font-display text-3xl font-normal tracking-tight text-[#0B1D3A] sm:text-4xl">
-              {title}
-            </h2>
-          </motion.div>
+        <RevealOnScroll variant="blur" className="mb-16">
+          <h2 className="font-display text-3xl font-normal tracking-tight text-[#0B1D3A] sm:text-4xl">
+            {title}
+          </h2>
         </RevealOnScroll>
 
         <RevealOnScroll

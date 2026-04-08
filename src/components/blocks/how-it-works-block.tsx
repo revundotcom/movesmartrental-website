@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion'
 import { RevealOnScroll, revealItem } from '@/components/ui/reveal-on-scroll'
 import type { HowItWorksBlockProps } from '@/types/blocks'
-import { IllustrationLeaseAgreement } from '@/components/illustrations'
+import { LeasingFlywheel } from '@/components/illustrations/leasing-flywheel'
 
 export function HowItWorksBlock({
   steps,
@@ -16,15 +16,17 @@ export function HowItWorksBlock({
     <section className="relative bg-slate-50 overflow-hidden">
       <div className="mx-auto max-w-6xl px-4">
         <RevealOnScroll>
-          <motion.div variants={revealItem} className="mb-14 text-center">
+          <motion.div variants={revealItem} className="mb-6 text-center">
             <h2 className="font-display text-3xl font-normal tracking-tight text-[#0B1D3A] sm:text-4xl">
               {title}
             </h2>
-            <div className="mt-8 flex justify-center opacity-80">
-              <IllustrationLeaseAgreement className="h-32 w-auto" />
-            </div>
           </motion.div>
         </RevealOnScroll>
+
+        {/* Animated flywheel diagram */}
+        <div className="mb-16 -mx-4">
+          <LeasingFlywheel />
+        </div>
 
         {/* Desktop: horizontal timeline */}
         <div className="hidden md:block">
