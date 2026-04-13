@@ -39,6 +39,34 @@ const nextConfig: NextConfig = {
       headers: securityHeaders,
     },
   ],
+  // Redirect common mistyped paths — /ca/{us-state}/... → /us/{us-state}/...
+  redirects: async () => [
+    {
+      source: '/ca/florida/:path*',
+      destination: '/us/florida/:path*',
+      permanent: true,
+    },
+    {
+      source: '/ca/texas/:path*',
+      destination: '/us/texas/:path*',
+      permanent: true,
+    },
+    {
+      source: '/ca/california/:path*',
+      destination: '/us/california/:path*',
+      permanent: true,
+    },
+    {
+      source: '/ca/new-york/:path*',
+      destination: '/us/new-york/:path*',
+      permanent: true,
+    },
+    {
+      source: '/ca/illinois/:path*',
+      destination: '/us/illinois/:path*',
+      permanent: true,
+    },
+  ],
 }
 
 export default nextConfig

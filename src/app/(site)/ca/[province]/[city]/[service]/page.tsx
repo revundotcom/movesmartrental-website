@@ -8,7 +8,7 @@ import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { BenefitsBlock } from '@/components/blocks/benefits-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
-import { HeroBlock } from '@/components/blocks/hero-block'
+import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { HowItWorksBlock } from '@/components/blocks/how-it-works-block'
 import { PainPointBlock } from '@/components/blocks/pain-point-block'
 import { PropertyCardBlock } from '@/components/blocks/property-card-block'
@@ -368,21 +368,29 @@ function CityServiceView({
         ]}
       />
 
-      {/* Hero */}
-      <HeroBlock
+      {/* Editorial hero */}
+      <PageHeroBlock
+        kicker={`${serviceTitle} · ${cityTitle}`}
+        eyebrow="Local property management"
         headline={data.heroHeadline}
-        subheadline={data.heroSubheadline}
+        accentLastWord={false}
+        lede={data.heroSubheadline ?? data.service.shortDescription}
         cta1={
           data.heroCta1
             ? { label: data.heroCta1.label, href: data.heroCta1.url }
-            : undefined
+            : { label: 'Book a Local Call', href: '/contact/' }
         }
         cta2={
           data.heroCta2
             ? { label: data.heroCta2.label, href: data.heroCta2.url }
-            : undefined
+            : { label: 'See Pricing', href: '/pricing/' }
         }
-        priority
+        meta={[
+          { label: 'Service', value: serviceTitle },
+          { label: 'Market', value: cityTitle },
+          { label: 'Median rent', value: formatCurrency(data.localMedianRent) },
+          { label: 'Setup fee', value: '$0' },
+        ]}
       />
 
       {/* Premium Local Market Section - two-column layout */}
@@ -586,14 +594,25 @@ function PropertyCategoryView({
         />
       </div>
 
-      {/* Hero */}
-      <HeroBlock
-        headline={`${propertyTypeLabel} for Rent in ${cityTitle}`}
-        subheadline={
+      {/* Editorial hero */}
+      <PageHeroBlock
+        kicker={`${cityTitle} Rentals`}
+        eyebrow={`${propertyTypeLabel} in ${cityTitle}`}
+        headline={`${propertyTypeLabel} for rent in ${cityTitle}`}
+        accentLastWord={false}
+        lede={
           listings.length > 0
-            ? `${listings.length} verified listing${listings.length === 1 ? '' : 's'} available`
-            : `Browse ${propertyTypeLabel.toLowerCase()} rentals in ${cityTitle}`
+            ? `${listings.length} verified listing${listings.length === 1 ? '' : 's'} available — transparent pricing, online applications, RTA-compliant leases.`
+            : `Browse ${propertyTypeLabel.toLowerCase()} rentals in ${cityTitle}. Verified properties with transparent pricing.`
         }
+        cta1={{ label: 'Apply Now', href: '/contact/?intent=apply' }}
+        cta2={{ label: 'Browse More Cities', href: '/locations/' }}
+        meta={[
+          { label: 'City', value: cityTitle },
+          { label: 'Property type', value: propertyTypeLabel },
+          { label: 'Listings', value: `${listings.length}` },
+          { label: 'Setup fee', value: '$0' },
+        ]}
       />
 
       {/* Category Description */}

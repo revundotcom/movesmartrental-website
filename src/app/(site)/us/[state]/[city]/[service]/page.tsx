@@ -6,7 +6,7 @@ import { z } from 'zod'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
-import { HeroBlock } from '@/components/blocks/hero-block'
+import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { generatePageMetadata } from '@/lib/metadata'
 import { sanityFetch } from '@/sanity/fetch'
 import {
@@ -215,10 +215,20 @@ export default async function USCityServicePage({
           ]}
         />
 
-        <HeroBlock
+        <PageHeroBlock
+          kicker={`${serviceTitle} · ${cityTitle}`}
+          eyebrow="Local property management"
           headline={cityServiceData.heroHeadline}
-          subheadline={cityServiceData.heroSubheadline}
-          priority
+          accentLastWord={false}
+          lede={cityServiceData.heroSubheadline}
+          cta1={{ label: 'Book a Local Call', href: '/contact/' }}
+          cta2={{ label: 'See Pricing', href: '/pricing/' }}
+          meta={[
+            { label: 'Service', value: serviceTitle },
+            { label: 'Market', value: cityTitle },
+            { label: 'Setup fee', value: '$0' },
+            { label: 'Local team', value: 'In-market' },
+          ]}
         />
 
         <CTABannerBlock
@@ -265,11 +275,21 @@ export default async function USCityServicePage({
         ]}
       />
 
-      {/* Hero */}
-      <HeroBlock
+      {/* Editorial hero */}
+      <PageHeroBlock
+        kicker={`${cityTitle}, ${stateName}`}
+        eyebrow="Coming soon"
         headline={`${formattedService} in ${cityTitle}`}
-        subheadline={`Professional ${formattedService.toLowerCase()} services are coming soon to ${cityTitle}, ${stateName}.`}
-        priority
+        accentLastWord={false}
+        lede={`Professional ${formattedService.toLowerCase()} services are coming soon to ${cityTitle}, ${stateName}. Join our waitlist — priority access for founding owners.`}
+        cta1={{ label: 'Join the Waitlist', href: '/contact/' }}
+        cta2={{ label: 'See Pricing', href: '/pricing/' }}
+        meta={[
+          { label: 'City', value: cityTitle },
+          { label: 'State', value: stateName },
+          { label: 'Status', value: 'Coming soon' },
+          { label: 'Setup fee', value: '$0' },
+        ]}
       />
 
       {/* Coming Soon Notice */}

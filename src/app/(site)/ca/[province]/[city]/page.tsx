@@ -7,12 +7,13 @@ import { z } from 'zod'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
-import { HeroBlock } from '@/components/blocks/hero-block'
+import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { ServiceGridBlock } from '@/components/blocks/service-grid-block'
 import { JsonLd } from '@/components/json-ld'
 import { PortableTextBody } from '@/components/portable-text'
 import { generatePageMetadata } from '@/lib/metadata'
 import { buildBreadcrumbListSchema, buildLocalBusinessSchema } from '@/lib/schema-builders'
+import { getFallbackCaCity } from '@/lib/static-fallbacks'
 import { sanityFetch } from '@/sanity/fetch'
 import { CITY_PAGE_QUERY, CITY_LIST_QUERY } from '@/sanity/queries/city'
 import type { ServiceCardData } from '@/types/blocks'
@@ -33,12 +34,32 @@ export async function generateStaticParams() {
     tags: ['city'],
   })
 
-  return cities
+  const sanityParams = cities
     .filter((c) => c.country === 'ca')
     .map((c) => ({
       province: c.provinceSlug,
       city: c.slug.current,
     }))
+
+  // Static fallback slugs — ensure footer-linked Ontario cities always build.
+  const fallbackSlugs = [
+    'toronto',
+    'ottawa',
+    'mississauga',
+    'hamilton',
+    'brampton',
+    'london',
+    'kitchener',
+  ]
+  const fallbackParams = fallbackSlugs.map((city) => ({ province: 'ontario', city }))
+
+  // De-duplicate (Sanity takes precedence when both exist)
+  const seen = new Set(sanityParams.map((p) => `${p.province}/${p.city}`))
+  const merged = [
+    ...sanityParams,
+    ...fallbackParams.filter((p) => !seen.has(`${p.province}/${p.city}`)),
+  ]
+  return merged
 }
 
 // ---------------------------------------------------------------------------
@@ -172,7 +193,7 @@ export default async function CityPage({
   }
 
   // Fetch city data and available services in parallel
-  const [data, cityServices] = await Promise.all([
+  const [sanityData, cityServices] = await Promise.all([
     sanityFetch<CityPageData | null>({
       query: CITY_PAGE_QUERY,
       params: { slug: city },
@@ -184,6 +205,9 @@ export default async function CityPage({
       tags: ['cityService'],
     }),
   ])
+
+  // Fall back to static data when Sanity has no document for this slug
+  const data: CityPageData | null = sanityData ?? (getFallbackCaCity(city) as CityPageData | null)
 
   if (!data) {
     notFound()
@@ -223,6 +247,10 @@ export default async function CityPage({
     data.description.length > 0 &&
     typeof data.description[0] === 'object'
 
+  const provinceAbbr = data.province.abbreviation ?? data.province.title
+  const descriptionText =
+    typeof data.description === 'string' ? data.description : undefined
+
   return (
     <main>
       {/* JSON-LD */}
@@ -237,215 +265,243 @@ export default async function CityPage({
       })} />
 
       {/* Breadcrumbs */}
-      <BreadcrumbNav
-        crumbs={[
-          { label: 'Home', href: '/' },
-          { label: 'Canada', href: '/ca/' },
-          { label: data.province.title, href: `/ca/${province}/` },
-          { label: data.title, href: `/ca/${province}/${city}/` },
+      <div className="mx-auto max-w-7xl px-4 pt-6 sm:px-6">
+        <BreadcrumbNav
+          crumbs={[
+            { label: 'Home', href: '/' },
+            { label: 'Canada', href: '/ca/' },
+            { label: data.province.title, href: `/ca/${province}/` },
+            { label: data.title, href: `/ca/${province}/${city}/` },
+          ]}
+        />
+      </div>
+
+      {/* Editorial hero */}
+      <PageHeroBlock
+        kicker={`${data.title}, ${provinceAbbr}`}
+        eyebrow="Property management & leasing"
+        headline={`Leasing in ${data.title}`}
+        lede={
+          descriptionText?.slice(0, 220) ??
+          `Local tenant placement, screening, rent protection, and day-to-day property management in ${data.title}, ${data.province.title}.`
+        }
+        cta1={{ label: 'Book a Local Call', href: '/contact/' }}
+        cta2={{ label: 'Browse Rentals', href: '/locations/' }}
+        meta={[
+          ...(data.medianRent != null
+            ? [{ label: 'Median rent', value: formatCurrency(data.medianRent) }]
+            : [{ label: 'Avg fill', value: '14 days' }]),
+          ...(data.neighbourhoods && data.neighbourhoods.length > 0
+            ? [{ label: 'Neighbourhoods', value: `${data.neighbourhoods.length}+` }]
+            : [{ label: 'Neighbourhoods', value: '20+' }]),
+          ...(data.vacancyRate != null
+            ? [{ label: 'Vacancy rate', value: formatPercentage(data.vacancyRate) }]
+            : [{ label: 'Setup fee', value: '$0' }]),
+          { label: 'Markets', value: '20+ cities' },
         ]}
       />
 
-      {/* Hero */}
-      <HeroBlock
-        headline={`Property Management in ${data.title}`}
-        subheadline={
-          typeof data.description === 'string'
-            ? (data.description as string).slice(0, 160)
-            : `Professional property management and tenant placement in ${data.title}, ${data.province.title}.`
-        }
-        backgroundImageUrl={data.heroImageUrl}
-        backgroundImageAlt={data.heroImageAlt}
-        priority
-      />
-
-      {/* Premium Local Data Section */}
-      <section className="relative overflow-hidden bg-white py-14">
-        {/* Dot-grid background */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          aria-hidden="true"
-          style={{
-            backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)',
-            backgroundSize: '24px 24px',
-          }}
-        />
-        <div
-          className="absolute -right-32 top-0 size-[360px] rounded-full bg-brand-emerald/6 blur-3xl"
-          aria-hidden="true"
-        />
-
-        <div className="relative z-10 mx-auto max-w-7xl px-4">
-          <div className="mb-10 text-center">
-            <p className="text-sm font-black uppercase tracking-[0.2em] text-brand-emerald">
-              Market Overview
+      {/* City narrative (Portable Text or description paragraph) */}
+      {data.description && (
+        <section className="bg-white py-16 sm:py-20">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
+              About {data.title}
             </p>
             <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
               {data.title}{' '}
-              <span className="font-display italic text-brand-emerald">
-                at a Glance
-              </span>
+              <span className="font-display italic text-brand-emerald">at a glance</span>
+              <span aria-hidden="true" className="text-brand-gold">.</span>
             </h2>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {data.population != null && (
-              <div className="flex flex-col items-center justify-center rounded-3xl bg-brand-navy p-8 text-center">
-                <p className="text-3xl font-black text-brand-emerald">
-                  {formatPopulation(data.population)}
+            <div className="mt-8">
+              {isPortableText ? (
+                <PortableTextBody value={data.description as never} />
+              ) : typeof data.description === 'string' ? (
+                <p className="text-lg leading-relaxed text-slate-600">
+                  {data.description}
                 </p>
-                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-white/50">
-                  Population
-                </p>
-              </div>
-            )}
-            {data.medianRent != null && (
-              <div className="flex flex-col items-center justify-center rounded-3xl bg-brand-emerald/10 p-8 text-center">
-                <p className="text-3xl font-black text-brand-navy">
-                  {formatCurrency(data.medianRent)}
-                </p>
-                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
-                  Median Rent
-                </p>
-              </div>
-            )}
-            {data.vacancyRate != null && (
-              <div className="flex flex-col items-center justify-center rounded-3xl bg-brand-emerald/10 p-8 text-center">
-                <p className="text-3xl font-black text-brand-navy">
-                  {formatPercentage(data.vacancyRate)}
-                </p>
-                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
-                  Vacancy Rate
-                </p>
-              </div>
-            )}
-            {data.neighbourhoods && data.neighbourhoods.length > 0 && (
-              <div className="flex flex-col items-center justify-center rounded-3xl bg-brand-navy p-8 text-center">
-                <p className="text-3xl font-black text-brand-emerald">
-                  {data.neighbourhoods.length}+
-                </p>
-                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-white/50">
-                  Neighbourhoods
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Getting Around */}
-      {data.transitInfo && (
-        <section className="py-12 lg:py-16 bg-slate-50">
-          <div className="container mx-auto px-4 max-w-4xl">
-            <div className="rounded-3xl bg-gradient-to-br from-slate-50 to-white border border-slate-100 p-8 md:p-10 shadow-sm">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-12 h-12 rounded-xl bg-brand-emerald/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-6 h-6 text-brand-emerald" />
-                </div>
-                <div>
-                  <p className="text-brand-emerald font-heading font-semibold text-xs uppercase tracking-wider mb-1">
-                    Transit &amp; Transportation
-                  </p>
-                  <h2 className="font-display text-2xl md:text-3xl text-brand-navy">
-                    Getting Around {data.title}
-                  </h2>
-                </div>
-              </div>
-              <p className="text-slate-600 leading-relaxed text-lg">{data.transitInfo}</p>
+              ) : null}
             </div>
           </div>
         </section>
       )}
 
-      {/* City Description */}
-      {data.description && (
-        <section className="mx-auto max-w-4xl px-4 py-8">
-          {isPortableText ? (
-            <PortableTextBody value={data.description as never} />
-          ) : typeof data.description === 'string' ? (
-            <p className="text-lg leading-relaxed text-muted-foreground">
-              {data.description}
+      {/* Market snapshot — editorial strip with pipe dividers */}
+      {(data.population != null ||
+        data.medianRent != null ||
+        data.vacancyRate != null ||
+        (data.neighbourhoods && data.neighbourhoods.length > 0)) && (
+        <section className="bg-[#FBFAF6] py-12 sm:py-14">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <p className="text-center text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
+              Market snapshot
             </p>
-          ) : null}
+            <dl className="mt-6 grid grid-cols-2 gap-8 border-y border-brand-navy/10 py-10 sm:grid-cols-4 sm:divide-x sm:divide-brand-navy/10 sm:gap-0">
+              {data.population != null && (
+                <div className="text-center sm:px-4">
+                  <dt className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-emerald">
+                    Population
+                  </dt>
+                  <dd className="mt-2 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
+                    {formatPopulation(data.population)}
+                  </dd>
+                </div>
+              )}
+              {data.medianRent != null && (
+                <div className="text-center sm:px-4">
+                  <dt className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-emerald">
+                    Median rent
+                  </dt>
+                  <dd className="mt-2 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
+                    {formatCurrency(data.medianRent)}
+                  </dd>
+                </div>
+              )}
+              {data.vacancyRate != null && (
+                <div className="text-center sm:px-4">
+                  <dt className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-emerald">
+                    Vacancy rate
+                  </dt>
+                  <dd className="mt-2 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
+                    {formatPercentage(data.vacancyRate)}
+                  </dd>
+                </div>
+              )}
+              {data.neighbourhoods && data.neighbourhoods.length > 0 && (
+                <div className="text-center sm:px-4">
+                  <dt className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-emerald">
+                    Neighbourhoods
+                  </dt>
+                  <dd className="mt-2 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
+                    {data.neighbourhoods.length}+
+                  </dd>
+                </div>
+              )}
+            </dl>
+          </div>
         </section>
       )}
 
-      {/* Services Grid */}
-      {services.length > 0 && (
-        <section className="mx-auto max-w-7xl px-4 py-12">
-          <div className="mx-auto max-w-2xl text-center mb-8">
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
-              Available in {data.title}
-            </p>
-            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
-              Full-Service Leasing in{' '}
-              <span className="font-display italic text-brand-emerald">
-                {data.title}
-              </span>
-            </h2>
+      {/* Neighbourhoods list */}
+      {data.neighbourhoods && data.neighbourhoods.length > 0 && (
+        <section className="bg-white py-16 sm:py-20">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6">
+            <div className="max-w-2xl">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                Neighbourhoods we serve
+              </p>
+              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+                Local coverage across{' '}
+                <span className="font-display italic text-brand-emerald">{data.title}</span>
+                <span aria-hidden="true" className="text-brand-gold">.</span>
+              </h2>
+            </div>
+            <ul className="mt-10 grid grid-cols-1 gap-y-0 divide-y divide-brand-navy/10 border-y border-brand-navy/10 sm:grid-cols-2 sm:gap-x-10 sm:divide-y-0">
+              {data.neighbourhoods.map((n, i) => (
+                <li
+                  key={n}
+                  className={`py-4 font-display text-xl text-brand-navy ${
+                    i < data.neighbourhoods!.length - 1 ? 'sm:border-b sm:border-brand-navy/10' : ''
+                  }`}
+                >
+                  <span aria-hidden="true" className="mr-3 font-mono text-xs text-brand-gold">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  {n}
+                </li>
+              ))}
+            </ul>
           </div>
-          <ServiceGridBlock
-            services={services}
-            columns={3}
-            basePath={`/ca/${province}/${city}`}
-            showHeading={false}
-          />
         </section>
       )}
 
-      {/* Property Type Links */}
-      <section className="relative overflow-hidden bg-slate-50 py-14">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          aria-hidden="true"
-          style={{
-            backgroundImage: 'radial-gradient(#0B1D3A0d 1px, transparent 1px)',
-            backgroundSize: '24px 24px',
-          }}
-        />
-        <div className="relative z-10 mx-auto max-w-7xl px-4">
-          <div className="mx-auto max-w-2xl text-center mb-8">
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
-              Rental Listings
-            </p>
-            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
-              Browse Rentals in{' '}
-              <span className="font-display italic text-brand-emerald">
-                {data.title}
-              </span>
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {PROPERTY_TYPES.map((pt) => (
-              <Link
-                key={pt.slug}
-                href={`/ca/${province}/${city}/${pt.slug}/`}
-                className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-6 text-center shadow-[0_2px_12px_rgba(11,29,58,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-emerald/30 hover:shadow-[0_12px_40px_rgba(11,29,58,0.12)]"
-              >
-                {/* Top accent bar on hover */}
-                <div
-                  className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 rounded-t-2xl transition-transform duration-300 group-hover:scale-x-100"
-                  style={{ background: 'linear-gradient(90deg, #10B981, #34D399)' }}
-                  aria-hidden="true"
-                />
-                <h3 className="text-lg font-bold text-brand-navy transition-colors duration-200 group-hover:text-brand-emerald">
-                  {pt.label}
-                </h3>
-                <p className="mt-1 text-sm text-slate-500">
-                  in {data.title}
+      {/* Transit info */}
+      {data.transitInfo && (
+        <section className="bg-[#FBFAF6] py-12 sm:py-14">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6">
+            <div className="flex items-start gap-4">
+              <MapPin className="mt-1 size-6 shrink-0 text-brand-emerald" />
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                  Transit &amp; transportation
                 </p>
-              </Link>
-            ))}
+                <h3 className="mt-2 font-display text-2xl font-normal text-brand-navy">
+                  Getting around {data.title}
+                </h3>
+                <p className="mt-3 text-base leading-relaxed text-slate-600">
+                  {data.transitInfo}
+                </p>
+              </div>
+            </div>
           </div>
+        </section>
+      )}
+
+      {/* Services available in this city */}
+      {services.length > 0 && (
+        <section className="bg-white py-16 sm:py-20">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                Available in {data.title}
+              </p>
+              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+                Full-service leasing in{' '}
+                <span className="font-display italic text-brand-emerald">{data.title}</span>
+                <span aria-hidden="true" className="text-brand-gold">.</span>
+              </h2>
+            </div>
+            <div className="mt-12">
+              <ServiceGridBlock
+                services={services}
+                columns={3}
+                basePath={`/ca/${province}/${city}`}
+                showHeading={false}
+              />
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Property type links — editorial list, not hover cards */}
+      <section className="bg-[#FBFAF6] py-14 sm:py-16">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6">
+          <div className="max-w-2xl">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
+              Rental listings
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+              Browse rentals in{' '}
+              <span className="font-display italic text-brand-emerald">{data.title}</span>
+              <span aria-hidden="true" className="text-brand-gold">.</span>
+            </h2>
+          </div>
+          <ul className="mt-10 divide-y divide-brand-navy/10 border-y border-brand-navy/10">
+            {PROPERTY_TYPES.map((pt) => (
+              <li key={pt.slug}>
+                <Link
+                  href={`/ca/${province}/${city}/${pt.slug}/`}
+                  className="group flex items-baseline justify-between gap-4 py-5 transition-colors hover:bg-white/60"
+                >
+                  <span className="font-display text-xl text-brand-navy group-hover:text-brand-emerald sm:text-2xl">
+                    {pt.label}
+                  </span>
+                  <span className="text-sm text-slate-500 group-hover:text-brand-navy">
+                    in {data.title} →
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
       {/* CTA Banner */}
       <CTABannerBlock
-        headline={`Get Started in ${data.title}`}
-        description={`Let MoveSmart Rentals handle your property management in ${data.title}. Zero upfront cost.`}
-        primaryCta={{ label: 'Create Free Account', href: '/contact/' }}
-        secondaryCta={{ label: 'Book a Call', href: '/contact/' }}
+        headline={`Ready to lease in ${data.title}?`}
+        description={`Book 20 minutes with a local advisor. Zero upfront cost, ${data.title}-specific market pricing, and RTA-compliant leases.`}
+        primaryCta={{ label: 'Book a Call', href: '/contact/' }}
+        secondaryCta={{ label: 'See Pricing', href: '/pricing/' }}
       />
     </main>
   )

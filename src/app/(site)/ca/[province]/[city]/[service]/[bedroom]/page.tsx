@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
-import { HeroBlock } from '@/components/blocks/hero-block'
+import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { PropertyCardBlock } from '@/components/blocks/property-card-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { sanityFetch } from '@/sanity/fetch'
@@ -162,14 +162,25 @@ export default async function BedroomPage({
         />
       </div>
 
-      {/* Hero */}
-      <HeroBlock
+      {/* Editorial hero */}
+      <PageHeroBlock
+        kicker={`${cityTitle} Rentals`}
+        eyebrow={`${bedroomLabel} ${propertyTypeLabel}`}
         headline={`${bedroomLabel} ${propertyTypeLabel} in ${cityTitle}`}
-        subheadline={
+        accentLastWord={false}
+        lede={
           listings.length > 0
-            ? `${listings.length} listing${listings.length === 1 ? '' : 's'} found`
-            : `No ${bedroomLabel.toLowerCase()} listings currently available`
+            ? `${listings.length} verified listing${listings.length === 1 ? '' : 's'} found — transparent pricing, online applications, RTA-compliant leases.`
+            : `No ${bedroomLabel.toLowerCase()} listings currently available in ${cityTitle}. Explore all ${propertyTypeLabel.toLowerCase()} or check back soon.`
         }
+        cta1={{ label: 'Apply Now', href: '/contact/?intent=apply' }}
+        cta2={{ label: `All ${propertyTypeLabel}`, href: `/ca/${province}/${city}/${service}/` }}
+        meta={[
+          { label: 'Bedrooms', value: bedroomLabel },
+          { label: 'Property type', value: propertyTypeLabel },
+          { label: 'City', value: cityTitle },
+          { label: 'Listings', value: `${listings.length}` },
+        ]}
       />
 
       {/* Listings - Server-rendered HTML (TEN-05) */}
