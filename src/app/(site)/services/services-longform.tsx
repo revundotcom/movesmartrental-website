@@ -336,7 +336,7 @@ function TierTable({ rows }: { rows: TierRow[] }) {
               scope="col"
               className="px-5 py-5 text-left text-[11px] font-bold uppercase tracking-[0.18em] text-brand-navy/55"
             >
-              What's included
+              What&apos;s included
             </th>
             <th
               scope="col"

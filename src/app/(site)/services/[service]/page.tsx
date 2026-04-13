@@ -144,11 +144,6 @@ export default async function ServicePage({
     areaServed: 'Ontario, Canada',
   })
 
-  // Build hero image URL from asset ref if available
-  const heroImageUrl = service.heroImage?.asset?._ref
-    ? buildSanityImageUrl(service.heroImage.asset._ref)
-    : undefined
-
   return (
     <main>
       <div className="mx-auto max-w-7xl px-4 pt-6">
@@ -252,20 +247,3 @@ export default async function ServicePage({
   )
 }
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
-
-/**
- * Build a Sanity CDN image URL from an asset reference.
- * Reference format: "image-{id}-{WxH}-{ext}" -> "{id}-{WxH}.{ext}"
- */
-function buildSanityImageUrl(ref: string): string {
-  const parts = ref.replace('image-', '').split('-')
-  const ext = parts.pop()
-  const rest = parts.join('-')
-  return `https://cdn.sanity.io/images/${projectId}/${dataset}/${rest}.${ext}`
-}
