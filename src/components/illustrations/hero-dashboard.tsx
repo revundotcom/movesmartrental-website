@@ -197,7 +197,7 @@ export function HeroDashboard() {
 
               {/* Charts row */}
               <div className="grid grid-cols-5 gap-2">
-                {/* Line chart — col span 3 */}
+                {/* Line chart - col span 3 */}
                 <div
                   className="col-span-3 rounded-xl p-3"
                   style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}
@@ -247,7 +247,7 @@ export function HeroDashboard() {
                   </svg>
                 </div>
 
-                {/* Donut chart — col span 2 */}
+                {/* Donut chart - col span 2 */}
                 <div
                   className="col-span-2 flex flex-col items-center justify-center rounded-xl p-3"
                   style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}
@@ -301,6 +301,7 @@ export function HeroDashboard() {
                 <p className="mb-2 text-[9px] font-semibold text-white/60">Monthly Rent Collection</p>
                 <div className="flex items-end gap-[3px]" style={{ height: 44 }}>
                   {BAR_HEIGHTS.map((h, i) => (
+                    // Static SVG data - index key is safe
                     <div key={i} className="flex flex-1 flex-col items-center gap-0.5">
                       <motion.div
                         className="w-full rounded-sm"

@@ -1,18 +1,24 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { z } from 'zod'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { CityGridBlock } from '@/components/blocks/city-grid-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { HeroBlock } from '@/components/blocks/hero-block'
+import { JsonLd } from '@/components/json-ld'
 import { PortableTextBody } from '@/components/portable-text'
+import { buildBreadcrumbListSchema } from '@/lib/schema-builders'
 import { generatePageMetadata } from '@/lib/metadata'
 import { sanityFetch } from '@/sanity/fetch'
 import {
   PROVINCE_PAGE_QUERY,
   PROVINCE_LIST_QUERY,
 } from '@/sanity/queries/province'
+import type { PortableTextBlock } from '@portabletext/types'
 import type { CityCardData } from '@/types/blocks'
+
+const slugSchema = z.string().regex(/^[a-z0-9-]+$/).max(100)
 
 // ---------------------------------------------------------------------------
 // Static Params
@@ -71,8 +77,7 @@ interface ProvincePageData {
   slug: { current: string }
   country: string
   abbreviation?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  description?: string | any[] // Could be string or PortableTextBlock[]
+  description?: string | PortableTextBlock[]
   heroImage?: {
     asset: { _ref: string }
     alt?: string
@@ -97,6 +102,10 @@ export default async function ProvincePage({
   params: Promise<{ province: string }>
 }) {
   const { province } = await params
+
+  if (!slugSchema.safeParse(province).success) {
+    notFound()
+  }
 
   const data = await sanityFetch<ProvincePageData | null>({
     query: PROVINCE_PAGE_QUERY,
@@ -123,8 +132,20 @@ export default async function ProvincePage({
     data.description.length > 0 &&
     typeof data.description[0] === 'object'
 
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
+
   return (
     <main>
+      {/* JSON-LD */}
+      <JsonLd data={buildBreadcrumbListSchema({
+        crumbs: [
+          { name: 'Home', url: siteUrl },
+          { name: 'Canada', url: `${siteUrl}/ca/` },
+          { name: data.title, url: `${siteUrl}/ca/${province}/` },
+        ]
+      })} />
+
       {/* Breadcrumbs */}
       <BreadcrumbNav
         crumbs={[
@@ -147,23 +168,68 @@ export default async function ProvincePage({
 
       {/* Province Description */}
       {data.description && (
-        <section className="mx-auto max-w-4xl px-4 py-12">
-          {isPortableText ? (
-            <PortableTextBody value={data.description as never} />
-          ) : typeof data.description === 'string' ? (
-            <p className="text-lg leading-relaxed text-muted-foreground">
-              {data.description}
-            </p>
-          ) : null}
+        <section className="relative overflow-hidden bg-white py-14 lg:py-14">
+          <div
+            className="absolute inset-0 opacity-[0.03] pointer-events-none"
+            aria-hidden="true"
+            style={{
+              backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)',
+              backgroundSize: '24px 24px',
+            }}
+          />
+          <div
+            className="absolute -right-32 top-0 size-[360px] rounded-full bg-brand-emerald/6 blur-3xl pointer-events-none"
+            aria-hidden="true"
+          />
+          <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8">
+              <p className="text-brand-emerald font-heading font-semibold text-sm uppercase tracking-wider mb-4">
+                About {data.title}
+              </p>
+              <h2 className="font-display text-3xl md:text-4xl text-brand-navy mb-6">
+                Property Management Across{' '}
+                <span className="italic text-brand-emerald">{data.title}</span>
+              </h2>
+            </div>
+            {isPortableText ? (
+              <PortableTextBody value={data.description as PortableTextBlock[]} />
+            ) : typeof data.description === 'string' ? (
+              <p className="text-lg leading-relaxed text-slate-600 text-center">
+                {data.description}
+              </p>
+            ) : null}
+          </div>
         </section>
       )}
 
-      {/* City Grid */}
-      <CityGridBlock
-        cities={cities}
-        province={`Cities in ${data.title}`}
-        columns={4}
-      />
+      {/* City Grid Section */}
+      <section className="py-14 lg:py-14 bg-slate-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <p className="text-brand-emerald font-heading font-semibold text-sm uppercase tracking-wider mb-4">
+              Service Areas
+            </p>
+            <h2 className="font-display text-4xl md:text-5xl text-brand-navy mb-6">
+              Cities We Serve in{' '}
+              <span className="italic text-brand-emerald">{data.title}</span>
+            </h2>
+            <p className="text-slate-600 text-lg max-w-2xl mx-auto">
+              Professional property management across every major market in{' '}
+              {data.title}. Local expertise, zero upfront cost, and results-driven
+              leasing for owners and tenants.
+            </p>
+          </div>
+
+          <div className="rounded-3xl bg-white border border-slate-100 p-6 md:p-10 shadow-sm">
+            <CityGridBlock
+              cities={cities}
+              province={`Cities in ${data.title}`}
+              columns={4}
+              showHeading={false}
+            />
+          </div>
+        </div>
+      </section>
 
       {/* CTA Banner */}
       <CTABannerBlock

@@ -33,7 +33,7 @@ const NODES = [
   { label: "Manage & Report",   sub: "Track everything",     icon: "chart",      angle: 210  },
 ];
 
-// Inline SVG icons — no external dependency
+// Inline SVG icons - no external dependency
 function NodeIcon({ icon, size = 26 }: { icon: string; size?: number }) {
   const s = size;
   switch (icon) {

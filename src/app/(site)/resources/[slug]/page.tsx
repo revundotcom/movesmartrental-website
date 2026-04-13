@@ -322,69 +322,103 @@ export default async function ResourcePage({
 
   return (
     <main>
-      <div className="mx-auto max-w-4xl px-4 py-8">
-        <BreadcrumbNav
-          crumbs={[
-            { label: 'Home', href: '/' },
-            { label: 'Resources', href: '/resources/' },
-            { label: doc.title, href: `/resources/${slug}/` },
-          ]}
+      <JsonLd data={articleSchema} />
+
+      {/* Hero Section */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-navy via-brand-navy to-[#132850] pt-10 pb-16 lg:pt-14 lg:pb-24">
+        <div
+          className="absolute inset-0 opacity-[0.08] pointer-events-none"
+          aria-hidden="true"
+          style={{
+            backgroundImage: 'radial-gradient(#10B981 1px, transparent 1px)',
+            backgroundSize: '28px 28px',
+          }}
+        />
+        <div
+          className="absolute -right-32 top-0 size-[420px] rounded-full bg-brand-emerald/10 blur-3xl pointer-events-none"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute -left-32 bottom-0 size-[360px] rounded-full bg-brand-gold/5 blur-3xl pointer-events-none"
+          aria-hidden="true"
         />
 
-        <JsonLd data={articleSchema} />
-
-        {/* Article header */}
-        <header className="mb-8">
-          <div className="mb-4">
-            <span
-              className={`inline-block rounded-full px-3 py-1 text-xs font-medium ${CATEGORY_COLORS[displayCategory] ?? 'bg-gray-100 text-gray-800'}`}
-            >
-              {categoryLabel}
-            </span>
+        <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="[&_a]:text-white/70 [&_a:hover]:text-brand-emerald [&_span]:text-white/50 mb-6">
+            <BreadcrumbNav
+              crumbs={[
+                { label: 'Home', href: '/' },
+                { label: 'Resources', href: '/resources/' },
+                { label: doc.title, href: `/resources/${slug}/` },
+              ]}
+            />
           </div>
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            {doc.title}
-          </h1>
-          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-            {doc.author && <span>By {doc.author}</span>}
-            {doc.publishing?.publishedAt && (
-              <time dateTime={doc.publishing.publishedAt}>
-                {new Date(doc.publishing.publishedAt).toLocaleDateString(
-                  'en-CA',
-                  {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  }
-                )}
-              </time>
-            )}
-            {doc.cityTitle && doc.citySlug && doc.cityProvinceSlug && (
-              <Link
-                href={`/ca/${doc.cityProvinceSlug}/${doc.citySlug}/`}
-                className="text-primary hover:underline"
-              >
-                {doc.cityTitle}
-              </Link>
-            )}
-            {doc.serviceTitle && doc.serviceSlug && (
-              <Link
-                href={`/services/${doc.serviceSlug}/`}
-                className="text-primary hover:underline"
-              >
-                {doc.serviceTitle}
-              </Link>
-            )}
-          </div>
-        </header>
 
+          <header>
+            <div className="mb-6">
+              <span
+                className={`inline-block rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider ${CATEGORY_COLORS[displayCategory] ?? 'bg-gray-100 text-gray-800'}`}
+              >
+                {categoryLabel}
+              </span>
+            </div>
+            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-white tracking-tight leading-tight">
+              {doc.title}
+            </h1>
+            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-white/70">
+              {doc.author && (
+                <span className="font-medium">By {doc.author}</span>
+              )}
+              {doc.publishing?.publishedAt && (
+                <>
+                  <span className="text-white/30">&bull;</span>
+                  <time dateTime={doc.publishing.publishedAt}>
+                    {new Date(doc.publishing.publishedAt).toLocaleDateString(
+                      'en-CA',
+                      {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      }
+                    )}
+                  </time>
+                </>
+              )}
+              {doc.cityTitle && doc.citySlug && doc.cityProvinceSlug && (
+                <>
+                  <span className="text-white/30">&bull;</span>
+                  <Link
+                    href={`/ca/${doc.cityProvinceSlug}/${doc.citySlug}/`}
+                    className="text-brand-emerald hover:text-brand-emerald/80 hover:underline font-medium"
+                  >
+                    {doc.cityTitle}
+                  </Link>
+                </>
+              )}
+              {doc.serviceTitle && doc.serviceSlug && (
+                <>
+                  <span className="text-white/30">&bull;</span>
+                  <Link
+                    href={`/services/${doc.serviceSlug}/`}
+                    className="text-brand-emerald hover:text-brand-emerald/80 hover:underline font-medium"
+                  >
+                    {doc.serviceTitle}
+                  </Link>
+                </>
+              )}
+            </div>
+          </header>
+        </div>
+      </section>
+
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 lg:py-12">
         {/* Type-specific rendering */}
 
         {/* ---- BlogGuide ---- */}
         {doc._type === 'blogGuide' && (
-          <>
+          <article className="prose prose-slate prose-lg max-w-none prose-headings:font-display prose-headings:text-brand-navy prose-a:text-brand-emerald hover:prose-a:text-brand-emerald/80">
             {doc.heroImage?.asset?._ref && (
-              <div className="relative mb-8 aspect-[2/1] overflow-hidden rounded-lg">
+              <div className="relative mb-10 aspect-[2/1] overflow-hidden rounded-2xl shadow-lg not-prose">
                 <Image
                   src={sanityImageUrl(doc.heroImage.asset._ref)}
                   alt={doc.heroImage.alt || doc.title}
@@ -396,15 +430,15 @@ export default async function ResourcePage({
               </div>
             )}
             {doc.body && <PortableTextBody value={doc.body} />}
-          </>
+          </article>
         )}
 
         {/* ---- Comparison ---- */}
         {doc._type === 'comparison' && (
-          <>
+          <article className="prose prose-slate prose-lg max-w-none prose-headings:font-display prose-headings:text-brand-navy prose-a:text-brand-emerald hover:prose-a:text-brand-emerald/80">
             {doc.body && <PortableTextBody value={doc.body} />}
             {doc.competitors && doc.competitors.length > 0 && (
-              <div className="mt-8 space-y-12">
+              <div className="mt-10 space-y-12 not-prose">
                 {doc.competitors.map((competitor) => (
                   <ComparisonTable
                     key={competitor.name}
@@ -413,14 +447,14 @@ export default async function ResourcePage({
                 ))}
               </div>
             )}
-          </>
+          </article>
         )}
 
         {/* ---- Case Study ---- */}
         {doc._type === 'caseStudy' && (
-          <>
+          <article className="prose prose-slate prose-lg max-w-none prose-headings:font-display prose-headings:text-brand-navy prose-a:text-brand-emerald hover:prose-a:text-brand-emerald/80">
             {doc.heroImage?.asset?._ref && (
-              <div className="relative mb-8 aspect-[2/1] overflow-hidden rounded-lg">
+              <div className="relative mb-10 aspect-[2/1] overflow-hidden rounded-2xl shadow-lg not-prose">
                 <Image
                   src={sanityImageUrl(doc.heroImage.asset._ref)}
                   alt={doc.heroImage.alt || doc.title}
@@ -432,19 +466,85 @@ export default async function ResourcePage({
               </div>
             )}
             {doc.outcome && (
-              <div className="mb-8 rounded-lg border-l-4 border-green-500 bg-green-50 p-6">
-                <p className="font-bold text-green-900">{doc.outcome}</p>
+              <div className="mb-10 rounded-2xl border-l-4 border-brand-emerald bg-brand-emerald/5 p-6 not-prose">
+                <p className="text-xs font-semibold uppercase tracking-wider text-brand-emerald mb-2">
+                  Outcome
+                </p>
+                <p className="font-display text-xl text-brand-navy">
+                  {doc.outcome}
+                </p>
               </div>
             )}
             {doc.clientName && (
-              <p className="mb-4 text-sm text-muted-foreground">
-                Client: <span className="font-medium">{doc.clientName}</span>
+              <p className="mb-6 text-sm text-slate-500 not-prose">
+                Client:{' '}
+                <span className="font-semibold text-brand-navy">
+                  {doc.clientName}
+                </span>
               </p>
             )}
             {doc.body && <PortableTextBody value={doc.body} />}
-          </>
+          </article>
         )}
       </div>
+
+      {/* Related Resources */}
+      <section className="bg-slate-50 py-12 lg:py-12 border-t border-slate-100">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="text-brand-emerald font-heading font-semibold text-xs uppercase tracking-wider mb-3">
+              Keep Reading
+            </p>
+            <h2 className="font-display text-3xl md:text-4xl text-brand-navy">
+              More Resources
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Link
+              href="/resources/"
+              className="group rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-brand-emerald/30"
+            >
+              <p className="text-xs font-semibold uppercase tracking-wider text-brand-emerald mb-2">
+                Browse All
+              </p>
+              <h3 className="font-display text-lg text-brand-navy group-hover:text-brand-emerald transition-colors">
+                All Resources
+              </h3>
+              <p className="mt-2 text-sm text-slate-500">
+                Guides, comparisons, and case studies.
+              </p>
+            </Link>
+            <Link
+              href="/services/"
+              className="group rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-brand-emerald/30"
+            >
+              <p className="text-xs font-semibold uppercase tracking-wider text-brand-emerald mb-2">
+                Services
+              </p>
+              <h3 className="font-display text-lg text-brand-navy group-hover:text-brand-emerald transition-colors">
+                Our Services
+              </h3>
+              <p className="mt-2 text-sm text-slate-500">
+                Full-service property management.
+              </p>
+            </Link>
+            <Link
+              href="/locations/"
+              className="group rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-brand-emerald/30"
+            >
+              <p className="text-xs font-semibold uppercase tracking-wider text-brand-emerald mb-2">
+                Locations
+              </p>
+              <h3 className="font-display text-lg text-brand-navy group-hover:text-brand-emerald transition-colors">
+                Service Areas
+              </h3>
+              <p className="mt-2 text-sm text-slate-500">
+                Cities we serve across Canada.
+              </p>
+            </Link>
+          </div>
+        </div>
+      </section>
 
       <CTABannerBlock
         headline={ctaConfig.headline}

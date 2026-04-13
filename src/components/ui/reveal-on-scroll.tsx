@@ -21,9 +21,25 @@ const VARIANTS = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
   },
+  clipReveal: {
+    hidden: { clipPath: 'inset(0 100% 0 0)', opacity: 0 },
+    visible: { clipPath: 'inset(0 0% 0 0)', opacity: 1 },
+  },
+  splitReveal: {
+    hidden: { clipPath: 'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)', opacity: 0 },
+    visible: { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', opacity: 1 },
+  },
+  rotateIn: {
+    hidden: { rotateX: -80, opacity: 0, transformPerspective: 1000 },
+    visible: { rotateX: 0, opacity: 1, transformPerspective: 1000 },
+  },
+  slideFromLeft: {
+    hidden: { x: -60, opacity: 0 },
+    visible: { x: 0, opacity: 1 },
+  },
 }
 
-// Legacy export — existing motion.div children with revealItem variants still work
+// Legacy export - existing motion.div children with revealItem variants still work
 export const revealItem = {
   hidden: { opacity: 0, y: 24 },
   visible: {
@@ -35,7 +51,7 @@ export const revealItem = {
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type Variant = 'blur' | 'slideUp' | 'scaleIn' | 'fade'
+type Variant = 'blur' | 'slideUp' | 'scaleIn' | 'fade' | 'clipReveal' | 'splitReveal' | 'rotateIn' | 'slideFromLeft'
 type StaggerFrom = 'first' | 'center'
 
 interface RevealOnScrollProps {
@@ -47,7 +63,7 @@ interface RevealOnScrollProps {
    * (children are expected to be motion.div with their own variants).
    */
   variant?: Variant
-  /** Stagger delay between children in seconds. Default 0.12 */
+  /** Stagger delay between children in seconds. Default 0.08 */
   stagger?: number
   /** Direction stagger originates from. Default: "first" */
   staggerFrom?: StaggerFrom
@@ -63,7 +79,7 @@ export function RevealOnScroll({
   children,
   className,
   variant,
-  stagger = 0.12,
+  stagger = 0.08,
   staggerFrom = 'first',
   delay = 0,
   duration = 0.5,
@@ -84,13 +100,13 @@ export function RevealOnScroll({
       return delay + i * stagger
     }
 
-    // Multiple children — stagger each with independent motion.div wrappers
+    // Multiple children - stagger each with independent motion.div wrappers
     if (childCount > 1) {
       return (
         <div ref={ref} className={className}>
           {Children.map(children, (child, i) => (
             <motion.div
-              key={i}
+              key={(child as React.ReactElement)?.key ?? i}
               initial="hidden"
               animate={inView ? 'visible' : 'hidden'}
               variants={{
@@ -112,7 +128,7 @@ export function RevealOnScroll({
       )
     }
 
-    // Single child — animate wrapper itself
+    // Single child - animate wrapper itself
     return (
       <motion.div
         ref={ref}
@@ -139,9 +155,7 @@ export function RevealOnScroll({
   // ── Legacy stagger-container mode (no variant prop) ───────────────────────
   // Children are motion.div elements with their own variants (e.g. revealItem).
   const staggerVariants =
-    stagger === 0.12
-      ? { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }
-      : { hidden: {}, visible: { transition: { staggerChildren: stagger } } }
+    { hidden: {}, visible: { transition: { staggerChildren: stagger, delayChildren: 0.15 } } }
 
   return (
     <motion.div

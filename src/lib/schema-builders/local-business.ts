@@ -30,13 +30,18 @@ export function buildLocalBusinessSchema(data: {
     url: data.url,
     telephone: data.phone,
     email: 'info@movesmartrentals.com',
-    priceRange: data.priceRange || 'Success-based fee — $0 upfront',
-    address: {
+    priceRange: data.priceRange || 'Success-based fee - $0 upfront',
+    address: (data.address.streetAddress || data.address.postalCode) ? {
       '@type': 'PostalAddress',
-      streetAddress: data.address.streetAddress,
+      ...(data.address.streetAddress && { streetAddress: data.address.streetAddress }),
       addressLocality: data.address.city,
       addressRegion: data.address.province,
-      postalCode: data.address.postalCode,
+      ...(data.address.postalCode && { postalCode: data.address.postalCode }),
+      addressCountry: data.address.country,
+    } : {
+      '@type': 'PostalAddress',
+      addressLocality: data.address.city,
+      addressRegion: data.address.province,
       addressCountry: data.address.country,
     },
     geo: data.geo

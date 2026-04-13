@@ -1,5 +1,5 @@
 /**
- * batch-4.ts — Barrie, Milton, Oshawa, Ajax, Pickering
+ * batch-4.ts - Barrie, Milton, Oshawa, Ajax, Pickering
  * Thin aggregator: re-exports from per-city files.
  */
 

@@ -23,7 +23,7 @@ import { motion, useInView } from 'framer-motion'
  * Cities are mapped proportionally onto this 500×560 viewBox.
  */
 
-// Ontario province outline — ~50 anchor points
+// Ontario province outline - ~50 anchor points
 const ONTARIO_PATH = `
   M 30,52
   L 60,40
@@ -71,7 +71,7 @@ const ONTARIO_PATH = `
   Z
 `
 
-// City pins — (x, y) in the 500×560 viewBox
+// City pins - (x, y) in the 500×560 viewBox
 const CITIES = [
   { id: 'toronto',    label: 'Toronto',    x: 232, y: 408, size: 'lg',  color: '#D4A853', delay: 0.2 },
   { id: 'ottawa',     label: 'Ottawa',     x: 310, y: 375, size: 'md',  color: '#10B981', delay: 0.5 },
@@ -242,7 +242,7 @@ export function OntarioMap({ className = '' }: { className?: string }) {
         )
       })}
 
-      {/* "20+ Cities" badge — fades in after all pins */}
+      {/* "20+ Cities" badge - fades in after all pins */}
       <motion.g
         initial={{ opacity: 0, y: 6 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}

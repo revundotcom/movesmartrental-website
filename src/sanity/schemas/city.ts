@@ -35,9 +35,9 @@ export default defineType({
       description: '1=pre-render at build, 2=on-demand ISR, 3=future',
       options: {
         list: [
-          { title: 'Tier 1 — Pre-render', value: 1 },
-          { title: 'Tier 2 — On-demand ISR', value: 2 },
-          { title: 'Tier 3 — Future', value: 3 },
+          { title: 'Tier 1 - Pre-render', value: 1 },
+          { title: 'Tier 2 - On-demand ISR', value: 2 },
+          { title: 'Tier 3 - Future', value: 3 },
         ],
       },
       validation: (Rule) => Rule.required(),
@@ -56,6 +56,37 @@ export default defineType({
       name: 'vacancyRate',
       title: 'Vacancy Rate',
       type: 'number',
+    }),
+    defineField({
+      name: 'averageDaysOnMarket',
+      title: 'Average Days on Market',
+      type: 'number',
+      description: 'Average days to rent a property in this city',
+      validation: (Rule) => Rule.min(0).max(365),
+    }),
+    defineField({
+      name: 'rentGrowthYoY',
+      title: 'Rent Growth YoY (%)',
+      type: 'number',
+      description: 'Year-over-year rent change percentage (negative for decline)',
+    }),
+    defineField({
+      name: 'dataSourceDate',
+      title: 'Data Source Date',
+      type: 'date',
+      description: 'When this market data was last updated',
+    }),
+    defineField({
+      name: 'geoLat',
+      title: 'Latitude',
+      type: 'number',
+      description: 'City center latitude for LocalBusiness schema',
+    }),
+    defineField({
+      name: 'geoLng',
+      title: 'Longitude',
+      type: 'number',
+      description: 'City center longitude for LocalBusiness schema',
     }),
     defineField({
       name: 'neighbourhoods',

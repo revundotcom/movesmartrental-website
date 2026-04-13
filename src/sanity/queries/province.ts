@@ -63,17 +63,3 @@ export const COUNTRY_PROVINCES_QUERY = groq`
     "cityCount": count(*[_type == "city" && province._ref == ^._id])
   }
 `
-
-/** Cities by province slug for CityGridBlock */
-export const PROVINCE_CITIES_QUERY = groq`
-  *[_type == "city" && province->slug.current == $provinceSlug] | order(tier asc, title asc) {
-    title,
-    "slug": slug.current,
-    tier,
-    population,
-    medianRent,
-    "provinceSlug": province->slug.current,
-    "heroImageUrl": heroImage.asset->url,
-    "heroImageAlt": heroImage.alt
-  }
-`

@@ -5,7 +5,7 @@ import { RevealOnScroll, revealItem } from '@/components/ui/reveal-on-scroll'
 const WHY_PILLARS = [
   {
     title: 'Verified Listings',
-    desc: 'Every property is owner-verified with professional photos and accurate pricing — no bait-and-switch.',
+    desc: 'Every property is owner-verified with professional photos and accurate pricing - no bait-and-switch.',
     icon: '✓',
   },
   {
@@ -22,9 +22,9 @@ const WHY_PILLARS = [
 
 export function TenantsWhySection() {
   return (
-    <section className="bg-brand-navy py-24 text-white">
+    <section className="bg-brand-navy py-16 text-white">
       <div className="mx-auto max-w-7xl px-4">
-        <div className="mx-auto max-w-2xl text-center mb-16">
+        <div className="mx-auto max-w-2xl text-center mb-10">
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
             Why MoveSmart
           </p>

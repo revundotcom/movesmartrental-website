@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { groq } from 'next-sanity'
+import { z } from 'zod'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
@@ -13,6 +14,8 @@ import {
   CITY_SERVICE_SEO_QUERY,
 } from '@/sanity/queries/city-service'
 import type { SeoFields } from '@/types/sanity'
+
+const slugSchema = z.string().regex(/^[a-z0-9-]+$/).max(100)
 
 // ---------------------------------------------------------------------------
 // Static Params -- US city-service pages
@@ -172,6 +175,14 @@ export default async function USCityServicePage({
 }) {
   const { state, city, service } = await params
 
+  if (
+    !slugSchema.safeParse(state).success ||
+    !slugSchema.safeParse(city).success ||
+    !slugSchema.safeParse(service).success
+  ) {
+    notFound()
+  }
+
   // Try CityService data first
   const cityServiceData = await sanityFetch<CityServicePageData | null>({
     query: CITY_SERVICE_PAGE_QUERY,
@@ -262,7 +273,7 @@ export default async function USCityServicePage({
       />
 
       {/* Coming Soon Notice */}
-      <section className="mx-auto max-w-3xl px-4 py-16 text-center">
+      <section className="mx-auto max-w-3xl px-4 py-12 text-center">
         <div className="rounded-lg border-2 border-dashed border-muted-foreground/25 bg-muted/50 p-12">
           <h2 className="mb-4 text-2xl font-bold tracking-tight">
             Coming Soon to {cityTitle}

@@ -390,7 +390,7 @@ async function findUniquePexelsPhoto(
 async function downloadBuffer(url: string): Promise<Buffer> {
   const res = await fetch(url)
   if (!res.ok) {
-    throw new Error(`HTTP ${res.status} ${res.statusText} — ${url}`)
+    throw new Error(`HTTP ${res.status} ${res.statusText} - ${url}`)
   }
   const arrayBuffer = await res.arrayBuffer()
   return Buffer.from(arrayBuffer)
@@ -452,8 +452,8 @@ async function main() {
         const buffer = await downloadBuffer(imageUrl)
         const assetId = await uploadAndPatch(city, buffer, `${city.slug}.jpg`)
 
-        const detail = `Pexels #${photo.id} by ${photo.photographer} — asset ${assetId}`
-        console.log(`  ${idx} ✓ ${city.name} — Pexels #${photo.id} by ${photo.photographer}`)
+        const detail = `Pexels #${photo.id} by ${photo.photographer} - asset ${assetId}`
+        console.log(`  ${idx} ✓ ${city.name} - Pexels #${photo.id} by ${photo.photographer}`)
         results.push({
           city: city.name,
           slug: city.slug,
@@ -467,14 +467,14 @@ async function main() {
         // -----------------------------------------------------------------------
         // 2. Wikimedia fallback
         // -----------------------------------------------------------------------
-        console.log(`  ${idx} ~ ${city.name} — no unique Pexels photo, trying Wikimedia fallback...`)
+        console.log(`  ${idx} ~ ${city.name} - no unique Pexels photo, trying Wikimedia fallback...`)
 
         let buffer: Buffer
         try {
           buffer = await downloadBuffer(city.wikimediaFallback)
         } catch (wikiErr) {
           const msg = wikiErr instanceof Error ? wikiErr.message : String(wikiErr)
-          console.error(`  ${idx} ✗ ${city.name} — Wikimedia fallback FAILED: ${msg}`)
+          console.error(`  ${idx} ✗ ${city.name} - Wikimedia fallback FAILED: ${msg}`)
           results.push({
             city: city.name,
             slug: city.slug,
@@ -487,18 +487,18 @@ async function main() {
         }
 
         const assetId = await uploadAndPatch(city, buffer, `${city.slug}-wiki.jpg`)
-        console.log(`  ${idx} ✓ ${city.name} — Wikimedia fallback — asset ${assetId}`)
+        console.log(`  ${idx} ✓ ${city.name} - Wikimedia fallback - asset ${assetId}`)
         results.push({
           city: city.name,
           slug: city.slug,
           status: 'success',
           source: 'wikimedia',
-          detail: `Wikimedia fallback — asset ${assetId}`,
+          detail: `Wikimedia fallback - asset ${assetId}`,
         })
       }
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err)
-      console.error(`  ${idx} ✗ ${city.name} — FAILED: ${msg}`)
+      console.error(`  ${idx} ✗ ${city.name} - FAILED: ${msg}`)
       results.push({
         city: city.name,
         slug: city.slug,
@@ -570,7 +570,7 @@ async function main() {
   if (duplicates.length > 0) {
     console.log(`\nWARNING: ${duplicates.length} duplicate Pexels photo IDs detected: ${duplicates.join(', ')}`)
   } else {
-    console.log(`\nNo duplicate photo IDs detected — all images are unique.`)
+    console.log(`\nNo duplicate photo IDs detected - all images are unique.`)
   }
 
   if (failed.length > 0) {

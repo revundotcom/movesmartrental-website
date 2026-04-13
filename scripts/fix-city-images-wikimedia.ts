@@ -2,7 +2,7 @@
  * fix-city-images-wikimedia.ts
  *
  * Patches Ontario city images in Sanity using VERIFIED Wikimedia Commons URLs.
- * All URLs have been confirmed via the Wikimedia Commons API — no guessed filenames.
+ * All URLs have been confirmed via the Wikimedia Commons API - no guessed filenames.
  *
  * Usage: npx tsx scripts/fix-city-images-wikimedia.ts
  */
@@ -259,7 +259,7 @@ async function main() {
     const imageData = CITY_IMAGES[slug]
 
     if (!imageData) {
-      console.log(`SKIP  ${city.title} (slug: ${slug}) — no image mapping`)
+      console.log(`SKIP  ${city.title} (slug: ${slug}) - no image mapping`)
       results.push({ city: city.title, status: 'skip', detail: `slug "${slug}" not in CITY_IMAGES` })
       skippedCount++
       continue

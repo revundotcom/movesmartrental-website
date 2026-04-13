@@ -39,14 +39,14 @@ export default defineType({
       title: 'City',
       type: 'reference',
       to: [{ type: 'city' }],
-      description: 'Optional — associate with a specific city',
+      description: 'Optional - associate with a specific city',
     }),
     defineField({
       name: 'service',
       title: 'Service',
       type: 'reference',
       to: [{ type: 'service' }],
-      description: 'Optional — associate with a specific service',
+      description: 'Optional - associate with a specific service',
     }),
     defineField({
       name: 'body',

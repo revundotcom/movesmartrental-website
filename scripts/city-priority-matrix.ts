@@ -280,7 +280,7 @@ async function main() {
     console.log('\n  Top 10 by priority score:')
     scored.slice(0, 10).forEach((c) => {
       console.log(
-        `    ${c.rank}. ${c.title} (${c.province}) — score: ${c.priorityScore}, status: ${c.status}`
+        `    ${c.rank}. ${c.title} (${c.province}) - score: ${c.priorityScore}, status: ${c.status}`
       )
     })
   }

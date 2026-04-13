@@ -41,5 +41,13 @@ export default defineType({
       type: 'array',
       of: [{ type: 'string' }],
     }),
+    defineField({
+      name: 'aiSummary',
+      title: 'AI Summary',
+      type: 'text',
+      rows: 3,
+      description: 'Concise 200-char summary for AI/voice assistants. Pattern: "MoveSmart Rentals provides [service] in [City], [Province]. As of [date], [key stat]. Zero upfront cost, success-fee model."',
+      validation: (Rule) => Rule.max(200),
+    }),
   ],
 })

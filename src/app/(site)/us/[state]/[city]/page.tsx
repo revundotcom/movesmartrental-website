@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { groq } from 'next-sanity'
+import { z } from 'zod'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
@@ -9,10 +10,12 @@ import { ServiceGridBlock } from '@/components/blocks/service-grid-block'
 import { JsonLd } from '@/components/json-ld'
 import { PortableTextBody } from '@/components/portable-text'
 import { generatePageMetadata } from '@/lib/metadata'
-import { buildLocalBusinessSchema } from '@/lib/schema-builders'
+import { buildBreadcrumbListSchema, buildLocalBusinessSchema } from '@/lib/schema-builders'
 import { sanityFetch } from '@/sanity/fetch'
 import { CITY_PAGE_QUERY } from '@/sanity/queries/city'
 import type { ServiceCardData } from '@/types/blocks'
+
+const slugSchema = z.string().regex(/^[a-z0-9-]+$/).max(100)
 
 // ---------------------------------------------------------------------------
 // Static Params
@@ -157,6 +160,10 @@ export default async function USCityPage({
 }) {
   const { state, city } = await params
 
+  if (!slugSchema.safeParse(state).success || !slugSchema.safeParse(city).success) {
+    notFound()
+  }
+
   // Fetch city data and available services in parallel
   const [data, cityServices] = await Promise.all([
     sanityFetch<CityPageData | null>({
@@ -213,6 +220,14 @@ export default async function USCityPage({
     <main>
       {/* JSON-LD */}
       <JsonLd data={localBusinessSchema} />
+      <JsonLd data={buildBreadcrumbListSchema({
+        crumbs: [
+          { name: 'Home', url: siteUrl },
+          { name: 'United States', url: `${siteUrl}/us/` },
+          { name: data.province.title, url: `${siteUrl}/us/${state}/` },
+          { name: data.title, url: `${siteUrl}/us/${state}/${city}/` },
+        ]
+      })} />
 
       {/* Breadcrumbs */}
       <BreadcrumbNav

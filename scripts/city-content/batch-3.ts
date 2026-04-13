@@ -1,5 +1,5 @@
 /**
- * batch-3.ts — Burlington, Kitchener, Waterloo, Cambridge, Guelph
+ * batch-3.ts - Burlington, Kitchener, Waterloo, Cambridge, Guelph
  * Thin aggregator: re-exports from per-city files.
  */
 

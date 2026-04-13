@@ -1,4 +1,5 @@
 'use client'
+
 import {
   Home,
   Users,
@@ -18,6 +19,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import { motion } from 'framer-motion'
+
 import { RevealOnScroll, revealItem } from '@/components/ui/reveal-on-scroll'
 import type { BenefitsBlockProps } from '@/types/blocks'
 import { IllustrationPropertyManagement } from '@/components/illustrations'
@@ -54,14 +56,14 @@ export function BenefitsBlock({
   }
 
   return (
-    <section className="relative bg-slate-50 overflow-hidden py-28">
+    <section className="relative bg-slate-50 overflow-hidden py-20">
       {/* Section illustration - hidden on mobile, decorative accent on desktop */}
       <div className="absolute -right-8 top-8 hidden opacity-20 xl:block" aria-hidden="true">
         <IllustrationPropertyManagement className="h-48 w-48" />
       </div>
 
       <div className="mx-auto max-w-6xl px-4">
-        <RevealOnScroll variant="blur" className="mb-16">
+        <RevealOnScroll variant="blur" className="mb-10">
           <h2 className="font-display text-3xl font-normal tracking-tight text-[#0B1D3A] sm:text-4xl">
             {title}
           </h2>
@@ -71,14 +73,14 @@ export function BenefitsBlock({
           className={`grid grid-cols-1 gap-6 md:grid-cols-2 ${gridCols[columns]}`}
           stagger={0.08}
         >
-          {benefits.map((benefit, index) => {
+          {benefits.map((benefit) => {
             const IconComponent = benefit.icon
               ? ICON_MAP[benefit.icon] || Star
               : Star
 
             return (
               <motion.div
-                key={index}
+                key={benefit.title}
                 variants={revealItem}
                 className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-7 shadow-[0_2px_12px_rgba(11,29,58,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-emerald/30 hover:shadow-[0_12px_40px_rgba(11,29,58,0.12)]"
               >

@@ -1,80 +1,7 @@
 import Link from 'next/link'
+
 import { Logo } from '@/components/brand/logo'
-
-/* ------------------------------------------------------------------ */
-/*  Footer link data                                                  */
-/* ------------------------------------------------------------------ */
-
-const FOOTER_COLUMNS = [
-  {
-    title: 'Services',
-    links: [
-      { label: 'Tenant Placement', href: '/services/tenant-placement/' },
-      { label: 'Tenant Screening', href: '/services/tenant-screening/' },
-      { label: 'Rent Guarantee', href: '/services/rent-guarantee/' },
-      { label: 'Rental Preparation', href: '/services/rental-preparation/' },
-      { label: 'Leasing Services', href: '/services/leasing-services/' },
-      { label: 'Portal & Technology', href: '/portal-and-technology/' },
-      { label: 'Pricing', href: '/pricing/' },
-    ],
-  },
-  {
-    title: 'For Owners',
-    links: [
-      { label: 'Owner Hub', href: '/owners/' },
-      { label: 'Create Free Account', href: '/contact/' },
-      { label: 'Book a Call', href: '/contact/?intent=call' },
-      { label: 'Reviews', href: '/reviews/' },
-    ],
-  },
-  {
-    title: 'For Tenants',
-    links: [
-      { label: 'Tenant Hub', href: '/tenants/' },
-      { label: 'Search Rentals', href: '/locations/' },
-      { label: 'Tenant FAQ', href: '/faq/' },
-      { label: 'Apply Now', href: '/contact/' },
-    ],
-  },
-  {
-    title: 'Ontario',
-    links: [
-      { label: 'Toronto', href: '/ca/ontario/toronto/' },
-      { label: 'Ottawa', href: '/ca/ontario/ottawa/' },
-      { label: 'Mississauga', href: '/ca/ontario/mississauga/' },
-      { label: 'Hamilton', href: '/ca/ontario/hamilton/' },
-      { label: 'Brampton', href: '/ca/ontario/brampton/' },
-      { label: 'London', href: '/ca/ontario/london/' },
-      { label: 'Kitchener', href: '/ca/ontario/kitchener/' },
-      { label: 'All Ontario Cities', href: '/ca/ontario/' },
-    ],
-  },
-  {
-    title: 'United States',
-    links: [
-      { label: 'Florida', href: '/us/florida/' },
-      { label: 'Texas', href: '/us/texas/' },
-      { label: 'California', href: '/us/california/' },
-      { label: 'New York', href: '/us/new-york/' },
-      { label: 'Illinois', href: '/us/illinois/' },
-      { label: 'All US States', href: '/us/' },
-    ],
-  },
-  {
-    title: 'Company',
-    links: [
-      { label: 'About Us', href: '/about/' },
-      { label: 'Franchising', href: '/franchising/' },
-      { label: 'Resources', href: '/resources/' },
-      { label: 'Contact', href: '/contact/' },
-    ],
-  },
-] as const
-
-const LEGAL_LINKS = [
-  { label: 'Privacy Policy', href: '/privacy/' },
-  { label: 'Terms of Service', href: '/terms/' },
-] as const
+import { FOOTER_COLUMNS, LEGAL_LINKS } from '@/lib/nav-config'
 
 /* ------------------------------------------------------------------ */
 /*  Wave separator SVG                                                */
@@ -223,6 +150,24 @@ export function Footer() {
                   </ul>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Trust certifications */}
+          <div className="border-t border-white/10 py-6">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+                <div className="flex flex-wrap items-center justify-center gap-6">
+                  {['RECO', 'FRPO', 'BBB', 'OREA'].map((badge) => (
+                    <span key={badge} className="text-xs font-bold uppercase tracking-wider text-white/30">
+                      {badge}
+                    </span>
+                  ))}
+                </div>
+                <p className="text-xs text-white/25 text-center sm:text-right max-w-md">
+                  MoveSmart Rentals operates in compliance with the Real Estate Council of Ontario (RECO) and the Residential Tenancies Act, 2006.
+                </p>
+              </div>
             </div>
           </div>
 

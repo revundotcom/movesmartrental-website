@@ -1,18 +1,24 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { z } from 'zod'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { CityGridBlock } from '@/components/blocks/city-grid-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { HeroBlock } from '@/components/blocks/hero-block'
+import { JsonLd } from '@/components/json-ld'
 import { PortableTextBody } from '@/components/portable-text'
+import { buildBreadcrumbListSchema } from '@/lib/schema-builders'
 import { generatePageMetadata } from '@/lib/metadata'
 import { sanityFetch } from '@/sanity/fetch'
 import {
   PROVINCE_PAGE_QUERY,
   PROVINCE_LIST_QUERY,
 } from '@/sanity/queries/province'
+import type { PortableTextBlock } from '@portabletext/types'
 import type { CityCardData } from '@/types/blocks'
+
+const slugSchema = z.string().regex(/^[a-z0-9-]+$/).max(100)
 
 // ---------------------------------------------------------------------------
 // Static Params
@@ -71,8 +77,7 @@ interface StatePageData {
   slug: { current: string }
   country: string
   abbreviation?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  description?: string | any[] // Could be string or PortableTextBlock[]
+  description?: string | PortableTextBlock[]
   heroImage?: {
     asset: { _ref: string }
     alt?: string
@@ -97,6 +102,10 @@ export default async function StatePage({
   params: Promise<{ state: string }>
 }) {
   const { state } = await params
+
+  if (!slugSchema.safeParse(state).success) {
+    notFound()
+  }
 
   const data = await sanityFetch<StatePageData | null>({
     query: PROVINCE_PAGE_QUERY,
@@ -123,8 +132,20 @@ export default async function StatePage({
     data.description.length > 0 &&
     typeof data.description[0] === 'object'
 
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
+
   return (
     <main>
+      {/* JSON-LD */}
+      <JsonLd data={buildBreadcrumbListSchema({
+        crumbs: [
+          { name: 'Home', url: siteUrl },
+          { name: 'United States', url: `${siteUrl}/us/` },
+          { name: data.title, url: `${siteUrl}/us/${state}/` },
+        ]
+      })} />
+
       {/* Breadcrumbs */}
       <BreadcrumbNav
         crumbs={[
@@ -149,7 +170,7 @@ export default async function StatePage({
       {data.description && (
         <section className="mx-auto max-w-4xl px-4 py-12">
           {isPortableText ? (
-            <PortableTextBody value={data.description as never} />
+            <PortableTextBody value={data.description as PortableTextBlock[]} />
           ) : typeof data.description === 'string' ? (
             <p className="text-lg leading-relaxed text-muted-foreground">
               {data.description}

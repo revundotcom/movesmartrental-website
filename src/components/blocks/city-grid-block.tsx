@@ -1,11 +1,13 @@
 'use client'
+
 import { useRef, useState, useCallback, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { MapPin, Users, DollarSign, ChevronLeft, ChevronRight } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { RevealOnScroll, revealItem } from '@/components/ui/reveal-on-scroll'
 
+import { RevealOnScroll, revealItem } from '@/components/ui/reveal-on-scroll'
+import { SCROLL_THRESHOLD, CITY_CARD_WIDTH, ANIMATION_DELAY_BASE } from '@/lib/constants'
 import type { CityGridBlockProps } from '@/types/blocks'
 
 function formatPopulation(population: number): string {
@@ -33,8 +35,8 @@ export function CityGridBlock({
   const updateScrollState = useCallback(() => {
     const el = scrollRef.current
     if (!el) return
-    setCanScrollLeft(el.scrollLeft > 8)
-    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 8)
+    setCanScrollLeft(el.scrollLeft > SCROLL_THRESHOLD)
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - SCROLL_THRESHOLD)
   }, [])
 
   useEffect(() => {
@@ -50,7 +52,7 @@ export function CityGridBlock({
   const scroll = (direction: 'left' | 'right') => {
     const el = scrollRef.current
     if (!el) return
-    const cardWidth = 304 // 288px card + 16px gap
+    const cardWidth = CITY_CARD_WIDTH // 288px card + 16px gap
     el.scrollBy({ left: direction === 'left' ? -cardWidth * 2 : cardWidth * 2, behavior: 'smooth' })
   }
 
@@ -68,7 +70,7 @@ export function CityGridBlock({
         <div className="mx-auto max-w-7xl px-4">
           {showHeading && province && (
             <RevealOnScroll>
-              <motion.div variants={revealItem} className="mb-12 text-center">
+              <motion.div variants={revealItem} className="mb-8 text-center">
                 <h2 className="font-display text-3xl font-normal tracking-tight text-[#0B1D3A] sm:text-4xl">
                   {province}
                 </h2>
@@ -78,7 +80,7 @@ export function CityGridBlock({
           )}
           <RevealOnScroll
             className={`grid grid-cols-1 gap-6 md:grid-cols-2 ${COLUMN_CLASSES[columns] ?? 'lg:grid-cols-3'}`}
-            stagger={0.08}
+            stagger={ANIMATION_DELAY_BASE}
           >
             {cities.map((city) => (
               <motion.div variants={revealItem} key={city.slug}>
@@ -167,7 +169,7 @@ export function CityGridBlock({
           </div>
         </div>
 
-        {/* Mobile swipe hint — only on first render / small screens */}
+        {/* Mobile swipe hint - only on first render / small screens */}
         <p className="mt-3 text-center text-xs text-[#0B1D3A]/40 md:hidden">
           Swipe to explore all cities &rarr;
         </p>

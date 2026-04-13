@@ -1,6 +1,8 @@
 'use client'
+
 import { XCircle, CheckCircle, AlertTriangle, ShieldCheck, Clock, Ban, ThumbsUp, Wrench } from 'lucide-react'
 import { motion } from 'framer-motion'
+
 import { RevealOnScroll, revealItem } from '@/components/ui/reveal-on-scroll'
 import type { PainPointBlockProps } from '@/types/blocks'
 
@@ -19,7 +21,7 @@ export function PainPointBlock({
     <section className="relative bg-white overflow-hidden">
       <div className="mx-auto max-w-6xl px-4">
         {showHeading && (
-          <RevealOnScroll variant="blur" className="mb-12 text-center">
+          <RevealOnScroll variant="blur" className="mb-8 text-center">
             <h2 className="font-display text-3xl font-normal tracking-tight text-[#0B1D3A] sm:text-4xl">
               {title}
             </h2>
@@ -35,7 +37,7 @@ export function PainPointBlock({
 
             return (
               <motion.div
-                key={index}
+                key={painPoint.problem}
                 variants={revealItem}
                 className={`grid grid-cols-1 gap-4 md:grid-cols-2 ${
                   isReversed ? 'md:[&>:first-child]:order-2' : ''

@@ -1,5 +1,5 @@
 /**
- * batch-2.ts — London, Vaughan, Markham, Richmond Hill, Oakville
+ * batch-2.ts - London, Vaughan, Markham, Richmond Hill, Oakville
  * Thin aggregator: re-exports from per-city files.
  */
 

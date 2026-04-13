@@ -14,7 +14,7 @@ const GRID_OVERLAY = {
 };
 
 /* ════════════════════════════════════════════════════════════════════════
-   1 — TenantScreeningVisual
+   1 - TenantScreeningVisual
    Credit score arc + animated checklist + "Verified" badge
 ════════════════════════════════════════════════════════════════════════ */
 export function TenantScreeningVisual() {
@@ -28,7 +28,7 @@ export function TenantScreeningVisual() {
     { label: "ID Verified", delay: "1.05s" },
   ];
 
-  /* Arc math — score gauge 0-100 maps to 0-180° sweep on a 70r semicircle */
+  /* Arc math - score gauge 0-100 maps to 0-180° sweep on a 70r semicircle */
   const r = 52;
   const cx = 90;
   const cy = 82;
@@ -43,7 +43,7 @@ export function TenantScreeningVisual() {
     <div ref={ref} className={BG}>
       <div className="absolute inset-0 opacity-[1]" style={GRID_OVERLAY} />
 
-      {/* Score gauge — SVG */}
+      {/* Score gauge - SVG */}
       <div className="absolute left-4 top-6">
         <svg width="180" height="96" viewBox="0 0 180 96" fill="none">
           {/* Background arc track */}
@@ -53,7 +53,7 @@ export function TenantScreeningVisual() {
             strokeWidth="8"
             strokeLinecap="round"
           />
-          {/* Filled arc — emerald */}
+          {/* Filled arc - emerald */}
           <path
             d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${arcEnd}`}
             stroke="#10B981"
@@ -95,9 +95,9 @@ export function TenantScreeningVisual() {
 
       {/* Checklist */}
       <div className="absolute right-5 top-8 flex flex-col gap-2">
-        {checks.map((c, i) => (
+        {checks.map((c) => (
           <div
-            key={i}
+            key={c.label}
             className="flex items-center gap-2"
             style={{
               opacity: inView ? 1 : 0,
@@ -141,7 +141,7 @@ export function TenantScreeningVisual() {
 }
 
 /* ════════════════════════════════════════════════════════════════════════
-   2 — RentCollectionVisual
+   2 - RentCollectionVisual
    12-month bar chart + trend line + "$24.8K" badge
 ════════════════════════════════════════════════════════════════════════ */
 export function RentCollectionVisual() {
@@ -179,7 +179,8 @@ export function RentCollectionVisual() {
         {/* Bars */}
         <div className="absolute bottom-5 left-4 right-0 flex items-end gap-[3px] h-[112px]">
           {bars.map((b, i) => (
-            <div key={i} className="flex flex-1 flex-col items-center justify-end h-full gap-0.5">
+            // Static SVG data - index key is safe
+            <div key={`bar-${months[i]}`} className="flex flex-1 flex-col items-center justify-end h-full gap-0.5">
               <div
                 className="w-full rounded-t-[2px] origin-bottom"
                 style={{
@@ -246,7 +247,7 @@ export function RentCollectionVisual() {
 }
 
 /* ════════════════════════════════════════════════════════════════════════
-   3 — PropertyListingVisual
+   3 - PropertyListingVisual
    MLS miniature listing card + "Live on 50+ sites" counter + network nodes
 ════════════════════════════════════════════════════════════════════════ */
 export function PropertyListingVisual() {
@@ -268,9 +269,9 @@ export function PropertyListingVisual() {
       <div className="absolute inset-0 opacity-[1]" style={GRID_OVERLAY} />
 
       {/* Network pulse nodes in background */}
-      {nodes.map((n, i) => (
+      {nodes.map((n) => (
         <div
-          key={i}
+          key={`${n.x}-${n.y}`}
           className="absolute"
           style={{ left: n.x, top: n.y, transform: "translate(-50%,-50%)" }}
         >
@@ -342,7 +343,7 @@ export function PropertyListingVisual() {
 }
 
 /* ════════════════════════════════════════════════════════════════════════
-   4 — MaintenanceVisual
+   4 - MaintenanceVisual
    Ticket board + animated progress bars + "98% resolved" metric
 ════════════════════════════════════════════════════════════════════════ */
 export function MaintenanceVisual() {
@@ -362,9 +363,9 @@ export function MaintenanceVisual() {
 
       {/* Ticket board */}
       <div className="relative z-10 w-[280px] space-y-2">
-        {tickets.map((t, i) => (
+        {tickets.map((t) => (
           <div
-            key={i}
+            key={t.label}
             className="flex items-center gap-3 rounded-lg border border-white/8 bg-white/4 px-3 py-2"
             style={{
               animation: inView
@@ -427,7 +428,7 @@ export function MaintenanceVisual() {
 }
 
 /* ════════════════════════════════════════════════════════════════════════
-   5 — LeaseManagementVisual
+   5 - LeaseManagementVisual
    Document with animated signature line + milestone timeline
 ════════════════════════════════════════════════════════════════════════ */
 export function LeaseManagementVisual() {
@@ -498,7 +499,7 @@ export function LeaseManagementVisual() {
       {/* Milestone timeline */}
       <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-0">
         {milestones.map((m, i) => (
-          <div key={i} className="flex items-center">
+          <div key={m.label} className="flex items-center">
             {/* Connector line (not before first) */}
             {i > 0 && (
               <div

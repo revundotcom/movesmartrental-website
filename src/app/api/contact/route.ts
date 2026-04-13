@@ -1,20 +1,61 @@
 import { NextRequest, NextResponse } from 'next/server'
+import crypto from 'crypto'
 import { z } from 'zod'
+
+// Simple in-memory rate limiter
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
+const RATE_LIMIT_WINDOW = 60 * 60 * 1000 // 1 hour
+const RATE_LIMIT_MAX = 5 // 5 requests per hour per IP
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now()
+  const record = rateLimitMap.get(ip)
+
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW })
+    return false
+  }
+
+  record.count++
+  return record.count > RATE_LIMIT_MAX
+}
+
+// Strip CR/LF to prevent header/log injection in downstream email/SMTP consumers
+const noCRLF = (s: string) => s.replace(/[\r\n]+/g, ' ').trim()
 
 const contactSchema = z.object({
   type: z.enum(['owner', 'tenant', 'franchise', 'other']),
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Please enter a valid email'),
-  phone: z.string().optional(),
-  message: z.string().min(10, 'Message must be at least 10 characters'),
-  recaptchaToken: z.string().optional(),
+  name: z
+    .string()
+    .min(2, 'Name must be at least 2 characters')
+    .max(100, 'Name is too long')
+    .transform(noCRLF),
+  email: z
+    .string()
+    .email('Please enter a valid email')
+    .max(254, 'Email is too long')
+    .transform(noCRLF),
+  phone: z
+    .string()
+    .max(32, 'Phone is too long')
+    .transform(noCRLF)
+    .optional(),
+  message: z
+    .string()
+    .min(10, 'Message must be at least 10 characters')
+    .max(5000, 'Message is too long')
+    .transform((s) => s.trim()),
+  recaptchaToken: z.string().max(4096).optional(),
 })
+
+// Hard cap on JSON body size (bytes). ~20KB is plenty for a contact form.
+const MAX_BODY_BYTES = 20 * 1024
 
 async function verifyRecaptcha(token: string): Promise<boolean> {
   const secretKey = process.env.RECAPTCHA_SECRET_KEY
   if (!secretKey) {
     // Graceful degradation: skip verification when secret key is not configured (local dev)
-    console.warn('RECAPTCHA_SECRET_KEY not set — skipping reCAPTCHA verification')
+    console.warn('RECAPTCHA_SECRET_KEY not set - skipping reCAPTCHA verification')
     return true
   }
 
@@ -27,7 +68,7 @@ async function verifyRecaptcha(token: string): Promise<boolean> {
     })
     const result = await response.json()
 
-    if (!result.success || result.score < 0.5) {
+    if (!result.success || result.score < 0.7) {
       console.warn('reCAPTCHA verification failed:', {
         success: result.success,
         score: result.score,
@@ -44,8 +85,39 @@ async function verifyRecaptcha(token: string): Promise<boolean> {
 }
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'anonymous'
+  if (isRateLimited(ip)) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again later.' },
+      { status: 429 }
+    )
+  }
+
   try {
-    const body = await req.json()
+    // Enforce body-size limit before parsing (defense in depth; Next also caps)
+    const contentLength = Number(req.headers.get('content-length') || '0')
+    if (contentLength > MAX_BODY_BYTES) {
+      return NextResponse.json(
+        { error: 'Request body too large' },
+        { status: 413 }
+      )
+    }
+
+    const raw = await req.text()
+    if (raw.length > MAX_BODY_BYTES) {
+      return NextResponse.json(
+        { error: 'Request body too large' },
+        { status: 413 }
+      )
+    }
+
+    let body: unknown
+    try {
+      body = JSON.parse(raw)
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+    }
+
     const parsed = contactSchema.safeParse(body)
 
     if (!parsed.success) {
@@ -74,14 +146,14 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // TODO: Add rate limiting per IP in a future enhancement
     // TODO: Add email notification integration (e.g., SendGrid, Resend)
 
     return NextResponse.json({ message: 'Message received' }, { status: 200 })
   } catch (error) {
-    console.error('Contact form error:', error)
+    const errorId = crypto.randomUUID()
+    console.error(`Contact form error [${errorId}]:`, error)
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Internal server error', errorId },
       { status: 500 }
     )
   }

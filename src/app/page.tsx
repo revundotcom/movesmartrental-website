@@ -28,7 +28,14 @@ import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { StatGrid } from '@/components/blocks/stat-grid'
 import { HowItWorksSteps } from '@/components/blocks/how-it-works-steps'
 import { PortalChips } from '@/components/blocks/portal-chips'
-import { TestimonialsSection } from '@/components/blocks/testimonials-section'
+import { TrustBadges } from '@/components/blocks/trust-badges'
+import { LivePropertyCount } from '@/components/blocks/live-property-count'
+import { RentCalculator } from '@/components/blocks/rent-calculator'
+import { AudienceSegmentation } from '@/components/blocks/audience-segmentation'
+import { GuaranteeSection } from '@/components/blocks/guarantee-section'
+import { CaseStudySection } from '@/components/blocks/case-study-card'
+import { SatisfactionStats } from '@/components/blocks/satisfaction-stats'
+import { RentalAnalysisForm } from '@/components/blocks/rental-analysis-form'
 import { JsonLd } from '@/components/json-ld'
 import { buildOrganizationSchema } from '@/lib/schema-builders/organization'
 import { buildWebSiteSchema } from '@/lib/schema-builders/website'
@@ -38,7 +45,6 @@ import { sanityFetch } from '@/sanity/fetch'
 import { HOMEPAGE_QUERY } from '@/sanity/queries/homepage'
 import type { ServiceCardData, CityCardData } from '@/types/blocks'
 import {
-  OwnerIllustration,
   PortalIllustration,
   FranchiseIllustration,
   ScreeningIllustration,
@@ -63,7 +69,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return generatePageMetadata({
     path: '/',
     fallbackTitle:
-      'MoveSmart Rentals | Full-Service Rental and Leasing Across Ontario',
+      'MoveSmart Rentals | Full-Service Rental and Leasing Across Canada',
     fallbackDescription:
       'Full-service rental and leasing company helping properties get rented to qualified tenants. MLS advertising on 50+ platforms, professional screening, rent protection, and zero upfront cost.',
   })
@@ -101,7 +107,7 @@ export default async function HomePage() {
 
   const localBusinessSchema = buildLocalBusinessSchema({
     name: 'MoveSmart Rentals',
-    description: 'Full-service rental and leasing company for Ontario landlords. Tenant placement, professional screening, rent protection, and end-to-end leasing support with zero upfront cost.',
+    description: 'Full-service rental and leasing company for Canadian landlords. Tenant placement, professional screening, rent protection, and end-to-end leasing support with zero upfront cost.',
     url: siteUrl,
     phone: '+14372957688',
     address: {
@@ -203,11 +209,14 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Wave divider: Section 2 → Section 2b (owner problem/solution) */}
+      {/* ── SECTION 2.5: Audience Segmentation ── */}
+      <AudienceSegmentation />
+
+      {/* Wave divider: Section 2.5 → Section 2b (owner problem/solution) */}
       <WaveDivider fill="#ffffff" />
 
       {/* ── SECTION 2b: Owner Problem/Solution Overview ── */}
-      <section className="relative overflow-hidden bg-white py-24">
+      <section className="relative overflow-hidden bg-white py-16">
         <div className="relative z-10 mx-auto max-w-6xl px-4">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
@@ -260,7 +269,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── SECTION 3: Services ── */}
-      <section className="relative overflow-hidden bg-slate-50 py-28">
+      <section className="relative overflow-hidden bg-slate-50 py-14">
         {/* Decorative accent top-left */}
         <div
           className="absolute -left-10 top-10 size-[200px] rounded-full"
@@ -303,7 +312,12 @@ export default async function HomePage() {
         <ServiceGridBlock services={data.featuredServices} columns={4} showHeading={false} />
       </section>
 
-      {/* ── SECTION 4: How It Works (7 Steps) — L-shape layout ── */}
+      <RentCalculator />
+
+      {/* ── SECTION 3.5: The MoveSmart Guarantee ── */}
+      <GuaranteeSection />
+
+      {/* ── SECTION 4: How It Works (7 Steps) - L-shape layout ── */}
       <section className="relative overflow-hidden bg-brand-navy text-white">
         {/* Background grid */}
         <div
@@ -332,10 +346,10 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px]">
 
             {/* LEFT COLUMN */}
-            <div className="flex flex-col py-20 lg:py-24 lg:pr-16">
+            <div className="flex flex-col py-14 lg:py-16 lg:pr-16">
 
-              {/* Header block — wide, spans left col */}
-              <div className="mb-12 border-b border-white/8 pb-10">
+              {/* Header block - wide, spans left col */}
+              <div className="mb-8 border-b border-white/8 pb-10">
                 <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
                   Our Process
                 </p>
@@ -349,16 +363,16 @@ export default async function HomePage() {
                 </p>
               </div>
 
-              {/* Steps in a 2-column grid — fills the horizontal bar of L */}
+              {/* Steps in a 2-column grid - fills the horizontal bar of L */}
               <HowItWorksSteps variant="grid" />
             </div>
 
-            {/* RIGHT COLUMN — vertical bar of L, full section height */}
+            {/* RIGHT COLUMN - vertical bar of L, full section height */}
             <div className="relative hidden lg:block">
-              {/* Left edge line — corner of the L */}
+              {/* Left edge line - corner of the L */}
               <div className="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-brand-emerald/25 to-transparent" aria-hidden="true" />
 
-              <div className="sticky top-24 flex flex-col gap-6 py-24 pl-10">
+              <div className="sticky top-24 flex flex-col gap-6 py-16 pl-10">
                 {/* Glow behind card */}
                 <div
                   className="pointer-events-none absolute -inset-8 rounded-3xl"
@@ -385,7 +399,7 @@ export default async function HomePage() {
                   </div>
                 </div>
 
-                {/* Stat chips — weight the vertical bar */}
+                {/* Stat chips - weight the vertical bar */}
                 <div className="mt-8 grid grid-cols-2 gap-3">
                   <div className="rounded-2xl border border-white/8 bg-white/4 px-4 py-4 backdrop-blur-sm">
                     <p className="text-2xl font-black text-brand-emerald">98%</p>
@@ -427,7 +441,7 @@ export default async function HomePage() {
       <WaveDivider fill="#ffffff" />
 
       {/* ── SECTION 5: Portal / Technology + Full Owner Messaging ── */}
-      <section className="relative overflow-hidden bg-white py-28">
+      <section className="relative overflow-hidden bg-white py-14">
         {/* Decorative background: diagonal stripe */}
         <div
           className="absolute inset-0 opacity-[0.025]"
@@ -519,6 +533,7 @@ export default async function HomePage() {
                   size="lg"
                   className="cta-primary-shadow cursor-pointer font-bold"
                   style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}
+                  nativeButton={false}
                   render={<Link href="/owners/" />}
                 >
                   Explore Owner Portal
@@ -529,7 +544,7 @@ export default async function HomePage() {
           </div>
 
           {/* Full 9-point owner messaging grid */}
-          <div className="mt-20 border-t border-slate-100 pt-16">
+          <div className="mt-12 border-t border-slate-100 pt-16">
             <div className="mx-auto max-w-2xl text-center">
               <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
                 Why Owners Choose MoveSmart
@@ -591,71 +606,20 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Wave divider: Section 5 (white) → Section 6 (slate-50), flipped */}
+      {/* Wave divider: Section 5 (white) → Case Studies (slate-50), flipped */}
       <WaveDivider fill="#f8fafc" flip={true} />
 
-      {/* ── SECTION 6: Owner Testimonials ── */}
-      <section className="relative overflow-hidden bg-slate-50 py-28">
-        {/* Decorative SVG blob top-right */}
-        <svg
-          className="absolute -right-24 -top-24 size-[400px] text-brand-emerald/5"
-          viewBox="0 0 400 400"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path d="M200 0C280 0 380 80 380 200C380 320 300 400 180 400C60 400 0 320 20 200C40 80 120 0 200 0Z" />
-        </svg>
-        {/* Decorative SVG blob bottom-left */}
-        <svg
-          className="absolute -bottom-20 -left-20 size-[300px] text-brand-navy/5"
-          viewBox="0 0 300 300"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path d="M150 0C230 20 300 80 280 160C260 240 180 300 100 280C20 260 0 180 20 100C40 20 70 -20 150 0Z" />
-        </svg>
+      {/* ── SECTION 6: Case Studies - Real Owner Outcomes ── */}
+      <CaseStudySection />
 
-        <div className="relative z-10 mx-auto max-w-7xl px-4">
-          <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:items-center">
-            {/* Left: owner illustration */}
-            <div className="flex items-center justify-center">
-              <div className="relative w-full max-w-[420px]">
-                <OwnerIllustration className="w-full" />
-                {/* Big stat */}
-                <div
-                  className="absolute -left-4 bottom-8 rounded-3xl px-6 py-4 shadow-2xl"
-                  style={{ background: 'linear-gradient(135deg, #0B1D3A, #132D54)' }}
-                >
-                  <p className="text-3xl font-black text-brand-emerald">98%</p>
-                  <p className="text-xs text-white/60">Average Occupancy</p>
-                </div>
-              </div>
-            </div>
+      {/* ── SECTION 6.6: Satisfaction Stats ── */}
+      <SatisfactionStats />
 
-            {/* Right: testimonials */}
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
-                Testimonials
-              </p>
-              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
-                What Property Owners Say
-              </h2>
-              <p className="mt-4 text-base text-muted-foreground">
-                Real results from real landlords across Ontario.
-              </p>
-
-              {/* Stagger-animated testimonial cards */}
-              <TestimonialsSection />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Wave divider: Section 6 (slate-50) → Section 6b (white, tenant journey) */}
+      {/* Wave divider: Section 6.6 → Section 6b (white, tenant journey) */}
       <WaveDivider fill="#ffffff" />
 
       {/* ── SECTION 6b: Tenant Journey ── */}
-      <section className="relative overflow-hidden bg-white py-24">
+      <section className="relative overflow-hidden bg-white py-16">
         <div className="relative z-10 mx-auto max-w-6xl px-4">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
@@ -697,6 +661,7 @@ export default async function HomePage() {
               size="lg"
               className="cta-primary-shadow cursor-pointer font-bold"
               style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}
+              nativeButton={false}
               render={<Link href="/tenants/" />}
             >
               Explore Tenant Hub
@@ -707,7 +672,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── SECTION 7: Featured Ontario Cities ── */}
-      <section className="relative overflow-hidden bg-slate-50 py-28">
+      <section className="relative overflow-hidden bg-slate-50 py-14">
         {/* Dot pattern */}
         <div
           className="absolute inset-0 opacity-[0.03]"
@@ -717,7 +682,7 @@ export default async function HomePage() {
 
         <div className="relative z-10 mx-auto max-w-7xl px-4">
           {/* Two-col: text left + map right */}
-          <div className="mb-16 grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+          <div className="mb-10 grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
             <div>
               <p className="inline-flex items-center gap-1.5 text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
                 <MapPin className="size-4" aria-hidden="true" />
@@ -764,7 +729,7 @@ export default async function HomePage() {
       <WaveDivider fill="#0B1D3A" />
 
       {/* ── SECTION 8: Franchising Preview ── */}
-      <section className="relative overflow-hidden bg-brand-navy py-28 text-white">
+      <section className="relative overflow-hidden bg-brand-navy py-14 text-white">
         {/* Multi-layer bg */}
         <div
           className="absolute inset-0 opacity-[0.04]"
@@ -831,6 +796,7 @@ export default async function HomePage() {
                   size="lg"
                   className="cta-primary-shadow cursor-pointer font-bold"
                   style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}
+                  nativeButton={false}
                   render={<Link href="/franchising/" />}
                 >
                   Learn About Franchising
@@ -839,6 +805,7 @@ export default async function HomePage() {
                   variant="outline"
                   size="lg"
                   className="cursor-pointer border-white/20 bg-white/5 font-semibold text-white backdrop-blur-sm hover:border-white/40 hover:bg-white/10"
+                  nativeButton={false}
                   render={<Link href="/contact/" />}
                 >
                   Request Information
@@ -849,8 +816,14 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Wave divider: Section 8 (navy) → Section 9 (white/FAQ) */}
-      <WaveDivider fill="#ffffff" flip={true} />
+      {/* Wave divider: Section 8 (navy) → Rental Analysis Form */}
+      <WaveDivider fill="#0B1D3A" flip={true} />
+
+      {/* ── SECTION 8.5: Free Rental Analysis CTA Form ── */}
+      <RentalAnalysisForm />
+
+      {/* Wave divider: Form → FAQ */}
+      <WaveDivider fill="#ffffff" />
 
       {/* ── SECTION 9: FAQ ── */}
       <FAQBlock
@@ -890,12 +863,65 @@ export default async function HomePage() {
         ]}
       />
 
+      {/* ── SECTION 9.5: Trusted & Certified ── */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-14 lg:py-14">
+        {/* Subtle dot grid background */}
+        <div
+          className="absolute inset-0 opacity-[0.04]"
+          aria-hidden="true"
+          style={{ backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)', backgroundSize: '24px 24px' }}
+        />
+        {/* Ambient emerald glow */}
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-brand-emerald/[0.06] blur-3xl"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          {/* Section header */}
+          <div className="text-center mb-10">
+            <p className="text-brand-emerald font-heading font-semibold text-sm uppercase tracking-wider mb-4">
+              Trusted & Certified
+            </p>
+            <h2 className="font-display text-4xl md:text-5xl text-brand-navy mb-6">
+              Canada&apos;s Most Trusted{' '}
+              <span className="font-display italic text-brand-emerald">Property Management</span>
+            </h2>
+            <p className="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">
+              Fully licensed, accredited, and regulated. We operate in compliance with every Ontario property management standard - and hold ourselves to an even higher bar.
+            </p>
+          </div>
+
+          {/* Live property count - centered prominent display */}
+          <div className="flex justify-center mb-10">
+            <LivePropertyCount />
+          </div>
+
+          {/* Divider with "Accreditations" label */}
+          <div className="relative flex items-center mb-10">
+            <div className="flex-grow h-px bg-slate-200" />
+            <p className="px-5 text-xs font-heading font-semibold uppercase tracking-widest text-slate-400">
+              Our Accreditations
+            </p>
+            <div className="flex-grow h-px bg-slate-200" />
+          </div>
+
+          {/* Trust badges grid */}
+          <TrustBadges />
+
+          {/* Compliance footer line */}
+          <p className="mt-10 text-center text-xs text-slate-400 max-w-2xl mx-auto">
+            MoveSmart Rentals operates in full compliance with the Real Estate Council of Ontario (RECO) and the Residential Tenancies Act, 2006. All property managers are licensed and insured.
+          </p>
+        </div>
+      </section>
+
       {/* ── SECTION 10: Final CTA ── */}
       <CTABannerBlock
         headline="Ready to Get Your Property Rented?"
-        description="Join 500+ property owners who trust MoveSmart Rentals for full-service leasing with zero upfront cost."
-        primaryCta={{ label: 'Create a Free Account', href: '/contact/' }}
-        secondaryCta={{ label: 'Book a Call', href: '/contact/?intent=call' }}
+        description="Join 500+ property owners who trust MoveSmart Rentals for full-service leasing with zero upfront cost. No contracts. No upfront fees. Results guaranteed."
+        primaryCta={{ label: 'Get Your Free Rental Analysis', href: '/contact/' }}
+        secondaryCta={{ label: 'See Our Pricing', href: '/pricing/' }}
       />
     </>
   )

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Bed, Bath, Maximize, MapPin, ArrowRight } from 'lucide-react'
+
 import type { PropertyCardBlockProps } from '@/types/blocks'
 
 function formatPrice(price: number): string {

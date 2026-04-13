@@ -46,24 +46,6 @@ export const PROPERTY_LISTING_QUERY = groq`
   }
 `
 
-/** Listings by category for PropertyCardBlock display */
-export const PROPERTY_LISTINGS_BY_CATEGORY_QUERY = groq`
-  *[_type == "propertyListing" && category._ref == $categoryId && available == true] | order(price asc) {
-    title,
-    "slug": slug.current,
-    "citySlug": city->slug.current,
-    "provinceSlug": city->province->slug.current,
-    price,
-    bedrooms,
-    bathrooms,
-    sqft,
-    address,
-    "imageUrl": images[0].asset->url,
-    "imageAlt": images[0].alt,
-    available
-  }
-`
-
 /** All listings with city and province slugs for generateStaticParams */
 export const PROPERTY_LISTING_PARAMS_QUERY = groq`
   *[_type == "propertyListing"] {

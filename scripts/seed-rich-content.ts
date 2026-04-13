@@ -185,7 +185,7 @@ function sleep(ms: number): Promise<void> {
 }
 
 // ---------------------------------------------------------------------------
-// Batch file loader (graceful — skip missing batches)
+// Batch file loader (graceful - skip missing batches)
 // ---------------------------------------------------------------------------
 
 interface BatchModule {
@@ -200,7 +200,7 @@ async function loadBatch(batchNum: number): Promise<BatchModule> {
     const mod = await import(batchPath) as BatchModule
     return mod
   } catch {
-    console.warn(`  ⚠  Batch ${batchNum} not found at ${batchPath} — skipping`)
+    console.warn(`  ⚠  Batch ${batchNum} not found at ${batchPath} - skipping`)
     return {}
   }
 }
@@ -330,7 +330,7 @@ async function patchCityDocuments(
 // ---------------------------------------------------------------------------
 
 async function main() {
-  console.log('\n🌱 seed-rich-content.ts — starting\n')
+  console.log('\n🌱 seed-rich-content.ts - starting\n')
 
   // Combine cityServiceContent from all batches + extra cities
   const allServiceContent: CityServiceContent[] = [
@@ -375,7 +375,7 @@ async function main() {
     console.log()
   }
 
-  console.log('✅ seed-rich-content.ts — complete\n')
+  console.log('✅ seed-rich-content.ts - complete\n')
 }
 
 main().catch((err) => {

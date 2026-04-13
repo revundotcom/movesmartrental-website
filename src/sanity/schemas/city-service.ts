@@ -371,7 +371,7 @@ export default defineType({
     },
     prepare({ cityTitle, serviceSlug, media }) {
       return {
-        title: cityTitle ? `${cityTitle} — ${serviceSlug}` : 'New City Service Page',
+        title: cityTitle ? `${cityTitle} - ${serviceSlug}` : 'New City Service Page',
         media,
       }
     },

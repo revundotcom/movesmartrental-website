@@ -5,14 +5,17 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 
 import { Button } from '@/components/ui/button'
+import { GradientText } from '@/components/ui/gradient-text'
+import { GradientMesh } from '@/components/ui/gradient-mesh'
 import { CTATracker } from '@/components/tracking/cta-tracker'
 import { HeroDashboard } from '@/components/illustrations/hero-dashboard'
 import { TextRotate } from '@/components/ui/text-rotate'
 import { VerticalCutReveal } from '@/components/ui/vertical-cut-reveal'
+import { ANIMATION_DELAY_BASE } from '@/lib/constants'
 import type { HeroBlockProps } from '@/types/blocks'
 
 const ROTATING_TEXTS = [
-  "Ontario's #1 Leasing Partner",
+  "Canada's #1 Leasing Partner",
   'Zero Upfront Cost',
   '14-Day Avg. Fill Time',
   '500+ Properties Managed',
@@ -33,6 +36,8 @@ export function HeroBlock({
   priority = false,
   city,
   service,
+  illustration,
+  eyebrow,
 }: HeroBlockProps) {
   // Split headline to accent the last word in emerald
   const words = headline.split(' ')
@@ -41,12 +46,15 @@ export function HeroBlock({
 
   return (
     <section className="relative flex min-h-[90vh] items-center overflow-hidden bg-[#0B1D3A] md:min-h-screen">
+      {/* Gradient mesh background */}
+      <GradientMesh colorScheme="navy-emerald" />
+
       {/* Background */}
       {backgroundImageUrl ? (
         <>
           <Image
             src={backgroundImageUrl}
-            alt={backgroundImageAlt ?? ''}
+            alt={backgroundImageAlt ?? 'Hero background'}
             fill
             priority={priority}
             className="object-cover"
@@ -59,128 +67,31 @@ export function HeroBlock({
         </>
       ) : (
         <>
-          {/* Rich multi-stop gradient: warm deep blue → forest green tint at bottom */}
+          {/* Clean gradient background */}
           <div
             className="absolute inset-0"
             style={{
-              background: 'linear-gradient(160deg, #071830 0%, #0B1D3A 35%, #0a2535 60%, #071f2e 80%, #061a1a 100%)',
+              background: 'linear-gradient(145deg, #060f1f 0%, #0B1D3A 40%, #0d2847 70%, #0B1D3A 100%)',
             }}
             aria-hidden="true"
           />
-          {/* Subtle warm horizon glow at bottom center */}
+          {/* Subtle emerald glow - top-left accent */}
           <div
-            className="absolute bottom-0 left-1/2 h-[40%] w-[80%] -translate-x-1/2"
-            style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(16,185,129,0.12) 0%, rgba(10,40,30,0.08) 40%, transparent 70%)' }}
+            className="absolute -left-[10%] -top-[20%] h-[60%] w-[50%] opacity-30"
+            style={{ background: 'radial-gradient(ellipse, rgba(16,185,129,0.15) 0%, transparent 70%)' }}
             aria-hidden="true"
           />
-          {/* City skyline silhouette — bottom of hero */}
-          <svg
-            className="absolute bottom-0 left-0 w-full opacity-[0.07]"
-            viewBox="0 0 1440 220"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="xMidYMax slice"
-            aria-hidden="true"
-          >
-            {/* Far background buildings */}
-            <rect x="0" y="120" width="60" height="100" fill="white" />
-            <rect x="10" y="95" width="8" height="26" fill="white" />
-            <rect x="25" y="100" width="8" height="20" fill="white" />
-            <rect x="65" y="110" width="45" height="110" fill="white" />
-            <rect x="75" y="85" width="10" height="26" fill="white" />
-            <rect x="115" y="130" width="30" height="90" fill="white" />
-            <rect x="150" y="105" width="55" height="115" fill="white" />
-            <rect x="165" y="80" width="10" height="26" fill="white" />
-            <rect x="210" y="115" width="40" height="105" fill="white" />
-            <rect x="255" y="95" width="70" height="125" fill="white" />
-            <rect x="270" y="70" width="12" height="26" fill="white" />
-            <rect x="285" y="65" width="8" height="32" fill="white" />
-            <rect x="330" y="120" width="35" height="100" fill="white" />
-            <rect x="370" y="100" width="50" height="120" fill="white" />
-            <rect x="375" y="75" width="10" height="26" fill="white" />
-            <rect x="425" y="90" width="65" height="130" fill="white" />
-            <rect x="440" y="60" width="12" height="32" fill="white" />
-            <rect x="455" y="55" width="8" height="37" fill="white" />
-            <rect x="495" y="115" width="40" height="105" fill="white" />
-            <rect x="540" y="105" width="55" height="115" fill="white" />
-            <rect x="555" y="80" width="10" height="26" fill="white" />
-            {/* CN Tower silhouette center */}
-            <rect x="690" y="10" width="6" height="210" fill="white" />
-            <ellipse cx="693" cy="75" rx="18" ry="8" fill="white" />
-            <rect x="685" y="60" width="16" height="90" fill="white" />
-            <rect x="680" y="100" width="26" height="6" fill="white" />
-            <rect x="670" y="140" width="46" height="80" fill="white" />
-            {/* Right side buildings */}
-            <rect x="720" y="100" width="55" height="120" fill="white" />
-            <rect x="730" y="75" width="10" height="26" fill="white" />
-            <rect x="780" y="115" width="40" height="105" fill="white" />
-            <rect x="825" y="95" width="65" height="125" fill="white" />
-            <rect x="840" y="65" width="12" height="32" fill="white" />
-            <rect x="895" y="110" width="45" height="110" fill="white" />
-            <rect x="945" y="100" width="55" height="120" fill="white" />
-            <rect x="960" y="75" width="8" height="26" fill="white" />
-            <rect x="1005" y="120" width="35" height="100" fill="white" />
-            <rect x="1045" y="105" width="50" height="115" fill="white" />
-            <rect x="1100" y="115" width="40" height="105" fill="white" />
-            <rect x="1145" y="95" width="60" height="125" fill="white" />
-            <rect x="1160" y="70" width="10" height="26" fill="white" />
-            <rect x="1210" y="110" width="45" height="110" fill="white" />
-            <rect x="1260" y="100" width="50" height="120" fill="white" />
-            <rect x="1315" y="120" width="35" height="100" fill="white" />
-            <rect x="1355" y="105" width="85" height="115" fill="white" />
-            <rect x="1365" y="80" width="10" height="26" fill="white" />
-            {/* Foreground ground */}
-            <rect x="0" y="200" width="1440" height="20" fill="white" />
-          </svg>
-          {/* Subtle film grain for texture depth */}
+          {/* Subtle blue glow - bottom-right accent */}
           <div
-            className="absolute inset-0 opacity-[0.035] mix-blend-overlay"
+            className="absolute -bottom-[10%] -right-[5%] h-[50%] w-[40%] opacity-25"
+            style={{ background: 'radial-gradient(ellipse, rgba(30,64,120,0.25) 0%, transparent 70%)' }}
             aria-hidden="true"
-            style={{
-              backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.75\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")',
-              backgroundSize: '200px 200px',
-            }}
           />
         </>
       )}
 
-      {/* Animated orb 1: emerald top-left — 12s cycle */}
-      <motion.div
-        className="pointer-events-none absolute size-[600px] rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.18)_0%,transparent_70%)] blur-[80px]"
-        style={{ top: -200, left: -100 }}
-        animate={{ x: [0, 80, -40, 0], y: [0, 60, 80, 0] }}
-        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-        aria-hidden="true"
-      />
-      {/* Animated orb 2: navy-light bottom-right — 16s cycle */}
-      <motion.div
-        className="pointer-events-none absolute size-[700px] rounded-full bg-[radial-gradient(circle,rgba(20,60,100,0.5)_0%,transparent_70%)] blur-[100px]"
-        style={{ bottom: -200, right: -150 }}
-        animate={{ x: [0, -60, 40, 0], y: [0, -80, -40, 0] }}
-        transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
-        aria-hidden="true"
-      />
-      {/* Animated orb 3: gold center-right — 8s cycle */}
-      <motion.div
-        className="pointer-events-none absolute size-[400px] rounded-full bg-[radial-gradient(circle,rgba(212,168,83,0.08)_0%,transparent_70%)] blur-[60px]"
-        style={{ top: '30%', right: '10%' }}
-        animate={{ x: [0, 40, -20, 0], y: [0, -40, 20, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        aria-hidden="true"
-      />
-
-      {/* Grid lines */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        aria-hidden="true"
-        style={{
-          backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
-        }}
-      />
-
       {/* Content: two-column layout on desktop */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-24 md:py-32">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-16 md:py-20">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Left: text content */}
           <div>
@@ -192,11 +103,17 @@ export function HeroBlock({
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
               <span className="animate-pulse-dot inline-block size-1.5 rounded-full bg-[#10B981]" />
-              <TextRotate
-                texts={ROTATING_TEXTS}
-                rotationInterval={2500}
-                className="rounded-md bg-[#10B981]/20 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-[#10B981]"
-              />
+              {eyebrow ? (
+                <span className="rounded-md bg-[#10B981]/20 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-[#10B981]">
+                  {eyebrow}
+                </span>
+              ) : (
+                <TextRotate
+                  texts={ROTATING_TEXTS}
+                  rotationInterval={2500}
+                  className="rounded-md bg-[#10B981]/20 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-[#10B981]"
+                />
+              )}
             </motion.div>
 
             <motion.h1
@@ -213,9 +130,11 @@ export function HeroBlock({
                 {leadingWords}
               </VerticalCutReveal>{' '}
               <span className="relative inline-block font-display italic text-brand-emerald">
-                <VerticalCutReveal staggerDuration={0.08} staggerFrom="first">
-                  {lastWord ?? ''}
-                </VerticalCutReveal>
+                <GradientText variant="animated">
+                  <VerticalCutReveal staggerDuration={ANIMATION_DELAY_BASE} staggerFrom="first">
+                    {lastWord ?? ''}
+                  </VerticalCutReveal>
+                </GradientText>
                 <motion.span
                   className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-brand-emerald"
                   initial={{ scaleX: 0 }}
@@ -238,6 +157,27 @@ export function HeroBlock({
               </motion.p>
             )}
 
+            {/* Quantified proof stats strip */}
+            <motion.div
+              className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {[
+                { label: '500+ Properties' },
+                { label: '20+ Cities' },
+                { label: '98% Occupancy' },
+                { label: '14-Day Avg Fill' },
+              ].map((stat, i) => (
+                <span key={stat.label} className="flex items-center gap-x-4 text-sm font-medium text-white/80">
+                  {i > 0 && <span className="hidden text-emerald-400/60 sm:inline" aria-hidden="true">|</span>}
+                  {stat.label}
+                </span>
+              ))}
+            </motion.div>
+
+            {/* CTA buttons */}
             {(cta1 || cta2) && (
               <motion.div
                 className="mt-10 flex flex-col gap-4 sm:flex-row"
@@ -250,10 +190,11 @@ export function HeroBlock({
                     <Button
                       variant="default"
                       size="lg"
-                      className="cta-primary-shadow group/btn cursor-pointer border-transparent px-8 py-6 text-base font-bold text-white transition-all duration-300 hover:-translate-y-0.5"
+                      className="cta-primary-shadow group/btn cursor-pointer border-transparent px-8 py-6 text-base font-bold text-white transition-all duration-300 hover:-translate-y-1"
                       style={{
                         background: 'linear-gradient(135deg, #10B981, #059669)',
                       }}
+                      nativeButton={false}
                       render={<Link href={cta1.href} />}
                     >
                       {cta1.label}
@@ -268,7 +209,8 @@ export function HeroBlock({
                     <Button
                       variant="outline"
                       size="lg"
-                      className="cursor-pointer border-2 border-white/20 bg-white/5 px-8 py-6 text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/10"
+                      className="cursor-pointer border-2 border-white/20 bg-white/5 px-8 py-6 text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/40 hover:bg-white/10"
+                      nativeButton={false}
                       render={<Link href={cta2.href} />}
                     >
                       {cta2.label}
@@ -277,6 +219,23 @@ export function HeroBlock({
                 )}
               </motion.div>
             )}
+
+            {/* Google review badge */}
+            <motion.div
+              className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7, duration: 0.5 }}
+            >
+              <div className="flex gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="size-4" fill="#D4A853" viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <span className="text-sm font-medium text-white/80">4.9 stars from 200+ reviews on Google</span>
+            </motion.div>
 
           </div>
 
@@ -287,15 +246,15 @@ export function HeroBlock({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="relative w-full max-w-[520px]">
+            <div className="border-conic relative w-full max-w-[520px]">
               {/* Glow behind illustration */}
               <div
                 className="absolute inset-0 rounded-3xl blur-3xl"
                 style={{ background: 'radial-gradient(ellipse, rgba(16,185,129,0.15) 0%, transparent 70%)' }}
                 aria-hidden="true"
               />
-              <HeroDashboard />
-              {/* Floating badge 1 — top right: Rent Received */}
+              {illustration ?? <HeroDashboard />}
+              {/* Floating badge 1 - top right: Rent Received */}
               <motion.div
                 className="absolute -right-4 top-8 flex items-center gap-2 rounded-2xl border border-white/10 bg-brand-navy/80 px-4 py-2.5 shadow-xl backdrop-blur-md"
                 initial={{ opacity: 0, x: 20 }}
@@ -311,7 +270,7 @@ export function HeroBlock({
                   <p className="mt-0.5 text-[9px] leading-none text-white/50">On time, every month</p>
                 </div>
               </motion.div>
-              {/* Floating badge 2 — bottom left: tenant placed */}
+              {/* Floating badge 2 - bottom left: tenant placed */}
               <motion.div
                 className="absolute -left-4 bottom-12 flex items-center gap-2 rounded-2xl border border-white/10 bg-brand-navy/80 px-4 py-2.5 shadow-xl backdrop-blur-md"
                 initial={{ opacity: 0, x: -20 }}
@@ -334,7 +293,7 @@ export function HeroBlock({
 
       {/* Bottom fade */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0B1D3A]/30 to-transparent"
+        className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#060f1f] to-transparent"
         aria-hidden="true"
       />
     </section>

@@ -30,13 +30,15 @@ const SITEMAP_CA_CITIES_QUERY = groq`
   *[_type == "city" && province->country == "ca"] {
     "slug": slug.current,
     tier,
-    "provinceSlug": province->slug.current
+    "provinceSlug": province->slug.current,
+    _updatedAt
   }
 `
 
 const SITEMAP_CA_PROVINCES_QUERY = groq`
   *[_type == "province" && country == "ca"] {
-    "slug": slug.current
+    "slug": slug.current,
+    _updatedAt
   }
 `
 
@@ -45,7 +47,8 @@ const SITEMAP_CA_CITY_SERVICES_QUERY = groq`
     "provinceSlug": city->province->slug.current,
     "citySlug": city->slug.current,
     "serviceSlug": service->slug.current,
-    "cityTier": city->tier
+    "cityTier": city->tier,
+    _updatedAt
   }
 `
 
@@ -53,13 +56,15 @@ const SITEMAP_US_CITIES_QUERY = groq`
   *[_type == "city" && province->country == "us"] {
     "slug": slug.current,
     tier,
-    "stateSlug": province->slug.current
+    "stateSlug": province->slug.current,
+    _updatedAt
   }
 `
 
 const SITEMAP_US_STATES_QUERY = groq`
   *[_type == "province" && country == "us"] {
-    "slug": slug.current
+    "slug": slug.current,
+    _updatedAt
   }
 `
 
@@ -68,19 +73,22 @@ const SITEMAP_US_CITY_SERVICES_QUERY = groq`
     "stateSlug": city->province->slug.current,
     "citySlug": city->slug.current,
     "serviceSlug": service->slug.current,
-    "cityTier": city->tier
+    "cityTier": city->tier,
+    _updatedAt
   }
 `
 
 const SITEMAP_SERVICES_QUERY = groq`
   *[_type == "service"] {
-    "slug": slug.current
+    "slug": slug.current,
+    _updatedAt
   }
 `
 
 const SITEMAP_BLOG_GUIDES_QUERY = groq`
   *[_type == "blogGuide"] {
-    "slug": slug.current
+    "slug": slug.current,
+    _updatedAt
   }
 `
 
@@ -88,7 +96,8 @@ const SITEMAP_PROPERTY_CATEGORIES_QUERY = groq`
   *[_type == "propertyCategory"] {
     "propertyType": propertyType,
     "citySlug": city->slug.current,
-    "provinceSlug": city->province->slug.current
+    "provinceSlug": city->province->slug.current,
+    _updatedAt
   }
 `
 
@@ -96,19 +105,22 @@ const SITEMAP_PROPERTY_LISTINGS_QUERY = groq`
   *[_type == "propertyListing"] {
     "slug": slug.current,
     "citySlug": city->slug.current,
-    "provinceSlug": city->province->slug.current
+    "provinceSlug": city->province->slug.current,
+    _updatedAt
   }
 `
 
 const SITEMAP_COMPARISONS_QUERY = groq`
   *[_type == "comparison"] {
-    "slug": slug.current
+    "slug": slug.current,
+    _updatedAt
   }
 `
 
 const SITEMAP_CASE_STUDIES_QUERY = groq`
   *[_type == "caseStudy"] {
-    "slug": slug.current
+    "slug": slug.current,
+    _updatedAt
   }
 `
 
@@ -116,32 +128,36 @@ const SITEMAP_CASE_STUDIES_QUERY = groq`
 /*  Type helpers                                                      */
 /* ------------------------------------------------------------------ */
 
-type SitemapCity = { slug: string; tier: number; provinceSlug: string }
-type SitemapProvince = { slug: string }
+type SitemapCity = { slug: string; tier: number; provinceSlug: string; _updatedAt?: string }
+type SitemapProvince = { slug: string; _updatedAt?: string }
 type SitemapCityService = {
   provinceSlug: string
   citySlug: string
   serviceSlug: string
   cityTier: number
+  _updatedAt?: string
 }
-type SitemapUSCity = { slug: string; tier: number; stateSlug: string }
+type SitemapUSCity = { slug: string; tier: number; stateSlug: string; _updatedAt?: string }
 type SitemapUSCityService = {
   stateSlug: string
   citySlug: string
   serviceSlug: string
   cityTier: number
+  _updatedAt?: string
 }
-type SitemapService = { slug: string }
-type SitemapSlug = { slug: string }
+type SitemapService = { slug: string; _updatedAt?: string }
+type SitemapSlug = { slug: string; _updatedAt?: string }
 type SitemapPropertyCategory = {
   propertyType: string
   citySlug: string
   provinceSlug: string
+  _updatedAt?: string
 }
 type SitemapPropertyListing = {
   slug: string
   citySlug: string
   provinceSlug: string
+  _updatedAt?: string
 }
 
 /* ------------------------------------------------------------------ */
@@ -170,8 +186,6 @@ function buildStaticSegment(): MetadataRoute.Sitemap {
 }
 
 async function buildCaCitiesSegment(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date()
-
   const [provinces, cities] = await Promise.all([
     sanityFetch<SitemapProvince[]>({
       query: SITEMAP_CA_PROVINCES_QUERY,
@@ -189,7 +203,7 @@ async function buildCaCitiesSegment(): Promise<MetadataRoute.Sitemap> {
   for (const province of provinces) {
     entries.push({
       url: `${siteUrl}/ca/${province.slug}/`,
-      lastModified: now,
+      lastModified: province._updatedAt ? new Date(province._updatedAt) : new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     })
@@ -199,7 +213,7 @@ async function buildCaCitiesSegment(): Promise<MetadataRoute.Sitemap> {
   for (const city of cities) {
     entries.push({
       url: `${siteUrl}/ca/${city.provinceSlug}/${city.slug}/`,
-      lastModified: now,
+      lastModified: city._updatedAt ? new Date(city._updatedAt) : new Date(),
       changeFrequency: 'weekly' as const,
       priority: city.tier === 1 ? 0.8 : 0.6,
     })
@@ -209,8 +223,6 @@ async function buildCaCitiesSegment(): Promise<MetadataRoute.Sitemap> {
 }
 
 async function buildCaServicesSegment(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date()
-
   const [cityServices, services] = await Promise.all([
     sanityFetch<SitemapCityService[]>({
       query: SITEMAP_CA_CITY_SERVICES_QUERY,
@@ -228,7 +240,7 @@ async function buildCaServicesSegment(): Promise<MetadataRoute.Sitemap> {
   for (const service of services) {
     entries.push({
       url: `${siteUrl}/services/${service.slug}/`,
-      lastModified: now,
+      lastModified: service._updatedAt ? new Date(service._updatedAt) : new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     })
@@ -238,7 +250,7 @@ async function buildCaServicesSegment(): Promise<MetadataRoute.Sitemap> {
   for (const cs of cityServices) {
     entries.push({
       url: `${siteUrl}/ca/${cs.provinceSlug}/${cs.citySlug}/${cs.serviceSlug}/`,
-      lastModified: now,
+      lastModified: cs._updatedAt ? new Date(cs._updatedAt) : new Date(),
       changeFrequency: 'weekly' as const,
       priority: cs.cityTier === 1 ? 0.9 : 0.7,
     })
@@ -248,8 +260,6 @@ async function buildCaServicesSegment(): Promise<MetadataRoute.Sitemap> {
 }
 
 async function buildBlogSegment(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date()
-
   const blogGuides = await sanityFetch<SitemapSlug[]>({
     query: SITEMAP_BLOG_GUIDES_QUERY,
     tags: ['blogGuide'],
@@ -257,15 +267,13 @@ async function buildBlogSegment(): Promise<MetadataRoute.Sitemap> {
 
   return blogGuides.map((post) => ({
     url: `${siteUrl}/resources/${post.slug}/`,
-    lastModified: now,
+    lastModified: post._updatedAt ? new Date(post._updatedAt) : new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.6,
   }))
 }
 
 async function buildListingsSegment(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date()
-
   const [categories, listings] = await Promise.all([
     sanityFetch<SitemapPropertyCategory[]>({
       query: SITEMAP_PROPERTY_CATEGORIES_QUERY,
@@ -283,7 +291,7 @@ async function buildListingsSegment(): Promise<MetadataRoute.Sitemap> {
   for (const cat of categories) {
     entries.push({
       url: `${siteUrl}/ca/${cat.provinceSlug}/${cat.citySlug}/${cat.propertyType}-for-rent/`,
-      lastModified: now,
+      lastModified: cat._updatedAt ? new Date(cat._updatedAt) : new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     })
@@ -293,7 +301,7 @@ async function buildListingsSegment(): Promise<MetadataRoute.Sitemap> {
   for (const listing of listings) {
     entries.push({
       url: `${siteUrl}/ca/${listing.provinceSlug}/${listing.citySlug}/rentals/${listing.slug}/`,
-      lastModified: now,
+      lastModified: listing._updatedAt ? new Date(listing._updatedAt) : new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.5,
     })
@@ -303,8 +311,6 @@ async function buildListingsSegment(): Promise<MetadataRoute.Sitemap> {
 }
 
 async function buildResourcesSegment(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date()
-
   const [comparisons, caseStudies] = await Promise.all([
     sanityFetch<SitemapSlug[]>({
       query: SITEMAP_COMPARISONS_QUERY,
@@ -321,7 +327,7 @@ async function buildResourcesSegment(): Promise<MetadataRoute.Sitemap> {
   for (const comp of comparisons) {
     entries.push({
       url: `${siteUrl}/resources/${comp.slug}/`,
-      lastModified: now,
+      lastModified: comp._updatedAt ? new Date(comp._updatedAt) : new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })
@@ -330,7 +336,7 @@ async function buildResourcesSegment(): Promise<MetadataRoute.Sitemap> {
   for (const cs of caseStudies) {
     entries.push({
       url: `${siteUrl}/resources/${cs.slug}/`,
-      lastModified: now,
+      lastModified: cs._updatedAt ? new Date(cs._updatedAt) : new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })
@@ -344,8 +350,6 @@ async function buildResourcesSegment(): Promise<MetadataRoute.Sitemap> {
 /* ------------------------------------------------------------------ */
 
 async function buildUsCitiesSegment(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date()
-
   const [states, cities] = await Promise.all([
     sanityFetch<SitemapProvince[]>({
       query: SITEMAP_US_STATES_QUERY,
@@ -363,7 +367,7 @@ async function buildUsCitiesSegment(): Promise<MetadataRoute.Sitemap> {
   for (const state of states) {
     entries.push({
       url: `${siteUrl}/us/${state.slug}/`,
-      lastModified: now,
+      lastModified: state._updatedAt ? new Date(state._updatedAt) : new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     })
@@ -373,7 +377,7 @@ async function buildUsCitiesSegment(): Promise<MetadataRoute.Sitemap> {
   for (const city of cities) {
     entries.push({
       url: `${siteUrl}/us/${city.stateSlug}/${city.slug}/`,
-      lastModified: now,
+      lastModified: city._updatedAt ? new Date(city._updatedAt) : new Date(),
       changeFrequency: 'weekly' as const,
       priority: city.tier === 1 ? 0.8 : 0.6,
     })
@@ -383,8 +387,6 @@ async function buildUsCitiesSegment(): Promise<MetadataRoute.Sitemap> {
 }
 
 async function buildUsServicesSegment(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date()
-
   const usCityServices = await sanityFetch<SitemapUSCityService[]>({
     query: SITEMAP_US_CITY_SERVICES_QUERY,
     tags: ['cityService'],
@@ -396,7 +398,7 @@ async function buildUsServicesSegment(): Promise<MetadataRoute.Sitemap> {
   for (const cs of usCityServices ?? []) {
     entries.push({
       url: `${siteUrl}/us/${cs.stateSlug}/${cs.citySlug}/${cs.serviceSlug}/`,
-      lastModified: now,
+      lastModified: cs._updatedAt ? new Date(cs._updatedAt) : new Date(),
       changeFrequency: 'weekly' as const,
       priority: cs.cityTier === 1 ? 0.9 : 0.7,
     })

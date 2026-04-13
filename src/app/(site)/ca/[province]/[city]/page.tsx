@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { groq } from 'next-sanity'
+import { MapPin } from 'lucide-react'
+import { z } from 'zod'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
@@ -10,10 +12,12 @@ import { ServiceGridBlock } from '@/components/blocks/service-grid-block'
 import { JsonLd } from '@/components/json-ld'
 import { PortableTextBody } from '@/components/portable-text'
 import { generatePageMetadata } from '@/lib/metadata'
-import { buildLocalBusinessSchema } from '@/lib/schema-builders'
+import { buildBreadcrumbListSchema, buildLocalBusinessSchema } from '@/lib/schema-builders'
 import { sanityFetch } from '@/sanity/fetch'
 import { CITY_PAGE_QUERY, CITY_LIST_QUERY } from '@/sanity/queries/city'
 import type { ServiceCardData } from '@/types/blocks'
+
+const slugSchema = z.string().regex(/^[a-z0-9-]+$/).max(100)
 
 // ---------------------------------------------------------------------------
 // Static Params
@@ -163,6 +167,10 @@ export default async function CityPage({
 }) {
   const { province, city } = await params
 
+  if (!slugSchema.safeParse(province).success || !slugSchema.safeParse(city).success) {
+    notFound()
+  }
+
   // Fetch city data and available services in parallel
   const [data, cityServices] = await Promise.all([
     sanityFetch<CityPageData | null>({
@@ -219,6 +227,14 @@ export default async function CityPage({
     <main>
       {/* JSON-LD */}
       <JsonLd data={localBusinessSchema} />
+      <JsonLd data={buildBreadcrumbListSchema({
+        crumbs: [
+          { name: 'Home', url: siteUrl },
+          { name: 'Canada', url: `${siteUrl}/ca/` },
+          { name: data.province.title, url: `${siteUrl}/ca/${province}/` },
+          { name: data.title, url: `${siteUrl}/ca/${province}/${city}/` },
+        ]
+      })} />
 
       {/* Breadcrumbs */}
       <BreadcrumbNav
@@ -244,7 +260,7 @@ export default async function CityPage({
       />
 
       {/* Premium Local Data Section */}
-      <section className="relative overflow-hidden bg-white py-20">
+      <section className="relative overflow-hidden bg-white py-14">
         {/* Dot-grid background */}
         <div
           className="absolute inset-0 opacity-[0.03]"
@@ -319,10 +335,24 @@ export default async function CityPage({
 
       {/* Getting Around */}
       {data.transitInfo && (
-        <section className="py-10 bg-slate-50">
+        <section className="py-12 lg:py-16 bg-slate-50">
           <div className="container mx-auto px-4 max-w-4xl">
-            <h2 className="text-2xl font-bold text-[#0B1D3A] mb-4">Getting Around {data.title}</h2>
-            <p className="text-slate-600 leading-relaxed">{data.transitInfo}</p>
+            <div className="rounded-3xl bg-gradient-to-br from-slate-50 to-white border border-slate-100 p-8 md:p-10 shadow-sm">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-12 h-12 rounded-xl bg-brand-emerald/10 flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-6 h-6 text-brand-emerald" />
+                </div>
+                <div>
+                  <p className="text-brand-emerald font-heading font-semibold text-xs uppercase tracking-wider mb-1">
+                    Transit &amp; Transportation
+                  </p>
+                  <h2 className="font-display text-2xl md:text-3xl text-brand-navy">
+                    Getting Around {data.title}
+                  </h2>
+                </div>
+              </div>
+              <p className="text-slate-600 leading-relaxed text-lg">{data.transitInfo}</p>
+            </div>
           </div>
         </section>
       )}
@@ -343,7 +373,7 @@ export default async function CityPage({
       {/* Services Grid */}
       {services.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 py-12">
-          <div className="mx-auto max-w-2xl text-center mb-12">
+          <div className="mx-auto max-w-2xl text-center mb-8">
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
               Available in {data.title}
             </p>
@@ -364,7 +394,7 @@ export default async function CityPage({
       )}
 
       {/* Property Type Links */}
-      <section className="relative overflow-hidden bg-slate-50 py-20">
+      <section className="relative overflow-hidden bg-slate-50 py-14">
         <div
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
@@ -374,7 +404,7 @@ export default async function CityPage({
           }}
         />
         <div className="relative z-10 mx-auto max-w-7xl px-4">
-          <div className="mx-auto max-w-2xl text-center mb-12">
+          <div className="mx-auto max-w-2xl text-center mb-8">
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
               Rental Listings
             </p>

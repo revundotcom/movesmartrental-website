@@ -1,4 +1,6 @@
 'use client'
+
+import Link from 'next/link'
 import {
   DollarSign,
   FileText,
@@ -11,7 +13,6 @@ import {
   ArrowUpRight,
   type LucideIcon,
 } from 'lucide-react'
-import Link from 'next/link'
 import { motion, type Variants } from 'framer-motion'
 
 import type { ServiceGridBlockProps } from '@/types/blocks'
@@ -38,7 +39,7 @@ const item: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: 'easeOut' } },
 }
 
-/* ─── Card styles — 8 unique looks, no two cards the same ─── */
+/* ─── Card styles - 8 unique looks, no two cards the same ─── */
 type CardStyle = {
   wrap: string          // outer wrapper / background
   title: string
@@ -49,23 +50,32 @@ type CardStyle = {
   glow: boolean
 }
 
+/* ─── Spotlight mouse-follow handler ─── */
+function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+  const rect = e.currentTarget.getBoundingClientRect()
+  const x = ((e.clientX - rect.left) / rect.width) * 100
+  const y = ((e.clientY - rect.top) / rect.height) * 100
+  e.currentTarget.style.setProperty('--mouse-x', `${x}%`)
+  e.currentTarget.style.setProperty('--mouse-y', `${y}%`)
+}
+
 const STYLES: CardStyle[] = [
-  /* 0 — deep navy-forest hero */
-  { wrap: 'bg-gradient-to-br from-[#0a1929] via-[#0b2240] to-[#062318]', title: 'text-white', desc: 'text-white/55', cta: 'text-emerald-400', iconWrap: 'bg-emerald-500/20', iconColor: 'text-emerald-400', glow: true },
-  /* 1 — crisp white */
-  { wrap: 'bg-white border border-slate-200/80', title: 'text-slate-900', desc: 'text-slate-500', cta: 'text-emerald-600', iconWrap: 'bg-emerald-50', iconColor: 'text-emerald-600', glow: false },
-  /* 2 — solid emerald */
-  { wrap: 'bg-emerald-600', title: 'text-white', desc: 'text-emerald-100/80', cta: 'text-white', iconWrap: 'bg-white/20', iconColor: 'text-white', glow: false },
-  /* 3 — midnight navy */
-  { wrap: 'bg-[#0b1e3d]', title: 'text-white', desc: 'text-slate-400', cta: 'text-emerald-400', iconWrap: 'bg-emerald-500/20', iconColor: 'text-emerald-400', glow: true },
-  /* 4 — warm sand */
-  { wrap: 'bg-amber-50 border border-amber-200/60', title: 'text-amber-950', desc: 'text-amber-800/70', cta: 'text-amber-700', iconWrap: 'bg-amber-200/60', iconColor: 'text-amber-700', glow: false },
-  /* 5 — slate cool */
-  { wrap: 'bg-slate-100 border border-slate-200/60', title: 'text-slate-900', desc: 'text-slate-500', cta: 'text-emerald-600', iconWrap: 'bg-white shadow-sm', iconColor: 'text-slate-600', glow: false },
-  /* 6 — deep teal */
-  { wrap: 'bg-gradient-to-br from-teal-900 to-teal-950', title: 'text-white', desc: 'text-teal-300/70', cta: 'text-teal-300', iconWrap: 'bg-teal-700/50', iconColor: 'text-teal-200', glow: true },
-  /* 7 — light teal tint */
-  { wrap: 'bg-teal-50 border border-teal-100', title: 'text-teal-950', desc: 'text-teal-700/70', cta: 'text-teal-700', iconWrap: 'bg-teal-100', iconColor: 'text-teal-700', glow: false },
+  /* 0 - deep navy-forest hero */
+  { wrap: 'bg-gradient-to-br from-[#0a1929] via-[#0b2240] to-[#062318] hover:border hover:border-emerald-500/30', title: 'text-white', desc: 'text-white/55', cta: 'text-emerald-400', iconWrap: 'bg-emerald-500/20', iconColor: 'text-emerald-400', glow: true },
+  /* 1 - crisp white */
+  { wrap: 'bg-white border border-slate-200/80 hover:border-emerald-500/20', title: 'text-slate-900', desc: 'text-slate-500', cta: 'text-emerald-600', iconWrap: 'bg-emerald-50', iconColor: 'text-emerald-600', glow: false },
+  /* 2 - solid emerald */
+  { wrap: 'bg-emerald-600 hover:border hover:border-emerald-300/30', title: 'text-white', desc: 'text-emerald-100/80', cta: 'text-white', iconWrap: 'bg-white/20', iconColor: 'text-white', glow: false },
+  /* 3 - midnight navy */
+  { wrap: 'bg-[#0b1e3d] hover:border hover:border-emerald-500/30', title: 'text-white', desc: 'text-slate-400', cta: 'text-emerald-400', iconWrap: 'bg-emerald-500/20', iconColor: 'text-emerald-400', glow: true },
+  /* 4 - warm sand */
+  { wrap: 'bg-amber-50 border border-amber-200/60 hover:border-emerald-500/20', title: 'text-amber-950', desc: 'text-amber-800/70', cta: 'text-amber-700', iconWrap: 'bg-amber-200/60', iconColor: 'text-amber-700', glow: false },
+  /* 5 - slate cool */
+  { wrap: 'bg-slate-100 border border-slate-200/60 hover:border-emerald-500/20', title: 'text-slate-900', desc: 'text-slate-500', cta: 'text-emerald-600', iconWrap: 'bg-white shadow-sm', iconColor: 'text-slate-600', glow: false },
+  /* 6 - deep teal */
+  { wrap: 'bg-gradient-to-br from-teal-900 to-teal-950 hover:border hover:border-emerald-500/30', title: 'text-white', desc: 'text-teal-300/70', cta: 'text-teal-300', iconWrap: 'bg-teal-700/50', iconColor: 'text-teal-200', glow: true },
+  /* 7 - light teal tint */
+  { wrap: 'bg-teal-50 border border-teal-100 hover:border-emerald-500/20', title: 'text-teal-950', desc: 'text-teal-700/70', cta: 'text-teal-700', iconWrap: 'bg-teal-100', iconColor: 'text-teal-700', glow: false },
 ]
 
 /*
@@ -79,7 +89,7 @@ const STYLES: CardStyle[] = [
  *   row3: [─ card 7 ─────────────────────────] [─ card 4 ──────────]
  *
  * Cards 0, 3, 7 are wide; cards 1, 2, 5, 6, 4 are narrower.
- * This creates a genuine asymmetry — not a regular grid.
+ * This creates a genuine asymmetry - not a regular grid.
  * ────────────────────────────────────────────────────────────
  */
 type GridConfig = { col: string; row: string }
@@ -87,7 +97,7 @@ type GridConfig = { col: string; row: string }
 const GRID_CONFIGS: GridConfig[] = [
   /* 0 */ { col: 'lg:col-start-1 lg:col-end-6',  row: 'lg:row-start-1 lg:row-end-2' },
   /* 1 */ { col: 'lg:col-start-6 lg:col-end-10', row: 'lg:row-start-1 lg:row-end-2' },
-  /* 2 */ { col: 'lg:col-start-10 lg:col-end-13',row: 'lg:row-start-1 lg:row-end-2' },
+  /* 2 */ { col: 'lg:col-start-10 lg:col-end-13', row: 'lg:row-start-1 lg:row-end-2' },
   /* 3 */ { col: 'lg:col-start-8 lg:col-end-13', row: 'lg:row-start-2 lg:row-end-3' },
   /* 4 */ { col: 'lg:col-start-7 lg:col-end-13', row: 'lg:row-start-3 lg:row-end-4' },
   /* 5 */ { col: 'lg:col-start-1 lg:col-end-5',  row: 'lg:row-start-2 lg:row-end-3' },
@@ -97,7 +107,6 @@ const GRID_CONFIGS: GridConfig[] = [
 
 export function ServiceGridBlock({
   services,
-  columns: _columns = 3, // eslint-disable-line @typescript-eslint/no-unused-vars
   basePath,
   showHeading = true,
 }: ServiceGridBlockProps) {
@@ -107,9 +116,9 @@ export function ServiceGridBlock({
 
   return (
     <section className="bg-transparent pt-10">
-      <div className="mx-auto max-w-7xl px-4 pb-20">
+      <div className="mx-auto max-w-7xl px-4 pb-14">
         {showHeading && (
-          <div className="mb-12 text-center">
+          <div className="mb-8 text-center">
             <h2 className="font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
               Our Services
             </h2>
@@ -136,10 +145,10 @@ export function ServiceGridBlock({
               <motion.div
                 key={service.slug}
                 variants={item}
-                className={`${grid.col} ${grid.row}`}
+                className={`${grid.col} ${grid.row}${style.glow ? ' border-conic' : ''}`}
               >
                 <Link href={href(service.slug)} className="group block h-full cursor-pointer">
-                  <div className={`relative flex h-full flex-col overflow-hidden rounded-3xl ${style.wrap} p-7 shadow-sm transition-all duration-300 group-hover:-translate-y-1.5 group-hover:shadow-2xl`}>
+                  <div onMouseMove={handleMouseMove} className={`spotlight-card relative flex h-full flex-col overflow-hidden rounded-3xl ${style.wrap} p-7 shadow-sm transition-all duration-300 group-hover:-translate-y-2 group-hover:shadow-2xl`}>
 
                     {/* Glow blob for dark cards */}
                     {style.glow && (
@@ -149,13 +158,19 @@ export function ServiceGridBlock({
                       />
                     )}
 
-                    {/* Number badge — top right */}
-                    <span className={`absolute right-5 top-5 font-mono text-[11px] font-semibold tracking-wider opacity-30 ${isHero || style.glow ? 'text-white' : 'text-slate-800'}`}>
+                    {/* Number badge - top right */}
+                    <motion.span
+                      className={`absolute right-5 top-5 font-mono text-[11px] font-semibold tracking-wider opacity-30 ${isHero || style.glow ? 'text-white' : 'text-slate-800'}`}
+                      initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
+                      whileInView={{ opacity: 0.3, scale: 1, rotate: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: 0.2 + idx * 0.05 }}
+                    >
                       0{idx + 1}
-                    </span>
+                    </motion.span>
 
                     <div className="relative z-10 flex h-full flex-col">
-                      {/* Service visual — shown when a matching visual exists */}
+                      {/* Service visual - shown when a matching visual exists */}
                       {(() => {
                         const Visual = SERVICE_VISUAL_MAP[service.slug]
                         return Visual ? (
@@ -165,7 +180,7 @@ export function ServiceGridBlock({
                         ) : null
                       })()}
 
-                      {/* Icon — only shown when no visual */}
+                      {/* Icon - only shown when no visual */}
                       {Icon && !SERVICE_VISUAL_MAP[service.slug] && (
                         <div className={`mb-5 inline-flex size-12 items-center justify-center rounded-2xl ${style.iconWrap} transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
                           <Icon className={`size-6 ${style.iconColor}`} aria-hidden="true" />
@@ -214,9 +229,9 @@ export function ServiceGridBlock({
             const isHero = idx === 0
 
             return (
-              <motion.div key={service.slug} variants={item} className={isHero ? 'sm:col-span-2' : ''}>
+              <motion.div key={service.slug} variants={item} className={`${isHero ? 'sm:col-span-2' : ''}${style.glow ? ' border-conic' : ''}`}>
                 <Link href={href(service.slug)} className="group block cursor-pointer">
-                  <div className={`relative flex flex-col overflow-hidden rounded-3xl ${style.wrap} p-6 shadow-sm transition-all duration-300 group-hover:-translate-y-1.5 group-hover:shadow-xl min-h-[180px]`}>
+                  <div onMouseMove={handleMouseMove} className={`spotlight-card relative flex flex-col overflow-hidden rounded-3xl ${style.wrap} p-6 shadow-sm transition-all duration-300 group-hover:-translate-y-2 group-hover:shadow-xl min-h-[180px]`}>
                     {style.glow && (
                       <div className="pointer-events-none absolute -right-8 -top-8 size-40 rounded-full bg-emerald-500/10 blur-3xl" aria-hidden="true" />
                     )}

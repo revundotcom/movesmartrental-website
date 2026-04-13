@@ -54,7 +54,7 @@ export const portableTextComponents: PortableTextComponents = {
         <figure className="my-8">
           <Image
             src={url}
-            alt={value.alt || ''}
+            alt={value.alt || 'Content image'}
             width={800}
             height={400}
             className="w-full rounded-lg"

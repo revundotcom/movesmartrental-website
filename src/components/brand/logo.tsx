@@ -1,35 +1,37 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
 type LogoSize = 'sm' | 'md' | 'lg'
 
 interface LogoProps {
-  /** 'default' uses navy text, 'white' uses white text (for dark backgrounds) */
+  /** 'default' uses the original navy + emerald artwork (for light backgrounds).
+   *  'white' inverts the artwork to a monochrome white mark (for dark backgrounds). */
   variant?: 'default' | 'white'
   /** sm=140px, md=190px, lg=260px */
   size?: LogoSize
   className?: string
 }
 
-const WORDMARK_SIZES: Record<
-  LogoSize,
-  { width: number; height: number; fontSize: number; barWidth: number; barHeight: number }
-> = {
-  sm: { width: 140, height: 24, fontSize: 16, barWidth: 26, barHeight: 3 },
-  md: { width: 190, height: 30, fontSize: 20, barWidth: 34, barHeight: 3.5 },
-  lg: { width: 260, height: 40, fontSize: 28, barWidth: 46, barHeight: 4 },
+/**
+ * Rendered dimensions for the full wordmark.
+ * Source artwork is 520.97 × 196.74 - ratio ≈ 2.65.
+ */
+const WORDMARK_SIZES: Record<LogoSize, { width: number; height: number }> = {
+  sm: { width: 140, height: 53 },
+  md: { width: 180, height: 68 },
+  lg: { width: 240, height: 91 },
 }
 
 /**
- * MoveSmart Rentals — Full wordmark with emerald accent bar.
+ * MoveSmart Rentals - Full brand wordmark.
  *
- * "MoveSmart" in bold + "Rentals" in light weight.
- * Small emerald accent bar beneath as the brand mark.
- * Wrapped in a <Link> to homepage for navigation use.
+ * Uses the official logo artwork (public/logo.svg).
+ * - variant="default" → navy + emerald (for light backgrounds)
+ * - variant="white"   → monochrome white (for dark backgrounds, via CSS filter)
  */
 export function Logo({ variant = 'default', size = 'md', className }: LogoProps) {
   const s = WORDMARK_SIZES[size]
-  const fill = variant === 'white' ? '#FFFFFF' : '#0B1D3A'
 
   return (
     <Link
@@ -37,51 +39,19 @@ export function Logo({ variant = 'default', size = 'md', className }: LogoProps)
       className={cn('inline-flex shrink-0 items-center', className)}
       aria-label="MoveSmart Rentals - Home"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox={`0 0 ${s.width} ${s.height}`}
+      <Image
+        src="/logo.png"
+        alt="MoveSmart Rentals"
         width={s.width}
         height={s.height}
-        role="img"
-        aria-hidden="true"
-        className="block"
-      >
-        {/* "MoveSmart" — bold weight */}
-        <text
-          x="0"
-          y={s.height * 0.68}
-          fontFamily="'Plus Jakarta Sans', var(--font-heading), system-ui, sans-serif"
-          fontSize={s.fontSize}
-          fontWeight="700"
-          fill={fill}
-          letterSpacing="-0.02em"
-        >
-          MoveSmart
-        </text>
-
-        {/* "Rentals" — light weight, positioned after MoveSmart */}
-        <text
-          x={s.width * 0.6}
-          y={s.height * 0.68}
-          fontFamily="'Plus Jakarta Sans', var(--font-heading), system-ui, sans-serif"
-          fontSize={s.fontSize}
-          fontWeight="300"
-          fill={fill}
-          letterSpacing="-0.01em"
-        >
-          Rentals
-        </text>
-
-        {/* Emerald accent bar — brand mark */}
-        <rect
-          x="0"
-          y={s.height - s.barHeight}
-          width={s.barWidth}
-          height={s.barHeight}
-          rx={s.barHeight / 2}
-          fill="#10B981"
-        />
-      </svg>
+        priority
+        sizes={`${s.width}px`}
+        className={cn(
+          'block h-auto w-auto object-contain',
+          variant === 'white' && 'brightness-0 invert',
+        )}
+        style={{ maxHeight: s.height, maxWidth: s.width }}
+      />
     </Link>
   )
 }
@@ -97,10 +67,10 @@ const ICON_SIZES: Record<LogoSize, number> = {
 }
 
 /**
- * MoveSmart — Icon-only mark.
+ * MoveSmart - Icon-only mark.
  *
- * Stylized "M" with emerald accent bar.
- * Use where the full wordmark doesn't fit (favicons, mobile, avatars).
+ * Stylized "M" with emerald accent bar. Use where the full wordmark
+ * doesn't fit (favicons, mobile overlays, avatars).
  */
 export function LogoIcon({
   size = 'md',
@@ -108,7 +78,8 @@ export function LogoIcon({
   className,
 }: LogoProps) {
   const s = ICON_SIZES[size]
-  const stroke = variant === 'white' ? '#FFFFFF' : '#0B1D3A'
+  const stroke = variant === 'white' ? '#FFFFFF' : '#001E57'
+  const accent = variant === 'white' ? '#FFFFFF' : '#009966'
 
   return (
     <svg
@@ -132,7 +103,7 @@ export function LogoIcon({
         strokeLinejoin="round"
       />
 
-      {/* Right leg extension — forward motion */}
+      {/* Right leg extension - forward motion */}
       <path
         d="M20 26h6"
         fill="none"
@@ -142,14 +113,7 @@ export function LogoIcon({
       />
 
       {/* Emerald accent bar at baseline */}
-      <rect
-        x="4"
-        y="29"
-        width="10"
-        height="2.5"
-        rx="1.25"
-        fill="#10B981"
-      />
+      <rect x="4" y="29" width="10" height="2.5" rx="1.25" fill={accent} />
     </svg>
   )
 }

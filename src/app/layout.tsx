@@ -5,6 +5,7 @@ import Script from 'next/script'
 import './globals.css'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
+import { MobileStickyCTA } from '@/components/layout/mobile-sticky-cta'
 import { ScrollDepthTracker } from '@/components/tracking/gtm-events'
 import { LinkTracker } from '@/components/tracking/link-tracker'
 
@@ -35,12 +36,12 @@ const dmSerifDisplay = DM_Serif_Display({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'),
   title: {
-    default: 'MoveSmart Rentals | White-Glove Property Management Ontario',
+    default: 'MoveSmart Rentals | Property Management Across Canada',
     template: '%s | MoveSmart Rentals',
   },
   description:
-    'White-glove property management across Ontario. Tenant placement, screening, rent protection, and full-service leasing with zero upfront cost.',
-  keywords: ['property management Ontario', 'tenant placement', 'rental management', 'rent protection', 'landlord services Ontario'],
+    'Full-service property management across Canada. Tenant placement, screening, rent guarantee, and leasing with zero upfront cost. Get your free rental analysis.',
+  keywords: ['property management Canada', 'tenant placement', 'rental management', 'rent guarantee', 'landlord services', 'property management Ontario', 'tenant screening Canada'],
   authors: [{ name: 'MoveSmart Rentals', url: 'https://movesmartrentals.com' }],
   creator: 'MoveSmart Rentals',
   publisher: 'MoveSmart Rentals',
@@ -64,7 +65,7 @@ export const metadata: Metadata = {
         url: '/og-default.png',
         width: 1200,
         height: 630,
-        alt: 'MoveSmart Rentals - White-Glove Property Management Ontario',
+        alt: 'MoveSmart Rentals - Property Management Across Canada',
       },
     ],
   },
@@ -92,8 +93,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-CA">
-      <body className={`${inter.variable} ${plusJakartaSans.variable} ${dmSerifDisplay.variable} font-sans`}>
+    <html lang="en-CA" suppressHydrationWarning>
+      <body className={`${inter.variable} ${plusJakartaSans.variable} ${dmSerifDisplay.variable} font-sans`} suppressHydrationWarning>
         {process.env.NEXT_PUBLIC_GTM_ID && (
           <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
         )}
@@ -101,6 +102,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <LinkTracker />
         <Header />
         {children}
+        <MobileStickyCTA />
         <Footer />
         {process.env.NEXT_PUBLIC_SALESIQ_WIDGET_CODE && (
           <Script

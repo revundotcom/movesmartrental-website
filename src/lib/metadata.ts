@@ -21,22 +21,26 @@ export function generatePageMetadata({
   const description = seo?.metaDescription || fallbackDescription
   const canonicalPath = path.endsWith('/') ? path : `${path}/`
 
+  const ogImageUrl = (seo?.ogImage?.asset as { url?: string } | undefined)?.url || '/og-default.png'
+  const ogImageAlt = seo?.ogImage?.alt || title
+
   return {
     title,
     description,
+    ...(seo?.keywords?.length ? { keywords: seo.keywords } : {}),
     alternates: {
       canonical: canonicalPath,
     },
     openGraph: {
       title,
       description,
-      images: ['/og-default.png'],
+      images: [{ url: ogImageUrl, alt: ogImageAlt }],
     },
     twitter: {
       card: 'summary_large_image' as const,
       title,
       description,
-      images: ['/og-default.png'],
+      images: [{ url: ogImageUrl, alt: ogImageAlt }],
     },
   }
 }

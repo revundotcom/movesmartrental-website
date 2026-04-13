@@ -49,10 +49,10 @@ const PROPERTY_TYPES: PropertyType[] = [
 
 export function TenantsPropertyTypes() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-28">
+    <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-20">
       <div className="relative z-10 mx-auto max-w-7xl px-4">
         {/* Section header */}
-        <div className="mx-auto max-w-2xl text-center mb-16">
+        <div className="mx-auto max-w-2xl text-center mb-10">
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
             Browse by Property Type
           </p>
@@ -60,7 +60,7 @@ export function TenantsPropertyTypes() {
             Find Your Perfect Home
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-            From downtown condos to suburban houses — verified listings across Ontario with
+            From downtown condos to suburban houses - verified listings across Ontario with
             transparent pricing.
           </p>
         </div>

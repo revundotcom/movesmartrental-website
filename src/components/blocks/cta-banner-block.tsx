@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { CTATracker } from '@/components/tracking/cta-tracker'
+import { motion } from 'framer-motion'
+import { GradientMesh } from '@/components/ui/gradient-mesh'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 import type { CTABannerBlockProps } from '@/types/blocks'
 
@@ -55,22 +57,35 @@ export function CTABannerBlock({
         aria-hidden="true"
       />
 
-      {/* Ambient blur top-right */}
-      <div
-        className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 rounded-full blur-3xl"
-        style={{ background: 'rgba(255,255,255,0.10)' }}
-        aria-hidden="true"
-      />
+      <GradientMesh colorScheme="emerald-only" />
 
-      {/* Ambient blur bottom-left */}
-      <div
-        className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-64 h-64 rounded-full blur-2xl"
-        style={{ background: 'rgba(255,255,255,0.08)' }}
-        aria-hidden="true"
-      />
+      {/* Floating particles */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        {[
+          { left: '10%', top: '20%', size: 6, duration: '5s', delay: '0s' },
+          { left: '85%', top: '15%', size: 4, duration: '4.5s', delay: '0.8s' },
+          { left: '25%', top: '75%', size: 5, duration: '6s', delay: '1.2s' },
+          { left: '70%', top: '60%', size: 3, duration: '4s', delay: '0.4s' },
+          { left: '50%', top: '30%', size: 4, duration: '5.5s', delay: '1.8s' },
+          { left: '90%', top: '80%', size: 5, duration: '4.8s', delay: '0.6s' },
+        ].map((p, i) => (
+          <div
+            key={i}
+            className="particle absolute rounded-full bg-white/20"
+            style={{
+              left: p.left,
+              top: p.top,
+              width: p.size,
+              height: p.size,
+              '--particle-duration': p.duration,
+              '--particle-delay': p.delay,
+            } as React.CSSProperties}
+          />
+        ))}
+      </div>
 
       <RevealOnScroll variant="blur">
-        <div className="relative z-10 mx-auto max-w-4xl px-4 py-24 text-center md:py-28">
+        <div className="relative z-10 mx-auto max-w-4xl px-4 py-16 text-center md:py-20">
           <h2 className="font-display text-4xl font-normal tracking-tight text-white md:text-5xl">
             {headline}
           </h2>
@@ -109,7 +124,7 @@ export function CTABannerBlock({
             </form>
           ) : (
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <CTATracker eventType={inferCTAType(primaryCta.href)} city={city} service={service}>
+              <CTATracker eventType="book_a_call" city={city} service={service}>
                 <Button
                   size="lg"
                   className="group/cb min-w-[180px] cursor-pointer border-transparent px-8 py-6 text-base font-bold transition-all duration-300 hover:-translate-y-0.5"
@@ -126,9 +141,10 @@ export function CTABannerBlock({
                     (e.currentTarget as HTMLButtonElement).style.boxShadow =
                       '0 8px 24px rgba(0,0,0,0.3)'
                   }}
-                  render={<Link href={primaryCta.href} />}
+                  nativeButton={false}
+                  render={<Link href="/contact/" />}
                 >
-                  {primaryCta.label}
+                  Get Your Free Rental Analysis
                   <svg
                     className="ml-2 size-4 transition-transform duration-200 group-hover/cb:translate-x-1"
                     fill="none"
@@ -148,6 +164,7 @@ export function CTABannerBlock({
                     variant="outline"
                     size="lg"
                     className="min-w-[180px] cursor-pointer border-2 border-white/20 bg-white/10 px-8 py-6 text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/20"
+                    nativeButton={false}
                     render={<Link href={secondaryCta.href} />}
                   >
                     {secondaryCta.label}
@@ -157,13 +174,20 @@ export function CTABannerBlock({
             </div>
           )}
 
-          {/* Trust points */}
+          {/* Trust points - staggered */}
           <div className="mx-auto mt-10 flex max-w-lg flex-wrap items-center justify-center gap-6">
-            {TRUST_POINTS.map((label) => (
-              <div key={label} className="flex items-center gap-2 text-sm text-white/90">
+            {TRUST_POINTS.map((label, i) => (
+              <motion.div
+                key={label}
+                className="flex items-center gap-2 text-sm text-white/90"
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + i * 0.1, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              >
                 <CheckCircle />
                 {label}
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

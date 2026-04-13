@@ -157,7 +157,7 @@ async function main() {
         throw new Error('No suitable photo found on Pexels (tried skyline, aerial, city queries)')
       }
 
-      // 2. Download photo buffer — prefer large2x, fall back to large
+      // 2. Download photo buffer - prefer large2x, fall back to large
       const imageUrl = photo.src.large2x || photo.src.large
       const buffer = await downloadPhotoBuffer(imageUrl)
 
@@ -183,12 +183,12 @@ async function main() {
         .commit()
 
       const detail = `asset ${assetDoc._id}, photo by ${photo.photographer} (Pexels ID: ${photo.id})`
-      console.log(`  [${i + 1}/${CITIES.length}] ${city.name} — uploaded ${detail}`)
+      console.log(`  [${i + 1}/${CITIES.length}] ${city.name} - uploaded ${detail}`)
       results.push({ city: city.name, status: 'success', detail })
 
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err)
-      console.error(`  [${i + 1}/${CITIES.length}] ${city.name} — FAILED: ${msg}`)
+      console.error(`  [${i + 1}/${CITIES.length}] ${city.name} - FAILED: ${msg}`)
       results.push({ city: city.name, status: 'failed', detail: msg })
     }
 

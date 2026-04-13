@@ -22,7 +22,7 @@ export function TextRotate({ texts, rotationInterval = 2500, className }: TextRo
     <span className={cn('overflow-hidden inline-flex', className)}>
       <AnimatePresence mode="wait">
         <motion.span
-          key={index}
+          key={texts[index]}
           initial={{ y: '100%', opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: '-120%', opacity: 0 }}

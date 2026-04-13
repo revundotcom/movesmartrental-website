@@ -1,5 +1,7 @@
 'use client'
+
 import { motion } from 'framer-motion'
+
 import { RevealOnScroll, revealItem } from '@/components/ui/reveal-on-scroll'
 import type { HowItWorksBlockProps } from '@/types/blocks'
 import { LeasingFlywheel } from '@/components/illustrations/leasing-flywheel'
@@ -31,7 +33,7 @@ export function HowItWorksBlock({
         {/* Desktop: horizontal timeline */}
         <div className="hidden md:block">
           <div className="relative flex items-start justify-between">
-            {/* Connecting line in emerald-200 — outside RevealOnScroll so it stays static */}
+            {/* Connecting line in emerald-200 - outside RevealOnScroll so it stays static */}
             {displaySteps.length > 1 && (
               <div
                 className="absolute top-7 h-0.5 bg-emerald-200"
@@ -43,9 +45,9 @@ export function HowItWorksBlock({
             )}
 
             <RevealOnScroll className="contents" stagger={0.1}>
-              {displaySteps.map((step, index) => (
+              {displaySteps.map((step) => (
                 <motion.div
-                  key={index}
+                  key={step.title}
                   variants={revealItem}
                   className="relative flex flex-col items-center text-center"
                   style={{ width: `${100 / displaySteps.length}%` }}
@@ -73,13 +75,13 @@ export function HowItWorksBlock({
         {/* Mobile: vertical timeline */}
         <div className="md:hidden">
           <div className="relative">
-            {/* Vertical connecting line — outside RevealOnScroll so it stays static */}
+            {/* Vertical connecting line - outside RevealOnScroll so it stays static */}
             <div className="absolute left-7 top-0 bottom-0 w-0.5 bg-emerald-200" />
 
             <RevealOnScroll className="relative space-y-0" stagger={0.1}>
-              {displaySteps.map((step, index) => (
+              {displaySteps.map((step) => (
                 <motion.div
-                  key={index}
+                  key={step.title}
                   variants={revealItem}
                   className="relative flex gap-5 pb-8 last:pb-0"
                 >

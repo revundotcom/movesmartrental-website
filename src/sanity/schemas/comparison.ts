@@ -26,7 +26,7 @@ export default defineType({
       title: 'Service',
       type: 'reference',
       to: [{ type: 'service' }],
-      description: 'Optional — associate with a specific service',
+      description: 'Optional - associate with a specific service',
     }),
     defineField({
       name: 'competitors',

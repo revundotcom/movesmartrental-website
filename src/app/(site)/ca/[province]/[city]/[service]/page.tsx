@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { PortableTextBlock } from '@portabletext/types'
+import { z } from 'zod'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { BenefitsBlock } from '@/components/blocks/benefits-block'
@@ -42,6 +43,8 @@ import type {
   TestimonialData,
 } from '@/types/blocks'
 import type { SeoFields } from '@/types/sanity'
+
+const slugSchema = z.string().regex(/^[a-z0-9-]+$/).max(100)
 
 // ---------------------------------------------------------------------------
 // CityService Data Shape
@@ -382,8 +385,8 @@ function CityServiceView({
         priority
       />
 
-      {/* Premium Local Market Section — two-column layout */}
-      <section className="relative overflow-hidden bg-white py-24">
+      {/* Premium Local Market Section - two-column layout */}
+      <section className="relative overflow-hidden bg-white py-12">
         {/* Dot-grid background */}
         <div
           className="absolute inset-0 opacity-[0.03]"
@@ -465,7 +468,7 @@ function CityServiceView({
                       : data.city.population >= 1_000
                         ? `${Math.round(data.city.population / 1_000)}K`
                         : String(data.city.population)
-                    : '—'}
+                    : '-'}
                 </p>
                 <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
                   Population
@@ -510,7 +513,7 @@ function CityServiceView({
       {/* Related Services */}
       {relatedServices.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 py-12">
-          <div className="mx-auto max-w-2xl text-center mb-12">
+          <div className="mx-auto max-w-2xl text-center mb-8">
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
               More Services
             </p>
@@ -602,14 +605,27 @@ function PropertyCategoryView({
 
       {/* Bedroom Filter Links */}
       {listings.length > 0 && (
-        <section className="mx-auto max-w-7xl px-4 py-6">
-          <h2 className="mb-4 text-xl font-semibold">Filter by Bedrooms</h2>
-          <div className="flex flex-wrap gap-3">
+        <section className="mx-auto max-w-7xl px-4 py-8">
+          <div className="mb-5 flex flex-col gap-1">
+            <p className="text-brand-emerald font-heading font-semibold text-xs uppercase tracking-wider">
+              Narrow Your Search
+            </p>
+            <h2 className="font-display text-2xl text-brand-navy">
+              Filter by Bedrooms
+            </h2>
+          </div>
+          <div className="flex flex-wrap gap-3 mb-4">
+            <Link
+              href={`/ca/${province}/${city}/${service}/`}
+              className="inline-flex items-center gap-2 rounded-full border border-brand-emerald bg-brand-emerald/5 px-5 py-2.5 text-sm font-medium text-brand-emerald transition-all duration-200"
+            >
+              All
+            </Link>
             {BEDROOM_OPTIONS.map((option) => (
               <Link
                 key={option.slug}
                 href={`/ca/${province}/${city}/${service}/${option.slug}/`}
-                className="rounded-lg border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 hover:border-brand-emerald hover:bg-brand-emerald/5 hover:text-brand-emerald hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200"
               >
                 {option.label}
               </Link>
@@ -619,17 +635,28 @@ function PropertyCategoryView({
       )}
 
       {/* Listings */}
-      <section className="mx-auto max-w-7xl px-4 py-8">
-        <h2 className="mb-6 text-2xl font-bold">
-          Available {propertyTypeLabel} in {cityTitle}
-        </h2>
-        {listings.length > 0 ? (
-          <PropertyCardBlock listings={listings} />
-        ) : (
-          <p className="text-muted-foreground">
-            No {propertyTypeLabel.toLowerCase()} listings are currently available
-            in {cityTitle}. Check back soon or browse other property types.
+      <section className="mx-auto max-w-7xl px-4 py-10">
+        <div className="mb-8 flex flex-col gap-1">
+          <p className="text-brand-emerald font-heading font-semibold text-xs uppercase tracking-wider">
+            Verified Listings
           </p>
+          <h2 className="font-display text-3xl md:text-4xl text-brand-navy">
+            Available {propertyTypeLabel} in{' '}
+            <span className="italic text-brand-emerald">{cityTitle}</span>
+          </h2>
+        </div>
+        {listings.length > 0 ? (
+          <div className="[&_a]:transition-all [&_a]:duration-300 [&_a:hover]:-translate-y-1 [&_a:hover]:shadow-lg">
+            <PropertyCardBlock listings={listings} />
+          </div>
+        ) : (
+          <div className="rounded-3xl bg-gradient-to-br from-slate-50 to-white border border-slate-100 p-10 text-center">
+            <p className="text-slate-600 leading-relaxed">
+              No {propertyTypeLabel.toLowerCase()} listings are currently
+              available in {cityTitle}. Check back soon or browse other property
+              types.
+            </p>
+          </div>
         )}
       </section>
 
@@ -653,6 +680,14 @@ export default async function CityServicePage({
   params: Promise<{ province: string; city: string; service: string }>
 }) {
   const { province, city, service } = await params
+
+  if (
+    !slugSchema.safeParse(province).success ||
+    !slugSchema.safeParse(city).success ||
+    !slugSchema.safeParse(service).success
+  ) {
+    notFound()
+  }
 
   // Try CityService first (highest-value SEO page type)
   const cityServiceData = await sanityFetch<CityServicePageData | null>({

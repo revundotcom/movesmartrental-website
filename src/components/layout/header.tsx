@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -14,36 +15,8 @@ import {
 import { Logo } from '@/components/brand/logo'
 import { MobileNav } from '@/components/layout/mobile-nav'
 import { cn } from '@/lib/utils'
-
-const NAV_GROUPS = [
-  {
-    label: 'For Owners',
-    items: [
-      { title: 'Owner Hub', href: '/owners/', description: 'Dashboard and resources for property owners' },
-      { title: 'Services', href: '/services/', description: 'Full-service property management solutions' },
-      { title: 'Pricing', href: '/pricing/', description: 'Transparent pricing with no hidden fees' },
-      { title: 'Portal & Technology', href: '/portal-and-technology/', description: 'Owner portal and technology platform' },
-      { title: 'Reviews', href: '/reviews/', description: 'See what our clients say about us' },
-      { title: 'Franchising', href: '/franchising/', description: 'Grow with the MoveSmart brand' },
-    ],
-  },
-  {
-    label: 'For Tenants',
-    items: [
-      { title: 'Tenant Hub', href: '/tenants/', description: 'Everything tenants need in one place' },
-      { title: 'Locations', href: '/locations/', description: 'Browse available rental properties' },
-      { title: 'Resources', href: '/resources/', description: 'Guides, FAQs, and helpful articles' },
-    ],
-  },
-  {
-    label: 'About',
-    items: [
-      { title: 'About Us', href: '/about/', description: 'Our story, mission, and team' },
-      { title: 'Contact', href: '/contact/', description: 'Get in touch with our team' },
-      { title: 'FAQ', href: '/faq/', description: 'Answers to commonly asked questions' },
-    ],
-  },
-] as const
+import { NAV_GROUPS } from '@/lib/nav-config'
+import { SCROLL_THRESHOLD } from '@/lib/constants'
 
 export function Header() {
   const pathname = usePathname()
@@ -56,7 +29,7 @@ export function Header() {
     const onScroll = () => {
       if (!ticking) {
         rafId = requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 8)
+          setScrolled(window.scrollY > SCROLL_THRESHOLD)
           setNavValue(null)
           ticking = false
         })
@@ -64,7 +37,7 @@ export function Header() {
       }
     }
     // Sync on mount so SSR hydration matches without waiting for a RAF
-    setScrolled(window.scrollY > 8)
+    setScrolled(window.scrollY > SCROLL_THRESHOLD)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => {
       window.removeEventListener('scroll', onScroll)
@@ -82,7 +55,7 @@ export function Header() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-[72px] lg:px-8">
-        {/* Logo — always white on dark navy */}
+        {/* Logo - always white on dark navy */}
         <Logo variant="white" />
 
         {/* Desktop navigation */}

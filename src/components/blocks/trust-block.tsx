@@ -1,6 +1,8 @@
 'use client'
+
 import { Quote } from 'lucide-react'
 import { motion } from 'framer-motion'
+
 import { RevealOnScroll, revealItem } from '@/components/ui/reveal-on-scroll'
 import type { TrustBlockProps } from '@/types/blocks'
 
@@ -13,9 +15,9 @@ function TestimonialsGrid({
 
   return (
     <RevealOnScroll className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {testimonials.map((testimonial, index) => (
+      {testimonials.map((testimonial) => (
         <motion.div
-          key={index}
+          key={testimonial.name}
           variants={revealItem}
           className="relative flex flex-col rounded-xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-emerald/30 hover:shadow-md"
         >
@@ -48,8 +50,8 @@ function StatsRow({ stats }: { stats: TrustBlockProps['stats'] }) {
   return (
     <div className="rounded-3xl px-6 py-14 md:px-12 bg-brand-navy">
       <RevealOnScroll className="flex flex-wrap items-center justify-center gap-x-16 gap-y-10">
-        {stats.map((stat, index) => (
-          <motion.div key={index} variants={revealItem} className="text-center">
+        {stats.map((stat) => (
+          <motion.div key={stat.label} variants={revealItem} className="text-center">
             <p className="text-5xl font-black text-brand-emerald">
               {stat.value}
             </p>
@@ -78,10 +80,10 @@ export function TrustBlock({ testimonials, stats, variant }: TrustBlockProps) {
       : 'What Our Clients Say'
 
   return (
-    <section className="relative overflow-hidden bg-slate-50 py-28">
+    <section className="relative overflow-hidden bg-slate-50 py-20">
       <div className="mx-auto max-w-6xl px-4">
         {/* Section heading with emerald underline */}
-        <div className="mb-12 text-center">
+        <div className="mb-8 text-center">
           <h2 className="font-display text-3xl font-normal tracking-tight text-[#0B1D3A] sm:text-4xl">
             {defaultTitle}
           </h2>
@@ -89,7 +91,7 @@ export function TrustBlock({ testimonials, stats, variant }: TrustBlockProps) {
         </div>
 
         {(effectiveVariant === 'stats' || effectiveVariant === 'combined') && (
-          <div className={effectiveVariant === 'combined' ? 'mb-12' : ''}>
+          <div className={effectiveVariant === 'combined' ? 'mb-8' : ''}>
             <StatsRow stats={stats} />
           </div>
         )}

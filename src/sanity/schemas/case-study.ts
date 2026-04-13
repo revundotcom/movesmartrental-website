@@ -26,7 +26,7 @@ export default defineType({
       title: 'City',
       type: 'reference',
       to: [{ type: 'city' }],
-      description: 'Optional — associate with a specific city',
+      description: 'Optional - associate with a specific city',
     }),
     defineField({
       name: 'clientName',

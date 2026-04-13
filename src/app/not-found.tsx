@@ -86,7 +86,7 @@ export default function NotFound() {
 
         {/* Primary CTA */}
         <div className="mt-8">
-          <Button variant="default" size="lg" render={<Link href="/" />}>
+          <Button variant="default" size="lg" nativeButton={false} render={<Link href="/" />}>
             Back to Homepage
           </Button>
         </div>

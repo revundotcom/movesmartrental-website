@@ -83,6 +83,10 @@ export interface HeroBlockProps {
   city?: string
   /** Service context for CTA event tracking */
   service?: string
+  /** Custom illustration rendered on the right side. Pass pre-rendered JSX (e.g. <OwnerIllustration />). Defaults to HeroDashboard. */
+  illustration?: React.ReactNode
+  /** Eyebrow badge text override. Default: rotating brand texts */
+  eyebrow?: string
 }
 
 export interface CTABannerBlockProps {

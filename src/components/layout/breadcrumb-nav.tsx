@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import Link from 'next/link'
 import {
   Breadcrumb,
@@ -45,16 +46,18 @@ export function BreadcrumbNav({ crumbs }: BreadcrumbNavProps) {
             const isLast = index === crumbs.length - 1
 
             return (
-              <BreadcrumbItem key={crumb.href}>
+              <Fragment key={crumb.href}>
                 {index > 0 && <BreadcrumbSeparator />}
-                {isLast ? (
-                  <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
-                ) : (
-                  <BreadcrumbLink render={<Link href={crumb.href} />}>
-                    {crumb.label}
-                  </BreadcrumbLink>
-                )}
-              </BreadcrumbItem>
+                <BreadcrumbItem>
+                  {isLast ? (
+                    <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
+                  ) : (
+                    <BreadcrumbLink render={<Link href={crumb.href} />}>
+                      {crumb.label}
+                    </BreadcrumbLink>
+                  )}
+                </BreadcrumbItem>
+              </Fragment>
             )
           })}
         </BreadcrumbList>
