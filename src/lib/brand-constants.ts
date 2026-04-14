@@ -12,11 +12,11 @@ export const BRAND = {
   /** Website URL (no trailing slash) */
   url: 'https://movesmartrentals.com',
   /** Primary phone (E.164) */
-  phone: '+14372957688',
+  phone: '+18005959755',
   /** Phone display format */
-  phoneDisplay: '(437) 295-7688',
+  phoneDisplay: '(800) 595-9755',
   /** Default contact email */
-  email: 'info@movesmartrentals.com',
+  email: 'contact@movesmartrentals.com',
   /** Founding year */
   foundingYear: 2024,
   /** Default OG image path */
@@ -24,10 +24,10 @@ export const BRAND = {
   /** Logo path */
   logo: '/og-default.png',
   /** Tagline */
-  tagline: 'White-Glove Property Management Across Canada',
+  tagline: 'White-Glove Leasing Brokerage Across Canada',
   /** Short description for schemas */
   description:
-    'Full-service property management across Canada. Tenant placement, screening, rent guarantee, and leasing with zero upfront cost.',
+    'White-glove leasing brokerage across Canada. Strategic pricing, professional marketing, tenant qualification, and lease execution for individual landlords and institutional operators - zero upfront, success-based fee.',
   /** Social profiles */
   social: {
     linkedin: 'https://www.linkedin.com/company/movesmart-rentals',
@@ -42,22 +42,23 @@ export const BRAND = {
     'https://www.facebook.com/movesmartrentals',
     'https://www.youtube.com/@movesmartrentals',
   ],
-  /** Canonical service names */
+  /** Canonical service names - the 9 leasing-execution services */
   services: [
-    'Tenant Placement',
-    'Tenant Screening',
-    'Rent Guarantee',
-    'Leasing Services',
-    'Rental Preparation',
-    'Rental Marketing',
-    'Property Management',
-    'Self-Serve Portal',
+    'Strategic Rental Pricing',
+    'Professional Marketing Execution',
+    'Showing Coordination',
+    'Offer Management',
+    'Tenant Qualification',
+    'Rental Protection Options',
+    'Lease Execution',
+    'Move-In Coordination',
+    'Institutional Lease-Up Services',
   ],
   /** Key statistics for trust signals - update quarterly */
   stats: {
-    propertiesManaged: '500+',
+    unitsLeased: '500+',
     citiesServed: '20+',
-    occupancyRate: '98%',
+    avgPlacementDays: 14,
     avgFillDays: 14,
     googleRating: 4.9,
     googleReviewCount: '200+',
@@ -77,28 +78,31 @@ export const BRAND = {
   areasServed: ['CA', 'US'],
 } as const
 
-/** Canonical service names - always use these exact strings */
+/** Canonical service names - always use these exact strings.
+ *  MoveSmart Rentals is a leasing brokerage, NOT a property management company.
+ *  These map 1:1 to the 9 leasing-execution services in the brand brief. */
 export const SERVICES = {
-  tenantPlacement: 'Tenant Placement',
-  tenantScreening: 'Tenant Screening',
-  propertyManagement: 'Property Management',
-  rentCollection: 'Rent Collection',
-  propertyMaintenance: 'Property Maintenance',
-  leaseManagement: 'Lease Management',
-  rentGuarantee: 'Rent Guarantee',
-  evictionProtection: 'Eviction Protection',
+  strategicPricing: 'Strategic Rental Pricing',
+  marketingExecution: 'Professional Marketing Execution',
+  showingCoordination: 'Showing Coordination',
+  offerManagement: 'Offer Management',
+  tenantQualification: 'Tenant Qualification',
+  rentalProtection: 'Rental Protection Options',
+  leaseExecution: 'Lease Execution',
+  moveInCoordination: 'Move-In Coordination',
+  institutionalLeaseUp: 'Institutional Lease-Up Services',
 } as const
 
 /** Key statistics for trust signals - update quarterly */
 export const STATS = {
-  propertiesManaged: '500+',
+  unitsLeased: '500+',
   citiesServed: '20+',
   avgDaysToRent: '14',
   ownerSatisfaction: '4.9',
   reviewCount: '200+',
   upfrontCost: '$0',
   tenantRetention: '95%',
-  occupancyRate: '98%',
+  avgPlacementDays: '14',
 } as const
 
 /** Trust certifications and partnerships */
@@ -122,7 +126,7 @@ export const MEDIA_MENTIONS = [
 export const CTA_COPY = {
   primary: 'Get Your Free Rental Analysis',
   secondary: 'See Our Pricing',
-  tertiary: 'Talk to a Property Expert',
+  tertiary: 'Talk to a Leasing Advisor',
   /** For city-specific pages: replace [City] with actual city name */
   citySpecific: (city: string, service?: string) =>
     service ? `Get ${service} in ${city}` : `Get Started in ${city}`,

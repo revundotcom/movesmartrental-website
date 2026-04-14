@@ -41,7 +41,7 @@ export async function generateStaticParams() {
       city: c.slug.current,
     }))
 
-  // Static fallback slugs — ensure footer-linked Ontario cities always build.
+  // Static fallback slugs - ensure footer-linked Ontario cities always build.
   const fallbackSlugs = [
     'toronto',
     'ottawa',
@@ -89,8 +89,8 @@ export async function generateMetadata({
   return generatePageMetadata({
     seo: data?.seo,
     path: `/ca/${province}/${city}`,
-    fallbackTitle: `Property Management in ${cityTitle}`,
-    fallbackDescription: `Tenant placement, screening, and property management in ${cityTitle}, ${provinceName}. Browse our services and rental listings.`,
+    fallbackTitle: `Leasing Services in ${cityTitle} | MoveSmart Rentals`,
+    fallbackDescription: `White-glove leasing brokerage in ${cityTitle}, ${provinceName}: tenant placement, screening, lease execution, and move-in coordination. Zero upfront cost.`,
   })
 }
 
@@ -229,7 +229,7 @@ export default async function CityPage({
   // Build LocalBusiness JSON-LD
   const localBusinessSchema = buildLocalBusinessSchema({
     name: `MoveSmart Rentals - ${data.title}`,
-    description: `Professional property management services in ${data.title}, ${data.province.title}.`,
+    description: `White-glove leasing brokerage in ${data.title}, ${data.province.title}.`,
     url: pageUrl,
     address: {
       streetAddress: '',
@@ -279,26 +279,14 @@ export default async function CityPage({
       {/* Editorial hero */}
       <PageHeroBlock
         kicker={`${data.title}, ${provinceAbbr}`}
-        eyebrow="Property management & leasing"
-        headline={`Leasing in ${data.title}`}
+        eyebrow="White-glove leasing brokerage"
+        headline={`Leasing services in ${data.title}`}
         lede={
           descriptionText?.slice(0, 220) ??
-          `Local tenant placement, screening, rent protection, and day-to-day property management in ${data.title}, ${data.province.title}.`
+          `Local tenant placement, screening, lease execution, and move-in coordination in ${data.title}, ${data.province.title}. Zero upfront - success-fee pricing only.`
         }
         cta1={{ label: 'Book a Local Call', href: '/contact/' }}
         cta2={{ label: 'Browse Rentals', href: '/locations/' }}
-        meta={[
-          ...(data.medianRent != null
-            ? [{ label: 'Median rent', value: formatCurrency(data.medianRent) }]
-            : [{ label: 'Avg fill', value: '14 days' }]),
-          ...(data.neighbourhoods && data.neighbourhoods.length > 0
-            ? [{ label: 'Neighbourhoods', value: `${data.neighbourhoods.length}+` }]
-            : [{ label: 'Neighbourhoods', value: '20+' }]),
-          ...(data.vacancyRate != null
-            ? [{ label: 'Vacancy rate', value: formatPercentage(data.vacancyRate) }]
-            : [{ label: 'Setup fee', value: '$0' }]),
-          { label: 'Markets', value: '20+ cities' },
-        ]}
       />
 
       {/* City narrative (Portable Text or description paragraph) */}
@@ -326,7 +314,7 @@ export default async function CityPage({
         </section>
       )}
 
-      {/* Market snapshot — editorial strip with pipe dividers */}
+      {/* Market snapshot - editorial strip with pipe dividers */}
       {(data.population != null ||
         data.medianRent != null ||
         data.vacancyRate != null ||
@@ -463,7 +451,7 @@ export default async function CityPage({
         </section>
       )}
 
-      {/* Property type links — editorial list, not hover cards */}
+      {/* Property type links - editorial list, not hover cards */}
       <section className="bg-[#FBFAF6] py-14 sm:py-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="max-w-2xl">
@@ -499,7 +487,7 @@ export default async function CityPage({
       {/* CTA Banner */}
       <CTABannerBlock
         headline={`Ready to lease in ${data.title}?`}
-        description={`Book 20 minutes with a local advisor. Zero upfront cost, ${data.title}-specific market pricing, and RTA-compliant leases.`}
+        description={`Book 20 minutes with a local leasing advisor. Zero upfront, success-fee pricing, ${data.title}-specific market strategy, and RTA-compliant leases.`}
         primaryCta={{ label: 'Book a Call', href: '/contact/' }}
         secondaryCta={{ label: 'See Pricing', href: '/pricing/' }}
       />

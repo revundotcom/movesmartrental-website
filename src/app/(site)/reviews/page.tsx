@@ -17,7 +17,7 @@ const GOOGLE_REVIEWS_URL =
 export const metadata: Metadata = {
   title: 'Reviews & Testimonials',
   description:
-    'Real results from real property owners. Read 200+ Google reviews and testimonials from landlords who trust MoveSmart Rentals for tenant placement and property management across Canada.',
+    'Real results from real property owners. Read 200+ Google reviews and testimonials from landlords who trust MoveSmart Rentals for white-glove leasing and tenant placement across Canada.',
   alternates: {
     canonical: '/reviews/',
   },
@@ -148,7 +148,7 @@ export default function ReviewsPage() {
       {/* 11. CTA Banner */}
       <CTABannerBlock
         headline="Ready to be our next 5-star review?"
-        description="Book a free rental analysis. We will tell you what your property should rent for, how fast we think we can fill it, and what we would do differently from your last manager."
+        description="Book a free rental analysis. We will tell you what your property should rent for, how fast we think we can lease it, and exactly how our white-glove execution will differ from anything you have tried before."
         primaryCta={{ label: 'Get Your Free Rental Analysis', href: '/contact/' }}
         secondaryCta={{ label: 'See Our Pricing', href: '/pricing/' }}
       />

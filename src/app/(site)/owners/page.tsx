@@ -2,10 +2,9 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
   Check,
-  FileText,
-  Wrench,
   ClipboardCheck,
-  Receipt,
+  Eye,
+  KeyRound,
   X,
   Minus,
   ArrowRight,
@@ -21,13 +20,10 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 
-import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { ServiceGridBlock } from '@/components/blocks/service-grid-block'
 import { TestimonialsSection } from '@/components/blocks/testimonials-section'
-import { GuaranteeSection } from '@/components/blocks/guarantee-section'
-import { CaseStudySection } from '@/components/blocks/case-study-card'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 import { CountUp } from '@/components/ui/count-up'
@@ -55,56 +51,56 @@ const CONTRACT_ICON_MAP: Record<string, LucideIcon> = {
 }
 
 export const metadata: Metadata = {
-  title: 'Property Management for Landlords | Hands-Off Leasing Across Canada',
+  title: 'White-Glove Leasing for Landlords | MoveSmart Rentals',
   description:
-    'Hands-off property management for Canadian landlords. Zero upfront cost, dedicated account manager, tenant screening, rent protection, and full leasing execution.',
+    'White-glove leasing brokerage for Canadian landlords. Strategic pricing, professional marketing, structured screening, and lease execution. Zero upfront cost, success-fee on placement.',
   alternates: {
     canonical: '/owners/',
   },
   openGraph: {
-    title: 'Property Management for Landlords | Hands-Off Leasing Across Canada',
+    title: 'White-Glove Leasing for Landlords | MoveSmart Rentals',
     description:
-      'Hands-off property management for Canadian landlords. Zero upfront cost, dedicated account manager, tenant screening, and rent protection.',
+      'Strategic pricing, professional marketing, structured screening, and lease execution for Canadian landlords. Zero upfront cost, success-fee on placement.',
     images: ['/og-default.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Property Management for Landlords | Hands-Off Leasing Across Canada',
+    title: 'White-Glove Leasing for Landlords | MoveSmart Rentals',
     description:
-      'Hands-off property management for Canadian landlords. Zero upfront cost, dedicated account manager, tenant screening, and rent protection.',
+      'Strategic pricing, professional marketing, structured screening, and lease execution. Zero upfront cost, success-fee on placement.',
   },
 }
 
-/* ---------- Landlord pain points (zigzag) ---------- */
+/* ---------- Landlord pain points (zigzag) - leasing-focused ---------- */
 
 const PAIN_POINTS: Array<{ problem: string; solution: string }> = [
   {
     problem:
-      'Vacant units sitting empty for weeks, costing you thousands in lost rental income every month.',
+      'Vacant units sitting empty for weeks while you guess at the right asking rent.',
     solution:
-      'Our MLS distribution and 50+ rental site syndication fills vacancies in an average of 14 days.',
+      'Strategic, data-backed pricing on day one - calibrated to live comps in your neighbourhood, not last year\u2019s averages. Most listings reach signed lease in roughly 14 days.',
   },
   {
     problem:
-      'Difficult tenants who damage property, pay late, or cause disputes with neighbours.',
+      'Listing photos that do not sell the unit and copy that gets lost in the feed.',
     solution:
-      'Structured screening with credit checks, employment verification, references, and full rental history review for every applicant.',
+      'Professional photography, virtual tours, and editorial listing copy syndicated to MLS, Realtor.ca, and the major rental websites the same day prep wraps.',
   },
   {
     problem:
-      'Spending evenings and weekends handling maintenance calls, tenant complaints, and property inspections.',
+      'Applicant chaos: a flood of inquiries, no-show showings, and screening you cannot defend.',
     solution:
-      'Your dedicated account manager handles everything. Track it all from your online portal without lifting a finger.',
+      'Showings coordinated and confirmed by our team. Every applicant runs through a structured, documented screen - credit, employment, references, rental history - visible to you in the portal.',
   },
   {
     problem:
-      'Hidden fees and unclear pricing from property management companies that eat into your returns.',
+      'Pricing guesswork, sloppy lease paperwork, and a messy move-in that sets the tenancy off badly.',
     solution:
-      'Nothing upfront. Our transparent, success-based model means you pay nothing until your property is rented.',
+      'Province-compliant lease execution, deposits and first-month collected on signing, key handover and move-in inspection coordinated end-to-end. Rent protection and partner insurance pathways available where applicable.',
   },
 ]
 
-/* ---------- Contract-required messaging (9 points) ---------- */
+/* ---------- Contract-required messaging (9 owner pillars) ---------- */
 
 const CONTRACT_MESSAGING: Array<{
   iconKey: string
@@ -115,55 +111,55 @@ const CONTRACT_MESSAGING: Array<{
     iconKey: 'DollarSign',
     title: 'Nothing Upfront',
     description:
-      'Our success-based model means you pay nothing until your property is rented. No setup fees, ever.',
+      'Standard leasing success fee is paid only on placement. No setup fees, no retainers, nothing due to start.',
   },
   {
     iconKey: 'Monitor',
-    title: 'Self-Serve Online Portal',
+    title: 'Self-Serve Online',
     description:
-      'Manage your properties, view financial reports, and communicate through your dedicated online portal.',
+      'Onboard, list, and track everything online. No mandatory phone calls - book a call only if you want one.',
   },
   {
     iconKey: 'Users',
-    title: 'Dedicated Account Manager',
+    title: 'Dedicated Account Manager (Optional)',
     description:
-      'A single point of contact who knows your properties inside and out and handles every detail.',
+      'A single named contact who knows your file end-to-end, available to owners who want concierge support.',
   },
   {
-    iconKey: 'Megaphone',
-    title: 'MLS Distribution',
+    iconKey: 'Zap',
+    title: 'Tech + Brick-and-Mortar Execution',
     description:
-      'Your listings appear on MLS, Realtor.ca, and 50+ rental sites for maximum exposure and faster fills.',
+      'Modern listing tools and screening pipelines backed by licensed brokers and on-the-ground showing teams in every market we serve.',
   },
   {
-    iconKey: 'Shield',
-    title: 'Structured Screening',
+    iconKey: 'TrendingUp',
+    title: 'Full Portal Visibility',
     description:
-      'Credit checks, employment verification, references, and full rental history review for every applicant.',
-  },
-  {
-    iconKey: 'CheckCircle',
-    title: 'Rent Protection + Insurance Pathways',
-    description:
-      'Our rent guarantee program protects your income from missed payments. Partner insurance pathways available where applicable.',
+      'Live view of showings, applicants, screening, approvals, counter-offers, inspections, and the full communication history.',
   },
   {
     iconKey: 'Paintbrush',
     title: 'Property Preparation',
     description:
-      'Professional cleaning, staging, and photography before listing to attract quality tenants fast.',
+      'Photography, virtual tours, painting, cleaning, junk removal, landscaping, handyman, and short-term financing support to get your unit lease-ready.',
   },
   {
-    iconKey: 'TrendingUp',
-    title: 'Full Visibility Into Every Step',
+    iconKey: 'Megaphone',
+    title: 'MLS + Major Rental Websites',
     description:
-      'Track showings, applications, screening, approvals, inspections, and communications in real time from your portal.',
+      'Listings distributed to MLS, Realtor.ca, the major rental portals, and our social channels for maximum applicant volume in week one.',
   },
   {
-    iconKey: 'Zap',
-    title: 'Tech + Brick-and-Mortar',
+    iconKey: 'Shield',
+    title: 'Structured, Documented Screening',
     description:
-      'Modern technology backed by local market expertise and real people you can meet in person.',
+      'Credit, employment, references, and rental history - every applicant, every time, with the file visible to you before you approve.',
+  },
+  {
+    iconKey: 'CheckCircle',
+    title: 'Rent Protection + Insurance Pathways',
+    description:
+      'Optional partner pathways for rent protection and landlord insurance, surfaced at the right moment in your leasing flow.',
   },
 ]
 
@@ -176,72 +172,72 @@ const LEASING_TIMELINE: Array<{
 }> = [
   {
     day: 'Day 0',
-    title: 'Onboarding call',
+    title: 'Onboarding (online or call)',
     description:
-      'A 30-minute call with your dedicated account manager to walk the property, set rent expectations, and confirm preferences.',
+      'Self-serve onboarding online, or a 30-minute walkthrough with an account manager if you prefer. We confirm the property, set strategic rent based on live comps, and lock preferences.',
   },
   {
     day: 'Day 1-3',
-    title: 'Prep, photography & staging',
+    title: 'Prep, photography & virtual tour',
     description:
-      'Professional cleaning, light staging where useful, and shot-listed photography. Listing copy drafted and approved by you.',
+      'Cleaning, painting, light staging and any handyman work coordinated through our partners. Professional photos and virtual tour shot. Listing copy drafted and approved by you.',
   },
   {
     day: 'Day 3-4',
-    title: 'MLS + 50-site syndication',
+    title: 'MLS + major-portal distribution',
     description:
-      'Your listing goes live on MLS, Realtor.ca, and 50+ rental portals on the same day. We handle inquiries from minute one.',
+      'Your listing goes live on MLS, Realtor.ca, the major rental websites, and our social distribution the same day. Inquiries route into the portal from minute one.',
   },
   {
     day: 'Day 4-10',
-    title: 'Showings & screening',
+    title: 'Showings & qualification',
     description:
-      'In-person and virtual tours managed by us. Every applicant runs through credit, employment, reference, and rental-history checks.',
+      'In-person and virtual showings coordinated by our team. Every applicant runs through credit, employment, reference, and rental-history checks - the full file lives in your portal.',
   },
   {
-    day: 'Day 10-14',
-    title: 'Approval & lease signing',
+    day: 'Day 10-13',
+    title: 'Offer & lease execution',
     description:
-      'You see the shortlisted applicants with our recommendation. Province-compliant lease, deposits collected, and move-in scheduled.',
+      'You see shortlisted applicants with our recommendation. Counter-offers handled in-portal, province-compliant lease prepared and e-signed, deposits and first-month collected.',
   },
   {
-    day: 'Ongoing',
-    title: 'Full management',
+    day: 'Day 14',
+    title: 'Move-in coordination',
     description:
-      'Rent collection, maintenance coordination, inspections, statements, and renewals - tracked live in your portal.',
+      'Key handover scheduled, move-in inspection completed and documented, utilities and tenant insurance pathways shared. Handoff is clean - the tenancy starts on solid footing.',
   },
 ]
 
-/* ---------- Portal feature strip (the ONE allowed card grid) ---------- */
+/* ---------- Portal feature strip - leasing-focused ---------- */
 
 const PORTAL_FEATURES = [
   {
-    icon: Receipt,
-    title: 'Rent ledger',
+    icon: Eye,
+    title: 'Showings & inquiries',
     description:
-      'Live ledger of every payment, deposit, fee, and disbursement - exportable to CSV or your accountant any time.',
+      'Every inquiry, every booked showing, every no-show - logged with timestamps and the team member who handled it.',
   },
   {
-    icon: Wrench,
-    title: 'Work orders',
+    icon: Users,
+    title: 'Applicant pipeline',
     description:
-      'See every maintenance request from intake to vendor invoice. Approve spends above your threshold in one click.',
+      'See every applicant as they move from inquiry through showing, application, and recommendation. Approve or counter in one click.',
   },
   {
     icon: ClipboardCheck,
     title: 'Screening reports',
     description:
-      'Full applicant files: credit, employment, references, rental history. You see what we see before approval.',
+      'Full applicant files: credit, employment, references, rental history. You see what we see before you approve.',
   },
   {
-    icon: FileText,
-    title: 'Monthly statements',
+    icon: KeyRound,
+    title: 'Lease & move-in',
     description:
-      'Itemised statement with rent collected, fees, and net deposit. Year-end summaries ready for your tax filing.',
+      'Signed lease, deposits collected, move-in inspection report, and the full communication history - all in one place.',
   },
 ]
 
-/* ---------- Owner economics comparison ---------- */
+/* ---------- Owner economics comparison - leasing line items ---------- */
 
 type Verdict = 'good' | 'bad' | 'meh'
 
@@ -252,40 +248,46 @@ const COMPARISON_ROWS: Array<{
   movesmart: { verdict: Verdict; text: string }
 }> = [
   {
-    label: 'Average vacancy time',
+    label: 'Average days to signed lease',
     diy: { verdict: 'bad', text: '30-60 days' },
     traditional: { verdict: 'meh', text: '21-35 days' },
-    movesmart: { verdict: 'good', text: '14 days average' },
+    movesmart: { verdict: 'good', text: '~14 days average' },
   },
   {
-    label: 'Tenant screening rigour',
+    label: 'Pricing approach',
+    diy: { verdict: 'bad', text: 'Gut feel, last year\u2019s rent' },
+    traditional: { verdict: 'meh', text: 'Broker estimate, infrequent updates' },
+    movesmart: { verdict: 'good', text: 'Strategic pricing on live comps' },
+  },
+  {
+    label: 'Listing quality & distribution',
+    diy: { verdict: 'bad', text: 'Phone photos, one or two sites' },
+    traditional: { verdict: 'meh', text: 'Basic photos, limited syndication' },
+    movesmart: { verdict: 'good', text: 'Pro photos + virtual tour, MLS + major portals + social' },
+  },
+  {
+    label: 'Showing coordination',
+    diy: { verdict: 'bad', text: 'You answer every text yourself' },
+    traditional: { verdict: 'meh', text: 'Shared inbox, slow reply times' },
+    movesmart: { verdict: 'good', text: 'Dedicated team confirms and runs every showing' },
+  },
+  {
+    label: 'Tenant qualification rigour',
     diy: { verdict: 'bad', text: 'Credit check only, if any' },
     traditional: { verdict: 'meh', text: 'Credit + basic references' },
-    movesmart: { verdict: 'good', text: 'Credit, employment, references, rental history' },
-  },
-  {
-    label: 'Evening & weekend calls',
-    diy: { verdict: 'bad', text: 'You answer them' },
-    traditional: { verdict: 'meh', text: 'Routed to call centre' },
-    movesmart: { verdict: 'good', text: 'Dedicated manager + 24/7 maintenance line' },
+    movesmart: { verdict: 'good', text: 'Credit, employment, references, rental history - documented' },
   },
   {
     label: 'Setup & onboarding fees',
     diy: { verdict: 'good', text: '$0' },
     traditional: { verdict: 'bad', text: '$200-$500 typical' },
-    movesmart: { verdict: 'good', text: '$0 - pay nothing until rented' },
+    movesmart: { verdict: 'good', text: '$0 - success fee paid only on placement' },
   },
   {
-    label: 'Hidden fees on your statement',
-    diy: { verdict: 'good', text: 'None - but you do the work' },
-    traditional: { verdict: 'bad', text: 'Markups on maintenance, lease renewal fees' },
-    movesmart: { verdict: 'good', text: 'Flat percentage. No vendor markups.' },
-  },
-  {
-    label: 'Visibility into the work',
-    diy: { verdict: 'good', text: 'You are the work' },
-    traditional: { verdict: 'bad', text: 'Monthly PDF, phone calls' },
-    movesmart: { verdict: 'good', text: 'Live portal - every showing, application, work order' },
+    label: 'Visibility into the leasing process',
+    diy: { verdict: 'good', text: 'You are the process' },
+    traditional: { verdict: 'bad', text: 'Phone calls, occasional email updates' },
+    movesmart: { verdict: 'good', text: 'Live portal - every showing, applicant, and approval' },
   },
 ]
 
@@ -332,11 +334,11 @@ const MARKETS: Array<{
 /* ---------- Hero "What you get" aside ---------- */
 
 const HERO_INCLUDED = [
-  'Photography, staging & MLS listing',
-  'Tenant screening - credit, employment, references',
-  'Province-compliant lease & e-signing',
-  'Rent collection & monthly owner statements',
-  'Maintenance coordination with vetted vendors',
+  'Strategic rental pricing on live comps',
+  'Photography, virtual tour & MLS listing',
+  'Showing coordination - in-person & virtual',
+  'Structured screening - credit, employment, references',
+  'Province-compliant lease execution & move-in handoff',
 ]
 
 function HeroAside() {
@@ -353,8 +355,8 @@ function HeroAside() {
           What&rsquo;s included
         </p>
         <h3 className="mt-2 font-display text-xl font-normal leading-snug text-brand-navy">
-          Full leasing &amp; management,{' '}
-          <span className="font-display italic text-brand-emerald">end&#8209;to&#8209;end</span>
+          White-glove leasing,{' '}
+          <span className="font-display italic text-brand-emerald">listing to move&#8209;in</span>
         </h3>
 
         <ul className="mt-5 space-y-3">
@@ -371,7 +373,7 @@ function HeroAside() {
         {/* Owner quote */}
         <figure className="mt-6 border-t border-brand-navy/10 pt-5">
           <blockquote className="font-display text-base font-normal italic leading-snug text-brand-navy">
-            &ldquo;They filled my Etobicoke condo in eleven days. I haven&rsquo;t taken a tenant call since.&rdquo;
+            &ldquo;They leased my Etobicoke condo in eleven days - listing photos, showings, screened applicants, signed lease, all handled.&rdquo;
           </blockquote>
           <figcaption className="mt-3 flex items-center gap-3">
             <span className="flex size-9 items-center justify-center rounded-full bg-brand-navy text-xs font-bold text-white">
@@ -454,8 +456,8 @@ export default async function OwnersPage() {
       <PageHeroBlock
         kicker="Owner Hub"
         eyebrow="For Property Owners"
-        headline="Hands-off leasing. Real Results."
-        lede="White-glove leasing execution from a property manager that does not get paid until your unit is rented. Real people, real markets, real accountability - backed by a portal that shows you everything."
+        headline="White-glove leasing. Real Results."
+        lede="Strategic pricing, professional marketing, structured screening, and clean lease execution - from listing to move-in. Nothing due upfront. Standard leasing success fee on placement."
         cta1={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
         cta2={{ label: 'Book a 20-Min Call', href: '/contact/?type=owner&intent=call' }}
         aside={<HeroAside />}
@@ -469,7 +471,7 @@ export default async function OwnersPage() {
               The Problem
             </p>
             <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
-              Four landlord{' '}
+              Four leasing{' '}
               <span className="font-display italic text-brand-emerald">aches</span>, four answers
               <span aria-hidden="true" className="text-brand-gold">
                 .
@@ -539,7 +541,7 @@ export default async function OwnersPage() {
               &ldquo;
             </span>
             <blockquote className="-mt-4 font-display text-2xl font-normal italic leading-snug text-brand-navy sm:text-3xl md:text-4xl">
-              We do not get paid until your property is rented. That single line
+              We do not get paid until your unit is leased. That single line
               re-writes every other line on this page.
             </blockquote>
             <p className="mt-6 text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
@@ -549,7 +551,7 @@ export default async function OwnersPage() {
         </div>
       </section>
 
-      {/* ── SECTION 3: 9 Contract-Required Messaging Points - EDITORIAL FEATURE LIST ── */}
+      {/* ── SECTION 3: 9 Owner Pillars - EDITORIAL FEATURE LIST ── */}
       <section className="bg-[#FBFAF6] py-20 sm:py-24">
         <div className="mx-auto max-w-6xl px-4">
           <SlideFromRight className="max-w-3xl lg:ml-auto lg:text-right">
@@ -564,7 +566,7 @@ export default async function OwnersPage() {
               </span>
             </h2>
             <p className="mt-4 text-base leading-relaxed text-slate-600">
-              Not marketing copy - clauses. Each line below appears verbatim in the contract you sign.
+              Not marketing copy - clauses. Each line below appears verbatim in the leasing agreement you sign.
             </p>
           </SlideFromRight>
 
@@ -616,7 +618,7 @@ export default async function OwnersPage() {
                 </span>
               </h2>
               <p className="mt-5 text-base leading-relaxed text-slate-600">
-                A six-step playbook refined across 500+ properties. Each step has a real owner, a real timeline, and a real handoff - no black-box marketing.
+                A six-step playbook refined across hundreds of placements. Each step has a real owner, a real timeline, and a real handoff - no black-box marketing.
               </p>
               <div className="mt-8 border-t border-brand-navy/10 pt-6">
                 <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
@@ -625,7 +627,7 @@ export default async function OwnersPage() {
                 <p className="mt-1 font-display text-4xl font-normal text-brand-navy">
                   <CountUp value={14} /> days
                 </p>
-                <p className="mt-1 text-sm text-slate-500">to a signed lease.</p>
+                <p className="mt-1 text-sm text-slate-500">to a signed lease and move-in.</p>
               </div>
             </RevealOnScroll>
 
@@ -681,7 +683,7 @@ export default async function OwnersPage() {
               </span>
             </h2>
             <p className="mt-4 text-base leading-relaxed text-slate-600">
-              Four views that turn property management from a black box into a glass box. Log in from any device, any time.
+              Four views that turn the leasing process from a black box into a glass box. Log in from any device, any time.
             </p>
           </RevealOnScroll>
 
@@ -741,7 +743,7 @@ export default async function OwnersPage() {
               </span>
             </h2>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
-              Most owner pages skip the math. Here&rsquo;s how managing it yourself, hiring a traditional PM, and partnering with us actually compare on the line items that hit your bottom line.
+              Most owner pages skip the math. Here&rsquo;s how listing it yourself, hiring a traditional leasing agent, and partnering with us actually compare on the line items that decide how fast - and how well - your unit leases.
             </p>
           </RevealOnScroll>
 
@@ -759,15 +761,15 @@ export default async function OwnersPage() {
                   <th scope="col" className="w-1/4 py-5 pr-6 align-bottom">
                     <p className="font-display text-2xl font-normal text-brand-navy">DIY</p>
                     <p className="mt-1 text-[11px] uppercase tracking-wider text-slate-500">
-                      You manage it yourself
+                      You list it yourself
                     </p>
                   </th>
                   <th scope="col" className="w-1/4 py-5 pr-6 align-bottom">
                     <p className="font-display text-2xl font-normal text-brand-navy">
-                      Traditional PM
+                      Traditional Agent
                     </p>
                     <p className="mt-1 text-[11px] uppercase tracking-wider text-slate-500">
-                      Local agency, paper-first
+                      Local leasing agent, paper-first
                     </p>
                   </th>
                   <th scope="col" className="w-1/4 py-5 align-bottom">
@@ -861,7 +863,7 @@ export default async function OwnersPage() {
           </div>
 
           <p className="mt-8 text-xs text-slate-500">
-            Industry benchmarks compiled from CMHC, Buildium, and Mynd 2025 owner reports. Specific numbers may vary by market.
+            Industry benchmarks compiled from CMHC, Buildium, and 2025 leasing-industry owner reports. Specific numbers vary by market.
           </p>
         </div>
       </section>
@@ -896,12 +898,6 @@ export default async function OwnersPage() {
         </div>
       </section>
 
-      {/* ── Guarantee Section ── */}
-      <GuaranteeSection />
-
-      {/* ── Case Study Section ── */}
-      <CaseStudySection />
-
       {/* ── SECTION 9: Markets We Serve - EDITORIAL LIST (no grid) ── */}
       <section className="bg-white py-24">
         <div className="mx-auto max-w-5xl px-4">
@@ -917,7 +913,7 @@ export default async function OwnersPage() {
               </span>
             </h2>
             <p className="mt-4 text-base leading-relaxed text-slate-600">
-              Twenty-plus cities across Canada and the United States, with licensed brokers and on-the-ground account managers in every region.
+              Twenty-plus cities across Canada and the United States, with licensed brokers and on-the-ground showing teams in every region.
             </p>
           </RevealOnScroll>
 
@@ -979,50 +975,43 @@ export default async function OwnersPage() {
         title="Owner FAQs"
         questions={[
           {
-            question: 'How much does MoveSmart property management cost?',
+            question: 'How much does MoveSmart leasing cost?',
             answer:
-              'We operate on a success-based model -- you pay nothing upfront. Our management fee is a percentage of collected rent, so we only earn when your property is earning. There are no hidden fees or long-term contracts.',
+              'Standard leasing success fee, paid only on placement. Nothing is due upfront - no setup fees, no retainers, no long-term contracts. You owe nothing until a qualified tenant is signed and moved in.',
           },
           {
-            question: 'What services are included in property management?',
+            question: 'What is included in a MoveSmart leasing engagement?',
             answer:
-              'Our full-service management includes tenant screening, rent collection, maintenance coordination, lease management, property inspections, financial reporting, and 24/7 emergency response. Everything you need to be a hands-off landlord.',
+              'Strategic rental pricing, professional photography and virtual tours, listing distribution to MLS and the major rental websites, showing coordination, structured tenant qualification, offer and counter-offer management, province-compliant lease execution, and move-in coordination. Property preparation services (paint, clean, junk removal, landscaping, handyman) and rent protection / insurance partner pathways are available where applicable.',
           },
           {
-            question: 'How do you screen tenants?',
+            question: 'How do you qualify tenants?',
             answer:
-              'Every applicant undergoes a structured screening process including credit checks, employment and income verification, previous landlord references, and rental history review. We only place tenants who meet our qualification criteria.',
+              'Every applicant runs through a structured, documented screen: credit check, employment and income verification, previous landlord references, and rental history review. The full file lives in your portal so you see exactly what we see before approving.',
           },
           {
-            question: 'What is the rent protection guarantee?',
+            question: 'What is the rent protection pathway?',
             answer:
-              'Our rent guarantee program protects your rental income from missed payments. If a qualified tenant fails to pay, we cover the rent so your cash flow remains consistent.',
+              'We surface optional partner pathways for rent protection and landlord insurance at the right moment in your leasing flow. These are third-party programs offered through vetted partners - you choose whether to enrol, and the cost and terms come from the partner directly.',
           },
           {
-            question: 'How quickly can you fill my vacancy?',
+            question: 'How quickly will my unit lease?',
             answer:
-              'On average, we fill vacancies within 14 days. We syndicate your listing across MLS, Realtor.ca, and 50+ rental platforms for maximum exposure, combined with professional photography and staging to attract quality tenants fast.',
+              'Most listings reach a signed lease in roughly 14 days from going live. We distribute to MLS, Realtor.ca, and the major rental portals, with professional photos and a virtual tour, to drive applicant volume in week one.',
           },
           {
-            question: 'Will I have a dedicated point of contact?',
+            question: 'Do I need to get on a call to start?',
             answer:
-              'Yes. Every owner is assigned a dedicated account manager who knows your portfolio, your preferences, and your tenants. You will not be bounced around a call centre - you have one phone number and one inbox for everything.',
+              'No. Onboarding is fully self-serve online. A dedicated account manager is available if you want concierge support, but no phone call is required to list with us.',
           },
           {
-            question: 'Can I cancel if I am not happy?',
+            question: 'What happens after the tenant moves in?',
             answer:
-              'Yes. There are no long-term contracts and no cancellation fees. We earn your business month to month - if we are not delivering, you are free to leave.',
+              'Our scope is leasing execution - from listing to move-in. Once the lease is signed, deposits collected, and the move-in inspection is complete, the engagement is fulfilled. We are a leasing brokerage, not a property management firm.',
           },
         ]}
       />
 
-      {/* ── SECTION 11: CTA Banner ── */}
-      <CTABannerBlock
-        headline="Ready for Hands-Off Leasing?"
-        description="Join 500+ property owners who trust MoveSmart Rentals for white-glove leasing execution."
-        primaryCta={{ label: 'Get Your Free Rental Analysis', href: '/contact/' }}
-        secondaryCta={{ label: 'See Our Pricing', href: '/pricing/' }}
-      />
     </main>
   )
 }

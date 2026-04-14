@@ -13,10 +13,10 @@ interface StatItem {
 }
 
 const STATS: StatItem[] = [
-  { value: 500, suffix: '+', label: 'Properties Managed', icon: Building2 },
-  { value: 160, suffix: '+', label: 'Cities Served', icon: MapPin },
-  { value: 98,  suffix: '%', label: 'Occupancy Rate', icon: BarChart3 },
-  { value: 14,  suffix: '',  label: 'Days Avg. Fill Time', icon: Clock },
+  { value: 500, suffix: '+', label: 'Units Leased', icon: Building2 },
+  { value: 20,  suffix: '+', label: 'Cities Served', icon: MapPin },
+  { value: 94,  suffix: '%', label: 'Qualification Approval', icon: BarChart3 },
+  { value: 14,  suffix: '',  label: 'Days Avg. Placement', icon: Clock },
 ]
 
 function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
@@ -138,7 +138,7 @@ export function StatGrid() {
         animate={sectionInView ? { opacity: 1 } : {}}
         transition={{ delay: 0.8, duration: 0.5 }}
       >
-        Based on 500+ managed properties across Ontario. Updated monthly.
+        Based on 500+ units leased across Canada. Updated monthly.
       </motion.p>
     </section>
   )

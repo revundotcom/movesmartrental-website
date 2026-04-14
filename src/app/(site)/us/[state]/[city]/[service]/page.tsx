@@ -74,8 +74,8 @@ export async function generateMetadata({
     return generatePageMetadata({
       seo: csData.seo,
       path: `/us/${state}/${city}/${service}`,
-      fallbackTitle: `${csData.serviceTitle} in ${csData.cityTitle}`,
-      fallbackDescription: `Professional ${csData.serviceTitle.toLowerCase()} services in ${csData.cityTitle}, ${csData.provinceName}. MoveSmart Rentals provides expert property management with zero upfront cost.`,
+      fallbackTitle: `${csData.serviceTitle} in ${csData.cityTitle} | MoveSmart Rentals`,
+      fallbackDescription: `${csData.serviceTitle} in ${csData.cityTitle}, ${csData.provinceName}. White-glove leasing brokerage with zero upfront cost and success-fee pricing.`,
     })
   }
 
@@ -91,8 +91,8 @@ export async function generateMetadata({
 
   return generatePageMetadata({
     path: `/us/${state}/${city}/${service}`,
-    fallbackTitle: `${formattedService} in ${formattedCity}`,
-    fallbackDescription: `${formattedService} services coming soon to ${formattedCity}. MoveSmart Rentals is expanding property management across the United States.`,
+    fallbackTitle: `${formattedService} in ${formattedCity} | MoveSmart Rentals`,
+    fallbackDescription: `${formattedService} services coming soon to ${formattedCity}. MoveSmart Rentals is expanding white-glove leasing brokerage across the United States.`,
   })
 }
 
@@ -217,23 +217,17 @@ export default async function USCityServicePage({
 
         <PageHeroBlock
           kicker={`${serviceTitle} · ${cityTitle}`}
-          eyebrow="Local property management"
+          eyebrow="Local leasing brokerage"
           headline={cityServiceData.heroHeadline}
           accentLastWord={false}
           lede={cityServiceData.heroSubheadline}
           cta1={{ label: 'Book a Local Call', href: '/contact/' }}
           cta2={{ label: 'See Pricing', href: '/pricing/' }}
-          meta={[
-            { label: 'Service', value: serviceTitle },
-            { label: 'Market', value: cityTitle },
-            { label: 'Setup fee', value: '$0' },
-            { label: 'Local team', value: 'In-market' },
-          ]}
         />
 
         <CTABannerBlock
           headline="Get Started with MoveSmart Rentals"
-          description={`Professional ${serviceTitle.toLowerCase()} in ${cityTitle}. Zero upfront cost.`}
+          description={`${serviceTitle} in ${cityTitle} - white-glove leasing brokerage, zero upfront cost, success-fee pricing.`}
           primaryCta={{ label: 'Create Free Account', href: '/contact/' }}
           secondaryCta={{ label: 'Book a Call', href: '/contact/' }}
         />
@@ -281,15 +275,9 @@ export default async function USCityServicePage({
         eyebrow="Coming soon"
         headline={`${formattedService} in ${cityTitle}`}
         accentLastWord={false}
-        lede={`Professional ${formattedService.toLowerCase()} services are coming soon to ${cityTitle}, ${stateName}. Join our waitlist — priority access for founding owners.`}
+        lede={`${formattedService} services are coming soon to ${cityTitle}, ${stateName}. Join our waitlist - priority access for founding landlords and developers.`}
         cta1={{ label: 'Join the Waitlist', href: '/contact/' }}
         cta2={{ label: 'See Pricing', href: '/pricing/' }}
-        meta={[
-          { label: 'City', value: cityTitle },
-          { label: 'State', value: stateName },
-          { label: 'Status', value: 'Coming soon' },
-          { label: 'Setup fee', value: '$0' },
-        ]}
       />
 
       {/* Coming Soon Notice */}
@@ -315,7 +303,7 @@ export default async function USCityServicePage({
       {/* CTA Banner */}
       <CTABannerBlock
         headline={`Get Started in ${cityTitle}`}
-        description={`Let MoveSmart Rentals handle your property management in ${cityTitle}. Zero upfront cost.`}
+        description={`Let MoveSmart Rentals run your leasing campaign in ${cityTitle}. White-glove brokerage, zero upfront, success-fee pricing.`}
         primaryCta={{ label: 'Contact Us', href: '/contact/' }}
         secondaryCta={{ label: 'Book a Call', href: '/contact/' }}
       />

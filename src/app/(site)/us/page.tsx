@@ -25,23 +25,23 @@ interface StateCard {
 // ---------------------------------------------------------------------------
 
 export const metadata: Metadata = {
-  title: 'Property Management in the United States',
+  title: 'Leasing Brokerage in the United States | MoveSmart Rentals',
   description:
-    'Professional property management across the United States. Explore our services in Florida, Texas, California, New York, and more.',
+    'White-glove leasing brokerage expanding across the United States. Tenant placement, screening, and lease execution in Florida, Texas, California, New York, and more.',
   alternates: {
     canonical: '/us/',
   },
   openGraph: {
-    title: 'Property Management in the United States',
+    title: 'Leasing Brokerage in the United States | MoveSmart Rentals',
     description:
-      'Professional property management across the United States. Explore our services in Florida, Texas, California, New York, and more.',
+      'White-glove leasing brokerage expanding across the United States. Tenant placement, screening, and lease execution in Florida, Texas, California, New York, and more.',
     images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'MoveSmart Rentals United States' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Property Management in the United States | MoveSmart Rentals',
+    title: 'Leasing Brokerage in the United States | MoveSmart Rentals',
     description:
-      'Professional property management across the United States. Explore our services in Florida, Texas, California, New York, and more.',
+      'White-glove leasing brokerage expanding across the United States. Tenant placement, screening, and lease execution in Florida, Texas, California, New York, and more.',
     images: ['/og-default.png'],
   },
 }
@@ -70,8 +70,8 @@ export default async function USHubPage() {
 
       {/* 1. Hero */}
       <HeroBlock
-        headline="Property Management Across the United States"
-        subheadline="MoveSmart Rentals is expanding into America's top rental markets, bringing our proven Canadian model to US property owners."
+        headline="Leasing Brokerage Across the United States"
+        subheadline="MoveSmart Rentals is expanding into America's top rental markets, bringing our zero-upfront, success-fee leasing model to US landlords, property managers, and developers."
       />
 
       {/* 2. Intro section */}
@@ -80,13 +80,14 @@ export default async function USHubPage() {
           Expanding Into America&apos;s Top Markets
         </h2>
         <p className="mx-auto mt-4 max-w-3xl text-muted-foreground">
-          Building on our success managing properties across Canada, MoveSmart
-          Rentals is bringing our technology-driven approach to the United
-          States. Our US operations focus on high-growth rental markets where
-          property owners need professional management that combines local
-          expertise with scalable systems. From Florida&apos;s Sun Belt to
-          California&apos;s tech corridors, we deliver tenant placement,
-          compliance management, and maximized occupancy rates.
+          Building on our leasing execution across Canada, MoveSmart Rentals is
+          bringing white-glove leasing brokerage to the United States. Our US
+          operations focus on high-growth rental markets where landlords,
+          property managers, and developers need disciplined leasing execution
+          with transparent pricing. From Florida&apos;s Sun Belt to
+          California&apos;s tech corridors, we deliver strategic rental pricing,
+          professional marketing, tenant qualification, and lease execution -
+          zero upfront, success-fee only.
         </p>
       </section>
 
@@ -145,8 +146,8 @@ export default async function USHubPage() {
 
       {/* 4. CTA */}
       <CTABannerBlock
-        headline="Own Property in the US? Let Us Manage It."
-        description="MoveSmart Rentals is bringing professional, technology-driven property management to America's top rental markets."
+        headline="Own Rental Property in the US? Let Us Lease It."
+        description="MoveSmart Rentals is bringing white-glove leasing brokerage to America's top rental markets - zero upfront, success-fee pricing."
         primaryCta={{ label: 'Book a Free Consultation', href: '/contact/' }}
         secondaryCta={{ label: 'View Pricing', href: '/pricing/' }}
       />

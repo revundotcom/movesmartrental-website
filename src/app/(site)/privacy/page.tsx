@@ -67,7 +67,8 @@ export default function PrivacyPolicyPage() {
                 </li>
                 <li>
                   <strong>Property Information:</strong> Details about rental
-                  properties you submit for management evaluation.
+                  properties you submit for a leasing evaluation or rental
+                  pricing analysis.
                 </li>
                 <li>
                   <strong>Usage Data:</strong> IP address, browser type, pages
@@ -90,7 +91,14 @@ export default function PrivacyPolicyPage() {
                 We use the information we collect for the following purposes:
               </p>
               <ul className="mt-2 list-disc space-y-1 pl-6">
-                <li>To provide, operate, and maintain our property management services.</li>
+                <li>
+                  To provide, operate, and deliver our white-glove leasing
+                  brokerage services, including strategic rental pricing,
+                  marketing, showings, offer management, applicant
+                  qualification, rent protection (via partner), lease
+                  execution, move-in coordination, and institutional
+                  lease-up engagements.
+                </li>
                 <li>To respond to inquiries, process requests, and communicate with you.</li>
                 <li>To send marketing communications (with your consent) about our services, promotions, and market insights.</li>
                 <li>To improve our Site, services, and user experience through analytics.</li>
@@ -250,10 +258,10 @@ export default function PrivacyPolicyPage() {
                 <li>
                   <strong>Email:</strong>{' '}
                   <a
-                    href="mailto:info@movesmartrentals.com"
+                    href="mailto:contact@movesmartrentals.com"
                     className="text-brand-emerald underline hover:no-underline"
                   >
-                    info@movesmartrentals.com
+                    contact@movesmartrentals.com
                   </a>
                 </li>
                 <li>

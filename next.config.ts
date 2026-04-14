@@ -1,4 +1,6 @@
 import type { NextConfig } from 'next'
+import type { Redirect } from 'next/dist/lib/load-custom-routes'
+import { LEGACY_REDIRECTS } from './src/data/legacy-redirects'
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -39,34 +41,45 @@ const nextConfig: NextConfig = {
       headers: securityHeaders,
     },
   ],
-  // Redirect common mistyped paths — /ca/{us-state}/... → /us/{us-state}/...
-  redirects: async () => [
-    {
-      source: '/ca/florida/:path*',
-      destination: '/us/florida/:path*',
-      permanent: true,
-    },
-    {
-      source: '/ca/texas/:path*',
-      destination: '/us/texas/:path*',
-      permanent: true,
-    },
-    {
-      source: '/ca/california/:path*',
-      destination: '/us/california/:path*',
-      permanent: true,
-    },
-    {
-      source: '/ca/new-york/:path*',
-      destination: '/us/new-york/:path*',
-      permanent: true,
-    },
-    {
-      source: '/ca/illinois/:path*',
-      destination: '/us/illinois/:path*',
-      permanent: true,
-    },
-  ],
+  // Redirects: mistyped /ca/{us-state} paths first, then the scaffolded
+  // legacy-URL inventory (see src/data/legacy-redirects.ts).
+  redirects: async (): Promise<Redirect[]> => {
+    const mistypedCountryRedirects: Redirect[] = [
+      {
+        source: '/ca/florida/:path*',
+        destination: '/us/florida/:path*',
+        permanent: true,
+      },
+      {
+        source: '/ca/texas/:path*',
+        destination: '/us/texas/:path*',
+        permanent: true,
+      },
+      {
+        source: '/ca/california/:path*',
+        destination: '/us/california/:path*',
+        permanent: true,
+      },
+      {
+        source: '/ca/new-york/:path*',
+        destination: '/us/new-york/:path*',
+        permanent: true,
+      },
+      {
+        source: '/ca/illinois/:path*',
+        destination: '/us/illinois/:path*',
+        permanent: true,
+      },
+    ]
+
+    const legacyRedirects: Redirect[] = LEGACY_REDIRECTS.map((r) => ({
+      source: r.source,
+      destination: r.destination,
+      permanent: r.permanent,
+    }))
+
+    return [...mistypedCountryRedirects, ...legacyRedirects]
+  },
 }
 
 export default nextConfig

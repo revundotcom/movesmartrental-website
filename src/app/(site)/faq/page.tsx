@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
-import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { JsonLd } from '@/components/json-ld'
 import { buildFaqPageSchema } from '@/lib/schema-builders'
@@ -12,23 +11,23 @@ import {
 import { ALL_FAQ_ITEMS, FAQ_CATEGORIES } from './faq-data'
 
 export const metadata: Metadata = {
-  title: 'Property Management FAQ Canada | Common Questions Answered',
+  title: 'Leasing Brokerage FAQ Canada | Common Questions Answered',
   description:
-    'Answers to frequently asked questions about MoveSmart Rentals property management: pricing, tenant screening, rent protection, cities served, and more.',
+    'Answers to frequently asked questions about MoveSmart Rentals white-glove leasing brokerage: pricing, tenant qualification, rental protection, cities served, and more.',
   alternates: {
     canonical: '/faq/',
   },
   openGraph: {
-    title: 'Property Management FAQ Canada | MoveSmart Rentals',
+    title: 'Leasing Brokerage FAQ Canada | MoveSmart Rentals',
     description:
-      'Answers to frequently asked questions about MoveSmart Rentals property management: pricing, tenant screening, rent protection, cities served, and more.',
+      'Answers to frequently asked questions about MoveSmart Rentals white-glove leasing brokerage: pricing, tenant qualification, rental protection, cities served, and more.',
     images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'MoveSmart Rentals FAQ' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Property Management FAQ Canada | MoveSmart Rentals',
+    title: 'Leasing Brokerage FAQ Canada | MoveSmart Rentals',
     description:
-      'Answers to frequently asked questions about MoveSmart Rentals property management: pricing, tenant screening, rent protection, cities served, and more.',
+      'Answers to frequently asked questions about MoveSmart Rentals white-glove leasing brokerage: pricing, tenant qualification, rental protection, cities served, and more.',
     images: ['/og-default.png'],
   },
 }
@@ -126,15 +125,6 @@ export default function FAQPage() {
         lede="A reading room, not a dumping ground - organized by topic, written in plain language, and kept current with provincial rules. Browse a section, scan a question, or jump straight to the team."
         cta1={{ label: 'Browse by topic', href: '#browse' }}
         cta2={{ label: 'Contact us', href: '/contact/' }}
-        meta={[
-          {
-            label: 'Questions answered',
-            value: `${ALL_FAQ_ITEMS.length}`,
-          },
-          { label: 'Categories', value: '6' },
-          { label: 'Last updated', value: 'Apr 2026' },
-          { label: 'Avg reply time', value: '24h' },
-        ]}
         aside={<PopularTopicsAside />}
       />
 
@@ -154,12 +144,6 @@ export default function FAQPage() {
       {/* SECTION 9 - Still have questions (editorial panel, not a card) */}
       <FAQStillHaveQuestions />
 
-      {/* SECTION 10 - Final CTA banner */}
-      <CTABannerBlock
-        headline="Talk to an advisor."
-        description="A real property manager - not a chatbot - will review your situation and tell you exactly what to expect. No pitch, no obligation."
-        primaryCta={{ label: 'Talk to an advisor', href: '/contact/' }}
-      />
     </main>
   )
 }

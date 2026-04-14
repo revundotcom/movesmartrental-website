@@ -4,13 +4,13 @@ import {
   ArrowRight,
   ScrollText,
   Camera,
-  Hammer,
   Home,
   FileSearch,
-  Receipt,
   HandCoins,
   CalendarClock,
   PhoneCall,
+  ShieldCheck,
+  Building2,
 } from 'lucide-react'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
@@ -18,7 +18,6 @@ import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { RentCalculator } from '@/components/blocks/rent-calculator'
-import { TestimonialsSection } from '@/components/blocks/testimonials-section'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 import { CountUp } from '@/components/ui/count-up'
 
@@ -34,30 +33,30 @@ function HeroAtAGlance() {
       />
 
       <p className="font-sans text-[10px] font-bold uppercase tracking-[0.28em] text-brand-navy/55">
-        At a glance · 2026 schedule
+        At a glance &middot; 2026 schedule
       </p>
 
       <p className="mt-4 font-display text-[3.5rem] italic leading-[0.95] text-brand-navy sm:text-[4.5rem]">
-        One month
+        $<CountUp value={0} />
         <span className="text-brand-gold">.</span>
       </p>
       <p className="mt-2 font-sans text-sm uppercase tracking-[0.18em] text-brand-navy/60">
-        Tenant placement &mdash; charged once, on signed lease.
+        Due upfront. No setup, no retainer, no onboarding.
       </p>
 
       <p className="mt-6 font-display text-[3.5rem] italic leading-[0.95] text-brand-navy sm:text-[4.5rem]">
-        <CountUp value={8} suffix="%" />
+        One-time
         <span className="text-brand-gold">.</span>
       </p>
       <p className="mt-2 font-sans text-sm uppercase tracking-[0.18em] text-brand-navy/60">
-        Of rent collected &mdash; only on months we actually collect.
+        Leasing success fee &mdash; only when a qualified tenant signs.
       </p>
 
       {/* Inline fact chips */}
       <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-navy/65">
-        <span>$<CountUp value={0} /> setup</span>
+        <span>$<CountUp value={0} /> retainer</span>
         <span aria-hidden="true" className="text-brand-gold">/</span>
-        <span><CountUp value={30} />-day cancel</span>
+        <span>No monthly fee</span>
         <span aria-hidden="true" className="text-brand-gold">/</span>
         <span><CountUp value={0} /> hidden</span>
       </div>
@@ -77,19 +76,19 @@ function HeroAtAGlance() {
 
 const HOW_WE_CHARGE = [
   {
-    title: 'The leasing fee.',
+    title: 'Zero upfront. Always.',
     body:
-      'A one-time fee equal to one month\u2019s rent, paid only after a qualified tenant signs the lease. It covers marketing, showings, screening, and lease preparation. If we don\u2019t place a tenant, we don\u2019t earn the fee. There is no upfront retainer, no listing surcharge, and no advertising line item billed separately.',
+      'You pay nothing to engage MoveSmart. No setup fee. No onboarding fee. No monthly retainer. Photography, syndication, screening, and lease preparation are all carried by us until a tenant is in place. Our economics are aligned with yours from the first conversation - if we don\u2019t place a qualified tenant, we don\u2019t earn a dollar.',
   },
   {
-    title: 'The management fee.',
+    title: 'A single leasing success fee.',
     body:
-      'A flat eight percent of monthly rent collected \u2014 only on months we actually collect. If the unit sits vacant, we don\u2019t earn a management fee. Period. It is netted from the rent we collect each month and the remainder is deposited to your account along with a statement that itemizes every line.',
+      'When a qualified tenant signs a lease we negotiated, you pay a one-time success fee - a fee structure tailored to property type and market, typically equivalent to one month of contracted rent. It is invoiced once, on placement, and is the only fee you owe for the leasing engagement. We are a leasing brokerage, not an ongoing manager: there is no monthly percentage, ever.',
   },
   {
     title: 'And nothing in between.',
     body:
-      'Zero onboarding fee, zero marketing surcharge, zero vendor markups. Repairs are billed at cost with the original contractor invoice attached to your statement. You see what we see. If a line item isn\u2019t printed on this page, it doesn\u2019t exist on your invoice.',
+      'No vendor markups. No marketing surcharges. No listing-prep surcharges. No clawbacks. The only optional charges are clearly named add-ons: Rent Protection (priced through our underwriting partner) and paid advertising beyond our standard syndication. Institutional lease-up engagements are quoted per RFP. Everything else is on this page.',
   },
 ] as const
 
@@ -102,9 +101,9 @@ function HowWeCharge() {
             &sect; 01 &middot; How we charge
           </p>
           <h2 className="mt-3 max-w-3xl font-display text-4xl font-normal leading-[1.05] text-brand-navy sm:text-5xl">
-            Two fees. Both earned.
-            <span className="font-display italic text-brand-emerald"> Nothing</span>
-            <span className="text-brand-gold">.</span> in between.
+            One fee. Earned on
+            <span className="font-display italic text-brand-emerald"> results</span>
+            <span className="text-brand-gold">.</span>
           </h2>
         </RevealOnScroll>
 
@@ -147,51 +146,55 @@ interface FeeRow {
   label: string
   detail?: string
   value: string
-  numeric?: { value: number; prefix?: string; suffix?: string }
   emphasis?: boolean
 }
 
 const FEE_SCHEDULE: FeeRow[] = [
   {
-    label: 'Tenant placement fee',
-    detail: 'Marketing, showings, screening, lease preparation.',
-    value: 'One month\u2019s rent',
+    label: 'Standard leasing success fee',
+    detail:
+      'Single condo, townhouse, or single-family home. Charged once, on signed lease, to a qualified tenant we placed.',
+    value: 'One month rent equivalent',
     emphasis: true,
   },
   {
-    label: 'Monthly management',
-    detail: 'On months we actually collect rent.',
-    value: '8%',
-    numeric: { value: 8, suffix: '%' },
+    label: 'Setup, onboarding, photography, syndication',
+    detail: 'Account creation, document collection, professional photos, 40+ portal listing.',
+    value: '$0',
     emphasis: true,
   },
   {
-    label: 'Premium portfolio (multi-unit)',
-    detail: 'Adds dedicated account manager, rent guarantee, 24/7 line.',
-    value: '10%',
-    numeric: { value: 10, suffix: '%' },
+    label: 'Monthly retainer or management %',
+    detail: 'We are a leasing brokerage. There is no recurring fee.',
+    value: 'Not charged',
   },
   {
-    label: 'Setup & onboarding',
-    detail: 'Account creation, document collection, first listing.',
-    value: '$0',
-    numeric: { value: 0, prefix: '$' },
+    label: 'Tenant Replacement Guarantee',
+    detail:
+      'If a tenant we placed breaks the lease in the first six months, we re-lease at no additional success fee.',
+    value: 'Included',
   },
   {
-    label: 'Marketing & photography',
-    detail: 'Professional photos, MLS, 40+ portal syndication.',
-    value: '$0',
-    numeric: { value: 0, prefix: '$' },
+    label: 'Rent Protection (optional add-on)',
+    detail:
+      'Guaranteed rental income coverage underwritten through our insurance partner. Owner opts in.',
+    value: 'Quoted by partner',
   },
   {
-    label: 'Vacant-month management',
-    detail: 'No rent collected = no fee charged. Period.',
-    value: '$0',
-    numeric: { value: 0, prefix: '$' },
+    label: 'Paid advertising beyond standard syndication',
+    detail:
+      'Optional boosted listings, premium portal placements, or targeted social campaigns. Owner pre-approves.',
+    value: 'Pass-through at cost',
   },
   {
-    label: 'Cancellation',
-    detail: 'Either party. No exit fee, no clawback.',
+    label: 'Institutional lease-up (PMC, builder, developer)',
+    detail:
+      'Multi-unit lease-up programs, project-based engagements, custom service scope.',
+    value: 'Custom RFP',
+  },
+  {
+    label: 'Engagement exit',
+    detail: 'Either party. No exit fee, no clawback on a placement already earned.',
     value: '30-day notice',
   },
 ]
@@ -211,7 +214,7 @@ function HeadlinePriceStatement() {
           <div className="col-span-12 lg:col-span-8">
             <RevealOnScroll variant="scaleIn" duration={0.8}>
               <p className="font-display font-normal leading-[0.85] text-brand-navy text-[5rem] sm:text-[8rem] lg:text-[12rem] xl:text-[14rem]">
-                <CountUp value={8} suffix="%" />
+                $<CountUp value={0} />
                 <span className="text-brand-gold">.</span>
               </p>
             </RevealOnScroll>
@@ -219,14 +222,15 @@ function HeadlinePriceStatement() {
           <div className="col-span-12 lg:col-span-4 lg:pb-8">
             <RevealOnScroll variant="slideUp" duration={0.7} delay={0.2}>
               <p className="font-sans text-xs font-bold uppercase tracking-[0.28em] text-brand-emerald">
-                Of monthly rent collected
+                Due upfront. Always.
               </p>
               <p className="mt-3 font-serif text-base leading-[1.7] text-slate-700">
-                The flat management fee on our Full-Service plan. We earn it the same way you do
-                &mdash; only on months the property is producing income.
+                You pay nothing to engage MoveSmart. The only fee on a standard leasing engagement
+                is a one-time success fee, charged when a qualified tenant signs the lease &mdash;
+                typically one month rent equivalent.
               </p>
               <a
-                href="/contact/"
+                href="/contact/?type=owner"
                 className="mt-5 inline-flex items-center gap-2 border-b border-brand-emerald/40 pb-1 font-sans text-sm font-semibold text-brand-emerald transition-colors hover:border-brand-emerald hover:text-brand-navy"
               >
                 Get a free rental analysis
@@ -244,7 +248,7 @@ function HeadlinePriceStatement() {
                 Full schedule of fees
               </p>
               <p className="font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-brand-navy/55">
-                Effective 2026 &middot; CAD / USD
+                Effective 2026 &middot; CAD
               </p>
             </div>
           </RevealOnScroll>
@@ -289,15 +293,7 @@ function HeadlinePriceStatement() {
                           : 'font-display text-xl font-normal text-brand-navy sm:text-2xl'
                       }
                     >
-                      {row.numeric ? (
-                        <CountUp
-                          value={row.numeric.value}
-                          prefix={row.numeric.prefix}
-                          suffix={row.numeric.suffix}
-                        />
-                      ) : (
-                        row.value
-                      )}
+                      {row.value}
                     </p>
                   </div>
                 </div>
@@ -318,15 +314,7 @@ function HeadlinePriceStatement() {
                     </p>
                   )}
                   <p className="mt-2 font-display text-2xl font-normal text-brand-navy">
-                    {row.numeric ? (
-                      <CountUp
-                        value={row.numeric.value}
-                        prefix={row.numeric.prefix}
-                        suffix={row.numeric.suffix}
-                      />
-                    ) : (
-                      row.value
-                    )}
+                    {row.value}
                   </p>
                 </div>
               ))}
@@ -335,9 +323,9 @@ function HeadlinePriceStatement() {
           </div>
 
           <p className="mt-8 max-w-3xl font-serif text-sm italic leading-relaxed text-slate-500">
-            Fees shown apply across Ontario, BC, Alberta and most US states we serve. Quebec and a
-            handful of US municipalities have small regional adjustments &mdash; your advisor will
-            quote those upfront. All fees exclude applicable GST/HST/PST.
+            Pricing is tailored to property type, location, and engagement scope. Your advisor will
+            confirm the exact success fee in writing before any work begins. All fees exclude
+            applicable GST/HST.
           </p>
         </div>
       </div>
@@ -345,7 +333,7 @@ function HeadlinePriceStatement() {
   )
 }
 
-/* ─── "What's NOT included" transparency table ──────────────────────────────── */
+/* ─── "What's included / what's not" transparency table ─────────────────────── */
 
 type Policy = 'included' | 'pass-through' | 'add-on' | 'not-charged'
 
@@ -358,66 +346,69 @@ const TRANSPARENCY_ROWS: Array<{
 }> = [
   {
     icon: Camera,
-    item: 'Marketing photography',
-    detail: 'Professional camera, wide-angle lens, edited gallery.',
+    item: 'Marketing photography & video',
+    detail: 'Professional camera, wide-angle lens, edited gallery, optional 3D walkthrough.',
     policy: 'included',
-    cost: 'Included in leasing fee',
-  },
-  {
-    icon: PhoneCall,
-    item: 'Late-rent collection calls',
-    detail: 'Outreach, payment plans, and demand letters when rent is late.',
-    policy: 'included',
-    cost: 'Included in management fee',
+    cost: 'Included in success fee',
   },
   {
     icon: ScrollText,
-    item: 'Eviction filing & paperwork',
-    detail: 'LTB / equivalent tribunal filings and tenant correspondence.',
-    policy: 'add-on',
-    cost: '$350 flat (Premium plan: free)',
+    item: 'MLS + 40+ portal syndication',
+    detail: 'Realtor.ca, Zumper, Zolo, Kijiji, Facebook Marketplace, and our agent network.',
+    policy: 'included',
+    cost: 'Included in success fee',
   },
   {
     icon: FileSearch,
-    item: 'Mid-lease inspection',
-    detail: 'In-person walkthrough with photo report sent to owner.',
+    item: 'Tenant screening & background',
+    detail: 'Credit, employment, income, reference, and prior-tenancy verification.',
     policy: 'included',
-    cost: 'One per year on Full-Service & Premium',
+    cost: 'Included in success fee',
   },
   {
-    icon: Hammer,
-    item: 'Maintenance & repairs',
-    detail: 'Plumbers, electricians, handymen, contractors.',
-    policy: 'pass-through',
-    cost: 'At vendor cost \u2014 invoice attached, no markup',
-  },
-  {
-    icon: Receipt,
-    item: 'Year-end tax statement',
-    detail: 'Itemized income & expense report for your accountant.',
+    icon: PhoneCall,
+    item: 'Showings & applicant management',
+    detail: 'Coordinated viewings, qualification calls, applicant shortlist with our recommendation.',
     policy: 'included',
-    cost: 'Included on Full-Service & Premium',
-  },
-  {
-    icon: Home,
-    item: 'Property prep / turnover',
-    detail: 'Cleaning, paint touch-ups, minor staging between tenants.',
-    policy: 'pass-through',
-    cost: 'At vendor cost (typical: $150\u2013$600)',
+    cost: 'Included in success fee',
   },
   {
     icon: HandCoins,
-    item: 'Lease renewal',
-    detail: 'Renewal negotiation, drafting, and execution.',
-    policy: 'not-charged',
-    cost: 'No fee \u2014 we want long tenancies',
+    item: 'Lease drafting & e-signing',
+    detail: 'Provincially compliant lease, schedules, addenda, and digital execution.',
+    policy: 'included',
+    cost: 'Included in success fee',
+  },
+  {
+    icon: Home,
+    item: 'Move-in coordination & key handover',
+    detail: 'Move-in inspection, condition report, key/fob delivery to tenant.',
+    policy: 'included',
+    cost: 'Included in success fee',
+  },
+  {
+    icon: ShieldCheck,
+    item: 'Rent Protection package',
+    detail:
+      'Optional guaranteed rental income coverage underwritten through our insurance partner.',
+    policy: 'add-on',
+    cost: 'Quoted separately by partner',
   },
   {
     icon: CalendarClock,
-    item: 'Vacant-month management fee',
-    detail: 'What we charge while the unit is empty.',
-    policy: 'not-charged',
-    cost: 'Nothing. No rent, no fee.',
+    item: 'Paid advertising beyond standard',
+    detail:
+      'Optional boosted listings, premium portal placements, or targeted social campaigns.',
+    policy: 'pass-through',
+    cost: 'At cost - owner pre-approves',
+  },
+  {
+    icon: Building2,
+    item: 'Institutional lease-up engagements',
+    detail:
+      'Multi-unit programs for property management companies, builders, and developers.',
+    policy: 'add-on',
+    cost: 'Custom RFP - contact for quote',
   },
 ]
 
@@ -445,16 +436,17 @@ function TransparencyTable() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <RevealOnScroll variant="slideUp" duration={0.7}>
           <p className="font-sans text-[11px] font-bold uppercase tracking-[0.28em] text-brand-navy/55">
-            &sect; 03 &middot; The fine print, on the front page
+            &sect; 03 &middot; What the success fee includes
           </p>
           <h2 className="mt-3 max-w-4xl font-display text-4xl font-normal leading-[1.05] text-brand-navy sm:text-5xl">
-            What&rsquo;s <span className="italic">NOT</span> in the headline fee &mdash; and what it
-            <span className="font-display italic text-brand-emerald"> costs</span>
+            Every leasing service we offer &mdash; in
+            <span className="font-display italic text-brand-emerald"> one fee</span>
             <span className="text-brand-gold">.</span>
           </h2>
           <p className="mt-4 max-w-2xl font-serif text-base leading-relaxed text-slate-600">
-            Most property managers hide these as add-ons. We list them here, before you sign anything.
-            If a line item isn&rsquo;t on this page, it doesn&rsquo;t exist on your invoice.
+            Most brokerages itemize photography, syndication, and screening as separate line items.
+            We don&rsquo;t. The success fee covers all nine pillars of our leasing service. Add-ons
+            are clearly labelled and never assumed.
           </p>
         </RevealOnScroll>
 
@@ -519,45 +511,52 @@ function TransparencyTable() {
 
         <p className="mt-8 max-w-3xl font-serif text-sm italic leading-relaxed text-slate-500">
           <span className="font-semibold not-italic text-brand-navy">
-            Vendor pass-through, never markup.
+            Pass-through, never markup.
           </span>{' '}
-          Every contractor invoice is attached to your monthly statement at the price the contractor
-          charged us. No hidden margin.
+          When an owner opts into paid advertising or partner services, the cost is passed through
+          at the price the vendor charges us. We do not earn a margin on add-ons.
         </p>
       </div>
     </section>
   )
 }
 
-/* ─── Annual cost worked example: two-column ledger ─────────────────────────── */
+/* ─── Worked examples: three engagement archetypes ──────────────────────────── */
 
-function AnnualScenario() {
-  // Scenario: $2,800/mo Toronto condo, 12-month lease, Full-Service plan
-  const monthlyRent = 2800
-  const leasingFee = monthlyRent
-  const monthlyMgmt = Math.round(monthlyRent * 0.08)
-  const annualMgmt = monthlyMgmt * 12
-  const movesmartTotal = leasingFee + annualMgmt
-  const annualGross = monthlyRent * 12
-  const movesmartAllIn = movesmartTotal + 1400
+const WORKED_EXAMPLES = [
+  {
+    tag: 'Engagement A',
+    title: 'Single Toronto condo.',
+    setup:
+      'A two-bedroom condo at $3,200/month. Owner is relocating and needs a qualified tenant before closing on a new property.',
+    fee: 'Success fee equivalent to one month rent.',
+    timing: 'Invoiced once, on signed lease. Typically deducted from first month\u2019s rent so nothing comes from your bank account.',
+    upfront: '$0',
+    recurring: 'None. We do not manage the unit after placement unless engaged separately.',
+  },
+  {
+    tag: 'Engagement B',
+    title: 'Townhouse portfolio (4 units).',
+    setup:
+      'An owner with four townhouses across the GTA, three turning over within ninety days. A coordinated lease-up calendar reduces vacancy weeks.',
+    fee: 'Per-unit success fee with a portfolio discount applied. Quoted in writing before work begins.',
+    timing: 'Each fee invoiced as its corresponding unit is leased - not all upfront.',
+    upfront: '$0',
+    recurring: 'None.',
+  },
+  {
+    tag: 'Engagement C',
+    title: 'Institutional lease-up.',
+    setup:
+      'A property management company or builder bringing 40+ units to market on a defined absorption schedule. Custom service scope: dedicated agent team, onsite leasing office option, weekly absorption reporting.',
+    fee: 'Custom pricing, structured per RFP - commonly a blend of monthly engagement allowance plus per-lease success fee.',
+    timing: 'Defined in master services agreement. Not billed against this published schedule.',
+    upfront: 'Per RFP',
+    recurring: 'Per RFP',
+  },
+] as const
 
-  const movesmart = [
-    { label: 'Leasing fee (one-time)', value: leasingFee },
-    { label: 'Monthly management (8% × 12)', value: annualMgmt },
-    { label: 'Setup, marketing, photography', value: 0 },
-    { label: 'Vacancy carrying cost (2-week avg)', value: 1400 },
-  ]
-
-  const diy = [
-    { label: 'Vacancy: avg 6 weeks vs our 2 weeks', value: 2800 },
-    { label: 'Listing & screening services (Naborly + Buildium)', value: 480 },
-    { label: 'Owner time: 80 hrs/yr at $50/hr', value: 4000 },
-    { label: 'Eviction risk reserve (3% of annual rent)', value: 1008 },
-    { label: 'One emergency vendor markup (no network)', value: 350 },
-  ]
-  const diyTotal = diy.reduce((s, x) => s + x.value, 0)
-  const netSaved = diyTotal - movesmartAllIn
-
+function WorkedExamples() {
   return (
     <section
       className="relative overflow-hidden py-20 lg:py-28"
@@ -570,129 +569,234 @@ function AnnualScenario() {
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <RevealOnScroll variant="slideUp" duration={0.7}>
           <p className="font-sans text-[11px] font-bold uppercase tracking-[0.28em] text-brand-gold">
-            &sect; 04 &middot; Worked example
+            &sect; 04 &middot; Worked examples
           </p>
           <h2 className="mt-3 max-w-4xl font-display text-4xl font-normal leading-[1.05] text-white sm:text-5xl">
-            One year, $<CountUp value={2800} />/mo Toronto
-            <span className="font-display italic text-brand-emerald"> condo</span>
+            Three engagements. One pricing
+            <span className="font-display italic text-brand-emerald"> philosophy</span>
             <span className="text-brand-gold">.</span>
           </h2>
           <p className="mt-4 max-w-2xl font-serif text-base leading-relaxed text-white/65">
-            What it actually costs to put us on a property for twelve months &mdash; versus what it
-            actually costs to do it yourself. Real numbers, no marketing math.
+            How the success-fee model lands across a single condo, a small portfolio, and an
+            institutional lease-up program.
           </p>
         </RevealOnScroll>
 
-        {/* Two-column ledger */}
-        <div className="mt-14 grid grid-cols-1 gap-x-12 gap-y-12 lg:grid-cols-2">
-          {/* MoveSmart column */}
-          <div>
-            <RevealOnScroll variant="slideUp" duration={0.6}>
-              <div className="flex items-baseline justify-between border-b-2 border-double border-brand-emerald/40 pb-3">
-                <p className="font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-300">
-                  With MoveSmart &middot; Full-Service
-                </p>
-                <p className="font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-white/40">
-                  CAD
-                </p>
-              </div>
-            </RevealOnScroll>
+        <div className="mt-14 border-t-2 border-double border-brand-gold/30" />
 
-            <RevealOnScroll variant="slideUp" stagger={0.06} duration={0.5}>
-              {movesmart.map((row) => (
-                <div
-                  key={row.label}
-                  className="grid grid-cols-12 items-baseline gap-3 border-b border-white/10 py-4"
-                >
-                  <p className="col-span-8 font-serif text-sm leading-snug text-white/75">
-                    {row.label}
-                  </p>
-                  <p className="col-span-4 text-right font-display text-lg text-white">
-                    $<CountUp value={row.value} />
-                  </p>
-                </div>
-              ))}
-            </RevealOnScroll>
-
-            <RevealOnScroll variant="slideUp" duration={0.6} delay={0.3}>
-              <div className="grid grid-cols-12 items-baseline gap-3 border-t-2 border-double border-brand-emerald/50 pt-4">
-                <p className="col-span-7 font-display text-lg font-bold text-white sm:text-xl">
-                  All-in annual cost
+        <RevealOnScroll variant="slideUp" stagger={0.12} duration={0.6}>
+          {WORKED_EXAMPLES.map((ex) => (
+            <div
+              key={ex.tag}
+              className="grid grid-cols-12 gap-6 border-b border-white/10 py-12 last:border-b-0"
+            >
+              <div className="col-span-12 sm:col-span-3">
+                <p className="font-sans text-[10px] font-bold uppercase tracking-[0.28em] text-brand-gold">
+                  {ex.tag}
                 </p>
-                <p className="col-span-5 text-right font-display text-3xl text-brand-emerald sm:text-4xl">
-                  $<CountUp value={movesmartAllIn} />
-                </p>
+                <h3 className="mt-2 font-display text-2xl italic leading-tight text-white sm:text-3xl">
+                  {ex.title}
+                </h3>
               </div>
-              <p className="mt-3 font-serif text-xs italic leading-relaxed text-white/55">
-                Includes screening, lease, rent collection, year-end statement, mid-lease inspection,
-                and a real human answering the phone. Roughly{' '}
-                <CountUp value={Number(((movesmartTotal / annualGross) * 100).toFixed(1))} suffix="%" />{' '}
-                of your $<CountUp value={annualGross} /> annual rent. Industry average is 12&ndash;18%.
-              </p>
-            </RevealOnScroll>
+              <div className="col-span-12 sm:col-span-9">
+                <p className="font-serif text-base leading-[1.7] text-white/80 sm:text-[17px]">
+                  {ex.setup}
+                </p>
+
+                <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
+                  <div>
+                    <dt className="font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-300">
+                      Fee structure
+                    </dt>
+                    <dd className="mt-1 font-serif text-sm leading-relaxed text-white/80">
+                      {ex.fee}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-300">
+                      Timing
+                    </dt>
+                    <dd className="mt-1 font-serif text-sm leading-relaxed text-white/80">
+                      {ex.timing}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-300">
+                      Due upfront
+                    </dt>
+                    <dd className="mt-1 font-display text-2xl text-white">{ex.upfront}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-300">
+                      Recurring
+                    </dt>
+                    <dd className="mt-1 font-display text-2xl text-white">{ex.recurring}</dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          ))}
+        </RevealOnScroll>
+
+        <div className="border-t-2 border-double border-brand-gold/30" />
+
+        <RevealOnScroll variant="scaleIn" duration={0.8} delay={0.1}>
+          <p className="mt-10 text-center font-serif text-base italic leading-relaxed text-white/70">
+            Every engagement is quoted in writing before work begins. No surprises, no escalators.
+          </p>
+        </RevealOnScroll>
+      </div>
+    </section>
+  )
+}
+
+/* ─── Comparison: MoveSmart vs. traditional PM vs. DIY ──────────────────────── */
+
+interface CompareRow {
+  label: string
+  movesmart: string
+  traditional: string
+  diy: string
+}
+
+const COMPARE_ROWS: CompareRow[] = [
+  {
+    label: 'Upfront cost',
+    movesmart: '$0',
+    traditional: 'Setup + onboarding fee common',
+    diy: 'Listing fees, screening tools, paid ads',
+  },
+  {
+    label: 'Recurring monthly fee',
+    movesmart: 'None - we are a leasing brokerage',
+    traditional: 'Percentage of monthly rent, every month',
+    diy: 'None, but you carry the ongoing time cost',
+  },
+  {
+    label: 'When you pay',
+    movesmart: 'Once, on signed lease',
+    traditional: 'Every month for the life of the contract',
+    diy: 'On every transaction - plus your hours',
+  },
+  {
+    label: 'Vacancy alignment',
+    movesmart: 'We earn nothing until a tenant signs',
+    traditional: 'Some plans charge during vacancy',
+    diy: 'You absorb the entire vacancy cost',
+  },
+  {
+    label: 'Tenant Replacement Guarantee',
+    movesmart: 'Included - first six months',
+    traditional: 'Varies by provider',
+    diy: 'You start over from scratch',
+  },
+  {
+    label: 'Vendor markup on repairs',
+    movesmart: 'Not applicable - we do not manage',
+    traditional: 'Often 10-20% markup',
+    diy: 'None, but you source every vendor',
+  },
+  {
+    label: 'Cancellation',
+    movesmart: '30-day notice. No clawback.',
+    traditional: 'Often 60-120 days, with exit fees',
+    diy: 'Anytime',
+  },
+]
+
+function ComparisonTable() {
+  return (
+    <section className="bg-white py-20 lg:py-28">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <RevealOnScroll variant="slideUp" duration={0.7}>
+          <p className="font-sans text-[11px] font-bold uppercase tracking-[0.28em] text-brand-navy/55">
+            &sect; 05 &middot; How we compare
+          </p>
+          <h2 className="mt-3 max-w-4xl font-display text-4xl font-normal leading-[1.05] text-brand-navy sm:text-5xl">
+            Success-fee leasing vs. monthly management vs.
+            <span className="font-display italic text-brand-emerald"> doing it yourself</span>
+            <span className="text-brand-gold">.</span>
+          </h2>
+          <p className="mt-4 max-w-2xl font-serif text-base leading-relaxed text-slate-600">
+            We are not a property manager. We are a white-glove leasing brokerage. Here is how the
+            three options actually compare on cost, alignment, and risk.
+          </p>
+        </RevealOnScroll>
+
+        {/* Desktop table */}
+        <div className="mt-12 hidden border-t-2 border-double border-brand-navy/30 md:block">
+          <div className="grid grid-cols-12 gap-4 border-b border-brand-navy/15 py-4">
+            <div className="col-span-3 font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-brand-navy/55">
+              Dimension
+            </div>
+            <div className="col-span-3 font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+              MoveSmart leasing brokerage
+            </div>
+            <div className="col-span-3 font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-brand-navy/55">
+              Traditional property manager
+            </div>
+            <div className="col-span-3 font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-brand-navy/55">
+              Do-it-yourself
+            </div>
           </div>
 
-          {/* DIY column */}
-          <div>
-            <RevealOnScroll variant="slideUp" duration={0.6}>
-              <div className="flex items-baseline justify-between border-b-2 border-double border-brand-gold/40 pb-3">
-                <p className="font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-brand-gold">
-                  Doing it yourself &middot; hidden costs
+          <RevealOnScroll variant="slideUp" stagger={0.05} duration={0.5}>
+            {COMPARE_ROWS.map((row) => (
+              <div
+                key={row.label}
+                className="grid grid-cols-12 items-baseline gap-4 border-b border-brand-navy/10 py-5"
+              >
+                <p className="col-span-3 font-display text-base font-normal text-brand-navy sm:text-lg">
+                  {row.label}
                 </p>
-                <p className="font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-white/40">
-                  CAD
+                <p className="col-span-3 font-serif text-sm leading-relaxed text-brand-navy">
+                  <span className="font-semibold">{row.movesmart}</span>
                 </p>
-              </div>
-            </RevealOnScroll>
-
-            <RevealOnScroll variant="slideUp" stagger={0.06} duration={0.5}>
-              {diy.map((row) => (
-                <div
-                  key={row.label}
-                  className="grid grid-cols-12 items-baseline gap-3 border-b border-white/10 py-4"
-                >
-                  <p className="col-span-8 font-serif text-sm leading-snug text-white/75">
-                    {row.label}
-                  </p>
-                  <p className="col-span-4 text-right font-display text-lg text-white">
-                    $<CountUp value={row.value} />
-                  </p>
-                </div>
-              ))}
-            </RevealOnScroll>
-
-            <RevealOnScroll variant="slideUp" duration={0.6} delay={0.3}>
-              <div className="grid grid-cols-12 items-baseline gap-3 border-t-2 border-double border-brand-gold/50 pt-4">
-                <p className="col-span-7 font-display text-lg font-bold text-white sm:text-xl">
-                  Real cost of DIY
+                <p className="col-span-3 font-serif text-sm italic leading-relaxed text-slate-500">
+                  {row.traditional}
                 </p>
-                <p className="col-span-5 text-right font-display text-3xl text-brand-gold sm:text-4xl">
-                  $<CountUp value={diyTotal} />
+                <p className="col-span-3 font-serif text-sm italic leading-relaxed text-slate-500">
+                  {row.diy}
                 </p>
               </div>
-              <p className="mt-3 font-serif text-xs italic leading-relaxed text-white/55">
-                Estimates based on Ontario averages: CMHC vacancy data, CRA hourly time-value, tenant
-                insurance industry eviction reserves, and Naborly/Buildium list pricing.
-              </p>
-            </RevealOnScroll>
-          </div>
+            ))}
+          </RevealOnScroll>
+          <div className="border-t-2 border-double border-brand-navy/30" />
         </div>
 
-        {/* Net difference - typographic line, no card */}
-        <RevealOnScroll variant="scaleIn" duration={0.8} delay={0.2}>
-          <div className="mt-16 border-y-2 border-double border-brand-gold/40 py-8 text-center">
-            <p className="font-sans text-[10px] font-bold uppercase tracking-[0.28em] text-brand-gold">
-              Net difference in your favour
-            </p>
-            <p className="mt-3 font-display text-5xl font-normal italic text-white sm:text-7xl">
-              $<CountUp value={netSaved} />
-              <span className="text-brand-gold">.</span>
-            </p>
-            <p className="mt-3 font-serif text-base italic text-white/70">
-              And your weekends back.
-            </p>
-          </div>
-        </RevealOnScroll>
+        {/* Mobile: stacked per row */}
+        <div className="mt-12 border-t-2 border-double border-brand-navy/30 md:hidden">
+          <RevealOnScroll variant="slideUp" stagger={0.05} duration={0.5}>
+            {COMPARE_ROWS.map((row) => (
+              <div key={row.label} className="border-b border-brand-navy/10 py-5">
+                <p className="font-display text-lg font-normal text-brand-navy">{row.label}</p>
+                <dl className="mt-3 space-y-2">
+                  <div>
+                    <dt className="font-sans text-[10px] font-bold uppercase tracking-[0.18em] text-brand-emerald">
+                      MoveSmart
+                    </dt>
+                    <dd className="mt-0.5 font-serif text-sm text-brand-navy">{row.movesmart}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-sans text-[10px] font-bold uppercase tracking-[0.18em] text-brand-navy/55">
+                      Traditional PM
+                    </dt>
+                    <dd className="mt-0.5 font-serif text-sm italic text-slate-500">
+                      {row.traditional}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="font-sans text-[10px] font-bold uppercase tracking-[0.18em] text-brand-navy/55">
+                      Do-it-yourself
+                    </dt>
+                    <dd className="mt-0.5 font-serif text-sm italic text-slate-500">{row.diy}</dd>
+                  </div>
+                </dl>
+              </div>
+            ))}
+          </RevealOnScroll>
+          <div className="border-t-2 border-double border-brand-navy/30" />
+        </div>
       </div>
     </section>
   )
@@ -702,19 +806,19 @@ function AnnualScenario() {
 
 const PRICING_GUARANTEES = [
   {
-    title: 'Tenant Replacement.',
+    title: 'Tenant Replacement Guarantee.',
     body:
-      'If a tenant we placed breaks their lease in the first six months, we re-lease the unit at no cost to you. We cover advertising, screening, and lease prep again \u2014 the new leasing fee is waived. You only pay the management fee on rent we actually collect during the gap.',
+      'If a tenant we placed breaks the lease in the first six months, we re-lease the unit at no additional success fee. We carry advertising, screening, and lease prep again. Our economics absorb the cost, not yours.',
   },
   {
-    title: 'Rent Protection (Premium).',
+    title: 'No-Placement, No-Fee Promise.',
     body:
-      'On the Premium plan, if a screened tenant misses rent, we cover the payment while the matter is resolved through the tribunal or collections process. Up to six months of cover, deposited into your account on schedule, so your cash flow doesn\u2019t pause while the legal process unfolds.',
+      'You owe nothing if we fail to place a qualified tenant. There is no kill-fee, no time-and-materials clawback, no minimum spend. Our risk is real and contractual - spelled out in writing before you sign anything.',
   },
   {
-    title: 'Satisfaction & Exit.',
+    title: 'Transparent Exit.',
     body:
-      'Thirty-day notice cancellation, no exit fee, no clawback of paid management. If we don\u2019t earn the next month, you don\u2019t owe one. We hand off all tenant records, leases, and security deposits within seven days of cancellation.',
+      'Engagements end on 30-day written notice from either party. There is no exit fee, no clawback on a placement already earned, and we hand off all applicant records and signed documents within seven days.',
   },
 ] as const
 
@@ -724,7 +828,7 @@ function GuaranteesPanel() {
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <RevealOnScroll variant="slideUp" duration={0.7}>
           <p className="font-sans text-[11px] font-bold uppercase tracking-[0.28em] text-brand-navy/55">
-            &sect; 05 &middot; Money-back &amp; guarantees
+            &sect; 06 &middot; Money-back &amp; guarantees
           </p>
           <h2 className="mt-3 max-w-3xl font-display text-4xl font-normal leading-[1.05] text-brand-navy sm:text-5xl">
             We back the price with the
@@ -732,7 +836,8 @@ function GuaranteesPanel() {
             <span className="text-brand-gold">.</span>
           </h2>
           <p className="mt-4 max-w-2xl font-serif text-base leading-relaxed text-slate-600">
-            Each guarantee is written into the management agreement &mdash; not buried in a footer.
+            Each guarantee is written into the leasing services agreement &mdash; not buried in a
+            footer.
           </p>
         </RevealOnScroll>
 
@@ -779,7 +884,7 @@ function PricingTestimonials() {
         <RevealOnScroll variant="slideUp" duration={0.6}>
           <div className="mx-auto max-w-2xl text-center">
             <p className="font-sans text-[11px] font-bold uppercase tracking-[0.28em] text-brand-navy/55">
-              &sect; 06 &middot; Owners on our pricing
+              &sect; 07 &middot; Owners on our pricing
             </p>
             <h2 className="mt-3 font-display text-3xl font-normal leading-tight text-brand-navy sm:text-4xl">
               No surprise invoices.
@@ -787,11 +892,11 @@ function PricingTestimonials() {
               <span className="text-brand-gold">.</span>
             </h2>
             <p className="mt-4 font-serif text-base leading-relaxed text-slate-600">
-              What owners say after their first twelve months on a MoveSmart agreement.
+              What owners say about engaging a success-fee leasing brokerage instead of a
+              percentage-based property manager.
             </p>
           </div>
         </RevealOnScroll>
-        <TestimonialsSection />
       </div>
     </section>
   )
@@ -801,44 +906,49 @@ function PricingTestimonials() {
 
 const PRICING_FAQS = [
   {
-    question: 'Are there setup fees, onboarding fees, or marketing fees?',
+    question: 'Are there setup fees, onboarding fees, or any cost to get started?',
     answer:
-      'No. Setup, onboarding, photography, MLS syndication, and portal advertising are all included in the leasing fee. You pay nothing before a tenant signs.',
+      'No. Engaging MoveSmart is free. There is no setup fee, no onboarding fee, no monthly retainer, and no cost for photography, syndication, or screening. The only fee on a standard engagement is a one-time leasing success fee, charged when a qualified tenant signs the lease.',
   },
   {
-    question: 'When exactly do I pay the leasing fee?',
+    question: 'Do you charge a monthly management percentage?',
     answer:
-      'The leasing fee is invoiced after the tenant has signed the lease and paid first month\u2019s rent and deposit. It is typically deducted from that first rent payment so nothing comes out of your pocket.',
+      'No. We are a leasing brokerage, not an ongoing property manager. There is no recurring monthly fee. Once we place a qualified tenant, the engagement is complete unless you specifically engage us for a separate scope.',
+  },
+  {
+    question: 'When exactly do I pay the success fee?',
+    answer:
+      'The success fee is invoiced after the tenant signs the lease and pays first month\u2019s rent plus deposit. It is typically deducted from that first rent payment so nothing comes out of your bank account.',
+  },
+  {
+    question: 'What is included in the leasing success fee?',
+    answer:
+      'All nine pillars of our service: professional photography and video, MLS plus 40+ portal syndication, applicant screening (credit, employment, income, references, prior tenancy), coordinated showings, lease drafting and e-signing, move-in coordination, key handover, condition reporting, and the Tenant Replacement Guarantee.',
+  },
+  {
+    question: 'What costs extra?',
+    answer:
+      'Three things, all optional and clearly named: Rent Protection (guaranteed rental income coverage, quoted by our insurance partner), paid advertising beyond standard syndication (boosted listings or premium portal placements, owner pre-approves), and Institutional Lease-Up engagements for property management companies, builders, or developers, which are scoped per RFP.',
   },
   {
     question: 'What happens if my tenant breaks the lease early?',
     answer:
-      'If a tenant we placed breaks the lease within the first six months, we re-lease the property at no additional leasing fee. We cover advertising, screening and lease prep again \u2014 you only pay the management fee on rent we actually collect.',
+      'If a tenant we placed breaks the lease within the first six months, we re-lease the property at no additional success fee under our Tenant Replacement Guarantee. We cover advertising, screening, and lease preparation again.',
   },
   {
-    question: 'Are repair vendors and contractors marked up?',
+    question: 'Do you work with builders, developers, or property management companies?',
     answer:
-      'No. Every contractor invoice is passed through at the price our vendor charges us, with the original invoice attached to your monthly statement. We do not earn any margin on repairs, turnover work, or emergency callouts.',
-  },
-  {
-    question: 'Is the management fee deducted automatically from rent?',
-    answer:
-      'Yes. The 8% (Full-Service) or 10% (Premium) management fee is netted from the rent we collect each month, and the remainder is deposited into your account along with a statement showing every line item.',
-  },
-  {
-    question: 'Do you charge a management fee during vacant months?',
-    answer:
-      'No. The management fee is a percentage of rent collected. If we don\u2019t collect rent that month, you don\u2019t pay management. We only earn when you do.',
+      'Yes. Institutional lease-up engagements are scoped per RFP - commonly a blend of monthly engagement allowance plus per-lease success fee, with custom service scope (dedicated agent team, onsite leasing office option, weekly absorption reporting). Contact us for an institutional quote.',
   },
   {
     question: 'What are the cancellation terms?',
     answer:
-      'Either party can cancel with 30 days\u2019 written notice. There is no exit fee, no clawback of past management fees, and we hand off all tenant records, leases, and security deposits within seven days.',
+      'Either party can cancel with 30 days\u2019 written notice. There is no exit fee, and no clawback on a placement already earned. We hand off all applicant records and signed documents within seven days.',
   },
   {
-    question: 'Is GST/HST/PST included in the fees shown?',
+    question: 'Is GST/HST included in the fees shown?',
     answer:
-      'No. All fees on this page are quoted before tax. Applicable GST/HST (Canada) or state/local taxes (US) are added to your monthly statement and are itemized separately so your accountant can claim them as input tax credits where eligible.',
+      'No. All fees on this page are quoted before tax. Applicable GST/HST is added to your invoice and itemized separately so your accountant can claim input tax credits where eligible.',
   },
 ]
 
@@ -860,17 +970,11 @@ export function PricingContent() {
       {/* 1. Hero - editorial PageHeroBlock with typographic aside */}
       <PageHeroBlock
         kicker="Pricing"
-        eyebrow="Transparent. Performance-Based."
-        headline="Pay Nothing Until We Lease It."
-        lede="Two fees, both earned. A one-time leasing fee when a qualified tenant signs, and a flat percentage of monthly rent we actually collect. No setup fee, no marketing surcharge, no vendor markups, and no charge for vacant months."
-        cta1={{ label: 'Get Free Rental Analysis', href: '/contact/' }}
-        cta2={{ label: 'Talk to an Advisor', href: '/contact/' }}
-        meta={[
-          { label: 'Setup fee', value: '$0' },
-          { label: 'Cancel anytime', value: '30 days' },
-          { label: 'Hidden fees', value: 'None' },
-          { label: 'Lease guarantee', value: '6 months' },
-        ]}
+        eyebrow="Zero Upfront. Success-Fee Leasing."
+        headline="Pay Nothing Until We Place a Tenant."
+        lede="MoveSmart is a white-glove leasing brokerage. There is no setup fee, no monthly retainer, no management percentage. You pay a single one-time success fee - typically equivalent to one month of rent - only when a qualified tenant signs the lease."
+        cta1={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
+        cta2={{ label: 'Book a Call', href: '/contact/?type=owner&intent=call' }}
         aside={<HeroAtAGlance />}
       />
 
@@ -886,24 +990,27 @@ export function PricingContent() {
       {/* 5. Rent calculator (existing component) */}
       <RentCalculator />
 
-      {/* 6. Annual cost worked scenario - two-column ledger */}
-      <AnnualScenario />
+      {/* 6. Worked examples - three engagement archetypes */}
+      <WorkedExamples />
 
-      {/* 7. Money-back & guarantees - vertical numbered notes */}
+      {/* 7. Comparison table - MoveSmart vs. PM vs. DIY */}
+      <ComparisonTable />
+
+      {/* 8. Money-back & guarantees - vertical numbered notes */}
       <GuaranteesPanel />
 
-      {/* 8. Testimonials */}
+      {/* 9. Testimonials */}
       <PricingTestimonials />
 
-      {/* 9. FAQ */}
-      <FAQBlock questions={PRICING_FAQS} title={'Pricing & Fees \u2014 Frequently Asked'} />
+      {/* 10. FAQ */}
+      <FAQBlock questions={PRICING_FAQS} title={'Pricing & Fees - Frequently Asked'} />
 
-      {/* 10. CTA Banner - pricing-specific */}
+      {/* 11. CTA Banner - pricing-specific */}
       <CTABannerBlock
-        headline="See your number before you sign anything."
-        description={'Get a free rental analysis with a no-fee placement quote for your address \u2014 typically back to you within one business day.'}
-        primaryCta={{ label: 'Get My Free Quote', href: '/contact/' }}
-        secondaryCta={{ label: 'Speak to an Advisor', href: '/contact/' }}
+        headline="Get a written success-fee quote before you commit."
+        description={'Open a free account and we\u2019ll send a no-fee placement quote tailored to your address - typically back to you within one business day.'}
+        primaryCta={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
+        secondaryCta={{ label: 'Book a Call', href: '/contact/?type=owner&intent=call' }}
       />
     </main>
   )

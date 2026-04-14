@@ -1,435 +1,309 @@
 'use client'
 
 import Link from 'next/link'
-import { motion, useInView, useReducedMotion } from 'framer-motion'
-import { useRef } from 'react'
+import { useMemo, useState } from 'react'
 
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
-import { CountUp } from '@/components/ui/count-up'
-
-const EASE = [0.22, 1, 0.36, 1] as const
 
 // ─────────────────────────────────────────────────────────────
-// Shared types
+// Shared data shapes
 // ─────────────────────────────────────────────────────────────
 
-export interface ProvinceEntry {
-  _id: string
-  title: string
+export interface ProvinceCard {
+  name: string
   slug: string
-  country: string
-  cities: Array<{
-    title: string
-    slug: string
-    provinceSlug?: string
-  }>
+  country: 'CA'
+  cityCount: number
+  note: string
+  positioning: string
+}
+
+export interface StateCard {
+  name: string
+  slug: string
+  cityCount: number
+  note: string
+  positioning: string
+  status: 'Now live' | 'Coverage rolling out'
+}
+
+export interface OntarioCity {
+  name: string
+  slug: string
+  marketNote: string
+}
+
+export interface USCity {
+  name: string
+  slug: string
+  state: string
+  stateSlug: string
 }
 
 // ─────────────────────────────────────────────────────────────
-// Typographic headline with letter-spacing cascade
+// Canada - Province Grid
 // ─────────────────────────────────────────────────────────────
 
-function TypographicHeading({
-  children,
-  className,
-  as: Tag = 'h2',
-}: {
-  children: React.ReactNode
-  className?: string
-  as?: 'h2' | 'h3'
-}) {
-  const reduce = useReducedMotion()
-  const ref = useRef<HTMLHeadingElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
-
-  const MotionTag = Tag === 'h2' ? motion.h2 : motion.h3
-
+export function ProvinceGrid({ provinces }: { provinces: ProvinceCard[] }) {
   return (
-    <MotionTag
-      ref={ref}
-      initial={reduce ? false : { opacity: 0, letterSpacing: '0.1em' }}
-      animate={
-        inView
-          ? { opacity: 1, letterSpacing: '0.01em' }
-          : { opacity: 0, letterSpacing: '0.1em' }
-      }
-      transition={{ duration: 0.9, ease: EASE }}
-      className={className}
-    >
-      {children}
-    </MotionTag>
-  )
-}
-
-// ─────────────────────────────────────────────────────────────
-// Editorial inline city list (cascades left-to-right)
-// ─────────────────────────────────────────────────────────────
-
-function InlineCityList({
-  cities,
-  allHref,
-  allLabel,
-  theme = 'light',
-}: {
-  cities: Array<{ title: string; slug: string; href: string }>
-  allHref: string
-  allLabel: string
-  theme?: 'light' | 'dark'
-}) {
-  const reduce = useReducedMotion()
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-40px' })
-
-  const linkBase =
-    theme === 'dark'
-      ? 'text-white/80 hover:text-brand-gold transition-colors duration-200'
-      : 'text-brand-navy/85 hover:text-brand-emerald transition-colors duration-200'
-  const sepColor =
-    theme === 'dark' ? 'text-white/25' : 'text-brand-navy/25'
-  const allLinkColor =
-    theme === 'dark'
-      ? 'text-brand-gold hover:text-white'
-      : 'text-brand-emerald hover:text-brand-navy'
-
-  return (
-    <div
-      ref={ref}
-      className="flex flex-wrap items-baseline gap-x-2 gap-y-1 font-heading text-base leading-relaxed sm:text-lg"
-    >
-      {cities.map((city, i) => (
-        <motion.span
-          key={city.slug}
-          initial={reduce ? false : { opacity: 0, y: 4 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 4 }}
-          transition={{ duration: 0.45, delay: i * 0.03, ease: EASE }}
-          className="inline-flex items-baseline gap-x-2"
-        >
-          <Link href={city.href} className={linkBase}>
-            {city.title}
-          </Link>
-          <span className={sepColor} aria-hidden="true">
-            ·
-          </span>
-        </motion.span>
-      ))}
-      <motion.span
-        initial={reduce ? false : { opacity: 0, y: 4 }}
-        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 4 }}
-        transition={{
-          duration: 0.45,
-          delay: cities.length * 0.03,
-          ease: EASE,
-        }}
-      >
-        <Link
-          href={allHref}
-          className={`font-semibold ${allLinkColor}`}
-        >
-          {allLabel}
-        </Link>
-      </motion.span>
-    </div>
-  )
-}
-
-// ─────────────────────────────────────────────────────────────
-// Province row - large typographic header + inline city list
-// ─────────────────────────────────────────────────────────────
-
-export function ProvinceRow({
-  province,
-  theme = 'light',
-  index = 0,
-}: {
-  province: ProvinceEntry
-  theme?: 'light' | 'dark'
-  index?: number
-}) {
-  const reduce = useReducedMotion()
-  const headingRef = useRef<HTMLHeadingElement>(null)
-  const inView = useInView(headingRef, { once: true, margin: '-80px' })
-
-  const countryPath = province.country === 'CA' ? 'ca' : 'us'
-  const allHref = `/${countryPath}/${province.slug}/`
-  const citiesWithHref = province.cities.map((c) => ({
-    ...c,
-    href: `/${countryPath}/${province.slug}/${c.slug}/`,
-  }))
-
-  const titleClass =
-    theme === 'dark'
-      ? 'font-display text-3xl font-normal text-white sm:text-4xl lg:text-5xl'
-      : 'font-display text-3xl font-normal text-brand-navy sm:text-4xl lg:text-5xl'
-
-  const kickerClass =
-    theme === 'dark'
-      ? 'text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-gold'
-      : 'text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-emerald'
-
-  const ruleClass =
-    theme === 'dark' ? 'bg-white/15' : 'bg-brand-navy/15'
-
-  const countLabelClass =
-    theme === 'dark' ? 'text-white/50' : 'text-brand-navy/50'
-
-  return (
-    <motion.div
-      ref={headingRef}
-      initial={reduce ? false : { opacity: 0, y: 60 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
-      transition={{ duration: 0.7, delay: index * 0.05, ease: EASE }}
-      className="py-10 first:pt-0 last:pb-0"
-    >
-      <div className="mb-5 flex items-baseline justify-between gap-6">
-        <div className="min-w-0">
-          <p className={`mb-2 ${kickerClass}`}>
-            {province.country === 'CA' ? 'Province' : 'State'} · {province.cities.length}{' '}
-            {province.cities.length === 1 ? 'city' : 'cities'}
-          </p>
-          <TypographicHeading className={titleClass}>
-            {province.title}
-          </TypographicHeading>
-        </div>
-        <span
-          className={`hidden shrink-0 font-heading text-sm ${countLabelClass} md:inline`}
-        >
-          {String(index + 1).padStart(2, '0')}
-        </span>
-      </div>
-
-      <div className={`mb-5 h-px w-full ${ruleClass}`} aria-hidden="true" />
-
-      <InlineCityList
-        cities={citiesWithHref}
-        allHref={allHref}
-        allLabel={`All ${province.title} →`}
-        theme={theme}
-      />
-    </motion.div>
-  )
-}
-
-// ─────────────────────────────────────────────────────────────
-// Featured city spotlight - two-column editorial
-// ─────────────────────────────────────────────────────────────
-
-export interface SpotlightData {
-  city: string
-  province: string
-  href: string
-  summary: string
-  neighborhoods: Array<{ name: string; note: string }>
-}
-
-export function CitySpotlight({
-  data,
-  index = 0,
-}: {
-  data: SpotlightData
-  index?: number
-}) {
-  const reduce = useReducedMotion()
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-60px' })
-
-  return (
-    <motion.article
-      ref={ref}
-      initial={reduce ? false : { opacity: 0, filter: 'blur(10px)', y: -20 }}
-      animate={
-        inView
-          ? { opacity: 1, filter: 'blur(0px)', y: 0 }
-          : { opacity: 0, filter: 'blur(10px)', y: -20 }
-      }
-      transition={{ duration: 0.8, delay: index * 0.1, ease: EASE }}
-      className="grid grid-cols-1 gap-8 border-t border-brand-navy/10 py-12 first:border-t-0 lg:grid-cols-12 lg:gap-12"
-    >
-      <div className="lg:col-span-6">
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
-          Spotlight · {data.province}
-        </p>
-        <h3 className="font-display text-4xl font-normal leading-[1.05] text-brand-navy sm:text-5xl">
-          {data.city}
-          <span className="text-brand-gold" aria-hidden="true">
-            .
-          </span>
-        </h3>
-        <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-600 md:text-lg">
-          {data.summary}
-        </p>
-        <Link
-          href={data.href}
-          className="mt-6 inline-flex items-center gap-2 font-heading text-sm font-semibold text-brand-emerald transition-colors hover:text-brand-navy"
-        >
-          Explore {data.city} rentals
-          <span aria-hidden="true">→</span>
-        </Link>
-      </div>
-
-      <div className="lg:col-span-6">
-        <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-navy/60">
-          Top neighborhoods
-        </p>
-        <ul>
-          {data.neighborhoods.map((n, i) => (
-            <motion.li
-              key={n.name}
-              initial={reduce ? false : { opacity: 0, x: -12 }}
-              animate={
-                inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -12 }
-              }
-              transition={{
-                duration: 0.45,
-                delay: 0.15 + i * 0.06,
-                ease: EASE,
-              }}
-              className="flex items-baseline justify-between gap-6 border-b border-brand-navy/10 py-3 last:border-b-0"
-            >
-              <span className="font-heading text-base font-semibold text-brand-navy">
-                {n.name}
-              </span>
-              <span className="shrink-0 text-right text-sm text-slate-500">
-                {n.note}
-              </span>
-            </motion.li>
-          ))}
-        </ul>
-      </div>
-    </motion.article>
-  )
-}
-
-// ─────────────────────────────────────────────────────────────
-// Market snapshot strip - editorial pipe-divided, NOT cards
-// ─────────────────────────────────────────────────────────────
-
-export interface SnapshotStat {
-  label: string
-  value: number
-  prefix?: string
-  suffix?: string
-  /** Fallback display text if value not countable (e.g. "All 10") */
-  text?: string
-}
-
-export function MarketSnapshot({ stats }: { stats: SnapshotStat[] }) {
-  return (
-    <RevealOnScroll variant="fade" duration={0.9}>
-      <div className="mx-auto max-w-6xl px-4">
-        <p className="mb-6 text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
-          Market snapshot
-        </p>
-        <div className="flex flex-col items-center justify-center gap-y-6 border-y border-brand-navy/10 py-8 md:flex-row md:items-baseline md:gap-x-0">
-          {stats.map((s, i) => (
+    <RevealOnScroll variant="fade" duration={0.8}>
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {provinces.map((p) => (
+          <Link
+            key={p.slug}
+            href={`/ca/${p.slug}/`}
+            className="group relative flex flex-col rounded-2xl border border-brand-navy/10 bg-white p-7 transition-all duration-300 hover:border-brand-emerald/40 hover:shadow-[0_24px_48px_-28px_rgba(10,46,37,0.35)]"
+          >
             <div
-              key={s.label}
-              className="flex flex-1 items-baseline justify-center gap-0 px-6 text-center md:px-8"
-              style={{
-                borderLeft:
-                  i > 0 ? '1px solid rgba(11,29,58,0.12)' : undefined,
-              }}
-            >
+              aria-hidden="true"
+              className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/60 to-transparent"
+            />
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
+              Province
+            </p>
+            <h3 className="mt-3 font-display text-2xl font-normal leading-tight text-brand-navy sm:text-3xl">
+              {p.name}
+              <span className="text-brand-gold" aria-hidden="true">
+                .
+              </span>
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              {p.positioning}
+            </p>
+            <div className="mt-6 flex items-end justify-between border-t border-brand-navy/10 pt-4">
               <div>
-                <p className="font-display text-3xl font-normal text-brand-navy md:text-4xl">
-                  {s.text ? (
-                    s.text
-                  ) : (
-                    <CountUp
-                      value={s.value}
-                      prefix={s.prefix}
-                      suffix={s.suffix}
-                    />
-                  )}
+                <p className="font-display text-2xl font-normal text-brand-navy">
+                  {p.cityCount}+
                 </p>
-                <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
-                  {s.label}
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+                  Tier-1 cities
                 </p>
               </div>
+              <span className="font-heading text-sm font-semibold text-brand-emerald transition-colors group-hover:text-brand-navy">
+                Explore {p.name} <span aria-hidden="true">→</span>
+              </span>
             </div>
-          ))}
-        </div>
+          </Link>
+        ))}
       </div>
     </RevealOnScroll>
   )
 }
 
 // ─────────────────────────────────────────────────────────────
-// Local teams - horizontal editorial lockup list
+// Ontario - searchable tier-1 city grid
 // ─────────────────────────────────────────────────────────────
 
-export interface Advisor {
-  name: string
-  city: string
-  phone: string
-  role: string
-}
+export function OntarioCityDirectory({ cities }: { cities: OntarioCity[] }) {
+  const [query, setQuery] = useState('')
 
-export function LocalTeamsList({ advisors }: { advisors: Advisor[] }) {
-  const reduce = useReducedMotion()
-  const ref = useRef<HTMLUListElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-40px' })
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    if (!q) return cities
+    return cities.filter(
+      (c) =>
+        c.name.toLowerCase().includes(q) ||
+        c.marketNote.toLowerCase().includes(q),
+    )
+  }, [cities, query])
 
   return (
-    <ul
-      ref={ref}
-      className="grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3 lg:grid-cols-6"
-    >
-      {advisors.map((a, i) => (
-        <motion.li
-          key={a.name}
-          initial={reduce ? false : { opacity: 0, y: 12 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-          transition={{ duration: 0.5, delay: i * 0.06, ease: EASE }}
-          className="border-t border-brand-navy/15 pt-4"
-        >
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-brand-emerald">
-            {a.city}
+    <div>
+      <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+        <p className="font-heading text-sm text-slate-600">
+          <span className="font-semibold text-brand-navy">{cities.length}</span>{' '}
+          tier-1 Ontario cities serviced
+        </p>
+        <label className="relative block w-full max-w-xs">
+          <span className="sr-only">Filter Ontario cities</span>
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Filter cities…"
+            className="w-full rounded-full border border-brand-navy/15 bg-white px-5 py-2.5 font-heading text-sm text-brand-navy placeholder:text-slate-400 focus:border-brand-emerald focus:outline-none focus:ring-2 focus:ring-brand-emerald/20"
+          />
+        </label>
+      </div>
+
+      <RevealOnScroll variant="fade" duration={0.7}>
+        {filtered.length === 0 ? (
+          <p className="rounded-2xl border border-dashed border-brand-navy/15 bg-white/60 p-8 text-center font-heading text-sm text-slate-500">
+            No Ontario cities match &ldquo;{query}&rdquo;. Try a different
+            filter, or browse the full list.
           </p>
-          <p className="mt-2 font-display text-xl font-normal leading-tight text-brand-navy">
-            {a.name}
-          </p>
-          <p className="mt-1 text-xs text-slate-500">{a.role}</p>
-          <a
-            href={`tel:${a.phone.replace(/[^+\d]/g, '')}`}
-            className="mt-3 inline-block font-heading text-sm font-semibold text-brand-navy hover:text-brand-emerald"
-          >
-            {a.phone}
-          </a>
-        </motion.li>
-      ))}
-    </ul>
+        ) : (
+          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {filtered.map((city) => (
+              <li key={city.slug}>
+                <Link
+                  href={`/ca/ontario/${city.slug}/`}
+                  className="group flex h-full flex-col justify-between rounded-xl border border-brand-navy/10 bg-white px-5 py-4 transition-all duration-200 hover:border-brand-emerald/40 hover:bg-white hover:shadow-[0_16px_32px_-24px_rgba(10,46,37,0.35)]"
+                >
+                  <p className="font-display text-lg font-normal text-brand-navy group-hover:text-brand-emerald">
+                    {city.name}
+                  </p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                    {city.marketNote}
+                  </p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </RevealOnScroll>
+    </div>
   )
 }
 
 // ─────────────────────────────────────────────────────────────
-// Quick-jump aside for hero
+// US - State Grid (dark band)
 // ─────────────────────────────────────────────────────────────
 
-export function QuickJumpCard({
-  items,
-}: {
-  items: Array<{ label: string; href: string }>
-}) {
+export function StateGrid({ states }: { states: StateCard[] }) {
   return (
-    <div className="rounded-2xl border border-brand-navy/10 bg-white/70 p-6 shadow-sm backdrop-blur-sm">
-      <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
-        Quick jump
-      </p>
-      <ul className="divide-y divide-brand-navy/10">
-        {items.map((item) => (
-          <li key={item.href}>
-            <Link
-              href={item.href}
-              className="flex items-center justify-between py-2.5 font-heading text-sm text-brand-navy transition-colors hover:text-brand-emerald"
-            >
-              <span>{item.label}</span>
-              <span aria-hidden="true" className="text-brand-navy/40">
-                →
+    <RevealOnScroll variant="fade" duration={0.8}>
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        {states.map((s) => (
+          <Link
+            key={s.slug}
+            href={`/us/${s.slug}/`}
+            className="group relative flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:border-brand-gold/50 hover:bg-white/[0.06]"
+          >
+            <div className="flex items-center justify-between">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-gold">
+                State
+              </p>
+              <span
+                className={`rounded-full border px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
+                  s.status === 'Now live'
+                    ? 'border-brand-emerald/40 bg-brand-emerald/10 text-brand-emerald'
+                    : 'border-white/20 bg-white/5 text-white/60'
+                }`}
+              >
+                {s.status}
               </span>
-            </Link>
-          </li>
+            </div>
+            <h3 className="mt-3 font-display text-2xl font-normal leading-tight text-white sm:text-[26px]">
+              {s.name}
+              <span className="text-brand-gold" aria-hidden="true">
+                .
+              </span>
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-white/70">
+              {s.positioning}
+            </p>
+            <div className="mt-5 flex items-end justify-between border-t border-white/10 pt-4">
+              <div>
+                <p className="font-display text-xl font-normal text-white">
+                  {s.cityCount}+
+                </p>
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-white/50">
+                  Priority cities
+                </p>
+              </div>
+              <span className="font-heading text-xs font-semibold text-brand-gold transition-colors group-hover:text-white">
+                Explore <span aria-hidden="true">→</span>
+              </span>
+            </div>
+          </Link>
         ))}
-      </ul>
+      </div>
+    </RevealOnScroll>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────
+// US - Tier-1 city directory, grouped by state, searchable
+// ─────────────────────────────────────────────────────────────
+
+export function USCityDirectory({ cities }: { cities: USCity[] }) {
+  const [query, setQuery] = useState('')
+
+  const grouped = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    const filtered = q
+      ? cities.filter(
+          (c) =>
+            c.name.toLowerCase().includes(q) ||
+            c.state.toLowerCase().includes(q),
+        )
+      : cities
+    const map = new Map<string, { state: string; stateSlug: string; items: USCity[] }>()
+    for (const c of filtered) {
+      const key = c.stateSlug
+      if (!map.has(key)) {
+        map.set(key, { state: c.state, stateSlug: c.stateSlug, items: [] })
+      }
+      map.get(key)!.items.push(c)
+    }
+    return Array.from(map.values())
+  }, [cities, query])
+
+  return (
+    <div>
+      <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+        <p className="font-heading text-sm text-slate-600">
+          <span className="font-semibold text-brand-navy">{cities.length}</span>{' '}
+          priority U.S. cities across{' '}
+          <span className="font-semibold text-brand-navy">10</span> states
+        </p>
+        <label className="relative block w-full max-w-xs">
+          <span className="sr-only">Filter U.S. cities</span>
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Filter by city or state…"
+            className="w-full rounded-full border border-brand-navy/15 bg-white px-5 py-2.5 font-heading text-sm text-brand-navy placeholder:text-slate-400 focus:border-brand-emerald focus:outline-none focus:ring-2 focus:ring-brand-emerald/20"
+          />
+        </label>
+      </div>
+
+      <RevealOnScroll variant="fade" duration={0.7}>
+        {grouped.length === 0 ? (
+          <p className="rounded-2xl border border-dashed border-brand-navy/15 bg-white/60 p-8 text-center font-heading text-sm text-slate-500">
+            No U.S. cities match &ldquo;{query}&rdquo;.
+          </p>
+        ) : (
+          <div className="space-y-10">
+            {grouped.map((group) => (
+              <div key={group.stateSlug}>
+                <div className="mb-4 flex items-baseline justify-between gap-4 border-b border-brand-navy/10 pb-3">
+                  <h3 className="font-display text-xl font-normal text-brand-navy">
+                    <Link
+                      href={`/us/${group.stateSlug}/`}
+                      className="transition-colors hover:text-brand-emerald"
+                    >
+                      {group.state}
+                    </Link>
+                  </h3>
+                  <span className="font-heading text-xs text-slate-500">
+                    {group.items.length} cities
+                  </span>
+                </div>
+                <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                  {group.items.map((city) => (
+                    <li key={`${city.stateSlug}-${city.slug}`}>
+                      <Link
+                        href={`/us/${city.stateSlug}/${city.slug}/`}
+                        className="group flex h-full flex-col rounded-xl border border-brand-navy/10 bg-white px-4 py-3 transition-all duration-200 hover:border-brand-emerald/40 hover:shadow-[0_12px_28px_-22px_rgba(10,46,37,0.35)]"
+                      >
+                        <p className="font-display text-base font-normal text-brand-navy group-hover:text-brand-emerald">
+                          {city.name}
+                        </p>
+                        <p className="mt-0.5 text-[11px] text-slate-500">
+                          {city.state}
+                        </p>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
+      </RevealOnScroll>
     </div>
   )
 }

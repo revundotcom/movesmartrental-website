@@ -3,7 +3,6 @@ import Link from 'next/link'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
-import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { sanityFetch } from '@/sanity/fetch'
 import { BLOG_GUIDE_LIST_QUERY } from '@/sanity/queries/blog-guide'
 import { COMPARISON_LIST_QUERY } from '@/sanity/queries/comparison'
@@ -19,21 +18,22 @@ import {
 // ---------------------------------------------------------------------------
 
 export const metadata: Metadata = {
-  title: 'Canadian Rental Market Resources | Guides, Reports & Case Studies',
+  title:
+    'Leasing Resources | Landlord, Tenant & Institutional Guides | MoveSmart Rentals',
   description:
-    'Free guides, Canadian rental market reports, property management case studies, and landlord FAQs. Expert resources for property owners and tenants.',
+    'Field manuals for serious rental operators. Free landlord playbooks, tenant handbooks, institutional lease-up guides, and quarterly market reports from Canada and the US\u2019s white-glove leasing brokerage.',
   alternates: { canonical: '/resources/' },
   openGraph: {
-    title: 'Canadian Rental Market Resources | MoveSmart Rentals',
+    title: 'Leasing Resources | MoveSmart Rentals',
     description:
-      'Free guides, Canadian rental market reports, property management case studies, and landlord FAQs.',
+      'Field manuals for serious rental operators. Landlord playbooks, tenant handbooks, institutional lease-up guides, and quarterly market reports.',
     images: ['/og-default.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Canadian Rental Market Resources | MoveSmart Rentals',
+    title: 'Leasing Resources | MoveSmart Rentals',
     description:
-      'Free guides, Canadian rental market reports, property management case studies, and landlord FAQs.',
+      'Field manuals for serious rental operators - landlord, tenant, institutional, and market-report guides.',
   },
 }
 
@@ -93,7 +93,7 @@ function mapComparison(c: ComparisonListItem): EditorialArticle {
     slug: c.slug,
     category: 'comparison',
     excerpt: c.serviceTitle
-      ? `Compare property management approaches for ${c.serviceTitle}.`
+      ? `Compare leasing approaches for ${c.serviceTitle}.`
       : undefined,
   }
 }
@@ -126,20 +126,20 @@ function formatShortDate(iso?: string): string {
 // ---------------------------------------------------------------------------
 
 function WhatsNewAside({ items }: { items: EditorialArticle[] }) {
-  // TODO: swap placeholder list once Sanity is seeded with monthly dispatches.
+  // TODO(phase-3): swap placeholder list once Sanity is seeded with guide drops.
   const placeholders: EditorialArticle[] = [
     {
-      title: 'What CMHC’s spring report means for GTA rents',
+      title: 'Q2 2026 Ontario rental market report',
       slug: '#',
       publishedAt: '2026-04-03',
     },
     {
-      title: 'Ontario rent-increase guideline, plain-English',
+      title: 'Lease-up playbook: the first 30 days',
       slug: '#',
       publishedAt: '2026-04-01',
     },
     {
-      title: 'Screening a self-employed applicant, the right way',
+      title: 'Screening a self-employed applicant the right way',
       slug: '#',
       publishedAt: '2026-03-28',
     },
@@ -159,14 +159,18 @@ function WhatsNewAside({ items }: { items: EditorialArticle[] }) {
         This month
       </p>
       <h3 className="font-display text-xl font-normal text-brand-navy">
-        What’s new on the shelf
+        Freshly{' '}
+        <span className="italic text-brand-emerald">published</span>
+        <span aria-hidden="true" className="text-brand-gold">
+          .
+        </span>
       </h3>
       <ul className="mt-5 divide-y divide-brand-navy/10">
         {picks.map((p, i) => (
           <li key={`${p.slug}-${i}`} className="py-3">
             <Link
               href={
-                p.slug && p.slug !== '#' ? `/resources/${p.slug}/` : '#recent'
+                p.slug && p.slug !== '#' ? `/resources/${p.slug}/` : '#featured'
               }
               className="group flex items-start justify-between gap-4"
             >
@@ -181,10 +185,138 @@ function WhatsNewAside({ items }: { items: EditorialArticle[] }) {
         ))}
       </ul>
       <p className="mt-5 text-[11px] italic text-slate-500">
-        New guides published most weeks. No filler.
+        New guides published most weeks. Nothing filler, ever.
       </p>
     </div>
   )
+}
+
+// ---------------------------------------------------------------------------
+// JSON-LD: CollectionPage describing the resources hub
+// ---------------------------------------------------------------------------
+
+const COLLECTION_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'MoveSmart Rentals Leasing Resources',
+  url: 'https://movesmartrentals.com/resources/',
+  description:
+    'Field manuals for serious rental operators. Landlord playbooks, tenant handbooks, institutional lease-up guides, and quarterly market reports published by MoveSmart Rentals.',
+  inLanguage: 'en',
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'MoveSmart Rentals',
+    url: 'https://movesmartrentals.com/',
+  },
+  about: [
+    { '@type': 'Thing', name: 'Landlord guides' },
+    { '@type': 'Thing', name: 'Tenant guides' },
+    { '@type': 'Thing', name: 'Institutional lease-up guides' },
+    { '@type': 'Thing', name: 'Rental market reports' },
+  ],
+  hasPart: [
+    {
+      '@type': 'ItemList',
+      name: 'Featured leasing guides',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          url: 'https://movesmartrentals.com/resources/tenant-screening-ontario-landlords/',
+          name: 'Tenant Screening Guide for Ontario Landlords',
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          url: 'https://movesmartrentals.com/resources/how-to-price-your-rental-2026/',
+          name: 'How to Price Your Rental in 2026',
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          url: 'https://movesmartrentals.com/resources/rent-guarantee-101/',
+          name: 'Rent Guarantee 101: What It Covers',
+        },
+        {
+          '@type': 'ListItem',
+          position: 4,
+          url: 'https://movesmartrentals.com/resources/lease-up-playbook-first-30-days/',
+          name: 'Lease-Up Playbook: The First 30 Days',
+        },
+        {
+          '@type': 'ListItem',
+          position: 5,
+          url: 'https://movesmartrentals.com/resources/how-to-avoid-bad-tenants/',
+          name: 'How to Avoid Bad Tenants: The 12-Point Checklist',
+        },
+        {
+          '@type': 'ListItem',
+          position: 6,
+          url: 'https://movesmartrentals.com/resources/institutional-rfp-template/',
+          name: 'Institutional RFP Template for Purpose-Built Rentals',
+        },
+        {
+          '@type': 'ListItem',
+          position: 7,
+          url: 'https://movesmartrentals.com/resources/tenant-insurance-by-province/',
+          name: 'Tenant Insurance Requirements by Province',
+        },
+        {
+          '@type': 'ListItem',
+          position: 8,
+          url: 'https://movesmartrentals.com/resources/moving-day-coordination-tenant/',
+          name: 'Moving Day Coordination Guide (Tenant Edition)',
+        },
+      ],
+    },
+  ],
+}
+
+const FAQ_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Are these guides free?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. Every guide, checklist, and market report on this site is free to read. No paywall, no email gate on the content itself, no lead-form gymnastics.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How often are the guides updated?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Legal guides are reviewed whenever the governing statute or tribunal rule changes. Market reports refresh each quarter. Evergreen operational guides get a full audit once a year.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I republish or cite these guides?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Short excerpts with attribution and a link back to the original page are fine. For longer reproductions, reach out and we will confirm in writing.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Do you produce custom guides for institutional clients?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. For developers and asset managers, we prepare tailored lease-up playbooks, RFP responses, and concession-strategy memos specific to the asset.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Who writes these guides?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Our leasing team writes the operational content. Legal guides are reviewed by outside counsel. Market reports are compiled from CMHC, Statistics Canada, MLS data, and our own leasing file.',
+      },
+    },
+  ],
 }
 
 // ---------------------------------------------------------------------------
@@ -227,7 +359,7 @@ export default async function ResourcesPage() {
     .filter((a) => a.slug !== featured?.slug)
     .slice(0, 12)
 
-  // Counts for hero meta strip
+  // Counts passed to editorial in case a future section surfaces them
   const articleCount = allArticles.length
   const guideCount = blogGuides.filter(
     (b) => b.category === 'guide' || b.category === 'legal-guide',
@@ -238,6 +370,15 @@ export default async function ResourcesPage() {
 
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(COLLECTION_LD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_LD) }}
+      />
+
       <div className="mx-auto max-w-7xl px-4 py-6">
         <BreadcrumbNav
           crumbs={[
@@ -249,23 +390,11 @@ export default async function ResourcesPage() {
 
       <PageHeroBlock
         kicker="Resources"
-        eyebrow="Articles, guides, and checklists"
-        headline="A working library for Canadian rental owners and tenants"
-        lede="Plain-English guides, monthly market reports, and checklists we actually use on our own files. No fluff, no paywalls, no lead-gen bait."
-        cta1={{ label: 'Browse Articles', href: '#recent' }}
-        cta2={{ label: 'Ask the Team', href: '/contact/' }}
-        meta={[
-          {
-            label: 'Articles',
-            value: articleCount > 0 ? String(articleCount) : '40+',
-          },
-          {
-            label: 'Guides',
-            value: guideCount > 0 ? String(guideCount) : '12',
-          },
-          { label: 'Updated', value: 'Weekly' },
-          { label: 'Topics', value: '8' },
-        ]}
+        eyebrow="The published process"
+        headline="Field manuals for serious rental operators"
+        lede="Everything we have learned from thousands of leases, 20+ markets, and institutional lease-up campaigns across North America - documented for landlords, tenants, and developers. Peace of mind, through execution you can audit."
+        cta1={{ label: 'Browse the library', href: '#pillars' }}
+        cta2={{ label: 'Talk to the team', href: '/contact/?type=owner' }}
         aside={<WhatsNewAside items={recent} />}
       />
 
@@ -277,13 +406,6 @@ export default async function ResourcesPage() {
           guides: guideCount,
           reports: reportCount,
         }}
-      />
-
-      <CTABannerBlock
-        headline="Can’t find what you’re looking for?"
-        description="Our team answers owner and tenant questions within 24 hours - by phone, email, or the contact form. No chatbot runaround."
-        primaryCta={{ label: 'Ask the Team', href: '/contact/' }}
-        secondaryCta={{ label: 'View Services', href: '/services/' }}
       />
     </main>
   )

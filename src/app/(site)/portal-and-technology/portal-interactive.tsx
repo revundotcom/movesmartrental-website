@@ -10,16 +10,17 @@ import {
 } from 'framer-motion'
 import {
   Bell,
-  CalendarClock,
+  CalendarCheck,
   CheckCircle2,
+  ClipboardCheck,
   CreditCard,
+  FileSignature,
+  KeyRound,
   Lock,
   MapPin,
-  MessageSquare,
-  Receipt,
+  Megaphone,
   ShieldCheck,
-  Wallet,
-  Wrench,
+  UserCheck,
 } from 'lucide-react'
 
 import { PortalIllustration } from '@/components/illustrations'
@@ -35,15 +36,15 @@ const EASE = [0.22, 1, 0.36, 1] as const
 const PILLARS = [
   {
     title: 'Real people first. Software second.',
-    body: "A human account manager owns your property. The portal is a window - not a replacement. You always have a name and a phone number. The dashboard exists so you don't have to call us; it doesn't exist because we don't want you to.",
+    body: "A human leasing manager owns your lease-up. The portal is a window - not a replacement. You always have a name and a phone number. The dashboard exists so you don't have to call us; it doesn't exist because we don't want you to.",
   },
   {
-    title: 'Built around the questions owners actually ask.',
-    body: "“Did rent come in?” “What\u2019s the work order on Unit 3?” “Where\u2019s last month\u2019s statement?” The portal answers those without a learning curve. We didn't design it for a software demo - we designed it for a Tuesday morning over coffee.",
+    title: 'Built for the questions owners actually ask during a lease-up.',
+    body: "“How did the Saturday showings go?” “Where is the Khan application in screening?” “Did the lease come back signed?” The portal answers those without a learning curve. We didn't design it for a software demo - we designed it for a Tuesday morning over coffee while your unit is on the market.",
   },
   {
-    title: 'Your data stays your data.',
-    body: "Owner records, tenant records, and financials stay with us. We don't sell, syndicate, or pipe your information to ad networks. Encrypted at rest, hosted in Canada where applicable, and yours to export in full at any time.",
+    title: 'Transparency is the differentiator.',
+    body: "Most brokerages go dark the moment your listing goes live and resurface only to announce a signed lease. We do the opposite. Every showing, every applicant, every screening check, every approval decision is on record - in your portal, exportable, and yours forever.",
   },
 ] as const
 
@@ -64,9 +65,9 @@ export function PhilosophyManifesto() {
               <span className="text-brand-gold">.</span>
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-slate-600">
-              We&rsquo;re a property management firm - not a software company.
-              The portal exists for one reason: so you never have to call to find
-              out what&rsquo;s happening with your property. Three principles
+              We&rsquo;re a white-glove leasing brokerage - not a software
+              company. The portal exists for one reason: so you never have to
+              chase us to find out where your lease-up stands. Three principles
               guided every decision.
             </p>
           </div>
@@ -113,22 +114,22 @@ export function PhilosophyManifesto() {
 const TOUR_ANNOTATIONS = [
   {
     n: 1,
-    title: 'Your properties at a glance',
-    body: 'Every unit you own with us - occupancy, rent, lease status - visible without opening anything. The top stat row gives you the entire portfolio in three numbers.',
+    title: 'Your listings at a glance',
+    body: 'Every unit we have on the market for you - status, days live, view counts, inquiries received. The top stat row gives you the entire lease-up portfolio in three numbers.',
     // Stats row band
     highlight: { left: '27.5%', top: '20%', width: '63%', height: '17%' },
   },
   {
     n: 2,
-    title: "This month's revenue",
-    body: "Rolling chart of what's landed in your account this month, against the same month last year. Hover any bar for a date breakdown - no spreadsheet required.",
+    title: "This week's leasing activity",
+    body: "Showings booked, showings completed, applications received, screenings in progress - charted day by day. Hover any bar for the underlying detail. No spreadsheet, no recap email needed.",
     // Bar chart
     highlight: { left: '27.5%', top: '40%', width: '63%', height: '30%' },
   },
   {
     n: 3,
-    title: 'Open work orders + recent activity',
-    body: "What's active across your portfolio right now, who's working on it, and the last few things that happened - payments received, messages sent, inspections logged.",
+    title: 'Open applications + screening status',
+    body: "Every applicant currently under review, where each one is in screening, and the latest activity log - leases sent, signatures received, inspections scheduled, move-ins confirmed.",
     // Recent activity strip
     highlight: { left: '27.5%', top: '74%', width: '63%', height: '11%' },
   },
@@ -215,9 +216,10 @@ export function StickyProductTour() {
             />
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-slate-600">
-            One screen. Three things you&rsquo;ll check most days. Designed for
-            an owner glancing at their phone over morning coffee - not for a
-            software demo. Scroll to take the tour.
+            One screen. Three things you&rsquo;ll check most days while your
+            unit is on the market - designed for an owner glancing at their
+            phone over morning coffee, not for a software demo. Scroll to take
+            the tour.
           </p>
         </div>
 
@@ -332,10 +334,10 @@ export function StickyProductTour() {
 /* ─────────────────────────────────────────────────────────────────────────── */
 
 const TENANT_LINES = [
-  'One-tap rent payment + autopay',
-  'Maintenance requests with photos',
-  'Lease + addenda always accessible',
-  'Direct line to the property manager',
+  'Apply online in minutes',
+  'Real-time application status tracking',
+  'Digital lease signing, fully secure',
+  'Move-in checklist + utility transfer',
 ] as const
 
 export function OwnerTenantSplit() {
@@ -347,16 +349,16 @@ export function OwnerTenantSplit() {
             Both Sides Of The Door
           </p>
           <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-[2.75rem]">
-            Your tenant gets a{' '}
+            Your applicant gets a{' '}
             <span className="font-display italic text-brand-emerald">
               portal too
             </span>
             <span className="text-brand-gold">.</span>
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-slate-600">
-            Easier for them to pay, request maintenance, and find their lease -
-            which means lower friction, fewer late payments, and longer
-            tenancies for you.
+            A frictionless application, transparent screening status, and
+            digital lease signing - which means stronger applicant pools,
+            faster decisions, and a cleaner path to move-in for you.
           </p>
         </div>
       </div>
@@ -379,17 +381,17 @@ export function OwnerTenantSplit() {
             />
             <div className="relative text-center">
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
-                Tenant side
+                Applicant & Tenant side
               </p>
               <h3 className="mt-4 font-display text-3xl font-normal leading-tight text-brand-navy sm:text-4xl">
                 Friction-free{' '}
-                <span className="italic text-brand-emerald">renting</span>
+                <span className="italic text-brand-emerald">leasing</span>
                 <span className="text-brand-gold">.</span>
               </h3>
               <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-slate-600">
-                A separate login, scoped to their unit. Easier for them to pay
-                and resolve issues - which is the quiet engine of lower
-                turnover.
+                A separate login, scoped to their application and signed
+                lease. Easier to apply, easier to sign - which is the quiet
+                engine of better pools and faster lease-up.
               </p>
               <ul className="mx-auto mt-8 grid max-w-xl grid-cols-1 gap-3 text-left sm:grid-cols-2 sm:gap-x-8">
                 {TENANT_LINES.map((line) => (
@@ -406,7 +408,7 @@ export function OwnerTenantSplit() {
                 ))}
               </ul>
               <p className="mx-auto mt-10 max-w-md border-t border-slate-200 pt-5 text-sm italic text-slate-500">
-                Easier for them to pay = lower turnover for you.
+                Easier to apply and sign = faster lease-up for you.
               </p>
             </div>
           </div>
@@ -422,45 +424,45 @@ export function OwnerTenantSplit() {
 
 const NOTIFICATIONS = [
   {
-    Icon: Wallet,
+    Icon: CalendarCheck,
     when: 'Tue 9:14a',
-    title: 'Rent received',
-    detail: 'Unit 4B · $2,400 · cleared to your account',
+    title: 'Showing booked',
+    detail: 'Mississauga 2nd Ave · Sat 11:00a · prospect confirmed',
     tone: 'emerald' as const,
   },
   {
-    Icon: Wrench,
-    when: 'Wed 2:30p',
-    title: 'Maintenance request',
-    detail: 'Mississauga 2nd Ave · kitchen faucet leak · vendor assigned',
+    Icon: Megaphone,
+    when: 'Tue 3:42p',
+    title: 'Listing live across channels',
+    detail: 'MLS · Rentals.ca · Zumper · Facebook Marketplace · paid social',
     tone: 'gold' as const,
   },
   {
-    Icon: MessageSquare,
-    when: 'Thu 11:02a',
-    title: 'Tenant message logged',
-    detail: 'Renewal interest - your account manager is replying',
+    Icon: UserCheck,
+    when: 'Wed 11:08a',
+    title: 'Application submitted',
+    detail: 'Brampton Maple St · 1 of 2 prospects on the shortlist',
     tone: 'navy' as const,
   },
   {
-    Icon: Receipt,
-    when: 'Fri 8:00a',
-    title: 'Monthly statement ready',
-    detail: 'March · 3 properties · download or auto-email',
+    Icon: ClipboardCheck,
+    when: 'Thu 2:30p',
+    title: 'Screening complete',
+    detail: 'Credit · income · employment · references all clear',
     tone: 'emerald' as const,
   },
   {
-    Icon: CalendarClock,
-    when: 'Mon 4:45p',
-    title: 'Inspection scheduled',
-    detail: 'Brampton Maple St · semi-annual walkthrough · April 22',
+    Icon: FileSignature,
+    when: 'Fri 4:12p',
+    title: 'Lease signed',
+    detail: 'Hamilton King St · 12-month term · countersigned & filed',
     tone: 'navy' as const,
   },
   {
-    Icon: CheckCircle2,
+    Icon: KeyRound,
     when: 'Mon 10:18a',
-    title: 'Lease renewal signed',
-    detail: 'Hamilton King St · 12 months · $200 rent increase accepted',
+    title: 'Move-in confirmed · utilities transferred',
+    detail: 'Inspection logged · 24 condition photos · keys handed over',
     tone: 'emerald' as const,
   },
 ]
@@ -501,8 +503,9 @@ export function NotificationTimeline() {
             </h2>
           </RevealOnScroll>
           <p className="mt-5 text-lg leading-relaxed text-slate-600">
-            Calm, human-paced. A few alerts a week - no buzzing your phone every
-            time a tenant logs in. Choose email, SMS, or both.
+            Calm, human-paced. The milestones that matter during a lease-up -
+            no buzzing your phone every time a prospect opens your listing.
+            Choose email, SMS, or both.
           </p>
         </div>
 
@@ -627,11 +630,11 @@ export function SecurityTrustStrip() {
             </h2>
           </RevealOnScroll>
           <p className="mt-6 text-base leading-relaxed text-slate-600 md:text-lg">
-            Owner financials, tenant records, and lease documents live in
-            encrypted Canadian-hosted infrastructure. Access is role-based - your
-            account manager sees what they need, your accountant sees what you
-            give them, and you see everything. We don&rsquo;t sell, syndicate, or
-            pipe data to ad networks. Ever.
+            Applicant files, signed leases, screening reports, and inspection
+            records live in encrypted Canadian-hosted infrastructure. Access is
+            role-based - your leasing manager sees what they need, applicants
+            see only their own file, and you see everything. We don&rsquo;t
+            sell, syndicate, or pipe data to ad networks. Ever.
           </p>
         </div>
 

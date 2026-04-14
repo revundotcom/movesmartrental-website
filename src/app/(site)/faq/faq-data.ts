@@ -29,52 +29,52 @@ const ownersQuestions: FaqItem[] = [
   {
     question: 'How does MoveSmart Rentals work for property owners?',
     answer:
-      'We handle everything from listing your property and screening tenants to lease signing and ongoing support. You pay nothing upfront - our success-based fee is only charged after a qualified tenant is placed. Once placed, we continue managing the tenancy through our owner portal.',
+      'We are a white-glove leasing brokerage. We run the leasing lifecycle end to end - strategic pricing, professional marketing, showings, applicant qualification, lease execution, and a documented move-in. You pay nothing upfront. A one-time success fee is charged only once a qualified tenant signs the lease. We are not an ongoing property manager.',
   },
   {
     question: 'How long does it take to find a tenant?',
     answer:
-      'Our average tenant placement time is 14-21 days. This varies by city and property type, but our multi-channel marketing (30+ listing platforms), AI-assisted pricing, and large applicant database ensure fast, quality placements.',
+      'Our average placement time is 14-21 days from go-live to signed lease. This varies by city and property type, but our multi-channel marketing (40+ listing platforms), live market pricing, and large applicant database keep placements fast and qualified.',
   },
   {
     question: 'Can I approve the final tenant selection?',
     answer:
-      'Yes. You have final say on tenant selection. We present you with our top screened candidates along with full application packages, credit reports, and our recommendation. You approve before any lease is signed.',
+      'Yes. You have final say on tenant selection. We present you with our top qualified candidates along with full application packages, credit reports, and our written risk summary. You approve before any lease is signed.',
   },
   {
-    question: 'What does the tenant screening process include?',
+    question: 'What does the tenant qualification process include?',
     answer:
-      'Our 7-point screening covers: (1) government ID verification, (2) full credit report with score, (3) employment letter and pay stubs, (4) landlord reference check, (5) social media and public record scan, (6) PIPEDA-compliant data handling, and (7) our internal risk scoring algorithm.',
+      'Our 7-point qualification covers: (1) government ID verification, (2) full credit report with score, (3) employment letter and pay stubs, (4) prior landlord reference check, (5) public record scan, (6) PIPEDA-compliant data handling, and (7) a written risk summary with provincial compliance flags.',
   },
   {
-    question: 'What is the rent guarantee and how does it work?',
+    question: 'What is rental protection and how does it work?',
     answer:
-      'Our Rent Guarantee program covers up to 12 months of lost rent if the placed tenant stops paying. It activates after an LTB non-payment notice is filed and continues until the unit is re-rented. This is a first-party service - not third-party insurance.',
+      'Rental Protection is an optional partner pathway, not an in-house insurance product. We coordinate guaranteed-rent insurance through vetted carriers and validate your applicant against partner underwriting standards. Coverage, premiums, and claim mechanics sit with the carrier - we explain coverage in plain English before you opt in.',
   },
   {
     question: 'What if I live outside the province or outside Canada?',
     answer:
-      'We regularly work with non-resident property owners. We manage all landlord-tenant communication, maintenance coordination, and compliance on your behalf. We also advise on Section 216 withholding tax requirements for non-resident owners.',
+      'We regularly work with non-resident owners. The owner portal, secure remote e-signing, and trust-accounted deposit handling are designed for out-of-province and overseas owners. For ongoing operations after move-in we maintain a referral network of trusted property management partners.',
   },
   {
     question: 'Are there discounts for multiple properties or portfolios?',
     answer:
-      'Yes. Property owners with 3 or more units qualify for our portfolio pricing. Reach out to our team to discuss multi-property rates and custom management agreements.',
+      'Yes. Owners with 3 or more units qualify for portfolio leasing pricing. Reach out to our team to discuss per-unit success fees and bulk lease-up engagements.',
   },
   {
-    question: 'Can I cancel the management agreement if it is not working out?',
+    question: 'Can I cancel the leasing engagement if it is not working out?',
     answer:
-      'Yes. Our management agreements include a 30-day termination clause with no long-term lock-in. We believe good service - not paperwork - should be what keeps the relationship going.',
+      'Yes. Engagements end on 30-day written notice from either party. There is no exit fee, and no clawback on a placement already earned. We hand off all applicant records and signed documents within seven days.',
   },
   {
     question: 'What does the owner portal show me?',
     answer:
-      'Your owner portal shows real-time listing analytics: views, inquiries, showing bookings, conversion rates, live financial reports, maintenance approvals, and lease status - all updated daily. We also provide weekly placement status emails until the unit is rented.',
+      'Your owner portal shows real-time listing analytics: views, inquiries, showing bookings, conversion rates, applicant pipeline, qualification status, and lease execution status - all updated daily. We also send weekly placement status emails until the unit is leased.',
   },
   {
-    question: 'Do I get tax-ready statements at year-end?',
+    question: 'Do I get a clean placement record at year-end?',
     answer:
-      'Yes. Owners receive year-end income and expense summaries formatted for Canadian tax filing (including T776 support for rental income). Statements are available for download in the owner portal and emailed in January.',
+      'Yes. Owners receive a year-end placement summary - signed lease, deposit trust accounting, HST disclosures, and the move-in inspection report - packaged for your accountant. We do not file taxes on your behalf; the statements are designed so your CPA has everything required for a T776 line by line.',
   },
 ]
 
@@ -103,9 +103,9 @@ const tenantsQuestions: FaqItem[] = [
       'In Ontario, the only deposit a landlord may collect is last month\'s rent (LMR), which is applied to your final month - not refunded as cash. Interest on the LMR deposit accrues annually at the provincial rent increase guideline rate and is credited to you each year.',
   },
   {
-    question: 'How do I submit a maintenance request?',
+    question: 'Who do I contact for maintenance once I move in?',
     answer:
-      'Log into your tenant portal, click "Maintenance," describe the issue, and attach photos if helpful. Urgent matters (no heat, water leak, security issue) are escalated immediately. Non-urgent requests are typically addressed within 3-5 business days.',
+      'MoveSmart Rentals handles the leasing engagement only - pricing, marketing, qualification, lease execution, and the documented move-in. After move-in, your day-to-day maintenance contact is the landlord or the property management partner the owner has engaged. You will receive that contact information in your move-in welcome packet.',
   },
   {
     question: 'What lease term do you offer, and can I renew?',
@@ -131,7 +131,7 @@ const pricingQuestions: FaqItem[] = [
   {
     question: 'Do I pay any setup fee or upfront costs?',
     answer:
-      'No. There are zero upfront costs. Our leasing fee is only collected once a qualified tenant signs a lease. Ongoing portal and management tools are included at no extra charge during the tenancy.',
+      'No. There are zero upfront costs. Our leasing success fee is only collected once a qualified tenant signs a lease. Owner portal access, photography, and listing distribution are included at no extra charge during the leasing engagement.',
   },
   {
     question: 'When is the leasing success fee paid?',
@@ -141,17 +141,17 @@ const pricingQuestions: FaqItem[] = [
   {
     question: 'What is included in the success fee?',
     answer:
-      'The success fee covers: professional photography, listing on 30+ platforms, all tenant inquiries and showings, full screening (credit, employment, references), lease preparation compliant with provincial rental law, and lease signing coordination.',
+      'The success fee covers all nine pillars of our leasing service: strategic pricing, professional photography and copy, listing on 40+ platforms, showing coordination, full applicant qualification (credit, employment, income, references), offer management, lease preparation compliant with provincial rental law, deposit collection in trust, and a documented move-in inspection.',
   },
   {
-    question: 'Do you mark up vendor or maintenance invoices?',
+    question: 'Do you mark up vendor or pre-listing prep invoices?',
     answer:
-      'No. Vendor invoices for repairs and maintenance are passed through at cost. You see the original invoice in your owner portal. We earn money through our leasing and management fees - not through hidden markups.',
+      'No. Vendor invoices for one-time pre-listing prep (paint touch-ups, deep clean, light handyman, landscaping refresh) are passed through at cost. You see the original invoice in your owner portal. We earn money through our leasing success fee - not through hidden markups.',
   },
   {
     question: 'Is there a cancellation fee, and is GST/HST included?',
     answer:
-      'No cancellation fee - you can terminate with 30 days notice. Fees quoted to Canadian owners are exclusive of GST/HST, which is added on the invoice as required. An itemised receipt is provided for every charge.',
+      'No cancellation fee - you can terminate the leasing engagement with 30 days notice. Fees quoted to Canadian owners are exclusive of GST/HST, which is added on the invoice as required. An itemised receipt is provided for every charge.',
   },
 ]
 
@@ -162,17 +162,17 @@ const servicesQuestions: FaqItem[] = [
   {
     question: 'Can I book services à la carte, or only as a full package?',
     answer:
-      'Both. Owners can choose tenant placement only (one-time success fee) or a full-service management plan that includes placement plus ongoing rent collection, maintenance coordination, inspections, and year-end reporting. Mix and match - we will quote transparently.',
+      'For individual landlords the nine leasing services run as one continuous workflow - they are designed to interlock from pricing through move-in. For institutional engagements we scope modular packages: marketing-only, qualification-only, or full lease-up. We are not a property management firm, so we do not provide ongoing rent collection or post-move-in operations.',
   },
   {
-    question: 'What is included in full-service management?',
+    question: 'What is included in the end-to-end leasing engagement?',
     answer:
-      'Full-service management covers: marketing and placement, rent collection via the portal, maintenance coordination with vetted vendors, semi-annual inspections, renewal negotiations, LTB handling where needed, and monthly + annual owner statements. Rent guarantee is an optional add-on.',
+      'The nine pillars: strategic pricing, professional marketing execution, showing coordination, offer management, tenant qualification, optional rental protection, lease execution, move-in coordination, and (for builders/PMCs) institutional lease-up. After the documented move-in the engagement is complete unless you specifically engage us for a separate scope.',
   },
   {
-    question: 'Do you manage multi-unit buildings and small portfolios?',
+    question: 'Do you lease multi-unit buildings and small portfolios?',
     answer:
-      'Yes. We work with individual condos, houses, duplexes, triplexes, small apartment buildings, and portfolios of 3-50 doors. For buildings over 50 units we structure a dedicated account team. Contact us for bespoke portfolio pricing.',
+      'Yes. We lease individual condos, houses, duplexes, triplexes, small apartment buildings, and portfolios of 3-50 units. For buildings over 50 units our Institutional Lease-Up practice deploys a dedicated leasing team and reports live against pro-forma. Contact us for bespoke portfolio pricing.',
   },
   {
     question: 'Which cities and provinces do you cover?',
@@ -188,22 +188,22 @@ const portalQuestions: FaqItem[] = [
   {
     question: 'Is there a mobile app, or is the portal web-only?',
     answer:
-      'The portal is a responsive web app that works equally well on desktop, tablet, and mobile browsers - no app download required. Push-style notifications are sent by email and SMS for rent receipts, maintenance updates, and lease events.',
+      'The portal is a responsive web app that works equally well on desktop, tablet, and mobile browsers - no app download required. Push-style notifications are sent by email and SMS for applicant pipeline updates, qualification status, and lease execution events.',
   },
   {
     question: 'Can I give my accountant or bookkeeper access to my owner portal?',
     answer:
-      'Yes. Owners can invite a read-only accountant user from the portal settings page. The accountant receives their own secure login and can download statements, invoices, and year-end reports without seeing tenant contact details.',
+      'Yes. Owners can invite a read-only accountant user from the portal settings page. The accountant receives their own secure login and can download placement summaries, success-fee invoices, and deposit trust records without seeing applicant contact details.',
   },
   {
-    question: 'How do I download tax documents and financial statements?',
+    question: 'How do I download placement summaries and lease records?',
     answer:
-      'Every monthly statement, vendor invoice, and year-end summary (including T776-formatted income reports) is available as a PDF download in the "Documents" section of the owner portal. Bulk ZIP download is available at year-end.',
+      'Every signed lease, applicant decision record, success-fee invoice, deposit trust statement, and move-in inspection report is available as a PDF download in the "Documents" section of the owner portal. A bulk ZIP download is available at year-end for your accountant.',
   },
   {
-    question: 'Can I manage multiple properties from one account, and is my data encrypted?',
+    question: 'Can I track multiple properties from one account, and is my data encrypted?',
     answer:
-      'Yes. A single owner account can hold unlimited properties, each with its own financials, tenants, and documents. All data is encrypted in transit (TLS 1.3) and at rest (AES-256). Payment card numbers are never stored on our servers, and infrastructure is hosted on SOC 2 Type II certified platforms with 99.9% uptime.',
+      'Yes. A single owner account can hold unlimited properties, each with its own leasing pipeline, applicants, and documents. All data is encrypted in transit (TLS 1.3) and at rest (AES-256). Payment card numbers are never stored on our servers, and infrastructure is hosted on SOC 2 Type II certified platforms with 99.9% uptime.',
   },
 ]
 
@@ -212,24 +212,24 @@ const portalQuestions: FaqItem[] = [
 /* ------------------------------------------------------------------ */
 const legalQuestions: FaqItem[] = [
   {
-    question: 'How do you handle LTB applications if a tenant stops paying?',
+    question: 'Do you handle LTB filings or evictions if a tenant stops paying?',
     answer:
-      'We initiate the LTB process immediately: serving the N4 (Notice to Terminate for Non-Payment) on day 1 of non-payment, filing the L1 application within 14 days, and representing you at the hearing. Non-payment hearings currently take 3-5 months in major Ontario markets. Rent guarantee clients receive covered payments from day 1 of non-payment.',
+      'No. LTB filings, evictions, and ongoing rent collection sit outside the leasing-execution scope. We focus exclusively on placing the right tenant on the right lease - so the asset is set up cleanly. For ongoing operations and LTB representation we maintain a referral list of trusted property management partners and paralegals.',
   },
   {
-    question: 'How are deposits, LMR, and interest handled under provincial law?',
+    question: 'How are deposits and interest handled at lease execution?',
     answer:
-      'In Ontario, only last month\'s rent (LMR) may be collected as a deposit - no damage deposits are permitted. Interest on the LMR accrues annually at the provincial rent increase guideline rate and must be credited to the tenant each year. We track and pay this automatically through the portal.',
+      'In Ontario, only last month\'s rent (LMR) may be collected as a deposit - no damage deposits are permitted. We collect the LMR at lease execution and hold it in a designated trust account; interest accrues per RTA s.106 and is credited at lease end. Province-specific rules apply elsewhere - we follow the local statute.',
   },
   {
-    question: 'Do you help with T776 and year-end tax filing?',
+    question: 'Will my accountant get clean records for T776 filing?',
     answer:
-      'Yes. Our year-end owner package is formatted to drop directly into a T776 - Statement of Real Estate Rentals - line by line. Your accountant can import or reference the PDF summary. We do not file taxes on your behalf, but the statements are designed so no bookkeeping is required.',
+      'Yes. Our placement summary is formatted so a CPA can drop the success-fee invoice, HST disclosure, and deposit trust ledger directly into a T776 - Statement of Real Estate Rentals. We do not file taxes on your behalf, and we do not run ongoing bookkeeping (we are a leasing brokerage, not a property manager) - but the leasing-engagement records are clean and audit-ready.',
   },
   {
-    question: 'Can you liaise with the condo board, HOA, or building management?',
+    question: 'Can you liaise with the condo board, HOA, or building management at move-in?',
     answer:
-      'Yes. For condo and HOA-governed units we obtain the corporation\'s rules upfront, register your tenant with the building manager as required, coordinate move-in/move-out bookings, and handle any violation notices on your behalf - keeping you informed without the back-and-forth.',
+      'Yes - during the leasing engagement. For condo and HOA-governed units we obtain the corporation\'s rules upfront, register the incoming tenant with the building manager as required, and coordinate move-in elevator bookings. After the documented move-in, ongoing condo-board liaison passes back to the owner or their property management partner.',
   },
 ]
 
@@ -242,7 +242,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
     id: 'owners',
     label: 'For Owners',
     heading: 'For owners',
-    deck: 'How MoveSmart works if you own one door or a hundred - from listing night one to year-end statements.',
+    deck: 'How MoveSmart works if you own one unit or a hundred - from listing night one to a documented move-in.',
     questions: ownersQuestions,
   },
   {
@@ -263,7 +263,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
     id: 'services',
     label: 'Services',
     heading: 'Services',
-    deck: 'À la carte or full-service, single condo or fifty-unit portfolio, in-province or out - what we do and where.',
+    deck: 'Nine interlocking leasing services, single condo or fifty-unit portfolio, in-province or out - what we do and where.',
     questions: servicesQuestions,
   },
   {
@@ -277,7 +277,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
     id: 'legal',
     label: 'Legal & Compliance',
     heading: 'Legal & compliance',
-    deck: 'LTB matters, deposit rules, tax forms, and condo-board coordination - the unglamorous work we handle so you do not have to.',
+    deck: 'Deposit rules, condo-board coordination at move-in, and where the leasing engagement ends - the unglamorous work we handle so you do not have to.',
     questions: legalQuestions,
   },
 ]

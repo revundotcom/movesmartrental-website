@@ -6,7 +6,7 @@ import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 export const metadata: Metadata = {
   title: 'Terms of Service | MoveSmart Rentals',
   description:
-    'Terms of Service for MoveSmart Rentals. Read our terms and conditions for using our property management services and website.',
+    'Terms of Service for MoveSmart Rentals. Read our terms and conditions for using our leasing brokerage services and website.',
   alternates: {
     canonical: '/terms/',
   },
@@ -77,12 +77,13 @@ export default function TermsOfServicePage() {
                 2. Services Description
               </h2>
               <p className="mt-3">
-                MoveSmart Rentals provides property management services
-                including, but not limited to: tenant placement and screening,
-                rent collection and protection, property maintenance
-                coordination, lease management, and landlord consultation. Our
-                services are available primarily in Ontario, Canada, with
-                additional markets as indicated on the Site.
+                MoveSmart Rentals provides leasing brokerage services
+                including, but not limited to: strategic rental pricing,
+                professional marketing, showing coordination, tenant
+                qualification, optional rental protection (partner pathway),
+                lease execution, and move-in coordination. Our services are
+                available primarily in Ontario, Canada, with additional markets
+                as indicated on the Site.
               </p>
               <p className="mt-2">
                 We reserve the right to modify, suspend, or discontinue any
@@ -139,7 +140,7 @@ export default function TermsOfServicePage() {
                 5. Fees and Payment
               </h2>
               <p className="mt-3">
-                Fees for our property management services are outlined in
+                Fees for our leasing brokerage services are outlined in
                 individual service agreements between MoveSmart Rentals and
                 property owners. General pricing information on the Site is
                 provided for reference and may not reflect all applicable fees,
@@ -269,10 +270,10 @@ export default function TermsOfServicePage() {
                 <li>
                   <strong>Email:</strong>{' '}
                   <a
-                    href="mailto:info@movesmartrentals.com"
+                    href="mailto:contact@movesmartrentals.com"
                     className="text-brand-emerald underline hover:no-underline"
                   >
-                    info@movesmartrentals.com
+                    contact@movesmartrentals.com
                   </a>
                 </li>
                 <li>

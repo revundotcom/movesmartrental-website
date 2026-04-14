@@ -143,9 +143,9 @@ export function HeroDashboard() {
               {/* Nav items */}
               {[
                 { label: 'Dashboard', icon: 'M3 3h6v4H3zM3 9h3v3H3zM8 9h3v3H8z', active: true },
-                { label: 'Properties', icon: 'M2 10V5l4-3 4 3v5M5 10V7h4v3', active: false },
-                { label: 'Tenants', icon: 'M6 5a2 2 0 100-4 2 2 0 000 4zM2 11a4 4 0 018 0', active: false },
-                { label: 'Finances', icon: 'M2 8h8M6 4v8M4 6l2-2 2 2', active: false },
+                { label: 'Listings', icon: 'M2 10V5l4-3 4 3v5M5 10V7h4v3', active: false },
+                { label: 'Applicants', icon: 'M6 5a2 2 0 100-4 2 2 0 000 4zM2 11a4 4 0 018 0', active: false },
+                { label: 'Leases', icon: 'M2 8h8M6 4v8M4 6l2-2 2 2', active: false },
               ].map(({ label, icon, active }) => (
                 <div
                   key={label}
@@ -170,9 +170,9 @@ export function HeroDashboard() {
               {/* Stat cards row */}
               <div className="grid grid-cols-3 gap-2">
                 {[
-                  { label: 'Properties', value: '12', icon: 'M2 10V5l4-3 4 3v5', color: GOLD },
-                  { label: 'Occupancy', value: '98%', icon: 'M6 2a4 4 0 100 8 4 4 0 000-8zM3 10a5 5 0 0110 0', color: EMERALD },
-                  { label: 'Revenue', value: '$24.8K', icon: 'M6 1v10M3 3h6M3 8h6', color: '#60A5FA' },
+                  { label: 'Listings', value: '12', icon: 'M2 10V5l4-3 4 3v5', color: GOLD },
+                  { label: 'Avg Days', value: '14', icon: 'M6 2a4 4 0 100 8 4 4 0 000-8zM3 10a5 5 0 0110 0', color: EMERALD },
+                  { label: 'Placements', value: '24', icon: 'M6 1v10M3 3h6M3 8h6', color: '#60A5FA' },
                 ].map(({ label, value, icon, color }, idx) => (
                   <motion.div
                     key={label}
@@ -203,7 +203,7 @@ export function HeroDashboard() {
                   style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}
                 >
                   <div className="mb-2 flex items-center justify-between">
-                    <p className="text-[9px] font-semibold text-white/60">Rental Income</p>
+                    <p className="text-[9px] font-semibold text-white/60">Lease Velocity</p>
                     <span className="rounded px-1.5 py-0.5 text-[8px] font-medium" style={{ background: `${EMERALD}18`, color: EMERALD }}>
                       +18.4%
                     </span>
@@ -252,7 +252,7 @@ export function HeroDashboard() {
                   className="col-span-2 flex flex-col items-center justify-center rounded-xl p-3"
                   style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}
                 >
-                  <p className="mb-2 text-[9px] font-semibold text-white/60">Occupancy Rate</p>
+                  <p className="mb-2 text-[9px] font-semibold text-white/60">Qualification Approval</p>
                   <div className="relative flex items-center justify-center">
                     <svg viewBox="0 0 70 70" className="h-16 w-16 -rotate-90">
                       {/* Track */}
@@ -286,8 +286,8 @@ export function HeroDashboard() {
                       />
                     </svg>
                     <div className="absolute flex flex-col items-center">
-                      <span className="text-sm font-bold text-white">98%</span>
-                      <span className="text-[7px] text-white/40">filled</span>
+                      <span className="text-sm font-bold text-white">94%</span>
+                      <span className="text-[7px] text-white/40">approved</span>
                     </div>
                   </div>
                 </div>
@@ -298,7 +298,7 @@ export function HeroDashboard() {
                 className="rounded-xl p-3"
                 style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}
               >
-                <p className="mb-2 text-[9px] font-semibold text-white/60">Monthly Rent Collection</p>
+                <p className="mb-2 text-[9px] font-semibold text-white/60">Monthly Placements</p>
                 <div className="flex items-end gap-[3px]" style={{ height: 44 }}>
                   {BAR_HEIGHTS.map((h, i) => (
                     // Static SVG data - index key is safe

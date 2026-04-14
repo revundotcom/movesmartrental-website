@@ -84,8 +84,8 @@ export function HowItWorksSteps({ variant = 'list' }: HowItWorksStepsProps) {
               </div>
               {/* Text */}
               <div>
-                <h3 className="text-sm font-bold text-white">{step.title}</h3>
-                <p className="mt-0.5 text-xs leading-relaxed text-white/50">{step.description}</p>
+                <h3 className="text-sm font-bold text-brand-navy">{step.title}</h3>
+                <p className="mt-0.5 text-xs leading-relaxed text-slate-600">{step.description}</p>
               </div>
             </motion.div>
           )
@@ -116,8 +116,8 @@ export function HowItWorksSteps({ variant = 'list' }: HowItWorksStepsProps) {
             </div>
             {/* Content */}
             <div className="pt-2 pb-0">
-              <h3 className="text-sm font-bold text-white">{step.title}</h3>
-              <p className="mt-0.5 text-xs leading-relaxed text-white/50">{step.description}</p>
+              <h3 className="text-sm font-bold text-brand-navy">{step.title}</h3>
+              <p className="mt-0.5 text-xs leading-relaxed text-slate-600">{step.description}</p>
             </div>
           </motion.div>
         )

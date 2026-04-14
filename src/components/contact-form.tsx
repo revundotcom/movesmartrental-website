@@ -187,7 +187,7 @@ export function ContactForm() {
           <h3 className="text-lg font-semibold text-green-800">Message received!</h3>
           <p className="mt-2 text-sm text-green-700">
             A member of our team will call or email you within 2 business hours. If you need immediate assistance, call us at{' '}
-            <a href="tel:+14372957688" className="font-semibold underline">+1 (437) 295-7688</a>.
+            <a href="tel:+18005959755" className="font-semibold underline">+1 (800) 595-9755</a>.
           </p>
         </div>
       </>

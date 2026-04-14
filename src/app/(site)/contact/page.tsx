@@ -11,23 +11,23 @@ import { ContactForm } from '@/components/contact-form'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 
 export const metadata: Metadata = {
-  title: 'Contact Us | Get a Free Property Management Consultation',
+  title: 'Contact Us | Book a Free White-Glove Leasing Consultation',
   description:
-    'Contact MoveSmart Rentals for a free consultation. Submit a property, book a call, or ask about our Canada-wide property management services. We respond within 24 hours.',
+    'Contact MoveSmart Rentals for a free leasing consultation. Submit a property, book a call, or ask about our Canada-wide white-glove leasing brokerage. We respond within one business day.',
   alternates: {
     canonical: '/contact/',
   },
   openGraph: {
-    title: 'Contact MoveSmart Rentals | Free Consultation',
+    title: 'Contact MoveSmart Rentals | Free Leasing Consultation',
     description:
-      'Contact MoveSmart Rentals for a free consultation. Submit a property, book a call, or ask about our Canada-wide property management services.',
+      'Contact MoveSmart Rentals for a free leasing consultation. Submit a property, book a call, or ask about our Canada-wide white-glove leasing brokerage.',
     images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'Contact MoveSmart Rentals' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Contact MoveSmart Rentals | Free Consultation',
+    title: 'Contact MoveSmart Rentals | Free Leasing Consultation',
     description:
-      'Contact MoveSmart Rentals for a free consultation. Submit a property, book a call, or ask about our Canada-wide property management services.',
+      'Contact MoveSmart Rentals for a free leasing consultation. Submit a property, book a call, or ask about our Canada-wide white-glove leasing brokerage.',
     images: ['/og-default.png'],
   },
 }
@@ -102,9 +102,9 @@ const REACH_ROWS = [
   {
     icon: Mail,
     title: 'Email directly',
-    copy: 'For general questions, partnerships, or anything that is not urgent, write to hello@movesmartrentals.com. A real person on our team will read it - no auto-responders.',
-    ctaLabel: 'hello@movesmartrentals.com',
-    ctaHref: 'mailto:hello@movesmartrentals.com',
+    copy: 'For general questions, partnerships, or anything that is not urgent, write to contact@movesmartrentals.com. A real person on our team will read it - no auto-responders.',
+    ctaLabel: 'contact@movesmartrentals.com',
+    ctaHref: 'mailto:contact@movesmartrentals.com',
   },
 ]
 
@@ -134,25 +134,25 @@ export default function ContactPage() {
             </p>
             <div className="mt-5 space-y-4">
               <a
-                href="tel:+14372957688"
+                href="tel:+18005959755"
                 className="group flex items-center justify-between border-b border-brand-navy/10 pb-4 last:border-b-0 last:pb-0"
               >
                 <span className="flex items-center gap-3">
                   <Phone className="size-4 text-brand-emerald" aria-hidden="true" />
                   <span className="font-display text-lg text-brand-navy">
-                    +1 (437) 295-7688
+                    +1 (800) 595-9755
                   </span>
                 </span>
                 <ArrowRight className="size-4 text-brand-navy/40 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
               </a>
               <a
-                href="mailto:hello@movesmartrentals.com"
+                href="mailto:contact@movesmartrentals.com"
                 className="group flex items-center justify-between border-b border-brand-navy/10 pb-4 last:border-b-0 last:pb-0"
               >
                 <span className="flex items-center gap-3">
                   <Mail className="size-4 text-brand-emerald" aria-hidden="true" />
                   <span className="font-display text-lg text-brand-navy">
-                    hello@movesmartrentals.com
+                    contact@movesmartrentals.com
                   </span>
                 </span>
                 <ArrowRight className="size-4 text-brand-navy/40 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
@@ -378,10 +378,10 @@ export default function ContactPage() {
                 For active owners and tenants only. Water leaks, heat outages, lockouts - call the main number and press 9.
               </p>
               <Link
-                href="tel:+14372957688"
+                href="tel:+18005959755"
                 className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-emerald hover:text-brand-emerald/80"
               >
-                +1 (437) 295-7688
+                +1 (800) 595-9755
                 <ArrowRight className="size-3.5" aria-hidden="true" />
               </Link>
             </div>

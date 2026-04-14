@@ -8,8 +8,8 @@ const AUDIENCES = [
   {
     icon: Building,
     title: 'For Property Owners',
-    description: 'Full-service property management with zero upfront cost. Tenant placement, screening, rent guarantee, and ongoing management - so you can earn passive income without the headaches.',
-    features: ['14-Day Tenant Placement', 'Professional Screening', 'Rent Guarantee', 'Dedicated Manager', 'Self-Serve Portal'],
+    description: 'White-glove leasing brokerage with zero upfront cost. Strategic pricing, professional marketing, tenant qualification, lease execution, and a documented move-in - hands-off leasing from listing to keys.',
+    features: ['14-Day Avg Placement', 'Defensible Qualification', 'Rental Protection (partner)', 'Dedicated Leasing Advisor', 'Owner Portal'],
     cta: 'Explore Owner Services',
     href: '/owners/',
     accent: 'emerald' as const,
@@ -17,8 +17,8 @@ const AUDIENCES = [
   {
     icon: Home,
     title: 'For Tenants',
-    description: 'Find your next home from our portfolio of professionally managed properties across Ontario. Verified listings, transparent pricing, and a smooth rental experience from application to move-in.',
-    features: ['Verified Listings', 'Online Applications', 'Transparent Pricing', 'Responsive Management', 'Maintenance Portal'],
+    description: 'Find your next home from our pipeline of professionally listed rentals across Canada. Verified listings, transparent pricing, and a smooth application-to-move-in experience.',
+    features: ['Verified Listings', 'Online Applications', 'Transparent Pricing', 'Responsive Leasing Team', 'Secure E-Sign'],
     cta: 'Browse Rentals',
     href: '/tenants/',
     accent: 'gold' as const,

@@ -15,10 +15,10 @@ import { ANIMATION_DELAY_BASE } from '@/lib/constants'
 import type { HeroBlockProps } from '@/types/blocks'
 
 const ROTATING_TEXTS = [
-  "Canada's #1 Leasing Partner",
+  "Canada's White-Glove Leasing Brokerage",
   'Zero Upfront Cost',
-  '14-Day Avg. Fill Time',
-  '500+ Properties Managed',
+  'MLS + 50-Portal Syndication',
+  'Listing to Move-In, Nothing Beyond',
 ]
 
 function inferCTAType(href: string): 'account_creation' | 'book_a_call' {
@@ -129,9 +129,13 @@ export function HeroBlock({
               >
                 {leadingWords}
               </VerticalCutReveal>{' '}
-              <span className="relative inline-block font-display italic text-brand-emerald">
+              <span className="relative inline-block pb-[0.4em] font-display italic text-brand-emerald">
                 <GradientText variant="animated">
-                  <VerticalCutReveal staggerDuration={ANIMATION_DELAY_BASE} staggerFrom="first">
+                  <VerticalCutReveal
+                    staggerDuration={ANIMATION_DELAY_BASE}
+                    staggerFrom="first"
+                    wordClassName="pb-[0.4em]"
+                  >
                     {lastWord ?? ''}
                   </VerticalCutReveal>
                 </GradientText>
@@ -156,26 +160,6 @@ export function HeroBlock({
                 {subheadline}
               </motion.p>
             )}
-
-            {/* Quantified proof stats strip */}
-            <motion.div
-              className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {[
-                { label: '500+ Properties' },
-                { label: '20+ Cities' },
-                { label: '98% Occupancy' },
-                { label: '14-Day Avg Fill' },
-              ].map((stat, i) => (
-                <span key={stat.label} className="flex items-center gap-x-4 text-sm font-medium text-white/80">
-                  {i > 0 && <span className="hidden text-emerald-400/60 sm:inline" aria-hidden="true">|</span>}
-                  {stat.label}
-                </span>
-              ))}
-            </motion.div>
 
             {/* CTA buttons */}
             {(cta1 || cta2) && (
@@ -254,7 +238,7 @@ export function HeroBlock({
                 aria-hidden="true"
               />
               {illustration ?? <HeroDashboard />}
-              {/* Floating badge 1 - top right: Rent Received */}
+              {/* Floating badge 1 - top right: Lease Signed */}
               <motion.div
                 className="absolute -right-4 top-8 flex items-center gap-2 rounded-2xl border border-white/10 bg-brand-navy/80 px-4 py-2.5 shadow-xl backdrop-blur-md"
                 initial={{ opacity: 0, x: 20 }}
@@ -266,8 +250,8 @@ export function HeroBlock({
                   <svg viewBox="0 0 16 16" className="size-3.5 text-brand-emerald" fill="currentColor" aria-hidden="true"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm.75 10.5h-1.5v-4.5h1.5v4.5zm0-6h-1.5V4h1.5v1.5z" /></svg>
                 </span>
                 <div>
-                  <p className="text-[11px] font-bold leading-none text-white">Rent Received</p>
-                  <p className="mt-0.5 text-[9px] leading-none text-white/50">On time, every month</p>
+                  <p className="text-[11px] font-bold leading-none text-white">Lease Signed</p>
+                  <p className="mt-0.5 text-[9px] leading-none text-white/50">Compliant, deposit in trust</p>
                 </div>
               </motion.div>
               {/* Floating badge 2 - bottom left: tenant placed */}
@@ -283,7 +267,7 @@ export function HeroBlock({
                 </span>
                 <div>
                   <p className="text-[11px] font-bold leading-none text-white">Tenant Placed</p>
-                  <p className="mt-0.5 text-[9px] leading-none text-emerald-400">14-day avg. fill</p>
+                  <p className="mt-0.5 text-[9px] leading-none text-emerald-400">Fully qualified</p>
                 </div>
               </motion.div>
             </div>

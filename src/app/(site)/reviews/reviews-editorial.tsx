@@ -77,7 +77,7 @@ const REVIEWS: Review[] = [
     date: 'Dec 2025',
     size: 'md',
     quote:
-      'I live overseas and needed someone I could trust completely. Three years in, every monthly statement has been on time and accurate. The owner portal is genuinely useful - not the usual broken industry software.',
+      'I live overseas and needed a leasing partner I could trust completely. Three placements in three years - clean qualification reports, deposits properly trusted, every lease signed remotely. The owner portal is genuinely useful, not the usual broken industry software.',
   },
   {
     name: 'Jennifer M.',
@@ -147,7 +147,7 @@ const REVIEWS: Review[] = [
     date: 'Dec 2025',
     size: 'sm',
     quote:
-      'Direct, no upsell, no nonsense. Exactly what I want from a property manager.',
+      'Direct, no upsell, no nonsense. Exactly what I want from a leasing advisor.',
   },
 ]
 
@@ -201,16 +201,16 @@ const CASE_STUDIES: CaseStudy[] = [
     city: 'Ottawa, ON',
     property: 'Westboro townhouse, owner overseas',
     before:
-      'Living in Singapore. Previous PM missed two HVAC service windows, lost a tenant over slow maintenance.',
+      'Living in Singapore. Previous broker placed a tenant in three weeks who broke the lease at month four - no qualification trail, no defensible decline file.',
     after:
-      'Three years later: same tenant in place, every monthly statement on time, zero owner-side admin.',
+      'Three placements over three years: every lease signed remotely, every deposit properly trusted, zero owner-side admin during the leasing engagement.',
     story:
-      'Distance ownership is its own discipline. Linda needed a firm that would treat the asset like our own when she could not be there. We built a maintenance schedule, opened a single point of contact, and routed every approval over $300 through the owner portal. She has not had to chase a single email in three years.',
-    pullQuote: 'Three years, zero chased emails.',
+      'Distance ownership is its own discipline. Linda needed a leasing partner that would treat the asset like our own when she could not be there. We ran every applicant through full qualification, executed leases via secure e-signature, and trust-accounted every deposit. She has not had to chase a single email through three placement cycles.',
+    pullQuote: 'Three placements, zero chased emails.',
     stats: [
       { label: 'Years as client', value: '3' },
-      { label: 'Maintenance SLA hit', value: '100%' },
-      { label: 'Statement accuracy', value: '100%' },
+      { label: 'Placements completed', value: '3' },
+      { label: 'Qualification accuracy', value: '100%' },
     ],
   },
   {
@@ -767,7 +767,7 @@ function RecognitionLockup() {
         </RevealOnScroll>
         <RevealOnScroll variant="fade" delay={0.2}>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/70">
-            We belong to the bodies that hold property managers to a written
+            We belong to the bodies that hold leasing brokerages to a written
             standard - not just feel-good marketing logos.
           </p>
         </RevealOnScroll>

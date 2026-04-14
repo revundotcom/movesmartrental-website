@@ -1,13 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { motion, useInView, useReducedMotion } from 'framer-motion'
-import { useMemo, useRef } from 'react'
 
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
-import { CountUp } from '@/components/ui/count-up'
-
-const EASE = [0.22, 1, 0.36, 1] as const
 
 // ─────────────────────────────────────────────────────────────
 // Types (mirrored from server page to keep coupling explicit)
@@ -35,376 +30,413 @@ interface ResourcesEditorialProps {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Static editorial data (topics, most-read, glossary)
+// Category pillars (contract §20.13 - four audiences)
 // ─────────────────────────────────────────────────────────────
 
-const TOPICS: { label: string; href: string; active?: boolean }[] = [
-  { label: 'All', href: '#recent', active: true },
-  { label: 'For Owners', href: '#recent' },
-  { label: 'For Tenants', href: '#recent' },
-  { label: 'Market Reports', href: '#recent' },
-  { label: 'Legal & Compliance', href: '#recent' },
-  { label: 'Maintenance', href: '#recent' },
-  { label: 'Moving', href: '#recent' },
-  { label: 'Budgeting', href: '#recent' },
-  { label: 'Glossary', href: '#glossary' },
-]
+interface Pillar {
+  eyebrow: string
+  title: string
+  italicWord: string
+  blurb: string
+  bullets: string[]
+  href: string
+  ctaLabel: string
+}
 
-const MOST_READ = [
+const PILLARS: Pillar[] = [
   {
-    n: '01',
-    title: 'The Canadian landlord\u2019s tenant-screening playbook',
+    eyebrow: 'For Landlords',
+    title: 'Owner',
+    italicWord: 'playbooks',
     blurb:
-      'Credit, employment, references, and the two questions that catch 80% of problem applicants before they sign.',
-    href: '/resources/tenant-screening-playbook/',
+      'Pricing, screening, lease drafting, and the paperwork habits that keep files out of the tribunal.',
+    bullets: [
+      'How to Find Tenants (city-specific)',
+      'Tenant Screening Guide',
+      'How to Price Your Rental',
+      'How to Avoid Bad Tenants',
+      'Eviction Guide (with partner legal counsel)',
+      'Landlord FAQ',
+    ],
+    href: '#guides-landlord',
+    ctaLabel: 'See landlord guides',
   },
   {
-    n: '02',
-    title: 'How to set rent you will actually collect',
+    eyebrow: 'For Tenants',
+    title: 'Tenant',
+    italicWord: 'handbooks',
     blurb:
-      'A pricing framework that balances CMHC benchmarks, local comps, and concession realities so a unit rents in under three weeks.',
-    href: '/resources/rent-pricing-framework/',
+      'Everything renters need to secure a home - applications, insurance, co-signers, and a calm move-in.',
+    bullets: [
+      'Tenant FAQ',
+      'Tenant Insurance Guide',
+      'Guarantor / Co-Signer Guide',
+      'Moving Guide',
+      'Application Walkthrough',
+    ],
+    href: '#guides-tenant',
+    ctaLabel: 'See tenant guides',
   },
   {
-    n: '03',
-    title: 'Ontario LTB: what owners must know in 2026',
+    eyebrow: 'For Developers',
+    title: 'Institutional',
+    italicWord: 'playbooks',
     blurb:
-      'N-notices, rent-increase guidelines, and the paperwork habits that keep applications out of the Landlord and Tenant Board.',
-    href: '/resources/ontario-ltb-2026/',
+      'Lease-up strategy for purpose-built rentals - from pre-marketing to stabilization.',
+    bullets: [
+      'Lease-Up Playbook for New Buildings',
+      'Institutional RFP Checklist',
+      'Purpose-Built Rental Marketing Strategy',
+      'Vacancy Performance Benchmarks',
+    ],
+    href: '#guides-institutional',
+    ctaLabel: 'See institutional guides',
   },
   {
-    n: '04',
-    title: 'Maintenance escalation: the 24/4/0 rule',
+    eyebrow: 'Market Reports',
+    title: 'Market',
+    italicWord: 'intelligence',
     blurb:
-      '24 hours to acknowledge, 4 days to schedule, 0 excuses for unsafe conditions. A working SLA owners can hand a vendor.',
-    href: '/resources/maintenance-escalation/',
-  },
-  {
-    n: '05',
-    title: 'Year-end tax prep for rental owners',
-    blurb:
-      'A deductible checklist, depreciation primer, and the three records your accountant wishes you had kept all year.',
-    href: '/resources/year-end-tax-prep/',
-  },
-]
-
-const GLOSSARY: { term: string; def: string }[] = [
-  {
-    term: 'Tenant screening',
-    def: 'Multi-step vetting of credit history, employment, references, and identity before a lease is signed.',
-  },
-  {
-    term: 'Rent roll',
-    def: 'A live register of every unit, tenant, rent amount, and lease end date across an owner\u2019s portfolio.',
-  },
-  {
-    term: 'CMHC',
-    def: 'Canada Mortgage and Housing Corporation \u2014 the federal body that publishes vacancy and average-rent benchmarks.',
-  },
-  {
-    term: 'Vacancy rate',
-    def: 'The share of rental units sitting empty in a given submarket; the leading indicator of pricing power.',
-  },
-  {
-    term: 'LTB',
-    def: 'Ontario\u2019s Landlord and Tenant Board \u2014 the tribunal that adjudicates tenancy disputes under the RTA.',
-  },
-  {
-    term: 'N-notice',
-    def: 'A numbered notice form (N4, N5, N12\u2026) landlords serve under the Ontario Residential Tenancies Act.',
-  },
-  {
-    term: 'MLS',
-    def: 'Multiple Listing Service \u2014 the REALTOR\u00ae database; one of several channels we syndicate rentals to.',
-  },
-  {
-    term: 'Amortization',
-    def: 'The schedule over which a mortgage principal is paid down; shapes owner cash-flow math on a rental.',
-  },
-  {
-    term: 'NOI',
-    def: 'Net Operating Income \u2014 gross rent minus operating expenses, before mortgage interest and taxes.',
-  },
-  {
-    term: 'Cap rate',
-    def: 'NOI divided by property value; the standard yardstick for comparing rental investments.',
+      'Quarterly and city-level reports covering vacancy, asking rents, concessions, and absorption.',
+    bullets: [
+      'Quarterly Ontario Rental Market Report',
+      'Market Snapshot: Toronto',
+      'Market Snapshot: Mississauga',
+      'Market Snapshot: Ottawa',
+      'Market Snapshot: Vancouver',
+      'Market Snapshot: Miami',
+    ],
+    href: '#guides-reports',
+    ctaLabel: 'See market reports',
   },
 ]
 
 // ─────────────────────────────────────────────────────────────
-// Helpers
+// Featured guides (6-8 high-intent cards)
+// TODO(phase-3): publish each slug as a Sanity guide so the
+// /resources/[slug]/ route renders the long-form content.
 // ─────────────────────────────────────────────────────────────
 
-function formatDate(iso?: string): string | null {
-  if (!iso) return null
-  try {
-    return new Date(iso).toLocaleDateString('en-CA', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    })
-  } catch {
-    return null
-  }
+interface FeaturedGuide {
+  tag: string
+  title: string
+  excerpt: string
+  slug: string
+  readMinutes: number
 }
 
-function estimatedReadTime(article: EditorialArticle): number {
-  if (article.readTime && article.readTime > 0) return article.readTime
-  const base = (article.excerpt?.length ?? 400) / 5 / 220
-  return Math.max(3, Math.round(base * 6))
-}
-
-function categoryLabel(c?: string): string {
-  if (!c) return 'Dispatch'
-  const map: Record<string, string> = {
-    blog: 'Dispatch',
-    guide: 'Guide',
-    'market-report': 'Market Report',
-    'legal-guide': 'Legal',
-    comparison: 'Comparison',
-    'case-study': 'Case Study',
-  }
-  return map[c] ?? c
-}
+const FEATURED_GUIDES: FeaturedGuide[] = [
+  {
+    tag: 'Landlord',
+    title: 'Tenant Screening Guide for Ontario Landlords',
+    excerpt:
+      'Credit, employment, references, and the two questions that catch most problem applicants before they sign.',
+    // TODO(phase-3): publish tenant-screening-ontario-landlords
+    slug: 'tenant-screening-ontario-landlords',
+    readMinutes: 9,
+  },
+  {
+    tag: 'Landlord',
+    title: 'How to Price Your Rental in 2026',
+    excerpt:
+      'A framework that balances CMHC benchmarks, live comps, and concession realities so a unit leases in under three weeks.',
+    // TODO(phase-3): publish how-to-price-your-rental-2026
+    slug: 'how-to-price-your-rental-2026',
+    readMinutes: 7,
+  },
+  {
+    tag: 'Landlord',
+    title: 'Rent Guarantee 101: What It Covers',
+    excerpt:
+      'How rent guarantee products work, what they do and do not cover, and when they are worth the premium.',
+    // TODO(phase-3): publish rent-guarantee-101
+    slug: 'rent-guarantee-101',
+    readMinutes: 5,
+  },
+  {
+    tag: 'Institutional',
+    title: 'Lease-Up Playbook: The First 30 Days',
+    excerpt:
+      'Pre-marketing, leasing-office staffing, incentive calibration, and the reporting cadence stabilization demands.',
+    // TODO(phase-3): publish lease-up-playbook-first-30-days
+    slug: 'lease-up-playbook-first-30-days',
+    readMinutes: 10,
+  },
+  {
+    tag: 'Landlord',
+    title: 'How to Avoid Bad Tenants: The 12-Point Checklist',
+    excerpt:
+      'The twelve disqualifying patterns we flag during screening, and how to verify each without tripping human-rights legislation.',
+    // TODO(phase-3): publish how-to-avoid-bad-tenants
+    slug: 'how-to-avoid-bad-tenants',
+    readMinutes: 8,
+  },
+  {
+    tag: 'Institutional',
+    title: 'Institutional RFP Template for Purpose-Built Rentals',
+    excerpt:
+      'A copy-and-edit RFP scope covering marketing, leasing, and handover - the document developers keep asking us for.',
+    // TODO(phase-3): publish institutional-rfp-template
+    slug: 'institutional-rfp-template',
+    readMinutes: 6,
+  },
+  {
+    tag: 'Tenant',
+    title: 'Tenant Insurance Requirements by Province',
+    excerpt:
+      'What most leases require, what insurers actually pay out, and the coverage figures worth negotiating.',
+    // TODO(phase-3): publish tenant-insurance-by-province
+    slug: 'tenant-insurance-by-province',
+    readMinutes: 6,
+  },
+  {
+    tag: 'Tenant',
+    title: 'Moving Day Coordination Guide (Tenant Edition)',
+    excerpt:
+      'Booking elevators, utilities, insurance, and the inspection walkthrough - the timeline we share with every new tenant.',
+    // TODO(phase-3): publish moving-day-coordination-tenant
+    slug: 'moving-day-coordination-tenant',
+    readMinutes: 5,
+  },
+]
 
 // ─────────────────────────────────────────────────────────────
-// Featured article (magazine-style)
+// Category-specific guide indexes (list views under each pillar)
 // ─────────────────────────────────────────────────────────────
 
-function FeaturedArticle({ article }: { article: EditorialArticle }) {
-  const readTime = estimatedReadTime(article)
-  const date = formatDate(article.publishedAt)
-  const author = article.author ?? 'The MoveSmart editors'
+interface GuideLink {
+  title: string
+  slug: string
+  note?: string
+}
 
+const LANDLORD_GUIDES: GuideLink[] = [
+  {
+    title: 'How to Find Tenants',
+    // TODO(phase-3): publish how-to-find-tenants with per-city variants
+    slug: 'how-to-find-tenants',
+    note: 'City-specific variants available',
+  },
+  {
+    title: 'Tenant Screening Guide',
+    // TODO(phase-3): publish tenant-screening-ontario-landlords
+    slug: 'tenant-screening-ontario-landlords',
+  },
+  {
+    title: 'Rental Market Guide',
+    // TODO(phase-3): publish rental-market-guide
+    slug: 'rental-market-guide',
+  },
+  {
+    title: 'Eviction Guide',
+    // TODO(phase-3): publish eviction-guide-ontario
+    slug: 'eviction-guide-ontario',
+    note: 'Published with partner legal counsel - not a service we provide',
+  },
+  {
+    title: 'How to Price Your Rental',
+    // TODO(phase-3): publish how-to-price-your-rental-2026
+    slug: 'how-to-price-your-rental-2026',
+  },
+  {
+    title: 'How to Avoid Bad Tenants',
+    // TODO(phase-3): publish how-to-avoid-bad-tenants
+    slug: 'how-to-avoid-bad-tenants',
+  },
+  {
+    title: 'Landlord FAQ',
+    // TODO(phase-3): publish landlord-faq
+    slug: 'landlord-faq',
+  },
+]
+
+const TENANT_GUIDES: GuideLink[] = [
+  {
+    title: 'Tenant FAQ',
+    // TODO(phase-3): publish tenant-faq
+    slug: 'tenant-faq',
+  },
+  {
+    title: 'Tenant Insurance Guide',
+    // TODO(phase-3): publish tenant-insurance-by-province
+    slug: 'tenant-insurance-by-province',
+  },
+  {
+    title: 'Guarantor / Co-Signer Guide',
+    // TODO(phase-3): publish guarantor-co-signer-guide
+    slug: 'guarantor-co-signer-guide',
+  },
+  {
+    title: 'Moving Guide',
+    // TODO(phase-3): publish moving-day-coordination-tenant
+    slug: 'moving-day-coordination-tenant',
+  },
+  {
+    title: 'Application Walkthrough',
+    // TODO(phase-3): publish tenant-application-walkthrough
+    slug: 'tenant-application-walkthrough',
+  },
+]
+
+const INSTITUTIONAL_GUIDES: GuideLink[] = [
+  {
+    title: 'Lease-Up Playbook for New Buildings',
+    // TODO(phase-3): publish lease-up-playbook-first-30-days
+    slug: 'lease-up-playbook-first-30-days',
+  },
+  {
+    title: 'Institutional RFP Checklist',
+    // TODO(phase-3): publish institutional-rfp-template
+    slug: 'institutional-rfp-template',
+  },
+  {
+    title: 'Purpose-Built Rental Marketing Strategy',
+    // TODO(phase-3): publish purpose-built-rental-marketing
+    slug: 'purpose-built-rental-marketing',
+  },
+  {
+    title: 'Vacancy Performance Benchmarks',
+    // TODO(phase-3): publish vacancy-performance-benchmarks
+    slug: 'vacancy-performance-benchmarks',
+  },
+]
+
+const MARKET_REPORTS: GuideLink[] = [
+  {
+    title: 'Quarterly Ontario Rental Market Report',
+    // TODO(phase-3): publish quarterly-ontario-rental-report
+    slug: 'quarterly-ontario-rental-report',
+    note: 'Series - updated four times a year',
+  },
+  {
+    title: 'Market Snapshot: Toronto',
+    // TODO(phase-3): publish market-snapshot-toronto
+    slug: 'market-snapshot-toronto',
+  },
+  {
+    title: 'Market Snapshot: Mississauga',
+    // TODO(phase-3): publish market-snapshot-mississauga
+    slug: 'market-snapshot-mississauga',
+  },
+  {
+    title: 'Market Snapshot: Ottawa',
+    // TODO(phase-3): publish market-snapshot-ottawa
+    slug: 'market-snapshot-ottawa',
+  },
+  {
+    title: 'Market Snapshot: Vancouver',
+    // TODO(phase-3): publish market-snapshot-vancouver
+    slug: 'market-snapshot-vancouver',
+  },
+  {
+    title: 'Market Snapshot: Miami',
+    // TODO(phase-3): publish market-snapshot-miami
+    slug: 'market-snapshot-miami',
+  },
+]
+
+// ─────────────────────────────────────────────────────────────
+// FAQ (5-6 questions)
+// ─────────────────────────────────────────────────────────────
+
+const FAQ: { q: string; a: string }[] = [
+  {
+    q: 'Are these guides free?',
+    a: 'Yes. Every guide, checklist, and market report on this site is free to read. No paywall, no email gate on the content itself, no lead-form gymnastics. We publish our documented process because transparency is the differentiator.',
+  },
+  {
+    q: 'How often are the guides updated?',
+    a: 'Legal guides are reviewed whenever the governing statute or tribunal rule changes. Market reports refresh each quarter. Evergreen operational guides (pricing, screening, moving) get a full audit once a year, with in-line corrections any time a reader flags a stale detail.',
+  },
+  {
+    q: 'Can I republish or cite these guides?',
+    a: 'Short excerpts with attribution and a link back to the original page are fine. For longer reproductions, reach out and we will confirm in writing - our only requirement is that the attribution remains visible and the text stays unedited.',
+  },
+  {
+    q: 'Do you produce custom guides for institutional clients?',
+    a: 'Yes. For developers and asset managers, we prepare tailored lease-up playbooks, RFP responses, and concession-strategy memos specific to the asset. That work is part of an engagement - the public guides here reflect the documented process behind it.',
+  },
+  {
+    q: 'Who writes these guides?',
+    a: 'Our leasing team writes the operational content. Legal guides are reviewed by outside counsel before publication. Market reports are compiled from CMHC, Statistics Canada, MLS data, and our own leasing file - with sources cited in every report.',
+  },
+  {
+    q: 'How do I request a guide on a topic that is not covered?',
+    a: 'Email the team or use the contact form. If a question comes in more than a handful of times, it becomes a guide. Several of the pages linked above started exactly that way.',
+  },
+]
+
+// ─────────────────────────────────────────────────────────────
+// Pillar cards
+// ─────────────────────────────────────────────────────────────
+
+function PillarGrid() {
   return (
-    <section className="relative overflow-hidden bg-[#FBFAF6] py-20 sm:py-28">
+    <section
+      id="pillars"
+      className="relative bg-white py-20 sm:py-24"
+      aria-label="Guide categories"
+    >
       <div
         aria-hidden="true"
         className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
       />
-      <div className="mx-auto max-w-3xl px-6 text-center">
-        <RevealOnScroll variant="blur" duration={0.9}>
-          <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.3em] text-brand-gold">
-            {categoryLabel(article.category)} \u00b7 Featured
-          </p>
-          <h2 className="font-display text-4xl font-normal leading-[1.08] tracking-tight text-brand-navy sm:text-5xl lg:text-[3.25rem]">
-            {article.title}
-            <span aria-hidden="true" className="text-brand-gold">
-              .
-            </span>
-          </h2>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-slate-600">
-            <span className="font-medium text-brand-navy">{author}</span>
-            <span aria-hidden="true" className="text-slate-400">
-              \u00b7
-            </span>
-            <span>{readTime} min read</span>
-            {date && (
-              <>
-                <span aria-hidden="true" className="text-slate-400">
-                  \u00b7
-                </span>
-                <time dateTime={article.publishedAt}>{date}</time>
-              </>
-            )}
-            {article.cityTitle && (
-              <>
-                <span aria-hidden="true" className="text-slate-400">
-                  \u00b7
-                </span>
-                <span>{article.cityTitle}</span>
-              </>
-            )}
-          </div>
-          {article.excerpt && (
-            <p className="mx-auto mt-8 max-w-2xl font-display text-xl italic leading-relaxed text-slate-700 sm:text-2xl">
-              {article.excerpt}
-            </p>
-          )}
-          <div className="mt-10">
-            <Link
-              href={`/resources/${article.slug}/`}
-              className="group inline-flex items-center gap-2 border-b-2 border-brand-emerald pb-1 font-display text-lg italic text-brand-emerald transition-colors hover:text-brand-navy hover:border-brand-navy"
-            >
-              Read the piece
-              <span
-                aria-hidden="true"
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              >
-                \u2192
-              </span>
-            </Link>
-          </div>
-        </RevealOnScroll>
-      </div>
-    </section>
-  )
-}
-
-// ─────────────────────────────────────────────────────────────
-// Browse-by-topic horizontal nav
-// ─────────────────────────────────────────────────────────────
-
-function TopicNav() {
-  return (
-    <nav
-      aria-label="Browse by topic"
-      className="border-y border-brand-navy/10 bg-white"
-    >
-      <div className="mx-auto max-w-6xl px-6 py-5">
-        <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-500">
-          Browse by topic
-        </p>
-        <ul className="flex flex-wrap items-baseline gap-x-7 gap-y-2 text-sm">
-          {TOPICS.map((t) => (
-            <li key={t.label}>
-              <a
-                href={t.href}
-                className={
-                  t.active
-                    ? 'font-display italic text-brand-navy underline decoration-brand-gold decoration-2 underline-offset-[6px]'
-                    : 'text-slate-600 transition-colors hover:text-brand-navy'
-                }
-              >
-                {t.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </nav>
-  )
-}
-
-// ─────────────────────────────────────────────────────────────
-// Recent articles - magazine masonry (varied sizes, hairlines)
-// ─────────────────────────────────────────────────────────────
-
-function RecentArticles({ items }: { items: EditorialArticle[] }) {
-  const shouldReduce = useReducedMotion()
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
-
-  // Deterministic pseudo-random rotation per index (no hydration drift)
-  const rotations = useMemo(
-    () => items.map((_, i) => ((i * 37) % 11) / 10 - 0.5),
-    [items]
-  )
-
-  if (items.length === 0) {
-    return (
-      <section id="recent" className="bg-[#FBFAF6] py-20">
-        <div className="mx-auto max-w-5xl px-6 text-center">
-          <p className="font-display text-2xl italic text-slate-600">
-            New dispatches are in the press. Check back next week.
-          </p>
-        </div>
-      </section>
-    )
-  }
-
-  return (
-    <section id="recent" className="bg-[#FBFAF6] py-20 sm:py-24">
       <div className="mx-auto max-w-6xl px-6">
         <RevealOnScroll variant="scaleIn" duration={0.7}>
-          <div className="mb-12 flex items-end justify-between gap-6 border-b border-brand-navy/15 pb-4">
-            <h2 className="font-display text-3xl font-normal text-brand-navy sm:text-4xl">
-              Recent{' '}
-              <span className="italic text-brand-emerald">dispatches</span>
-              <span aria-hidden="true" className="text-brand-gold">
-                .
-              </span>
-            </h2>
-            <p className="hidden text-sm text-slate-500 sm:block">
-              Updated weekly \u00b7{' '}
-              <CountUp value={items.length} className="font-semibold text-brand-navy" />{' '}
-              in the feed
-            </p>
-          </div>
+          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-brand-gold">
+            The library
+          </p>
+          <h2 className="mb-12 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
+            Four audiences,{' '}
+            <span className="italic text-brand-emerald">one discipline</span>
+            <span aria-hidden="true" className="text-brand-gold">
+              .
+            </span>
+          </h2>
         </RevealOnScroll>
 
-        <div
-          ref={ref}
-          className="grid grid-cols-1 gap-x-10 gap-y-10 md:grid-cols-2 lg:grid-cols-3"
-        >
-          {items.map((a, i) => {
-            const prominence = i % 5 === 0 ? 'lg' : i % 3 === 0 ? 'md' : 'sm'
-            const pullQuote = i % 7 === 3
-            const date = formatDate(a.publishedAt)
-            const author = a.author ?? 'MoveSmart editors'
-
-            return (
-              <motion.article
-                key={a.slug}
-                initial={
-                  shouldReduce
-                    ? { opacity: 0 }
-                    : { opacity: 0, y: 20, rotate: rotations[i] - 0.5 }
-                }
-                animate={
-                  inView
-                    ? shouldReduce
-                      ? { opacity: 1 }
-                      : { opacity: 1, y: 0, rotate: 0 }
-                    : undefined
-                }
-                transition={{
-                  duration: 0.7,
-                  delay: i * 0.06,
-                  ease: EASE,
-                }}
-                className={
-                  prominence === 'lg'
-                    ? 'md:col-span-2'
-                    : undefined
-                }
-              >
-                <div className="border-t border-brand-navy/15 pt-6">
-                  <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-brand-gold">
-                    {categoryLabel(a.category)}
-                    {a.cityTitle && (
-                      <span className="ml-2 text-slate-500">
-                        {' \u00b7 '}
-                        {a.cityTitle}
-                      </span>
-                    )}
-                  </p>
-                  <h3
-                    className={
-                      prominence === 'lg'
-                        ? 'font-display text-3xl font-normal leading-tight text-brand-navy sm:text-4xl'
-                        : prominence === 'md'
-                          ? 'font-display text-2xl font-normal leading-snug text-brand-navy'
-                          : 'font-display text-xl font-normal leading-snug text-brand-navy'
-                    }
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-4">
+          {PILLARS.map((p) => (
+            <RevealOnScroll key={p.eyebrow} variant="fade" duration={0.6}>
+              <div className="flex h-full flex-col border-t border-brand-navy/15 pt-6">
+                <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-brand-gold">
+                  {p.eyebrow}
+                </p>
+                <h3 className="font-display text-2xl font-normal leading-tight text-brand-navy">
+                  {p.title}{' '}
+                  <span className="italic text-brand-emerald">
+                    {p.italicWord}
+                  </span>
+                  <span aria-hidden="true" className="text-brand-gold">
+                    .
+                  </span>
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  {p.blurb}
+                </p>
+                <ul className="mt-5 space-y-2 text-sm text-slate-700">
+                  {p.bullets.map((b) => (
+                    <li key={b} className="flex gap-2">
+                      <span
+                        aria-hidden="true"
+                        className="mt-[0.55rem] inline-block h-1 w-1 shrink-0 bg-brand-emerald"
+                      />
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-6 pt-5">
+                  <Link
+                    href={p.href}
+                    className="inline-flex items-center gap-1 border-b-2 border-brand-emerald pb-1 font-display text-base italic text-brand-emerald transition-colors hover:border-brand-navy hover:text-brand-navy"
                   >
-                    <Link
-                      href={`/resources/${a.slug}/`}
-                      className="transition-colors hover:text-brand-emerald"
-                    >
-                      {a.title}
-                    </Link>
-                  </h3>
-                  {a.excerpt && (
-                    <p
-                      className={
-                        pullQuote
-                          ? 'mt-3 font-display text-base italic leading-relaxed text-slate-700'
-                          : 'mt-3 text-sm leading-relaxed text-slate-600'
-                      }
-                    >
-                      {pullQuote ? `\u201c${a.excerpt}\u201d` : a.excerpt}
-                    </p>
-                  )}
-                  <p className="mt-4 text-xs text-slate-500">
-                    {author}
-                    {date && <span> \u00b7 {date}</span>}
-                    <span> \u00b7 {estimatedReadTime(a)} min</span>
-                  </p>
+                    {p.ctaLabel}
+                    <span aria-hidden="true">&rarr;</span>
+                  </Link>
                 </div>
-              </motion.article>
-            )
-          })}
+              </div>
+            </RevealOnScroll>
+          ))}
         </div>
       </div>
     </section>
@@ -412,131 +444,180 @@ function RecentArticles({ items }: { items: EditorialArticle[] }) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Most-read guides - numbered stack, no cards
+// Featured guides - 6-8 high-intent cards
 // ─────────────────────────────────────────────────────────────
 
-function MostReadStack() {
-  const shouldReduce = useReducedMotion()
-  const ref = useRef<HTMLOListElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
-
+function FeaturedGuides() {
   return (
-    <section className="bg-white py-20 sm:py-24">
-      <div className="mx-auto max-w-4xl px-6">
+    <section
+      id="featured"
+      className="bg-[#FBFAF6] py-20 sm:py-24"
+      aria-label="Featured guides"
+    >
+      <div className="mx-auto max-w-6xl px-6">
         <RevealOnScroll variant="scaleIn" duration={0.7}>
-          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-brand-gold">
-            The shelf
-          </p>
-          <h2 className="mb-12 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
-            Most-read{' '}
-            <span className="italic text-brand-emerald">guides</span>
-            <span aria-hidden="true" className="text-brand-gold">
-              .
-            </span>
-          </h2>
+          <div className="mb-12 flex flex-wrap items-end justify-between gap-6 border-b border-brand-navy/15 pb-4">
+            <div>
+              <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-brand-gold">
+                Start here
+              </p>
+              <h2 className="font-display text-3xl font-normal text-brand-navy sm:text-4xl">
+                Featured{' '}
+                <span className="italic text-brand-emerald">guides</span>
+                <span aria-hidden="true" className="text-brand-gold">
+                  .
+                </span>
+              </h2>
+            </div>
+            <p className="max-w-md text-sm leading-relaxed text-slate-600">
+              The published process - documented so you can see exactly what
+              serious leasing execution looks like before you hire anyone.
+            </p>
+          </div>
         </RevealOnScroll>
 
-        <ol ref={ref} className="divide-y divide-brand-navy/10">
-          {MOST_READ.map((g, i) => (
-            <motion.li
-              key={g.n}
-              initial={
-                shouldReduce ? { opacity: 0 } : { opacity: 0, x: -60 }
-              }
-              animate={
-                inView
-                  ? shouldReduce
-                    ? { opacity: 1 }
-                    : { opacity: 1, x: 0 }
-                  : undefined
-              }
-              transition={{ duration: 0.6, delay: i * 0.1, ease: EASE }}
-              className="flex items-start gap-6 py-6 sm:gap-10"
-            >
-              <span
-                aria-hidden="true"
-                className="font-display text-5xl italic text-brand-gold sm:text-6xl"
-              >
-                {g.n}
-              </span>
-              <div className="flex-1">
-                <h3 className="font-display text-xl font-normal text-brand-navy sm:text-2xl">
+        <div className="grid grid-cols-1 gap-x-10 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+          {FEATURED_GUIDES.map((g) => (
+            <RevealOnScroll key={g.slug} variant="fade" duration={0.6}>
+              <article className="flex h-full flex-col border-t border-brand-navy/15 pt-6">
+                <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-brand-gold">
+                  {g.tag}
+                </p>
+                <h3 className="font-display text-xl font-normal leading-snug text-brand-navy">
                   <Link
-                    href={g.href}
+                    href={`/resources/${g.slug}/`}
                     className="transition-colors hover:text-brand-emerald"
                   >
                     {g.title}
                   </Link>
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600 sm:text-base">
-                  {g.blurb}
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  {g.excerpt}
                 </p>
-                <Link
-                  href={g.href}
-                  className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-brand-emerald transition-colors hover:text-brand-navy"
-                >
-                  Read the guide
-                  <span aria-hidden="true">\u2192</span>
-                </Link>
-              </div>
-            </motion.li>
+                <p className="mt-5 text-xs uppercase tracking-wider text-slate-500">
+                  {g.readMinutes} min read
+                </p>
+              </article>
+            </RevealOnScroll>
           ))}
-        </ol>
+        </div>
       </div>
     </section>
   )
 }
 
 // ─────────────────────────────────────────────────────────────
-// Glossary - 2-col <dl>, clipReveal on terms
+// Category guide indexes (anchor targets for pillar CTAs)
 // ─────────────────────────────────────────────────────────────
 
-function Glossary() {
+function CategoryIndex({
+  id,
+  eyebrow,
+  title,
+  italicWord,
+  intro,
+  guides,
+}: {
+  id: string
+  eyebrow: string
+  title: string
+  italicWord: string
+  intro: string
+  guides: GuideLink[]
+}) {
   return (
-    <section id="glossary" className="bg-[#FBFAF6] py-20 sm:py-24">
+    <section id={id} className="bg-white py-16 sm:py-20">
       <div className="mx-auto max-w-5xl px-6">
-        <RevealOnScroll variant="scaleIn" duration={0.7}>
+        <RevealOnScroll variant="fade" duration={0.6}>
           <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-brand-gold">
-            Index
+            {eyebrow}
           </p>
-          <h2 className="mb-12 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
-            Glossary of property{' '}
-            <span className="italic text-brand-emerald">terms</span>
+          <h3 className="font-display text-2xl font-normal text-brand-navy sm:text-3xl">
+            {title}{' '}
+            <span className="italic text-brand-emerald">{italicWord}</span>
             <span aria-hidden="true" className="text-brand-gold">
               .
             </span>
-          </h2>
+          </h3>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600">
+            {intro}
+          </p>
         </RevealOnScroll>
 
-        <dl className="grid grid-cols-1 gap-x-12 sm:grid-cols-2">
-          {GLOSSARY.map((g) => (
-            <div
-              key={g.term}
-              className="border-t border-brand-navy/15 py-5 first:border-t sm:[&:nth-child(2)]:border-t"
-            >
-              <RevealOnScroll variant="clipReveal" duration={0.6}>
-                <dt className="font-display text-lg font-normal text-brand-navy">
-                  {g.term}
-                </dt>
-              </RevealOnScroll>
-              <dd className="mt-1 text-sm leading-relaxed text-slate-600">
-                {g.def}
-              </dd>
-            </div>
+        <ul className="mt-8 divide-y divide-brand-navy/10 border-t border-brand-navy/15">
+          {guides.map((g) => (
+            <li key={g.slug} className="py-4">
+              <Link
+                href={`/resources/${g.slug}/`}
+                className="group flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1"
+              >
+                <span className="font-display text-lg font-normal text-brand-navy transition-colors group-hover:text-brand-emerald">
+                  {g.title}
+                </span>
+                {g.note && (
+                  <span className="text-xs italic text-slate-500">
+                    {g.note}
+                  </span>
+                )}
+              </Link>
+            </li>
           ))}
-        </dl>
+        </ul>
       </div>
     </section>
   )
 }
 
+function CategoryIndexes() {
+  return (
+    <>
+      <CategoryIndex
+        id="guides-landlord"
+        eyebrow="For Landlords"
+        title="Owner"
+        italicWord="library"
+        intro="The operational documents we hand our own files - pricing frameworks, screening SOPs, and the paperwork habits that keep an owner out of the tribunal."
+        guides={LANDLORD_GUIDES}
+      />
+      <CategoryIndex
+        id="guides-tenant"
+        eyebrow="For Tenants"
+        title="Tenant"
+        italicWord="library"
+        intro="Practical guides for renters - what a strong application looks like, how guarantors work, what tenant insurance actually covers, and how to plan a calm move-in."
+        guides={TENANT_GUIDES}
+      />
+      <CategoryIndex
+        id="guides-institutional"
+        eyebrow="For Developers"
+        title="Institutional"
+        italicWord="library"
+        intro="Lease-up playbooks, RFP templates, and marketing strategies for purpose-built rental developers and asset managers stabilizing new inventory."
+        guides={INSTITUTIONAL_GUIDES}
+      />
+      <CategoryIndex
+        id="guides-reports"
+        eyebrow="Market Reports"
+        title="Market"
+        italicWord="reports"
+        intro="Quarterly province-level reports and city-level snapshots covering vacancy, asking rents, concessions, and absorption - with sources cited."
+        guides={MARKET_REPORTS}
+      />
+    </>
+  )
+}
+
 // ─────────────────────────────────────────────────────────────
-// Newsletter signup - editorial panel, not a card
+// Newsletter panel
 // ─────────────────────────────────────────────────────────────
 
 function NewsletterPanel() {
   return (
-    <section className="bg-white py-20 sm:py-24">
+    <section
+      id="newsletter"
+      className="bg-[#FBFAF6] py-20 sm:py-24"
+      aria-label="Monthly market intel signup"
+    >
       <div className="mx-auto max-w-3xl px-6">
         <div className="border-y border-brand-navy/15 py-10 text-center sm:py-14">
           <RevealOnScroll variant="scaleIn" duration={0.7}>
@@ -544,24 +625,27 @@ function NewsletterPanel() {
               The dispatch
             </p>
             <h2 className="font-display text-3xl font-normal text-brand-navy sm:text-4xl">
-              One email a month.{' '}
-              <span className="italic text-brand-emerald">No noise</span>
+              Monthly market intel.{' '}
+              <span className="italic text-brand-emerald">
+                New guides first
+              </span>
               <span aria-hidden="true" className="text-brand-gold">
                 .
               </span>
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-slate-600">
-              New guides, Canadian market shifts, and the occasional policy
-              alert. If a month has nothing worth reading, we don\u2019t send.
+              One email a month: fresh guides, Canadian and US market shifts,
+              and the occasional policy alert. If a month has nothing worth
+              reading, we do not send.
             </p>
           </RevealOnScroll>
 
           <form
-            action="/contact/?intent=newsletter"
+            action="/contact/"
             method="get"
             className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row"
           >
-            <input type="hidden" name="intent" value="newsletter" />
+            <input type="hidden" name="type" value="newsletter" />
             <label htmlFor="newsletter-email" className="sr-only">
               Email address
             </label>
@@ -575,7 +659,7 @@ function NewsletterPanel() {
             />
             <button
               type="submit"
-              className="rounded-none border border-brand-navy bg-brand-navy px-6 py-3 font-display text-sm uppercase tracking-wider text-white transition-colors hover:bg-brand-emerald hover:border-brand-emerald"
+              className="rounded-none border border-brand-navy bg-brand-navy px-6 py-3 font-display text-sm uppercase tracking-wider text-white transition-colors hover:border-brand-emerald hover:bg-brand-emerald"
             >
               Subscribe
             </button>
@@ -583,7 +667,173 @@ function NewsletterPanel() {
           <p className="mx-auto mt-4 max-w-md text-xs text-slate-500">
             No spam, ever. Unsubscribe in one click. We never share your email.
           </p>
+          <p className="mx-auto mt-2 max-w-md text-xs italic text-slate-500">
+            Prefer a direct request?{' '}
+            <Link
+              href="/contact/?type=newsletter"
+              className="underline decoration-brand-gold underline-offset-4 hover:text-brand-emerald"
+            >
+              Ask the team for the current issue
+            </Link>
+            .
+          </p>
         </div>
+      </div>
+    </section>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────
+// Related anchors - locations + services
+// ─────────────────────────────────────────────────────────────
+
+function RelatedAnchors() {
+  return (
+    <section
+      className="bg-white py-20 sm:py-24"
+      aria-label="Related sections"
+    >
+      <div className="mx-auto max-w-6xl px-6">
+        <RevealOnScroll variant="scaleIn" duration={0.7}>
+          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-brand-gold">
+            Keep exploring
+          </p>
+          <h2 className="mb-12 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
+            Put the library{' '}
+            <span className="italic text-brand-emerald">into context</span>
+            <span aria-hidden="true" className="text-brand-gold">
+              .
+            </span>
+          </h2>
+        </RevealOnScroll>
+
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+          <div className="border-t border-brand-navy/15 pt-6">
+            <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-brand-gold">
+              Locations
+            </p>
+            <h3 className="font-display text-xl font-normal leading-snug text-brand-navy">
+              <Link
+                href="/locations/"
+                className="transition-colors hover:text-brand-emerald"
+              >
+                Every market we lease in, with local data
+              </Link>
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              Toronto, Mississauga, Ottawa, Vancouver, Miami, and the twenty
+              other cities where our brokerage is licensed to execute - each
+              with local vacancy, rent, and concession benchmarks.
+            </p>
+          </div>
+          <div className="border-t border-brand-navy/15 pt-6">
+            <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-brand-gold">
+              Services
+            </p>
+            <h3 className="font-display text-xl font-normal leading-snug text-brand-navy">
+              <Link
+                href="/services/"
+                className="transition-colors hover:text-brand-emerald"
+              >
+                The leasing services these guides support
+              </Link>
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              Tenant placement, screening, lease drafting, showing coordination,
+              and full institutional lease-up - each service is the executed
+              version of the guide it maps to.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────
+// FAQ
+// ─────────────────────────────────────────────────────────────
+
+function FAQSection() {
+  return (
+    <section id="faq" className="bg-[#FBFAF6] py-20 sm:py-24" aria-label="FAQ">
+      <div className="mx-auto max-w-4xl px-6">
+        <RevealOnScroll variant="scaleIn" duration={0.7}>
+          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-brand-gold">
+            Frequently asked
+          </p>
+          <h2 className="mb-12 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
+            About the{' '}
+            <span className="italic text-brand-emerald">resources hub</span>
+            <span aria-hidden="true" className="text-brand-gold">
+              .
+            </span>
+          </h2>
+        </RevealOnScroll>
+
+        <dl className="divide-y divide-brand-navy/10 border-t border-brand-navy/15">
+          {FAQ.map((f) => (
+            <div key={f.q} className="py-6">
+              <RevealOnScroll variant="fade" duration={0.5}>
+                <dt className="font-display text-lg font-normal text-brand-navy">
+                  {f.q}
+                </dt>
+                <dd className="mt-2 text-sm leading-relaxed text-slate-600">
+                  {f.a}
+                </dd>
+              </RevealOnScroll>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────
+// Final CTA
+// ─────────────────────────────────────────────────────────────
+
+function FinalCTA() {
+  return (
+    <section
+      className="relative bg-brand-navy py-20 sm:py-24"
+      aria-label="Final call to action"
+    >
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/60 to-transparent"
+      />
+      <div className="mx-auto max-w-3xl px-6 text-center">
+        <RevealOnScroll variant="scaleIn" duration={0.8}>
+          <h2 className="font-display text-3xl font-normal leading-tight text-white sm:text-4xl">
+            Ready to put these resources{' '}
+            <span className="italic text-brand-gold">into practice</span>
+            <span aria-hidden="true" className="text-brand-gold">
+              .
+            </span>
+          </h2>
+          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/75">
+            The guides document the process. Our leasing team runs it on your
+            file - zero upfront, success-fee only.
+          </p>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/contact/?type=owner"
+              className="inline-flex items-center gap-2 rounded-none border border-brand-gold bg-brand-gold px-7 py-3 font-display text-sm uppercase tracking-wider text-brand-navy transition-colors hover:bg-white hover:border-white"
+            >
+              Talk to a leasing advisor
+              <span aria-hidden="true">&rarr;</span>
+            </Link>
+            <Link
+              href="/services/"
+              className="inline-flex items-center gap-2 border-b-2 border-white/60 pb-1 font-display text-base italic text-white transition-colors hover:border-brand-gold hover:text-brand-gold"
+            >
+              Review our services
+              <span aria-hidden="true">&rarr;</span>
+            </Link>
+          </div>
+        </RevealOnScroll>
       </div>
     </section>
   )
@@ -598,16 +848,22 @@ export function ResourcesEditorial({
   recent,
   counts,
 }: ResourcesEditorialProps) {
-  // suppress unused lint in case counts referenced only by parent hero
+  // Parent page controls the hero + Sanity-driven "What's new" aside.
+  // Suppress unused lint - these remain in the prop contract for future use
+  // (e.g. surfacing Sanity-published guides inside the featured section).
+  void featured
+  void recent
   void counts
+
   return (
     <>
-      {featured && <FeaturedArticle article={featured} />}
-      <TopicNav />
-      <RecentArticles items={recent} />
-      <MostReadStack />
-      <Glossary />
+      <PillarGrid />
+      <FeaturedGuides />
+      <CategoryIndexes />
       <NewsletterPanel />
+      <RelatedAnchors />
+      <FAQSection />
+      <FinalCTA />
     </>
   )
 }

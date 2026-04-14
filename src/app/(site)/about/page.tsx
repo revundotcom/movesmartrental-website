@@ -20,23 +20,23 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
 
 export const metadata: Metadata = {
-  title: 'About Us | Property Management Company Across Canada',
+  title: 'About Us | White-Glove Rental Brokerage in Canada',
   description:
-    'MoveSmart Rentals: Canada\'s white-glove property management company. Zero upfront cost, 500+ properties managed, 98% occupancy rate, and dedicated account managers.',
+    'MoveSmart Rentals is a white-glove leasing brokerage delivering full-cycle rental execution, strategic pricing, disciplined tenant qualification, and complete move-in coordination for landlords, property managers, builders, and institutional operators.',
   alternates: {
     canonical: '/about/',
   },
   openGraph: {
-    title: 'About MoveSmart Rentals | Canada Property Management',
+    title: 'About MoveSmart Rentals | Canadian Leasing Brokerage',
     description:
-      'Canada\'s white-glove property management company. Zero upfront cost, 500+ properties managed, 98% occupancy rate, and dedicated account managers.',
+      'Full-service leasing execution for serious rental operators. Strategic pricing, disciplined tenant qualification, rental protection options, and complete move-in coordination.',
     images: ['/og-default.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'About MoveSmart Rentals | Canada Property Management',
+    title: 'About MoveSmart Rentals | Canadian Leasing Brokerage',
     description:
-      'Canada\'s white-glove property management company. Zero upfront cost, 500+ properties managed, 98% occupancy rate, and dedicated account managers.',
+      'Full-service leasing execution for serious rental operators. Strategic pricing, disciplined tenant qualification, rental protection options, and complete move-in coordination.',
   },
 }
 
@@ -45,8 +45,8 @@ const organizationSchema = buildOrganizationSchema({
   url: SITE_URL,
   logo: `${SITE_URL}/og-default.png`,
   description:
-    'Professional property management across Canada with zero upfront cost, modern technology, and local expertise.',
-  contactEmail: 'info@movesmartrentals.com',
+    'White-glove rental brokerage delivering full-cycle leasing execution, strategic pricing, disciplined tenant qualification, and move-in coordination for landlords, PMCs, builders, and institutional operators across Canada.',
+  contactEmail: 'contact@movesmartrentals.com',
   socialLinks: [
     'https://www.linkedin.com/company/movesmart-rentals',
     'https://www.instagram.com/movesmartrentals',
@@ -59,9 +59,9 @@ const organizationSchema = buildOrganizationSchema({
 const localBusinessSchema = buildLocalBusinessSchema({
   name: 'MoveSmart Rentals',
   description:
-    'White-glove property management for Ontario landlords. Tenant placement, screening, rent protection, and full-service leasing with zero upfront cost.',
+    'White-glove leasing brokerage for Ontario landlords, property managers, builders, and institutional rental operators. Strategic pricing, tenant qualification, rental protection, and full move-in coordination.',
   url: SITE_URL,
-  phone: '+14372957688',
+  phone: '+18005959755',
   address: {
     streetAddress: '1 King St W, Suite 4801',
     city: 'Toronto',
@@ -85,8 +85,8 @@ function FounderQuoteCard() {
         From the founder
       </p>
       <p className="mt-6 font-display text-2xl font-normal italic leading-[1.35] text-brand-navy sm:text-[1.6rem]">
-        &ldquo;We wanted to build the property manager we wished we had hired
-        ourselves.&rdquo;
+        &ldquo;Brokers sell. Managers operate. We built MoveSmart to obsess
+        over the leasing phase itself.&rdquo;
       </p>
       <div className="mt-8 flex items-center gap-3 border-t border-brand-navy/10 pt-5">
         <span
@@ -125,10 +125,10 @@ export default function AboutPage() {
 
       <PageHeroBlock
         kicker="About"
-        eyebrow="Our story"
-        headline="Property management, rebuilt around owners"
+        eyebrow="Leasing brokerage"
+        headline="Full-service leasing execution for serious operators"
         accentLastWord
-        lede="MoveSmart Rentals was founded on a simple idea: property management should be accessible, transparent, and results-driven. Six years later, that principle still runs the company."
+        lede="MoveSmart Rentals is a white-glove rental brokerage built for landlords, property managers, builders, and institutional operators who refuse to leave the leasing phase to chance. We execute the full cycle - strategic pricing, disciplined tenant qualification, rental protection options, and complete move-in coordination - so vacancy stays short and approvals stay clean."
         cta1={{ label: 'Meet the team', href: '#team' }}
         cta2={{ label: 'Contact us', href: '/contact/' }}
         aside={<FounderQuoteCard />}
@@ -149,8 +149,8 @@ export default function AboutPage() {
       <LongTestimonials />
 
       <CTABannerBlock
-        headline="Curious if we're the right fit for your property?"
-        description="Book a 20-minute call with our team. No pressure, no obligation."
+        headline="Have a unit, a building, or a lease-up campaign coming?"
+        description="Book a 20-minute call with our leasing team. No pressure, no obligation."
         primaryCta={{ label: 'Book a 20-minute call', href: '/contact/' }}
       />
     </main>

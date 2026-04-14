@@ -65,49 +65,59 @@ export function Header() {
           value={navValue}
           onValueChange={(val) => setNavValue(val)}
         >
-          <NavigationMenuList className="gap-0.5">
-            <NavigationMenuItem>
-              <NavigationMenuLink
-                render={<Link href="/" />}
-                active={pathname === '/'}
-                className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-white/80 transition-all duration-200 hover:bg-white/10 hover:text-white data-active:text-white"
-              >
-                Home
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            {NAV_GROUPS.map((group) => (
-              <NavigationMenuItem key={group.label}>
-                <NavigationMenuTrigger
-                  className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-white/80 transition-all duration-200 hover:bg-white/10 hover:text-white data-popup-open:bg-white/10 data-popup-open:text-white"
-                >
-                  {group.label}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent className="min-w-[280px]">
-                  <ul className="grid gap-0.5 p-1.5">
-                    {group.items.map((item) => (
-                      <li key={item.href}>
-                        <NavigationMenuLink
-                          render={<Link href={item.href} />}
-                          active={pathname === item.href}
-                          className="group/link block cursor-pointer rounded-lg px-3 py-2.5 transition-all duration-150 hover:bg-emerald-50 focus:bg-emerald-50 data-active:bg-emerald-50 data-active:text-emerald-700"
-                        >
-                          <div className="flex items-center gap-2 text-sm font-semibold text-[#0B1D3A] group-hover/link:text-emerald-700">
-                            <span
-                              className="inline-block size-1.5 rounded-full bg-emerald-400 opacity-0 transition-opacity duration-150 group-hover/link:opacity-100"
-                              aria-hidden="true"
-                            />
-                            {item.title}
-                          </div>
-                          <p className="mt-0.5 pl-3.5 text-xs leading-relaxed text-muted-foreground">
-                            {item.description}
-                          </p>
-                        </NavigationMenuLink>
-                      </li>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            ))}
+          <NavigationMenuList className="gap-0">
+            {NAV_GROUPS.map((group) => {
+              // Single-item groups render as direct top-level links
+              // so the contracted nav order (Pricing, Franchising,
+              // Contact) reads as flat items rather than dropdowns.
+              if (group.items.length === 1) {
+                const only = group.items[0]
+                return (
+                  <NavigationMenuItem key={group.label}>
+                    <NavigationMenuLink
+                      render={<Link href={only.href} />}
+                      active={pathname === only.href}
+                      className="cursor-pointer rounded-lg px-2.5 py-2 text-sm font-medium whitespace-nowrap text-white/80 transition-all duration-200 hover:bg-white/10 hover:text-white data-active:bg-transparent data-active:text-white"
+                    >
+                      {group.label}
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                )
+              }
+              return (
+                <NavigationMenuItem key={group.label}>
+                  <NavigationMenuTrigger
+                    className="cursor-pointer rounded-lg px-2.5 py-2 text-sm font-medium whitespace-nowrap text-white/80 transition-all duration-200 hover:bg-white/10 hover:text-white data-popup-open:bg-white/10 data-popup-open:text-white"
+                  >
+                    {group.label}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent className="min-w-[280px]">
+                    <ul className="grid gap-0.5 p-1.5">
+                      {group.items.map((item) => (
+                        <li key={item.href}>
+                          <NavigationMenuLink
+                            render={<Link href={item.href} />}
+                            active={pathname === item.href}
+                            className="group/link block cursor-pointer rounded-lg px-3 py-2.5 transition-all duration-150 hover:bg-emerald-50 focus:bg-emerald-50 data-active:bg-emerald-50 data-active:text-emerald-700"
+                          >
+                            <div className="flex items-center gap-2 text-sm font-semibold text-[#0B1D3A] group-hover/link:text-emerald-700">
+                              <span
+                                className="inline-block size-1.5 rounded-full bg-emerald-400 opacity-0 transition-opacity duration-150 group-hover/link:opacity-100"
+                                aria-hidden="true"
+                              />
+                              {item.title}
+                            </div>
+                            <p className="mt-0.5 pl-3.5 text-xs leading-relaxed text-muted-foreground">
+                              {item.description}
+                            </p>
+                          </NavigationMenuLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              )
+            })}
           </NavigationMenuList>
         </NavigationMenu>
 
@@ -115,15 +125,15 @@ export function Header() {
         <div className="hidden items-center gap-2 lg:flex">
           <Link
             href="/contact/?intent=call"
-            className="cursor-pointer rounded-lg border border-white/20 px-4 py-2 text-sm font-medium text-white/80 transition-all duration-200 hover:border-white/40 hover:bg-white/10 hover:text-white"
+            className="cursor-pointer whitespace-nowrap rounded-lg border border-white/20 px-3.5 py-2 text-sm font-medium text-white/80 transition-all duration-200 hover:border-white/40 hover:bg-white/10 hover:text-white"
           >
             Book a Call
           </Link>
           <Link
-            href="/contact/"
-            className="cursor-pointer rounded-lg bg-brand-emerald px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-emerald-900/20 transition-all duration-200 hover:-translate-y-px hover:bg-emerald-600 hover:shadow-md"
+            href="/contact/?type=owner"
+            className="cursor-pointer whitespace-nowrap rounded-lg bg-brand-emerald px-3.5 py-2 text-sm font-semibold text-white shadow-sm shadow-emerald-900/20 transition-all duration-200 hover:-translate-y-px hover:bg-emerald-600 hover:shadow-md"
           >
-            Get Started
+            Create Account
           </Link>
         </div>
 

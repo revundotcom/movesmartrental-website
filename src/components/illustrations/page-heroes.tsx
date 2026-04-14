@@ -241,11 +241,11 @@ export function PricingHeroIllustration({ className = '' }: { className?: string
           <circle cx="22" cy="13" r="1.2" fill="#FFFFFF" />
         </g>
 
-        <text x="65" y="68" textAnchor="middle" fill="#0B1D3A" fontSize="11" fontWeight="700">Premium</text>
-        <text x="65" y="82" textAnchor="middle" fill="#0B1D3A" fontSize="8" opacity="0.5">White-glove service</text>
+        <text x="65" y="68" textAnchor="middle" fill="#0B1D3A" fontSize="11" fontWeight="700">Institutional</text>
+        <text x="65" y="82" textAnchor="middle" fill="#0B1D3A" fontSize="8" opacity="0.5">Bulk lease-up</text>
 
-        <text x="65" y="114" textAnchor="middle" fill="#0B1D3A" fontSize="22" fontWeight="800">10%</text>
-        <text x="65" y="128" textAnchor="middle" fill="#0B1D3A" fontSize="8" opacity="0.5">of monthly rent</text>
+        <text x="65" y="114" textAnchor="middle" fill="#0B1D3A" fontSize="18" fontWeight="800">RFP</text>
+        <text x="65" y="128" textAnchor="middle" fill="#0B1D3A" fontSize="8" opacity="0.5">project-scoped</text>
 
         {[0, 1, 2].map((i) => (
           <g key={`f3-${i}`} transform={`translate(16, ${146 + i * 14})`}>
@@ -281,13 +281,13 @@ export function PricingHeroIllustration({ className = '' }: { className?: string
           <rect x="17" y="32" width="6" height="6" rx="1" fill="#D4A853" />
         </g>
 
-        <text x="75" y="92" textAnchor="middle" fill="#FFFFFF" fontSize="13" fontWeight="800">Full Service</text>
-        <text x="75" y="106" textAnchor="middle" fill="#FFFFFF" fontSize="9" opacity="0.6">Most flexibility & support</text>
+        <text x="75" y="92" textAnchor="middle" fill="#FFFFFF" fontSize="13" fontWeight="800">White-Glove Leasing</text>
+        <text x="75" y="106" textAnchor="middle" fill="#FFFFFF" fontSize="9" opacity="0.6">Concierge end-to-end</text>
 
-        <text x="75" y="140" textAnchor="middle" fill="#10B981" fontSize="28" fontWeight="800">8%</text>
-        <text x="75" y="154" textAnchor="middle" fill="#FFFFFF" fontSize="8" opacity="0.5">of monthly rent</text>
+        <text x="75" y="140" textAnchor="middle" fill="#10B981" fontSize="22" fontWeight="800">1 mo.</text>
+        <text x="75" y="154" textAnchor="middle" fill="#FFFFFF" fontSize="8" opacity="0.5">success fee on placement</text>
 
-        {['Tenant placement', 'Rent collection', 'Maintenance', '24/7 support'].map((feat, i) => (
+        {['Strategic pricing', 'Showings', 'Lease execution', 'Move-in coord.'].map((feat, i) => (
           <g key={`f2-${i}`} transform={`translate(16, ${172 + i * 15})`}>
             <circle cx="5" cy="5" r="4.5" fill="#10B981" fillOpacity="0.3" />
             <path d="M2.5 5 L4.5 7 L7.5 3" stroke="#10B981" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" fill="none" />

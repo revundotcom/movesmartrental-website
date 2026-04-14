@@ -28,21 +28,21 @@ import {
 } from './franchising-client'
 
 export const metadata: Metadata = {
-  title: 'Property Management Franchise Opportunity Canada & US',
+  title: 'Leasing Brokerage Franchise Opportunity Canada & US',
   description:
-    'Build a property management brand in your market with MoveSmart Rentals. Protected territory, 6-week training, proven leasing playbook, and ongoing HQ support.',
+    'Start your own white-glove leasing brokerage with MoveSmart Rentals. Protected territory, 6-week training, proven leasing playbook, and ongoing HQ support.',
   alternates: {
     canonical: '/franchising/',
   },
   openGraph: {
-    title: 'Property Management Franchise Canada & US | MoveSmart Rentals',
+    title: 'Leasing Brokerage Franchise Canada & US | MoveSmart Rentals',
     description:
       'Now awarding territories. Protected market, 6-week training, proven leasing playbook, and ongoing HQ support.',
     images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'MoveSmart Rentals Franchise Opportunity' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Property Management Franchise Canada & US | MoveSmart Rentals',
+    title: 'Leasing Brokerage Franchise Canada & US | MoveSmart Rentals',
     description:
       'Now awarding territories. Protected market, 6-week training, proven leasing playbook, and ongoing HQ support.',
     images: ['/og-default.png'],
@@ -68,13 +68,13 @@ const FRANCHISEE_BENEFITS: Array<{
     icon: BookOpen,
     title: 'Proven Leasing Playbook',
     description:
-      'A documented, repeatable system for tenant placement, screening, lease execution, and rent collection. Built from 500+ properties under management today.',
+      'A documented, repeatable system for strategic pricing, marketing, showings, tenant qualification, and lease execution. Built from 500+ units leased today.',
   },
   {
     icon: Monitor,
     title: 'Tech Platform & Owner Portal',
     description:
-      'Full access to our property management software, owner portal, tenant portal, and reporting suite - no separate SaaS to license, included in your royalty.',
+      'Full access to our leasing execution software, owner portal, applicant portal, and reporting suite - no separate SaaS to license, included in your royalty.',
   },
   {
     icon: Megaphone,
@@ -160,7 +160,7 @@ const ONBOARDING_WEEKS: Array<{
     week: 'Week 2',
     title: 'Sales & Lead Gen',
     description:
-      'Owner acquisition scripts, the rental analysis appointment, objection handling, and closing the management agreement.',
+      'Owner acquisition scripts, the rental analysis appointment, objection handling, and closing the leasing engagement agreement.',
   },
   {
     week: 'Week 3',
@@ -172,7 +172,7 @@ const ONBOARDING_WEEKS: Array<{
     week: 'Week 4',
     title: 'Tech & Portal',
     description:
-      'Hands-on training in the property management platform: listings, screening, e-signing, accounting, and owner reporting.',
+      'Hands-on training in the leasing execution platform: listings, screening, e-signing, deposit trust, and owner reporting.',
   },
   {
     week: 'Week 5',
@@ -243,12 +243,12 @@ const FRANCHISE_FAQS = [
   {
     question: 'How long until my franchise is profitable?',
     answer:
-      'Most franchisees reach operating break-even in months 9 to 14, with positive cash flow typically by month 18. Time-to-profit depends on your market size, sales effort, and how aggressively you invest in local lead generation. Year 1 targets 25-40 doors under management; year 3 mature operators run 120-200 doors.',
+      'Most franchisees reach operating break-even in months 9 to 14, with positive cash flow typically by month 18. Time-to-profit depends on your market size, sales effort, and how aggressively you invest in local lead generation. Year 1 targets 25-40 units leased; year 3 mature operators close 120-200 placements per year.',
   },
   {
     question: 'Do I need a real estate background to qualify?',
     answer:
-      'A real estate, leasing, or sales operations background is strongly preferred and accelerates ramp time. It is not strictly required - we have onboarded franchisees from financial services and small-business ownership - but you must hold (or be willing to obtain) the property management or real estate licence required in your province or state. We help you navigate licensing during onboarding.',
+      'A real estate, leasing, or sales operations background is strongly preferred and accelerates ramp time. It is not strictly required - we have onboarded franchisees from financial services and small-business ownership - but you must hold (or be willing to obtain) the real estate or leasing brokerage licence required in your province or state. We help you navigate licensing during onboarding.',
   },
   {
     question: 'Can I run this as a semi-absentee owner?',
@@ -278,7 +278,7 @@ const FRANCHISE_FAQS = [
   {
     question: 'What if I want to exit - can I sell my franchise?',
     answer:
-      'Yes. Franchise agreements include a defined transfer process. You can sell to a qualified buyer subject to HQ approval, transfer to a family member, or in some cases re-sell back to the franchise system. Most established MoveSmart units sell at a healthy multiple of recurring management revenue.',
+      'Yes. Franchise agreements include a defined transfer process. You can sell to a qualified buyer subject to HQ approval, transfer to a family member, or in some cases re-sell back to the franchise system. Most established MoveSmart units sell at a healthy multiple of recurring leasing revenue.',
   },
 ]
 
@@ -357,17 +357,11 @@ export default function FranchisingPage() {
       <PageHeroBlock
         kicker="Franchise Opportunity"
         eyebrow="Now Awarding Territories"
-        headline="Build a Property Management Brand in Your Market."
+        headline="Start your own white-glove leasing brokerage."
         accentLastWord={false}
         lede="MoveSmart Rentals is awarding protected territories to qualified operators across Canada and the United States. You bring local market knowledge and operational drive - we provide the playbook, the tech platform, and the brand that owners trust."
         cta1={{ label: 'Request the Franchise Kit', href: '/contact/?intent=franchise' }}
         cta2={{ label: 'Book Discovery Call', href: '/contact/?type=franchise&intent=call' }}
-        meta={[
-          { label: 'Initial investment', value: 'From $84.5K' }, // TODO: confirm with legal/finance
-          { label: 'Territory', value: 'Protected' },
-          { label: 'Training', value: '6 weeks' },
-          { label: 'HQ support', value: 'Ongoing' },
-        ]}
         aside={<HeroSpecSheet />}
       />
 
@@ -384,7 +378,7 @@ export default function FranchisingPage() {
             </p>
             <RevealOnScroll variant="blur" duration={0.9}>
               <h2 className="mt-4 font-display text-4xl font-normal leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[3.25rem]">
-                Why property management is the right{' '}
+                Why residential leasing is the right{' '}
                 <GradientText variant="emerald" className="font-display italic">
                   franchise category
                 </GradientText>
@@ -403,7 +397,7 @@ export default function FranchisingPage() {
               prefix="$"
               value={101}
               suffix="B"
-              label="North American property management industry size"
+              label="North American residential rental industry size"
             />
             <MarketStat
               value={4.3}
@@ -414,7 +408,7 @@ export default function FranchisingPage() {
             <MarketStat
               value={85}
               suffix="%+"
-              label="Recurring revenue from monthly management fees"
+              label="Recurring owner re-engagement on lease renewal cycles"
             />
           </div>
 
@@ -556,7 +550,7 @@ export default function FranchisingPage() {
                     />
                   </dd>
                   <dt className="mt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">
-                    Year 1 doors under management
+                    Year 1 units leased
                   </dt>
                 </div>
                 <div>
@@ -568,7 +562,7 @@ export default function FranchisingPage() {
                     />
                   </dd>
                   <dt className="mt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">
-                    Year 3 mature unit count
+                    Year 3 mature annual placements
                   </dt>
                 </div>
                 <div>
@@ -581,7 +575,7 @@ export default function FranchisingPage() {
                     />
                   </dd>
                   <dt className="mt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">
-                    Avg revenue per door per year
+                    Avg success fee per placement
                   </dt>
                 </div>
               </dl>
@@ -614,7 +608,7 @@ export default function FranchisingPage() {
               </h2>
             </RevealOnScroll>
             <p className="mt-6 text-base leading-relaxed text-white/65 md:text-lg">
-              From signing day to your first thirty owner conversations. Structured, supported, and built for someone who has never run a property management firm before.
+              From signing day to your first thirty owner conversations. Structured, supported, and built for someone who has never run a leasing brokerage before.
             </p>
           </div>
 
@@ -679,12 +673,12 @@ export default function FranchisingPage() {
 
           <div className="space-y-24 sm:space-y-32">
             <PullQuote
-              quote="I came from residential sales, not property management. The 6-week onboarding gave me a full operating system on day one. We hit 38 doors in our first eleven months and are on track for 110 by year-end."
+              quote="I came from residential sales, not leasing brokerage. The 6-week onboarding gave me a full operating system on day one. We placed tenants in 38 units in our first eleven months and are on track for 110 by year-end."
               attribution="D. Patel"
               market="Calgary franchisee since 2024"
               outcomeValue={38}
-              outcomeSuffix=" doors"
-              outcomeLabel="Under management in 11 months"
+              outcomeSuffix=" units"
+              outcomeLabel="Leased in first 11 months"
             />
             <PullQuote
               quote="HQ marketing has been the quiet engine. Owner inquiries land in my inbox already pre-qualified by the national site. My job is to close them - and the playbook tells me how."

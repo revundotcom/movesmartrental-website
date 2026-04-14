@@ -1,5 +1,57 @@
 import { groq } from 'next-sanity'
 
+/**
+ * Shared SEO projection fragment.
+ * Keep in sync with src/sanity/objects/seo-fields.ts
+ */
+const SEO_PROJECTION = `
+  seo {
+    metaTitle,
+    metaDescription,
+    ogImage {
+      asset,
+      alt,
+      hotspot
+    },
+    featuredImage {
+      asset,
+      alt,
+      hotspot
+    },
+    keywords,
+    primaryKeyword,
+    secondaryKeywords,
+    aiSummary,
+    schemaFields {
+      schemaType,
+      includeFaqSchema,
+      includeBreadcrumbSchema,
+      includeLocalBusinessSchema,
+      customJsonLd
+    }
+  }
+`
+
+/**
+ * Shared Publishing projection fragment.
+ * Keep in sync with src/sanity/objects/publishing-controls.ts
+ */
+const PUBLISHING_PROJECTION = `
+  publishing {
+    canonicalSetting,
+    canonicalOverride,
+    indexControl,
+    noindex,
+    sitemapInclude,
+    includedInSitemap,
+    redirectTo,
+    redirectFrom,
+    author,
+    publishedAt,
+    updatedAt
+  }
+`
+
 /** Full CityService page data with resolved references and all blocks */
 export const CITY_SERVICE_PAGE_QUERY = groq`
   *[_type == "cityService"
@@ -38,17 +90,23 @@ export const CITY_SERVICE_PAGE_QUERY = groq`
     },
     // Denormalized fields
     cityTitle,
+    cityName,
+    serviceName,
     provinceSlug,
+    provinceOrStateName,
+    country,
     citySlug,
     serviceSlug,
-    // Required local content
-    localMedianRent,
-    localVacancyRate,
-    neighbourhoodNames,
-    localRegulatory,
-    localBody,
-    // Hero fields
+    slug,
+    // SEO / Keywords (top-level denormalized - shared SEO object projected below)
+    primaryKeyword,
+    secondaryKeywords,
+    metaTitle,
+    metaDescription,
+    // Hero
+    heroHeading,
     heroHeadline,
+    heroSubheading,
     heroSubheadline,
     heroCta1,
     heroCta2,
@@ -57,21 +115,55 @@ export const CITY_SERVICE_PAGE_QUERY = groq`
       alt,
       hotspot
     },
-    // Block data arrays
+    imagePrompt,
+    altText,
+    // Required local content
+    localIntro,
+    localMedianRent,
+    localVacancyRate,
+    neighbourhoodNames,
+    localRegulatory,
+    localBody,
+    localPainPoints,
+    // Legacy alias
     painPoints,
-    benefits,
+    // Service scope & process
+    serviceScope,
+    processSteps,
     howItWorks,
+    // Trust
+    trustBlock,
     testimonials,
+    // Supporting blocks
+    benefits,
+    faqItems,
+    // Legacy FAQ alias
     faq,
+    // CTA
+    ctaText,
     // Related
     "relatedServices": relatedServices[]-> {
+      _id,
       title,
       slug,
       shortDescription,
       icon
     },
-    seo,
-    publishing
+    "relatedServiceLinks": relatedServiceLinks[]-> {
+      _id,
+      title,
+      "slug": slug.current,
+      shortDescription,
+      icon
+    },
+    "relatedCityLinks": relatedCityLinks[]-> {
+      _id,
+      title,
+      "slug": slug.current,
+      "provinceSlug": province->slug.current
+    },
+    ${SEO_PROJECTION},
+    ${PUBLISHING_PROJECTION}
   }
 `
 
@@ -82,7 +174,11 @@ export const CITY_SERVICE_SEO_QUERY = groq`
     && service->slug.current == $serviceSlug
     && city->province->slug.current == $provinceSlug
   ][0] {
-    seo,
+    metaTitle,
+    metaDescription,
+    ${SEO_PROJECTION},
+    ${PUBLISHING_PROJECTION},
+    heroHeading,
     heroHeadline,
     "cityTitle": city->title,
     "serviceTitle": service->title,

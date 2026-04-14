@@ -25,23 +25,23 @@ interface ProvinceCard {
 // ---------------------------------------------------------------------------
 
 export const metadata: Metadata = {
-  title: 'Property Management in Canada',
+  title: 'Leasing Brokerage in Canada | MoveSmart Rentals',
   description:
-    'Professional property management across Canada. Explore our services in Ontario, Quebec, British Columbia, Alberta, Nova Scotia, and more.',
+    'White-glove leasing brokerage across Canada. Tenant placement, screening, and full-cycle leasing execution in Ontario, Quebec, BC, Alberta, Nova Scotia, and more.',
   alternates: {
     canonical: '/ca/',
   },
   openGraph: {
-    title: 'Property Management in Canada',
+    title: 'Leasing Brokerage in Canada | MoveSmart Rentals',
     description:
-      'Professional property management across Canada. Explore our services in Ontario, Quebec, British Columbia, Alberta, Nova Scotia, and more.',
+      'White-glove leasing brokerage across Canada. Tenant placement, screening, and full-cycle leasing execution in Ontario, Quebec, BC, Alberta, Nova Scotia, and more.',
     images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'MoveSmart Rentals Canada' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Property Management in Canada | MoveSmart Rentals',
+    title: 'Leasing Brokerage in Canada | MoveSmart Rentals',
     description:
-      'Professional property management across Canada. Explore our services in Ontario, Quebec, British Columbia, Alberta, Nova Scotia, and more.',
+      'White-glove leasing brokerage across Canada. Tenant placement, screening, and full-cycle leasing execution in Ontario, Quebec, BC, Alberta, Nova Scotia, and more.',
     images: ['/og-default.png'],
   },
 }
@@ -70,23 +70,24 @@ export default async function CanadaHubPage() {
 
       {/* 1. Hero */}
       <HeroBlock
-        headline="Property Management Across Canada"
-        subheadline="From coast to coast, MoveSmart Rentals provides professional property management that maximizes returns and minimizes stress for Canadian property owners."
+        headline="Leasing Brokerage Across Canada"
+        subheadline="From coast to coast, MoveSmart Rentals is the only leasing firm that serves a basement-unit landlord and a 500-door lease-up campaign with the same discipline - zero upfront, success-fee pricing."
       />
 
       {/* 2. Intro section */}
       <section className="mx-auto max-w-4xl px-4 py-12 text-center md:py-16">
         <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-          Canada&apos;s Trusted Property Management Partner
+          Canada&apos;s Only Unified Leasing Brokerage
         </h2>
         <p className="mx-auto mt-4 max-w-3xl text-muted-foreground">
-          MoveSmart Rentals operates across Canada&apos;s most active rental
-          markets. Whether you own a condo in downtown Toronto, a duplex in
-          Montreal, or a single-family home in Calgary, our local teams
-          understand the provincial regulations, tenant demographics, and market
-          dynamics that drive success. We handle tenant placement, rent
-          collection, maintenance coordination, and compliance so you can invest
-          with confidence.
+          MoveSmart Rentals runs leasing campaigns across Canada&apos;s most active
+          rental markets. Whether you own one condo in downtown Toronto, a
+          duplex in Montreal, or a 300-unit lease-up in Calgary, our local
+          teams deliver strategic pricing, professional marketing, showing
+          coordination, tenant qualification, and lease execution under one
+          brand. We are the only Canadian leasing specialist bridging individual
+          landlords and institutional lease-up campaigns - with transparent
+          success-fee pricing, not opaque quotes.
         </p>
       </section>
 
@@ -144,8 +145,8 @@ export default async function CanadaHubPage() {
 
       {/* 4. CTA */}
       <CTABannerBlock
-        headline="Ready to Maximize Your Canadian Rental Income?"
-        description="Join thousands of property owners who trust MoveSmart Rentals for professional, transparent management."
+        headline="Ready to Lease Your Canadian Rental?"
+        description="Landlords, property managers, and developers trust MoveSmart Rentals for zero-upfront, success-fee leasing execution."
         primaryCta={{ label: 'Book a Free Consultation', href: '/contact/' }}
         secondaryCta={{ label: 'View Pricing', href: '/pricing/' }}
       />

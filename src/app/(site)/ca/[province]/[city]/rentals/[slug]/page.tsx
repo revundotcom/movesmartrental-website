@@ -15,7 +15,10 @@ import {
   PROPERTY_LISTING_QUERY,
   PROPERTY_LISTING_PARAMS_QUERY,
 } from '@/sanity/queries/property-listing'
-import { buildRealEstateListingSchema } from '@/lib/schema-builders/real-estate-listing'
+import {
+  buildRealEstateListingSchema,
+  buildBreadcrumbListSchema,
+} from '@/lib/schema-builders'
 import type { SeoFields } from '@/types/sanity'
 
 // ---------------------------------------------------------------------------
@@ -99,6 +102,33 @@ function formatDate(dateString: string): string {
   })
 }
 
+function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+/**
+ * Map a raw property-type string to the canonical /categories/ slug used by the
+ * property-category template. Falls back to the single category most likely
+ * to match. Keeps hrefs honest even for irregular pluralisations.
+ */
+function mapToCategorySlug(propertyTypeRaw: string): string {
+  const t = propertyTypeRaw.toLowerCase().trim()
+  if (t.includes('basement')) return 'basement-apartments-for-rent'
+  if (t.includes('duplex')) return 'duplex-for-rent'
+  if (t.includes('townhouse') || t.includes('town-house'))
+    return 'townhouses-for-rent'
+  if (t.includes('condo')) return 'condos-for-rent'
+  if (t.includes('house')) return 'houses-for-rent'
+  if (t.includes('apartment')) return 'apartments-for-rent'
+  return 'apartments-for-rent'
+}
+
+/** Truncate description to fit meta description range (140-160 chars). */
+function trimDescription(text: string, max = 158): string {
+  if (text.length <= max) return text
+  return `${text.slice(0, max - 1).trimEnd()}…`
+}
+
 // ---------------------------------------------------------------------------
 // Static Params
 // ---------------------------------------------------------------------------
@@ -140,12 +170,21 @@ export async function generateMetadata({
   if (!listing) return {}
 
   const cityTitle = listing.city.title
+  const provinceTitle = listing.province.title
+  const propertyType = capitalize(
+    listing.category?.propertyType || listing.category?.title || 'Rental'
+  )
+
+  // Contract §7.5 pattern: {PropertyType} for Rent: {address} | {City}, {Province}
+  const fallbackTitle = `${propertyType} for Rent: ${listing.address} | ${cityTitle}, ${provinceTitle}`
+
+  const descBase = `${listing.bedrooms}-bedroom ${listing.bathrooms}-bathroom ${propertyType.toLowerCase()} at ${listing.address} in ${cityTitle}, ${provinceTitle} - ${formatPrice(listing.price)}/month. Apply online with MoveSmart Rentals.`
 
   return generatePageMetadata({
     seo: listing.seo,
     path: `/ca/${province}/${city}/rentals/${slug}`,
-    fallbackTitle: `${listing.title} | ${cityTitle}`,
-    fallbackDescription: `${listing.bedrooms} bedroom ${listing.category?.propertyType || 'rental'} for rent at ${formatPrice(listing.price)}/month in ${cityTitle}. Apply online today.`,
+    fallbackTitle,
+    fallbackDescription: trimDescription(descBase),
   })
 }
 
@@ -172,6 +211,9 @@ export default async function PropertyDetailPage({
 
   const cityTitle = listing.city.title
   const provinceTitle = listing.province.title
+  const propertyTypeRaw =
+    listing.category?.propertyType || listing.category?.title || 'rental'
+  const propertyType = capitalize(propertyTypeRaw)
   const pageUrl = `${SITE_URL}/ca/${province}/${city}/rentals/${slug}/`
 
   // Build image URLs for JSON-LD
@@ -192,10 +234,25 @@ export default async function PropertyDetailPage({
     available: listing.available,
   })
 
+  // Breadcrumb JSON-LD
+  const breadcrumbSchema = buildBreadcrumbListSchema({
+    crumbs: [
+      { name: 'Home', url: SITE_URL },
+      { name: provinceTitle, url: `${SITE_URL}/ca/${province}/` },
+      { name: cityTitle, url: `${SITE_URL}/ca/${province}/${city}/` },
+      {
+        name: `${propertyType} Rentals`,
+        url: `${SITE_URL}/ca/${province}/${city}/`,
+      },
+      { name: listing.address, url: pageUrl },
+    ],
+  })
+
   return (
-    <main>
+    <main className="bg-[#FBFAF6]">
       {/* JSON-LD */}
       <JsonLd data={listingSchema} />
+      <JsonLd data={breadcrumbSchema} />
 
       {/* Breadcrumbs */}
       <div className="mx-auto max-w-7xl px-4 pt-4">
@@ -204,9 +261,12 @@ export default async function PropertyDetailPage({
             { label: 'Home', href: '/' },
             { label: provinceTitle, href: `/ca/${province}/` },
             { label: cityTitle, href: `/ca/${province}/${city}/` },
-            { label: 'Rentals', href: `/ca/${province}/${city}/` },
             {
-              label: listing.title,
+              label: `${propertyType} Rentals`,
+              href: `/ca/${province}/${city}/`,
+            },
+            {
+              label: listing.address,
               href: `/ca/${province}/${city}/rentals/${slug}/`,
             },
           ]}
@@ -220,6 +280,9 @@ export default async function PropertyDetailPage({
             {listing.images.map((image, index) => {
               if (!image.asset?._ref) return null
               const url = sanityImageUrl(image.asset._ref)
+              const altText =
+                image.alt ||
+                `${propertyType} at ${listing.address}, ${cityTitle} - photo ${index + 1}`
               return (
                 <div
                   key={image.asset._ref}
@@ -231,7 +294,7 @@ export default async function PropertyDetailPage({
                 >
                   <Image
                     src={url}
-                    alt={image.alt || `${listing.title} - Photo ${index + 1}`}
+                    alt={altText}
                     fill
                     priority={index === 0}
                     className="object-cover"
@@ -253,40 +316,56 @@ export default async function PropertyDetailPage({
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Main Content */}
           <div className="lg:col-span-2">
-            {/* Header */}
-            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              {listing.title}
+            {/* Header - single H1 */}
+            <h1 className="font-display text-3xl font-normal leading-tight tracking-tight text-brand-navy sm:text-4xl">
+              {propertyType} for Rent at{' '}
+              <span className="font-display italic text-brand-emerald">
+                {listing.address}
+              </span>
+              <span aria-hidden="true" className="text-brand-gold">
+                .
+              </span>
             </h1>
 
-            <p className="mt-2 text-3xl font-bold text-primary">
-              {formatPrice(listing.price)}/month
+            <p className="mt-2 text-lg text-brand-navy/70">
+              {cityTitle}, {provinceTitle}
             </p>
 
-            <p className="mt-2 text-lg text-muted-foreground">
-              {listing.address}
+            <p className="mt-4 font-display text-3xl font-normal text-brand-emerald">
+              {formatPrice(listing.price)}
+              <span className="text-lg text-brand-navy/60">/month</span>
             </p>
 
-            {/* Key Stats */}
+            {/* Key Stats - H3 level */}
+            <h3 className="sr-only">Unit at a glance</h3>
             <div className="mt-6 flex flex-wrap gap-6">
               <div className="flex items-center gap-2">
-                <Bed className="size-5 text-muted-foreground" />
-                <span className="font-medium">
+                <Bed className="size-5 text-brand-emerald" />
+                <span className="font-medium text-brand-navy">
                   {listing.bedrooms}{' '}
                   {listing.bedrooms === 1 ? 'Bedroom' : 'Bedrooms'}
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <Bath className="size-5 text-muted-foreground" />
-                <span className="font-medium">
+                <Bath className="size-5 text-brand-emerald" />
+                <span className="font-medium text-brand-navy">
                   {listing.bathrooms}{' '}
                   {listing.bathrooms === 1 ? 'Bathroom' : 'Bathrooms'}
                 </span>
               </div>
               {listing.sqft && (
                 <div className="flex items-center gap-2">
-                  <Maximize className="size-5 text-muted-foreground" />
-                  <span className="font-medium">
+                  <Maximize className="size-5 text-brand-emerald" />
+                  <span className="font-medium text-brand-navy">
                     {listing.sqft.toLocaleString('en-CA')} sqft
+                  </span>
+                </div>
+              )}
+              {listing.category && (
+                <div className="flex items-center gap-2">
+                  <Home className="size-5 text-brand-emerald" />
+                  <span className="font-medium capitalize text-brand-navy">
+                    {propertyTypeRaw}
                   </span>
                 </div>
               )}
@@ -297,80 +376,188 @@ export default async function PropertyDetailPage({
               <span
                 className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium ${
                   listing.available
-                    ? 'bg-brand-emerald/10 text-green-700'
-                    : 'bg-muted text-muted-foreground'
+                    ? 'bg-brand-emerald/10 text-emerald-700'
+                    : 'bg-slate-100 text-slate-600'
                 }`}
               >
                 <span
                   className={`size-2 rounded-full ${
-                    listing.available ? 'bg-brand-emerald' : 'bg-muted-foreground'
+                    listing.available ? 'bg-brand-emerald' : 'bg-slate-400'
                   }`}
                 />
                 {listing.available
                   ? listing.availableDate
                     ? `Available from ${formatDate(listing.availableDate)}`
-                    : 'Available'
-                  : 'Not Available'}
+                    : 'Available now'
+                  : 'Currently not available'}
               </span>
             </div>
 
-            {/* Description */}
-            {listing.description && (
-              <div className="mt-8">
-                <h2 className="mb-4 text-2xl font-bold">Description</h2>
-                <PortableTextBody value={listing.description} />
-              </div>
-            )}
+            {/* Address detail block - crawlable */}
+            <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
+              <h2 className="font-display text-2xl font-normal text-brand-navy">
+                About this{' '}
+                <span className="font-display italic text-brand-emerald">
+                  listing
+                </span>
+                <span aria-hidden="true" className="text-brand-gold">
+                  .
+                </span>
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                <span className="font-semibold text-brand-navy">Address:</span>{' '}
+                {listing.address}, {cityTitle}, {provinceTitle}
+              </p>
+              {listing.description && (
+                <div className="mt-4 text-slate-700">
+                  <PortableTextBody value={listing.description} />
+                </div>
+              )}
+            </section>
+
+            {/* Related rentals & resources - H2 */}
+            <section className="mt-8">
+              <h2 className="font-display text-2xl font-normal text-brand-navy">
+                Keep exploring{' '}
+                <span className="font-display italic text-brand-emerald">
+                  {cityTitle}
+                </span>
+                <span aria-hidden="true" className="text-brand-gold">
+                  .
+                </span>
+              </h2>
+              <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <li>
+                  <Link
+                    href={`/ca/${province}/${city}/`}
+                    className="block rounded-xl border border-slate-200 bg-white p-4 text-sm font-medium text-brand-navy transition hover:border-brand-emerald hover:bg-brand-emerald/5"
+                  >
+                    All rentals in {cityTitle}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={`/ca/${province}/${city}/categories/${mapToCategorySlug(propertyTypeRaw)}/`}
+                    className="block rounded-xl border border-slate-200 bg-white p-4 text-sm font-medium text-brand-navy transition hover:border-brand-emerald hover:bg-brand-emerald/5"
+                  >
+                    More {propertyTypeRaw.toLowerCase()}s for rent in {cityTitle}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={`/ca/${province}/`}
+                    className="block rounded-xl border border-slate-200 bg-white p-4 text-sm font-medium text-brand-navy transition hover:border-brand-emerald hover:bg-brand-emerald/5"
+                  >
+                    Browse all {provinceTitle} cities
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/tenants/"
+                    className="block rounded-xl border border-slate-200 bg-white p-4 text-sm font-medium text-brand-navy transition hover:border-brand-emerald hover:bg-brand-emerald/5"
+                  >
+                    Tenant Hub & application resources
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/faq/"
+                    className="block rounded-xl border border-slate-200 bg-white p-4 text-sm font-medium text-brand-navy transition hover:border-brand-emerald hover:bg-brand-emerald/5"
+                  >
+                    Renter FAQ
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/contact/?intent=apply"
+                    className="block rounded-xl border border-slate-200 bg-white p-4 text-sm font-medium text-brand-navy transition hover:border-brand-emerald hover:bg-brand-emerald/5"
+                  >
+                    Start a rental application
+                  </Link>
+                </li>
+              </ul>
+            </section>
           </div>
 
           {/* Sidebar - Property Details */}
           <aside className="lg:col-span-1">
-            <div className="sticky top-24 rounded-xl border border-border bg-card p-6">
-              <h2 className="mb-4 text-lg font-bold">Property Details</h2>
+            <div className="sticky top-24 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <h2 className="mb-4 font-display text-xl font-normal text-brand-navy">
+                Property details
+                <span aria-hidden="true" className="text-brand-gold">
+                  .
+                </span>
+              </h2>
               <dl className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <dt className="flex items-center gap-2 text-muted-foreground">
+                  <dt className="flex items-center gap-2 text-slate-600">
                     <Bed className="size-4" />
                     Bedrooms
                   </dt>
-                  <dd className="font-medium">{listing.bedrooms}</dd>
+                  <dd className="font-medium text-brand-navy">
+                    {listing.bedrooms}
+                  </dd>
                 </div>
                 <div className="flex items-center justify-between">
-                  <dt className="flex items-center gap-2 text-muted-foreground">
+                  <dt className="flex items-center gap-2 text-slate-600">
                     <Bath className="size-4" />
                     Bathrooms
                   </dt>
-                  <dd className="font-medium">{listing.bathrooms}</dd>
+                  <dd className="font-medium text-brand-navy">
+                    {listing.bathrooms}
+                  </dd>
                 </div>
                 {listing.sqft && (
                   <div className="flex items-center justify-between">
-                    <dt className="flex items-center gap-2 text-muted-foreground">
+                    <dt className="flex items-center gap-2 text-slate-600">
                       <Maximize className="size-4" />
-                      Square Footage
+                      Square footage
                     </dt>
-                    <dd className="font-medium">
+                    <dd className="font-medium text-brand-navy">
                       {listing.sqft.toLocaleString('en-CA')} sqft
                     </dd>
                   </div>
                 )}
                 {listing.category && (
                   <div className="flex items-center justify-between">
-                    <dt className="flex items-center gap-2 text-muted-foreground">
+                    <dt className="flex items-center gap-2 text-slate-600">
                       <Home className="size-4" />
-                      Property Type
+                      Property type
                     </dt>
-                    <dd className="font-medium capitalize">
-                      {listing.category.propertyType}
+                    <dd className="font-medium capitalize text-brand-navy">
+                      {propertyTypeRaw}
                     </dd>
                   </div>
                 )}
+                <div className="flex items-center justify-between">
+                  <dt className="flex items-center gap-2 text-slate-600">
+                    City
+                  </dt>
+                  <dd className="font-medium text-brand-navy">{cityTitle}</dd>
+                </div>
+                <div className="flex items-center justify-between">
+                  <dt className="flex items-center gap-2 text-slate-600">
+                    Province
+                  </dt>
+                  <dd className="font-medium text-brand-navy">
+                    {provinceTitle}
+                  </dd>
+                </div>
+                <div className="flex items-center justify-between">
+                  <dt className="flex items-center gap-2 text-slate-600">
+                    Monthly rent
+                  </dt>
+                  <dd className="font-medium text-brand-navy">
+                    {formatPrice(listing.price)}
+                  </dd>
+                </div>
                 {listing.availableDate && (
                   <div className="flex items-center justify-between">
-                    <dt className="flex items-center gap-2 text-muted-foreground">
+                    <dt className="flex items-center gap-2 text-slate-600">
                       <Calendar className="size-4" />
-                      Available Date
+                      Available date
                     </dt>
-                    <dd className="font-medium">
+                    <dd className="font-medium text-brand-navy">
                       {formatDate(listing.availableDate)}
                     </dd>
                   </div>
@@ -379,16 +566,16 @@ export default async function PropertyDetailPage({
 
               <div className="mt-6 space-y-3">
                 <Link
-                  href="/contact/"
-                  className="block w-full rounded-lg bg-primary px-4 py-3 text-center font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                  href="/contact/?intent=apply"
+                  className="block w-full rounded-lg bg-brand-emerald px-4 py-3 text-center font-medium text-white transition-colors hover:bg-emerald-600"
                 >
-                  Apply Now
+                  Apply now
                 </Link>
                 <Link
-                  href="/contact/"
-                  className="block w-full rounded-lg border border-border px-4 py-3 text-center font-medium transition-colors hover:bg-accent"
+                  href="/contact/?intent=viewing"
+                  className="block w-full rounded-lg border border-brand-navy/15 bg-white px-4 py-3 text-center font-medium text-brand-navy transition-colors hover:border-brand-navy/30 hover:bg-slate-50"
                 >
-                  Book a Viewing
+                  Book a viewing
                 </Link>
               </div>
             </div>
@@ -398,9 +585,14 @@ export default async function PropertyDetailPage({
 
       {/* CTA Banner */}
       <CTABannerBlock
-        headline="Interested in this property?"
-        primaryCta={{ label: 'Apply Now', href: '/contact/' }}
-        secondaryCta={{ label: 'Book a Viewing', href: '/contact/' }}
+        headline="Interested in this rental?"
+        description={`Start your application or book a private viewing for ${listing.address} in ${cityTitle}.`}
+        primaryCta={{ label: 'Apply now', href: '/contact/?intent=apply' }}
+        secondaryCta={{
+          label: 'Book a viewing',
+          href: '/contact/?intent=viewing',
+        }}
+        city={city}
       />
     </main>
   )

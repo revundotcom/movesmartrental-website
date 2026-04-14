@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import {
-  Building2,
-  Wallet,
-  Wrench,
-  FileText,
-  ClipboardList,
+  CalendarCheck,
+  Inbox,
+  ClipboardCheck,
+  FileSignature,
+  KeyRound,
   Lock,
 } from 'lucide-react'
 
@@ -13,7 +13,6 @@ import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { OwnersFeaturesBento } from '@/components/blocks/owners-features-bento'
-import { TestimonialsSection } from '@/components/blocks/testimonials-section'
 import { generatePageMetadata } from '@/lib/metadata'
 
 import {
@@ -26,9 +25,9 @@ import {
 
 export const metadata: Metadata = generatePageMetadata({
   path: '/portal-and-technology/',
-  fallbackTitle: 'Owner Portal & Technology | MoveSmart Rentals',
+  fallbackTitle: 'Owner Portal & Leasing Transparency | MoveSmart Rentals',
   fallbackDescription:
-    'Total visibility into your property - built around real account managers. Live rent ledger, work-order tracking, statements, and a tenant portal that lowers turnover.',
+    'Total visibility into your leasing - from listing to signed lease. Track showings, applications, screening progress, approvals, and move-in coordination from one owner login.',
 })
 
 /* ─────────────────────────────────────────────────────────────────────────── */
@@ -36,11 +35,11 @@ export const metadata: Metadata = generatePageMetadata({
 /* ─────────────────────────────────────────────────────────────────────────── */
 
 const HERO_ASIDE_ITEMS = [
-  { icon: Building2, label: 'Properties', detail: 'all units at a glance' },
-  { icon: Wallet, label: 'Rent ledger', detail: 'paid · pending · late' },
-  { icon: Wrench, label: 'Work orders', detail: 'open and resolved' },
-  { icon: FileText, label: 'Documents', detail: 'leases · inspections' },
-  { icon: ClipboardList, label: 'Statements', detail: 'monthly + tax docs' },
+  { icon: KeyRound, label: 'Listings', detail: 'live · views · inquiries' },
+  { icon: CalendarCheck, label: 'Showings', detail: 'booked · feedback logged' },
+  { icon: Inbox, label: 'Applicants', detail: 'received · under review' },
+  { icon: ClipboardCheck, label: 'Screening', detail: 'credit · income · references' },
+  { icon: FileSignature, label: 'Lease & Move-in', detail: 'signed · keys handed over' },
 ]
 
 function HeroAsideCard() {
@@ -54,8 +53,8 @@ function HeroAsideCard() {
         What you&rsquo;ll see today
       </p>
       <h3 className="mt-2 font-display text-xl font-normal text-brand-navy">
-        Five sections.{' '}
-        <span className="font-display italic text-brand-emerald">One login</span>
+        Five stages.{' '}
+        <span className="font-display italic text-brand-emerald">One leasing view</span>
         <span className="text-brand-gold">.</span>
       </h3>
 
@@ -89,45 +88,45 @@ function HeroAsideCard() {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────── */
-/* Owner portal feature bento (six tiles, asymmetric)                          */
+/* Owner portal feature bento (six tiles, leasing-lifecycle focused)           */
 /* ─────────────────────────────────────────────────────────────────────────── */
 
 const PORTAL_FEATURES = [
   {
-    iconKey: 'DollarSign',
-    title: 'Live rent ledger',
-    description:
-      'See every payment as it lands. Status - paid, pending, or late - updated in real time, with full history exportable any time.',
-  },
-  {
     iconKey: 'Zap',
-    title: 'Work-order tracker',
+    title: 'Live Showing Calendar',
     description:
-      'Every maintenance request, from first message to vendor invoice, with photos, timestamps, and approval trail attached.',
+      'Every scheduled showing, confirmation, no-show, and post-tour feedback note - visible the moment our leasing team logs it. No more guessing how Saturday went.',
   },
   {
-    iconKey: 'Megaphone',
-    title: 'Tenant communications log',
+    iconKey: 'Users',
+    title: 'Applicant Inbox',
     description:
-      "Every message between your account manager and your tenant - searchable, dated, never lost in someone's inbox.",
+      'Every application that lands, with the prospect summary and current screening status attached. See your shortlist build in real time, not in a Friday email.',
   },
   {
     iconKey: 'Shield',
-    title: 'Document vault',
+    title: 'Screening Dashboard',
     description:
-      'Leases, inspection reports, condition photos, addenda - all filed against the right unit and a click away.',
-  },
-  {
-    iconKey: 'TrendingUp',
-    title: 'Monthly statements + tax docs',
-    description:
-      'Auto-generated every month. Year-end T776-ready summary your accountant will actually thank you for.',
+      'Credit pull, income verification, employment confirmation, reference checks, and compliance flags - tracked stage by stage, with the underwriter notes that matter.',
   },
   {
     iconKey: 'CheckCircle',
-    title: 'Maintenance approvals',
+    title: 'Approval & Counteroffer Workflow',
     description:
-      'One-tap approve or decline on any spend above your threshold. Nothing happens to your property without your call.',
+      'Approve or decline an applicant in one tap. Negotiate a counteroffer on rent, term, or conditions without leaving the portal - every decision time-stamped and on record.',
+  },
+  {
+    iconKey: 'Megaphone',
+    title: 'Marketing Distribution View',
+    description:
+      'See exactly where your listing is live - MLS, rental portals, social syndication, and any paid ad placement - with status, impressions, and inquiry counts per channel.',
+  },
+  {
+    iconKey: 'Monitor',
+    title: 'Move-In Coordination',
+    description:
+      'The inspection checklist, condition photos, signed lease packet, and utility-transfer tracker - all linked to the day keys change hands. A clean handoff, fully documented.',
   },
 ]
 
@@ -150,17 +149,11 @@ export default function PortalAndTechnologyPage() {
       {/* SECTION 1 - Editorial inner-page hero */}
       <PageHeroBlock
         kicker="Portal & Technology"
-        eyebrow="Owner Visibility, Done Right"
-        headline="Total Visibility, Zero Hassle"
-        lede="Your dedicated account manager handles the work. The portal lets you see every step - anytime, from anywhere."
+        eyebrow="Leasing Transparency, End-to-End"
+        headline="Total Visibility Into Your Leasing"
+        lede="Most brokerages go dark the day your listing goes live. Our portal is the opposite - watch every showing, application, screening check, and approval as it happens, from listing through signed lease and move-in."
         cta1={{ label: 'Tour the Portal', href: '#walkthrough' }}
         cta2={{ label: 'Get a Demo', href: '/contact/?intent=demo' }}
-        meta={[
-          { label: 'Real-time updates', value: 'Yes' },
-          { label: 'Mobile + desktop', value: 'Both' },
-          { label: 'Reports', value: 'Auto' },
-          { label: 'Support', value: 'Mon-Sat' },
-        ]}
         aside={<HeroAsideCard />}
       />
 
@@ -190,16 +183,15 @@ export default function PortalAndTechnologyPage() {
               Owners On The Portal
             </p>
             <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-[2.75rem]">
-              &ldquo;I always know what&rsquo;s happening with my{' '}
-              <span className="font-display italic text-brand-emerald">property</span>
-              <span className="text-brand-gold">.&rdquo;</span>
+              &ldquo;I always knew where my{' '}
+              <span className="font-display italic text-brand-emerald">lease-up</span>
+              <span className="text-brand-gold">&nbsp;stood.&rdquo;</span>
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-slate-600">
               The visibility owners ask us about most isn&rsquo;t a metric - it&rsquo;s
-              the feeling of never being in the dark.
+              the feeling of never being in the dark while their unit is on the market.
             </p>
           </div>
-          <TestimonialsSection />
         </div>
       </section>
 
@@ -210,37 +202,37 @@ export default function PortalAndTechnologyPage() {
           {
             question: 'Is there a mobile app?',
             answer:
-              'The portal is a fully responsive web app - works on any phone or tablet browser, no download required. Most owners save it to their home screen for one-tap access. We chose this so you never have to wait for an app update to see your data.',
+              'The portal is a fully responsive web app - works on any phone or tablet browser, no download required. Most owners save it to their home screen for one-tap access. We chose this so you never have to wait for an app update to see your latest showing feedback.',
           },
           {
-            question: 'Can my accountant get access?',
+            question: 'Can I see applicant feedback in real-time?',
             answer:
-              'Yes. You can grant your accountant a read-only role with access to statements, ledgers, and tax-ready summaries. They cannot see tenant communications or change anything. You can revoke access any time from your settings.',
+              'Yes. The moment our leasing agent logs a showing or screens a new application, it appears in your portal - showing notes, applicant summary, screening progress, and any flags. No waiting for a weekly email recap.',
           },
           {
-            question: 'How do I download tax docs?',
+            question: 'What happens after my tenant is approved?',
             answer:
-              'Year-end summaries (T776-ready in Canada, Schedule E-ready in the US) are auto-generated by January 15. Download as PDF or CSV from the Statements section, or have them auto-emailed to you and your accountant.',
+              'You see the lease move from Draft to Out-for-Signature to Signed, with timestamps. Then move-in coordination kicks in: inspection checklist, condition photos, utility-transfer tracker, and a final confirmation when keys change hands. Once move-in is confirmed, our active engagement closes out and the record stays available to you.',
           },
           {
-            question: 'What if I have multiple properties?',
+            question: 'What if I have multiple units being leased at once?',
             answer:
-              'The portal is built for portfolios. Toggle between unit-level detail and a portfolio-wide roll-up of revenue, occupancy, and open work orders. Owners with 12+ units use the portfolio dashboard as their daily home screen.',
+              'The portal is built for portfolios. Toggle between unit-level detail and a portfolio-wide roll-up of listings live, showings booked this week, applications under review, and approvals pending. Owners running multi-unit lease-ups use this as their morning view.',
           },
           {
-            question: 'Do tenants see what I see?',
+            question: 'Do applicants and tenants see what I see?',
             answer:
-              'No. Tenants have a separate portal scoped strictly to their own unit - their lease, their payments, their maintenance requests. They cannot see your financials, other units, or any owner-side data.',
+              'No. Tenants and applicants have a separate, scoped login - their application status, their lease, their move-in checklist. They cannot see your other listings, your decision notes, or any owner-side data.',
           },
           {
             question: 'Is my data encrypted?',
             answer:
-              'Yes. 256-bit AES encryption at rest, TLS 1.3 in transit, role-based access controls, and bank-grade (PCI-DSS) payment processing. We are PIPEDA compliant and host Canadian owner data on Canadian infrastructure where applicable.',
+              'Yes. 256-bit AES encryption at rest, TLS 1.3 in transit, role-based access controls, and PCI-DSS compliant payment processing for application fees and first-month deposits. We are PIPEDA compliant and host Canadian owner data on Canadian infrastructure where applicable.',
           },
           {
-            question: 'What happens if I cancel - do I lose my history?',
+            question: 'Is my data exportable after the lease is signed?',
             answer:
-              'No. You receive a complete export of your records - leases, statements, communications, inspections, photos - in a portable format (PDF + CSV) before access ends. We retain a copy for the legally required period and then delete on request.',
+              'Yes. You can export the full leasing record at any time - showing log, applicant files, screening reports, signed lease, inspection photos, and communication history - in a portable format (PDF + CSV). Your file stays accessible to you for as long as you keep your account.',
           },
         ]}
       />
@@ -248,7 +240,7 @@ export default function PortalAndTechnologyPage() {
       {/* SECTION 10 - Portal-specific CTA banner */}
       <CTABannerBlock
         headline="See it in 5 minutes."
-        description="Book a portal walkthrough with one of our account managers - no slides, no sales pitch, just a real owner login on a screen-share."
+        description="Book a portal walkthrough with one of our leasing managers - no slides, no sales pitch, just a real owner login on a screen-share."
         primaryCta={{ label: 'Book a Portal Walkthrough', href: '/contact/?intent=demo' }}
         secondaryCta={{ label: 'See Pricing', href: '/pricing/' }}
       />

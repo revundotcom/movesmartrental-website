@@ -7,8 +7,10 @@ import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { PropertyCardBlock } from '@/components/blocks/property-card-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
+import { JsonLd } from '@/components/json-ld'
 import { sanityFetch } from '@/sanity/fetch'
 import { generatePageMetadata } from '@/lib/metadata'
+import { buildBreadcrumbListSchema } from '@/lib/schema-builders'
 import { BEDROOM_COUNT_QUERY } from '@/sanity/queries/property-category'
 import type { PropertyCardData } from '@/types/blocks'
 import type { SeoFields } from '@/types/sanity'
@@ -40,6 +42,9 @@ interface BedroomCategoryData {
 // Helpers
 // ---------------------------------------------------------------------------
 
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
+
 /**
  * Parse bedroom count from slug: "1-bedroom" -> 1, "2-bedroom" -> 2, "3-bedroom" -> 3
  */
@@ -50,12 +55,31 @@ function parseBedroomCount(slug: string): number | null {
 }
 
 /**
- * Format bedroom label: 1 -> "1 Bedroom", 3 -> "3+ Bedroom"
+ * Format bedroom label: 1 -> "1-Bedroom", 3 -> "3+-Bedroom"
  */
 function formatBedroomLabel(count: number): string {
-  if (count >= 3) return `${count}+ Bedroom`
-  return `${count} Bedroom`
+  if (count >= 3) return `${count}+-Bedroom`
+  return `${count}-Bedroom`
 }
+
+function humanServiceLabel(slug: string): string {
+  return slug
+    .split('-')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ')
+}
+
+function trimDescription(text: string, max = 158): string {
+  if (text.length <= max) return text
+  return `${text.slice(0, max - 1).trimEnd()}…`
+}
+
+// Sibling bedroom variants for related-links block.
+const BEDROOM_VARIANTS = [
+  { slug: '1-bedroom', label: '1-Bedroom' },
+  { slug: '2-bedroom', label: '2-Bedroom' },
+  { slug: '3-bedroom', label: '3+-Bedroom' },
+]
 
 // ---------------------------------------------------------------------------
 // Dynamic Params
@@ -90,17 +114,20 @@ export async function generateMetadata({
     tags: ['propertyCategory'],
   })
 
-  if (!data) return {}
-
-  const cityTitle = data.city.title
+  const cityTitle = data?.city.title ?? humanServiceLabel(city)
+  const serviceLabel = data?.title || humanServiceLabel(service)
   const bedroomLabel = formatBedroomLabel(bedroomCount)
-  const propertyTypeLabel = data.title || service.replace(/-/g, ' ')
+
+  // Contract pattern: "{Service} for {Bedroom}-Bedroom Rentals in {City}"
+  const fallbackTitle = `${serviceLabel} for ${bedroomLabel} Rentals in ${cityTitle}`
+
+  const descBase = `${serviceLabel} for ${bedroomLabel.toLowerCase()} rentals in ${cityTitle} - white-glove leasing execution, verified applicants, RTA-compliant leases. Talk to MoveSmart Rentals today.`
 
   return generatePageMetadata({
-    seo: data.seo,
+    seo: data?.seo,
     path: `/ca/${province}/${city}/${service}/${bedroom}`,
-    fallbackTitle: `${bedroomLabel} ${propertyTypeLabel} in ${cityTitle}`,
-    fallbackDescription: `Browse ${bedroomLabel.toLowerCase()} ${propertyTypeLabel.toLowerCase()} for rent in ${cityTitle}. Verified listings with online applications.`,
+    fallbackTitle,
+    fallbackDescription: trimDescription(descBase),
   })
 }
 
@@ -131,18 +158,33 @@ export default async function BedroomPage({
     tags: ['propertyCategory', 'propertyListing'],
   })
 
-  if (!data) {
-    notFound()
-  }
-
-  const cityTitle = data.city.title
-  const provinceTitle = data.province.title
+  // Fall back to synthesised labels so the page still renders as a useful
+  // landing destination when Sanity has no document for this filter combo.
+  const cityTitle = data?.city.title ?? humanServiceLabel(city)
+  const provinceTitle = data?.province.title ?? humanServiceLabel(province)
   const bedroomLabel = formatBedroomLabel(bedroomCount)
-  const propertyTypeLabel = data.title || service.replace(/-/g, ' ')
-  const listings = data.listings ?? []
+  const serviceLabel = data?.title || humanServiceLabel(service)
+  const listings = data?.listings ?? []
+
+  const pageUrl = `${SITE_URL}/ca/${province}/${city}/${service}/${bedroom}/`
+
+  const breadcrumbSchema = buildBreadcrumbListSchema({
+    crumbs: [
+      { name: 'Home', url: SITE_URL },
+      { name: provinceTitle, url: `${SITE_URL}/ca/${province}/` },
+      { name: cityTitle, url: `${SITE_URL}/ca/${province}/${city}/` },
+      {
+        name: serviceLabel,
+        url: `${SITE_URL}/ca/${province}/${city}/${service}/`,
+      },
+      { name: `${bedroomLabel} rentals`, url: pageUrl },
+    ],
+  })
 
   return (
-    <main>
+    <main className="bg-[#FBFAF6]">
+      <JsonLd data={breadcrumbSchema} />
+
       {/* Breadcrumbs */}
       <div className="mx-auto max-w-7xl px-4 pt-4">
         <BreadcrumbNav
@@ -151,7 +193,7 @@ export default async function BedroomPage({
             { label: provinceTitle, href: `/ca/${province}/` },
             { label: cityTitle, href: `/ca/${province}/${city}/` },
             {
-              label: propertyTypeLabel,
+              label: serviceLabel,
               href: `/ca/${province}/${city}/${service}/`,
             },
             {
@@ -162,59 +204,131 @@ export default async function BedroomPage({
         />
       </div>
 
-      {/* Editorial hero */}
+      {/* Editorial hero (single H1, no meta strip per §10) */}
       <PageHeroBlock
-        kicker={`${cityTitle} Rentals`}
-        eyebrow={`${bedroomLabel} ${propertyTypeLabel}`}
-        headline={`${bedroomLabel} ${propertyTypeLabel} in ${cityTitle}`}
+        kicker={`${cityTitle} rentals`}
+        eyebrow={`${bedroomLabel} · ${serviceLabel}`}
+        headline={`${serviceLabel} for ${bedroomLabel} rentals in ${cityTitle}`}
         accentLastWord={false}
         lede={
           listings.length > 0
-            ? `${listings.length} verified listing${listings.length === 1 ? '' : 's'} found — transparent pricing, online applications, RTA-compliant leases.`
-            : `No ${bedroomLabel.toLowerCase()} listings currently available in ${cityTitle}. Explore all ${propertyTypeLabel.toLowerCase()} or check back soon.`
+            ? `${listings.length} verified ${bedroomLabel.toLowerCase()} listing${listings.length === 1 ? '' : 's'} - transparent pricing, online applications, RTA-compliant leases handled by MoveSmart Rentals.`
+            : `No ${bedroomLabel.toLowerCase()} listings are active in ${cityTitle} right now. Browse all ${serviceLabel.toLowerCase()} openings, or have MoveSmart Rentals source one for you.`
         }
-        cta1={{ label: 'Apply Now', href: '/contact/?intent=apply' }}
-        cta2={{ label: `All ${propertyTypeLabel}`, href: `/ca/${province}/${city}/${service}/` }}
-        meta={[
-          { label: 'Bedrooms', value: bedroomLabel },
-          { label: 'Property type', value: propertyTypeLabel },
-          { label: 'City', value: cityTitle },
-          { label: 'Listings', value: `${listings.length}` },
-        ]}
+        cta1={{ label: 'Apply now', href: '/contact/?intent=apply' }}
+        cta2={{
+          label: `All ${serviceLabel.toLowerCase()}`,
+          href: `/ca/${province}/${city}/${service}/`,
+        }}
+        city={city}
+        service={service}
       />
 
-      {/* Listings - Server-rendered HTML (TEN-05) */}
-      <section className="mx-auto max-w-7xl px-4 py-8">
-        <h2 className="mb-6 text-2xl font-bold">
-          {bedroomLabel} {propertyTypeLabel} for Rent in {cityTitle}
+      {/* Related bedroom variants */}
+      <section className="mx-auto max-w-7xl px-4 pt-10">
+        <h2 className="font-display text-2xl font-normal text-brand-navy">
+          Filter by{' '}
+          <span className="font-display italic text-brand-emerald">
+            bedrooms
+          </span>
+          <span aria-hidden="true" className="text-brand-gold">
+            .
+          </span>
+        </h2>
+        <div className="mt-4 flex flex-wrap gap-3">
+          <Link
+            href={`/ca/${province}/${city}/${service}/`}
+            className="inline-flex items-center rounded-full border border-slate-200 bg-white px-5 py-2 text-sm font-medium text-brand-navy transition hover:border-brand-emerald hover:bg-brand-emerald/5 hover:text-brand-emerald"
+          >
+            All
+          </Link>
+          {BEDROOM_VARIANTS.map((v) => {
+            const isActive = v.slug === bedroom
+            return (
+              <Link
+                key={v.slug}
+                href={`/ca/${province}/${city}/${service}/${v.slug}/`}
+                aria-current={isActive ? 'page' : undefined}
+                className={
+                  isActive
+                    ? 'inline-flex items-center rounded-full border border-brand-emerald bg-brand-emerald/10 px-5 py-2 text-sm font-semibold text-brand-emerald'
+                    : 'inline-flex items-center rounded-full border border-slate-200 bg-white px-5 py-2 text-sm font-medium text-brand-navy transition hover:border-brand-emerald hover:bg-brand-emerald/5 hover:text-brand-emerald'
+                }
+              >
+                {v.label}
+              </Link>
+            )
+          })}
+        </div>
+      </section>
+
+      {/* Listings - server-rendered HTML (TEN-05) */}
+      <section className="mx-auto max-w-7xl px-4 py-10">
+        <h2 className="mb-6 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
+          Available{' '}
+          <span className="font-display italic text-brand-emerald">
+            {bedroomLabel.toLowerCase()} {serviceLabel.toLowerCase()}
+          </span>{' '}
+          in {cityTitle}
+          <span aria-hidden="true" className="text-brand-gold">
+            .
+          </span>
         </h2>
         {listings.length > 0 ? (
           <PropertyCardBlock listings={listings} />
         ) : (
-          <p className="text-muted-foreground">
-            No {bedroomLabel.toLowerCase()} {propertyTypeLabel.toLowerCase()}{' '}
-            listings are currently available in {cityTitle}. Try browsing all{' '}
-            {propertyTypeLabel.toLowerCase()} or check back soon.
+          <p className="rounded-2xl border border-slate-200 bg-white p-6 text-slate-600">
+            No {bedroomLabel.toLowerCase()} {serviceLabel.toLowerCase()}{' '}
+            listings are currently active in {cityTitle}. Try browsing{' '}
+            <Link
+              href={`/ca/${province}/${city}/${service}/`}
+              className="font-medium text-brand-emerald underline-offset-2 hover:underline"
+            >
+              all {serviceLabel.toLowerCase()} in {cityTitle}
+            </Link>{' '}
+            or{' '}
+            <Link
+              href="/contact/?intent=apply"
+              className="font-medium text-brand-emerald underline-offset-2 hover:underline"
+            >
+              tell us what you need
+            </Link>
+            .
           </p>
         )}
       </section>
 
-      {/* Back to category link */}
-      <section className="mx-auto max-w-7xl px-4 pb-8">
-        <Link
-          href={`/ca/${province}/${city}/${service}/`}
-          className="inline-flex items-center gap-2 text-primary hover:underline"
-        >
-          <ArrowLeft className="size-4" />
-          View all {propertyTypeLabel.toLowerCase()} in {cityTitle}
-        </Link>
+      {/* Navigation back-links */}
+      <section className="mx-auto max-w-7xl px-4 pb-12">
+        <div className="flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:gap-6">
+          <Link
+            href={`/ca/${province}/${city}/${service}/`}
+            className="inline-flex items-center gap-2 text-brand-navy hover:text-brand-emerald"
+          >
+            <ArrowLeft className="size-4" />
+            All {serviceLabel.toLowerCase()} in {cityTitle}
+          </Link>
+          <Link
+            href={`/ca/${province}/${city}/`}
+            className="inline-flex items-center gap-2 text-brand-navy hover:text-brand-emerald"
+          >
+            <ArrowLeft className="size-4" />
+            {cityTitle} rental hub
+          </Link>
+        </div>
       </section>
 
       {/* CTA Banner */}
       <CTABannerBlock
-        headline="Find Your Perfect Rental"
-        description={`Browse all available rentals in ${cityTitle} and apply online today.`}
-        primaryCta={{ label: 'Browse All Listings', href: `/ca/${province}/${city}/` }}
+        headline={`Find your next ${bedroomLabel.toLowerCase()} rental`}
+        description={`Browse ${bedroomLabel.toLowerCase()} ${serviceLabel.toLowerCase()} openings in ${cityTitle} or let MoveSmart Rentals source one for you.`}
+        primaryCta={{
+          label: `Browse ${cityTitle} rentals`,
+          href: `/ca/${province}/${city}/`,
+        }}
+        secondaryCta={{ label: 'Talk to a broker', href: '/contact/' }}
+        city={city}
+        service={service}
       />
     </main>
   )

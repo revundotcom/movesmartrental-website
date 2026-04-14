@@ -1,0 +1,17 @@
+{
+  "name": "MoveSmart Rentals — White-Glove Leasing Brokerage",
+  "short_name": "MoveSmart Rentals",
+  "description": "Full-cycle leasing execution for landlords, property managers, and institutional rental operators.",
+  "start_url": "/",
+  "display": "minimal-ui",
+  "orientation": "portrait",
+  "background_color": "#FBFAF6",
+  "theme_color": "#001E57",
+  "icons": [
+    { "src": "/icon", "sizes": "32x32", "type": "image/png" },
+    { "src": "/apple-icon", "sizes": "180x180", "type": "image/png" },
+    { "src": "/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ],
+  "categories": ["business", "finance", "real-estate"],
+  "lang": "en-CA"
+}

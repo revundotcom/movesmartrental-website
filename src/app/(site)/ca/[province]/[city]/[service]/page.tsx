@@ -199,8 +199,8 @@ export async function generateMetadata({
     return generatePageMetadata({
       seo: csData.seo,
       path: `/ca/${province}/${city}/${service}`,
-      fallbackTitle: `${csData.serviceTitle} in ${csData.cityTitle}`,
-      fallbackDescription: `Professional ${csData.serviceTitle.toLowerCase()} services in ${csData.cityTitle}, ${csData.provinceName}. MoveSmart Rentals provides expert property management with zero upfront cost.`,
+      fallbackTitle: `${csData.serviceTitle} in ${csData.cityTitle} | MoveSmart Rentals`,
+      fallbackDescription: `${csData.serviceTitle} in ${csData.cityTitle}, ${csData.provinceName}. White-glove leasing brokerage with zero upfront cost and success-fee pricing.`,
     })
   }
 
@@ -284,9 +284,9 @@ function CityServiceView({
   schemas.push(
     buildLocalBusinessSchema({
       name: `MoveSmart Rentals - ${cityTitle}`,
-      description: `Professional ${serviceTitle.toLowerCase()} services in ${cityTitle}, ${provinceName}.`,
+      description: `${serviceTitle} in ${cityTitle}, ${provinceName} - white-glove leasing brokerage with zero upfront cost.`,
       url: pageUrl,
-      phone: '+14372957688',
+      phone: '+18005959755',
       address: {
         streetAddress: cityTitle,
         city: cityTitle,
@@ -371,7 +371,7 @@ function CityServiceView({
       {/* Editorial hero */}
       <PageHeroBlock
         kicker={`${serviceTitle} · ${cityTitle}`}
-        eyebrow="Local property management"
+        eyebrow="Local leasing brokerage"
         headline={data.heroHeadline}
         accentLastWord={false}
         lede={data.heroSubheadline ?? data.service.shortDescription}
@@ -385,12 +385,6 @@ function CityServiceView({
             ? { label: data.heroCta2.label, href: data.heroCta2.url }
             : { label: 'See Pricing', href: '/pricing/' }
         }
-        meta={[
-          { label: 'Service', value: serviceTitle },
-          { label: 'Market', value: cityTitle },
-          { label: 'Median rent', value: formatCurrency(data.localMedianRent) },
-          { label: 'Setup fee', value: '$0' },
-        ]}
       />
 
       {/* Premium Local Market Section - two-column layout */}
@@ -430,9 +424,11 @@ function CityServiceView({
                 </div>
               ) : (
                 <p className="mt-6 text-lg leading-relaxed text-slate-600">
-                  MoveSmart Rentals provides professional {serviceTitle.toLowerCase()} services
-                  in {cityTitle}, {provinceName}. Our local team understands the {cityTitle}{' '}
-                  rental market and delivers results-driven property management with zero upfront cost.
+                  MoveSmart Rentals runs {serviceTitle.toLowerCase()} in {cityTitle},{' '}
+                  {provinceName} as a white-glove leasing brokerage. Our local
+                  team knows the {cityTitle} rental market and delivers full-cycle
+                  leasing execution - strategic pricing, marketing, qualification,
+                  and lease execution - with zero upfront cost.
                 </p>
               )}
 
@@ -549,7 +545,7 @@ function CityServiceView({
       {/* CTA Banner */}
       <CTABannerBlock
         headline="Get Started with MoveSmart Rentals"
-        description={`Professional ${serviceTitle.toLowerCase()} in ${cityTitle}. Zero upfront cost.`}
+        description={`${serviceTitle} in ${cityTitle} - white-glove leasing brokerage, zero upfront cost, success-fee pricing.`}
         primaryCta={{ label: 'Create Free Account', href: '/contact/' }}
         secondaryCta={{ label: 'Book a Call', href: '/contact/' }}
       />
@@ -602,17 +598,11 @@ function PropertyCategoryView({
         accentLastWord={false}
         lede={
           listings.length > 0
-            ? `${listings.length} verified listing${listings.length === 1 ? '' : 's'} available — transparent pricing, online applications, RTA-compliant leases.`
+            ? `${listings.length} verified listing${listings.length === 1 ? '' : 's'} available - transparent pricing, online applications, RTA-compliant leases.`
             : `Browse ${propertyTypeLabel.toLowerCase()} rentals in ${cityTitle}. Verified properties with transparent pricing.`
         }
         cta1={{ label: 'Apply Now', href: '/contact/?intent=apply' }}
         cta2={{ label: 'Browse More Cities', href: '/locations/' }}
-        meta={[
-          { label: 'City', value: cityTitle },
-          { label: 'Property type', value: propertyTypeLabel },
-          { label: 'Listings', value: `${listings.length}` },
-          { label: 'Setup fee', value: '$0' },
-        ]}
       />
 
       {/* Category Description */}

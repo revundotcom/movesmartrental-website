@@ -1,30 +1,40 @@
-import { defineType, defineField } from 'sanity'
+import { defineType, defineField, defineArrayMember } from 'sanity'
 
 export default defineType({
   name: 'blogGuide',
   title: 'Blog / Guide',
   type: 'document',
+  fieldsets: [
+    { name: 'identity', title: 'Identity' },
+    { name: 'seo', title: 'SEO & Keywords' },
+    { name: 'authorship', title: 'Authorship' },
+    { name: 'content', title: 'Content' },
+    { name: 'links', title: 'Related Links' },
+    { name: 'media', title: 'Media' },
+    { name: 'publishing', title: 'Publishing' },
+  ],
   fields: [
+    // ---------- Identity ----------
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
+      fieldset: 'identity',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: {
-        source: 'title',
-        maxLength: 96,
-      },
+      options: { source: 'title', maxLength: 96 },
+      fieldset: 'identity',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'category',
       title: 'Category',
       type: 'string',
+      fieldset: 'identity',
       options: {
         list: [
           { title: 'Blog Post', value: 'blog' },
@@ -34,39 +44,128 @@ export default defineType({
         ],
       },
     }),
+
+    // ---------- SEO & Keywords ----------
     defineField({
-      name: 'city',
-      title: 'City',
-      type: 'reference',
-      to: [{ type: 'city' }],
-      description: 'Optional - associate with a specific city',
+      name: 'primaryKeyword',
+      title: 'Primary Keyword',
+      type: 'string',
+      fieldset: 'seo',
     }),
     defineField({
-      name: 'service',
-      title: 'Service',
-      type: 'reference',
-      to: [{ type: 'service' }],
-      description: 'Optional - associate with a specific service',
+      name: 'secondaryKeywords',
+      title: 'Secondary Keywords',
+      type: 'array',
+      of: [{ type: 'string' }],
+      fieldset: 'seo',
+    }),
+
+    // ---------- Authorship ----------
+    defineField({
+      name: 'author',
+      title: 'Author',
+      type: 'string',
+      fieldset: 'authorship',
     }),
     defineField({
-      name: 'body',
-      title: 'Body',
-      type: 'portableContent',
-      validation: (Rule) => Rule.required(),
+      name: 'publishDate',
+      title: 'Publish Date',
+      type: 'datetime',
+      fieldset: 'authorship',
+    }),
+    defineField({
+      name: 'updateDate',
+      title: 'Update Date',
+      type: 'datetime',
+      description: 'Auto-updated on save by a Studio action; editable for backfills.',
+      fieldset: 'authorship',
+    }),
+
+    // ---------- Content ----------
+    defineField({
+      name: 'intro',
+      title: 'Intro',
+      type: 'text',
+      rows: 4,
+      fieldset: 'content',
     }),
     defineField({
       name: 'excerpt',
-      title: 'Excerpt',
+      title: 'Excerpt (legacy)',
       type: 'text',
+      fieldset: 'content',
       validation: (Rule) => Rule.max(200),
     }),
     defineField({
+      name: 'mainBody',
+      title: 'Main Body',
+      type: 'portableContent',
+      fieldset: 'content',
+    }),
+    defineField({
+      name: 'body',
+      title: 'Body (legacy alias)',
+      type: 'portableContent',
+      fieldset: 'content',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'faqItems',
+      title: 'FAQ Items',
+      type: 'array',
+      fieldset: 'content',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'faqItem',
+          fields: [
+            defineField({ name: 'question', title: 'Question', type: 'string', validation: (Rule) => Rule.required() }),
+            defineField({ name: 'answer', title: 'Answer', type: 'text', validation: (Rule) => Rule.required() }),
+          ],
+          preview: { select: { title: 'question' } },
+        }),
+      ],
+    }),
+
+    // ---------- Links ----------
+    defineField({
+      name: 'city',
+      title: 'Primary City (legacy single-ref)',
+      type: 'reference',
+      to: [{ type: 'city' }],
+      description: 'Optional - legacy single-city association. Prefer Related City Links.',
+      fieldset: 'links',
+    }),
+    defineField({
+      name: 'service',
+      title: 'Primary Service (legacy single-ref)',
+      type: 'reference',
+      to: [{ type: 'service' }],
+      description: 'Optional - legacy single-service association. Prefer Related Service Links.',
+      fieldset: 'links',
+    }),
+    defineField({
+      name: 'relatedServiceLinks',
+      title: 'Related Service Links',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'service' }] }],
+      fieldset: 'links',
+    }),
+    defineField({
+      name: 'relatedCityLinks',
+      title: 'Related City Links',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'city' }] }],
+      fieldset: 'links',
+    }),
+
+    // ---------- Media ----------
+    defineField({
       name: 'heroImage',
-      title: 'Hero Image',
+      title: 'Hero / Featured Image',
       type: 'image',
-      options: {
-        hotspot: true,
-      },
+      options: { hotspot: true },
+      fieldset: 'media',
       fields: [
         defineField({
           name: 'alt',
@@ -76,21 +175,10 @@ export default defineType({
         }),
       ],
     }),
-    defineField({
-      name: 'author',
-      title: 'Author',
-      type: 'string',
-    }),
-    defineField({
-      name: 'seo',
-      title: 'SEO',
-      type: 'seoFields',
-    }),
-    defineField({
-      name: 'publishing',
-      title: 'Publishing Controls',
-      type: 'publishingControls',
-    }),
+
+    // ---------- SEO & Publishing ----------
+    defineField({ name: 'seo', title: 'SEO (OG image, keywords, schema fields)', type: 'seoFields', fieldset: 'seo' }),
+    defineField({ name: 'publishing', title: 'Publishing Controls', type: 'publishingControls', fieldset: 'publishing' }),
   ],
   preview: {
     select: {

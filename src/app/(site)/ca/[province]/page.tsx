@@ -68,8 +68,8 @@ export async function generateMetadata({
   return generatePageMetadata({
     seo: data?.seo,
     path: `/ca/${province}`,
-    fallbackTitle: `${data?.title ?? province} Property Management`,
-    fallbackDescription: `Professional property management services in ${data?.title ?? province}. Find MoveSmart Rentals in cities across ${data?.title ?? province}.`,
+    fallbackTitle: `Leasing Brokerage in ${data?.title ?? province} | MoveSmart Rentals`,
+    fallbackDescription: `White-glove leasing services across ${data?.title ?? province}: tenant placement, screening, lease execution, and move-in coordination with zero upfront cost.`,
   })
 }
 
@@ -173,17 +173,11 @@ export default async function ProvincePage({
       {/* Editorial hero */}
       <PageHeroBlock
         kicker={data.title}
-        eyebrow={`Property management across ${data.title}`}
+        eyebrow={`Leasing brokerage across ${data.title}`}
         headline={`Leasing across ${data.title}`}
-        lede={descriptionText ?? `Professional property management in every major ${data.title} market — placement, screening, rent protection, and day-to-day operations handled by a local team.`}
+        lede={descriptionText ?? `White-glove leasing execution in every major ${data.title} market - strategic pricing, professional marketing, tenant qualification, and lease execution from a local team. Zero upfront cost.`}
         cta1={{ label: 'Book a Local Call', href: '/contact/' }}
         cta2={{ label: 'See Pricing', href: '/pricing/' }}
-        meta={[
-          { label: 'Cities served', value: `${cities.length}+` },
-          { label: 'Avg fill time', value: '14 days' },
-          { label: 'Setup fee', value: '$0' },
-          { label: 'Local team', value: 'In-market' },
-        ]}
       />
 
       {/* Province narrative (Portable Text) */}
@@ -194,7 +188,7 @@ export default async function ProvincePage({
               About {data.title}
             </p>
             <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
-              Property management across{' '}
+              Leasing services across{' '}
               <span className="font-display italic text-brand-emerald">{data.title}</span>
               <span aria-hidden="true" className="text-brand-gold">.</span>
             </h2>
@@ -218,8 +212,8 @@ export default async function ProvincePage({
               <span aria-hidden="true" className="text-brand-gold">.</span>
             </h2>
             <p className="mt-4 text-base text-slate-600">
-              Local expertise in every major market — from tenant placement to full
-              property management.
+              Local expertise in every major market - from tenant placement to
+              institutional lease-up, executed by the same in-market team.
             </p>
           </div>
 
@@ -237,7 +231,7 @@ export default async function ProvincePage({
       {/* CTA Banner */}
       <CTABannerBlock
         headline={`Find MoveSmart in ${data.title}`}
-        description={`Professional property management across ${data.title}. Book a 20-minute call with a local advisor.`}
+        description={`White-glove leasing services across ${data.title}. Book a 20-minute call with a local advisor - zero upfront cost.`}
         primaryCta={{ label: 'Book a Call', href: '/contact/' }}
         secondaryCta={{ label: 'See Pricing', href: '/pricing/' }}
       />

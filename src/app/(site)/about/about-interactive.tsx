@@ -30,7 +30,7 @@ export function FounderEssay() {
                 <span aria-hidden="true" className="text-brand-gold">.</span>
               </p>
               <p className="mt-4 max-w-xs text-sm leading-relaxed text-slate-500">
-                A note from the team on the problem we came here to solve.
+                A note from the team on the gap we set out to close in the rental market.
               </p>
             </div>
           </RevealOnScroll>
@@ -44,23 +44,29 @@ export function FounderEssay() {
                 aria-hidden="true"
                 className="float-left mr-3 mt-2 font-display text-[5rem] font-normal italic leading-[0.85] text-brand-gold"
               >
-                P
+                T
               </span>
-              roperty management, as most owners have experienced it, is a game of opaque
-              invoices, slow phone calls, and promises that evaporate the moment a pipe
-              bursts at midnight. We started MoveSmart Rentals because we had been on the
-              other side of that phone call - as owners ourselves - and we knew the industry
-              could do so much better.
+              he Canadian rental market is fragmented. Listings are
+              under-presented, pricing is guessed at instead of analyzed,
+              vacancy turnaround drifts, and tenant screening swings between
+              too lenient and too rigid. Brokers are wired to sell. Property
+              managers are wired to operate the years that follow. Almost
+              nobody is obsessing over the leasing phase itself - the eight
+              to twenty-one days that decide whether the next twelve months
+              go smoothly or go sideways.
             </p>
           </RevealOnScroll>
 
           <RevealOnScroll variant="slideUp" duration={0.7}>
             <p className="mt-8 text-lg leading-[1.8] text-slate-600 sm:text-[1.15rem]">
-              Our founding idea was plain: treat every door like it was our own. That meant
-              real people answering real questions, a pricing model that only earned when
-              owners earned, and a technology layer that quietly did the work instead of
-              shouting about itself. No upsells, no small print, no surprise deductions on
-              the monthly statement.
+              We built MoveSmart Rentals to be that specialist. A white-glove
+              leasing brokerage with one job: deliver disciplined,
+              well-documented, market-aware leasing execution for the people
+              who actually own and operate rental inventory. That means
+              individual landlords with one or two doors, property managers
+              who outsource their lease-up, builders handing over fresh
+              inventory, and institutional operators coordinating hundreds of
+              units across multiple buildings.
             </p>
           </RevealOnScroll>
 
@@ -68,19 +74,22 @@ export function FounderEssay() {
           <RevealOnScroll variant="slideUp" duration={0.7}>
             <blockquote className="my-14 border-l-2 border-brand-gold pl-8">
               <p className="font-display text-3xl font-normal italic leading-[1.3] tracking-tight text-brand-gold sm:text-[2.25rem]">
-                &ldquo;We wanted to build the property manager we wished we had
-                hired ourselves.&rdquo;
+                &ldquo;Brokers sell. Managers operate. We built MoveSmart to
+                obsess over the leasing phase itself.&rdquo;
               </p>
             </blockquote>
           </RevealOnScroll>
 
           <RevealOnScroll variant="slideUp" duration={0.7}>
             <p className="text-lg leading-[1.8] text-slate-600 sm:text-[1.15rem]">
-              Six years later, that principle still runs the company. It shapes who we
-              hire, how we price, and why we still answer the phone on a Sunday afternoon.
-              Owners stay with us because the spreadsheet works - occupancy stays high,
-              placements stay fast, maintenance stays honest. But they refer us because the
-              service feels unreasonably personal for an industry this size.
+              Every campaign we run has the same anatomy: strategic pricing
+              against live comparables, polished listing presentation,
+              structured showings, disciplined applicant qualification,
+              optional rental protection, and a complete move-in handover -
+              utilities, insurance, key delivery, and a documented file the
+              owner can audit. Owners do not need warmth alone. They need
+              proof the work was done. That is what we deliver, and it is why
+              serious operators keep handing us the next building.
             </p>
           </RevealOnScroll>
         </article>
@@ -98,11 +107,11 @@ export function FounderEssay() {
 // ────────────────────────────────────────────────────────────────
 const MILESTONES: { date: string; title: string }[] = [
   { date: '2020', title: 'MoveSmart founded in Toronto' },
-  { date: '2021', title: 'First 50 doors under management' },
-  { date: '2022', title: 'Expanded to 5 Ontario cities' },
-  { date: '2023', title: 'Owner portal launched' },
-  { date: '2024', title: '500 doors milestone' },
-  { date: '2025', title: 'Entered US market' },
+  { date: '2021', title: 'First 50 units leased across the GTA' },
+  { date: '2022', title: 'Expanded leasing coverage to 5 Ontario cities' },
+  { date: '2023', title: 'Owner reporting portal launched' },
+  { date: '2024', title: '500+ units leased milestone' },
+  { date: '2025', title: 'First institutional lease-up campaigns' },
 ]
 
 export function Timeline() {
@@ -159,23 +168,30 @@ export function Timeline() {
 }
 
 // ────────────────────────────────────────────────────────────────
-// Values - 01 / 02 / 03 editorial statements
+// Values - 01 / 02 / 03 / 04 editorial statements
+// Aligned to brand personality: Strategic, Disciplined, Concierge,
+// Transparent, Performance-driven.
 // ────────────────────────────────────────────────────────────────
 const VALUES = [
   {
-    title: 'Treat every door like our own',
+    title: 'Strategic before tactical',
     body:
-      'We do not distinguish between a single condo and a twelve-unit portfolio. The same standard of care, the same named account manager, the same urgency on a Sunday evening.',
+      'Every campaign starts with live market analysis, comparable pricing, and a positioning plan for the listing. We do not post and pray. We price, present, and target the right tenant pool deliberately - because the first decision sets the next twelve months.',
   },
   {
-    title: 'Earn on outcomes, never on friction',
+    title: 'Disciplined tenant qualification',
     body:
-      'Our fees are tied to performance - rented units, renewed leases, protected rent. If we do not deliver, we do not invoice. It is the only model we believe in.',
+      'Screening is the single biggest lever in a rental file, so we treat it like one. Income verification, employment confirmation, credit review, landlord references, and a documented decision trail on every applicant. Consistent standards, no shortcuts, no surprises.',
   },
   {
-    title: 'Be the boring kind of excellent',
+    title: 'Concierge coordination, end to end',
     body:
-      'Reliability beats novelty. We would rather return every call within two hours for a decade than ship a flashy feature once. Owners stay with operators who stay consistent.',
+      'Showings, applications, lease execution, utility transfers, insurance setup, key handover, and the move-in walkthrough - handled by our team and documented for the owner. The owner should not have to chase any thread of the leasing phase.',
+  },
+  {
+    title: 'Transparent, performance-driven reporting',
+    body:
+      'Owners and institutional partners receive structured updates on activity, applicants, pricing feedback, and time-to-lease. Outcomes are measurable. Files are auditable. Peace of mind comes from proof, not promises.',
   },
 ]
 
@@ -234,6 +250,7 @@ export function Values() {
 // Team - circle-initials editorial grid
 // ────────────────────────────────────────────────────────────────
 // NOTE: team roster placeholder - confirm names with leadership before launch.
+// Roles reframed to match leasing brokerage positioning.
 const TEAM: {
   initials: string
   name: string
@@ -241,14 +258,14 @@ const TEAM: {
   credo?: string
   tone: 'gold' | 'emerald'
 }[] = [
-  { initials: 'JC', name: 'Jatin Chhabra', role: 'Founder & Principal Broker', credo: 'Answers the phone on Sundays.', tone: 'gold' },
-  { initials: 'AR', name: 'Anika Rao', role: 'Head of Operations', credo: 'Runs the playbook, writes the playbook.', tone: 'emerald' },
-  { initials: 'DM', name: 'Daniel Mercer', role: 'Lead Property Manager', credo: 'Twelve-year veteran of GTA leasing.', tone: 'gold' },
-  { initials: 'SP', name: 'Simran Patel', role: 'Tenant Placement Lead', credo: 'Screens like a bank, warms like a neighbour.', tone: 'emerald' },
-  { initials: 'KO', name: 'Kwame Owusu', role: 'Maintenance Coordinator', credo: 'Keeps 40 trades on speed-dial.', tone: 'gold' },
+  { initials: 'JC', name: 'Jatin Chhabra', role: 'Founder & Principal Broker', credo: 'Owns the standard the team executes against.', tone: 'gold' },
+  { initials: 'AR', name: 'Anika Rao', role: 'Head of Leasing Operations', credo: 'Runs the playbook, writes the playbook.', tone: 'emerald' },
+  { initials: 'DM', name: 'Daniel Mercer', role: 'Institutional Lease-Up Lead', credo: 'Twelve-year veteran of GTA leasing.', tone: 'gold' },
+  { initials: 'SP', name: 'Simran Patel', role: 'Tenant Qualification Analyst', credo: 'Screens like a bank, briefs like a partner.', tone: 'emerald' },
+  { initials: 'KO', name: 'Kwame Owusu', role: 'Showings Manager', credo: 'Keeps every tour on time and on script.', tone: 'gold' },
   { initials: 'EL', name: 'Emily Larsson', role: 'Owner Success Manager', credo: 'Every owner has her cell number.', tone: 'emerald' },
-  { initials: 'RT', name: 'Ravi Thakur', role: 'Portfolio Analyst', credo: 'Where the monthly statement gets honest.', tone: 'gold' },
-  { initials: 'MB', name: 'Mei Bennett', role: 'Client Onboarding', credo: 'Makes week-one feel like year-ten.', tone: 'emerald' },
+  { initials: 'RT', name: 'Ravi Thakur', role: 'Pricing & Market Analyst', credo: 'Where guesswork ends and comparables start.', tone: 'gold' },
+  { initials: 'MB', name: 'Mei Bennett', role: 'Move-In Coordinator', credo: 'Keys, utilities, insurance, walkthrough - all handled.', tone: 'emerald' },
 ]
 
 export function Team() {
@@ -265,12 +282,12 @@ export function Team() {
             </div>
             <h2 className="mt-4 font-display text-4xl font-normal leading-[1.08] tracking-tight text-brand-navy sm:text-5xl">
               The people behind<br />
-              <span className="font-display italic text-brand-emerald">the portfolio</span>
+              <span className="font-display italic text-brand-emerald">the campaigns</span>
               <span aria-hidden="true" className="text-brand-gold">.</span>
             </h2>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-600">
-              A small, RECO-licensed team with twenty-plus years of combined property
-              management experience across Ontario.
+              A small, RECO-licensed leasing team with twenty-plus years of
+              combined rental brokerage experience across Ontario.
             </p>
           </div>
         </RevealOnScroll>
@@ -309,12 +326,13 @@ export function Team() {
 
 // ────────────────────────────────────────────────────────────────
 // By the numbers - editorial strip with pipe dividers
+// Reframed to leasing-execution metrics.
 // ────────────────────────────────────────────────────────────────
 const BY_NUMBERS: { value: number; suffix: string; label: string }[] = [
-  { value: 8, suffix: '', label: 'Years in market' },
-  { value: 24, suffix: '', label: 'Team members' },
-  { value: 20, suffix: '+', label: 'Cities' },
-  { value: 3200, suffix: '', label: 'Inspections / year' },
+  { value: 500, suffix: '+', label: 'Units leased' },
+  { value: 14, suffix: '', label: 'Avg days to placement' },
+  { value: 20, suffix: '+', label: 'Cities served' },
+  { value: 94, suffix: '%', label: 'Applicant approval accuracy' },
 ]
 
 export function ByTheNumbers() {
@@ -327,7 +345,7 @@ export function ByTheNumbers() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <RevealOnScroll variant="slideUp" duration={0.7}>
           <p className="mb-10 text-center text-xs font-semibold uppercase tracking-[0.22em] text-brand-gold">
-            By the numbers
+            Leasing performance, by the numbers
           </p>
         </RevealOnScroll>
 
@@ -359,7 +377,7 @@ export function ByTheNumbers() {
 // ────────────────────────────────────────────────────────────────
 // Press & recognition - single horizontal editorial line
 // ────────────────────────────────────────────────────────────────
-// NOTE: press mentions placeholder - verify with PR before launch.
+// NOTE: press mentions placeholder - replace with verified logos before launch.
 const PRESS = ['Toronto Star', 'Globe and Mail', 'REP Magazine', 'FRPO', 'CBC Radio']
 
 export function Press() {
@@ -391,18 +409,18 @@ export function Press() {
 }
 
 // ────────────────────────────────────────────────────────────────
-// Long-form testimonials - two pull quotes about TEAM & VALUES
+// Long-form testimonials - two pull quotes about TEAM & EXECUTION
 // ────────────────────────────────────────────────────────────────
 const LONG_TESTIMONIALS = [
   {
     quote:
-      'What surprised me was not the occupancy rate - it was that after three years, my account manager still knows every tenant by name and every quirk in the building. You do not get that from a big franchise. You get it from a team that decided early on what kind of company they wanted to be.',
+      'What surprised me was not the speed - it was the discipline. Every applicant came with a documented file: income, references, credit, the reasoning behind the recommendation. I had never seen a leasing team operate with that level of structure. Three buildings later, that is still the difference.',
     name: 'James K.',
     role: '12-unit portfolio owner, Hamilton',
   },
   {
     quote:
-      'I interviewed four property managers before choosing MoveSmart. The others talked about their software. This team talked about my tenants, my building, and how they would protect both. Four years later that is still the difference.',
+      'I interviewed four firms before choosing MoveSmart. The others pitched their listings reach. This team walked me through pricing logic, qualification standards, and how the move-in handover would be documented. The leasing phase finally felt like it was being handled, not improvised.',
     name: 'Priya M.',
     role: 'Owner, Mississauga',
   },
@@ -422,7 +440,7 @@ export function LongTestimonials() {
             </div>
             <h2 className="mt-4 font-display text-4xl font-normal leading-[1.08] tracking-tight text-brand-navy sm:text-5xl">
               Owners on the<br />
-              <span className="font-display italic text-brand-emerald">team</span>
+              <span className="font-display italic text-brand-emerald">execution</span>
               <span aria-hidden="true" className="text-brand-gold">.</span>
             </h2>
           </div>

@@ -6,27 +6,27 @@ import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 const GUARANTEES = [
   {
     icon: Clock,
-    title: '14-Day Placement Guarantee',
-    description: 'We find a qualified tenant within 14 days or the first month of management is free.',
-    detail: 'Our average fill time is just 14 days across 500+ managed properties.',
+    title: '14-Day Placement Target',
+    description: 'We aim to place a qualified tenant within 14 days. If we miss, we keep marketing your unit at no extra cost until we sign one.',
+    detail: 'Our average placement time is 14 days across 500+ units leased.',
   },
   {
     icon: DollarSign,
-    title: 'Rent Protection Guarantee',
-    description: 'Your rental income is protected. If a tenant we place misses rent, we cover it.',
-    detail: 'Peace of mind that your investment is always generating income.',
+    title: 'Rental Protection Pathway',
+    description: 'Optional guaranteed-rent insurance through our vetted carrier partners - coverage explained in plain English before you opt in.',
+    detail: 'A partner pathway, not an in-house product. Premiums and claim mechanics sit with the carrier.',
   },
   {
     icon: Shield,
-    title: '24-Hour Response Guarantee',
-    description: 'Every inquiry answered within 24 hours. Your dedicated manager is always a call away.',
-    detail: 'Real humans, real responses. No automated runarounds.',
+    title: 'Tenant Replacement Guarantee',
+    description: 'If a tenant we placed breaks the lease in the first six months, we re-lease at no additional success fee.',
+    detail: 'We carry advertising, qualification, and lease prep again on our dime.',
   },
   {
     icon: Unlock,
     title: 'No Lock-In Guarantee',
-    description: 'No long-term contracts. No cancellation fees. We earn your business every month.',
-    detail: 'If you\'re not happy, you\'re free to leave. That\'s how confident we are.',
+    description: 'No long-term contracts. No cancellation fees. 30-day exit, no clawback on a placement already earned.',
+    detail: 'If you are not happy, you are free to leave. That is how confident we are.',
   },
 ]
 
@@ -46,7 +46,7 @@ export function GuaranteeSection() {
               The MoveSmart Guarantee
             </h2>
             <p className="text-slate-300 text-lg max-w-2xl mx-auto">
-              We put our money where our mouth is. No other property management company in Canada offers these guarantees.
+              We put our money where our mouth is. No other leasing brokerage in Canada writes these guarantees into the engagement.
             </p>
           </div>
         </RevealOnScroll>

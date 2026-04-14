@@ -6,7 +6,7 @@ import './globals.css'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { MobileStickyCTA } from '@/components/layout/mobile-sticky-cta'
-import { ScrollDepthTracker } from '@/components/tracking/gtm-events'
+import { ScrollDepthTracker } from '@/components/tracking/scroll-depth-tracker'
 import { LinkTracker } from '@/components/tracking/link-tracker'
 
 const inter = Inter({
@@ -36,12 +36,12 @@ const dmSerifDisplay = DM_Serif_Display({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'),
   title: {
-    default: 'MoveSmart Rentals | Property Management Across Canada',
+    default: 'MoveSmart Rentals | White-Glove Leasing Brokerage Across Canada',
     template: '%s | MoveSmart Rentals',
   },
   description:
-    'Full-service property management across Canada. Tenant placement, screening, rent guarantee, and leasing with zero upfront cost. Get your free rental analysis.',
-  keywords: ['property management Canada', 'tenant placement', 'rental management', 'rent guarantee', 'landlord services', 'property management Ontario', 'tenant screening Canada'],
+    'White-glove leasing brokerage across Canada. Strategic pricing, professional marketing, tenant qualification, and lease execution with zero upfront cost. Get your free rental analysis.',
+  keywords: ['leasing brokerage Canada', 'rental leasing services', 'tenant qualification', 'lease execution', 'landlord services', 'leasing services Ontario', 'tenant screening Canada'],
   authors: [{ name: 'MoveSmart Rentals', url: 'https://movesmartrentals.com' }],
   creator: 'MoveSmart Rentals',
   publisher: 'MoveSmart Rentals',
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
         url: '/og-default.png',
         width: 1200,
         height: 630,
-        alt: 'MoveSmart Rentals - Property Management Across Canada',
+        alt: 'MoveSmart Rentals - White-Glove Leasing Brokerage Across Canada',
       },
     ],
   },
@@ -89,6 +89,12 @@ export const metadata: Metadata = {
       'msvalidate.01': process.env.NEXT_PUBLIC_BING_VERIFICATION || '',
     },
   },
+  icons: {
+    icon: '/icon',
+    apple: '/apple-icon',
+    shortcut: '/icon',
+  },
+  manifest: '/manifest.webmanifest',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

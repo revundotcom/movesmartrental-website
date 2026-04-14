@@ -65,10 +65,10 @@ export function CaseStudySection() {
           </div>
         </RevealOnScroll>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           {CASE_STUDIES.map((study, i) => (
-            <RevealOnScroll key={study.clientName} variant="slideUp" delay={i * 0.1}>
-              <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-slate-100">
+            <RevealOnScroll key={study.clientName} variant="slideUp" delay={i * 0.1} className="h-full">
+              <div className="group h-full flex flex-col bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-slate-100">
                 {/* Location badge */}
                 <div className="flex items-center gap-2 text-sm text-slate-500 mb-4">
                   <MapPin className="w-4 h-4" />
@@ -86,7 +86,7 @@ export function CaseStudySection() {
                 </p>
 
                 {/* Metrics */}
-                <div className="grid grid-cols-2 gap-4 pt-6 border-t border-slate-100">
+                <div className="mt-auto grid grid-cols-2 gap-4 pt-6 border-t border-slate-100">
                   <div>
                     <div className="flex items-center gap-1.5 mb-1">
                       <Clock className="w-3.5 h-3.5 text-brand-emerald" />

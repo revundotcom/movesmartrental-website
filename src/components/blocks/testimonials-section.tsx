@@ -1,8 +1,5 @@
 'use client'
 
-import { useRef, useEffect, useState } from 'react'
-import { motion, useInView } from 'framer-motion'
-
 const TESTIMONIALS = [
   {
     quote: 'MoveSmart handled everything from photography to lease signing. I did not have to lift a finger and my unit was rented in 10 days.',
@@ -72,11 +69,11 @@ function Avatar({ name }: { name: string }) {
   )
 }
 
-function AnimatedStars({ rating, inView }: { rating: number; inView: boolean }) {
+function Stars({ rating }: { rating: number }) {
   return (
     <div className="flex gap-0.5" role="img" aria-label={`${rating} out of 5 stars`}>
       {Array.from({ length: 5 }).map((_, i) => (
-        <motion.svg
+        <svg
           key={i}
           width="16"
           height="16"
@@ -84,12 +81,9 @@ function AnimatedStars({ rating, inView }: { rating: number; inView: boolean }) 
           fill="#D4A853"
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
-          initial={{ opacity: 0, scale: 0 }}
-          animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
-          transition={{ delay: i * 0.1, duration: 0.3, ease: 'easeOut' }}
         >
           <path d="M8 1.5l1.76 3.57 3.94.57-2.85 2.78.67 3.93L8 10.5l-3.52 1.85.67-3.93L2.3 5.64l3.94-.57L8 1.5z" />
-        </motion.svg>
+        </svg>
       ))}
     </div>
   )
@@ -103,24 +97,14 @@ function QuoteMark() {
   )
 }
 
-function TestimonialCard({ testimonial, index }: { testimonial: typeof TESTIMONIALS[0]; index: number }) {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-40px' })
-
+function TestimonialCard({ testimonial }: { testimonial: typeof TESTIMONIALS[0] }) {
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative flex min-w-[320px] max-w-[400px] shrink-0 snap-center flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl sm:min-w-[360px]"
-    >
+    <div className="group relative flex w-[340px] shrink-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-xl sm:w-[380px]">
       {/* Gradient border-bottom slides in from left on hover */}
       <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-emerald-500 to-emerald-300 transition-all duration-500 group-hover:w-full" aria-hidden="true" />
 
       <QuoteMark />
-      <AnimatedStars rating={testimonial.rating} inView={inView} />
+      <Stars rating={testimonial.rating} />
 
       <blockquote className="mt-4 flex-1 font-display text-sm italic leading-relaxed text-slate-700">
         {testimonial.quote}
@@ -142,7 +126,7 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof TESTIMONI
           {testimonial.outcome}
         </span>
       </div>
-    </motion.div>
+    </div>
   )
 }
 
@@ -167,58 +151,23 @@ function GoogleBadge() {
 }
 
 export function TestimonialsSection() {
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const [isPaused, setIsPaused] = useState(false)
-
-  // Auto-scroll with pause on hover/touch
-  useEffect(() => {
-    const container = scrollRef.current
-    if (!container) return
-
-    let animationId: number
-    let scrollPos = 0
-    const speed = 0.5 // px per frame
-
-    function autoScroll() {
-      if (!container || isPaused) {
-        animationId = requestAnimationFrame(autoScroll)
-        return
-      }
-
-      scrollPos += speed
-      if (scrollPos >= container.scrollWidth / 2) {
-        scrollPos = 0
-      }
-      container.scrollLeft = scrollPos
-      animationId = requestAnimationFrame(autoScroll)
-    }
-
-    animationId = requestAnimationFrame(autoScroll)
-    return () => cancelAnimationFrame(animationId)
-  }, [isPaused])
-
   return (
     <div className="mt-8">
       <div
-        ref={scrollRef}
-        className="flex gap-5 overflow-x-auto py-4 snap-x snap-mandatory scrollbar-hide"
+        className="group/marquee overflow-hidden py-4"
         style={{
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
           WebkitMaskImage:
             'linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%)',
           maskImage:
             'linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%)',
         }}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-        onTouchStart={() => setIsPaused(true)}
-        onTouchEnd={() => setIsPaused(false)}
       >
-        {/* Duplicate testimonials for infinite scroll effect */}
-        {[...TESTIMONIALS, ...TESTIMONIALS].map((testimonial, idx) => (
-          <TestimonialCard key={`${testimonial.name}-${idx}`} testimonial={testimonial} index={idx % TESTIMONIALS.length} />
-        ))}
+        <div className="flex w-max gap-5 animate-marquee-scroll [animation-duration:60s] group-hover/marquee:[animation-play-state:paused]">
+          {/* Duplicate testimonials for seamless loop - translateX(-50%) in keyframes */}
+          {[...TESTIMONIALS, ...TESTIMONIALS].map((testimonial, idx) => (
+            <TestimonialCard key={`${testimonial.name}-${idx}`} testimonial={testimonial} />
+          ))}
+        </div>
       </div>
       <GoogleBadge />
     </div>

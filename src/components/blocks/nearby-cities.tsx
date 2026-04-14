@@ -26,7 +26,7 @@ export function NearbyCities({ cities, currentCity, country = 'ca' }: NearbyCiti
         <div className="mb-8 text-center">
           <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-emerald-600">Explore Nearby</p>
           <h2 className="font-display text-2xl font-normal tracking-tight text-[#0B1D3A] sm:text-3xl">
-            Property Management Near {currentCity}
+            White-Glove Leasing Near {currentCity}
           </h2>
         </div>
 

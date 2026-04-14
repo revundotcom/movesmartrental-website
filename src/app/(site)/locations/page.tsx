@@ -1,203 +1,360 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
-import { sanityFetch } from '@/sanity/fetch'
-import { PROVINCES_WITH_CITIES_QUERY } from '@/sanity/queries/province'
-import type { CityCardData } from '@/types/blocks'
+import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 
 import {
-  CitySpotlight,
-  LocalTeamsList,
-  MarketSnapshot,
-  ProvinceRow,
-  QuickJumpCard,
-  type ProvinceEntry,
-  type SpotlightData,
-  type Advisor,
-  type SnapshotStat,
+  OntarioCityDirectory,
+  ProvinceGrid,
+  StateGrid,
+  USCityDirectory,
+  type OntarioCity,
+  type ProvinceCard,
+  type StateCard,
+  type USCity,
 } from './locations-interactive'
 
 export const metadata: Metadata = {
-  title: 'Property Management Locations Canada | 20+ Cities Served',
+  title: 'Leasing Coverage - Canada & United States | MoveSmart Rentals',
   description:
-    'MoveSmart Rentals serves 20+ Canadian cities including Toronto, Ottawa, Mississauga, Hamilton, Brampton, London, Kitchener, Waterloo, Barrie, and Oakville. Find your city.',
+    'White-glove leasing across Canada and the United States. 20+ Ontario tier-1 cities, five provinces, ten priority U.S. states including Florida, Texas, California, New York, and Illinois.',
   alternates: {
     canonical: '/locations/',
   },
   openGraph: {
-    title: 'Property Management Locations Canada | MoveSmart Rentals',
+    title: 'Leasing Coverage - Canada & United States | MoveSmart Rentals',
     description:
-      'MoveSmart Rentals serves 20+ Canadian cities. Find professional property management in Toronto, Ottawa, Mississauga, Hamilton, Brampton, London, and more.',
+      'Same discipline, same white-glove execution - from a basement unit in Hamilton to a 500-unit lease-up in Miami.',
     images: ['/og-default.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Property Management Locations Canada | MoveSmart Rentals',
+    title: 'Leasing Coverage - Canada & United States | MoveSmart Rentals',
     description:
-      'MoveSmart Rentals serves 20+ Canadian cities. Find professional property management in Toronto, Ottawa, Mississauga, Hamilton, Brampton, London, and more.',
+      'White-glove leasing brokerage across Canada and the United States. See every province and state we serve.',
   },
 }
 
-interface ProvinceWithCities {
-  _id: string
-  title: string
-  slug: string
-  country: string
-  cities: CityCardData[]
-}
-
 // ─────────────────────────────────────────────────────────────
-// Static editorial content
+// Canadian provinces (5 priority)
 // ─────────────────────────────────────────────────────────────
 
-const SPOTLIGHTS: SpotlightData[] = [
+const CANADIAN_PROVINCES: ProvinceCard[] = [
   {
-    city: 'Toronto',
-    province: 'Ontario',
-    href: '/ca/ontario/toronto/',
-    summary:
-      'Canada’s largest rental market rewards precision. Median one-bedroom rents hover near $2,500; demand peaks in late spring and early fall. We lease condos, row-houses and detached stock from the waterfront to North York.',
-    neighborhoods: [
-      { name: 'King West', note: 'Condo-heavy · high turnover' },
-      { name: 'Leslieville', note: 'Row-house · young families' },
-      { name: 'North York', note: 'Detached · long-term tenants' },
-      { name: 'The Annex', note: 'Pre-war · student adjacent' },
-      { name: 'Liberty Village', note: 'Condo · transit-first' },
-    ],
+    name: 'Ontario',
+    slug: 'ontario',
+    country: 'CA',
+    cityCount: 20,
+    note: 'Flagship market',
+    positioning:
+      'Our deepest bench. Twenty tier-1 cities from Toronto to Kingston with named advisors in every corridor of the GTA, Golden Horseshoe, and Southwestern Ontario.',
   },
   {
-    city: 'Ottawa',
-    province: 'Ontario',
-    href: '/ca/ontario/ottawa/',
-    summary:
-      'Stable government and tech employment keeps Ottawa vacancy below 2%. Townhouses in Barrhaven and Kanata lease in under two weeks when priced right. Expect steady 3-5% annual rent growth.',
-    neighborhoods: [
-      { name: 'Westboro', note: 'Walkable · premium rents' },
-      { name: 'Barrhaven', note: 'Townhouse · family demand' },
-      { name: 'Kanata', note: 'Tech corridor · executives' },
-      { name: 'Centretown', note: 'Apartment · professionals' },
-    ],
+    name: 'Quebec',
+    slug: 'quebec',
+    country: 'CA',
+    cityCount: 6,
+    note: 'Bilingual execution',
+    positioning:
+      'Bilingual lease execution aligned with the TAL. Montréal, Laval, Longueuil and Québec City - with French-fluent advisors and regie-ready documentation.',
   },
   {
-    city: 'Miami',
-    province: 'Florida',
-    href: '/us/florida/miami/',
-    summary:
-      'Snowbird seasonality shapes Miami leasing - winter demand spikes November through April. We coordinate short hold-over clauses, furnished options and HOA compliance across Brickell, Wynwood and Coral Gables.',
-    neighborhoods: [
-      { name: 'Brickell', note: 'High-rise · international renters' },
-      { name: 'Wynwood', note: 'Lofts · creative class' },
-      { name: 'Coral Gables', note: 'SFH · long-term families' },
-      { name: 'Coconut Grove', note: 'Townhome · waterfront' },
-    ],
+    name: 'British Columbia',
+    slug: 'british-columbia',
+    country: 'CA',
+    cityCount: 7,
+    note: 'RTB-aligned',
+    positioning:
+      'Vancouver, Burnaby, Richmond, Surrey, Victoria and the Okanagan. RTB-aligned lease templates, strata-ready showings, and strict pet-and-smoking compliance baked in.',
   },
   {
-    city: 'Austin',
-    province: 'Texas',
-    href: '/us/texas/austin/',
-    summary:
-      'Austin absorbed record new supply in 2025 - landlords need sharper pricing and faster turnarounds. We run aggressive marketing in East Austin and price-discovery in suburbs like Round Rock and Cedar Park.',
-    neighborhoods: [
-      { name: 'East Austin', note: 'SFH · young professionals' },
-      { name: 'Mueller', note: 'New build · premium' },
-      { name: 'Round Rock', note: 'Suburban · family' },
-      { name: 'South Congress', note: 'Condo · walkable' },
-    ],
+    name: 'Alberta',
+    slug: 'alberta',
+    country: 'CA',
+    cityCount: 5,
+    note: 'Energy-corridor ready',
+    positioning:
+      'Calgary, Edmonton, Red Deer, Lethbridge and Airdrie. Built for energy-corridor mobility - flexible hold-over clauses and fast qualification for corporate transferees.',
+  },
+  {
+    name: 'Nova Scotia',
+    slug: 'nova-scotia',
+    country: 'CA',
+    cityCount: 5,
+    note: 'Atlantic anchor',
+    positioning:
+      'Halifax, Dartmouth, Bedford, Sydney and Truro. Atlantic-region pricing discipline with an eye on the military, healthcare and post-secondary rental demand drivers.',
   },
 ]
 
-const ADVISORS: Advisor[] = [
-  // TODO: Replace placeholder names with real local leasing advisors once confirmed.
-  { name: 'Priya Kaur', city: 'Toronto', role: 'Senior Leasing Advisor', phone: '(416) 555-0142' },
-  { name: 'Marcus Chen', city: 'Ottawa', role: 'Regional Lead - Ontario East', phone: '(613) 555-0108' },
-  { name: 'Sophie Tremblay', city: 'Montreal', role: 'Leasing Advisor - Québec', phone: '(514) 555-0177' },
-  { name: 'Daniel Okafor', city: 'Vancouver', role: 'Regional Lead - BC', phone: '(604) 555-0193' },
-  { name: 'Hema Patel', city: 'Miami', role: 'Leasing Advisor - Florida', phone: '(305) 555-0124' },
-  { name: 'Jordan Reyes', city: 'Austin', role: 'Regional Lead - Texas', phone: '(512) 555-0156' },
+// ─────────────────────────────────────────────────────────────
+// Ontario tier-1 cities (20 - exact list per spec)
+// ─────────────────────────────────────────────────────────────
+
+const ONTARIO_TIER_1_CITIES: OntarioCity[] = [
+  { name: 'Toronto', slug: 'toronto', marketNote: 'Canada’s largest rental market' },
+  { name: 'Mississauga', slug: 'mississauga', marketNote: 'GTA West anchor' },
+  { name: 'Brampton', slug: 'brampton', marketNote: 'High-growth, family-driven' },
+  { name: 'Hamilton', slug: 'hamilton', marketNote: 'Golden Horseshoe value play' },
+  { name: 'Ottawa', slug: 'ottawa', marketNote: 'Stable sub-2% vacancy' },
+  { name: 'London', slug: 'london', marketNote: 'Student and healthcare corridor' },
+  { name: 'Vaughan', slug: 'vaughan', marketNote: 'GTA North premium stock' },
+  { name: 'Markham', slug: 'markham', marketNote: 'Tech-corridor professionals' },
+  { name: 'Richmond Hill', slug: 'richmond-hill', marketNote: 'Executive long-term tenants' },
+  { name: 'Oakville', slug: 'oakville', marketNote: 'Lakeshore premium homes' },
+  { name: 'Burlington', slug: 'burlington', marketNote: 'Commuter demand, tight supply' },
+  { name: 'Kitchener', slug: 'kitchener', marketNote: 'Waterloo-region tech hub' },
+  { name: 'Waterloo', slug: 'waterloo', marketNote: 'University-driven turnover' },
+  { name: 'Cambridge', slug: 'cambridge', marketNote: 'Manufacturing and logistics demand' },
+  { name: 'Guelph', slug: 'guelph', marketNote: 'Low vacancy, steady growth' },
+  { name: 'Barrie', slug: 'barrie', marketNote: 'GTA-exit family market' },
+  { name: 'Milton', slug: 'milton', marketNote: 'Fastest-growing municipality' },
+  { name: 'Oshawa', slug: 'oshawa', marketNote: 'Durham region anchor' },
+  { name: 'Ajax', slug: 'ajax', marketNote: 'Transit-oriented family rentals' },
+  { name: 'Pickering', slug: 'pickering', marketNote: 'East GTA growth pocket' },
 ]
 
-const SNAPSHOT_STATS: SnapshotStat[] = [
-  { label: 'Average market rent', value: 2400, prefix: '$', suffix: '/mo' },
-  { label: 'Listings this month', value: 340 },
-  { label: 'Cities onboarding Q2', value: 6, suffix: ' more' },
-  { label: 'Provinces by 2027', value: 0, text: 'All 10' },
+// ─────────────────────────────────────────────────────────────
+// U.S. states (10 priority)
+// ─────────────────────────────────────────────────────────────
+
+const US_STATES: StateCard[] = [
+  {
+    name: 'Florida',
+    slug: 'florida',
+    cityCount: 5,
+    note: 'Snowbird seasonality',
+    positioning:
+      'Miami, Orlando, Tampa and Jacksonville. Snowbird hold-overs, HOA-compliant marketing and furnished-vs-unfurnished pricing built in.',
+    status: 'Now live',
+  },
+  {
+    name: 'Texas',
+    slug: 'texas',
+    cityCount: 5,
+    note: 'Institutional lease-up',
+    positioning:
+      'Houston, Dallas, Austin and San Antonio. Institutional lease-up capacity for build-to-rent communities absorbing record new supply.',
+    status: 'Now live',
+  },
+  {
+    name: 'California',
+    slug: 'california',
+    cityCount: 5,
+    note: 'Rent-control fluent',
+    positioning:
+      'Los Angeles, San Diego, San Francisco, San Jose and Sacramento. AB 1482 and local rent-control ordinances handled inside every lease.',
+    status: 'Now live',
+  },
+  {
+    name: 'New York',
+    slug: 'new-york',
+    cityCount: 5,
+    note: 'Five-borough coverage',
+    positioning:
+      'NYC proper, Brooklyn, Queens, Buffalo and Rochester. HSTPA-compliant workflows, co-op board packages, and upstate SFH leasing.',
+    status: 'Now live',
+  },
+  {
+    name: 'Illinois',
+    slug: 'illinois',
+    cityCount: 4,
+    note: 'Chicagoland focus',
+    positioning:
+      'Chicago, Aurora, Naperville and Rockford. CRLTO-aware leasing for Chicago condos and Chicagoland SFH portfolios.',
+    status: 'Now live',
+  },
+  {
+    name: 'Georgia',
+    slug: 'georgia',
+    cityCount: 4,
+    note: 'Sunbelt growth',
+    positioning:
+      'Atlanta, Augusta, Savannah and Columbus. Intown condo and suburban SFH leasing with institutional-ready turn cycles.',
+    status: 'Now live',
+  },
+  {
+    name: 'North Carolina',
+    slug: 'north-carolina',
+    cityCount: 4,
+    note: 'Research-triangle talent',
+    positioning:
+      'Charlotte, Raleigh, Greensboro and Durham. Tuned for research-triangle relocations and uptown high-rise stock.',
+    status: 'Now live',
+  },
+  {
+    name: 'Arizona',
+    slug: 'arizona',
+    cityCount: 4,
+    note: 'Metro Phoenix scale',
+    positioning:
+      'Phoenix, Tucson, Mesa and Scottsdale. Fast lease-up for build-to-rent neighbourhoods and snowbird seasonal holds.',
+    status: 'Now live',
+  },
+  {
+    name: 'Colorado',
+    slug: 'colorado',
+    cityCount: 4,
+    note: 'Front-range demand',
+    positioning:
+      'Denver, Colorado Springs, Aurora and Fort Collins. Front-range mountain-town seasonality and HOA-driven condo leasing.',
+    status: 'Now live',
+  },
+  {
+    name: 'New Jersey',
+    slug: 'new-jersey',
+    cityCount: 4,
+    note: 'NYC-adjacent',
+    positioning:
+      'Newark, Jersey City, Paterson and Elizabeth. PATH-corridor professionals with cross-Hudson mobility and strict disclosure workflows.',
+    status: 'Now live',
+  },
 ]
+
+// ─────────────────────────────────────────────────────────────
+// U.S. tier-1 cities (40+ - per spec)
+// ─────────────────────────────────────────────────────────────
+
+const US_TIER_1_CITIES: USCity[] = [
+  // Florida
+  { name: 'Miami', slug: 'miami', state: 'Florida', stateSlug: 'florida' },
+  { name: 'Orlando', slug: 'orlando', state: 'Florida', stateSlug: 'florida' },
+  { name: 'Tampa', slug: 'tampa', state: 'Florida', stateSlug: 'florida' },
+  { name: 'Jacksonville', slug: 'jacksonville', state: 'Florida', stateSlug: 'florida' },
+  { name: 'Fort Lauderdale', slug: 'fort-lauderdale', state: 'Florida', stateSlug: 'florida' },
+  // Texas
+  { name: 'Houston', slug: 'houston', state: 'Texas', stateSlug: 'texas' },
+  { name: 'Dallas', slug: 'dallas', state: 'Texas', stateSlug: 'texas' },
+  { name: 'Austin', slug: 'austin', state: 'Texas', stateSlug: 'texas' },
+  { name: 'San Antonio', slug: 'san-antonio', state: 'Texas', stateSlug: 'texas' },
+  { name: 'Fort Worth', slug: 'fort-worth', state: 'Texas', stateSlug: 'texas' },
+  // California
+  { name: 'Los Angeles', slug: 'los-angeles', state: 'California', stateSlug: 'california' },
+  { name: 'San Diego', slug: 'san-diego', state: 'California', stateSlug: 'california' },
+  { name: 'San Francisco', slug: 'san-francisco', state: 'California', stateSlug: 'california' },
+  { name: 'Sacramento', slug: 'sacramento', state: 'California', stateSlug: 'california' },
+  { name: 'San Jose', slug: 'san-jose', state: 'California', stateSlug: 'california' },
+  // New York
+  { name: 'New York City', slug: 'new-york-city', state: 'New York', stateSlug: 'new-york' },
+  { name: 'Brooklyn', slug: 'brooklyn', state: 'New York', stateSlug: 'new-york' },
+  { name: 'Queens', slug: 'queens', state: 'New York', stateSlug: 'new-york' },
+  { name: 'Buffalo', slug: 'buffalo', state: 'New York', stateSlug: 'new-york' },
+  { name: 'Rochester', slug: 'rochester', state: 'New York', stateSlug: 'new-york' },
+  // Illinois
+  { name: 'Chicago', slug: 'chicago', state: 'Illinois', stateSlug: 'illinois' },
+  { name: 'Aurora', slug: 'aurora', state: 'Illinois', stateSlug: 'illinois' },
+  { name: 'Naperville', slug: 'naperville', state: 'Illinois', stateSlug: 'illinois' },
+  { name: 'Rockford', slug: 'rockford', state: 'Illinois', stateSlug: 'illinois' },
+  // Georgia
+  { name: 'Atlanta', slug: 'atlanta', state: 'Georgia', stateSlug: 'georgia' },
+  { name: 'Augusta', slug: 'augusta', state: 'Georgia', stateSlug: 'georgia' },
+  { name: 'Savannah', slug: 'savannah', state: 'Georgia', stateSlug: 'georgia' },
+  { name: 'Columbus', slug: 'columbus', state: 'Georgia', stateSlug: 'georgia' },
+  // North Carolina
+  { name: 'Charlotte', slug: 'charlotte', state: 'North Carolina', stateSlug: 'north-carolina' },
+  { name: 'Raleigh', slug: 'raleigh', state: 'North Carolina', stateSlug: 'north-carolina' },
+  { name: 'Greensboro', slug: 'greensboro', state: 'North Carolina', stateSlug: 'north-carolina' },
+  { name: 'Durham', slug: 'durham', state: 'North Carolina', stateSlug: 'north-carolina' },
+  // Arizona
+  { name: 'Phoenix', slug: 'phoenix', state: 'Arizona', stateSlug: 'arizona' },
+  { name: 'Tucson', slug: 'tucson', state: 'Arizona', stateSlug: 'arizona' },
+  { name: 'Mesa', slug: 'mesa', state: 'Arizona', stateSlug: 'arizona' },
+  { name: 'Scottsdale', slug: 'scottsdale', state: 'Arizona', stateSlug: 'arizona' },
+  // Colorado
+  { name: 'Denver', slug: 'denver', state: 'Colorado', stateSlug: 'colorado' },
+  { name: 'Colorado Springs', slug: 'colorado-springs', state: 'Colorado', stateSlug: 'colorado' },
+  { name: 'Aurora', slug: 'aurora-co', state: 'Colorado', stateSlug: 'colorado' },
+  { name: 'Fort Collins', slug: 'fort-collins', state: 'Colorado', stateSlug: 'colorado' },
+  // New Jersey
+  { name: 'Newark', slug: 'newark', state: 'New Jersey', stateSlug: 'new-jersey' },
+  { name: 'Jersey City', slug: 'jersey-city', state: 'New Jersey', stateSlug: 'new-jersey' },
+  { name: 'Paterson', slug: 'paterson', state: 'New Jersey', stateSlug: 'new-jersey' },
+  { name: 'Elizabeth', slug: 'elizabeth', state: 'New Jersey', stateSlug: 'new-jersey' },
+]
+
+// ─────────────────────────────────────────────────────────────
+// FAQ
+// ─────────────────────────────────────────────────────────────
 
 const FAQ_ITEMS = [
   {
-    question: "Do you serve my city?",
+    question: 'Which cities and states does MoveSmart actively serve?',
     answer:
-      "We actively manage rentals across 20+ Canadian cities and an expanding list of U.S. states. If your city isn’t listed, email us - we expand regionally based on owner demand, and we may already have a local advisor in-market.",
+      'In Canada we actively lease in 20+ Ontario tier-1 cities plus Quebec, British Columbia, Alberta and Nova Scotia. In the United States we cover ten priority states - Florida, Texas, California, New York, Illinois, Georgia, North Carolina, Arizona, Colorado and New Jersey - with a named leasing advisor per priority metro. The full map above shows every live jurisdiction.',
   },
   {
-    question: "Can I list a property if you don’t cover my area yet?",
+    question: 'When do you add new cities?',
     answer:
-      "In most cases yes. We extend service to adjacent markets on a request basis - especially when multiple owners in one city reach out. Start with a Rental Analysis and we’ll tell you honestly whether we can serve you today or when coverage is expected.",
+      'We open new markets when three signals line up: repeat owner demand, a local advisor we trust, and regulatory fluency in that jurisdiction. Expansion is quarterly - if you own a unit in a city we have not yet listed, write to us and we will tell you honestly whether we can serve you today or when coverage is expected.',
   },
   {
-    question: "How local is ‘local’?",
+    question: 'Do you service rural areas and small towns?',
     answer:
-      "Every city we operate in has a named leasing advisor and a ground team that conducts showings, inspections and vendor coordination in person. We do not run remote-only pods - regional leads live and work in their markets.",
+      'Our footprint is tier-1 metropolitan and adjacent commuter markets. For rural single-unit landlords outside those corridors we are not the right fit today, though we will extend to adjacent communities on a case-by-case basis when multiple owners in one region request service.',
   },
   {
-    question: "Do you handle regional regulations?",
+    question: 'Does pricing differ by market?',
     answer:
-      "Yes. Provincial tenancy acts (RTA in Ontario, RTB in BC, TAL in Québec) and U.S. state landlord-tenant statutes are built into our lease templates and notice workflows. Compliance is non-negotiable - we update documentation the week any rule changes.",
+      'Our leasing fee structure is consistent across Canada and the United States, but strategic pricing inputs - comparable rents, typical days-on-market, seasonality - are always local. You will see the same nine-service scope everywhere, with market-specific playbooks applied underneath.',
   },
   {
-    question: "Can out-of-province or overseas owners work with you?",
+    question: 'Is there a minimum portfolio size to work with MoveSmart?',
     answer:
-      "Absolutely - roughly a third of our owner base lives outside the city their property is in. The owner portal, trust-accounted monthly statements and direct-deposit disbursements are designed exactly for this case.",
+      'No. We lease single basement units in Hamilton with the same discipline we apply to a 500-unit lease-up campaign in Miami. For institutional operators, builders and developers we offer a dedicated lease-up track - otherwise the standard owner workflow covers any unit count.',
   },
-]
-
-const QUICK_JUMP = [
-  { label: 'Ontario', href: '#ca-ontario' },
-  { label: 'British Columbia', href: '#ca-british-columbia' },
-  { label: 'Quebec', href: '#ca-quebec' },
-  { label: 'Alberta', href: '#ca-alberta' },
-  { label: 'Florida', href: '#us-florida' },
-  { label: 'Texas', href: '#us-texas' },
+  {
+    question: 'Can you handle cross-border institutional lease-up?',
+    answer:
+      'Yes - cross-border institutional lease-up is a deliberate specialty. Canadian operators with Sunbelt acquisitions, and U.S. builders expanding into the GTA or Montréal, get a single point of contact, unified reporting and jurisdiction-specific lease templates handled inside one program.',
+  },
 ]
 
 // ─────────────────────────────────────────────────────────────
+// JSON-LD Place schema
+// ─────────────────────────────────────────────────────────────
 
-function toProvinceEntry(p: ProvinceWithCities): ProvinceEntry {
-  return {
-    _id: p._id,
-    title: p.title,
-    slug: p.slug,
-    country: p.country,
-    cities: p.cities.map((c) => ({
-      title: c.title,
-      slug: c.slug,
-      provinceSlug: c.provinceSlug,
-    })),
-  }
+const PLACE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'MoveSmart Rentals',
+  description:
+    'White-glove residential leasing brokerage operating across Canada and the United States.',
+  url: 'https://movesmartrentals.com/locations/',
+  areaServed: [
+    // Canadian provinces
+    { '@type': 'AdministrativeArea', name: 'Ontario, Canada' },
+    { '@type': 'AdministrativeArea', name: 'Quebec, Canada' },
+    { '@type': 'AdministrativeArea', name: 'British Columbia, Canada' },
+    { '@type': 'AdministrativeArea', name: 'Alberta, Canada' },
+    { '@type': 'AdministrativeArea', name: 'Nova Scotia, Canada' },
+    // U.S. states
+    { '@type': 'AdministrativeArea', name: 'Florida, USA' },
+    { '@type': 'AdministrativeArea', name: 'Texas, USA' },
+    { '@type': 'AdministrativeArea', name: 'California, USA' },
+    { '@type': 'AdministrativeArea', name: 'New York, USA' },
+    { '@type': 'AdministrativeArea', name: 'Illinois, USA' },
+    { '@type': 'AdministrativeArea', name: 'Georgia, USA' },
+    { '@type': 'AdministrativeArea', name: 'North Carolina, USA' },
+    { '@type': 'AdministrativeArea', name: 'Arizona, USA' },
+    { '@type': 'AdministrativeArea', name: 'Colorado, USA' },
+    { '@type': 'AdministrativeArea', name: 'New Jersey, USA' },
+  ],
 }
 
-export default async function LocationsPage() {
-  const provinces = await sanityFetch<ProvinceWithCities[]>({
-    query: PROVINCES_WITH_CITIES_QUERY,
-    tags: ['province', 'city'],
-  })
+// ─────────────────────────────────────────────────────────────
 
-  const provincesWithCities = provinces.filter(
-    (p) => p.cities && p.cities.length > 0,
-  )
-
-  const canadian = provincesWithCities
-    .filter((p) => p.country === 'CA')
-    .map(toProvinceEntry)
-  const american = provincesWithCities
-    .filter((p) => p.country === 'US')
-    .map(toProvinceEntry)
-
+export default function LocationsPage() {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(PLACE_SCHEMA) }}
+      />
+
       <div className="mx-auto max-w-7xl px-4 pt-6">
         <BreadcrumbNav
           crumbs={[
@@ -207,162 +364,211 @@ export default async function LocationsPage() {
         />
       </div>
 
-      {/* 1. Editorial hero */}
+      {/* Hero - editorial */}
       <PageHeroBlock
         kicker="Locations"
         eyebrow="Where we lease"
-        headline="Rentals across Canada"
-        lede="Twenty-plus cities, five provinces, and a growing U.S. footprint - each with a named advisor and a team that works the neighborhood in person, not from a remote call center."
-        cta1={{ label: 'Find a Rental', href: '#directory' }}
-        cta2={{ label: 'Talk to a Local Advisor', href: '/contact/?intent=call' }}
-        meta={[
-          { label: 'Cities', value: '20+' },
-          { label: 'Provinces', value: '5' },
-          { label: 'Listings live', value: 'Daily' },
-          { label: 'Local teams', value: 'In-market' },
-        ]}
-        aside={<QuickJumpCard items={QUICK_JUMP} />}
+        headline="Leasing coverage across North America"
+        accentLastWord
+        lede="Same discipline, same white-glove execution - from a basement-unit landlord in Hamilton to a 500-unit lease-up campaign in Miami. Five provinces, ten priority U.S. states, one concierge standard."
+        cta1={{ label: 'Create a Free Account', href: '/signup/' }}
+        cta2={{ label: 'Book a Call', href: '/contact/?intent=call' }}
       />
 
-      {/* 2. Canada directory - ivory band */}
-      <section
-        id="directory"
-        className="relative bg-[#FBFAF6] py-20"
-      >
+      {/* Section 1 - Canada coverage */}
+      <section id="canada" className="relative bg-[#FBFAF6] py-20">
         <div
           aria-hidden="true"
           className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/60 to-transparent"
         />
         <div className="mx-auto max-w-6xl px-4">
-          <div className="mb-12 max-w-3xl">
-            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
-              Atlas · Canada
-            </p>
-            <h2 className="font-display text-4xl font-normal leading-[1.1] text-brand-navy sm:text-5xl">
-              Every province we
-              <span className="italic text-brand-emerald"> serve</span>
-              <span className="text-brand-gold" aria-hidden="true">.</span>
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-600 md:text-lg">
-              A full index of Canadian markets under active management. Click a
-              city for local rent data, leasing timelines and vacancy rates.
-            </p>
-          </div>
+          <RevealOnScroll variant="fade">
+            <div className="mb-12 max-w-3xl">
+              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
+                Atlas · Canada
+              </p>
+              <h2 className="font-display text-4xl font-normal leading-[1.1] text-brand-navy sm:text-5xl">
+                Every province we
+                <span className="italic text-brand-emerald"> serve</span>
+                <span className="text-brand-gold" aria-hidden="true">
+                  .
+                </span>
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-slate-600 md:text-lg">
+                Five priority provinces with a named advisor in every tier-1
+                metro. Each province card links to the full provincial directory
+                with rental market data, leasing timelines, and local regulatory
+                notes.
+              </p>
+            </div>
+          </RevealOnScroll>
 
-          <div className="divide-y divide-brand-navy/10">
-            {canadian.map((p, i) => (
-              <div key={p._id} id={`ca-${p.slug}`}>
-                <ProvinceRow province={p} theme="light" index={i} />
-              </div>
-            ))}
-          </div>
+          <ProvinceGrid provinces={CANADIAN_PROVINCES} />
         </div>
       </section>
 
-      {/* 3. United States directory - navy band */}
-      {american.length > 0 && (
-        <section className="relative bg-brand-navy py-20">
-          <div
-            aria-hidden="true"
-            className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent"
-          />
-          <div className="mx-auto max-w-6xl px-4">
+      {/* Section 2 - Ontario tier-1 cities */}
+      <section id="ontario" className="bg-white py-20">
+        <div className="mx-auto max-w-6xl px-4">
+          <RevealOnScroll variant="fade">
+            <div className="mb-10 max-w-3xl">
+              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
+                Flagship · Ontario
+              </p>
+              <h2 className="font-display text-4xl font-normal leading-[1.1] text-brand-navy sm:text-5xl">
+                Twenty Ontario cities, one leasing
+                <span className="italic text-brand-emerald"> standard</span>
+                <span className="text-brand-gold" aria-hidden="true">
+                  .
+                </span>
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-slate-600 md:text-lg">
+                Ontario is our home market and deepest bench. From Toronto to
+                Pickering, every tier-1 city below has a local leasing advisor,
+                RTA-aligned documentation, and the full nine-service concierge
+                scope.
+              </p>
+            </div>
+          </RevealOnScroll>
+
+          <OntarioCityDirectory cities={ONTARIO_TIER_1_CITIES} />
+        </div>
+      </section>
+
+      {/* Section 3 - U.S. state coverage */}
+      <section id="united-states" className="relative bg-brand-navy py-20">
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent"
+        />
+        <div className="mx-auto max-w-6xl px-4">
+          <RevealOnScroll variant="fade">
             <div className="mb-12 max-w-3xl">
               <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-gold">
                 Atlas · United States
               </p>
               <h2 className="font-display text-4xl font-normal leading-[1.1] text-white sm:text-5xl">
-                States we’ve
-                <span className="italic text-brand-emerald"> opened</span>
-                <span className="text-brand-gold" aria-hidden="true">.</span>
+                Ten states, now
+                <span className="italic text-brand-emerald"> live</span>
+                <span className="text-brand-gold" aria-hidden="true">
+                  .
+                </span>
               </h2>
               <p className="mt-4 text-base leading-relaxed text-white/70 md:text-lg">
-                Our U.S. expansion follows owner demand - snowbird portfolios,
-                cross-border investors, and Canadian operators with Sunbelt
-                stock. Every state below is staffed by a regional lead.
+                Our U.S. footprint follows owner demand - Canadian operators with
+                Sunbelt stock, cross-border snowbird portfolios, and institutional
+                build-to-rent lease-ups. Every state below is staffed, with
+                jurisdiction-specific lease templates already in production.
               </p>
             </div>
+          </RevealOnScroll>
 
-            <div className="divide-y divide-white/10">
-              {american.map((p, i) => (
-                <div key={p._id} id={`us-${p.slug}`}>
-                  <ProvinceRow province={p} theme="dark" index={i} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 4. Featured city spotlights */}
-      <section className="bg-white py-20">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="mb-10 max-w-3xl">
-            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
-              Featured markets
-            </p>
-            <h2 className="font-display text-4xl font-normal leading-[1.1] text-brand-navy sm:text-5xl">
-              Four cities, four
-              <span className="italic text-brand-emerald"> playbooks</span>
-              <span className="text-brand-gold" aria-hidden="true">.</span>
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-600 md:text-lg">
-              Leasing strategy changes with geography. Here’s how we read a
-              handful of the markets we know best.
-            </p>
-          </div>
-
-          <div>
-            {SPOTLIGHTS.map((s, i) => (
-              <CitySpotlight key={s.city} data={s} index={i} />
-            ))}
-          </div>
+          <StateGrid states={US_STATES} />
         </div>
       </section>
 
-      {/* 5. Local teams */}
-      <section className="bg-[#FBFAF6] py-20">
+      {/* Section 4 - U.S. tier-1 cities */}
+      <section id="us-cities" className="bg-[#FBFAF6] py-20">
         <div className="mx-auto max-w-6xl px-4">
-          <div className="mb-12 grid grid-cols-1 gap-8 lg:grid-cols-12">
-            <div className="lg:col-span-5">
+          <RevealOnScroll variant="fade">
+            <div className="mb-10 max-w-3xl">
               <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
-                Local teams
+                U.S. cities · Priority list
               </p>
               <h2 className="font-display text-4xl font-normal leading-[1.1] text-brand-navy sm:text-5xl">
-                Named advisors, in
-                <span className="italic text-brand-emerald"> market</span>
-                <span className="text-brand-gold" aria-hidden="true">.</span>
+                Forty priority U.S. cities, grouped by
+                <span className="italic text-brand-emerald"> state</span>
+                <span className="text-brand-gold" aria-hidden="true">
+                  .
+                </span>
               </h2>
+              <p className="mt-4 text-base leading-relaxed text-slate-600 md:text-lg">
+                Filter by city or state, then drill into the city page for rent
+                benchmarks, vacancy trends, and local leasing playbooks.
+              </p>
             </div>
-            <p className="text-base leading-relaxed text-slate-600 md:text-lg lg:col-span-7">
-              Every city we operate in has a person - not a ticket queue. Our
-              regional leads live where they lease, show properties themselves,
-              and know which vendors answer the phone on a Saturday. Call them
-              directly; they’ll pick up.
-            </p>
-          </div>
+          </RevealOnScroll>
 
-          <LocalTeamsList advisors={ADVISORS} />
+          <USCityDirectory cities={US_TIER_1_CITIES} />
         </div>
       </section>
 
-      {/* 6. Market snapshot strip */}
-      <section className="bg-white py-16">
-        <MarketSnapshot stats={SNAPSHOT_STATS} />
+      {/* Section 5 - Institutional coverage */}
+      <section id="institutional" className="bg-white py-20">
+        <div className="mx-auto max-w-6xl px-4">
+          <RevealOnScroll variant="fade">
+            <div className="grid grid-cols-1 gap-10 rounded-3xl border border-brand-navy/10 bg-[#FBFAF6] p-10 lg:grid-cols-12 lg:p-14">
+              <div className="lg:col-span-7">
+                <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
+                  For builders, developers &amp; institutional operators
+                </p>
+                <h2 className="font-display text-3xl font-normal leading-[1.1] text-brand-navy sm:text-4xl lg:text-5xl">
+                  Cross-border institutional
+                  <span className="italic text-brand-emerald"> lease-up</span>
+                  <span className="text-brand-gold" aria-hidden="true">
+                    .
+                  </span>
+                </h2>
+                <p className="mt-5 text-base leading-relaxed text-slate-600 md:text-lg">
+                  MoveSmart is one of the few leasing brokerages that runs
+                  institutional lease-up campaigns on both sides of the border -
+                  Canadian PMCs absorbing new Sunbelt acquisitions, U.S. builders
+                  opening Ontario and Quebec stock, and cross-listed REITs that
+                  need unified reporting in CAD and USD.
+                </p>
+                <ul className="mt-6 space-y-3 font-heading text-sm text-brand-navy">
+                  <li className="flex gap-3">
+                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-brand-gold" aria-hidden="true" />
+                    <span>Single program lead across Canada and the U.S.</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-brand-gold" aria-hidden="true" />
+                    <span>Jurisdiction-specific lease templates, applied inside one workflow</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-brand-gold" aria-hidden="true" />
+                    <span>Absorption pacing, pricing strategy and staffing scaled to the campaign</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="flex flex-col justify-center border-t border-brand-navy/10 pt-8 lg:col-span-5 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
+                  Start the conversation
+                </p>
+                <p className="mt-3 font-display text-xl font-normal leading-snug text-brand-navy">
+                  Request an institutional RFP and we&rsquo;ll respond within one
+                  business day with a tailored scope and a named program lead.
+                </p>
+                <div className="mt-6 flex flex-col gap-3">
+                  <Link
+                    href="/contact/?type=institutional"
+                    className="inline-flex items-center justify-center rounded-full bg-brand-navy px-6 py-3 font-heading text-sm font-semibold text-white transition-colors hover:bg-brand-emerald"
+                  >
+                    Request an institutional RFP
+                    <span aria-hidden="true" className="ml-2">→</span>
+                  </Link>
+                  <Link
+                    href="/contact/?intent=call"
+                    className="inline-flex items-center justify-center rounded-full border border-brand-navy/20 px-6 py-3 font-heading text-sm font-semibold text-brand-navy transition-colors hover:border-brand-emerald hover:text-brand-emerald"
+                  >
+                    Book a scoping call
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </RevealOnScroll>
+        </div>
       </section>
 
-      {/* 7. FAQ */}
-      <FAQBlock
-        title="Location questions, answered"
-        questions={FAQ_ITEMS}
-      />
+      {/* Section 6 - FAQ */}
+      <FAQBlock title="Location questions, answered" questions={FAQ_ITEMS} />
 
-      {/* 8. CTA */}
+      {/* Final CTA */}
       <CTABannerBlock
-        headline="Don’t see your city?"
-        description="Email us - we expand based on demand. Tell us where your property is and we’ll tell you honestly whether we can serve you today."
-        primaryCta={{ label: 'Request Your City', href: '/contact/' }}
-        secondaryCta={{ label: 'Browse All Cities', href: '#directory' }}
+        headline="Ready to lease your unit - anywhere in our footprint?"
+        description="Create a free account and a local leasing advisor will introduce themselves within one business day, with a rental analysis tailored to your exact address."
+        primaryCta={{ label: 'Create a Free Account', href: '/signup/' }}
+        secondaryCta={{ label: 'Book a Call', href: '/contact/?intent=call' }}
       />
     </main>
   )

@@ -47,7 +47,7 @@ export async function generateStaticParams() {
     city: c.slug.current,
   }))
 
-  // Static fallback slugs — ensure major US cities always build
+  // Static fallback slugs - ensure major US cities always build
   const fallbackCombos: Array<{ state: string; city: string }> = [
     { state: 'florida', city: 'miami' },
     { state: 'florida', city: 'orlando' },
@@ -110,8 +110,8 @@ export async function generateMetadata({
   return generatePageMetadata({
     seo: data?.seo,
     path: `/us/${state}/${city}`,
-    fallbackTitle: `Property Management in ${cityTitle}`,
-    fallbackDescription: `Tenant placement, screening, and property management in ${cityTitle}, ${stateName}. Browse our services and rental listings.`,
+    fallbackTitle: `Leasing Services in ${cityTitle} | MoveSmart Rentals`,
+    fallbackDescription: `White-glove leasing brokerage in ${cityTitle}, ${stateName}: tenant placement, screening, lease execution, and move-in coordination. Zero upfront cost.`,
   })
 }
 
@@ -237,7 +237,7 @@ export default async function USCityPage({
   // Build LocalBusiness JSON-LD
   const localBusinessSchema = buildLocalBusinessSchema({
     name: `MoveSmart Rentals - ${data.title}`,
-    description: `Professional property management services in ${data.title}, ${data.province.title}.`,
+    description: `White-glove leasing brokerage in ${data.title}, ${data.province.title}.`,
     url: pageUrl,
     address: {
       streetAddress: '',
@@ -287,26 +287,14 @@ export default async function USCityPage({
       {/* Editorial hero */}
       <PageHeroBlock
         kicker={`${data.title}, ${stateAbbr}`}
-        eyebrow="Property management & leasing"
-        headline={`Leasing in ${data.title}`}
+        eyebrow="White-glove leasing brokerage"
+        headline={`Leasing services in ${data.title}`}
         lede={
           descriptionText?.slice(0, 220) ??
-          `Local tenant placement, screening, rent protection, and day-to-day property management in ${data.title}, ${data.province.title}.`
+          `Local tenant placement, screening, lease execution, and move-in coordination in ${data.title}, ${data.province.title}. Zero upfront - success-fee pricing only.`
         }
         cta1={{ label: 'Book a Local Call', href: '/contact/' }}
         cta2={{ label: 'Browse Rentals', href: '/locations/' }}
-        meta={[
-          ...(data.medianRent != null
-            ? [{ label: 'Median rent', value: formatCurrency(data.medianRent) }]
-            : [{ label: 'Avg fill', value: '14 days' }]),
-          ...(data.neighbourhoods && data.neighbourhoods.length > 0
-            ? [{ label: 'Neighborhoods', value: `${data.neighbourhoods.length}+` }]
-            : [{ label: 'Neighborhoods', value: '20+' }]),
-          ...(data.vacancyRate != null
-            ? [{ label: 'Vacancy rate', value: formatPercentage(data.vacancyRate) }]
-            : [{ label: 'Setup fee', value: '$0' }]),
-          { label: 'Local team', value: 'In-market' },
-        ]}
       />
 
       {/* City narrative */}

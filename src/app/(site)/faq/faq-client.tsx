@@ -232,10 +232,10 @@ export function FAQStillHaveQuestions() {
                 </dt>
                 <dd className="sm:col-span-2">
                   <a
-                    href="mailto:info@movesmartrentals.com"
+                    href="mailto:contact@movesmartrentals.com"
                     className="font-display text-xl text-brand-navy underline decoration-brand-gold decoration-2 underline-offset-[6px] transition-colors hover:text-brand-emerald"
                   >
-                    info@movesmartrentals.com
+                    contact@movesmartrentals.com
                   </a>
                   <p className="mt-1 text-sm text-slate-500">
                     Replies within 24 hours on business days.

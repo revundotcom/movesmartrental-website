@@ -43,6 +43,17 @@ export interface SeoFields {
   metaDescription: string
   ogImage?: SanityImage
   keywords?: string[]
+  featuredImage?: { asset: { _ref: string }; alt?: string; hotspot?: unknown }
+  primaryKeyword?: string
+  secondaryKeywords?: string[]
+  aiSummary?: string
+  schemaFields?: {
+    schemaType?: string
+    includeFaqSchema?: boolean
+    includeBreadcrumbSchema?: boolean
+    includeLocalBusinessSchema?: boolean
+    customJsonLd?: string
+  }
 }
 
 export interface PublishingControls {
@@ -53,6 +64,10 @@ export interface PublishingControls {
   publishedAt?: string
   updatedAt?: string
   author?: string
+  canonicalSetting?: 'self' | 'parent' | 'custom'
+  indexControl?: 'index' | 'noindex'
+  sitemapInclude?: boolean
+  redirectFrom?: string[]
 }
 
 // ---------------------------------------------------------------------------
@@ -113,9 +128,22 @@ export interface Province extends SanityDocument {
   country: 'ca' | 'us'
   abbreviation?: string
   description?: string
-  heroImage?: SanityImage
+  heroImage?: SanityImage | { asset: { _ref: string }; alt?: string; hotspot?: unknown }
   seo: SeoFields
   publishing: PublishingControls
+  provinceOrStateName?: string
+  provinceOrStateCode?: string
+  metaTitle?: string
+  metaDescription?: string
+  heroHeading?: string
+  heroSubheading?: string
+  introBody?: PortableTextBlock[]
+  serviceSummaryBlocks?: unknown[] // TODO: narrow type
+  localLawSummary?: PortableTextBlock[]
+  faqItems?: FaqItem[]
+  internalLinkBlocks?: unknown[] // TODO: narrow type
+  relatedServiceLinks?: unknown[] // TODO: narrow type
+  relatedCityLinks?: unknown[] // TODO: narrow type
 }
 
 export interface City extends SanityDocument {
@@ -133,6 +161,25 @@ export interface City extends SanityDocument {
   description?: PortableTextBlock[]
   seo: SeoFields
   publishing: PublishingControls
+  cityName?: string
+  country?: string
+  provinceOrStateName?: string
+  metaTitle?: string
+  metaDescription?: string
+  heroHeading?: string
+  heroSubheading?: string
+  cityIntro?: PortableTextBlock[]
+  rentalMarketSummary?: PortableTextBlock[]
+  landlordProblemSummary?: PortableTextBlock[]
+  faqItems?: FaqItem[]
+  servicesAvailable?: unknown[] // TODO: narrow type
+  relatedCityLinks?: unknown[] // TODO: narrow type
+  relatedServiceLinks?: unknown[] // TODO: narrow type
+  averageDaysOnMarket?: number
+  rentGrowthYoY?: number
+  dataSourceDate?: string
+  geoLat?: number
+  geoLng?: number
 }
 
 export interface Service extends SanityDocument {
@@ -148,6 +195,20 @@ export interface Service extends SanityDocument {
   faq?: FaqItem[]
   seo: SeoFields
   publishing: PublishingControls
+  serviceName?: string
+  metaTitle?: string
+  metaDescription?: string
+  heroHeading?: string
+  heroSubheading?: string
+  introBody?: PortableTextBlock[]
+  benefits?: unknown[] // TODO: narrow type (overlaps with Benefit[])
+  howItWorks?: Array<{ stepNumber?: number; title?: string; description?: string }>
+  faqItems?: FaqItem[]
+  pricingSummary?: string
+  ctaText?: string
+  ctaFormVariant?: string
+  relatedServiceLinks?: unknown[] // TODO: narrow type
+  relatedCityLinks?: unknown[] // TODO: narrow type
 }
 
 export interface CityService extends SanityDocument {
@@ -181,6 +242,27 @@ export interface CityService extends SanityDocument {
   relatedServices?: SanityReference[]
   seo: SeoFields
   publishing: PublishingControls
+  cityName?: string
+  serviceName?: string
+  provinceOrStateName?: string
+  country?: string
+  primaryKeyword?: string
+  secondaryKeywords?: string[]
+  metaTitle?: string
+  metaDescription?: string
+  heroHeading?: string
+  heroSubheading?: string
+  localIntro?: PortableTextBlock[]
+  localPainPoints?: unknown[] // TODO: narrow type (overlaps with PainPoint[])
+  serviceScope?: unknown[] // TODO: narrow type
+  processSteps?: Array<{ stepNumber?: number; title?: string; description?: string }>
+  trustBlock?: unknown[] // TODO: narrow type
+  faqItems?: FaqItem[]
+  ctaText?: string
+  imagePrompt?: string
+  altText?: string
+  relatedServiceLinks?: unknown[] // TODO: narrow type
+  relatedCityLinks?: unknown[] // TODO: narrow type
 }
 
 export interface BlogGuide extends SanityDocument {
@@ -192,10 +274,19 @@ export interface BlogGuide extends SanityDocument {
   service?: SanityReference
   body: PortableTextBlock[]
   excerpt?: string
-  heroImage?: SanityImage
+  heroImage?: SanityImage | { asset: { _ref: string }; alt?: string; hotspot?: unknown }
   author?: string
   seo: SeoFields
   publishing: PublishingControls
+  primaryKeyword?: string
+  secondaryKeywords?: string[]
+  publishDate?: string
+  updateDate?: string
+  intro?: PortableTextBlock[]
+  mainBody?: PortableTextBlock[]
+  faqItems?: FaqItem[]
+  relatedServiceLinks?: unknown[] // TODO: narrow type
+  relatedCityLinks?: unknown[] // TODO: narrow type
 }
 
 export interface Comparison extends SanityDocument {

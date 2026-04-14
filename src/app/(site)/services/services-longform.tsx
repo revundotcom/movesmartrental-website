@@ -36,7 +36,7 @@ const PLAYBOOK_PHASES: PlaybookPhase[] = [
     day: 'Day 1',
     title: 'Owner onboarding',
     description:
-      'Discovery call, property walkthrough, document intake (deed, condo rules, insurance) and management agreement signed.',
+      'Discovery call, property walkthrough, document intake (deed, condo rules, insurance) and leasing engagement agreement signed.',
     icon: ClipboardList,
   },
   {
@@ -114,9 +114,9 @@ const COMPLIANCE_OBLIGATIONS: ComplianceEntry[] = [
   },
   {
     icon: Receipt,
-    obligation: 'T776 statements & HST treatment',
+    obligation: 'Deposit trust accounting & HST treatment',
     handling:
-      'Owner statements packaged for your accountant each January, with capital vs. operating splits clearly delineated.',
+      'First-and-last deposits held in trust with interest credited per RTA s.106; placement invoices and HST disclosures packaged clean for your accountant at year-end.',
   },
   {
     icon: Building2,
@@ -369,7 +369,7 @@ function TierTable({ rows }: { rows: TierRow[] }) {
                 </span>
               </span>
               <span className="mt-1 block font-display text-base font-normal text-white">
-                Full-Service Management
+                White-Glove Leasing
               </span>
               <span className="mt-1 block text-[11px] text-white/55">
                 Investor owners
@@ -601,7 +601,7 @@ export function ServicesLongform({
                 <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600">
                   Each service is a discipline owned by a specialist on our
                   staff - not a vendor we forward your call to. Pick what you
-                  need, or stack them into a single management agreement.
+                  need, or stack them into a single leasing engagement.
                 </p>
               </RevealOnScroll>
               <div className="mt-10">{catalogue}</div>
@@ -627,9 +627,10 @@ export function ServicesLongform({
               </RevealOnScroll>
               <RevealOnScroll variant="fade" stagger={0.05} delay={0.1}>
                 <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600">
-                  Both tiers include the leasing playbook end-to-end.
-                  Full-Service adds the post-move-in operating layer most
-                  owners would rather not run themselves.
+                  Both tiers run the leasing playbook end-to-end. Ongoing
+                  operations post-move-in run through a property-management
+                  partner the owner engages separately &mdash; MoveSmart&apos;s
+                  engagement ends with the move-in inspection.
                 </p>
               </RevealOnScroll>
               <TierTable rows={tierRows} />
@@ -686,8 +687,8 @@ export function ServicesLongform({
                 <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600">
                   Every category below is filled by background-checked,
                   insured, and rate-card-locked partners we work with weekly.
-                  Most owners save more on vendor pricing than they spend on
-                  management.
+                  Most owners save more on vendor pricing than the success fee
+                  they pay on placement.
                 </p>
               </RevealOnScroll>
 
@@ -732,9 +733,9 @@ export function ServicesLongform({
               </RevealOnScroll>
               <RevealOnScroll variant="fade" stagger={0.05} delay={0.1}>
                 <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600">
-                  Property management in Canada is a regulated practice - the
+                  Residential leasing in Canada is a regulated practice - the
                   RTA, LTB, condo bylaws, and CRA all want something from you.
-                  Here is what we keep on file, on time, and audit-ready.
+                  Here is what we keep on file, on time, and audit-ready during the leasing engagement.
                 </p>
               </RevealOnScroll>
 
@@ -747,8 +748,8 @@ export function ServicesLongform({
               <p className="mt-10 max-w-3xl text-xs leading-relaxed text-slate-500">
                 Provincial scope: Ontario (RTA / LTB), British Columbia (RTB),
                 Alberta (RTDRS), Quebec (TAL), and the Atlantic provinces.
-                Forms and timelines vary - your dedicated manager applies the
-                correct jurisdiction.
+                Forms and timelines vary - your dedicated leasing manager
+                applies the correct jurisdiction.
               </p>
             </section>
 
@@ -772,8 +773,8 @@ export function ServicesLongform({
               </RevealOnScroll>
               <RevealOnScroll variant="fade" stagger={0.05} delay={0.1}>
                 <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600">
-                  Single-fee enhancements you can add at any point in your
-                  tenancy - no tier change required.
+                  Single-fee enhancements you can add at any point in the
+                  leasing engagement - no tier change required.
                 </p>
               </RevealOnScroll>
 
