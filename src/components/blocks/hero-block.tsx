@@ -97,7 +97,7 @@ export function HeroBlock({
           <div>
             {/* Eyebrow badge with rotating text */}
             <motion.div
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-1.5 backdrop-blur-sm"
+              className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-1.5 backdrop-blur-sm sm:mb-6"
               initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
@@ -117,7 +117,7 @@ export function HeroBlock({
             </motion.div>
 
             <motion.h1
-              className="font-display text-4xl font-normal leading-[1.1] tracking-tight text-white sm:text-5xl md:text-6xl"
+              className="font-display text-4xl font-normal leading-[1.15] tracking-tight text-white sm:text-5xl sm:leading-[1.1] md:text-6xl"
               initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
@@ -129,18 +129,17 @@ export function HeroBlock({
               >
                 {leadingWords}
               </VerticalCutReveal>{' '}
-              <span className="relative inline-block pb-[0.4em] font-display italic text-brand-emerald">
+              <span className="relative inline-block pb-[0.15em] font-display italic text-brand-emerald">
                 <GradientText variant="animated">
                   <VerticalCutReveal
                     staggerDuration={ANIMATION_DELAY_BASE}
                     staggerFrom="first"
-                    wordClassName="pb-[0.4em]"
                   >
                     {lastWord ?? ''}
                   </VerticalCutReveal>
                 </GradientText>
                 <motion.span
-                  className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-brand-emerald"
+                  className="absolute bottom-0 left-0 h-[3px] w-full rounded-full bg-brand-emerald"
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
                   transition={{ delay: 0.8, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -161,19 +160,19 @@ export function HeroBlock({
               </motion.p>
             )}
 
-            {/* Proof stats row */}
+            {/* Proof stats row — 2x2 grid on mobile, inline on desktop */}
             <motion.div
-              className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/75"
+              className="mt-8 grid grid-cols-2 gap-x-6 gap-y-3 text-sm text-white/75 sm:flex sm:flex-wrap sm:items-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
             >
               <span className="font-semibold text-white">500+ Units Leased</span>
-              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/30" />
+              <span aria-hidden="true" className="hidden h-1 w-1 rounded-full bg-white/30 sm:inline-block" />
               <span className="font-semibold text-white">20+ Cities</span>
-              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/30" />
+              <span aria-hidden="true" className="hidden h-1 w-1 rounded-full bg-white/30 sm:inline-block" />
               <span className="font-semibold text-white">94% Applicant Approval</span>
-              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/30" />
+              <span aria-hidden="true" className="hidden h-1 w-1 rounded-full bg-white/30 sm:inline-block" />
               <span className="font-semibold text-white">14-Day Avg. Placement</span>
             </motion.div>
 

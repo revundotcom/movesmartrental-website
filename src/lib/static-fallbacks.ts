@@ -897,24 +897,8 @@ const US_STATES: FallbackProvince[] = [
 ]
 
 // ---------------------------------------------------------------------------
-// Ontario province (aggregates the Ontario cities above + extras)
+// Ontario province (aggregates the Ontario cities above)
 // ---------------------------------------------------------------------------
-
-const ONTARIO_EXTRA_CITIES: FallbackProvince['cities'] = [
-  { title: 'Markham', slug: { current: 'markham' }, tier: 1, population: 338000, medianRent: 2500, provinceSlug: 'ontario' },
-  { title: 'Vaughan', slug: { current: 'vaughan' }, tier: 1, population: 323000, medianRent: 2600, provinceSlug: 'ontario' },
-  { title: 'Richmond Hill', slug: { current: 'richmond-hill' }, tier: 1, population: 202000, medianRent: 2550, provinceSlug: 'ontario' },
-  { title: 'Oakville', slug: { current: 'oakville' }, tier: 1, population: 211000, medianRent: 2700, provinceSlug: 'ontario' },
-  { title: 'Burlington', slug: { current: 'burlington' }, tier: 1, population: 186000, medianRent: 2450, provinceSlug: 'ontario' },
-  { title: 'Barrie', slug: { current: 'barrie' }, tier: 1, population: 147000, medianRent: 1900, provinceSlug: 'ontario' },
-  { title: 'Ajax', slug: { current: 'ajax' }, tier: 1, population: 126000, medianRent: 2050, provinceSlug: 'ontario' },
-  { title: 'Oshawa', slug: { current: 'oshawa' }, tier: 1, population: 175000, medianRent: 1850, provinceSlug: 'ontario' },
-  { title: 'Waterloo', slug: { current: 'waterloo' }, tier: 1, population: 121000, medianRent: 2000, provinceSlug: 'ontario' },
-  { title: 'Cambridge', slug: { current: 'cambridge' }, tier: 1, population: 138000, medianRent: 1900, provinceSlug: 'ontario' },
-  { title: 'Guelph', slug: { current: 'guelph' }, tier: 1, population: 144000, medianRent: 1950, provinceSlug: 'ontario' },
-  { title: 'Milton', slug: { current: 'milton' }, tier: 1, population: 132000, medianRent: 2350, provinceSlug: 'ontario' },
-  { title: 'Pickering', slug: { current: 'pickering' }, tier: 1, population: 99000, medianRent: 2100, provinceSlug: 'ontario' },
-]
 
 const ONTARIO_PROVINCE: FallbackProvince = {
   _id: 'province-ontario-static',
@@ -924,17 +908,14 @@ const ONTARIO_PROVINCE: FallbackProvince = {
   abbreviation: 'ON',
   description:
     'Ontario is Canada\'s largest rental market, home to over 40% of all managed properties in the country. From the Greater Toronto Area to university towns like Waterloo and London, MoveSmart serves every Tier-1 Ontario market with a local in-market team.',
-  cities: [
-    ...ONTARIO_CITIES.map((c) => ({
-      title: c.title,
-      slug: c.slug,
-      tier: c.tier,
-      population: c.population,
-      medianRent: c.medianRent,
-      provinceSlug: 'ontario',
-    })),
-    ...ONTARIO_EXTRA_CITIES,
-  ],
+  cities: ONTARIO_CITIES.map((c) => ({
+    title: c.title,
+    slug: c.slug,
+    tier: c.tier,
+    population: c.population,
+    medianRent: c.medianRent,
+    provinceSlug: 'ontario',
+  })),
 }
 
 // ---------------------------------------------------------------------------
@@ -1047,5 +1028,5 @@ export function getFallbackCityList(): Array<{
       medianRent: c.medianRent,
     }))
   )
-  return [...caCities, ...ONTARIO_EXTRA_CITIES, ...usCities]
+  return [...caCities, ...usCities]
 }

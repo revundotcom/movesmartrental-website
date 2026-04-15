@@ -22,14 +22,11 @@ import {
 
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
-import { ServiceGridBlock } from '@/components/blocks/service-grid-block'
 import { TestimonialsSection } from '@/components/blocks/testimonials-section'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 import { CountUp } from '@/components/ui/count-up'
 import { GradientText } from '@/components/ui/gradient-text'
-import { getFallbackServiceList } from '@/lib/static-fallbacks'
-import type { ServiceCardData } from '@/types/blocks'
 import {
   LeasingTimeline,
   MarketRow,
@@ -435,18 +432,6 @@ function GoldRule() {
 }
 
 export default async function OwnersPage() {
-  // Static local data (Sanity has been removed). Owner hub shows services
-  // aimed at owners or both audiences.
-  const services: ServiceCardData[] = getFallbackServiceList()
-    .filter((s) => s.audience === 'owner' || s.audience === 'both')
-    .map((s) => ({
-      title: s.title,
-      slug: s.slug.current,
-      shortDescription: s.shortDescription,
-      icon: s.icon,
-      audience: s.audience,
-    }))
-
   return (
     <main>
       <div className="mx-auto max-w-7xl px-4 pt-6">
@@ -874,21 +859,6 @@ export default async function OwnersPage() {
         </div>
       </section>
 
-      {/* ── SECTION 7: Service Grid (from CMS) ── */}
-      <section className="bg-[#FBFAF6] py-20">
-        <div className="mx-auto max-w-7xl px-4">
-          <RevealOnScroll variant="slideFromLeft" className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
-              Owner Services
-            </p>
-            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
-              Everything we do, listed in one place
-            </h2>
-          </RevealOnScroll>
-        </div>
-        <ServiceGridBlock services={services} columns={3} showHeading={false} />
-      </section>
-
       {/* ── SECTION 8: Testimonials ── */}
       <section className="bg-white py-16">
         <div className="mx-auto max-w-3xl px-4">
@@ -927,10 +897,7 @@ export default async function OwnersPage() {
           <div className="mt-14 divide-y divide-brand-navy/15 border-y border-brand-navy/15">
             {MARKETS.map((market, idx) => (
               <MarketRow key={market.region} index={idx}>
-                <Link
-                  href={market.href}
-                  className="group block py-8 transition-colors hover:bg-[#FBFAF6] sm:py-10"
-                >
+                <div className="block py-8 sm:py-10">
                   <div className="grid grid-cols-1 items-baseline gap-y-3 px-2 sm:grid-cols-12 sm:gap-x-8">
                     <div className="flex items-baseline gap-4 sm:col-span-5">
                       <span
@@ -939,27 +906,18 @@ export default async function OwnersPage() {
                       >
                         {String(idx + 1).padStart(2, '0')}
                       </span>
-                      <h3 className="font-display text-3xl font-normal leading-none text-brand-navy transition-colors group-hover:text-brand-emerald sm:text-4xl md:text-5xl">
+                      <h3 className="font-display text-3xl font-normal leading-none text-brand-navy sm:text-4xl md:text-5xl">
                         {market.region}
                       </h3>
                     </div>
-                    <p className="text-base leading-relaxed text-slate-700 sm:col-span-5">
+                    <p className="text-base leading-relaxed text-slate-700 sm:col-span-7">
                       {market.blurb}
                     </p>
-                    <div className="flex items-center justify-between gap-4 sm:col-span-2 sm:justify-end">
-                      <span className="hidden text-[10px] font-bold uppercase tracking-[0.18em] text-brand-emerald sm:inline">
-                        Visit
-                      </span>
-                      <ArrowRight
-                        className="size-5 text-brand-navy/30 transition-all group-hover:translate-x-1 group-hover:text-brand-emerald"
-                        aria-hidden="true"
-                      />
-                    </div>
                   </div>
                   <p className="mt-3 px-2 text-xs uppercase tracking-wider text-slate-500 sm:ml-12">
                     {market.cities}
                   </p>
-                </Link>
+                </div>
               </MarketRow>
             ))}
           </div>
