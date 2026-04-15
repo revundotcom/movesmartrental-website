@@ -1,6 +1,9 @@
 import type { MetadataRoute } from 'next'
-import { groq } from 'next-sanity'
-import { sanityFetch } from '@/sanity/fetch'
+import {
+  getFallbackCityList,
+  getFallbackServiceList,
+} from '@/lib/static-fallbacks'
+import { GUIDES } from '@/data/guides'
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
@@ -17,147 +20,22 @@ export async function generateSitemaps() {
     { id: 'us-cities' },
     { id: 'us-services' },
     { id: 'blog' },
-    { id: 'listings' },
-    { id: 'resources' },
   ]
 }
 
 /* ------------------------------------------------------------------ */
-/*  GROQ queries (sitemap-specific minimal projections)               */
+/*  Country partitioning                                              */
 /* ------------------------------------------------------------------ */
 
-const SITEMAP_CA_CITIES_QUERY = groq`
-  *[_type == "city" && province->country == "ca"] {
-    "slug": slug.current,
-    tier,
-    "provinceSlug": province->slug.current,
-    _updatedAt
-  }
-`
+/**
+ * getFallbackCityList() returns a flat list of cities with `provinceSlug`
+ * but no country discriminator. Ontario is the only CA province in the
+ * static fallbacks; everything else is a US state slug.
+ */
+const CA_PROVINCE_SLUGS = new Set(['ontario'])
 
-const SITEMAP_CA_PROVINCES_QUERY = groq`
-  *[_type == "province" && country == "ca"] {
-    "slug": slug.current,
-    _updatedAt
-  }
-`
-
-const SITEMAP_CA_CITY_SERVICES_QUERY = groq`
-  *[_type == "cityService" && city->province->country == "ca"] {
-    "provinceSlug": city->province->slug.current,
-    "citySlug": city->slug.current,
-    "serviceSlug": service->slug.current,
-    "cityTier": city->tier,
-    _updatedAt
-  }
-`
-
-const SITEMAP_US_CITIES_QUERY = groq`
-  *[_type == "city" && province->country == "us"] {
-    "slug": slug.current,
-    tier,
-    "stateSlug": province->slug.current,
-    _updatedAt
-  }
-`
-
-const SITEMAP_US_STATES_QUERY = groq`
-  *[_type == "province" && country == "us"] {
-    "slug": slug.current,
-    _updatedAt
-  }
-`
-
-const SITEMAP_US_CITY_SERVICES_QUERY = groq`
-  *[_type == "cityService" && city->province->country == "us"] {
-    "stateSlug": city->province->slug.current,
-    "citySlug": city->slug.current,
-    "serviceSlug": service->slug.current,
-    "cityTier": city->tier,
-    _updatedAt
-  }
-`
-
-const SITEMAP_SERVICES_QUERY = groq`
-  *[_type == "service"] {
-    "slug": slug.current,
-    _updatedAt
-  }
-`
-
-const SITEMAP_BLOG_GUIDES_QUERY = groq`
-  *[_type == "blogGuide"] {
-    "slug": slug.current,
-    _updatedAt
-  }
-`
-
-const SITEMAP_PROPERTY_CATEGORIES_QUERY = groq`
-  *[_type == "propertyCategory"] {
-    "propertyType": propertyType,
-    "citySlug": city->slug.current,
-    "provinceSlug": city->province->slug.current,
-    _updatedAt
-  }
-`
-
-const SITEMAP_PROPERTY_LISTINGS_QUERY = groq`
-  *[_type == "propertyListing"] {
-    "slug": slug.current,
-    "citySlug": city->slug.current,
-    "provinceSlug": city->province->slug.current,
-    _updatedAt
-  }
-`
-
-const SITEMAP_COMPARISONS_QUERY = groq`
-  *[_type == "comparison"] {
-    "slug": slug.current,
-    _updatedAt
-  }
-`
-
-const SITEMAP_CASE_STUDIES_QUERY = groq`
-  *[_type == "caseStudy"] {
-    "slug": slug.current,
-    _updatedAt
-  }
-`
-
-/* ------------------------------------------------------------------ */
-/*  Type helpers                                                      */
-/* ------------------------------------------------------------------ */
-
-type SitemapCity = { slug: string; tier: number; provinceSlug: string; _updatedAt?: string }
-type SitemapProvince = { slug: string; _updatedAt?: string }
-type SitemapCityService = {
-  provinceSlug: string
-  citySlug: string
-  serviceSlug: string
-  cityTier: number
-  _updatedAt?: string
-}
-type SitemapUSCity = { slug: string; tier: number; stateSlug: string; _updatedAt?: string }
-type SitemapUSCityService = {
-  stateSlug: string
-  citySlug: string
-  serviceSlug: string
-  cityTier: number
-  _updatedAt?: string
-}
-type SitemapService = { slug: string; _updatedAt?: string }
-type SitemapSlug = { slug: string; _updatedAt?: string }
-type SitemapPropertyCategory = {
-  propertyType: string
-  citySlug: string
-  provinceSlug: string
-  _updatedAt?: string
-}
-type SitemapPropertyListing = {
-  slug: string
-  citySlug: string
-  provinceSlug: string
-  _updatedAt?: string
+function isCaCity(provinceSlug: string): boolean {
+  return CA_PROVINCE_SLUGS.has(provinceSlug)
 }
 
 /* ------------------------------------------------------------------ */
@@ -185,27 +63,18 @@ function buildStaticSegment(): MetadataRoute.Sitemap {
   ]
 }
 
-async function buildCaCitiesSegment(): Promise<MetadataRoute.Sitemap> {
-  const [provincesRaw, citiesRaw] = await Promise.all([
-    sanityFetch<SitemapProvince[] | null>({
-      query: SITEMAP_CA_PROVINCES_QUERY,
-      tags: ['province'],
-    }),
-    sanityFetch<SitemapCity[] | null>({
-      query: SITEMAP_CA_CITIES_QUERY,
-      tags: ['city'],
-    }),
-  ])
-  const provinces = provincesRaw ?? []
-  const cities = citiesRaw ?? []
+function buildCaCitiesSegment(): MetadataRoute.Sitemap {
+  const now = new Date()
+  const cities = getFallbackCityList().filter((c) => isCaCity(c.provinceSlug))
 
   const entries: MetadataRoute.Sitemap = []
 
-  // Province pages
-  for (const province of provinces) {
+  // Province pages (only Ontario is currently seeded in static fallbacks)
+  const provinceSlugs = Array.from(new Set(cities.map((c) => c.provinceSlug)))
+  for (const provinceSlug of provinceSlugs) {
     entries.push({
-      url: `${siteUrl}/ca/${province.slug}/`,
-      lastModified: province._updatedAt ? new Date(province._updatedAt) : new Date(),
+      url: `${siteUrl}/ca/${provinceSlug}/`,
+      lastModified: now,
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     })
@@ -214,170 +83,60 @@ async function buildCaCitiesSegment(): Promise<MetadataRoute.Sitemap> {
   // City hub pages
   for (const city of cities) {
     entries.push({
-      url: `${siteUrl}/ca/${city.provinceSlug}/${city.slug}/`,
-      lastModified: city._updatedAt ? new Date(city._updatedAt) : new Date(),
+      url: `${siteUrl}/ca/${city.provinceSlug}/${city.slug.current}/`,
+      lastModified: now,
       changeFrequency: 'weekly' as const,
-      priority: city.tier === 1 ? 0.8 : 0.6,
+      priority: 0.8,
     })
   }
 
   return entries
 }
 
-async function buildCaServicesSegment(): Promise<MetadataRoute.Sitemap> {
-  const [cityServicesRaw, servicesRaw] = await Promise.all([
-    sanityFetch<SitemapCityService[] | null>({
-      query: SITEMAP_CA_CITY_SERVICES_QUERY,
-      tags: ['cityService', 'service'],
-    }),
-    sanityFetch<SitemapService[] | null>({
-      query: SITEMAP_SERVICES_QUERY,
-      tags: ['service'],
-    }),
-  ])
-  const cityServices = cityServicesRaw ?? []
-  const services = servicesRaw ?? []
+function buildCaServicesSegment(): MetadataRoute.Sitemap {
+  const now = new Date()
+  const services = getFallbackServiceList()
 
   const entries: MetadataRoute.Sitemap = []
 
   // Service hub pages
   for (const service of services) {
     entries.push({
-      url: `${siteUrl}/services/${service.slug}/`,
-      lastModified: service._updatedAt ? new Date(service._updatedAt) : new Date(),
+      url: `${siteUrl}/services/${service.slug.current}/`,
+      lastModified: now,
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     })
   }
 
-  // CityService pages
-  for (const cs of cityServices) {
-    entries.push({
-      url: `${siteUrl}/ca/${cs.provinceSlug}/${cs.citySlug}/${cs.serviceSlug}/`,
-      lastModified: cs._updatedAt ? new Date(cs._updatedAt) : new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: cs.cityTier === 1 ? 0.9 : 0.7,
-    })
+  // City x Service combinations for CA cities
+  const caCities = getFallbackCityList().filter((c) => isCaCity(c.provinceSlug))
+  for (const city of caCities) {
+    for (const service of services) {
+      entries.push({
+        url: `${siteUrl}/ca/${city.provinceSlug}/${city.slug.current}/${service.slug.current}/`,
+        lastModified: now,
+        changeFrequency: 'weekly' as const,
+        priority: 0.7,
+      })
+    }
   }
 
   return entries
 }
 
-async function buildBlogSegment(): Promise<MetadataRoute.Sitemap> {
-  const blogGuides = await sanityFetch<SitemapSlug[] | null>({
-    query: SITEMAP_BLOG_GUIDES_QUERY,
-    tags: ['blogGuide'],
-  })
-
-  return (blogGuides ?? []).map((post) => ({
-    url: `${siteUrl}/resources/${post.slug}/`,
-    lastModified: post._updatedAt ? new Date(post._updatedAt) : new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.6,
-  }))
-}
-
-async function buildListingsSegment(): Promise<MetadataRoute.Sitemap> {
-  const [categoriesRaw, listingsRaw] = await Promise.all([
-    sanityFetch<SitemapPropertyCategory[] | null>({
-      query: SITEMAP_PROPERTY_CATEGORIES_QUERY,
-      tags: ['propertyCategory'],
-    }),
-    sanityFetch<SitemapPropertyListing[] | null>({
-      query: SITEMAP_PROPERTY_LISTINGS_QUERY,
-      tags: ['propertyListing'],
-    }),
-  ])
-  const categories = categoriesRaw ?? []
-  const listings = listingsRaw ?? []
-
-  const entries: MetadataRoute.Sitemap = []
-
-  // Property category pages
-  for (const cat of categories) {
-    entries.push({
-      url: `${siteUrl}/ca/${cat.provinceSlug}/${cat.citySlug}/${cat.propertyType}-for-rent/`,
-      lastModified: cat._updatedAt ? new Date(cat._updatedAt) : new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    })
-  }
-
-  // Property detail pages
-  for (const listing of listings) {
-    entries.push({
-      url: `${siteUrl}/ca/${listing.provinceSlug}/${listing.citySlug}/rentals/${listing.slug}/`,
-      lastModified: listing._updatedAt ? new Date(listing._updatedAt) : new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.5,
-    })
-  }
-
-  return entries
-}
-
-async function buildResourcesSegment(): Promise<MetadataRoute.Sitemap> {
-  const [comparisonsRaw, caseStudiesRaw] = await Promise.all([
-    sanityFetch<SitemapSlug[] | null>({
-      query: SITEMAP_COMPARISONS_QUERY,
-      tags: ['comparison'],
-    }),
-    sanityFetch<SitemapSlug[] | null>({
-      query: SITEMAP_CASE_STUDIES_QUERY,
-      tags: ['caseStudy'],
-    }),
-  ])
-  const comparisons = comparisonsRaw ?? []
-  const caseStudies = caseStudiesRaw ?? []
-
-  const entries: MetadataRoute.Sitemap = []
-
-  for (const comp of comparisons) {
-    entries.push({
-      url: `${siteUrl}/resources/${comp.slug}/`,
-      lastModified: comp._updatedAt ? new Date(comp._updatedAt) : new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    })
-  }
-
-  for (const cs of caseStudies) {
-    entries.push({
-      url: `${siteUrl}/resources/${cs.slug}/`,
-      lastModified: cs._updatedAt ? new Date(cs._updatedAt) : new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    })
-  }
-
-  return entries
-}
-
-/* ------------------------------------------------------------------ */
-/*  US segment builders                                               */
-/* ------------------------------------------------------------------ */
-
-async function buildUsCitiesSegment(): Promise<MetadataRoute.Sitemap> {
-  const [statesRaw, citiesRaw] = await Promise.all([
-    sanityFetch<SitemapProvince[] | null>({
-      query: SITEMAP_US_STATES_QUERY,
-      tags: ['province'],
-    }),
-    sanityFetch<SitemapUSCity[] | null>({
-      query: SITEMAP_US_CITIES_QUERY,
-      tags: ['city'],
-    }),
-  ])
-  const states = statesRaw ?? []
-  const cities = citiesRaw ?? []
+function buildUsCitiesSegment(): MetadataRoute.Sitemap {
+  const now = new Date()
+  const cities = getFallbackCityList().filter((c) => !isCaCity(c.provinceSlug))
 
   const entries: MetadataRoute.Sitemap = []
 
   // State pages
-  for (const state of states) {
+  const stateSlugs = Array.from(new Set(cities.map((c) => c.provinceSlug)))
+  for (const stateSlug of stateSlugs) {
     entries.push({
-      url: `${siteUrl}/us/${state.slug}/`,
-      lastModified: state._updatedAt ? new Date(state._updatedAt) : new Date(),
+      url: `${siteUrl}/us/${stateSlug}/`,
+      lastModified: now,
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     })
@@ -386,46 +145,56 @@ async function buildUsCitiesSegment(): Promise<MetadataRoute.Sitemap> {
   // City hub pages
   for (const city of cities) {
     entries.push({
-      url: `${siteUrl}/us/${city.stateSlug}/${city.slug}/`,
-      lastModified: city._updatedAt ? new Date(city._updatedAt) : new Date(),
+      url: `${siteUrl}/us/${city.provinceSlug}/${city.slug.current}/`,
+      lastModified: now,
       changeFrequency: 'weekly' as const,
-      priority: city.tier === 1 ? 0.8 : 0.6,
+      priority: 0.8,
     })
   }
 
   return entries
 }
 
-async function buildUsServicesSegment(): Promise<MetadataRoute.Sitemap> {
-  const usCityServices = await sanityFetch<SitemapUSCityService[] | null>({
-    query: SITEMAP_US_CITY_SERVICES_QUERY,
-    tags: ['cityService'],
-  })
+function buildUsServicesSegment(): MetadataRoute.Sitemap {
+  const now = new Date()
+  const services = getFallbackServiceList()
+  const usCities = getFallbackCityList().filter((c) => !isCaCity(c.provinceSlug))
 
   const entries: MetadataRoute.Sitemap = []
 
-  // US CityService pages (may be empty for now)
-  for (const cs of usCityServices ?? []) {
-    entries.push({
-      url: `${siteUrl}/us/${cs.stateSlug}/${cs.citySlug}/${cs.serviceSlug}/`,
-      lastModified: cs._updatedAt ? new Date(cs._updatedAt) : new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: cs.cityTier === 1 ? 0.9 : 0.7,
-    })
+  for (const city of usCities) {
+    for (const service of services) {
+      entries.push({
+        url: `${siteUrl}/us/${city.provinceSlug}/${city.slug.current}/${service.slug.current}/`,
+        lastModified: now,
+        changeFrequency: 'weekly' as const,
+        priority: 0.7,
+      })
+    }
   }
 
   return entries
+}
+
+function buildBlogSegment(): MetadataRoute.Sitemap {
+  const now = new Date()
+  return Object.values(GUIDES).map((guide) => ({
+    url: `${siteUrl}/resources/${guide.slug}/`,
+    lastModified: guide.publishDate ? new Date(guide.publishDate) : now,
+    changeFrequency: 'weekly' as const,
+    priority: 0.6,
+  }))
 }
 
 /* ------------------------------------------------------------------ */
 /*  Main sitemap function                                             */
 /* ------------------------------------------------------------------ */
 
-export default async function sitemap({
+export default function sitemap({
   id,
 }: {
   id: string
-}): Promise<MetadataRoute.Sitemap> {
+}): MetadataRoute.Sitemap {
   switch (id) {
     case 'static':
       return buildStaticSegment()
@@ -439,10 +208,6 @@ export default async function sitemap({
       return buildUsServicesSegment()
     case 'blog':
       return buildBlogSegment()
-    case 'listings':
-      return buildListingsSegment()
-    case 'resources':
-      return buildResourcesSegment()
     default:
       return []
   }

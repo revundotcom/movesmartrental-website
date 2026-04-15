@@ -8,8 +8,7 @@ import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 import { CountUp } from '@/components/ui/count-up'
-import { sanityFetch } from '@/sanity/fetch'
-import { HOMEPAGE_QUERY } from '@/sanity/queries/homepage'
+import { getFallbackCityList } from '@/lib/static-fallbacks'
 import type { CityCardData } from '@/types/blocks'
 import { ZigzagStep, FeeTableRow, PullQuoteReveal } from './tenants-interactive'
 
@@ -208,14 +207,17 @@ const PULL_QUOTES: Array<{ quote: string; name: string; city: string }> = [
 ]
 
 export default async function TenantsPage() {
-  const data = await sanityFetch<{
-    featuredCities: CityCardData[]
-  }>({
-    query: HOMEPAGE_QUERY,
-    tags: ['city'],
-  })
-
-  const cities = data?.featuredCities ?? []
+  // Static local data (Sanity has been removed). Tenants hub features the
+  // top cities from the fallback city list.
+  const cities: CityCardData[] = getFallbackCityList()
+    .slice(0, 8)
+    .map((c) => ({
+      title: c.title,
+      slug: c.slug.current,
+      provinceSlug: c.provinceSlug,
+      population: c.population,
+      medianRent: c.medianRent,
+    }))
 
   const heroAside = (
     <div className="rounded-3xl border border-brand-navy/10 bg-white/70 p-6 shadow-sm backdrop-blur-sm sm:p-7">

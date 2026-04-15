@@ -4,8 +4,7 @@ import Link from 'next/link'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { HeroBlock } from '@/components/blocks/hero-block'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
-import { sanityFetch } from '@/sanity/fetch'
-import { COUNTRY_PROVINCES_QUERY } from '@/sanity/queries/province'
+import { getFallbackCityList } from '@/lib/static-fallbacks'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -19,6 +18,99 @@ interface StateCard {
   description?: string
   cityCount: number
 }
+
+// ---------------------------------------------------------------------------
+// Static state data (Sanity has been removed)
+// ---------------------------------------------------------------------------
+
+const US_STATES_META: Array<{
+  _id: string
+  title: string
+  slug: string
+  abbreviation: string
+  description: string
+}> = [
+  {
+    _id: 'state-florida-static',
+    title: 'Florida',
+    slug: 'florida',
+    abbreviation: 'FL',
+    description:
+      'Sun Belt leasing demand driven by Northeast migration and international investors. Strongest in Miami, Tampa, Orlando, and Fort Lauderdale.',
+  },
+  {
+    _id: 'state-texas-static',
+    title: 'Texas',
+    slug: 'texas',
+    abbreviation: 'TX',
+    description:
+      'Fastest-growing state by new-resident rental demand. Austin, Houston, and the DFW metroplex anchor our Texas footprint.',
+  },
+  {
+    _id: 'state-california-static',
+    title: 'California',
+    slug: 'california',
+    abbreviation: 'CA',
+    description:
+      'The most competitive rental market in North America with strict tenant-protection statutes. AB-1482 and Costa-Hawkins specialist leasing.',
+  },
+  {
+    _id: 'state-new-york-static',
+    title: 'New York',
+    slug: 'new-york',
+    abbreviation: 'NY',
+    description:
+      'From Manhattan\u2019s ultra-competitive submarkets through emerging Brooklyn and Queens neighbourhoods. DHCR-aware, rent-stabilization-aware leasing.',
+  },
+  {
+    _id: 'state-illinois-static',
+    title: 'Illinois',
+    slug: 'illinois',
+    abbreviation: 'IL',
+    description:
+      'Chicago metro leasing with Chicago RLTO compliance plus collar-county growth submarkets.',
+  },
+  {
+    _id: 'state-georgia-static',
+    title: 'Georgia',
+    slug: 'georgia',
+    abbreviation: 'GA',
+    description:
+      'Atlanta-anchored leasing across a fast-growing Sun Belt state with strong in-migration and build-to-rent inventory.',
+  },
+  {
+    _id: 'state-north-carolina-static',
+    title: 'North Carolina',
+    slug: 'north-carolina',
+    abbreviation: 'NC',
+    description:
+      'Charlotte and Raleigh-Durham leasing across one of the strongest tech-and-finance inbound migration corridors in the US.',
+  },
+  {
+    _id: 'state-arizona-static',
+    title: 'Arizona',
+    slug: 'arizona',
+    abbreviation: 'AZ',
+    description:
+      'Phoenix-metro leasing with disciplined pricing for a market shaped by seasonal rental cycles and California in-migration.',
+  },
+  {
+    _id: 'state-colorado-static',
+    title: 'Colorado',
+    slug: 'colorado',
+    abbreviation: 'CO',
+    description:
+      'Denver-anchored leasing with Front Range coverage for a market that balances strong wage growth and steady rental demand.',
+  },
+  {
+    _id: 'state-new-jersey-static',
+    title: 'New Jersey',
+    slug: 'new-jersey',
+    abbreviation: 'NJ',
+    description:
+      'Northern New Jersey leasing with a focus on NYC-commuter submarkets and dense rental inventory along the Hudson corridor.',
+  },
+]
 
 // ---------------------------------------------------------------------------
 // Metadata
@@ -51,11 +143,18 @@ export const metadata: Metadata = {
 // ---------------------------------------------------------------------------
 
 export default async function USHubPage() {
-  const states = (await sanityFetch<StateCard[] | null>({
-    query: COUNTRY_PROVINCES_QUERY,
-    params: { country: 'us' },
-    tags: ['province'],
-  })) ?? []
+  // Static local data (Sanity has been removed). City counts are derived
+  // from the local city list by matching provinceSlug (which holds the
+  // state slug for US entries).
+  const cityList = getFallbackCityList()
+  const states: StateCard[] = US_STATES_META.map((s) => ({
+    _id: s._id,
+    title: s.title,
+    slug: s.slug,
+    abbreviation: s.abbreviation,
+    description: s.description,
+    cityCount: cityList.filter((c) => c.provinceSlug === s.slug).length,
+  }))
 
   return (
     <main>

@@ -1,22 +1,34 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { groq } from 'next-sanity'
 import { z } from 'zod'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
-import { ServiceGridBlock } from '@/components/blocks/service-grid-block'
 import { JsonLd } from '@/components/json-ld'
-import { PortableTextBody } from '@/components/portable-text'
-import { getFallbackUsCity } from '@/lib/static-fallbacks'
+import {
+  getFallbackUsCity,
+  getFallbackCityList,
+} from '@/lib/static-fallbacks'
+import type { FallbackCity } from '@/lib/static-fallbacks'
 import { generatePageMetadata } from '@/lib/metadata'
 import { buildBreadcrumbListSchema, buildLocalBusinessSchema } from '@/lib/schema-builders'
-import { sanityFetch } from '@/sanity/fetch'
-import { CITY_PAGE_QUERY } from '@/sanity/queries/city'
-import type { ServiceCardData } from '@/types/blocks'
 
 const slugSchema = z.string().regex(/^[a-z0-9-]+$/).max(100)
+
+// Known US state slugs — used to filter the flat city list.
+const US_STATE_SLUGS = new Set([
+  'florida',
+  'texas',
+  'california',
+  'new-york',
+  'illinois',
+  'georgia',
+  'north-carolina',
+  'arizona',
+  'colorado',
+  'new-jersey',
+])
 
 // ---------------------------------------------------------------------------
 // Static Params
@@ -25,62 +37,20 @@ const slugSchema = z.string().regex(/^[a-z0-9-]+$/).max(100)
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const cities = await sanityFetch<
-    Array<{
-      slug: { current: string }
-      provinceSlug: string
-      country: string
-    }> | null
-  >({
-    query: groq`
-      *[_type == "city" && province->country == "us"] {
-        slug,
-        "provinceSlug": province->slug.current,
-        "country": province->country
-      }
-    `,
-    tags: ['city'],
-  })
+  const allCities = getFallbackCityList()
+  const usCities = allCities.filter((c) =>
+    US_STATE_SLUGS.has(c.provinceSlug)
+  )
 
-  const sanityParams = (cities ?? []).map((c) => ({
-    state: c.provinceSlug,
-    city: c.slug.current,
-  }))
-
-  // Static fallback slugs - ensure major US cities always build
-  const fallbackCombos: Array<{ state: string; city: string }> = [
-    { state: 'florida', city: 'miami' },
-    { state: 'florida', city: 'orlando' },
-    { state: 'florida', city: 'tampa' },
-    { state: 'florida', city: 'jacksonville' },
-    { state: 'florida', city: 'fort-lauderdale' },
-    { state: 'texas', city: 'austin' },
-    { state: 'texas', city: 'houston' },
-    { state: 'texas', city: 'dallas' },
-    { state: 'texas', city: 'san-antonio' },
-    { state: 'texas', city: 'fort-worth' },
-    { state: 'california', city: 'los-angeles' },
-    { state: 'california', city: 'san-diego' },
-    { state: 'california', city: 'san-francisco' },
-    { state: 'california', city: 'san-jose' },
-    { state: 'california', city: 'sacramento' },
-    { state: 'new-york', city: 'new-york-city' },
-    { state: 'new-york', city: 'buffalo' },
-    { state: 'new-york', city: 'rochester' },
-    { state: 'new-york', city: 'albany' },
-    { state: 'new-york', city: 'syracuse' },
-    { state: 'illinois', city: 'chicago' },
-    { state: 'illinois', city: 'aurora' },
-    { state: 'illinois', city: 'naperville' },
-    { state: 'illinois', city: 'rockford' },
-    { state: 'illinois', city: 'springfield' },
-  ]
-  const seen = new Set(sanityParams.map((p) => `${p.state}/${p.city}`))
-  const merged = [
-    ...sanityParams,
-    ...fallbackCombos.filter((p) => !seen.has(`${p.state}/${p.city}`)),
-  ]
-  return merged
+  const seen = new Set<string>()
+  const params: Array<{ state: string; city: string }> = []
+  for (const c of usCities) {
+    const key = `${c.provinceSlug}/${c.slug.current}`
+    if (seen.has(key)) continue
+    seen.add(key)
+    params.push({ state: c.provinceSlug, city: c.slug.current })
+  }
+  return params
 }
 
 // ---------------------------------------------------------------------------
@@ -94,76 +64,17 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { state, city } = await params
 
-  const data = await sanityFetch<{
-    title: string
-    province: { title: string }
-    seo?: { metaTitle: string; metaDescription: string }
-  } | null>({
-    query: CITY_PAGE_QUERY,
-    params: { slug: city },
-    tags: ['city'],
-  })
+  const data = getFallbackUsCity(city)
 
   const cityTitle = data?.title ?? city
   const stateName = data?.province?.title ?? state
 
   return generatePageMetadata({
-    seo: data?.seo,
     path: `/us/${state}/${city}`,
-    fallbackTitle: `Leasing Services in ${cityTitle} | MoveSmart Rentals`,
+    fallbackTitle: `Leasing Services in ${cityTitle}`,
     fallbackDescription: `White-glove leasing brokerage in ${cityTitle}, ${stateName}: tenant placement, screening, lease execution, and move-in coordination. Zero upfront cost.`,
   })
 }
-
-// ---------------------------------------------------------------------------
-// City Page Data Shape
-// ---------------------------------------------------------------------------
-
-interface CityPageData {
-  _id: string
-  title: string
-  slug: { current: string }
-  tier: number
-  population?: number
-  medianRent?: number
-  vacancyRate?: number
-  neighbourhoods?: string[]
-  transitInfo?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  description?: string | any[] // Could be string or PortableTextBlock[]
-  province: {
-    title: string
-    slug: { current: string }
-    country: string
-    abbreviation?: string
-  }
-}
-
-/** Shape returned by the city services query */
-interface CityServiceItem {
-  serviceTitle: string
-  serviceSlug: string
-  serviceDescription: string
-  serviceIcon?: string
-  serviceAudience: 'owner' | 'tenant' | 'both'
-}
-
-// ---------------------------------------------------------------------------
-// City Services Query
-// ---------------------------------------------------------------------------
-
-const CITY_SERVICES_QUERY = groq`
-  *[_type == "cityService"
-    && city->slug.current == $citySlug
-    && city->province->slug.current == $stateSlug
-  ] {
-    "serviceTitle": service->title,
-    "serviceSlug": service->slug.current,
-    "serviceDescription": service->shortDescription,
-    "serviceIcon": service->icon,
-    "serviceAudience": service->audience
-  }
-`
 
 // ---------------------------------------------------------------------------
 // Formatting Helpers
@@ -200,22 +111,7 @@ export default async function USCityPage({
     notFound()
   }
 
-  // Fetch city data and available services in parallel
-  const [sanityData, cityServices] = await Promise.all([
-    sanityFetch<CityPageData | null>({
-      query: CITY_PAGE_QUERY,
-      params: { slug: city },
-      tags: ['city'],
-    }),
-    sanityFetch<CityServiceItem[]>({
-      query: CITY_SERVICES_QUERY,
-      params: { citySlug: city, stateSlug: state },
-      tags: ['cityService'],
-    }),
-  ])
-
-  // Fall back to static data when Sanity has no document for this slug
-  const data: CityPageData | null = sanityData ?? (getFallbackUsCity(city) as CityPageData | null)
+  const data: FallbackCity | null = getFallbackUsCity(city)
 
   if (!data) {
     notFound()
@@ -224,15 +120,6 @@ export default async function USCityPage({
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
   const pageUrl = `${siteUrl}/us/${state}/${city}/`
-
-  // Map services to ServiceCardData shape
-  const services: ServiceCardData[] = (cityServices ?? []).map((cs) => ({
-    title: cs.serviceTitle,
-    slug: cs.serviceSlug,
-    shortDescription: cs.serviceDescription,
-    icon: cs.serviceIcon,
-    audience: cs.serviceAudience,
-  }))
 
   // Build LocalBusiness JSON-LD
   const localBusinessSchema = buildLocalBusinessSchema({
@@ -249,15 +136,8 @@ export default async function USCityPage({
     areaServed: data.title,
   })
 
-  // Check if description is Portable Text
-  const isPortableText =
-    Array.isArray(data.description) &&
-    data.description.length > 0 &&
-    typeof data.description[0] === 'object'
-
   const stateAbbr = data.province.abbreviation ?? data.province.title
-  const descriptionText =
-    typeof data.description === 'string' ? data.description : undefined
+  const descriptionText = data.description
 
   return (
     <main>
@@ -298,7 +178,7 @@ export default async function USCityPage({
       />
 
       {/* City narrative */}
-      {data.description && (
+      {descriptionText && (
         <section className="bg-white py-16 sm:py-20">
           <div className="mx-auto max-w-3xl px-4 sm:px-6">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
@@ -310,13 +190,9 @@ export default async function USCityPage({
               <span aria-hidden="true" className="text-brand-gold">.</span>
             </h2>
             <div className="mt-8">
-              {isPortableText ? (
-                <PortableTextBody value={data.description as never} />
-              ) : typeof data.description === 'string' ? (
-                <p className="text-lg leading-relaxed text-slate-600">
-                  {data.description}
-                </p>
-              ) : null}
+              <p className="text-lg leading-relaxed text-slate-600">
+                {descriptionText}
+              </p>
             </div>
           </div>
         </section>
@@ -407,32 +283,6 @@ export default async function USCityPage({
                 </li>
               ))}
             </ul>
-          </div>
-        </section>
-      )}
-
-      {/* Services available in this city */}
-      {services.length > 0 && (
-        <section className="bg-[#FBFAF6] py-16 sm:py-20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6">
-            <div className="mx-auto max-w-2xl text-center">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
-                Available in {data.title}
-              </p>
-              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
-                Full-service leasing in{' '}
-                <span className="font-display italic text-brand-emerald">{data.title}</span>
-                <span aria-hidden="true" className="text-brand-gold">.</span>
-              </h2>
-            </div>
-            <div className="mt-12">
-              <ServiceGridBlock
-                services={services}
-                columns={3}
-                basePath={`/us/${state}/${city}`}
-                showHeading={false}
-              />
-            </div>
           </div>
         </section>
       )}

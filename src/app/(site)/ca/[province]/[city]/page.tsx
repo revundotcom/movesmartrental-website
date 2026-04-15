@@ -1,24 +1,36 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { groq } from 'next-sanity'
 import { MapPin } from 'lucide-react'
 import { z } from 'zod'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
-import { ServiceGridBlock } from '@/components/blocks/service-grid-block'
 import { JsonLd } from '@/components/json-ld'
-import { PortableTextBody } from '@/components/portable-text'
 import { generatePageMetadata } from '@/lib/metadata'
 import { buildBreadcrumbListSchema, buildLocalBusinessSchema } from '@/lib/schema-builders'
-import { getFallbackCaCity } from '@/lib/static-fallbacks'
-import { sanityFetch } from '@/sanity/fetch'
-import { CITY_PAGE_QUERY, CITY_LIST_QUERY } from '@/sanity/queries/city'
-import type { ServiceCardData } from '@/types/blocks'
+import {
+  getFallbackCaCity,
+  getFallbackCityList,
+} from '@/lib/static-fallbacks'
+import type { FallbackCity } from '@/lib/static-fallbacks'
 
 const slugSchema = z.string().regex(/^[a-z0-9-]+$/).max(100)
+
+// Known US state slugs — used to exclude US cities from CA city static params.
+const US_STATE_SLUGS = new Set([
+  'florida',
+  'texas',
+  'california',
+  'new-york',
+  'illinois',
+  'georgia',
+  'north-carolina',
+  'arizona',
+  'colorado',
+  'new-jersey',
+])
 
 // ---------------------------------------------------------------------------
 // Static Params
@@ -27,39 +39,22 @@ const slugSchema = z.string().regex(/^[a-z0-9-]+$/).max(100)
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const cities = await sanityFetch<
-    Array<{ slug: { current: string }; provinceSlug: string; country: string }> | null
-  >({
-    query: CITY_LIST_QUERY,
-    tags: ['city'],
-  })
+  const allCities = getFallbackCityList()
+  // Filter to CA cities only (province slug not in US state set)
+  const caCities = allCities.filter(
+    (c) => !US_STATE_SLUGS.has(c.provinceSlug)
+  )
 
-  const sanityParams = (cities ?? [])
-    .filter((c) => c.country === 'ca')
-    .map((c) => ({
-      province: c.provinceSlug,
-      city: c.slug.current,
-    }))
-
-  // Static fallback slugs - ensure footer-linked Ontario cities always build.
-  const fallbackSlugs = [
-    'toronto',
-    'ottawa',
-    'mississauga',
-    'hamilton',
-    'brampton',
-    'london',
-    'kitchener',
-  ]
-  const fallbackParams = fallbackSlugs.map((city) => ({ province: 'ontario', city }))
-
-  // De-duplicate (Sanity takes precedence when both exist)
-  const seen = new Set(sanityParams.map((p) => `${p.province}/${p.city}`))
-  const merged = [
-    ...sanityParams,
-    ...fallbackParams.filter((p) => !seen.has(`${p.province}/${p.city}`)),
-  ]
-  return merged
+  // Dedupe in case the list contains duplicate (province, city) combos
+  const seen = new Set<string>()
+  const params: Array<{ province: string; city: string }> = []
+  for (const c of caCities) {
+    const key = `${c.provinceSlug}/${c.slug.current}`
+    if (seen.has(key)) continue
+    seen.add(key)
+    params.push({ province: c.provinceSlug, city: c.slug.current })
+  }
+  return params
 }
 
 // ---------------------------------------------------------------------------
@@ -73,78 +68,17 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { province, city } = await params
 
-  const data = await sanityFetch<{
-    title: string
-    province: { title: string }
-    seo?: { metaTitle: string; metaDescription: string }
-  } | null>({
-    query: CITY_PAGE_QUERY,
-    params: { slug: city },
-    tags: ['city'],
-  })
+  const data = getFallbackCaCity(city)
 
   const cityTitle = data?.title ?? city
   const provinceName = data?.province?.title ?? province
 
   return generatePageMetadata({
-    seo: data?.seo,
     path: `/ca/${province}/${city}`,
-    fallbackTitle: `Leasing Services in ${cityTitle} | MoveSmart Rentals`,
+    fallbackTitle: `Leasing Services in ${cityTitle}`,
     fallbackDescription: `White-glove leasing brokerage in ${cityTitle}, ${provinceName}: tenant placement, screening, lease execution, and move-in coordination. Zero upfront cost.`,
   })
 }
-
-// ---------------------------------------------------------------------------
-// City Page Data Shape
-// ---------------------------------------------------------------------------
-
-interface CityPageData {
-  _id: string
-  title: string
-  slug: { current: string }
-  tier: number
-  population?: number
-  medianRent?: number
-  vacancyRate?: number
-  neighbourhoods?: string[]
-  transitInfo?: string
-  heroImageUrl?: string
-  heroImageAlt?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  description?: string | any[] // Could be string or PortableTextBlock[]
-  province: {
-    title: string
-    slug: { current: string }
-    country: string
-    abbreviation?: string
-  }
-}
-
-/** Shape returned by the city services query */
-interface CityServiceItem {
-  serviceTitle: string
-  serviceSlug: string
-  serviceDescription: string
-  serviceIcon?: string
-  serviceAudience: 'owner' | 'tenant' | 'both'
-}
-
-// ---------------------------------------------------------------------------
-// City Services Query
-// ---------------------------------------------------------------------------
-
-const CITY_SERVICES_QUERY = groq`
-  *[_type == "cityService"
-    && city->slug.current == $citySlug
-    && city->province->slug.current == $provinceSlug
-  ] {
-    "serviceTitle": service->title,
-    "serviceSlug": service->slug.current,
-    "serviceDescription": service->shortDescription,
-    "serviceIcon": service->icon,
-    "serviceAudience": service->audience
-  }
-`
 
 // ---------------------------------------------------------------------------
 // Formatting Helpers
@@ -192,22 +126,7 @@ export default async function CityPage({
     notFound()
   }
 
-  // Fetch city data and available services in parallel
-  const [sanityData, cityServices] = await Promise.all([
-    sanityFetch<CityPageData | null>({
-      query: CITY_PAGE_QUERY,
-      params: { slug: city },
-      tags: ['city'],
-    }),
-    sanityFetch<CityServiceItem[]>({
-      query: CITY_SERVICES_QUERY,
-      params: { citySlug: city, provinceSlug: province },
-      tags: ['cityService'],
-    }),
-  ])
-
-  // Fall back to static data when Sanity has no document for this slug
-  const data: CityPageData | null = sanityData ?? (getFallbackCaCity(city) as CityPageData | null)
+  const data: FallbackCity | null = getFallbackCaCity(city)
 
   if (!data) {
     notFound()
@@ -216,15 +135,6 @@ export default async function CityPage({
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
   const pageUrl = `${siteUrl}/ca/${province}/${city}/`
-
-  // Map services to ServiceCardData shape
-  const services: ServiceCardData[] = (cityServices ?? []).map((cs) => ({
-    title: cs.serviceTitle,
-    slug: cs.serviceSlug,
-    shortDescription: cs.serviceDescription,
-    icon: cs.serviceIcon,
-    audience: cs.serviceAudience,
-  }))
 
   // Build LocalBusiness JSON-LD
   const localBusinessSchema = buildLocalBusinessSchema({
@@ -241,15 +151,8 @@ export default async function CityPage({
     areaServed: data.title,
   })
 
-  // Check if description is Portable Text
-  const isPortableText =
-    Array.isArray(data.description) &&
-    data.description.length > 0 &&
-    typeof data.description[0] === 'object'
-
   const provinceAbbr = data.province.abbreviation ?? data.province.title
-  const descriptionText =
-    typeof data.description === 'string' ? data.description : undefined
+  const descriptionText = data.description
 
   return (
     <main>
@@ -289,8 +192,8 @@ export default async function CityPage({
         cta2={{ label: 'Browse Rentals', href: '/locations/' }}
       />
 
-      {/* City narrative (Portable Text or description paragraph) */}
-      {data.description && (
+      {/* City narrative (plain-text description from local data) */}
+      {descriptionText && (
         <section className="bg-white py-16 sm:py-20">
           <div className="mx-auto max-w-3xl px-4 sm:px-6">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
@@ -302,13 +205,9 @@ export default async function CityPage({
               <span aria-hidden="true" className="text-brand-gold">.</span>
             </h2>
             <div className="mt-8">
-              {isPortableText ? (
-                <PortableTextBody value={data.description as never} />
-              ) : typeof data.description === 'string' ? (
-                <p className="text-lg leading-relaxed text-slate-600">
-                  {data.description}
-                </p>
-              ) : null}
+              <p className="text-lg leading-relaxed text-slate-600">
+                {descriptionText}
+              </p>
             </div>
           </div>
         </section>
@@ -420,32 +319,6 @@ export default async function CityPage({
                   {data.transitInfo}
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Services available in this city */}
-      {services.length > 0 && (
-        <section className="bg-white py-16 sm:py-20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6">
-            <div className="mx-auto max-w-2xl text-center">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
-                Available in {data.title}
-              </p>
-              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
-                Full-service leasing in{' '}
-                <span className="font-display italic text-brand-emerald">{data.title}</span>
-                <span aria-hidden="true" className="text-brand-gold">.</span>
-              </h2>
-            </div>
-            <div className="mt-12">
-              <ServiceGridBlock
-                services={services}
-                columns={3}
-                basePath={`/ca/${province}/${city}`}
-                showHeading={false}
-              />
             </div>
           </div>
         </section>

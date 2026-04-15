@@ -1,60 +1,79 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { groq } from 'next-sanity'
 import { z } from 'zod'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { generatePageMetadata } from '@/lib/metadata'
-import { sanityFetch } from '@/sanity/fetch'
 import {
-  CITY_SERVICE_PAGE_QUERY,
-  CITY_SERVICE_SEO_QUERY,
-} from '@/sanity/queries/city-service'
-import type { SeoFields } from '@/types/sanity'
+  getFallbackUsCity,
+  getFallbackCityList,
+} from '@/lib/static-fallbacks'
+import type { FallbackCity } from '@/lib/static-fallbacks'
+import {
+  SERVICE_SLUGS,
+  getServiceContent,
+} from '@/data/services-content'
+import type { ServicePageContent } from '@/data/services-content'
 
 const slugSchema = z.string().regex(/^[a-z0-9-]+$/).max(100)
 
+// Known US state slugs — only US cities participate in this cross-product.
+const US_STATE_SLUGS = new Set([
+  'florida',
+  'texas',
+  'california',
+  'new-york',
+  'illinois',
+  'georgia',
+  'north-carolina',
+  'arizona',
+  'colorado',
+  'new-jersey',
+])
+
 // ---------------------------------------------------------------------------
-// Static Params -- US city-service pages
+// Static Params (cross-product of US cities × services)
 // ---------------------------------------------------------------------------
 
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const results = await sanityFetch<
-    Array<{ stateSlug: string; citySlug: string; serviceSlug: string }>
-  >({
-    query: groq`
-      *[_type == "cityService" && city->province->country == "us"] {
-        "stateSlug": city->province->slug.current,
-        "citySlug": city->slug.current,
-        "serviceSlug": service->slug.current
-      }
-    `,
-    tags: ['cityService'],
-  })
+  const allCities = getFallbackCityList()
+  const usCities = allCities.filter((c) =>
+    US_STATE_SLUGS.has(c.provinceSlug)
+  )
 
-  return (results ?? []).map((r) => ({
-    state: r.stateSlug,
-    city: r.citySlug,
-    service: r.serviceSlug,
-  }))
+  const seen = new Set<string>()
+  const uniqueUsCities: Array<{ stateSlug: string; citySlug: string }> = []
+  for (const c of usCities) {
+    const key = `${c.provinceSlug}/${c.slug.current}`
+    if (seen.has(key)) continue
+    seen.add(key)
+    uniqueUsCities.push({
+      stateSlug: c.provinceSlug,
+      citySlug: c.slug.current,
+    })
+  }
+
+  const params: Array<{ state: string; city: string; service: string }> = []
+  for (const city of uniqueUsCities) {
+    for (const service of SERVICE_SLUGS) {
+      params.push({
+        state: city.stateSlug,
+        city: city.citySlug,
+        service,
+      })
+    }
+  }
+  return params
 }
 
 // ---------------------------------------------------------------------------
 // Metadata
 // ---------------------------------------------------------------------------
-
-interface CityServiceSeoData {
-  seo?: SeoFields
-  heroHeadline: string
-  cityTitle: string
-  serviceTitle: string
-  provinceName: string
-}
 
 export async function generateMetadata({
   params,
@@ -63,23 +82,18 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { state, city, service } = await params
 
-  // Try CityService data
-  const csData = await sanityFetch<CityServiceSeoData | null>({
-    query: CITY_SERVICE_SEO_QUERY,
-    params: { provinceSlug: state, citySlug: city, serviceSlug: service },
-    tags: ['cityService'],
-  })
+  const cityData = getFallbackUsCity(city)
+  const serviceData = getServiceContent(service)
 
-  if (csData) {
+  if (cityData && serviceData) {
     return generatePageMetadata({
-      seo: csData.seo,
       path: `/us/${state}/${city}/${service}`,
-      fallbackTitle: `${csData.serviceTitle} in ${csData.cityTitle} | MoveSmart Rentals`,
-      fallbackDescription: `${csData.serviceTitle} in ${csData.cityTitle}, ${csData.provinceName}. White-glove leasing brokerage with zero upfront cost and success-fee pricing.`,
+      fallbackTitle: `${serviceData.title} in ${cityData.title}`,
+      fallbackDescription: `${serviceData.title} in ${cityData.title}, ${cityData.province.title}. White-glove leasing brokerage with zero upfront cost and success-fee pricing.`,
     })
   }
 
-  // Fallback metadata for coming-soon state
+  // Fallback metadata for coming-soon / missing data state
   const formattedService = service
     .split('-')
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -91,77 +105,9 @@ export async function generateMetadata({
 
   return generatePageMetadata({
     path: `/us/${state}/${city}/${service}`,
-    fallbackTitle: `${formattedService} in ${formattedCity} | MoveSmart Rentals`,
+    fallbackTitle: `${formattedService} in ${formattedCity}`,
     fallbackDescription: `${formattedService} services coming soon to ${formattedCity}. MoveSmart Rentals is expanding white-glove leasing brokerage across the United States.`,
   })
-}
-
-// ---------------------------------------------------------------------------
-// City info query (for coming-soon fallback)
-// ---------------------------------------------------------------------------
-
-interface CityInfo {
-  _id: string
-  title: string
-  slug: { current: string }
-  province: {
-    title: string
-    slug: { current: string }
-    abbreviation?: string
-  }
-}
-
-const CITY_INFO_QUERY = groq`
-  *[_type == "city"
-    && slug.current == $citySlug
-    && province->slug.current == $stateSlug
-  ][0] {
-    _id,
-    title,
-    slug,
-    "province": province-> {
-      title,
-      slug,
-      abbreviation
-    }
-  }
-`
-
-// ---------------------------------------------------------------------------
-// CityService Data Shape (matches Canadian pattern)
-// ---------------------------------------------------------------------------
-
-interface CityServicePageData {
-  _id: string
-  city: {
-    _id: string
-    title: string
-    slug: { current: string }
-    tier: number
-    population?: number
-    medianRent?: number
-    vacancyRate?: number
-    neighbourhoods?: string[]
-    transitInfo?: string
-  }
-  province: {
-    _id: string
-    title: string
-    slug: { current: string }
-    country: string
-    abbreviation?: string
-  }
-  service: {
-    _id: string
-    title: string
-    slug: { current: string }
-    shortDescription: string
-    audience: 'owner' | 'tenant' | 'both'
-    icon?: string
-  }
-  heroHeadline: string
-  heroSubheadline?: string
-  seo?: SeoFields
 }
 
 // ---------------------------------------------------------------------------
@@ -183,22 +129,14 @@ export default async function USCityServicePage({
     notFound()
   }
 
-  // Try CityService data first
-  const cityServiceData = await sanityFetch<CityServicePageData | null>({
-    query: CITY_SERVICE_PAGE_QUERY,
-    params: {
-      provinceSlug: state,
-      citySlug: city,
-      serviceSlug: service,
-    },
-    tags: ['cityService', 'city', 'service'],
-  })
+  const cityData: FallbackCity | null = getFallbackUsCity(city)
+  const serviceData: ServicePageContent | null = getServiceContent(service)
 
-  if (cityServiceData) {
-    // Full CityService page (when US services are active)
-    const cityTitle = cityServiceData.city.title
-    const serviceTitle = cityServiceData.service.title
-    const stateName = cityServiceData.province.title
+  // Full CityService page when both city + service exist in local data
+  if (cityData && serviceData) {
+    const cityTitle = cityData.title
+    const serviceTitle = serviceData.title
+    const stateName = cityData.province.title
 
     return (
       <main>
@@ -218,9 +156,9 @@ export default async function USCityServicePage({
         <PageHeroBlock
           kicker={`${serviceTitle} · ${cityTitle}`}
           eyebrow="Local leasing brokerage"
-          headline={cityServiceData.heroHeadline}
+          headline={`${serviceTitle} in ${cityTitle}`}
           accentLastWord={false}
-          lede={cityServiceData.heroSubheadline}
+          lede={serviceData.heroLede}
           cta1={{ label: 'Book a Local Call', href: '/contact/' }}
           cta2={{ label: 'See Pricing', href: '/pricing/' }}
         />
@@ -235,19 +173,13 @@ export default async function USCityServicePage({
     )
   }
 
-  // Fallback: Coming Soon page with city info
-  const cityInfo = await sanityFetch<CityInfo | null>({
-    query: CITY_INFO_QUERY,
-    params: { citySlug: city, stateSlug: state },
-    tags: ['city'],
-  })
-
-  if (!cityInfo) {
+  // Coming-soon fallback: city exists but service missing (or vice versa)
+  if (!cityData) {
     notFound()
   }
 
-  const cityTitle = cityInfo.title
-  const stateName = cityInfo.province.title
+  const cityTitle = cityData.title
+  const stateName = cityData.province.title
   const formattedService = service
     .split('-')
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))

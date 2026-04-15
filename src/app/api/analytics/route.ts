@@ -1,31 +1,49 @@
 import { NextResponse } from 'next/server'
-import { sanityFetch } from '@/sanity/fetch'
-import { groq } from 'next-sanity'
+import {
+  getFallbackCityList,
+  getFallbackServiceList,
+} from '@/lib/static-fallbacks'
+import { GUIDES } from '@/data/guides'
 
 // Public-facing analytics summary (no auth required -- returns only aggregate counts)
-// This endpoint returns CMS content counts, not user analytics (those are in GA4/Looker Studio)
+// This endpoint returns content counts from local static data, not user analytics
+// (those are in GA4 / Looker Studio).
 
-const CONTENT_COUNTS_QUERY = groq`{
-  "cities": count(*[_type == "city"]),
-  "provinces": count(*[_type == "province"]),
-  "services": count(*[_type == "service"]),
-  "cityServices": count(*[_type == "cityService"]),
-  "blogGuides": count(*[_type == "blogGuide"]),
-  "propertyCategories": count(*[_type == "propertyCategory"]),
-  "propertyListings": count(*[_type == "propertyListing"]),
-  "comparisons": count(*[_type == "comparison"]),
-  "caseStudies": count(*[_type == "caseStudy"]),
-  "canadianCities": count(*[_type == "city" && province->country == "ca"]),
-  "usCities": count(*[_type == "city" && province->country == "us"]),
-  "totalPages": count(*[_type in ["city", "province", "cityService", "blogGuide", "propertyCategory", "propertyListing", "comparison", "caseStudy"]])
-}`
+// Ontario is the only CA province currently represented in static fallbacks;
+// every other provinceSlug is a US state.
+const CA_PROVINCE_SLUGS = new Set(['ontario'])
 
-export async function GET() {
+export function GET() {
   try {
-    const counts = await sanityFetch<Record<string, number>>({
-      query: CONTENT_COUNTS_QUERY,
-      tags: ['city', 'province', 'service', 'cityService', 'blogGuide'],
-    })
+    const cities = getFallbackCityList()
+    const services = getFallbackServiceList()
+
+    const canadianCities = cities.filter((c) =>
+      CA_PROVINCE_SLUGS.has(c.provinceSlug),
+    ).length
+    const usCities = cities.length - canadianCities
+
+    const blogGuides = Object.keys(GUIDES).length
+    // 5 CA provinces + 10 US states per contract
+    const provinces = 15
+
+    const counts = {
+      cities: cities.length,
+      canadianCities,
+      usCities,
+      services: services.length,
+      blogGuides,
+      provinces,
+      // The following are computed dynamically per city x service at request
+      // time, and no static data exists for the rest.
+      cityServices: 0,
+      propertyCategories: 0,
+      propertyListings: 0,
+      comparisons: 0,
+      caseStudies: 0,
+      totalPages:
+        cities.length + provinces + services.length + blogGuides,
+    }
 
     return NextResponse.json({
       status: 'healthy',
@@ -34,8 +52,8 @@ export async function GET() {
     })
   } catch {
     return NextResponse.json(
-      { status: 'error', message: 'Failed to fetch content counts' },
-      { status: 500 }
+      { status: 'error', message: 'Failed to compute content counts' },
+      { status: 500 },
     )
   }
 }

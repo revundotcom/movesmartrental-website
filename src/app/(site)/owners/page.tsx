@@ -28,8 +28,7 @@ import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 import { CountUp } from '@/components/ui/count-up'
 import { GradientText } from '@/components/ui/gradient-text'
-import { sanityFetch } from '@/sanity/fetch'
-import { SERVICE_OWNER_QUERY } from '@/sanity/queries/service'
+import { getFallbackServiceList } from '@/lib/static-fallbacks'
 import type { ServiceCardData } from '@/types/blocks'
 import {
   LeasingTimeline,
@@ -436,10 +435,17 @@ function GoldRule() {
 }
 
 export default async function OwnersPage() {
-  const services = (await sanityFetch<ServiceCardData[] | null>({
-    query: SERVICE_OWNER_QUERY,
-    tags: ['service'],
-  })) ?? []
+  // Static local data (Sanity has been removed). Owner hub shows services
+  // aimed at owners or both audiences.
+  const services: ServiceCardData[] = getFallbackServiceList()
+    .filter((s) => s.audience === 'owner' || s.audience === 'both')
+    .map((s) => ({
+      title: s.title,
+      slug: s.slug.current,
+      shortDescription: s.shortDescription,
+      icon: s.icon,
+      audience: s.audience,
+    }))
 
   return (
     <main>

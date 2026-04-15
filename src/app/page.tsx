@@ -32,8 +32,10 @@ import { buildOrganizationSchema } from '@/lib/schema-builders/organization'
 import { buildWebSiteSchema } from '@/lib/schema-builders/website'
 import { buildLocalBusinessSchema } from '@/lib/schema-builders/local-business'
 import { generatePageMetadata } from '@/lib/metadata'
-import { sanityFetch } from '@/sanity/fetch'
-import { HOMEPAGE_QUERY } from '@/sanity/queries/homepage'
+import {
+  getFallbackServiceList,
+  getFallbackCityList,
+} from '@/lib/static-fallbacks'
 import type { ServiceCardData, CityCardData } from '@/types/blocks'
 import {
   PortalIllustration,
@@ -41,18 +43,6 @@ import {
   ScreeningIllustration,
 } from '@/components/illustrations'
 import { OntarioMap } from '@/components/illustrations/ontario-map'
-
-/* ---------- Types ---------- */
-
-interface HomepageData {
-  featuredServices: ServiceCardData[]
-  featuredCities: CityCardData[]
-  stats: {
-    cityServiceCount: number
-    cityCount: number
-    serviceCount: number
-  }
-}
 
 /* ---------- Core 9 Services (white-glove leasing brokerage) ---------- */
 
@@ -146,14 +136,25 @@ export async function generateMetadata(): Promise<Metadata> {
 /* ---------- Page ---------- */
 
 export default async function HomePage() {
-  const rawData = await sanityFetch<HomepageData>({
-    query: HOMEPAGE_QUERY,
-    tags: ['service', 'city'],
-  })
-  // `sanityFetch` returns `[]` when Sanity env vars are missing (see
-  // src/sanity/fetch.ts). Coerce into a safe partial so downstream
-  // `data.featuredX` lookups yield undefined → handled by `?? fallback`.
-  const data = (rawData && !Array.isArray(rawData) ? rawData : {}) as Partial<HomepageData>
+  // Static local data (Sanity has been removed).
+  const featuredServices: ServiceCardData[] = getFallbackServiceList().map(
+    (s) => ({
+      title: s.title,
+      slug: s.slug.current,
+      shortDescription: s.shortDescription,
+      icon: s.icon,
+      audience: s.audience,
+    }),
+  )
+  const featuredCities: CityCardData[] = getFallbackCityList()
+    .slice(0, 8)
+    .map((c) => ({
+      title: c.title,
+      slug: c.slug.current,
+      provinceSlug: c.provinceSlug,
+      population: c.population,
+      medianRent: c.medianRent,
+    }))
 
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
@@ -194,12 +195,10 @@ export default async function HomePage() {
     openingHours: ['Mo-Fr 09:00-18:00'],
   })
 
-  // Prefer Sanity featured services if present, otherwise fall back to the
+  // Prefer local featured services if present, otherwise fall back to the
   // contract-mandated 9 core leasing services defined above.
   const services =
-    data.featuredServices && data.featuredServices.length > 0
-      ? data.featuredServices
-      : CORE_SERVICES
+    featuredServices.length > 0 ? featuredServices : CORE_SERVICES
 
   return (
     <>
@@ -674,7 +673,7 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
-        <CityGridBlock cities={data.featuredCities ?? []} columns={4} showHeading={false} />
+        <CityGridBlock cities={featuredCities} columns={4} showHeading={false} />
       </section>
 
       {/* ── SECTION 7.5: North America Positioning (Canada + US expansion) ── */}

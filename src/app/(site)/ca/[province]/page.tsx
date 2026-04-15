@@ -7,16 +7,10 @@ import { CityGridBlock } from '@/components/blocks/city-grid-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { JsonLd } from '@/components/json-ld'
-import { PortableTextBody } from '@/components/portable-text'
 import { buildBreadcrumbListSchema } from '@/lib/schema-builders'
 import { generatePageMetadata } from '@/lib/metadata'
 import { getFallbackProvince } from '@/lib/static-fallbacks'
-import { sanityFetch } from '@/sanity/fetch'
-import {
-  PROVINCE_PAGE_QUERY,
-  PROVINCE_LIST_QUERY,
-} from '@/sanity/queries/province'
-import type { PortableTextBlock } from '@portabletext/types'
+import type { FallbackProvince } from '@/lib/static-fallbacks'
 import type { CityCardData } from '@/types/blocks'
 
 const slugSchema = z.string().regex(/^[a-z0-9-]+$/).max(100)
@@ -28,21 +22,13 @@ const slugSchema = z.string().regex(/^[a-z0-9-]+$/).max(100)
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const provinces = await sanityFetch<
-    Array<{ slug: { current: string }; country: string }> | null
-  >({
-    query: PROVINCE_LIST_QUERY,
-    tags: ['province'],
-  })
-
-  const sanityParams = (provinces ?? [])
-    .filter((p) => p.country === 'ca')
-    .map((p) => ({ province: p.slug.current }))
-
-  // Ensure Ontario always builds even if Sanity is empty
-  const seen = new Set(sanityParams.map((p) => p.province))
-  if (!seen.has('ontario')) sanityParams.push({ province: 'ontario' })
-  return sanityParams
+  return [
+    { province: 'ontario' },
+    { province: 'quebec' },
+    { province: 'british-columbia' },
+    { province: 'alberta' },
+    { province: 'nova-scotia' },
+  ]
 }
 
 // ---------------------------------------------------------------------------
@@ -56,46 +42,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { province } = await params
 
-  const data = await sanityFetch<{
-    title: string
-    seo?: { metaTitle: string; metaDescription: string }
-  } | null>({
-    query: PROVINCE_PAGE_QUERY,
-    params: { slug: province },
-    tags: ['province'],
-  })
+  const data = getFallbackProvince(province)
 
   return generatePageMetadata({
-    seo: data?.seo,
     path: `/ca/${province}`,
-    fallbackTitle: `Leasing Brokerage in ${data?.title ?? province} | MoveSmart Rentals`,
+    fallbackTitle: `Leasing Brokerage in ${data?.title ?? province}`,
     fallbackDescription: `White-glove leasing services across ${data?.title ?? province}: tenant placement, screening, lease execution, and move-in coordination with zero upfront cost.`,
   })
-}
-
-// ---------------------------------------------------------------------------
-// Province Page Data Shape
-// ---------------------------------------------------------------------------
-
-interface ProvincePageData {
-  _id: string
-  title: string
-  slug: { current: string }
-  country: string
-  abbreviation?: string
-  description?: string | PortableTextBlock[]
-  heroImage?: {
-    asset: { _ref: string }
-    alt?: string
-  }
-  cities: Array<{
-    title: string
-    slug: { current: string }
-    tier: number
-    population?: number
-    medianRent?: number
-    provinceSlug: string
-  }>
 }
 
 // ---------------------------------------------------------------------------
@@ -113,15 +66,7 @@ export default async function ProvincePage({
     notFound()
   }
 
-  const sanityData = await sanityFetch<ProvincePageData | null>({
-    query: PROVINCE_PAGE_QUERY,
-    params: { slug: province },
-    tags: ['province', 'city'],
-  })
-
-  // Fall back to static data when Sanity has no document for this slug
-  const data: ProvincePageData | null =
-    sanityData ?? (getFallbackProvince(province) as unknown as ProvincePageData | null)
+  const data: FallbackProvince | null = getFallbackProvince(province)
 
   if (!data) {
     notFound()
@@ -136,17 +81,11 @@ export default async function ProvincePage({
     medianRent: city.medianRent,
   }))
 
-  // Check if description is Portable Text or plain string
-  const isPortableText =
-    Array.isArray(data.description) &&
-    data.description.length > 0 &&
-    typeof data.description[0] === 'object'
-
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
 
-  const descriptionText =
-    typeof data.description === 'string' ? data.description : undefined
+  // Fallback description is a plain string, not PortableText
+  const descriptionText = data.description
 
   return (
     <main>
@@ -180,8 +119,8 @@ export default async function ProvincePage({
         cta2={{ label: 'See Pricing', href: '/pricing/' }}
       />
 
-      {/* Province narrative (Portable Text) */}
-      {isPortableText && (
+      {/* Province narrative (plain-text description) */}
+      {descriptionText && (
         <section className="bg-white py-16 sm:py-20">
           <div className="mx-auto max-w-3xl px-4 sm:px-6">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
@@ -193,7 +132,7 @@ export default async function ProvincePage({
               <span aria-hidden="true" className="text-brand-gold">.</span>
             </h2>
             <div className="mt-8">
-              <PortableTextBody value={data.description as PortableTextBlock[]} />
+              <p className="text-lg leading-relaxed text-slate-600">{descriptionText}</p>
             </div>
           </div>
         </section>

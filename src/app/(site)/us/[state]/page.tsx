@@ -7,16 +7,10 @@ import { CityGridBlock } from '@/components/blocks/city-grid-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { JsonLd } from '@/components/json-ld'
-import { PortableTextBody } from '@/components/portable-text'
 import { buildBreadcrumbListSchema } from '@/lib/schema-builders'
 import { generatePageMetadata } from '@/lib/metadata'
 import { getFallbackProvince } from '@/lib/static-fallbacks'
-import { sanityFetch } from '@/sanity/fetch'
-import {
-  PROVINCE_PAGE_QUERY,
-  PROVINCE_LIST_QUERY,
-} from '@/sanity/queries/province'
-import type { PortableTextBlock } from '@portabletext/types'
+import type { FallbackProvince } from '@/lib/static-fallbacks'
 import type { CityCardData } from '@/types/blocks'
 
 const slugSchema = z.string().regex(/^[a-z0-9-]+$/).max(100)
@@ -28,24 +22,18 @@ const slugSchema = z.string().regex(/^[a-z0-9-]+$/).max(100)
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const provinces = await sanityFetch<
-    Array<{ slug: { current: string }; country: string }> | null
-  >({
-    query: PROVINCE_LIST_QUERY,
-    tags: ['province'],
-  })
-
-  const sanityParams = (provinces ?? [])
-    .filter((p) => p.country === 'us')
-    .map((p) => ({ state: p.slug.current }))
-
-  // Static fallback slugs - ensure footer-linked US states always build
-  const fallbackStates = ['florida', 'texas', 'california', 'new-york', 'illinois']
-  const seen = new Set(sanityParams.map((p) => p.state))
-  const fallbackParams = fallbackStates
-    .filter((state) => !seen.has(state))
-    .map((state) => ({ state }))
-  return [...sanityParams, ...fallbackParams]
+  return [
+    { state: 'florida' },
+    { state: 'texas' },
+    { state: 'california' },
+    { state: 'new-york' },
+    { state: 'illinois' },
+    { state: 'georgia' },
+    { state: 'north-carolina' },
+    { state: 'arizona' },
+    { state: 'colorado' },
+    { state: 'new-jersey' },
+  ]
 }
 
 // ---------------------------------------------------------------------------
@@ -59,46 +47,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { state } = await params
 
-  const data = await sanityFetch<{
-    title: string
-    seo?: { metaTitle: string; metaDescription: string }
-  } | null>({
-    query: PROVINCE_PAGE_QUERY,
-    params: { slug: state },
-    tags: ['province'],
-  })
+  const data = getFallbackProvince(state)
 
   return generatePageMetadata({
-    seo: data?.seo,
     path: `/us/${state}`,
-    fallbackTitle: `Leasing Brokerage in ${data?.title ?? state} | MoveSmart Rentals`,
+    fallbackTitle: `Leasing Brokerage in ${data?.title ?? state}`,
     fallbackDescription: `White-glove leasing services across ${data?.title ?? state}: tenant placement, screening, lease execution, and move-in coordination with zero upfront cost.`,
   })
-}
-
-// ---------------------------------------------------------------------------
-// State Page Data Shape
-// ---------------------------------------------------------------------------
-
-interface StatePageData {
-  _id: string
-  title: string
-  slug: { current: string }
-  country: string
-  abbreviation?: string
-  description?: string | PortableTextBlock[]
-  heroImage?: {
-    asset: { _ref: string }
-    alt?: string
-  }
-  cities: Array<{
-    title: string
-    slug: { current: string }
-    tier: number
-    population?: number
-    medianRent?: number
-    provinceSlug: string
-  }>
 }
 
 // ---------------------------------------------------------------------------
@@ -116,15 +71,7 @@ export default async function StatePage({
     notFound()
   }
 
-  const sanityData = await sanityFetch<StatePageData | null>({
-    query: PROVINCE_PAGE_QUERY,
-    params: { slug: state },
-    tags: ['province', 'city'],
-  })
-
-  // Fall back to static data when Sanity has no document for this slug
-  const data: StatePageData | null =
-    sanityData ?? (getFallbackProvince(state) as unknown as StatePageData | null)
+  const data: FallbackProvince | null = getFallbackProvince(state)
 
   if (!data) {
     notFound()
@@ -139,17 +86,10 @@ export default async function StatePage({
     medianRent: city.medianRent,
   }))
 
-  // Check if description is Portable Text or plain string
-  const isPortableText =
-    Array.isArray(data.description) &&
-    data.description.length > 0 &&
-    typeof data.description[0] === 'object'
-
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
 
-  const descriptionText =
-    typeof data.description === 'string' ? data.description : undefined
+  const descriptionText = data.description
 
   return (
     <main>
@@ -183,8 +123,8 @@ export default async function StatePage({
         cta2={{ label: 'See Pricing', href: '/pricing/' }}
       />
 
-      {/* State narrative (Portable Text) */}
-      {isPortableText && (
+      {/* State narrative (plain-text description) */}
+      {descriptionText && (
         <section className="bg-white py-16 sm:py-20">
           <div className="mx-auto max-w-3xl px-4 sm:px-6">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
@@ -196,7 +136,7 @@ export default async function StatePage({
               <span aria-hidden="true" className="text-brand-gold">.</span>
             </h2>
             <div className="mt-8">
-              <PortableTextBody value={data.description as PortableTextBlock[]} />
+              <p className="text-lg leading-relaxed text-slate-600">{descriptionText}</p>
             </div>
           </div>
         </section>

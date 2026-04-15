@@ -4,8 +4,7 @@ import Link from 'next/link'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { HeroBlock } from '@/components/blocks/hero-block'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
-import { sanityFetch } from '@/sanity/fetch'
-import { COUNTRY_PROVINCES_QUERY } from '@/sanity/queries/province'
+import { getFallbackCityList } from '@/lib/static-fallbacks'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -19,6 +18,59 @@ interface ProvinceCard {
   description?: string
   cityCount: number
 }
+
+// ---------------------------------------------------------------------------
+// Static province data (Sanity has been removed)
+// ---------------------------------------------------------------------------
+
+const CA_PROVINCES_META: Array<{
+  _id: string
+  title: string
+  slug: string
+  abbreviation: string
+  description: string
+}> = [
+  {
+    _id: 'province-ontario-static',
+    title: 'Ontario',
+    slug: 'ontario',
+    abbreviation: 'ON',
+    description:
+      'Canada\u2019s largest rental market. Toronto, the GTA, Ottawa, Hamilton, London, and Kitchener-Waterloo anchor our highest-volume leasing footprint.',
+  },
+  {
+    _id: 'province-quebec-static',
+    title: 'Quebec',
+    slug: 'quebec',
+    abbreviation: 'QC',
+    description:
+      'TAL-compliant leasing across Montreal, Quebec City, Laval, and Gatineau with French-language tenant communications.',
+  },
+  {
+    _id: 'province-british-columbia-static',
+    title: 'British Columbia',
+    slug: 'british-columbia',
+    abbreviation: 'BC',
+    description:
+      'Lower Mainland and Vancouver Island leasing with RTB-compliant lease packages across Vancouver, Surrey, Burnaby, and Victoria.',
+  },
+  {
+    _id: 'province-alberta-static',
+    title: 'Alberta',
+    slug: 'alberta',
+    abbreviation: 'AB',
+    description:
+      'Calgary and Edmonton metro leasing with disciplined pricing strategy and transparent success-fee execution.',
+  },
+  {
+    _id: 'province-nova-scotia-static',
+    title: 'Nova Scotia',
+    slug: 'nova-scotia',
+    abbreviation: 'NS',
+    description:
+      'Halifax-anchored leasing across Nova Scotia with full-cycle tenant placement and lease execution.',
+  },
+]
 
 // ---------------------------------------------------------------------------
 // Metadata
@@ -51,11 +103,17 @@ export const metadata: Metadata = {
 // ---------------------------------------------------------------------------
 
 export default async function CanadaHubPage() {
-  const provinces = (await sanityFetch<ProvinceCard[] | null>({
-    query: COUNTRY_PROVINCES_QUERY,
-    params: { country: 'ca' },
-    tags: ['province'],
-  })) ?? []
+  // Static local data (Sanity has been removed). City counts are derived
+  // from the local city list by matching provinceSlug.
+  const cityList = getFallbackCityList()
+  const provinces: ProvinceCard[] = CA_PROVINCES_META.map((p) => ({
+    _id: p._id,
+    title: p.title,
+    slug: p.slug,
+    abbreviation: p.abbreviation,
+    description: p.description,
+    cityCount: cityList.filter((c) => c.provinceSlug === p.slug).length,
+  }))
 
   return (
     <main>

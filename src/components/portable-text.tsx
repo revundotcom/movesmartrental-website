@@ -2,40 +2,12 @@ import {
   PortableText,
   type PortableTextComponents,
   type PortableTextMarkComponentProps,
-  type PortableTextTypeComponentProps,
 } from '@portabletext/react'
 import type { PortableTextBlock } from '@portabletext/types'
-import Image from 'next/image'
-
-// ---------------------------------------------------------------------------
-// Sanity Image URL Helper
-// ---------------------------------------------------------------------------
-
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
-
-/**
- * Build a Sanity CDN image URL from an asset reference.
- * Reference format: "image-{id}-{WxH}-{ext}" -> "{id}-{WxH}.{ext}"
- */
-function sanityImageUrl(ref: string): string {
-  // ref looks like "image-abc123-800x400-png"
-  const parts = ref.replace('image-', '').split('-')
-  const ext = parts.pop()
-  const rest = parts.join('-')
-  return `https://cdn.sanity.io/images/${projectId}/${dataset}/${rest}.${ext}`
-}
 
 // ---------------------------------------------------------------------------
 // Custom Component Definitions
 // ---------------------------------------------------------------------------
-
-interface SanityImageValue {
-  _type: 'image'
-  asset: { _ref: string; _type: 'reference' }
-  alt?: string
-  caption?: string
-}
 
 interface LinkMark {
   _type: 'link'
@@ -47,27 +19,10 @@ interface LinkMark {
 /** Portable Text component configuration with custom renderers */
 export const portableTextComponents: PortableTextComponents = {
   types: {
-    image: ({ value }: PortableTextTypeComponentProps<SanityImageValue>) => {
-      if (!value?.asset?._ref) return null
-      const url = sanityImageUrl(value.asset._ref)
-      return (
-        <figure className="my-8">
-          <Image
-            src={url}
-            alt={value.alt || 'Content image'}
-            width={800}
-            height={400}
-            className="w-full rounded-lg"
-            sizes="(max-width: 768px) 100vw, 672px"
-          />
-          {(value.caption || value.alt) && (
-            <figcaption className="mt-2 text-center text-sm text-muted-foreground">
-              {value.caption || value.alt}
-            </figcaption>
-          )}
-        </figure>
-      )
-    },
+    // Image blocks are intentionally not rendered here. Guides do not
+    // currently embed images via PortableText, and the previous Sanity CDN
+    // URL builder has been removed along with the CMS integration.
+    image: () => null,
   },
 
   marks: {

@@ -1,21 +1,13 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import type { PortableTextBlock } from '@portabletext/types'
 import { z } from 'zod'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
-import { BenefitsBlock } from '@/components/blocks/benefits-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { HowItWorksBlock } from '@/components/blocks/how-it-works-block'
-import { PainPointBlock } from '@/components/blocks/pain-point-block'
-import { PropertyCardBlock } from '@/components/blocks/property-card-block'
-import { ServiceGridBlock } from '@/components/blocks/service-grid-block'
-import { TrustBlock } from '@/components/blocks/trust-block'
 import { JsonLd } from '@/components/json-ld'
-import { PortableTextBody } from '@/components/portable-text'
 import { generatePageMetadata } from '@/lib/metadata'
 import {
   buildBreadcrumbListSchema,
@@ -23,163 +15,75 @@ import {
   buildLocalBusinessSchema,
   buildServiceSchema,
 } from '@/lib/schema-builders'
-import { sanityFetch } from '@/sanity/fetch'
 import {
-  CITY_SERVICE_PAGE_QUERY,
-  CITY_SERVICE_PARAMS_QUERY,
-  CITY_SERVICE_SEO_QUERY,
-} from '@/sanity/queries/city-service'
+  getFallbackCaCity,
+  getFallbackCityList,
+} from '@/lib/static-fallbacks'
+import type { FallbackCity } from '@/lib/static-fallbacks'
 import {
-  PROPERTY_CATEGORY_QUERY,
-  PROPERTY_CATEGORY_PARAMS_QUERY,
-} from '@/sanity/queries/property-category'
-import type {
-  BenefitData,
-  FaqItem,
-  HowItWorksStep,
-  PainPointData,
-  PropertyCardData,
-  ServiceCardData,
-  TestimonialData,
-} from '@/types/blocks'
-import type { SeoFields } from '@/types/sanity'
+  SERVICE_SLUGS,
+  getServiceContent,
+} from '@/data/services-content'
+import type { ServicePageContent } from '@/data/services-content'
+import type { HowItWorksStep } from '@/types/blocks'
 
 const slugSchema = z.string().regex(/^[a-z0-9-]+$/).max(100)
 
-// ---------------------------------------------------------------------------
-// CityService Data Shape
-// ---------------------------------------------------------------------------
-
-interface CityServicePageData {
-  _id: string
-  city: {
-    _id: string
-    title: string
-    slug: { current: string }
-    tier: number
-    population?: number
-    medianRent?: number
-    vacancyRate?: number
-    neighbourhoods?: string[]
-    transitInfo?: string
-  }
-  province: {
-    _id: string
-    title: string
-    slug: { current: string }
-    country: string
-    abbreviation?: string
-  }
-  service: {
-    _id: string
-    title: string
-    slug: { current: string }
-    shortDescription: string
-    audience: 'owner' | 'tenant' | 'both'
-    icon?: string
-  }
-  cityTitle?: string
-  localMedianRent: number
-  localVacancyRate: number
-  neighbourhoodNames: string[]
-  localRegulatory: string
-  localBody: PortableTextBlock[]
-  heroHeadline: string
-  heroSubheadline?: string
-  heroCta1?: { label: string; url: string }
-  heroCta2?: { label: string; url: string }
-  painPoints?: PainPointData[]
-  benefits?: BenefitData[]
-  howItWorks?: HowItWorksStep[]
-  testimonials?: TestimonialData[]
-  faq?: FaqItem[]
-  relatedServices?: Array<{
-    title: string
-    slug: { current: string }
-    shortDescription: string
-    icon?: string
-  }>
-  seo?: SeoFields
-}
+// Known US state slugs — exclude US cities from the CA cross-product.
+const US_STATE_SLUGS = new Set([
+  'florida',
+  'texas',
+  'california',
+  'new-york',
+  'illinois',
+  'georgia',
+  'north-carolina',
+  'arizona',
+  'colorado',
+  'new-jersey',
+])
 
 // ---------------------------------------------------------------------------
-// PropertyCategory Data Shape (shared [service] segment)
-// ---------------------------------------------------------------------------
-
-interface CategoryData {
-  _id: string
-  title: string
-  slug: { current: string }
-  propertyType: string
-  description?: PortableTextBlock[]
-  averageRent?: number
-  city: {
-    _id: string
-    title: string
-    slug: { current: string }
-    tier: number
-    population?: number
-    medianRent?: number
-  }
-  province: {
-    _id: string
-    title: string
-    slug: { current: string }
-    country: string
-    abbreviation?: string
-  }
-  listings: PropertyCardData[]
-  seo?: SeoFields
-}
-
-// ---------------------------------------------------------------------------
-// Static Params (both CityService Tier-1 combos + PropertyCategory)
+// Static Params (cross-product of CA cities × services)
 // ---------------------------------------------------------------------------
 
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  const [cityServiceParams, categoryParams] = await Promise.all([
-    sanityFetch<
-      Array<{ province: string; city: string; service: string }>
-    >({
-      query: CITY_SERVICE_PARAMS_QUERY,
-      tags: ['cityService'],
-    }),
-    sanityFetch<
-      Array<{ propertyType: string; citySlug: string; provinceSlug: string }>
-    >({
-      query: PROPERTY_CATEGORY_PARAMS_QUERY,
-      tags: ['propertyCategory'],
-    }),
-  ])
+  const allCities = getFallbackCityList()
+  const caCities = allCities.filter(
+    (c) => !US_STATE_SLUGS.has(c.provinceSlug)
+  )
 
-  const csParams = (cityServiceParams ?? []).map((p) => ({
-    province: p.province,
-    city: p.city,
-    service: p.service,
-  }))
+  // Dedupe cities in case the list has any duplicates.
+  const seen = new Set<string>()
+  const uniqueCaCities: Array<{ provinceSlug: string; citySlug: string }> = []
+  for (const c of caCities) {
+    const key = `${c.provinceSlug}/${c.slug.current}`
+    if (seen.has(key)) continue
+    seen.add(key)
+    uniqueCaCities.push({
+      provinceSlug: c.provinceSlug,
+      citySlug: c.slug.current,
+    })
+  }
 
-  const catParams = (categoryParams ?? []).map((p) => ({
-    province: p.provinceSlug,
-    city: p.citySlug,
-    service: p.propertyType,
-  }))
-
-  return [...csParams, ...catParams]
+  const params: Array<{ province: string; city: string; service: string }> = []
+  for (const city of uniqueCaCities) {
+    for (const service of SERVICE_SLUGS) {
+      params.push({
+        province: city.provinceSlug,
+        city: city.citySlug,
+        service,
+      })
+    }
+  }
+  return params
 }
 
 // ---------------------------------------------------------------------------
 // Metadata
 // ---------------------------------------------------------------------------
-
-interface CityServiceSeoData {
-  seo?: SeoFields
-  heroHeadline: string
-  cityTitle: string
-  serviceTitle: string
-  provinceName: string
-}
 
 export async function generateMetadata({
   params,
@@ -188,41 +92,22 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { province, city, service } = await params
 
-  // Try CityService first
-  const csData = await sanityFetch<CityServiceSeoData | null>({
-    query: CITY_SERVICE_SEO_QUERY,
-    params: { provinceSlug: province, citySlug: city, serviceSlug: service },
-    tags: ['cityService'],
-  })
+  const cityData = getFallbackCaCity(city)
+  const serviceData = getServiceContent(service)
 
-  if (csData) {
-    return generatePageMetadata({
-      seo: csData.seo,
-      path: `/ca/${province}/${city}/${service}`,
-      fallbackTitle: `${csData.serviceTitle} in ${csData.cityTitle} | MoveSmart Rentals`,
-      fallbackDescription: `${csData.serviceTitle} in ${csData.cityTitle}, ${csData.provinceName}. White-glove leasing brokerage with zero upfront cost and success-fee pricing.`,
-    })
+  if (!cityData || !serviceData) {
+    return {}
   }
 
-  // Fallback to PropertyCategory
-  const catData = await sanityFetch<CategoryData | null>({
-    query: PROPERTY_CATEGORY_QUERY,
-    params: { citySlug: city, propertyType: service },
-    tags: ['propertyCategory'],
+  const cityTitle = cityData.title
+  const serviceTitle = serviceData.title
+  const provinceName = cityData.province.title
+
+  return generatePageMetadata({
+    path: `/ca/${province}/${city}/${service}`,
+    fallbackTitle: `${serviceTitle} in ${cityTitle}`,
+    fallbackDescription: `${serviceTitle} in ${cityTitle}, ${provinceName}. White-glove leasing brokerage with zero upfront cost and success-fee pricing.`,
   })
-
-  if (catData) {
-    const cityTitle = catData.city.title
-    const propertyTypeLabel = catData.title || service.replace(/-/g, ' ')
-    return generatePageMetadata({
-      seo: catData.seo,
-      path: `/ca/${province}/${city}/${service}`,
-      fallbackTitle: `${propertyTypeLabel} for Rent in ${cityTitle}`,
-      fallbackDescription: `Browse available ${propertyTypeLabel.toLowerCase()} listings for rent in ${cityTitle}. Verified properties with transparent pricing and online applications.`,
-    })
-  }
-
-  return {}
 }
 
 // ---------------------------------------------------------------------------
@@ -244,26 +129,18 @@ function formatPercentage(rate: number | null | undefined): string {
 }
 
 // ---------------------------------------------------------------------------
-// Bedroom Filter Config
-// ---------------------------------------------------------------------------
-
-const BEDROOM_OPTIONS = [
-  { label: '1 Bedroom', slug: '1-bedroom' },
-  { label: '2 Bedroom', slug: '2-bedroom' },
-  { label: '3+ Bedroom', slug: '3-bedroom' },
-]
-
-// ---------------------------------------------------------------------------
-// CityService View
+// CityService View (synthesised from local city + service data)
 // ---------------------------------------------------------------------------
 
 function CityServiceView({
-  data,
+  cityData,
+  serviceData,
   province,
   city,
   service,
 }: {
-  data: CityServicePageData
+  cityData: FallbackCity
+  serviceData: ServicePageContent
   province: string
   city: string
   service: string
@@ -272,12 +149,16 @@ function CityServiceView({
     process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
   const pageUrl = `${siteUrl}/ca/${province}/${city}/${service}/`
 
-  const cityTitle = data.city.title
-  const serviceTitle = data.service.title
-  const provinceName = data.province.title
-  const provinceAbbr = data.province.abbreviation ?? provinceName
+  const cityTitle = cityData.title
+  const serviceTitle = serviceData.title
+  const provinceName = cityData.province.title
+  const provinceAbbr = cityData.province.abbreviation ?? provinceName
 
-  // Build JSON-LD schemas (4 types)
+  // Synthesise localised hero headline combining city + service
+  const heroHeadline = `${serviceTitle} in ${cityTitle}`
+  const heroSubheadline = serviceData.heroLede
+
+  // Build JSON-LD schemas
   const schemas: Record<string, unknown>[] = []
 
   // 1. LocalBusiness
@@ -303,7 +184,7 @@ function CityServiceView({
   schemas.push(
     buildServiceSchema({
       name: serviceTitle,
-      description: data.service.shortDescription,
+      description: serviceData.metaDescription,
       url: pageUrl,
       provider: {
         name: 'MoveSmart Rentals',
@@ -313,11 +194,11 @@ function CityServiceView({
     })
   )
 
-  // 3. FAQ (if faq items exist)
-  if (data.faq && data.faq.length > 0) {
+  // 3. FAQ
+  if (serviceData.faqItems && serviceData.faqItems.length > 0) {
     schemas.push(
       buildFaqPageSchema({
-        questions: data.faq.map((f) => ({
+        questions: serviceData.faqItems.map((f) => ({
           question: f.question,
           answer: f.answer,
         })),
@@ -337,16 +218,12 @@ function CityServiceView({
     })
   )
 
-  // Map related services to ServiceCardData
-  const relatedServices: ServiceCardData[] = (data.relatedServices ?? []).map(
-    (rs) => ({
-      title: rs.title,
-      slug: rs.slug.current,
-      shortDescription: rs.shortDescription,
-      icon: rs.icon,
-      audience: 'both' as const,
-    })
-  )
+  // Map service "howItWorks" steps (service-content shape) to block shape
+  const howItWorksSteps: HowItWorksStep[] = serviceData.howItWorks.map((s) => ({
+    stepNumber: s.step,
+    title: s.title,
+    description: s.body,
+  }))
 
   return (
     <>
@@ -372,19 +249,11 @@ function CityServiceView({
       <PageHeroBlock
         kicker={`${serviceTitle} · ${cityTitle}`}
         eyebrow="Local leasing brokerage"
-        headline={data.heroHeadline}
+        headline={heroHeadline}
         accentLastWord={false}
-        lede={data.heroSubheadline ?? data.service.shortDescription}
-        cta1={
-          data.heroCta1
-            ? { label: data.heroCta1.label, href: data.heroCta1.url }
-            : { label: 'Book a Local Call', href: '/contact/' }
-        }
-        cta2={
-          data.heroCta2
-            ? { label: data.heroCta2.label, href: data.heroCta2.url }
-            : { label: 'See Pricing', href: '/pricing/' }
-        }
+        lede={heroSubheadline}
+        cta1={{ label: 'Book a Local Call', href: '/contact/' }}
+        cta2={{ label: 'See Pricing', href: '/pricing/' }}
       />
 
       {/* Premium Local Market Section - two-column layout */}
@@ -418,37 +287,21 @@ function CityServiceView({
                 </span>
               </h2>
 
-              {data.localBody ? (
-                <div className="mt-6 text-lg leading-relaxed text-slate-600">
-                  <PortableTextBody value={data.localBody} />
-                </div>
-              ) : (
-                <p className="mt-6 text-lg leading-relaxed text-slate-600">
-                  MoveSmart Rentals runs {serviceTitle.toLowerCase()} in {cityTitle},{' '}
-                  {provinceName} as a white-glove leasing brokerage. Our local
-                  team knows the {cityTitle} rental market and delivers full-cycle
-                  leasing execution - strategic pricing, marketing, qualification,
-                  and lease execution - with zero upfront cost.
-                </p>
-              )}
+              <p className="mt-6 text-lg leading-relaxed text-slate-600">
+                {cityData.description ??
+                  `MoveSmart Rentals runs ${serviceTitle.toLowerCase()} in ${cityTitle}, ${provinceName} as a white-glove leasing brokerage. Our local team knows the ${cityTitle} rental market and delivers full-cycle leasing execution - strategic pricing, marketing, qualification, and lease execution - with zero upfront cost.`}
+              </p>
 
-              {data.localRegulatory && (
-                <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="text-xs font-black uppercase tracking-wider text-slate-400">
-                    Local Regulations
-                  </p>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                    {data.localRegulatory}
-                  </p>
-                </div>
-              )}
+              <p className="mt-4 text-lg leading-relaxed text-slate-600">
+                {serviceData.solutionLede}
+              </p>
             </div>
 
             {/* Right: stat bento grid */}
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col items-center justify-center rounded-3xl bg-brand-navy p-8 text-center">
                 <p className="text-4xl font-black text-brand-emerald">
-                  {formatCurrency(data.localMedianRent)}
+                  {formatCurrency(cityData.medianRent)}
                 </p>
                 <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-white/50">
                   Median Rent / Mo
@@ -457,7 +310,7 @@ function CityServiceView({
 
               <div className="flex flex-col items-center justify-center rounded-3xl bg-brand-emerald/10 p-8 text-center">
                 <p className="text-4xl font-black text-brand-navy">
-                  {formatPercentage(data.localVacancyRate)}
+                  {formatPercentage(cityData.vacancyRate)}
                 </p>
                 <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
                   Vacancy Rate
@@ -466,12 +319,12 @@ function CityServiceView({
 
               <div className="flex flex-col items-center justify-center rounded-3xl bg-brand-emerald/10 p-8 text-center">
                 <p className="text-4xl font-black text-brand-navy">
-                  {data.city.population
-                    ? data.city.population >= 1_000_000
-                      ? `${(data.city.population / 1_000_000).toFixed(1)}M`
-                      : data.city.population >= 1_000
-                        ? `${Math.round(data.city.population / 1_000)}K`
-                        : String(data.city.population)
+                  {cityData.population
+                    ? cityData.population >= 1_000_000
+                      ? `${(cityData.population / 1_000_000).toFixed(1)}M`
+                      : cityData.population >= 1_000
+                        ? `${Math.round(cityData.population / 1_000)}K`
+                        : String(cityData.population)
                     : '-'}
                 </p>
                 <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
@@ -481,8 +334,8 @@ function CityServiceView({
 
               <div className="flex flex-col items-center justify-center rounded-3xl bg-brand-navy p-8 text-center">
                 <p className="text-4xl font-black text-brand-emerald">
-                  {data.neighbourhoodNames.length > 0
-                    ? `${data.neighbourhoodNames.length}+`
+                  {cityData.neighbourhoods && cityData.neighbourhoods.length > 0
+                    ? `${cityData.neighbourhoods.length}+`
                     : '10+'}
                 </p>
                 <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-white/50">
@@ -494,52 +347,14 @@ function CityServiceView({
         </div>
       </section>
 
-      {/* Pain Points */}
-      {data.painPoints && data.painPoints.length > 0 && (
-        <PainPointBlock painPoints={data.painPoints} />
+      {/* How It Works (from service data) */}
+      {howItWorksSteps.length > 0 && (
+        <HowItWorksBlock steps={howItWorksSteps} />
       )}
 
-      {/* Benefits */}
-      {data.benefits && data.benefits.length > 0 && (
-        <BenefitsBlock benefits={data.benefits} />
-      )}
-
-      {/* How It Works */}
-      {data.howItWorks && data.howItWorks.length > 0 && (
-        <HowItWorksBlock steps={data.howItWorks} />
-      )}
-
-      {/* Testimonials */}
-      {data.testimonials && data.testimonials.length > 0 && (
-        <TrustBlock testimonials={data.testimonials} variant="testimonials" />
-      )}
-
-      {/* Related Services */}
-      {relatedServices.length > 0 && (
-        <section className="mx-auto max-w-7xl px-4 py-12">
-          <div className="mx-auto max-w-2xl text-center mb-8">
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
-              More Services
-            </p>
-            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
-              Related Services in{' '}
-              <span className="font-display italic text-brand-emerald">
-                {cityTitle}
-              </span>
-            </h2>
-          </div>
-          <ServiceGridBlock
-            services={relatedServices}
-            columns={3}
-            basePath={`/ca/${province}/${city}`}
-            showHeading={false}
-          />
-        </section>
-      )}
-
-      {/* FAQ -- schemaEnabled=false because FAQ JSON-LD injected above */}
-      {data.faq && data.faq.length > 0 && (
-        <FAQBlock questions={data.faq} schemaEnabled={false} />
+      {/* FAQ — schemaEnabled=false because FAQ JSON-LD injected above */}
+      {serviceData.faqItems && serviceData.faqItems.length > 0 && (
+        <FAQBlock questions={serviceData.faqItems} schemaEnabled={false} />
       )}
 
       {/* CTA Banner */}
@@ -554,133 +369,7 @@ function CityServiceView({
 }
 
 // ---------------------------------------------------------------------------
-// PropertyCategory View
-// ---------------------------------------------------------------------------
-
-function PropertyCategoryView({
-  data,
-  province,
-  city,
-  service,
-}: {
-  data: CategoryData
-  province: string
-  city: string
-  service: string
-}) {
-  const cityTitle = data.city.title
-  const provinceTitle = data.province.title
-  const propertyTypeLabel = data.title || service.replace(/-/g, ' ')
-  const listings = data.listings ?? []
-
-  return (
-    <>
-      {/* Breadcrumbs */}
-      <div className="mx-auto max-w-7xl px-4 pt-4">
-        <BreadcrumbNav
-          crumbs={[
-            { label: 'Home', href: '/' },
-            { label: provinceTitle, href: `/ca/${province}/` },
-            { label: cityTitle, href: `/ca/${province}/${city}/` },
-            {
-              label: propertyTypeLabel,
-              href: `/ca/${province}/${city}/${service}/`,
-            },
-          ]}
-        />
-      </div>
-
-      {/* Editorial hero */}
-      <PageHeroBlock
-        kicker={`${cityTitle} Rentals`}
-        eyebrow={`${propertyTypeLabel} in ${cityTitle}`}
-        headline={`${propertyTypeLabel} for rent in ${cityTitle}`}
-        accentLastWord={false}
-        lede={
-          listings.length > 0
-            ? `${listings.length} verified listing${listings.length === 1 ? '' : 's'} available - transparent pricing, online applications, RTA-compliant leases.`
-            : `Browse ${propertyTypeLabel.toLowerCase()} rentals in ${cityTitle}. Verified properties with transparent pricing.`
-        }
-        cta1={{ label: 'Apply Now', href: '/contact/?intent=apply' }}
-        cta2={{ label: 'Browse More Cities', href: '/locations/' }}
-      />
-
-      {/* Category Description */}
-      {data.description && (
-        <section className="mx-auto max-w-4xl px-4 py-8">
-          <PortableTextBody value={data.description} />
-        </section>
-      )}
-
-      {/* Bedroom Filter Links */}
-      {listings.length > 0 && (
-        <section className="mx-auto max-w-7xl px-4 py-8">
-          <div className="mb-5 flex flex-col gap-1">
-            <p className="text-brand-emerald font-heading font-semibold text-xs uppercase tracking-wider">
-              Narrow Your Search
-            </p>
-            <h2 className="font-display text-2xl text-brand-navy">
-              Filter by Bedrooms
-            </h2>
-          </div>
-          <div className="flex flex-wrap gap-3 mb-4">
-            <Link
-              href={`/ca/${province}/${city}/${service}/`}
-              className="inline-flex items-center gap-2 rounded-full border border-brand-emerald bg-brand-emerald/5 px-5 py-2.5 text-sm font-medium text-brand-emerald transition-all duration-200"
-            >
-              All
-            </Link>
-            {BEDROOM_OPTIONS.map((option) => (
-              <Link
-                key={option.slug}
-                href={`/ca/${province}/${city}/${service}/${option.slug}/`}
-                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 hover:border-brand-emerald hover:bg-brand-emerald/5 hover:text-brand-emerald hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200"
-              >
-                {option.label}
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Listings */}
-      <section className="mx-auto max-w-7xl px-4 py-10">
-        <div className="mb-8 flex flex-col gap-1">
-          <p className="text-brand-emerald font-heading font-semibold text-xs uppercase tracking-wider">
-            Verified Listings
-          </p>
-          <h2 className="font-display text-3xl md:text-4xl text-brand-navy">
-            Available {propertyTypeLabel} in{' '}
-            <span className="italic text-brand-emerald">{cityTitle}</span>
-          </h2>
-        </div>
-        {listings.length > 0 ? (
-          <div className="[&_a]:transition-all [&_a]:duration-300 [&_a:hover]:-translate-y-1 [&_a:hover]:shadow-lg">
-            <PropertyCardBlock listings={listings} />
-          </div>
-        ) : (
-          <div className="rounded-3xl bg-gradient-to-br from-slate-50 to-white border border-slate-100 p-10 text-center">
-            <p className="text-slate-600 leading-relaxed">
-              No {propertyTypeLabel.toLowerCase()} listings are currently
-              available in {cityTitle}. Check back soon or browse other property
-              types.
-            </p>
-          </div>
-        )}
-      </section>
-
-      {/* CTA Banner */}
-      <CTABannerBlock
-        headline="Find Your Next Rental"
-        description={`Looking for the perfect ${propertyTypeLabel.toLowerCase()} in ${cityTitle}? Browse all available listings and apply online.`}
-        primaryCta={{ label: 'Browse All Cities', href: '/locations/' }}
-      />
-    </>
-  )
-}
-
-// ---------------------------------------------------------------------------
-// Page Component (dispatches to CityService or PropertyCategory)
+// Page Component
 // ---------------------------------------------------------------------------
 
 export default async function CityServicePage({
@@ -698,50 +387,24 @@ export default async function CityServicePage({
     notFound()
   }
 
-  // Try CityService first (highest-value SEO page type)
-  const cityServiceData = await sanityFetch<CityServicePageData | null>({
-    query: CITY_SERVICE_PAGE_QUERY,
-    params: {
-      provinceSlug: province,
-      citySlug: city,
-      serviceSlug: service,
-    },
-    tags: ['cityService', 'city', 'service'],
-  })
+  const cityData = getFallbackCaCity(city)
+  const serviceData = getServiceContent(service)
 
-  if (cityServiceData) {
-    return (
-      <main>
-        <CityServiceView
-          data={cityServiceData}
-          province={province}
-          city={city}
-          service={service}
-        />
-      </main>
-    )
+  if (!cityData || !serviceData) {
+    // TODO: no static data — property-category (apartments-for-rent, etc.)
+    // and unknown slugs fall through to 404 here.
+    notFound()
   }
 
-  // Fallback: try PropertyCategory
-  const categoryData = await sanityFetch<CategoryData | null>({
-    query: PROPERTY_CATEGORY_QUERY,
-    params: { citySlug: city, propertyType: service },
-    tags: ['propertyCategory', 'propertyListing'],
-  })
-
-  if (categoryData) {
-    return (
-      <main>
-        <PropertyCategoryView
-          data={categoryData}
-          province={province}
-          city={city}
-          service={service}
-        />
-      </main>
-    )
-  }
-
-  // Neither matched
-  notFound()
+  return (
+    <main>
+      <CityServiceView
+        cityData={cityData}
+        serviceData={serviceData}
+        province={province}
+        city={city}
+        service={service}
+      />
+    </main>
+  )
 }

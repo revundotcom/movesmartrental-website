@@ -3,10 +3,7 @@ import Link from 'next/link'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
-import { sanityFetch } from '@/sanity/fetch'
-import { BLOG_GUIDE_LIST_QUERY } from '@/sanity/queries/blog-guide'
-import { COMPARISON_LIST_QUERY } from '@/sanity/queries/comparison'
-import { CASE_STUDY_LIST_QUERY } from '@/sanity/queries/case-study'
+import { listGuides, type GuideContent } from '@/data/guides'
 
 import {
   ResourcesEditorial,
@@ -38,74 +35,17 @@ export const metadata: Metadata = {
 }
 
 // ---------------------------------------------------------------------------
-// Types for fetched listing data (preserved from prior implementation)
+// Mapper: normalise local GuideContent into EditorialArticle
 // ---------------------------------------------------------------------------
 
-interface BlogGuideListItem {
-  title: string
-  slug: string
-  category?: 'blog' | 'guide' | 'market-report' | 'legal-guide'
-  excerpt?: string
-  heroImageUrl?: string
-  heroImageAlt?: string
-  author?: string
-  publishedAt?: string
-  cityTitle?: string
-  serviceTitle?: string
-  featured?: boolean
-}
-
-interface ComparisonListItem {
-  title: string
-  slug: string
-  serviceTitle?: string
-}
-
-interface CaseStudyListItem {
-  title: string
-  slug: string
-  clientName?: string
-  outcome?: string
-  cityTitle?: string
-  heroImageUrl?: string
-  heroImageAlt?: string
-}
-
-// ---------------------------------------------------------------------------
-// Mappers: normalise every Sanity source into EditorialArticle
-// ---------------------------------------------------------------------------
-
-function mapBlogGuide(b: BlogGuideListItem): EditorialArticle {
+function mapGuide(g: GuideContent): EditorialArticle {
   return {
-    title: b.title,
-    slug: b.slug,
-    category: b.category,
-    excerpt: b.excerpt,
-    author: b.author,
-    publishedAt: b.publishedAt,
-    cityTitle: b.cityTitle,
-  }
-}
-
-function mapComparison(c: ComparisonListItem): EditorialArticle {
-  return {
-    title: c.title,
-    slug: c.slug,
-    category: 'comparison',
-    excerpt: c.serviceTitle
-      ? `Compare leasing approaches for ${c.serviceTitle}.`
-      : undefined,
-  }
-}
-
-function mapCaseStudy(c: CaseStudyListItem): EditorialArticle {
-  return {
-    title: c.title,
-    slug: c.slug,
-    category: 'case-study',
-    excerpt: c.outcome,
-    cityTitle: c.cityTitle,
-    author: c.clientName,
+    title: g.title,
+    slug: g.slug,
+    category: g.category,
+    excerpt: g.metaDescription,
+    author: g.author,
+    publishedAt: g.publishDate,
   }
 }
 
@@ -324,34 +264,21 @@ const FAQ_LD = {
 // ---------------------------------------------------------------------------
 
 export default async function ResourcesPage() {
-  const [blogGuides, comparisons, caseStudies] = await Promise.all([
-    sanityFetch<BlogGuideListItem[]>({
-      query: BLOG_GUIDE_LIST_QUERY,
-      params: { category: null },
-      tags: ['blogGuide'],
-    }),
-    sanityFetch<ComparisonListItem[]>({
-      query: COMPARISON_LIST_QUERY,
-      tags: ['comparison'],
-    }),
-    sanityFetch<CaseStudyListItem[]>({
-      query: CASE_STUDY_LIST_QUERY,
-      tags: ['caseStudy'],
-    }),
-  ])
+  // Local guide registry replaces the prior Sanity-backed fetches.
+  const guides = listGuides()
+  const comparisons: never[] = []
+  const caseStudies: never[] = []
 
-  // Normalise every Sanity source into the editorial article shape
+  // Normalise every source into the editorial article shape
   const allArticles: EditorialArticle[] = [
-    ...blogGuides.map(mapBlogGuide),
-    ...comparisons.map(mapComparison),
-    ...caseStudies.map(mapCaseStudy),
+    ...guides.map(mapGuide),
+    ...comparisons,
+    ...caseStudies,
   ]
 
-  // Pick featured: explicit featured flag, else first blog/guide, else first item
-  const featuredSource =
-    blogGuides.find((b) => b.featured) ?? blogGuides[0] ?? null
-  const featured: EditorialArticle | null = featuredSource
-    ? mapBlogGuide(featuredSource)
+  // Pick featured: first guide, else first article
+  const featured: EditorialArticle | null = guides[0]
+    ? mapGuide(guides[0])
     : allArticles[0] ?? null
 
   // Recent feed (everything except featured, capped at 12)
@@ -361,12 +288,10 @@ export default async function ResourcesPage() {
 
   // Counts passed to editorial in case a future section surfaces them
   const articleCount = allArticles.length
-  const guideCount = blogGuides.filter(
-    (b) => b.category === 'guide' || b.category === 'legal-guide',
+  const guideCount = guides.filter(
+    (g) => g.category === 'landlord' || g.category === 'tenant' || g.category === 'institutional',
   ).length
-  const reportCount = blogGuides.filter(
-    (b) => b.category === 'market-report',
-  ).length
+  const reportCount = guides.filter((g) => g.category === 'market').length
 
   return (
     <main>
