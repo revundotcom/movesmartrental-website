@@ -186,16 +186,18 @@ function buildStaticSegment(): MetadataRoute.Sitemap {
 }
 
 async function buildCaCitiesSegment(): Promise<MetadataRoute.Sitemap> {
-  const [provinces, cities] = await Promise.all([
-    sanityFetch<SitemapProvince[]>({
+  const [provincesRaw, citiesRaw] = await Promise.all([
+    sanityFetch<SitemapProvince[] | null>({
       query: SITEMAP_CA_PROVINCES_QUERY,
       tags: ['province'],
     }),
-    sanityFetch<SitemapCity[]>({
+    sanityFetch<SitemapCity[] | null>({
       query: SITEMAP_CA_CITIES_QUERY,
       tags: ['city'],
     }),
   ])
+  const provinces = provincesRaw ?? []
+  const cities = citiesRaw ?? []
 
   const entries: MetadataRoute.Sitemap = []
 
@@ -223,16 +225,18 @@ async function buildCaCitiesSegment(): Promise<MetadataRoute.Sitemap> {
 }
 
 async function buildCaServicesSegment(): Promise<MetadataRoute.Sitemap> {
-  const [cityServices, services] = await Promise.all([
-    sanityFetch<SitemapCityService[]>({
+  const [cityServicesRaw, servicesRaw] = await Promise.all([
+    sanityFetch<SitemapCityService[] | null>({
       query: SITEMAP_CA_CITY_SERVICES_QUERY,
       tags: ['cityService', 'service'],
     }),
-    sanityFetch<SitemapService[]>({
+    sanityFetch<SitemapService[] | null>({
       query: SITEMAP_SERVICES_QUERY,
       tags: ['service'],
     }),
   ])
+  const cityServices = cityServicesRaw ?? []
+  const services = servicesRaw ?? []
 
   const entries: MetadataRoute.Sitemap = []
 
@@ -260,12 +264,12 @@ async function buildCaServicesSegment(): Promise<MetadataRoute.Sitemap> {
 }
 
 async function buildBlogSegment(): Promise<MetadataRoute.Sitemap> {
-  const blogGuides = await sanityFetch<SitemapSlug[]>({
+  const blogGuides = await sanityFetch<SitemapSlug[] | null>({
     query: SITEMAP_BLOG_GUIDES_QUERY,
     tags: ['blogGuide'],
   })
 
-  return blogGuides.map((post) => ({
+  return (blogGuides ?? []).map((post) => ({
     url: `${siteUrl}/resources/${post.slug}/`,
     lastModified: post._updatedAt ? new Date(post._updatedAt) : new Date(),
     changeFrequency: 'weekly' as const,
@@ -274,16 +278,18 @@ async function buildBlogSegment(): Promise<MetadataRoute.Sitemap> {
 }
 
 async function buildListingsSegment(): Promise<MetadataRoute.Sitemap> {
-  const [categories, listings] = await Promise.all([
-    sanityFetch<SitemapPropertyCategory[]>({
+  const [categoriesRaw, listingsRaw] = await Promise.all([
+    sanityFetch<SitemapPropertyCategory[] | null>({
       query: SITEMAP_PROPERTY_CATEGORIES_QUERY,
       tags: ['propertyCategory'],
     }),
-    sanityFetch<SitemapPropertyListing[]>({
+    sanityFetch<SitemapPropertyListing[] | null>({
       query: SITEMAP_PROPERTY_LISTINGS_QUERY,
       tags: ['propertyListing'],
     }),
   ])
+  const categories = categoriesRaw ?? []
+  const listings = listingsRaw ?? []
 
   const entries: MetadataRoute.Sitemap = []
 
@@ -311,16 +317,18 @@ async function buildListingsSegment(): Promise<MetadataRoute.Sitemap> {
 }
 
 async function buildResourcesSegment(): Promise<MetadataRoute.Sitemap> {
-  const [comparisons, caseStudies] = await Promise.all([
-    sanityFetch<SitemapSlug[]>({
+  const [comparisonsRaw, caseStudiesRaw] = await Promise.all([
+    sanityFetch<SitemapSlug[] | null>({
       query: SITEMAP_COMPARISONS_QUERY,
       tags: ['comparison'],
     }),
-    sanityFetch<SitemapSlug[]>({
+    sanityFetch<SitemapSlug[] | null>({
       query: SITEMAP_CASE_STUDIES_QUERY,
       tags: ['caseStudy'],
     }),
   ])
+  const comparisons = comparisonsRaw ?? []
+  const caseStudies = caseStudiesRaw ?? []
 
   const entries: MetadataRoute.Sitemap = []
 
@@ -350,16 +358,18 @@ async function buildResourcesSegment(): Promise<MetadataRoute.Sitemap> {
 /* ------------------------------------------------------------------ */
 
 async function buildUsCitiesSegment(): Promise<MetadataRoute.Sitemap> {
-  const [states, cities] = await Promise.all([
-    sanityFetch<SitemapProvince[]>({
+  const [statesRaw, citiesRaw] = await Promise.all([
+    sanityFetch<SitemapProvince[] | null>({
       query: SITEMAP_US_STATES_QUERY,
       tags: ['province'],
     }),
-    sanityFetch<SitemapUSCity[]>({
+    sanityFetch<SitemapUSCity[] | null>({
       query: SITEMAP_US_CITIES_QUERY,
       tags: ['city'],
     }),
   ])
+  const states = statesRaw ?? []
+  const cities = citiesRaw ?? []
 
   const entries: MetadataRoute.Sitemap = []
 
@@ -387,7 +397,7 @@ async function buildUsCitiesSegment(): Promise<MetadataRoute.Sitemap> {
 }
 
 async function buildUsServicesSegment(): Promise<MetadataRoute.Sitemap> {
-  const usCityServices = await sanityFetch<SitemapUSCityService[]>({
+  const usCityServices = await sanityFetch<SitemapUSCityService[] | null>({
     query: SITEMAP_US_CITY_SERVICES_QUERY,
     tags: ['cityService'],
   })

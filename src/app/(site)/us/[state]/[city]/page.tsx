@@ -30,7 +30,7 @@ export async function generateStaticParams() {
       slug: { current: string }
       provinceSlug: string
       country: string
-    }>
+    }> | null
   >({
     query: groq`
       *[_type == "city" && province->country == "us"] {
@@ -42,7 +42,7 @@ export async function generateStaticParams() {
     tags: ['city'],
   })
 
-  const sanityParams = cities.map((c) => ({
+  const sanityParams = (cities ?? []).map((c) => ({
     state: c.provinceSlug,
     city: c.slug.current,
   }))

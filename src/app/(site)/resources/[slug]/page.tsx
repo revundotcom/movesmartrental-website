@@ -155,16 +155,16 @@ interface SlugItem {
 
 export async function generateStaticParams() {
   const [blogGuides, comparisons, caseStudies] = await Promise.all([
-    sanityFetch<SlugItem[]>({
+    sanityFetch<SlugItem[] | null>({
       query: BLOG_GUIDE_LIST_QUERY,
       params: { category: null },
       tags: ['blogGuide'],
     }),
-    sanityFetch<SlugItem[]>({
+    sanityFetch<SlugItem[] | null>({
       query: COMPARISON_LIST_QUERY,
       tags: ['comparison'],
     }),
-    sanityFetch<SlugItem[]>({
+    sanityFetch<SlugItem[] | null>({
       query: CASE_STUDY_LIST_QUERY,
       tags: ['caseStudy'],
     }),
@@ -172,9 +172,9 @@ export async function generateStaticParams() {
 
   const localSlugs = GUIDE_SLUGS.map((slug) => ({ slug }))
   const sanitySlugs = [
-    ...blogGuides.map((bg) => ({ slug: bg.slug })),
-    ...comparisons.map((c) => ({ slug: c.slug })),
-    ...caseStudies.map((cs) => ({ slug: cs.slug })),
+    ...(blogGuides ?? []).map((bg) => ({ slug: bg.slug })),
+    ...(comparisons ?? []).map((c) => ({ slug: c.slug })),
+    ...(caseStudies ?? []).map((cs) => ({ slug: cs.slug })),
   ]
 
   // De-dupe - local slugs take precedence when a slug exists in both sources

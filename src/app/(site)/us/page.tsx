@@ -51,11 +51,11 @@ export const metadata: Metadata = {
 // ---------------------------------------------------------------------------
 
 export default async function USHubPage() {
-  const states = await sanityFetch<StateCard[]>({
+  const states = (await sanityFetch<StateCard[] | null>({
     query: COUNTRY_PROVINCES_QUERY,
     params: { country: 'us' },
     tags: ['province'],
-  })
+  })) ?? []
 
   return (
     <main>

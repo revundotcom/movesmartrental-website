@@ -12,11 +12,10 @@ export async function sanityFetch<T>({
   const client = getClient()
   if (!client) {
     // Sanity env vars missing (typical during build or preview deploys
-    // without secrets). Return [] so callers that expect arrays (most
-    // generateStaticParams usages) can call .filter/.map without crashing;
-    // callers expecting a single object generally use `data?.field ?? fallback`
-    // patterns, which also degrade safely against [].
-    return [] as unknown as T
+    // without secrets). Return null so `sanityData ?? fallback` patterns
+    // trigger correctly for single-doc queries. Array callers must use
+    // `?? []` before calling .filter/.map.
+    return null as unknown as T
   }
   return await client.fetch<T>(query, params, {
     next: { tags },

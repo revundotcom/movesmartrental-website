@@ -51,11 +51,11 @@ export const metadata: Metadata = {
 // ---------------------------------------------------------------------------
 
 export default async function CanadaHubPage() {
-  const provinces = await sanityFetch<ProvinceCard[]>({
+  const provinces = (await sanityFetch<ProvinceCard[] | null>({
     query: COUNTRY_PROVINCES_QUERY,
     params: { country: 'ca' },
     tags: ['province'],
-  })
+  })) ?? []
 
   return (
     <main>

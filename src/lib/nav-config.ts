@@ -55,48 +55,15 @@ export const NAV_GROUPS = [
     ],
   },
   {
-    label: 'Locations',
-    // TODO(phase-2): build dedicated /locations/ hub. Until then we
-    // surface the existing Ontario index plus tier-1 city links.
-    items: [
-      { title: 'All Ontario Locations', href: '/ca/ontario/', description: 'Browse every Ontario city we serve' },
-      { title: 'Toronto', href: '/ca/ontario/toronto/', description: 'Downtown core to the suburbs' },
-      { title: 'Mississauga', href: '/ca/ontario/mississauga/', description: 'Square One and Port Credit' },
-      { title: 'Brampton', href: '/ca/ontario/brampton/', description: 'Heart Lake to Mount Pleasant' },
-      { title: 'Hamilton', href: '/ca/ontario/hamilton/', description: 'Westdale to Stoney Creek' },
-      { title: 'Ottawa', href: '/ca/ontario/ottawa/', description: 'Centretown, Westboro, Kanata' },
-      { title: 'Vaughan', href: '/ca/ontario/vaughan/', description: 'Woodbridge, Maple, Thornhill' },
-      { title: 'Markham', href: '/ca/ontario/markham/', description: 'Unionville and Cornell' },
-    ],
-  },
-  {
     label: 'Pricing',
     items: [
       { title: 'Pricing & Plans', href: '/pricing/', description: 'Transparent leasing fees, no lock-in' },
     ],
   },
   {
-    label: 'Resources',
-    // TODO(phase-2): build dedicated /resources/ hub. For now this
-    // points at the FAQ which is the closest existing resource page.
-    items: [
-      { title: 'FAQ', href: '/faq/', description: 'Answers for owners, operators, and renters' },
-      { title: 'Reviews', href: '/reviews/', description: 'Verified client outcomes' },
-      { title: 'Tenant Hub', href: '/tenants/', description: 'Renter-focused guides and tools' },
-      { title: 'Owner Hub', href: '/owners/', description: 'Landlord-focused guides and tools' },
-    ],
-  },
-  {
     label: 'Franchising',
     items: [
       { title: 'Franchising', href: '/franchising/', description: 'Build a leasing brokerage with MoveSmart' },
-    ],
-  },
-  {
-    label: 'About',
-    items: [
-      { title: 'About Us', href: '/about/', description: 'Our story, mission, and team' },
-      { title: 'Reviews', href: '/reviews/', description: 'See what clients say about us' },
     ],
   },
   {

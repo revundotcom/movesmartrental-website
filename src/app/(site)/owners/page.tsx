@@ -436,10 +436,10 @@ function GoldRule() {
 }
 
 export default async function OwnersPage() {
-  const services = await sanityFetch<ServiceCardData[]>({
+  const services = (await sanityFetch<ServiceCardData[] | null>({
     query: SERVICE_OWNER_QUERY,
     tags: ['service'],
-  })
+  })) ?? []
 
   return (
     <main>
