@@ -161,6 +161,22 @@ export function HeroBlock({
               </motion.p>
             )}
 
+            {/* Proof stats row */}
+            <motion.div
+              className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/75"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span className="font-semibold text-white">500+ Units Leased</span>
+              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/30" />
+              <span className="font-semibold text-white">20+ Cities</span>
+              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/30" />
+              <span className="font-semibold text-white">94% Applicant Approval</span>
+              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/30" />
+              <span className="font-semibold text-white">14-Day Avg. Placement</span>
+            </motion.div>
+
             {/* CTA buttons */}
             {(cta1 || cta2) && (
               <motion.div

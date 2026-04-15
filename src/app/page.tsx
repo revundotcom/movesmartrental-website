@@ -146,10 +146,14 @@ export async function generateMetadata(): Promise<Metadata> {
 /* ---------- Page ---------- */
 
 export default async function HomePage() {
-  const data = await sanityFetch<HomepageData>({
+  const rawData = await sanityFetch<HomepageData>({
     query: HOMEPAGE_QUERY,
     tags: ['service', 'city'],
   })
+  // `sanityFetch` returns `[]` when Sanity env vars are missing (see
+  // src/sanity/fetch.ts). Coerce into a safe partial so downstream
+  // `data.featuredX` lookups yield undefined → handled by `?? fallback`.
+  const data = (rawData && !Array.isArray(rawData) ? rawData : {}) as Partial<HomepageData>
 
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
@@ -213,8 +217,8 @@ export default async function HomePage() {
           <div className="absolute top-0 right-[8%] w-80 h-80 rounded-full bg-brand-gold/10 blur-[100px]" />
         </div>
         <HeroBlock
-          headline="Stress-Free Leasing, Maximum Exposure, Full Transparency"
-          subheadline="MoveSmart Rentals is a white-glove leasing brokerage. Technology-driven listing, MLS and multi-platform advertising, structured professional screening, rental protection options, and optional dedicated account-manager support, from listing to move-in."
+          headline="Get Your Property Rented to Qualified Tenants, Fast"
+          subheadline="MoveSmart Rentals is a white-glove leasing brokerage. We advertise on MLS and 50+ platforms, screen every applicant, and handle every step from listing to move-in. Nothing due upfront."
           cta1={{ label: 'Create a Free Account', href: '/contact/' }}
           cta2={{ label: 'Book a Call', href: '/contact/?intent=call' }}
           priority
@@ -670,7 +674,7 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
-        <CityGridBlock cities={data.featuredCities} columns={4} showHeading={false} />
+        <CityGridBlock cities={data.featuredCities ?? []} columns={4} showHeading={false} />
       </section>
 
       {/* ── SECTION 7.5: North America Positioning (Canada + US expansion) ── */}
