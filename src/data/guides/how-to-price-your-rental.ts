@@ -51,7 +51,7 @@ Neither number is catastrophic in isolation. Both are avoidable with a structure
       callout: {
         label: 'The rule of thumb',
         body:
-          'A correctly priced Ontario rental typically secures a qualified applicant within 14-28 days of listing. A listing that crosses 28 days without a qualified offer is a pricing or presentation signal, not a market signal.',
+          'A correctly priced Ontario rental typically secures a qualified applicant within 18 to 28 days of listing. A listing that crosses 28 days without a qualified offer is a pricing or presentation signal, not a market signal.',
       },
     },
     {
@@ -193,7 +193,7 @@ For owners who want pricing bundled with the full placement, see [Leasing Servic
     {
       question: 'How often should I reprice a listing that is not renting?',
       answer:
-        'A listing that has crossed roughly 14 days without a qualified offer should trigger a review; a listing crossing 28 days without one should be repriced. When the adjustment comes, a single meaningful reduction (typically 3-5% in Ontario submarkets) clears the listing faster than a series of small cuts. Repeated 1-2% adjustments signal indecision to agents and applicants and extend total time-on-market, which costs more in lost rent than the correction would.',
+        'A listing that has crossed roughly 18 days without a qualified offer should trigger a review; a listing crossing 28 days without one should be repriced. When the adjustment comes, a single meaningful reduction (typically 3-5% in Ontario submarkets) clears the listing faster than a series of small cuts. Repeated 1-2% adjustments signal indecision to agents and applicants and extend total time-on-market, which costs more in lost rent than the correction would.',
     },
     {
       question: 'Should I list below market to generate multiple offers?',

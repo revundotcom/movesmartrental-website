@@ -74,7 +74,7 @@ const PAIN_POINTS: Array<{ problem: string; solution: string }> = [
     problem:
       'Vacant units sitting empty for weeks while you guess at the right asking rent.',
     solution:
-      'Strategic, data-backed pricing on day one - calibrated to live comps in your neighbourhood, not last year\u2019s averages. Most listings reach signed lease in roughly 14 days.',
+      'Strategic, data-backed pricing on day one - calibrated to live comps in your neighbourhood, not last year\u2019s averages. Most listings reach signed lease in roughly 18 days.',
   },
   {
     problem:
@@ -247,7 +247,7 @@ const COMPARISON_ROWS: Array<{
     label: 'Average days to signed lease',
     diy: { verdict: 'bad', text: '30-60 days' },
     traditional: { verdict: 'meh', text: '21-35 days' },
-    movesmart: { verdict: 'good', text: '~14 days average' },
+    movesmart: { verdict: 'good', text: '~18 days average' },
   },
   {
     label: 'Pricing approach',
@@ -961,7 +961,7 @@ export default async function OwnersPage() {
           {
             question: 'How quickly will my unit lease?',
             answer:
-              'Most listings reach a signed lease in roughly 14 days from going live. We distribute to MLS, Realtor.ca, and the major rental portals, with professional photos and a virtual tour, to drive applicant volume in week one.',
+              'Most listings reach a signed lease in roughly 18 days from going live. We distribute to MLS, Realtor.ca, and the major rental portals, with professional photos and a virtual tour, to drive applicant volume in week one.',
           },
           {
             question: 'Do I need to get on a call to start?',

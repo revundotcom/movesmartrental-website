@@ -278,7 +278,7 @@ export default async function TenantsPage() {
         cta2={{ label: 'Tenant FAQ', href: '/faq/' }}
         meta={[
           { label: 'Cities', value: '20+' },
-          { label: 'Avg move-in', value: '14 days' },
+          { label: 'Avg move-in', value: '18 days' },
           { label: 'Listings', value: 'Daily' },
           { label: 'Response', value: '< 24h' },
         ]}

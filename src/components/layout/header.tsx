@@ -48,15 +48,15 @@ export function Header() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 w-full bg-brand-navy transition-[border-color,box-shadow] duration-300',
+        'sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md transition-[border-color,box-shadow] duration-300',
         scrolled
-          ? 'border-b border-white/10 shadow-[0_1px_16px_rgba(11,29,58,0.4)]'
-          : 'border-b border-white/5',
+          ? 'border-b border-slate-200 shadow-[0_1px_16px_rgba(11,29,58,0.08)]'
+          : 'border-b border-slate-100',
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-[72px] lg:px-8">
-        {/* Logo - always white on dark navy */}
-        <Logo variant="white" />
+        {/* Logo in its true navy + emerald colors */}
+        <Logo variant="default" />
 
         {/* Desktop navigation */}
         <NavigationMenu
@@ -77,7 +77,7 @@ export function Header() {
                     <NavigationMenuLink
                       render={<Link href={only.href} />}
                       active={pathname === only.href}
-                      className="cursor-pointer rounded-lg px-2.5 py-2 text-sm font-medium whitespace-nowrap text-white/80 transition-all duration-200 hover:bg-white/10 hover:text-white data-active:bg-transparent data-active:text-white"
+                      className="cursor-pointer rounded-lg px-2.5 py-2 text-sm font-medium whitespace-nowrap text-brand-navy/75 transition-all duration-200 hover:bg-slate-100 hover:text-brand-navy data-active:bg-transparent data-active:text-brand-navy"
                     >
                       {group.label}
                     </NavigationMenuLink>
@@ -87,7 +87,7 @@ export function Header() {
               return (
                 <NavigationMenuItem key={group.label}>
                   <NavigationMenuTrigger
-                    className="cursor-pointer rounded-lg px-2.5 py-2 text-sm font-medium whitespace-nowrap text-white/80 transition-all duration-200 hover:bg-white/10 hover:text-white data-popup-open:bg-white/10 data-popup-open:text-white"
+                    className="cursor-pointer rounded-lg px-2.5 py-2 text-sm font-medium whitespace-nowrap text-brand-navy/75 transition-all duration-200 hover:bg-slate-100 hover:text-brand-navy data-popup-open:bg-slate-100 data-popup-open:text-brand-navy"
                   >
                     {group.label}
                   </NavigationMenuTrigger>
@@ -125,7 +125,7 @@ export function Header() {
         <div className="hidden items-center gap-2 lg:flex">
           <Link
             href="/contact/?intent=call"
-            className="cursor-pointer whitespace-nowrap rounded-lg border border-white/20 px-3.5 py-2 text-sm font-medium text-white/80 transition-all duration-200 hover:border-white/40 hover:bg-white/10 hover:text-white"
+            className="cursor-pointer whitespace-nowrap rounded-lg border border-slate-200 px-3.5 py-2 text-sm font-medium text-brand-navy/80 transition-all duration-200 hover:border-brand-navy/30 hover:bg-slate-50 hover:text-brand-navy"
           >
             Book a Call
           </Link>

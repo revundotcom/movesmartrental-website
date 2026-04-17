@@ -1,9 +1,10 @@
 'use client'
 
 import { memo, useEffect, useMemo, useRef, useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence, MotionConfig } from 'framer-motion'
-import { ArrowRight, Check } from 'lucide-react'
+import { ArrowRight, Check, Shield, Key, Building2, MapPin, Calendar, FileText, Sparkles } from 'lucide-react'
 
 import type { ServiceCardData } from '@/types/blocks'
 
@@ -182,459 +183,715 @@ function ServiceVisual({ idx }: { idx: number }) {
 }
 
 function PricingVisual() {
+  const comps = [
+    { unit: '123 King St W', sqft: '680', rent: '$2,790', isYou: false },
+    { unit: '127 King St W', sqft: '710', rent: '$2,850', isYou: true },
+    { unit: '145 Bathurst', sqft: '695', rent: '$2,825', isYou: false },
+  ]
   return (
-    <svg viewBox="0 0 320 200" className="mx-auto block w-full max-w-[340px]" aria-hidden="true">
-      {/* Axis */}
-      <line x1="20" y1="170" x2="300" y2="170" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-      <line x1="20" y1="20" x2="20" y2="170" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-      {/* Comparable dots */}
-      {[
-        { x: 60, y: 120, color: 'rgba(255,255,255,0.25)' },
-        { x: 100, y: 90, color: 'rgba(255,255,255,0.25)' },
-        { x: 140, y: 110, color: 'rgba(255,255,255,0.25)' },
-        { x: 180, y: 70, color: 'rgba(255,255,255,0.25)' },
-        { x: 220, y: 85, color: 'rgba(255,255,255,0.25)' },
-      ].map((p) => (
-        <circle key={`${p.x}`} cx={p.x} cy={p.y} r="3.5" fill={p.color} />
-      ))}
-      {/* Recommended price line */}
-      <motion.path
-        d="M 20 130 L 60 110 L 100 95 L 140 85 L 180 70 L 220 60 L 260 55 L 300 50"
-        fill="none"
-        stroke="#10B981"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 1.4, ease: EASE }}
-      />
-      {/* Recommended price marker */}
-      <circle cx="260" cy="55" r="6" fill="#10B981" />
-      <circle cx="260" cy="55" r="11" fill="#10B981" fillOpacity="0.18" />
-      <text x="270" y="40" fill="#10B981" fontSize="11" fontWeight="800">$2,850</text>
-      <text x="270" y="52" fill="rgba(255,255,255,0.5)" fontSize="8">recommended</text>
-      {/* Y-axis ticks */}
-      {['$3.2k', '$2.8k', '$2.4k', '$2.0k'].map((t, i) => (
-        <text key={t} x="2" y={40 + i * 40} fill="rgba(255,255,255,0.3)" fontSize="7">{t}</text>
-      ))}
-    </svg>
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: EASE }}
+      className="mx-auto w-full max-w-[360px] rounded-2xl bg-white p-4 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)] ring-1 ring-slate-200"
+    >
+      {/* Address chip */}
+      <div className="flex items-center gap-2 rounded-lg bg-slate-50 px-2.5 py-1.5 ring-1 ring-slate-200/70">
+        <MapPin className="size-3.5 text-brand-emerald" aria-hidden="true" />
+        <span className="truncate text-[11px] font-semibold text-slate-700">127 King St W, Toronto</span>
+      </div>
+
+      {/* Suggested rent */}
+      <div className="mt-3 flex items-end justify-between">
+        <div>
+          <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-slate-400">Suggested Rent</p>
+          <p className="font-display text-2xl font-black leading-none text-brand-emerald">$2,850<span className="text-sm font-semibold text-slate-400">/mo</span></p>
+        </div>
+        <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[9px] font-bold text-brand-emerald ring-1 ring-emerald-200">+2.1% vs market</span>
+      </div>
+
+      {/* Comparables chart */}
+      <div className="mt-3 rounded-lg bg-slate-50 p-2 ring-1 ring-slate-200/70">
+        <svg viewBox="0 0 280 80" className="block w-full" aria-hidden="true">
+          {/* Band */}
+          <rect x="0" y="22" width="280" height="22" fill="#10B981" fillOpacity="0.08" />
+          <line x1="0" y1="33" x2="280" y2="33" stroke="#10B981" strokeOpacity="0.3" strokeWidth="1" strokeDasharray="3 3" />
+          {/* Line */}
+          <motion.path
+            d="M 5 55 L 45 50 L 85 42 L 125 36 L 165 34 L 205 30 L 245 28 L 275 25"
+            fill="none"
+            stroke="#10B981"
+            strokeWidth="2"
+            strokeLinecap="round"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 1.2, ease: EASE }}
+          />
+          {/* Dots */}
+          {[[45, 50], [85, 42], [125, 36], [165, 34], [205, 30], [245, 28]].map(([x, y]) => (
+            <circle key={`${x}`} cx={x} cy={y} r="2.5" fill="white" stroke="#10B981" strokeWidth="1.5" />
+          ))}
+          {/* Highlight */}
+          <circle cx="165" cy="34" r="5" fill="#10B981" />
+          <circle cx="165" cy="34" r="9" fill="#10B981" fillOpacity="0.18" />
+        </svg>
+      </div>
+
+      {/* Comparables table */}
+      <div className="mt-3 overflow-hidden rounded-lg ring-1 ring-slate-200/70">
+        <div className="grid grid-cols-[1fr_56px_72px] gap-1 bg-slate-100/70 px-2.5 py-1 text-[8.5px] font-bold uppercase tracking-wider text-slate-500">
+          <span>Unit</span>
+          <span className="text-right">Sqft</span>
+          <span className="text-right">Rent</span>
+        </div>
+        {comps.map((c) => (
+          <div
+            key={c.unit}
+            className={`grid grid-cols-[1fr_56px_72px] items-center gap-1 px-2.5 py-1.5 text-[10.5px] ${
+              c.isYou ? 'bg-emerald-50/70 font-bold text-brand-emerald' : 'text-slate-600'
+            } border-t border-slate-100`}
+          >
+            <span className="flex items-center gap-1.5 truncate">
+              {c.isYou && <span className="rounded bg-brand-emerald px-1 py-0.5 text-[7.5px] font-black leading-none text-white">YOU</span>}
+              <span className="truncate">{c.unit}</span>
+            </span>
+            <span className="text-right tabular-nums">{c.sqft}</span>
+            <span className="text-right font-semibold tabular-nums">{c.rent}</span>
+          </div>
+        ))}
+      </div>
+    </motion.div>
   )
 }
 
 function MarketingVisual() {
+  const portals = ['MLS', 'Realtor.ca', 'Kijiji', 'Facebook', 'Instagram', 'Rentals.ca']
   return (
-    <svg viewBox="0 0 340 220" className="mx-auto block w-full max-w-[340px]" aria-hidden="true">
-      {/* Listing card */}
-      <rect x="20" y="30" width="180" height="160" rx="10" fill="#132D54" stroke="rgba(16,185,129,0.25)" strokeWidth="1" />
-      {/* Photo area */}
-      <rect x="28" y="38" width="164" height="78" rx="6" fill="rgba(16,185,129,0.10)" />
-      {/* House silhouette */}
-      <path d="M 60 96 L 110 60 L 160 96 L 160 110 L 60 110 Z" fill="#10B981" fillOpacity="0.35" />
-      <rect x="100" y="84" width="20" height="26" fill="#0B1D3A" />
-      {/* Photo dots */}
-      <g>
-        {[0, 1, 2, 3].map((i) => (
-          <rect key={i} x={50 + i * 28} y="120" width="20" height="2" rx="1" fill="rgba(255,255,255,0.2)" />
-        ))}
-      </g>
-      <text x="32" y="148" fill="white" fontSize="9" fontWeight="700">2 BR · King West</text>
-      <text x="32" y="162" fill="#10B981" fontSize="11" fontWeight="800">$2,850/mo</text>
-      <text x="32" y="178" fill="rgba(255,255,255,0.4)" fontSize="7">MLS · Listed today</text>
-
-      {/* Syndication nodes */}
-      {[
-        { x: 240, y: 60, label: 'MLS' },
-        { x: 290, y: 90, label: 'Kijiji' },
-        { x: 250, y: 130, label: 'FB' },
-        { x: 295, y: 160, label: 'IG' },
-      ].map((n, i) => (
-        <g key={n.label}>
-          <motion.line
-            x1="200" y1="110" x2={n.x} y2={n.y}
-            stroke="rgba(16,185,129,0.4)" strokeWidth="1" strokeDasharray="3 3"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 0.7, delay: 0.4 + i * 0.1 }}
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: EASE }}
+      className="mx-auto w-full max-w-[360px] rounded-2xl bg-white p-4 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)] ring-1 ring-slate-200"
+    >
+      {/* Listing header */}
+      <div className="flex items-center gap-3">
+        <div className="relative size-14 overflow-hidden rounded-lg ring-1 ring-slate-200">
+          <Image
+            src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=240&q=80"
+            alt=""
+            fill
+            sizes="56px"
+            className="object-cover"
           />
-          <circle cx={n.x} cy={n.y} r="14" fill="#10B981" fillOpacity="0.15" />
-          <circle cx={n.x} cy={n.y} r="10" fill="#0B1D3A" stroke="#10B981" strokeWidth="1.5" />
-          <text x={n.x} y={n.y + 3} textAnchor="middle" fill="#10B981" fontSize="6" fontWeight="700">{n.label}</text>
-        </g>
-      ))}
-      {/* Center pulse */}
-      <circle cx="200" cy="110" r="4" fill="#D4A853" />
-    </svg>
+        </div>
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-[11px] font-bold text-slate-900">2 BR · King West</p>
+          <p className="text-[15px] font-black leading-tight text-brand-emerald">$2,850<span className="text-[10px] font-semibold text-slate-400">/mo</span></p>
+          <p className="mt-0.5 text-[8.5px] font-semibold uppercase tracking-wider text-slate-400">Listed today · MLS ready</p>
+        </div>
+        <motion.span
+          animate={{ opacity: [0.8, 1, 0.8] }}
+          transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+          className="rounded-full bg-emerald-50 px-2 py-1 text-[9px] font-black uppercase tracking-wider text-brand-emerald ring-1 ring-emerald-200"
+        >
+          <span className="mr-1 inline-block size-1.5 rounded-full bg-brand-emerald align-middle" />
+          Live in 50+
+        </motion.span>
+      </div>
+
+      {/* Divider */}
+      <div className="my-3 h-px bg-slate-100" />
+
+      {/* Portals label */}
+      <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-slate-400">Syndication</p>
+
+      {/* Portal chips */}
+      <div className="mt-2 grid grid-cols-2 gap-1.5">
+        {portals.map((p, i) => (
+          <motion.div
+            key={p}
+            initial={{ opacity: 0, x: -6 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.35, delay: 0.15 + i * 0.07 }}
+            className="flex items-center gap-1.5 rounded-md bg-slate-50 px-2 py-1.5 ring-1 ring-slate-200/70"
+          >
+            <span className="inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-brand-emerald">
+              <Check className="size-2.5 text-white" strokeWidth={4} aria-hidden="true" />
+            </span>
+            <span className="truncate text-[10px] font-semibold text-slate-700">{p}</span>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Bottom status bar */}
+      <div className="mt-3 flex items-center justify-between rounded-lg bg-brand-navy px-2.5 py-1.5">
+        <span className="text-[9px] font-bold uppercase tracking-wider text-white/70">Reach</span>
+        <div className="flex items-center gap-2">
+          <div className="h-1 w-20 overflow-hidden rounded-full bg-white/10">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: '92%' }}
+              transition={{ duration: 1.1, delay: 0.5, ease: EASE }}
+              className="h-full bg-brand-emerald"
+            />
+          </div>
+          <span className="text-[9.5px] font-black text-brand-emerald">1.2M imp.</span>
+        </div>
+      </div>
+    </motion.div>
   )
 }
 
 function ShowingVisual() {
-  const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
-  const booked: Array<[number, number]> = [[0, 1], [1, 0], [2, 2], [3, 1], [4, 0], [5, 1], [5, 2], [6, 0]]
+  const days = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+  // [col, row] -> initials
+  const booked: Record<string, string> = {
+    '0-1': 'JM',
+    '1-0': 'KP',
+    '2-2': 'SL',
+    '3-1': 'RT',
+    '4-0': 'DC',
+    '5-2': 'JM',
+    '5-3': 'AW',
+  }
   return (
-    <svg viewBox="0 0 340 220" className="mx-auto block w-full max-w-[340px]" aria-hidden="true">
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: EASE }}
+      className="mx-auto w-full max-w-[360px] rounded-2xl bg-white p-4 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)] ring-1 ring-slate-200"
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1.5">
+          <Calendar className="size-3.5 text-brand-emerald" aria-hidden="true" />
+          <p className="text-[10.5px] font-bold text-slate-900">This week</p>
+        </div>
+        <p className="text-[9px] font-semibold text-slate-400">Apr 13 · Apr 19</p>
+      </div>
+
       {/* Day headers */}
-      {days.map((d, i) => (
-        <text key={`d${i}`} x={28 + i * 42} y="28" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9" fontWeight="700">{d}</text>
-      ))}
-      {/* Slots grid 7 cols × 3 rows */}
-      {Array.from({ length: 3 }).map((_, row) =>
-        days.map((_, col) => {
-          const isBooked = booked.some(([c, r]) => c === col && r === row)
-          return (
-            <motion.rect
-              key={`s${row}-${col}`}
-              x={14 + col * 42}
-              y={42 + row * 42}
-              width="32"
-              height="32"
-              rx="6"
-              fill={isBooked ? '#10B981' : 'rgba(255,255,255,0.05)'}
-              fillOpacity={isBooked ? 0.85 : 1}
-              stroke={isBooked ? '#10B981' : 'rgba(255,255,255,0.1)'}
-              strokeWidth="1"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: 0.05 * (row * 7 + col) }}
-            />
-          )
-        })
-      )}
-      {/* Time labels */}
-      {['10am', '2pm', '6pm'].map((t, i) => (
-        <text key={t} x="306" y={62 + i * 42} fill="rgba(255,255,255,0.3)" fontSize="8">{t}</text>
-      ))}
-      {/* Bottom badge */}
-      <g transform="translate(20, 188)">
-        <rect x="0" y="0" width="120" height="22" rx="6" fill="rgba(16,185,129,0.12)" stroke="rgba(16,185,129,0.3)" strokeWidth="1" />
-        <circle cx="11" cy="11" r="3" fill="#10B981" />
-        <text x="22" y="15" fill="#10B981" fontSize="9" fontWeight="700">8 showings booked</text>
-      </g>
-    </svg>
+      <div className="mt-3 grid grid-cols-6 gap-1">
+        {days.map((d) => (
+          <div key={d} className="text-center text-[9px] font-bold uppercase tracking-wider text-slate-400">{d}</div>
+        ))}
+      </div>
+
+      {/* Grid 6 cols x 5 rows */}
+      <div className="mt-1 grid grid-cols-6 gap-1">
+        {Array.from({ length: 5 }).map((_, row) =>
+          days.map((_, col) => {
+            const key = `${col}-${row}`
+            const initials = booked[key]
+            const isBooked = Boolean(initials)
+            return (
+              <motion.div
+                key={key}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.25, delay: 0.03 * (row * 6 + col) }}
+                className={`flex aspect-square items-center justify-center rounded-md text-[8.5px] font-black ${
+                  isBooked
+                    ? 'bg-brand-emerald text-white shadow-sm'
+                    : 'bg-slate-50 text-slate-300 ring-1 ring-inset ring-slate-200'
+                }`}
+              >
+                {initials ?? ''}
+              </motion.div>
+            )
+          }),
+        )}
+      </div>
+
+      {/* Upcoming row */}
+      <div className="mt-3 flex items-center gap-2 rounded-lg bg-emerald-50/70 px-2.5 py-2 ring-1 ring-emerald-200">
+        <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-brand-emerald text-[9px] font-black text-white">JM</span>
+        <div className="min-w-0 flex-1">
+          <p className="text-[9px] font-bold uppercase tracking-wider text-brand-emerald">Upcoming</p>
+          <p className="truncate text-[10.5px] font-semibold text-slate-800">Sat 2:00 PM · Jessica M. · Unit 4B</p>
+        </div>
+        <span className="rounded-full bg-white px-2 py-0.5 text-[8.5px] font-bold text-brand-emerald ring-1 ring-emerald-200">Confirmed</span>
+      </div>
+    </motion.div>
   )
 }
 
 function OfferVisual() {
+  const offers = [
+    { label: 'Offer A', rent: '$2,850', term: '12-mo', emp: 'Verified', credit: 780, winning: true },
+    { label: 'Offer B', rent: '$2,800', term: '12-mo', emp: 'Verified', credit: 762, winning: false },
+  ]
   return (
-    <svg viewBox="0 0 340 220" className="mx-auto block w-full max-w-[340px]" aria-hidden="true">
-      {/* Stacked offers */}
-      {[
-        { x: 60, y: 30, opacity: 0.4, label: 'Offer 03' },
-        { x: 50, y: 50, opacity: 0.65, label: 'Offer 02' },
-        { x: 40, y: 70, opacity: 1, label: 'Offer 01' },
-      ].map((o, i) => (
-        <g key={o.label} opacity={o.opacity}>
-          <rect x={o.x} y={o.y} width="160" height="100" rx="8" fill="#132D54" stroke="rgba(16,185,129,0.3)" strokeWidth="1" />
-          <text x={o.x + 12} y={o.y + 22} fill="white" fontSize="9" fontWeight="700">{o.label}</text>
-          <text x={o.x + 12} y={o.y + 40} fill="rgba(255,255,255,0.5)" fontSize="7">Applicant · Verified</text>
-          {i === 2 && (
-            <>
-              <text x={o.x + 12} y={o.y + 64} fill="#10B981" fontSize="14" fontWeight="800">$2,900/mo</text>
-              <text x={o.x + 12} y={o.y + 82} fill="rgba(255,255,255,0.4)" fontSize="7">12-month term · LMR ready</text>
-            </>
-          )}
-        </g>
-      ))}
-      {/* Arrow */}
-      <motion.path
-        d="M 215 120 L 250 120"
-        stroke="#10B981" strokeWidth="2" strokeLinecap="round"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-      />
-      <path d="M 244 114 L 252 120 L 244 126" fill="none" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: EASE }}
+      className="mx-auto w-full max-w-[360px] rounded-2xl bg-white p-3.5 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)] ring-1 ring-slate-200"
+    >
+      <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-slate-400">Offers received</p>
 
-      {/* Owner approval card */}
-      <g>
-        <rect x="255" y="80" width="76" height="80" rx="10" fill="#10B981" fillOpacity="0.12" stroke="#10B981" strokeWidth="1.5" />
-        <circle cx="293" cy="105" r="14" fill="#10B981" fillOpacity="0.25" />
-        <path d="M 286 105 L 291 110 L 300 100" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-        <text x="293" y="135" textAnchor="middle" fill="white" fontSize="8" fontWeight="700">Approved</text>
-        <text x="293" y="148" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="6">by owner</text>
-      </g>
+      <div className="mt-2 grid grid-cols-2 gap-2">
+        {offers.map((o, i) => (
+          <motion.div
+            key={o.label}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.1 + i * 0.1 }}
+            className={`relative rounded-xl p-2.5 ${
+              o.winning
+                ? 'bg-gradient-to-br from-emerald-50 to-white ring-2 ring-brand-emerald'
+                : 'bg-slate-50 ring-1 ring-slate-200'
+            }`}
+          >
+            {o.winning && (
+              <span className="absolute -right-1.5 -top-1.5 rounded-md bg-brand-emerald px-1.5 py-0.5 text-[8px] font-black uppercase tracking-wider text-white shadow">
+                Winning
+              </span>
+            )}
+            <p className={`text-[9px] font-bold uppercase tracking-wider ${o.winning ? 'text-brand-emerald' : 'text-slate-400'}`}>{o.label}</p>
+            <p className={`font-display text-xl font-black leading-none ${o.winning ? 'text-brand-emerald' : 'text-slate-700'}`}>
+              {o.rent}
+              <span className="ml-0.5 text-[9px] font-semibold text-slate-400">/mo</span>
+            </p>
+            <div className="mt-2 space-y-1">
+              <div className="flex items-center justify-between text-[9px]">
+                <span className="text-slate-500">Term</span>
+                <span className="font-bold text-slate-700">{o.term}</span>
+              </div>
+              <div className="flex items-center justify-between text-[9px]">
+                <span className="text-slate-500">Employment</span>
+                <span className="inline-flex items-center gap-0.5 font-bold text-brand-emerald">
+                  <Check className="size-2.5" strokeWidth={4} aria-hidden="true" />
+                  {o.emp}
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-[9px]">
+                <span className="text-slate-500">Credit</span>
+                <span className="font-black text-slate-800">{o.credit}</span>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
 
-      {/* Bottom strip */}
-      <rect x="20" y="190" width="200" height="3" rx="1.5" fill="rgba(16,185,129,0.2)" />
-      <motion.rect
-        x="20" y="190" height="3" rx="1.5" fill="#10B981"
-        initial={{ width: 0 }}
-        animate={{ width: 140 }}
-        transition={{ duration: 1, delay: 0.3 }}
-      />
-    </svg>
+      {/* Owner approves */}
+      <div className="mt-3 flex items-center justify-between rounded-lg bg-brand-navy px-3 py-2">
+        <div>
+          <p className="text-[8.5px] font-bold uppercase tracking-wider text-white/50">Awaiting</p>
+          <p className="text-[10.5px] font-semibold text-white">Owner approval</p>
+        </div>
+        <div className="inline-flex items-center gap-1 rounded-md bg-brand-emerald px-2.5 py-1.5 text-[10px] font-black text-white shadow-[0_6px_20px_-4px_rgba(16,185,129,0.6)]">
+          <Check className="size-3" strokeWidth={4} aria-hidden="true" />
+          Owner approves
+        </div>
+      </div>
+    </motion.div>
   )
 }
 
 function ScreeningVisual() {
-  const r = 60
-  const cx = 110
-  const cy = 110
-  const score = 760
-  const pct = (score - 300) / (850 - 300)
-  const sweep = Math.PI
-  const angle = pct * sweep - Math.PI
-  const nx = cx + r * Math.cos(angle)
-  const ny = cy + r * Math.sin(angle)
-  const dash = Math.PI * r
+  const score = 780
+  const pct = (score - 300) / (850 - 300) // ~0.873
+  // Circle stroke math (r=28, circumference ~175.93)
+  const r = 28
+  const circ = 2 * Math.PI * r
+  const checks = ['Employment', 'Income', 'References', 'ID + AML', 'Rental History']
   return (
-    <svg viewBox="0 0 340 220" className="mx-auto block w-full max-w-[340px]" aria-hidden="true">
-      {/* Gauge track */}
-      <path d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`} stroke="rgba(255,255,255,0.1)" strokeWidth="10" strokeLinecap="round" fill="none" />
-      <motion.path
-        d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
-        stroke="#10B981" strokeWidth="10" strokeLinecap="round" fill="none"
-        strokeDasharray={dash}
-        initial={{ strokeDashoffset: dash }}
-        animate={{ strokeDashoffset: dash * (1 - pct) }}
-        transition={{ duration: 1.4, ease: EASE }}
-      />
-      {/* Needle */}
-      <motion.line
-        x1={cx} y1={cy} x2={nx} y2={ny}
-        stroke="#D4A853" strokeWidth="3" strokeLinecap="round"
-        initial={{ x2: cx - r, y2: cy }}
-        animate={{ x2: nx, y2: ny }}
-        transition={{ duration: 1.4, ease: EASE }}
-      />
-      <circle cx={cx} cy={cy} r="6" fill="#0B1D3A" stroke="#D4A853" strokeWidth="2" />
-      {/* Score */}
-      <text x={cx} y={cy + 30} textAnchor="middle" fill="white" fontSize="22" fontWeight="900">{score}</text>
-      <text x={cx} y={cy + 44} textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="8">Credit · placed avg</text>
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: EASE }}
+      className="mx-auto w-full max-w-[360px] rounded-2xl bg-white p-4 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)] ring-1 ring-slate-200"
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-slate-400">Applicant</p>
+          <p className="text-[12.5px] font-bold text-slate-900">Jessica Moreau</p>
+        </div>
+        <div className="relative">
+          <svg width="72" height="72" viewBox="0 0 72 72" aria-hidden="true">
+            <circle cx="36" cy="36" r={r} fill="none" stroke="#E2E8F0" strokeWidth="6" />
+            <motion.circle
+              cx="36"
+              cy="36"
+              r={r}
+              fill="none"
+              stroke="#10B981"
+              strokeWidth="6"
+              strokeLinecap="round"
+              strokeDasharray={circ}
+              initial={{ strokeDashoffset: circ }}
+              animate={{ strokeDashoffset: circ * (1 - pct) }}
+              transition={{ duration: 1.4, ease: EASE }}
+              transform="rotate(-90 36 36)"
+            />
+          </svg>
+          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+            <span className="text-[15px] font-black leading-none text-slate-900">{score}</span>
+            <span className="text-[7.5px] font-bold uppercase tracking-wider text-slate-400">Credit</span>
+          </div>
+        </div>
+      </div>
 
-      {/* Check list */}
-      {['Employment', 'References', 'ID + AML', 'Rental history'].map((item, i) => (
-        <g key={item} transform={`translate(220, ${50 + i * 30})`}>
-          <circle cx="0" cy="0" r="8" fill="rgba(16,185,129,0.15)" />
-          <path d="M -3 0 L -1 2 L 4 -3" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-          <text x="14" y="3" fill="rgba(255,255,255,0.7)" fontSize="9" fontWeight="600">{item}</text>
-        </g>
-      ))}
-    </svg>
+      {/* Checks */}
+      <div className="mt-3 space-y-1.5">
+        {checks.map((c, i) => (
+          <motion.div
+            key={c}
+            initial={{ opacity: 0, x: -6 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: 0.2 + i * 0.08 }}
+            className="flex items-center justify-between rounded-md bg-slate-50 px-2.5 py-1.5 ring-1 ring-slate-200/70"
+          >
+            <div className="flex items-center gap-2">
+              <span className="inline-flex size-4 items-center justify-center rounded-full bg-brand-emerald">
+                <Check className="size-2.5 text-white" strokeWidth={4} aria-hidden="true" />
+              </span>
+              <span className="text-[10px] font-semibold text-slate-700">{c}</span>
+            </div>
+            <span className="text-[8.5px] font-bold uppercase tracking-wider text-brand-emerald">Passed</span>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Approved pill */}
+      <div className="mt-3 flex items-center justify-between rounded-lg bg-emerald-50 px-3 py-2 ring-1 ring-emerald-200">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-emerald px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-white">
+          <Check className="size-2.5" strokeWidth={4} aria-hidden="true" />
+          Approved
+        </span>
+        <span className="text-[9px] font-semibold text-slate-500">Apr 17 · 11:42 AM</span>
+      </div>
+    </motion.div>
   )
 }
 
 function ProtectionVisual() {
+  const rows = [
+    { label: 'Legal support included', pct: 100 },
+    { label: 'Tenant default covered', pct: 92 },
+    { label: 'Insurance coordinated', pct: 88 },
+  ]
   return (
-    <svg viewBox="0 0 340 220" className="mx-auto block w-full max-w-[340px]" aria-hidden="true">
-      {/* Shield */}
-      <g transform="translate(60, 30)">
-        <motion.path
-          d="M 70 0 L 130 22 L 130 70 C 130 110 105 140 70 158 C 35 140 10 110 10 70 L 10 22 Z"
-          fill="rgba(16,185,129,0.10)"
-          stroke="#10B981"
-          strokeWidth="2"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 1 }}
-          transition={{ duration: 1.2, ease: EASE }}
-        />
-        {/* Inner shield */}
-        <path d="M 70 18 L 116 36 L 116 72 C 116 102 96 124 70 138 C 44 124 24 102 24 72 L 24 36 Z" fill="rgba(16,185,129,0.12)" />
-        {/* Big check */}
-        <motion.path
-          d="M 50 78 L 65 92 L 92 60"
-          stroke="#10B981" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" fill="none"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-        />
-      </g>
-      {/* Coverage bar */}
-      <g transform="translate(220, 60)">
-        <text x="0" y="0" fill="rgba(255,255,255,0.5)" fontSize="9" fontWeight="700">RENT GUARANTEE</text>
-        <rect x="0" y="10" width="100" height="6" rx="3" fill="rgba(255,255,255,0.1)" />
-        <motion.rect
-          x="0" y="10" height="6" rx="3" fill="#10B981"
-          initial={{ width: 0 }}
-          animate={{ width: 100 }}
-          transition={{ duration: 1, delay: 0.4 }}
-        />
-        <text x="0" y="32" fill="white" fontSize="14" fontWeight="800">12 months</text>
-        <text x="0" y="46" fill="rgba(255,255,255,0.5)" fontSize="8">covered if tenant defaults</text>
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: EASE }}
+      className="mx-auto w-full max-w-[360px] rounded-2xl bg-gradient-to-br from-[#0E2548] to-[#0B1D3A] p-4 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.5)] ring-1 ring-white/10"
+    >
+      {/* Shield + headline */}
+      <div className="flex items-start gap-3">
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.6, ease: EASE }}
+          className="relative flex size-14 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/15 ring-1 ring-emerald-400/40"
+        >
+          <Shield className="size-7 text-brand-emerald" strokeWidth={2.2} aria-hidden="true" />
+          <span className="absolute -right-1 -top-1 inline-flex size-4 items-center justify-center rounded-full bg-brand-emerald text-white">
+            <Check className="size-2.5" strokeWidth={4} aria-hidden="true" />
+          </span>
+        </motion.div>
+        <div className="min-w-0 flex-1">
+          <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-emerald-300/80">Rent protection</p>
+          <p className="text-[13px] font-bold leading-tight text-white">12-Month Rent Guarantee</p>
+          <p className="mt-0.5 text-[10px] text-white/50">Active from move-in day</p>
+        </div>
+      </div>
 
-        <text x="0" y="76" fill="rgba(255,255,255,0.5)" fontSize="9" fontWeight="700">TENANT INSURANCE</text>
-        <rect x="0" y="86" width="100" height="6" rx="3" fill="rgba(255,255,255,0.1)" />
-        <motion.rect
-          x="0" y="86" height="6" rx="3" fill="#D4A853"
-          initial={{ width: 0 }}
-          animate={{ width: 88 }}
-          transition={{ duration: 1, delay: 0.6 }}
-        />
-        <text x="0" y="108" fill="white" fontSize="13" fontWeight="800">$2M liability</text>
-        <text x="0" y="122" fill="rgba(255,255,255,0.5)" fontSize="8">coordinated at signing</text>
-      </g>
-    </svg>
+      {/* Big coverage number */}
+      <div className="mt-3 flex items-end justify-between rounded-xl bg-white/5 p-3 ring-1 ring-white/10">
+        <div>
+          <p className="text-[9px] font-bold uppercase tracking-wider text-white/50">Coverage up to</p>
+          <p className="font-display text-2xl font-black leading-none text-brand-emerald">$30,000</p>
+        </div>
+        <span className="rounded-md bg-brand-emerald/15 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-brand-emerald ring-1 ring-brand-emerald/40">
+          Paid monthly
+        </span>
+      </div>
+
+      {/* Coverage rows */}
+      <div className="mt-3 space-y-2">
+        {rows.map((r, i) => (
+          <div key={r.label} className="space-y-1">
+            <div className="flex items-center justify-between text-[10px]">
+              <span className="flex items-center gap-1.5 font-semibold text-white/80">
+                <Check className="size-3 text-brand-emerald" strokeWidth={4} aria-hidden="true" />
+                {r.label}
+              </span>
+              <span className="text-[9px] font-bold text-brand-emerald">{r.pct}%</span>
+            </div>
+            <div className="h-1 overflow-hidden rounded-full bg-white/10">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${r.pct}%` }}
+                transition={{ duration: 1, delay: 0.3 + i * 0.15, ease: EASE }}
+                className="h-full bg-brand-emerald"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </motion.div>
   )
 }
 
 function LeaseVisual() {
+  const audit = [
+    { label: 'Sent', time: '9:14 AM', done: true },
+    { label: 'Viewed', time: '11:03 AM', done: true },
+    { label: 'Signed', time: '2:47 PM', done: true },
+  ]
   return (
-    <svg viewBox="0 0 340 220" className="mx-auto block w-full max-w-[340px]" aria-hidden="true">
-      {/* Document */}
-      <rect x="60" y="20" width="180" height="180" rx="8" fill="white" />
-      <rect x="60" y="20" width="180" height="32" rx="8" fill="#0B1D3A" />
-      <rect x="60" y="42" width="180" height="10" fill="#0B1D3A" />
-      <text x="150" y="40" textAnchor="middle" fill="white" fontSize="9" fontWeight="800">ONTARIO STANDARD LEASE</text>
-      {/* Body lines */}
-      {[0, 1, 2, 3, 4].map((i) => (
-        <rect key={i} x="76" y={70 + i * 14} width={i % 2 === 0 ? 140 : 110} height="3" rx="1.5" fill="#E2E8F0" />
-      ))}
-      {/* Signature line */}
-      <line x1="76" y1="160" x2="180" y2="160" stroke="#0B1D3A" strokeWidth="1" />
-      <motion.path
-        d="M 80 158 C 90 150 100 162 110 156 C 120 150 130 158 140 154 C 150 150 165 158 175 152"
-        fill="none"
-        stroke="#10B981"
-        strokeWidth="2"
-        strokeLinecap="round"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 1.2, delay: 0.3 }}
-      />
-      <text x="76" y="178" fill="rgba(11,29,58,0.5)" fontSize="7">Tenant signature · e-signed today</text>
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: EASE }}
+      className="mx-auto grid w-full max-w-[360px] grid-cols-[1fr_90px] gap-2"
+    >
+      {/* Document viewer */}
+      <div className="overflow-hidden rounded-xl bg-white shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)] ring-1 ring-slate-200">
+        {/* Header bar */}
+        <div className="flex items-center gap-2 bg-brand-navy px-2.5 py-2">
+          <FileText className="size-3.5 text-brand-emerald" aria-hidden="true" />
+          <p className="text-[9px] font-black uppercase tracking-wider text-white">Ontario Standard Lease</p>
+          <span className="ml-auto rounded bg-white/10 px-1.5 py-0.5 text-[7.5px] font-bold text-white/70">Form 2229E</span>
+        </div>
 
-      {/* e-Signed badge */}
-      <g transform="translate(190, 170)">
-        <rect x="0" y="0" width="44" height="22" rx="6" fill="#10B981" />
-        <text x="22" y="14" textAnchor="middle" fill="white" fontSize="8" fontWeight="800">e-Signed</text>
-      </g>
+        {/* Body */}
+        <div className="space-y-1.5 p-3">
+          <div className="h-1.5 w-5/6 rounded-full bg-slate-100" />
+          <div className="h-1.5 w-3/4 rounded-full bg-slate-100" />
+          <div className="h-1.5 w-4/5 rounded-full bg-slate-100" />
+          <div className="h-1.5 w-2/3 rounded-full bg-slate-100" />
+          <div className="h-1.5 w-3/4 rounded-full bg-slate-100" />
+          <div className="h-1.5 w-1/2 rounded-full bg-slate-100" />
+        </div>
 
-      {/* Audit trail dots */}
-      <g transform="translate(20, 30)">
-        {['Sent', 'Viewed', 'Signed'].map((s, i) => (
-          <g key={s} transform={`translate(0, ${i * 40})`}>
-            <circle cx="6" cy="6" r="5" fill="#10B981" fillOpacity={0.3 + i * 0.2} />
-            <text x="16" y="9" fill="rgba(255,255,255,0.6)" fontSize="7" fontWeight="600">{s}</text>
-            <text x="16" y="19" fill="rgba(255,255,255,0.3)" fontSize="6">{i === 0 ? '9:14am' : i === 1 ? '11:03am' : '2:47pm'}</text>
-          </g>
-        ))}
-      </g>
-    </svg>
+        {/* Signature block */}
+        <div className="border-t border-slate-100 px-3 pb-3 pt-2">
+          <p className="text-[8px] font-bold uppercase tracking-wider text-slate-400">Tenant Signature</p>
+          <div className="relative mt-1 h-9 border-b border-slate-300">
+            <svg viewBox="0 0 160 36" className="h-full w-full" aria-hidden="true">
+              <motion.path
+                d="M 6 26 C 14 10, 28 30, 38 20 C 48 10, 58 28, 70 18 C 82 8, 94 26, 108 16 C 120 8, 136 22, 150 12"
+                fill="none"
+                stroke="#10B981"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 1.4, delay: 0.4, ease: EASE }}
+              />
+            </svg>
+          </div>
+          <div className="mt-1.5 flex items-center justify-between">
+            <p className="text-[8.5px] font-semibold text-slate-500">e-Signed today at 2:47 PM</p>
+            <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 px-1.5 py-0.5 text-[8px] font-black uppercase tracking-wider text-brand-emerald ring-1 ring-emerald-200">
+              <Check className="size-2.5" strokeWidth={4} aria-hidden="true" />
+              Verified
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Audit panel */}
+      <div className="rounded-xl bg-brand-navy p-2.5 ring-1 ring-white/10">
+        <p className="text-[8.5px] font-black uppercase tracking-wider text-emerald-300/80">Audit Trail</p>
+        <div className="relative mt-2 space-y-3">
+          <div className="absolute left-[5px] top-1 bottom-1 w-px bg-white/15" aria-hidden="true" />
+          {audit.map((a, i) => (
+            <motion.div
+              key={a.label}
+              initial={{ opacity: 0, x: 4 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: 0.25 + i * 0.12 }}
+              className="relative flex items-start gap-2"
+            >
+              <span className="relative z-10 mt-0.5 inline-flex size-[11px] items-center justify-center rounded-full bg-brand-emerald ring-2 ring-brand-navy">
+                <span className="size-1 rounded-full bg-white" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-[9px] font-bold leading-tight text-white">{a.label}</p>
+                <p className="text-[8px] text-white/50">{a.time}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </motion.div>
   )
 }
 
 function MoveInVisual() {
+  const items = [
+    'Hydro transferred',
+    'Gas + water confirmed',
+    'Locks rotated',
+    '38-pt condition photos',
+    'Move-in report countersigned',
+  ]
   return (
-    <svg viewBox="0 0 340 220" className="mx-auto block w-full max-w-[340px]" aria-hidden="true">
-      {/* Key */}
-      <g transform="translate(40, 40)">
-        <motion.g
-          initial={{ rotate: -20, opacity: 0 }}
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: EASE }}
+      className="mx-auto w-full max-w-[360px] rounded-2xl bg-white p-4 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)] ring-1 ring-slate-200"
+    >
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <motion.div
+          initial={{ rotate: -25, opacity: 0 }}
           animate={{ rotate: 0, opacity: 1 }}
           transition={{ duration: 0.7, ease: EASE }}
-          style={{ transformOrigin: '50px 50px' }}
+          className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#D4A853] to-[#B78B3C] shadow-[0_8px_20px_-6px_rgba(212,168,83,0.6)]"
         >
-          {/* Bow */}
-          <circle cx="40" cy="50" r="22" fill="none" stroke="#D4A853" strokeWidth="6" />
-          <circle cx="40" cy="50" r="8" fill="#0B1D3A" stroke="#D4A853" strokeWidth="3" />
-          {/* Shaft */}
-          <rect x="62" y="46" width="60" height="8" rx="2" fill="#D4A853" />
-          {/* Teeth */}
-          <rect x="100" y="54" width="6" height="10" fill="#D4A853" />
-          <rect x="112" y="54" width="6" height="14" fill="#D4A853" />
-        </motion.g>
-        {/* Tag */}
-        <g transform="translate(8, 100)">
-          <rect x="0" y="0" width="64" height="22" rx="3" fill="#10B981" fillOpacity="0.15" stroke="#10B981" strokeWidth="1" />
-          <text x="32" y="14" textAnchor="middle" fill="#10B981" fontSize="8" fontWeight="800">UNIT 4B</text>
-        </g>
-      </g>
+          <Key className="size-5 text-white" strokeWidth={2.2} aria-hidden="true" />
+        </motion.div>
+        <div className="flex-1">
+          <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-slate-400">Keys ready</p>
+          <p className="font-display text-lg font-black leading-none text-brand-navy">UNIT 4B</p>
+        </div>
+        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-brand-emerald ring-1 ring-emerald-200">
+          <Sparkles className="size-2.5" strokeWidth={3} aria-hidden="true" />
+          Cleared
+        </span>
+      </div>
 
       {/* Checklist */}
-      <g transform="translate(180, 30)">
-        <text x="0" y="0" fill="rgba(255,255,255,0.5)" fontSize="9" fontWeight="800">MOVE-IN CHECKLIST</text>
-        {['Hydro transfer', 'Gas + water', 'Locks rotated', 'Photos archived', 'Report signed'].map((item, i) => (
-          // Static <g> owns positioning; inner motion.g animates only opacity
-          // so framer-motion doesn't overwrite our translate().
-          <g key={item} transform={`translate(0, ${20 + i * 26})`}>
-            <motion.g
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.2 + i * 0.1 }}
-            >
-              <circle cx="8" cy="8" r="8" fill="rgba(16,185,129,0.18)" />
-              <path d="M 4 8 L 7 11 L 13 5" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-              <text x="22" y="11" fill="white" fontSize="9" fontWeight="600" opacity="0.85">{item}</text>
-            </motion.g>
-          </g>
+      <div className="mt-3 space-y-1.5">
+        {items.map((item, i) => (
+          <motion.div
+            key={item}
+            initial={{ opacity: 0, x: -6 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: 0.2 + i * 0.09 }}
+            className="flex items-center gap-2 rounded-md bg-slate-50 px-2.5 py-1.5 ring-1 ring-slate-200/70"
+          >
+            <span className="inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-brand-emerald">
+              <Check className="size-2.5 text-white" strokeWidth={4} aria-hidden="true" />
+            </span>
+            <span className="flex-1 text-[10.5px] font-semibold text-slate-700">{item}</span>
+            <span className="text-[8.5px] font-bold uppercase tracking-wider text-slate-400">Done</span>
+          </motion.div>
         ))}
-      </g>
+      </div>
 
-      {/* Bottom completion bar */}
-      <rect x="20" y="194" width="300" height="4" rx="2" fill="rgba(255,255,255,0.08)" />
-      <motion.rect
-        x="20" y="194" height="4" rx="2" fill="#10B981"
-        initial={{ width: 0 }}
-        animate={{ width: 300 }}
-        transition={{ duration: 1.4, delay: 0.4 }}
-      />
-    </svg>
+      {/* Progress bar */}
+      <div className="mt-3 rounded-lg bg-brand-navy px-3 py-2">
+        <div className="flex items-center justify-between">
+          <span className="text-[9px] font-bold uppercase tracking-wider text-white/60">Move-in readiness</span>
+          <span className="text-[11px] font-black text-brand-emerald">100%</span>
+        </div>
+        <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/10">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: '100%' }}
+            transition={{ duration: 1.3, delay: 0.4, ease: EASE }}
+            className="h-full rounded-full bg-gradient-to-r from-brand-emerald to-emerald-400"
+          />
+        </div>
+      </div>
+    </motion.div>
   )
 }
 
 function InstitutionalVisual() {
+  const bars = [3, 4, 5, 7, 3] // peak week 4
+  const weeks = ['W1', 'W2', 'W3', 'W4', 'W5']
+  const maxBar = Math.max(...bars)
   return (
-    <svg viewBox="0 0 340 220" className="mx-auto block w-full max-w-[340px]" aria-hidden="true">
-      {/* Building */}
-      <g transform="translate(30, 20)">
-        <rect x="0" y="20" width="80" height="170" rx="3" fill="#132D54" stroke="rgba(16,185,129,0.3)" strokeWidth="1" />
-        <rect x="0" y="20" width="80" height="10" fill="#0B1D3A" />
-        {/* Window grid 4×7 */}
-        {Array.from({ length: 7 }).map((_, row) =>
-          Array.from({ length: 4 }).map((_, col) => {
-            const occupied = (row * 4 + col) < 22 // 22/28 occupied
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: EASE }}
+      className="mx-auto grid w-full max-w-[360px] grid-cols-[84px_1fr] gap-2.5"
+    >
+      {/* Building silhouette */}
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#0E2548] to-[#0B1D3A] p-2 ring-1 ring-white/10">
+        <div className="flex items-center gap-1 pb-1.5">
+          <Building2 className="size-3 text-brand-emerald" aria-hidden="true" />
+          <span className="text-[7.5px] font-bold uppercase tracking-wider text-white/60">Tower A</span>
+        </div>
+        <div className="grid grid-cols-4 gap-[3px]">
+          {Array.from({ length: 28 }).map((_, i) => {
+            const lit = i < 20
             return (
-              <motion.rect
-                key={`w-${row}-${col}`}
-                x={6 + col * 18}
-                y={36 + row * 22}
-                width="14"
-                height="16"
-                rx="2"
-                fill={occupied ? '#10B981' : 'rgba(255,255,255,0.12)'}
-                fillOpacity={occupied ? 0.7 : 1}
+              <motion.div
+                key={i}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.2, delay: 0.05 * (row * 4 + col) }}
+                transition={{ duration: 0.25, delay: 0.04 * i }}
+                className={`aspect-[3/4] rounded-sm ${
+                  lit ? 'bg-brand-emerald shadow-[0_0_6px_rgba(16,185,129,0.6)]' : 'bg-white/5 ring-1 ring-inset ring-white/10'
+                }`}
               />
             )
-          })
-        )}
-      </g>
+          })}
+        </div>
+        <div className="mt-1.5 rounded-md bg-white/5 px-1.5 py-1 text-center ring-1 ring-white/10">
+          <span className="text-[8.5px] font-black text-brand-emerald">22/28</span>
+          <span className="ml-1 text-[7.5px] font-semibold uppercase tracking-wider text-white/50">leased</span>
+        </div>
+      </div>
 
-      {/* Absorption stats */}
-      <g transform="translate(140, 30)">
-        <text x="0" y="0" fill="rgba(255,255,255,0.5)" fontSize="9" fontWeight="800">ABSORPTION</text>
-        <text x="0" y="32" fill="#10B981" fontSize="32" fontWeight="900">22<tspan fill="rgba(255,255,255,0.4)" fontSize="20">/28</tspan></text>
-        <text x="0" y="50" fill="rgba(255,255,255,0.5)" fontSize="8">units leased · 60-day cycle</text>
+      {/* Command center panel */}
+      <div className="rounded-xl bg-white p-3 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)] ring-1 ring-slate-200">
+        <div className="flex items-center justify-between">
+          <p className="text-[8.5px] font-bold uppercase tracking-[0.18em] text-slate-400">Absorption</p>
+          <span className="rounded-md bg-amber-50 px-1.5 py-0.5 text-[7.5px] font-black uppercase tracking-wider text-brand-gold ring-1 ring-amber-200">
+            60-day cycle
+          </span>
+        </div>
+        <p className="mt-0.5 font-display text-2xl font-black leading-none text-brand-emerald">
+          22<span className="text-base text-slate-400">/28</span>
+          <span className="ml-1.5 text-[10px] font-semibold text-slate-500">units</span>
+        </p>
 
-        {/* Mini bar chart */}
-        <g transform="translate(0, 70)">
-          <text x="0" y="0" fill="rgba(255,255,255,0.5)" fontSize="8" fontWeight="700">WEEKLY LEASES</text>
-          {[3, 4, 5, 6, 4].map((h, i) => (
-            <motion.rect
-              key={i}
-              x={i * 22}
-              y={50 - h * 7}
-              width="14"
-              height={h * 7}
-              rx="2"
-              fill={i === 3 ? '#D4A853' : '#10B981'}
-              fillOpacity={i === 3 ? 1 : 0.7}
-              initial={{ scaleY: 0 }}
-              animate={{ scaleY: 1 }}
-              transition={{ duration: 0.5, delay: 0.3 + i * 0.08 }}
-              style={{ transformOrigin: `${i * 22 + 7}px 50px` }}
-            />
-          ))}
-          <line x1="0" y1="52" x2="110" y2="52" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-        </g>
+        {/* Bar chart */}
+        <div className="mt-2.5 rounded-lg bg-slate-50 p-2 ring-1 ring-slate-200/70">
+          <div className="flex items-center justify-between">
+            <p className="text-[8px] font-bold uppercase tracking-wider text-slate-500">Weekly leases</p>
+            <p className="text-[8px] font-semibold text-slate-400">Peak W4</p>
+          </div>
+          <div className="mt-1.5 flex h-14 items-end gap-1.5">
+            {bars.map((h, i) => {
+              const isPeak = h === maxBar
+              const hPct = (h / maxBar) * 100
+              return (
+                <div key={i} className="flex flex-1 flex-col items-center gap-1">
+                  <motion.div
+                    initial={{ height: 0 }}
+                    animate={{ height: `${hPct}%` }}
+                    transition={{ duration: 0.7, delay: 0.3 + i * 0.08, ease: EASE }}
+                    className={`w-full rounded-sm ${
+                      isPeak ? 'bg-brand-gold' : 'bg-brand-emerald/70'
+                    }`}
+                  />
+                  <span className={`text-[7px] font-bold ${isPeak ? 'text-brand-gold' : 'text-slate-400'}`}>{weeks[i]}</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
 
-        <g transform="translate(0, 140)">
-          <rect x="0" y="0" width="140" height="22" rx="6" fill="rgba(212,168,83,0.15)" stroke="rgba(212,168,83,0.4)" strokeWidth="1" />
-          <text x="10" y="14" fill="#D4A853" fontSize="9" fontWeight="700">On-site team deployed</text>
-        </g>
-      </g>
-    </svg>
+        {/* Status pill */}
+        <div className="mt-2.5 inline-flex w-full items-center justify-between rounded-md bg-emerald-50 px-2 py-1.5 ring-1 ring-emerald-200">
+          <span className="flex items-center gap-1.5">
+            <span className="relative flex size-2">
+              <motion.span
+                animate={{ opacity: [1, 0.3, 1] }}
+                transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute inset-0 rounded-full bg-brand-emerald"
+              />
+            </span>
+            <span className="text-[9px] font-black uppercase tracking-wider text-brand-emerald">On-site team deployed</span>
+          </span>
+          <span className="text-[8.5px] font-bold text-brand-emerald">Live</span>
+        </div>
+      </div>
+    </motion.div>
   )
 }
 

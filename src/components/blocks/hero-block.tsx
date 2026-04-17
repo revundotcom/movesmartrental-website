@@ -6,7 +6,6 @@ import { motion } from 'framer-motion'
 
 import { Button } from '@/components/ui/button'
 import { GradientText } from '@/components/ui/gradient-text'
-import { GradientMesh } from '@/components/ui/gradient-mesh'
 import { CTATracker } from '@/components/tracking/cta-tracker'
 import { HeroDashboard } from '@/components/illustrations/hero-dashboard'
 import { TextRotate } from '@/components/ui/text-rotate'
@@ -45,10 +44,7 @@ export function HeroBlock({
   const leadingWords = words.join(' ')
 
   return (
-    <section className="relative flex min-h-[90vh] items-center overflow-hidden bg-[#0B1D3A] md:min-h-screen">
-      {/* Gradient mesh background */}
-      <GradientMesh colorScheme="navy-emerald" />
-
+    <section className="relative flex min-h-[90vh] items-center overflow-hidden bg-[#FBFAF6] md:min-h-screen">
       {/* Background */}
       {backgroundImageUrl ? (
         <>
@@ -61,31 +57,37 @@ export function HeroBlock({
             sizes="100vw"
           />
           <div
-            className="absolute inset-0 bg-gradient-to-br from-[#0B1D3A]/92 via-[#132B4F]/88 to-[#0B1D3A]/92"
+            className="absolute inset-0 bg-gradient-to-br from-white/88 via-[#FBFAF6]/92 to-white/88"
             aria-hidden="true"
           />
         </>
       ) : (
         <>
-          {/* Clean gradient background */}
+          {/* Clean ivory gradient background */}
           <div
             className="absolute inset-0"
             style={{
-              background: 'linear-gradient(145deg, #060f1f 0%, #0B1D3A 40%, #0d2847 70%, #0B1D3A 100%)',
+              background:
+                'linear-gradient(145deg, #FFFFFF 0%, #FBFAF6 40%, #F3F6FB 70%, #FFFFFF 100%)',
             }}
             aria-hidden="true"
           />
-          {/* Subtle emerald glow - top-left accent */}
+          {/* Subtle emerald wash, top-left */}
           <div
-            className="absolute -left-[10%] -top-[20%] h-[60%] w-[50%] opacity-30"
-            style={{ background: 'radial-gradient(ellipse, rgba(16,185,129,0.15) 0%, transparent 70%)' }}
+            className="absolute -left-[10%] -top-[20%] h-[60%] w-[50%] opacity-60"
+            style={{ background: 'radial-gradient(ellipse, rgba(16,185,129,0.10) 0%, transparent 70%)' }}
             aria-hidden="true"
           />
-          {/* Subtle blue glow - bottom-right accent */}
+          {/* Subtle gold wash, bottom-right */}
           <div
-            className="absolute -bottom-[10%] -right-[5%] h-[50%] w-[40%] opacity-25"
-            style={{ background: 'radial-gradient(ellipse, rgba(30,64,120,0.25) 0%, transparent 70%)' }}
+            className="absolute -bottom-[10%] -right-[5%] h-[50%] w-[40%] opacity-40"
+            style={{ background: 'radial-gradient(ellipse, rgba(212,168,83,0.12) 0%, transparent 70%)' }}
             aria-hidden="true"
+          />
+          {/* Hairline gold accent at top, brick-and-mortar warmth */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
           />
         </>
       )}
@@ -97,27 +99,27 @@ export function HeroBlock({
           <div>
             {/* Eyebrow badge with rotating text */}
             <motion.div
-              className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-1.5 backdrop-blur-sm sm:mb-6"
+              className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-navy/10 bg-white/70 px-4 py-1.5 shadow-sm backdrop-blur-sm sm:mb-6"
               initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
               <span className="animate-pulse-dot inline-block size-1.5 rounded-full bg-[#10B981]" />
               {eyebrow ? (
-                <span className="rounded-md bg-[#10B981]/20 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-[#10B981]">
+                <span className="rounded-md bg-emerald-100 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-emerald-700">
                   {eyebrow}
                 </span>
               ) : (
                 <TextRotate
                   texts={ROTATING_TEXTS}
                   rotationInterval={2500}
-                  className="rounded-md bg-[#10B981]/20 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-[#10B981]"
+                  className="rounded-md bg-emerald-100 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-emerald-700"
                 />
               )}
             </motion.div>
 
             <motion.h1
-              className="font-display text-4xl font-normal leading-[1.15] tracking-tight text-white sm:text-5xl sm:leading-[1.1] md:text-6xl"
+              className="font-display text-4xl font-normal leading-[1.15] tracking-tight text-brand-navy sm:text-5xl sm:leading-[1.1] md:text-6xl"
               initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
@@ -151,7 +153,7 @@ export function HeroBlock({
 
             {subheadline && (
               <motion.p
-                className="mt-6 max-w-xl text-lg leading-relaxed text-white/65 md:text-xl"
+                className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600 md:text-xl"
                 initial={{ opacity: 0, y: 32 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
@@ -160,20 +162,17 @@ export function HeroBlock({
               </motion.p>
             )}
 
-            {/* Proof stats row — 2x2 grid on mobile, inline on desktop */}
+            {/* Proof stats row, consistent 2x2 grid across breakpoints */}
             <motion.div
-              className="mt-8 grid grid-cols-2 gap-x-6 gap-y-3 text-sm text-white/75 sm:flex sm:flex-wrap sm:items-center"
+              className="mt-8 grid max-w-lg grid-cols-2 gap-x-8 gap-y-3 text-sm text-slate-600"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
             >
-              <span className="font-semibold text-white">500+ Units Leased</span>
-              <span aria-hidden="true" className="hidden h-1 w-1 rounded-full bg-white/30 sm:inline-block" />
-              <span className="font-semibold text-white">20+ Cities</span>
-              <span aria-hidden="true" className="hidden h-1 w-1 rounded-full bg-white/30 sm:inline-block" />
-              <span className="font-semibold text-white">94% Applicant Approval</span>
-              <span aria-hidden="true" className="hidden h-1 w-1 rounded-full bg-white/30 sm:inline-block" />
-              <span className="font-semibold text-white">14-Day Avg. Placement</span>
+              <span className="font-semibold text-brand-navy">500+ Units Leased</span>
+              <span className="font-semibold text-brand-navy">20+ Cities</span>
+              <span className="font-semibold text-brand-navy">94% Applicant Approval</span>
+              <span className="font-semibold text-brand-navy">18-Day Avg. Placement</span>
             </motion.div>
 
             {/* CTA buttons */}
@@ -208,7 +207,7 @@ export function HeroBlock({
                     <Button
                       variant="outline"
                       size="lg"
-                      className="cursor-pointer border-2 border-white/20 bg-white/5 px-8 py-6 text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/40 hover:bg-white/10"
+                      className="cursor-pointer border-2 border-brand-navy/15 bg-white px-8 py-6 text-base font-semibold text-brand-navy transition-all duration-300 hover:-translate-y-1 hover:border-brand-navy/30 hover:bg-slate-50"
                       nativeButton={false}
                       render={<Link href={cta2.href} />}
                     >
@@ -221,7 +220,7 @@ export function HeroBlock({
 
             {/* Google review badge */}
             <motion.div
-              className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm"
+              className="mt-6 inline-flex items-center gap-2 rounded-full border border-brand-navy/10 bg-white px-4 py-2 shadow-sm backdrop-blur-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7, duration: 0.5 }}
@@ -233,7 +232,7 @@ export function HeroBlock({
                   </svg>
                 ))}
               </div>
-              <span className="text-sm font-medium text-white/80">4.9 stars from 200+ reviews on Google</span>
+              <span className="text-sm font-medium text-brand-navy/80">4.9 stars from 200+ reviews on Google</span>
             </motion.div>
 
           </div>
@@ -255,34 +254,34 @@ export function HeroBlock({
               {illustration ?? <HeroDashboard />}
               {/* Floating badge 1 - top right: Lease Signed */}
               <motion.div
-                className="absolute -right-4 top-8 flex items-center gap-2 rounded-2xl border border-white/10 bg-brand-navy/80 px-4 py-2.5 shadow-xl backdrop-blur-md"
+                className="absolute -right-4 top-8 flex items-center gap-2.5 rounded-2xl border border-slate-200/80 border-l-4 border-l-brand-emerald bg-white px-4 py-2.5 shadow-lg shadow-slate-900/10"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0, y: [0, -8, 0] }}
                 transition={{ opacity: { delay: 0.9, duration: 0.5 }, x: { delay: 0.9, duration: 0.5 }, y: { duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 1 } }}
                 aria-hidden="true"
               >
-                <span className="flex size-6 items-center justify-center rounded-full bg-brand-emerald/20">
+                <span className="flex size-6 items-center justify-center rounded-full bg-emerald-50">
                   <svg viewBox="0 0 16 16" className="size-3.5 text-brand-emerald" fill="currentColor" aria-hidden="true"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm.75 10.5h-1.5v-4.5h1.5v4.5zm0-6h-1.5V4h1.5v1.5z" /></svg>
                 </span>
                 <div>
-                  <p className="text-[11px] font-bold leading-none text-white">Lease Signed</p>
-                  <p className="mt-0.5 text-[9px] leading-none text-white/50">Compliant, deposit in trust</p>
+                  <p className="text-[11px] font-bold leading-none text-brand-navy">Lease Signed</p>
+                  <p className="mt-0.5 text-[9px] leading-none text-slate-500">Compliant, deposit in trust</p>
                 </div>
               </motion.div>
               {/* Floating badge 2 - bottom left: tenant placed */}
               <motion.div
-                className="absolute -left-4 bottom-12 flex items-center gap-2 rounded-2xl border border-white/10 bg-brand-navy/80 px-4 py-2.5 shadow-xl backdrop-blur-md"
+                className="absolute -left-4 bottom-12 flex items-center gap-2.5 rounded-2xl border border-slate-200/80 border-l-4 border-l-brand-emerald bg-white px-4 py-2.5 shadow-lg shadow-slate-900/10"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0, y: [0, 8, 0] }}
                 transition={{ opacity: { delay: 1.1, duration: 0.5 }, x: { delay: 1.1, duration: 0.5 }, y: { duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 1.2 } }}
                 aria-hidden="true"
               >
-                <span className="flex size-6 items-center justify-center rounded-full bg-brand-emerald/20">
+                <span className="flex size-6 items-center justify-center rounded-full bg-emerald-50">
                   <svg viewBox="0 0 20 20" className="size-3.5 text-brand-emerald" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" /></svg>
                 </span>
                 <div>
-                  <p className="text-[11px] font-bold leading-none text-white">Tenant Placed</p>
-                  <p className="mt-0.5 text-[9px] leading-none text-emerald-400">Fully qualified</p>
+                  <p className="text-[11px] font-bold leading-none text-brand-navy">Tenant Placed</p>
+                  <p className="mt-0.5 text-[9px] leading-none text-slate-500">Fully qualified</p>
                 </div>
               </motion.div>
             </div>
@@ -290,9 +289,9 @@ export function HeroBlock({
         </div>
       </div>
 
-      {/* Bottom fade */}
+      {/* Bottom fade to next section */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#060f1f] to-transparent"
+        className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent"
         aria-hidden="true"
       />
     </section>

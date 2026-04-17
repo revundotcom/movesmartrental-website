@@ -28,6 +28,8 @@ export interface FallbackCity {
   neighbourhoods?: string[]
   transitInfo?: string
   description?: string
+  heroImageUrl?: string
+  heroImageAlt?: string
   province: {
     title: string
     slug: { current: string }
@@ -97,7 +99,9 @@ const ONTARIO_CITIES: FallbackCity[] = [
     transitInfo:
       'Toronto is served by the TTC (subway, streetcar, bus) plus GO Transit for commuter rail across the GTA. Most rental submarkets are within a 15-minute walk of a subway station or dedicated transit corridor.',
     description:
-      'Canada\'s largest rental market, Toronto offers steady demand across every property type - from downtown condos near the PATH and Union Station to family-oriented townhouses in Etobicoke and North York. Tenant placements in Toronto typically close in 10-14 days at or above asking rent.',
+      'Canada\'s largest rental market, Toronto offers steady demand across every property type - from downtown condos near the PATH and Union Station to family-oriented townhouses in Etobicoke and North York. Tenant placements in Toronto typically close in 10-18 days at or above asking rent.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Toronto city skyline with CN Tower and downtown high-rises',
     province: ONTARIO_PROVINCE_REF,
   },
   {
@@ -122,6 +126,8 @@ const ONTARIO_CITIES: FallbackCity[] = [
       'Ottawa\'s O-Train light rail plus an extensive bus network cover most rental neighbourhoods. Government-sector tenants typically prioritize transit proximity.',
     description:
       'Ottawa\'s rental market is anchored by the public sector, the University of Ottawa, and Carleton University. Tenant turnover is steady and predictable, with strong demand for condos in Centretown and family homes in Kanata and Barrhaven.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1591400304123-7d10f2f5add9?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Ottawa Parliament buildings with green trees under summer sky',
     province: ONTARIO_PROVINCE_REF,
   },
   {
@@ -146,6 +152,8 @@ const ONTARIO_CITIES: FallbackCity[] = [
       'MiWay bus network plus GO Transit (Lakeshore West, Milton, Kitchener lines) link Mississauga to downtown Toronto in 25-40 minutes. The Hurontario LRT is under construction.',
     description:
       'Mississauga combines Toronto-adjacent access with family-oriented suburbs and a fast-growing downtown around Square One. Rental demand is strongest for 2-3 bedroom condos near transit and townhouses in Meadowvale and Erin Mills.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1483790488866-adee346370c3?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Mississauga Ontario glass office tower against Canadian sky',
     province: ONTARIO_PROVINCE_REF,
   },
   {
@@ -170,6 +178,8 @@ const ONTARIO_CITIES: FallbackCity[] = [
       'HSR bus network plus GO Transit (Lakeshore West) link Hamilton to Toronto in about an hour. The Hamilton LRT is planned along the King Street corridor.',
     description:
       'Hamilton\'s rental market has gained significant momentum as Toronto commuters seek lower rents with GO Transit access. McMaster University sustains steady demand in Westdale and Ainslie Wood.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1508002461948-e612d8221021?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Hamilton Ontario Niagara Escarpment layered waterfalls',
     province: ONTARIO_PROVINCE_REF,
   },
   {
@@ -194,6 +204,8 @@ const ONTARIO_CITIES: FallbackCity[] = [
       'Brampton Transit plus GO Transit (Kitchener line) via the Brampton and Mount Pleasant stations provide commuter service to Toronto in about 45 minutes.',
     description:
       'Brampton has one of the fastest-growing populations in Canada with strong demand for 3-4 bedroom homes and townhouses. The rental market tilts toward young families and multi-generational households.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1581141117898-2be4de754b12?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Brampton Ontario high-rise buildings illuminated at night',
     province: ONTARIO_PROVINCE_REF,
   },
   {
@@ -218,6 +230,8 @@ const ONTARIO_CITIES: FallbackCity[] = [
       'London Transit Commission serves the city with an extensive bus network. The Western University campus and Fanshawe College generate strong student-rental demand.',
     description:
       'London\'s rental market is anchored by Western University, Fanshawe College, and a growing tech sector. Tenant placement typically favours September move-ins aligned with the academic calendar.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1596022558228-463253a5f27c?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'London Ontario downtown skyline under cloudy daytime sky',
     province: ONTARIO_PROVINCE_REF,
   },
   {
@@ -242,6 +256,8 @@ const ONTARIO_CITIES: FallbackCity[] = [
       'ION light rail and Grand River Transit buses connect Kitchener-Waterloo. GO Transit (Kitchener line) runs express service to Toronto in about 90 minutes.',
     description:
       'Kitchener anchors Canada\'s "Technology Triangle" with strong demand from tech workers, University of Waterloo co-ops, and Conestoga College students. Rent growth has consistently outpaced Ontario averages.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1634944350954-c7377654e6f1?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Kitchener Ontario downtown wet street with buildings and street lights',
     province: ONTARIO_PROVINCE_REF,
   },
   {
@@ -1011,6 +1027,8 @@ export function getFallbackCityList(): Array<{
   provinceSlug: string
   population?: number
   medianRent?: number
+  heroImageUrl?: string
+  heroImageAlt?: string
 }> {
   const caCities = ONTARIO_CITIES.map((c) => ({
     title: c.title,
@@ -1018,6 +1036,8 @@ export function getFallbackCityList(): Array<{
     provinceSlug: 'ontario',
     population: c.population,
     medianRent: c.medianRent,
+    heroImageUrl: c.heroImageUrl,
+    heroImageAlt: c.heroImageAlt,
   }))
   const usCities = US_STATES.flatMap((s) =>
     s.cities.map((c) => ({

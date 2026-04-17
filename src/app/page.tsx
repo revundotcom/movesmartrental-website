@@ -21,10 +21,11 @@ import { HomeServicesShowcase } from '@/components/blocks/home-services-showcase
 import { CityGridBlock } from '@/components/blocks/city-grid-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { StatGrid } from '@/components/blocks/stat-grid'
-import { HowItWorksSteps } from '@/components/blocks/how-it-works-steps'
 import { PortalChips } from '@/components/blocks/portal-chips'
+import { ListingToMoveInBlock } from '@/components/blocks/listing-to-movein-block'
 import { RentCalculator } from '@/components/blocks/rent-calculator'
 import { AudienceSegmentation } from '@/components/blocks/audience-segmentation'
+import { ProblemSolutionShowcase } from '@/components/blocks/problem-solution-showcase'
 import { CaseStudySection } from '@/components/blocks/case-study-card'
 import { RentalAnalysisForm } from '@/components/blocks/rental-analysis-form'
 import { JsonLd } from '@/components/json-ld'
@@ -40,7 +41,6 @@ import type { ServiceCardData, CityCardData } from '@/types/blocks'
 import {
   PortalIllustration,
   FranchiseIllustration,
-  ScreeningIllustration,
 } from '@/components/illustrations'
 import { OntarioMap } from '@/components/illustrations/ontario-map'
 
@@ -154,6 +154,8 @@ export default async function HomePage() {
       provinceSlug: c.provinceSlug,
       population: c.population,
       medianRent: c.medianRent,
+      heroImageUrl: c.heroImageUrl,
+      heroImageAlt: c.heroImageAlt,
     }))
 
   const siteUrl =
@@ -209,12 +211,6 @@ export default async function HomePage() {
 
       {/* ── SECTION 1: Hero ── */}
       <section className="relative overflow-hidden">
-        {/* Ambient blur blobs */}
-        <div className="pointer-events-none absolute inset-0 z-[2]">
-          <div className="absolute top-[-80px] left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full bg-brand-emerald/10 blur-[120px]" />
-          <div className="absolute top-10 left-[8%] w-72 h-72 rounded-full bg-brand-emerald/8 blur-[90px]" />
-          <div className="absolute top-0 right-[8%] w-80 h-80 rounded-full bg-brand-gold/10 blur-[100px]" />
-        </div>
         <HeroBlock
           headline="Get Your Property Rented to Qualified Tenants, Fast"
           subheadline="MoveSmart Rentals is a white-glove leasing brokerage. We advertise on MLS and 50+ platforms, screen every applicant, and handle every step from listing to move-in. Nothing due upfront."
@@ -294,69 +290,8 @@ export default async function HomePage() {
       {/* Wave divider */}
       <WaveDivider fill="#ffffff" />
 
-      {/* ── SECTION 2b: Owner Problem → Solution Overview ── */}
-      <section className="relative overflow-hidden bg-white py-16">
-        <div className="relative z-10 mx-auto max-w-6xl px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
-              The Problem We Solve
-            </p>
-            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
-              Leasing Friction,{' '}
-              <span className="font-display italic text-brand-emerald">Resolved</span>
-            </h2>
-            <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-              Owners and operators don&apos;t need another overpromising agent. They need disciplined leasing execution, brick-by-brick, with full visibility from listing to move-in.
-            </p>
-          </div>
-
-          <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2">
-            {[
-              {
-                problem:
-                  'Vacant units sitting empty for weeks, with thin marketing reach and no clear pricing strategy.',
-                solution:
-                  'Comparables-driven pricing combined with MLS, major rental websites, paid social distribution, photography, and virtual tours.',
-              },
-              {
-                problem:
-                  'Unstructured screening that misses red flags or feels like a black box for owners and applicants alike.',
-                solution:
-                  'Structured tenant qualification: credit, income, employment, references, risk scoring, and a documented audit trail for every file.',
-              },
-              {
-                problem:
-                  'Disorganized showings, missed leads, and zero visibility into who saw the unit or what they thought.',
-                solution:
-                  'Coordinated agent-led showings, open houses, developer tours, and a portal log of every applicant interaction.',
-              },
-              {
-                problem:
-                  'Hidden upfront fees and surprise charges from generalist agents who quietly drift outside their scope.',
-                solution:
-                  'Zero upfront. Standard leasing success fee on placement. Optional rental protection through partner pathways. Nothing beyond move-in.',
-              },
-            ].map((item, i) => (
-              <div key={i} className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
-                <div className="flex items-start gap-3">
-                  <div className="mt-1 flex size-6 shrink-0 items-center justify-center rounded-full bg-red-100">
-                    <span className="text-xs font-bold text-red-500">!</span>
-                  </div>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{item.problem}</p>
-                </div>
-                <div className="mt-4 flex items-start gap-3">
-                  <div className="mt-1 flex size-6 shrink-0 items-center justify-center rounded-full bg-brand-emerald/10">
-                    <svg viewBox="0 0 12 12" className="size-3 text-brand-emerald" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M2 6l3 3 5-5" />
-                    </svg>
-                  </div>
-                  <p className="text-sm font-medium leading-relaxed text-brand-navy">{item.solution}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ── SECTION 2b: Owner Problem to Solution Overview ── */}
+      <ProblemSolutionShowcase />
 
       {/* ── SECTION 3: Service Grid (9 core leasing services) ── */}
       <HomeServicesShowcase services={services} />
@@ -364,100 +299,7 @@ export default async function HomePage() {
       <RentCalculator />
 
       {/* ── SECTION 4: How It Works - listing to move-in ── */}
-      <section className="relative overflow-hidden bg-white">
-        {/* Background grid (navy lines, very faint) */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          aria-hidden="true"
-          style={{
-            backgroundImage: 'linear-gradient(#0B1D3A 1px, transparent 1px), linear-gradient(90deg, #0B1D3A 1px, transparent 1px)',
-            backgroundSize: '50px 50px',
-          }}
-        />
-        {/* Ambient glows (emerald, softer for light bg) */}
-        <div className="absolute -right-40 -top-40 size-[500px] rounded-full bg-brand-emerald/5 blur-3xl" aria-hidden="true" />
-        <div className="absolute -bottom-40 -left-40 size-[400px] rounded-full bg-brand-emerald/4 blur-3xl" aria-hidden="true" />
-
-        <div className="relative z-10 mx-auto max-w-7xl px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px]">
-
-            {/* LEFT COLUMN */}
-            <div className="flex flex-col py-14 lg:py-16 lg:pr-16">
-
-              {/* Header block */}
-              <div className="mb-8 border-b border-slate-200 pb-10">
-                <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
-                  Our Process
-                </p>
-                <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
-                  From{' '}
-                  <span className="text-brand-emerald">Listing</span>{' '}
-                  to Move-In
-                </h2>
-                <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-600">
-                  A disciplined leasing sequence handled entirely by our team. Every applicant logged. Every approval recorded. Every key release documented.
-                </p>
-              </div>
-
-              {/* Step grid */}
-              <HowItWorksSteps variant="grid" />
-            </div>
-
-            {/* RIGHT COLUMN */}
-            <div className="relative hidden lg:block">
-              <div className="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-brand-emerald/25 to-transparent" aria-hidden="true" />
-
-              <div className="sticky top-24 flex flex-col gap-6 py-16 pl-10">
-                <div
-                  className="pointer-events-none absolute -inset-8 rounded-3xl"
-                  style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(16,185,129,0.14) 0%, transparent 65%)' }}
-                  aria-hidden="true"
-                />
-
-                {/* Screening card */}
-                <div className="relative">
-                  <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-2 shadow-2xl shadow-brand-navy/10">
-                    <ScreeningIllustration className="w-full" />
-                  </div>
-                  <div className="absolute -bottom-4 -left-4 flex items-center gap-2 rounded-2xl border border-brand-navy/10 bg-brand-navy px-4 py-3 shadow-xl">
-                    <div className="flex size-8 items-center justify-center rounded-xl bg-brand-emerald/20">
-                      <svg viewBox="0 0 20 20" className="size-4 text-brand-emerald" fill="currentColor" aria-hidden="true">
-                        <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-white">Fully Vetted</p>
-                      <p className="text-[10px] text-white/60">Every applicant, every file</p>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            {/* Mobile-only illustration */}
-            <div className="pb-16 lg:hidden">
-              <div className="relative mx-auto max-w-sm">
-                <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-2 shadow-xl shadow-brand-navy/10">
-                  <ScreeningIllustration className="w-full" />
-                </div>
-                <div className="absolute -bottom-4 -left-4 flex items-center gap-2 rounded-2xl border border-brand-navy/10 bg-brand-navy px-4 py-3 shadow-xl">
-                  <div className="flex size-8 items-center justify-center rounded-xl bg-brand-emerald/20">
-                    <svg viewBox="0 0 20 20" className="size-4 text-brand-emerald" fill="currentColor" aria-hidden="true">
-                      <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-white">Fully Vetted</p>
-                    <p className="text-[10px] text-white/60">Every applicant, every file</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
+      <ListingToMoveInBlock />
 
       {/* ── SECTION 5: Owner Portal - Leasing Visibility (NOT ongoing mgmt) + 9 messaging pillars ── */}
       <section className="relative overflow-hidden bg-white py-14">
@@ -836,7 +678,7 @@ export default async function HomePage() {
 
       {/* ── SECTION 9: FAQ - leasing-focused ── */}
       <FAQBlock
-        title="Frequently Asked Questions"
+        title="Common Questions, Direct Answers"
         schemaEnabled
         questions={[
           {

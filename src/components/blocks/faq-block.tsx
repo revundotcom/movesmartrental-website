@@ -1,10 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
+import { Plus, ArrowRight, Mail } from 'lucide-react'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 
-import { RevealOnScroll, revealItem } from '@/components/ui/reveal-on-scroll'
 import type { FAQBlockProps } from '@/types/blocks'
 
 function FAQItem({
@@ -13,92 +13,120 @@ function FAQItem({
   isOpen,
   onToggle,
   index,
+  prefersReducedMotion,
 }: {
   question: string
   answer: string
   isOpen: boolean
   onToggle: () => void
   index: number
+  prefersReducedMotion: boolean
 }) {
+  const itemVariants = prefersReducedMotion
+    ? { hidden: { opacity: 0 }, visible: { opacity: 1 } }
+    : {
+        hidden: { opacity: 0, y: 16 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: {
+            duration: 0.5,
+            delay: index * 0.08,
+            ease: [0.22, 1, 0.36, 1] as const,
+          },
+        },
+      }
+
   return (
-    <motion.div variants={revealItem}>
-      <div
-        className={`group/faq relative border-b border-slate-100 last:border-b-0 transition-all duration-200 ${
-          isOpen
-            ? 'bg-emerald-50/50'
-            : 'hover:border-brand-emerald/30 hover:bg-emerald-50/30'
-        }`}
+    <motion.div
+      variants={itemVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-60px' }}
+      className="group/faq border-b border-slate-200/70 last:border-b-0"
+    >
+      <button
+        type="button"
+        onClick={onToggle}
+        className="flex w-full cursor-pointer items-start justify-between gap-6 px-2 py-6 text-left transition-colors duration-200 hover:bg-slate-50/60 sm:px-3"
+        aria-expanded={isOpen}
       >
-        {/* Left accent */}
-        <div
-          className={`absolute inset-y-0 left-0 w-0.5 rounded-full transition-all duration-300 ${
-            isOpen ? 'bg-[#10B981]' : 'bg-transparent'
+        <div className="flex items-start gap-4">
+          <span
+            className={`mt-1 font-display text-sm italic tracking-wide transition-colors duration-300 ${
+              isOpen ? 'text-brand-emerald' : 'text-brand-gold'
+            }`}
+            aria-hidden="true"
+          >
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <h3
+            className={`font-display text-lg font-normal leading-snug tracking-tight transition-all duration-300 md:text-xl ${
+              isOpen ? 'text-brand-emerald' : 'text-brand-navy group-hover/faq:translate-x-[2px]'
+            }`}
+          >
+            {question}
+          </h3>
+        </div>
+        <motion.span
+          animate={{ rotate: isOpen ? 45 : 0 }}
+          transition={
+            prefersReducedMotion
+              ? { duration: 0 }
+              : { type: 'spring', stiffness: 260, damping: 22 }
+          }
+          className={`mt-1 flex size-9 shrink-0 items-center justify-center rounded-full border transition-colors duration-300 ${
+            isOpen
+              ? 'border-brand-emerald/30 bg-brand-emerald/10 text-brand-emerald'
+              : 'border-brand-gold/30 bg-white text-brand-gold group-hover/faq:border-brand-gold/60 group-hover/faq:bg-brand-gold/5'
           }`}
           aria-hidden="true"
-        />
-        <button
-          type="button"
-          onClick={onToggle}
-          className="flex w-full cursor-pointer items-center justify-between px-6 py-5 text-left"
-          aria-expanded={isOpen}
         >
-          <div className="flex items-start gap-3 pr-4">
-            <span className={`mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-all duration-200 ${
-              isOpen ? 'bg-[#10B981] text-white ring-pulse' : 'bg-slate-100 text-slate-500 group-hover/faq:bg-emerald-100 group-hover/faq:text-emerald-700'
-            }`}>
-              {index + 1}
-            </span>
-            <span className={`text-base font-semibold transition-colors duration-200 ${isOpen ? 'text-emerald-700' : 'text-[#0B1D3A]'}`}>
-              {question}
-            </span>
-          </div>
+          <Plus className="size-4" strokeWidth={2} />
+        </motion.span>
+      </button>
+      <AnimatePresence initial={false}>
+        {isOpen && (
           <motion.div
-            animate={{ rotate: isOpen ? 180 : 0 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={
+              prefersReducedMotion
+                ? { duration: 0 }
+                : {
+                    height: { type: 'spring', stiffness: 220, damping: 30 },
+                    opacity: { duration: 0.3, delay: 0.08 },
+                  }
+            }
+            className="overflow-hidden"
           >
-            <ChevronDown
-              className={`size-5 shrink-0 ${
-                isOpen ? 'text-[#10B981]' : 'text-slate-400 group-hover/faq:text-[#10B981]'
-              }`}
-              aria-hidden="true"
-            />
-          </motion.div>
-        </button>
-        <AnimatePresence initial={false}>
-          {isOpen && (
             <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{
-                height: { type: 'spring', stiffness: 200, damping: 30 },
-                opacity: { duration: 0.3, delay: 0.1 },
-              }}
-              className="overflow-hidden"
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={
+                prefersReducedMotion
+                  ? { duration: 0 }
+                  : { duration: 0.35, delay: 0.12, ease: [0.22, 1, 0.36, 1] }
+              }
+              className="pb-6 pl-2 pr-12 text-base leading-relaxed text-slate-600 sm:pl-3"
             >
-              <motion.div
-                className="pb-5 pl-15 pr-6 text-sm leading-relaxed text-slate-600"
-                style={{ paddingLeft: '3.75rem' }}
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              >
-                {answer}
-              </motion.div>
+              <div className="pl-10 sm:pl-11">{answer}</div>
             </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }
 
 export function FAQBlock({
   questions,
-  title = 'Frequently Asked Questions',
+  title = 'Common Questions, Direct Answers',
   schemaEnabled = true,
 }: FAQBlockProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const prefersReducedMotion = useReducedMotion() ?? false
 
   if (questions.length === 0) return null
 
@@ -115,27 +143,62 @@ export function FAQBlock({
     })),
   }
 
-  return (
-    <section
-      className="relative bg-slate-50/50 py-14"
-      style={{
-        backgroundImage: 'radial-gradient(#0B1D3A0d 1px, transparent 1px)',
-        backgroundSize: '24px 24px',
-      }}
-    >
-      <div className="mx-auto max-w-3xl px-4">
-        {/* Section heading */}
-        <div className="mb-10 text-center">
-          <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-brand-emerald">
-            FAQs
-          </p>
-          <h2 className="font-display font-normal text-3xl tracking-tight text-[#0B1D3A] sm:text-4xl">
-            {title}
-          </h2>
-          <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-gradient-to-r from-[#10B981] to-[#34D399]" />
-        </div>
+  const headerVariants = prefersReducedMotion
+    ? { hidden: { opacity: 0 }, visible: { opacity: 1 } }
+    : {
+        hidden: { opacity: 0, y: 16 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const },
+        },
+      }
 
-        <RevealOnScroll className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+  return (
+    <section className="relative bg-[#FBFAF6] py-20 sm:py-24">
+      {/* Subtle editorial backdrop */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.05]"
+        style={{
+          backgroundImage:
+            'radial-gradient(#0B1D3A 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+        }}
+      />
+
+      <div className="relative mx-auto max-w-3xl px-4 sm:px-6">
+        {/* Section heading */}
+        <motion.div
+          variants={headerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          className="mb-12 text-center"
+        >
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-brand-emerald">
+            Frequently Asked
+          </p>
+          <h2 className="font-display text-3xl font-normal leading-tight tracking-tight text-brand-navy sm:text-4xl md:text-[2.75rem]">
+            {title.includes(',') ? (
+              <>
+                {title.split(',')[0]},
+                <span className="block italic text-brand-navy/90">
+                  {title.split(',').slice(1).join(',').trim()}
+                </span>
+              </>
+            ) : (
+              title
+            )}
+          </h2>
+          <span
+            aria-hidden="true"
+            className="mx-auto mt-5 block h-px w-20 bg-gradient-to-r from-transparent via-brand-gold to-transparent"
+          />
+        </motion.div>
+
+        {/* FAQ list, editorial, no card shadow */}
+        <div className="border-t border-slate-200/70">
           {questions.map((item, index) => (
             <FAQItem
               key={item.question}
@@ -146,9 +209,47 @@ export function FAQBlock({
               onToggle={() =>
                 setOpenIndex(openIndex === index ? null : index)
               }
+              prefersReducedMotion={prefersReducedMotion}
             />
           ))}
-        </RevealOnScroll>
+        </div>
+
+        {/* Still have questions? closer */}
+        <motion.div
+          variants={headerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-40px' }}
+          className="mt-12 flex flex-col items-start justify-between gap-6 rounded-2xl border border-slate-200/80 bg-white/70 px-6 py-6 backdrop-blur-sm sm:flex-row sm:items-center sm:px-8"
+        >
+          <div>
+            <p className="font-display text-lg font-normal text-brand-navy sm:text-xl">
+              Still have questions?
+            </p>
+            <p className="mt-1 text-sm text-slate-600">
+              Talk to a leasing advisor. No pressure, no obligation.
+            </p>
+          </div>
+          <div className="flex w-full flex-col-reverse items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center">
+            <Link
+              href="/contact/"
+              className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-brand-navy/80 transition-colors hover:text-brand-emerald"
+            >
+              <Mail className="size-4" aria-hidden="true" />
+              Email us
+            </Link>
+            <Link
+              href="/contact/"
+              className="group inline-flex items-center justify-center gap-2 rounded-full bg-brand-emerald px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-[1px] hover:bg-brand-emerald-hover hover:shadow-md"
+            >
+              Book a 20-minute call
+              <ArrowRight
+                className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+                aria-hidden="true"
+              />
+            </Link>
+          </div>
+        </motion.div>
 
         {schemaEnabled && (
           <script

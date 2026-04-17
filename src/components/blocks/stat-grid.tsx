@@ -16,7 +16,7 @@ const STATS: StatItem[] = [
   { value: 500, suffix: '+', label: 'Units Leased', icon: Building2 },
   { value: 20,  suffix: '+', label: 'Cities Served', icon: MapPin },
   { value: 94,  suffix: '%', label: 'Qualification Approval', icon: BarChart3 },
-  { value: 14,  suffix: '',  label: 'Days Avg. Placement', icon: Clock },
+  { value: 18,  suffix: '',  label: 'Days Avg. Placement', icon: Clock },
 ]
 
 function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {

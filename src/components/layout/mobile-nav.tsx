@@ -242,7 +242,7 @@ export function MobileNav() {
             variant="ghost"
             size="icon"
             aria-label="Open navigation menu"
-            className="text-white hover:bg-white/10 hover:text-white size-11"
+            className="text-brand-navy hover:bg-slate-100 hover:text-brand-navy size-11"
           >
             <Menu className="size-5" />
           </Button>

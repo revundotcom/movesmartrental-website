@@ -6,9 +6,9 @@ import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 const GUARANTEES = [
   {
     icon: Clock,
-    title: '14-Day Placement Target',
-    description: 'We aim to place a qualified tenant within 14 days. If we miss, we keep marketing your unit at no extra cost until we sign one.',
-    detail: 'Our average placement time is 14 days across 500+ units leased.',
+    title: '18-Day Placement Target',
+    description: 'We aim to place a qualified tenant within 18 days. If we miss, we keep marketing your unit at no extra cost until we sign one.',
+    detail: 'Our average placement time is 18 days across 500+ units leased.',
   },
   {
     icon: DollarSign,
