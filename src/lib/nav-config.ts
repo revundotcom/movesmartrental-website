@@ -130,7 +130,7 @@ export const FOOTER_COLUMNS = [
     ],
   },
   {
-    title: 'Ontario',
+    title: 'Canada',
     links: [
       { label: 'Toronto', href: '/ca/ontario/toronto/' },
       { label: 'Mississauga', href: '/ca/ontario/mississauga/' },
