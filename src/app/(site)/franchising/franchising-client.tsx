@@ -325,7 +325,7 @@ export function TerritoryParallax({ awarded, available }: TerritorySectionProps)
             <span aria-hidden="true" className="text-brand-gold">.</span>
           </h2>
           <p className="mt-5 text-base leading-relaxed text-white/65">
-            Five Canadian territories are awarded today. The remaining North American map is open - but moves quickly. Once a market is awarded, it is exclusive to that operator for the duration of their agreement.
+            Five Canadian territories are awarded today. The remaining North American map is open - but moves quickly. Once a market is awarded, it belongs to that operator for the duration of their agreement.
           </p>
         </div>
 

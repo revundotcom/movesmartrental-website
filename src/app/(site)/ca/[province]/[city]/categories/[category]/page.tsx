@@ -318,7 +318,7 @@ export async function generateMetadata({
   // Keep title 50-60 chars: "{Category} in {City}, {Province} | MoveSmart"
   const fallbackTitle = `${meta.headlineLabel} in ${cityTitle}, ${provinceTitle} | MoveSmart`
 
-  const descBase = `${meta.headlineLabel} in ${cityTitle}, ${provinceTitle}. White-glove leasing brokerage - strategic pricing, verified applicants, RTA-compliant leases, updated weekly.`
+  const descBase = `${meta.headlineLabel} in ${cityTitle}, ${provinceTitle}. Full-service leasing and tenant placement - strategic pricing, verified applicants, RTA-compliant leases, updated weekly.`
 
   return generatePageMetadata({
     path: `/ca/${province}/${city}/categories/${category}`,
@@ -408,7 +408,7 @@ export default async function PropertyCategoryPage({
       {/* Hero - single H1, no meta prop */}
       <PageHeroBlock
         kicker={`${cityTitle} rentals`}
-        eyebrow={`White-glove leasing brokerage`}
+        eyebrow={`Full-service leasing and tenant placement`}
         headline={`${meta.headlineLabel} in ${cityTitle}, ${provinceTitle}`}
         accentLastWord={false}
         lede={`${meta.scope} MoveSmart Rentals runs the full leasing sequence - pricing, marketing, screening, and signing - so every ${meta.singular.toLowerCase()} in ${cityTitle} is leased to a qualified renter.`}

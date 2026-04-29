@@ -1,10 +1,10 @@
 /**
  * JSON-LD schema builders for MoveSmart Rentals.
  *
- * MoveSmart Rentals is a white-glove rental brokerage delivering full-cycle
- * leasing execution, strategic pricing, disciplined tenant qualification, and
- * complete move-in coordination for landlords, property managers, and
- * institutional rental operators.
+ * MoveSmart Rentals is a full-service leasing and tenant placement company
+ * delivering end-to-end leasing execution, strategic pricing, disciplined
+ * tenant qualification, and complete move-in coordination for landlords,
+ * property managers, and institutional rental operators.
  *
  * Contract references: §7.6 (structured data), §20.14 (SEO / schema).
  */

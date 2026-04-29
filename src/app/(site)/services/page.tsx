@@ -25,7 +25,7 @@ import { BRAND } from '@/lib/brand-constants'
 export const metadata: Metadata = {
   title: 'Leasing Brokerage Services | MoveSmart Rentals Canada',
   description:
-    'White-glove leasing execution for individual landlords and institutional operators - strategic pricing, professional marketing, tenant qualification, and lease execution. No upfront fees, success-based pricing.',
+    'Full-service leasing execution for individual landlords and institutional operators - strategic pricing, professional marketing, tenant qualification, and lease execution. No upfront fees, success-based pricing.',
   alternates: {
     canonical: '/services/',
   },
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Leasing Brokerage Services | MoveSmart Rentals Canada',
     description:
-      'Strategic, concierge-grade leasing execution for individual landlords and institutional operators across Canada.',
+      'Strategic, full-service leasing execution for individual landlords and institutional operators across Canada.',
   },
 }
 
@@ -200,7 +200,7 @@ const SERVICE_FAQ = [
   {
     question: 'Are you a property manager?',
     answer:
-      'No. MoveSmart Rentals is a white-glove leasing brokerage. Our scope is the leasing lifecycle - pricing, marketing, showings, qualification, lease execution, and move-in. We do not collect monthly rent, dispatch maintenance, file LTB notices, or issue year-end tax statements. If you need ongoing management, we can refer trusted partners.',
+      'No. MoveSmart Rentals is a full-service leasing and tenant placement company. Our scope is the leasing lifecycle - pricing, marketing, showings, qualification, lease execution, and move-in. We do not collect monthly rent, dispatch maintenance, file LTB notices, or issue year-end tax statements. If you need ongoing management, we can refer trusted partners.',
   },
   {
     question: 'What exactly is included in a placement?',
@@ -215,7 +215,7 @@ const SERVICE_FAQ = [
   {
     question: 'Do you handle ongoing maintenance, rent collection, or evictions?',
     answer:
-      'No. Those sit outside leasing-execution scope. We focus exclusively on placing the right tenant on the right lease - so the asset is set up cleanly. For ongoing operations we maintain a referral list of trusted property management partners.',
+      'No. Those sit outside leasing-execution scope. We focus on placing the right tenant on the right lease, so the asset is set up cleanly. For ongoing operations we maintain a referral list of trusted property management partners.',
   },
   {
     question: 'Can I choose only some of the nine services?',
@@ -338,7 +338,7 @@ export default function ServicesPage() {
             For individual landlords
           </p>
           <p className="mt-1.5 text-sm font-medium text-brand-navy group-hover:underline group-hover:decoration-brand-gold group-hover:underline-offset-4">
-            One unit or a small portfolio - placed concierge-style.
+            One unit or a small portfolio - placed end to end.
           </p>
         </a>
         <a
@@ -382,7 +382,7 @@ export default function ServicesPage() {
       {/* ── 1. Editorial page hero ── */}
       <PageHeroBlock
         kicker="Services"
-        eyebrow="White-Glove Leasing Brokerage"
+        eyebrow="Full-Service Leasing &amp; Tenant Placement"
         headline="Nine services. One leased unit."
         accentLastWord={false}
         lede="From pricing strategy to move-in inspection, MoveSmart Rentals runs the leasing lifecycle end to end - so individual landlords get peace of mind, and institutional operators get a leasing team that scales with them."
@@ -400,7 +400,7 @@ export default function ServicesPage() {
                 For individual landlords
               </p>
               <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
-                Concierge leasing,{' '}
+                Full-service leasing,{' '}
                 <span className="font-display italic text-brand-emerald">end to end</span>
                 <span aria-hidden="true" className="text-brand-gold">.</span>
               </h2>

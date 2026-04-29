@@ -79,21 +79,21 @@ const CA_PROVINCES_META: Array<{
 export const metadata: Metadata = {
   title: 'Leasing Brokerage in Canada | MoveSmart Rentals',
   description:
-    'White-glove leasing brokerage across Canada. Tenant placement, screening, and full-cycle leasing execution in Ontario, Quebec, BC, Alberta, Nova Scotia, and more.',
+    'Full-service leasing and tenant placement across Canada. Tenant placement, screening, and full-cycle leasing execution in Ontario, Quebec, BC, Alberta, Nova Scotia, and more.',
   alternates: {
     canonical: '/ca/',
   },
   openGraph: {
     title: 'Leasing Brokerage in Canada | MoveSmart Rentals',
     description:
-      'White-glove leasing brokerage across Canada. Tenant placement, screening, and full-cycle leasing execution in Ontario, Quebec, BC, Alberta, Nova Scotia, and more.',
+      'Full-service leasing and tenant placement across Canada. Tenant placement, screening, and full-cycle leasing execution in Ontario, Quebec, BC, Alberta, Nova Scotia, and more.',
     images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'MoveSmart Rentals Canada' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Leasing Brokerage in Canada | MoveSmart Rentals',
     description:
-      'White-glove leasing brokerage across Canada. Tenant placement, screening, and full-cycle leasing execution in Ontario, Quebec, BC, Alberta, Nova Scotia, and more.',
+      'Full-service leasing and tenant placement across Canada. Tenant placement, screening, and full-cycle leasing execution in Ontario, Quebec, BC, Alberta, Nova Scotia, and more.',
     images: ['/og-default.png'],
   },
 }

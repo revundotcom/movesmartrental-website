@@ -89,7 +89,7 @@ export async function generateMetadata({
     return generatePageMetadata({
       path: `/us/${state}/${city}/${service}`,
       fallbackTitle: `${serviceData.title} in ${cityData.title}`,
-      fallbackDescription: `${serviceData.title} in ${cityData.title}, ${cityData.province.title}. White-glove leasing brokerage with zero upfront cost and success-fee pricing.`,
+      fallbackDescription: `${serviceData.title} in ${cityData.title}, ${cityData.province.title}. Full-service leasing and tenant placement with zero upfront cost and success-fee pricing.`,
     })
   }
 
@@ -106,7 +106,7 @@ export async function generateMetadata({
   return generatePageMetadata({
     path: `/us/${state}/${city}/${service}`,
     fallbackTitle: `${formattedService} in ${formattedCity}`,
-    fallbackDescription: `${formattedService} services coming soon to ${formattedCity}. MoveSmart Rentals is expanding white-glove leasing brokerage across the United States.`,
+    fallbackDescription: `${formattedService} services coming soon to ${formattedCity}. MoveSmart Rentals is expanding full-service leasing and tenant placement across the United States.`,
   })
 }
 
@@ -165,7 +165,7 @@ export default async function USCityServicePage({
 
         <CTABannerBlock
           headline="Get Started with MoveSmart Rentals"
-          description={`${serviceTitle} in ${cityTitle} - white-glove leasing brokerage, zero upfront cost, success-fee pricing.`}
+          description={`${serviceTitle} in ${cityTitle} - full-service leasing and tenant placement, zero upfront cost, success-fee pricing.`}
           primaryCta={{ label: 'Create Free Account', href: '/contact/' }}
           secondaryCta={{ label: 'Book a Call', href: '/contact/' }}
         />
@@ -235,7 +235,7 @@ export default async function USCityServicePage({
       {/* CTA Banner */}
       <CTABannerBlock
         headline={`Get Started in ${cityTitle}`}
-        description={`Let MoveSmart Rentals run your leasing campaign in ${cityTitle}. White-glove brokerage, zero upfront, success-fee pricing.`}
+        description={`Let MoveSmart Rentals run your leasing campaign in ${cityTitle}. Full-service leasing, zero upfront, success-fee pricing.`}
         primaryCta={{ label: 'Contact Us', href: '/contact/' }}
         secondaryCta={{ label: 'Book a Call', href: '/contact/' }}
       />

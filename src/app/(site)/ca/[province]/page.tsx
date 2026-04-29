@@ -47,7 +47,7 @@ export async function generateMetadata({
   return generatePageMetadata({
     path: `/ca/${province}`,
     fallbackTitle: `Leasing Brokerage in ${data?.title ?? province}`,
-    fallbackDescription: `White-glove leasing services across ${data?.title ?? province}: tenant placement, screening, lease execution, and move-in coordination with zero upfront cost.`,
+    fallbackDescription: `Full-service leasing services across ${data?.title ?? province}: tenant placement, screening, lease execution, and move-in coordination with zero upfront cost.`,
   })
 }
 
@@ -114,7 +114,7 @@ export default async function ProvincePage({
         kicker={data.title}
         eyebrow={`Leasing brokerage across ${data.title}`}
         headline={`Leasing across ${data.title}`}
-        lede={descriptionText ?? `White-glove leasing execution in every major ${data.title} market - strategic pricing, professional marketing, tenant qualification, and lease execution from a local team. Zero upfront cost.`}
+        lede={descriptionText ?? `Full-service leasing execution in every major ${data.title} market - strategic pricing, professional marketing, tenant qualification, and lease execution from a local team. Zero upfront cost.`}
         cta1={{ label: 'Book a Local Call', href: '/contact/' }}
         cta2={{ label: 'See Pricing', href: '/pricing/' }}
       />
@@ -170,7 +170,7 @@ export default async function ProvincePage({
       {/* CTA Banner */}
       <CTABannerBlock
         headline={`Find MoveSmart in ${data.title}`}
-        description={`White-glove leasing services across ${data.title}. Book a 20-minute call with a local advisor - zero upfront cost.`}
+        description={`Full-service leasing services across ${data.title}. Book a 20-minute call with a local advisor - zero upfront cost.`}
         primaryCta={{ label: 'Book a Call', href: '/contact/' }}
         secondaryCta={{ label: 'See Pricing', href: '/pricing/' }}
       />

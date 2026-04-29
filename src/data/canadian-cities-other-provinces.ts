@@ -11,7 +11,7 @@
  *
  * Positioning throughout: leasing brokerage / tenant placement /
  * rent guarantee - NOT property management. MoveSmart is a
- * concierge leasing house, not an operator.
+ * leasing-and-placement house, not an operator.
  */
 
 export interface CanadianCityContent {
@@ -60,7 +60,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Montreal | MoveSmart Rentals',
     metaDescription:
-      'White-glove tenant placement and rent-guarantee leasing in Montreal, QC. Bilingual, Bill 96-compliant leases, TAL-aware pricing, and concierge screening for plex and condo owners.',
+      'Full-service tenant placement and rent-guarantee leasing in Montreal, QC. Bilingual, Bill 96-compliant leases, TAL-aware pricing, and structured screening for plex and condo owners.',
     heroHeadline: 'Montreal Leasing, Bilingual, Bill 96-Compliant, TAL-Aware',
     heroLede:
       'MoveSmart places vetted tenants into Montreal plexes, condos, and single-family homes with a leasing process that respects Bill 96, reads the TAL grid correctly, and speaks to both francophone and anglophone applicant pools without compromise.',
@@ -145,7 +145,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Quebec City | MoveSmart Rentals',
     metaDescription:
-      'Concierge tenant placement and rent-guarantee leasing for Quebec City landlords. Bill 96-compliant, TAL-aware pricing, fluent with Laval, provincial workforce, and Old City rental dynamics.',
+      'Full-service tenant placement and rent-guarantee leasing for Quebec City landlords. Bill 96-compliant, TAL-aware pricing, fluent with Laval, provincial workforce, and Old City rental dynamics.',
     heroHeadline: 'Québec City Leasing, for the Capital Market That Rewards Discipline',
     heroLede:
       'Quebec City rentals reward owners who respect the calendar, the TAL grid, and the heating-included norm. MoveSmart places vetted tenants into Sainte-Foy, Limoilou, and Old City units with French-first marketing and full Bill 96 compliance.',
@@ -230,7 +230,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Laval | MoveSmart Rentals',
     metaDescription:
-      'White-glove tenant placement for Laval landlords. Family-focused marketing across Chomedey, Sainte-Dorothée, and Vimont with Bill 96-compliant leases and TAL-aware pricing.',
+      'Full-service tenant placement for Laval landlords. Family-focused marketing across Chomedey, Sainte-Dorothée, and Vimont with Bill 96-compliant leases and TAL-aware pricing.',
     heroHeadline: 'Laval Leasing, Built for the Off-Island Family Market',
     heroLede:
       'Laval rentals attract families and dual-income professionals who want Montreal access without Montreal rent. MoveSmart places vetted tenants with French-first marketing, Bill 96-compliant leases, and metro-corridor positioning.',
@@ -400,7 +400,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Longueuil | MoveSmart Rentals',
     metaDescription:
-      'Concierge tenant placement for Longueuil landlords. South-shore Montreal leasing with metro-corridor pricing, Bill 96-compliant leases, and bilingual professional screening.',
+      'Full-service tenant placement for Longueuil landlords. South-shore Montreal leasing with metro-corridor pricing, Bill 96-compliant leases, and bilingual professional screening.',
     heroHeadline: 'Longueuil Leasing, for the South-Shore Metro-Corridor Market',
     heroLede:
       'Longueuil rentals offer true Montreal-metro access at off-island pricing. MoveSmart places vetted tenants with French-first marketing, Bill 96-compliant leases, and yellow-line-aware comparable pricing.',
@@ -485,7 +485,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Vancouver | MoveSmart Rentals',
     metaDescription:
-      'White-glove tenant placement and rent-guarantee leasing in Vancouver, BC. Vancouver Charter-aware, speculation-tax fluent, and concierge screening for condo, laneway, and detached owners.',
+      'Full-service tenant placement and rent-guarantee leasing in Vancouver, BC. Vancouver Charter-aware, speculation-tax fluent, and structured screening for condo, laneway, and detached owners.',
     heroHeadline: 'Vancouver Leasing, for Canada\'s Most Demanding Asset Class',
     heroLede:
       'Vancouver rentals carry Canada\'s highest pricing, strictest tenant protections, and most nuanced regulatory overlay. MoveSmart places vetted tenants into condos, laneways, and detached homes with RTB-compliant leases and speculation-tax-aware guidance.',
@@ -570,7 +570,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Surrey | MoveSmart Rentals',
     metaDescription:
-      'Concierge tenant placement for Surrey landlords. SkyTrain-extension-aware pricing, multilingual marketing, RTB-compliant leases, and rent-guaranteed leasing across Newton, Whalley, and Fleetwood.',
+      'Full-service tenant placement for Surrey landlords. SkyTrain-extension-aware pricing, multilingual marketing, RTB-compliant leases, and rent-guaranteed leasing across Newton, Whalley, and Fleetwood.',
     heroHeadline: 'Surrey Leasing, for BC\'s Fastest-Growing Rental Market',
     heroLede:
       'Surrey is on track to overtake Vancouver in population and its rental market is scaling just as fast. MoveSmart places vetted tenants with SkyTrain-corridor pricing, multilingual marketing, and full RTB-compliant lease execution.',
@@ -655,7 +655,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Burnaby | MoveSmart Rentals',
     metaDescription:
-      'White-glove tenant placement for Burnaby landlords. SFU-aware pricing, Metrotown and Brentwood condo leasing, RTB-compliant and fluent with BC tech-corridor professional tenants.',
+      'Full-service tenant placement for Burnaby landlords. SFU-aware pricing, Metrotown and Brentwood condo leasing, RTB-compliant and fluent with BC tech-corridor professional tenants.',
     heroHeadline: 'Burnaby Leasing, Between SFU, Tech, and the Metrotown Spine',
     heroLede:
       'Burnaby rentals draw students, tech workers, and professional couples in equal measure. MoveSmart places vetted tenants with SkyTrain-anchored pricing, full RTB compliance, and marketing tuned to SFU, BCIT, and the Brentwood tech corridor.',
@@ -740,7 +740,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Richmond | MoveSmart Rentals',
     metaDescription:
-      'Concierge tenant placement for Richmond landlords. Mandarin-language marketing, airport-adjacent condo leasing, Canada Line pricing, and RTB-compliant leases with rent guarantee.',
+      'Full-service tenant placement for Richmond landlords. Mandarin-language marketing, airport-adjacent condo leasing, Canada Line pricing, and RTB-compliant leases with rent guarantee.',
     heroHeadline: 'Richmond Leasing, Where Mandarin-First Marketing Is the Baseline',
     heroLede:
       'Richmond rentals operate in a market where Mandarin-first marketing is not a differentiator but a requirement. MoveSmart places vetted tenants with bilingual listings, Canada Line-aware pricing, and full RTB-compliant lease execution.',
@@ -825,7 +825,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Victoria | MoveSmart Rentals',
     metaDescription:
-      'White-glove tenant placement for Victoria landlords. UVic-aware pricing, government and healthcare tenant screening, RTB-compliant leases, and rent-guaranteed leasing across BC\'s capital.',
+      'Full-service tenant placement for Victoria landlords. UVic-aware pricing, government and healthcare tenant screening, RTB-compliant leases, and rent-guaranteed leasing across BC\'s capital.',
     heroHeadline: 'Victoria Leasing, for BC\'s Supply-Starved Capital Market',
     heroLede:
       'Victoria rentals sit in one of the tightest markets in the country. MoveSmart places vetted tenants across government, healthcare, and UVic demand pools with precise RTB-compliant leasing and disciplined comparable pricing.',
@@ -910,7 +910,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Calgary | MoveSmart Rentals',
     metaDescription:
-      'White-glove tenant placement for Calgary landlords. Free-market rent positioning, Stampede-aware strategy, energy-sector workforce screening, and rent-guaranteed leasing across Beltline, Bridgeland, and the inner suburbs.',
+      'Full-service tenant placement for Calgary landlords. Free-market rent positioning, Stampede-aware strategy, energy-sector workforce screening, and rent-guaranteed leasing across Beltline, Bridgeland, and the inner suburbs.',
     heroHeadline: 'Calgary Leasing, for Alberta\'s Free-Market Rent Regime',
     heroLede:
       'Calgary has no rent cap - pricing is true free-market between tenancies, which cuts both ways. MoveSmart places vetted tenants with energy-sector-aware screening, Beltline and inner-suburb comparable discipline, and Rent Guarantee protection.',
@@ -995,7 +995,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Edmonton | MoveSmart Rentals',
     metaDescription:
-      'Concierge tenant placement for Edmonton landlords. U of A-aware pricing, provincial-government screening, Whyte Ave and Oliver condo leasing with free-market positioning and rent guarantee.',
+      'Full-service tenant placement for Edmonton landlords. U of A-aware pricing, provincial-government screening, Whyte Ave and Oliver condo leasing with free-market positioning and rent guarantee.',
     heroHeadline: 'Edmonton Leasing, for the Alberta Capital\'s Steady Free-Market Engine',
     heroLede:
       'Edmonton rentals reward disciplined pricing and timing to the U of A academic cycle. MoveSmart places vetted tenants across provincial-government, healthcare, and student pools with free-market pricing and Rent Guarantee protection.',
@@ -1080,7 +1080,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Red Deer | MoveSmart Rentals',
     metaDescription:
-      'White-glove tenant placement for Red Deer landlords. Service-hub professional screening, oilfield and agricultural tenant fluency, free-market pricing, and rent-guaranteed leasing.',
+      'Full-service tenant placement for Red Deer landlords. Service-hub professional screening, oilfield and agricultural tenant fluency, free-market pricing, and rent-guaranteed leasing.',
     heroHeadline: 'Red Deer Leasing, for Mid-Alberta\'s Service-Hub Rental Market',
     heroLede:
       'Red Deer rentals sit between Alberta\'s two major markets and draw workforce tenants from agriculture, oilfield services, healthcare, and regional trade. MoveSmart places vetted tenants with free-market pricing and Rent Guarantee protection.',
@@ -1165,7 +1165,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Lethbridge | MoveSmart Rentals',
     metaDescription:
-      'Concierge tenant placement for Lethbridge landlords. U of L student-cycle timing, agricultural and food-processing tenant screening, free-market pricing, and rent guarantee.',
+      'Full-service tenant placement for Lethbridge landlords. U of L student-cycle timing, agricultural and food-processing tenant screening, free-market pricing, and rent guarantee.',
     heroHeadline: 'Lethbridge Leasing, for Southern Alberta\'s Student and Agricultural Anchor',
     heroLede:
       'Lethbridge rentals combine a strong University of Lethbridge student cycle with stable agricultural and food-processing workforce demand. MoveSmart places vetted tenants with academic-calendar-aware timing and Alberta free-market pricing.',
@@ -1250,7 +1250,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Sherwood Park | MoveSmart Rentals',
     metaDescription:
-      'White-glove tenant placement for Sherwood Park landlords. Strathcona County family-executive screening, oil and petrochemical workforce fluency, free-market pricing, and rent guarantee.',
+      'Full-service tenant placement for Sherwood Park landlords. Strathcona County family-executive screening, oil and petrochemical workforce fluency, free-market pricing, and rent guarantee.',
     heroHeadline: 'Sherwood Park Leasing, for Strathcona County\'s Family-Executive Market',
     heroLede:
       'Sherwood Park rentals are the premium family-executive tier of the Edmonton region. MoveSmart places vetted tenants with petrochemical-workforce screening, large-lot family marketing, and Alberta free-market pricing.',
@@ -1335,7 +1335,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Halifax | MoveSmart Rentals',
     metaDescription:
-      'White-glove tenant placement for Halifax landlords. Dal and SMU student-cycle timing, military and healthcare tenant fluency, provincial rent-cap awareness, and rent-guaranteed leasing.',
+      'Full-service tenant placement for Halifax landlords. Dal and SMU student-cycle timing, military and healthcare tenant fluency, provincial rent-cap awareness, and rent-guaranteed leasing.',
     heroHeadline: 'Halifax Leasing, for Atlantic Canada\'s Tightest Rental Market',
     heroLede:
       'Halifax rentals have seen some of the steepest rent growth in Canada since 2022. MoveSmart places vetted tenants across university, military, and healthcare pools with rent-cap-compliant pricing and Rent Guarantee protection.',
@@ -1420,7 +1420,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Dartmouth | MoveSmart Rentals',
     metaDescription:
-      'Concierge tenant placement for Dartmouth landlords. Harbour-ferry commute marketing, naval-base family screening, rent-cap-compliant leases, and rent guarantee.',
+      'Full-service tenant placement for Dartmouth landlords. Harbour-ferry commute marketing, naval-base family screening, rent-cap-compliant leases, and rent guarantee.',
     heroHeadline: 'Dartmouth Leasing, for the Harbour\'s Ferry-Commute Market',
     heroLede:
       'Dartmouth rentals trade against peninsular Halifax on the harbour-ferry commute and lower-entry detached stock. MoveSmart places vetted tenants with naval-base family fluency, rent-cap-compliant leasing, and Rent Guarantee protection.',
@@ -1505,7 +1505,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Sydney | MoveSmart Rentals',
     metaDescription:
-      'White-glove tenant placement for Sydney, NS landlords. Cape Breton University student-cycle marketing, healthcare tenant fluency, rent-cap-compliant leases, and rent guarantee.',
+      'Full-service tenant placement for Sydney, NS landlords. Cape Breton University student-cycle marketing, healthcare tenant fluency, rent-cap-compliant leases, and rent guarantee.',
     heroHeadline: 'Sydney Leasing, for Cape Breton\'s University and Healthcare Anchor',
     heroLede:
       'Sydney rentals run on a slower, steadier rhythm than the Halifax metro but with genuine pricing power tied to Cape Breton University and the regional healthcare base. MoveSmart places vetted tenants with academic-calendar timing and rent-cap-compliant leasing.',
@@ -1590,7 +1590,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in Truro | MoveSmart Rentals',
     metaDescription:
-      'Concierge tenant placement for Truro landlords. Rail and logistics-hub professional screening, Dal-AC student-cycle awareness, rent-cap compliance, and rent-guaranteed leasing.',
+      'Full-service tenant placement for Truro landlords. Rail and logistics-hub professional screening, Dal-AC student-cycle awareness, rent-cap compliance, and rent-guaranteed leasing.',
     heroHeadline: 'Truro Leasing, for Central Nova Scotia\'s Rail and Logistics Hub',
     heroLede:
       'Truro rentals run on a steady workforce and education base with rent growth quietly tracking the provincial pattern. MoveSmart places vetted tenants with Dal-AC and regional-employer fluency and Rent Guarantee protection.',
@@ -1675,7 +1675,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
     tier: 1,
     seoTitle: 'Leasing Services in New Glasgow | MoveSmart Rentals',
     metaDescription:
-      'Concierge tenant placement for New Glasgow landlords. Pictou County manufacturing and healthcare screening, tight-inventory leasing, rent-cap compliance, and rent guarantee.',
+      'Full-service tenant placement for New Glasgow landlords. Pictou County manufacturing and healthcare screening, tight-inventory leasing, rent-cap compliance, and rent guarantee.',
     heroHeadline: 'New Glasgow Leasing, for Pictou County\'s Manufacturing and Healthcare Market',
     heroLede:
       'New Glasgow rentals run tight on inventory with steady workforce and healthcare demand. MoveSmart places vetted tenants with Pictou County employer fluency and rent-cap-compliant leasing.',

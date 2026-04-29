@@ -200,7 +200,7 @@ export function ServiceHeroPlaceholder({
           letterSpacing="3"
           fontWeight="400"
         >
-          A white-glove leasing brokerage service
+          A full-service leasing and tenant placement service
         </text>
 
         {/* Muted watermark bottom-left */}

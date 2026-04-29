@@ -718,7 +718,7 @@ function ComparisonTable() {
             <span className="text-brand-gold">.</span>
           </h2>
           <p className="mt-4 max-w-2xl font-serif text-base leading-relaxed text-slate-600">
-            We are not a property manager. We are a white-glove leasing brokerage. Here is how the
+            We are not a property manager. We are a full-service leasing and tenant placement company. Here is how the
             three options actually compare on cost, alignment, and risk.
           </p>
         </RevealOnScroll>
@@ -972,7 +972,7 @@ export function PricingContent() {
         kicker="Pricing"
         eyebrow="Zero Upfront. Success-Fee Leasing."
         headline="Pay Nothing Until We Place a Tenant."
-        lede="MoveSmart is a white-glove leasing brokerage. There is no setup fee, no monthly retainer, no management percentage. You pay a single one-time success fee - typically equivalent to one month of rent - only when a qualified tenant signs the lease."
+        lede="MoveSmart is a full-service leasing and tenant placement company. There is no setup fee, no monthly retainer, no management percentage. You pay a single one-time success fee - typically equivalent to one month of rent - only when a qualified tenant signs the lease."
         cta1={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
         cta2={{ label: 'Book a Call', href: '/contact/?type=owner&intent=call' }}
         aside={<HeroAtAGlance />}

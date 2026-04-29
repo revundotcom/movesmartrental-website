@@ -47,21 +47,21 @@ const CONTRACT_ICON_MAP: Record<string, LucideIcon> = {
 }
 
 export const metadata: Metadata = {
-  title: 'White-Glove Leasing for Landlords | MoveSmart Rentals',
+  title: 'Full-Service Leasing for Landlords | MoveSmart Rentals',
   description:
-    'White-glove leasing brokerage for Canadian landlords. Strategic pricing, professional marketing, structured screening, and lease execution. Zero upfront cost, success-fee on placement.',
+    'Full-service leasing and tenant placement for Canadian landlords. Strategic pricing, professional marketing, structured screening, and lease execution. Zero upfront cost, success-fee on placement.',
   alternates: {
     canonical: '/owners/',
   },
   openGraph: {
-    title: 'White-Glove Leasing for Landlords | MoveSmart Rentals',
+    title: 'Full-Service Leasing for Landlords | MoveSmart Rentals',
     description:
       'Strategic pricing, professional marketing, structured screening, and lease execution for Canadian landlords. Zero upfront cost, success-fee on placement.',
     images: ['/og-default.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'White-Glove Leasing for Landlords | MoveSmart Rentals',
+    title: 'Full-Service Leasing for Landlords | MoveSmart Rentals',
     description:
       'Strategic pricing, professional marketing, structured screening, and lease execution. Zero upfront cost, success-fee on placement.',
   },
@@ -119,7 +119,7 @@ const CONTRACT_MESSAGING: Array<{
     iconKey: 'Users',
     title: 'Dedicated Account Manager (Optional)',
     description:
-      'A single named contact who knows your file end-to-end, available to owners who want concierge support.',
+      'A single named contact who knows your file end-to-end, available to owners who want a hands-on point of contact.',
   },
   {
     iconKey: 'Zap',
@@ -351,7 +351,7 @@ function HeroAside() {
           What&rsquo;s included
         </p>
         <h3 className="mt-2 font-display text-xl font-normal leading-snug text-brand-navy">
-          White-glove leasing,{' '}
+          Full-service leasing,{' '}
           <span className="font-display italic text-brand-emerald">listing to move&#8209;in</span>
         </h3>
 
@@ -447,7 +447,7 @@ export default async function OwnersPage() {
       <PageHeroBlock
         kicker="Owner Hub"
         eyebrow="For Property Owners"
-        headline="White-glove leasing. Real Results."
+        headline="Full-service leasing. Real Results."
         lede="Strategic pricing, professional marketing, structured screening, and clean lease execution - from listing to move-in. Nothing due upfront. Standard leasing success fee on placement."
         cta1={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
         cta2={{ label: 'Book a 20-Min Call', href: '/contact/?type=owner&intent=call' }}
@@ -966,7 +966,7 @@ export default async function OwnersPage() {
           {
             question: 'Do I need to get on a call to start?',
             answer:
-              'No. Onboarding is fully self-serve online. A dedicated account manager is available if you want concierge support, but no phone call is required to list with us.',
+              'No. Onboarding is fully self-serve online. A dedicated account manager is available if you want a hands-on point of contact, but no phone call is required to list with us.',
           },
           {
             question: 'What happens after the tenant moves in?',

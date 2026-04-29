@@ -6,7 +6,7 @@
  * TypeScript module exporting a `GuideContent` object; this file aggregates
  * them into a lookup map for the route handler and the /resources/ index.
  *
- * Voice: Strategic, Professional, Concierge - MoveSmart is a white-glove
+ * Voice: Strategic, Professional, Transparent - MoveSmart is a full-service
  * leasing brokerage, not a property management firm.
  */
 

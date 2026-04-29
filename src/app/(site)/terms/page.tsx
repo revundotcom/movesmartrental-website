@@ -226,7 +226,7 @@ export default function TermsOfServicePage() {
                 with the laws of the Province of Ontario and the federal laws of
                 Canada applicable therein, without regard to conflict of law
                 principles. Any disputes arising under these Terms shall be
-                subject to the exclusive jurisdiction of the courts located in
+                subject to the sole jurisdiction of the courts located in
                 Ontario, Canada.
               </p>
             </div>

@@ -2,7 +2,7 @@
  * JSON-LD: Organization schema
  * Used on: Homepage, About page
  *
- * MoveSmart Rentals is a white-glove rental brokerage. This builder frames
+ * MoveSmart Rentals is a full-service leasing and tenant placement company. This builder frames
  * the entity as an Organization with leasing-specific knowsAbout, areaServed,
  * and contact metadata.
  */

@@ -15,7 +15,7 @@ const AUDIENCES = [
   {
     icon: Building,
     title: 'For Property Owners',
-    description: 'White-glove leasing brokerage with zero upfront cost. Strategic pricing, professional marketing, tenant qualification, lease execution, and a documented move-in - hands-off leasing from listing to keys.',
+    description: 'Full-service leasing and tenant placement with zero upfront cost. Strategic pricing, professional marketing, tenant qualification, lease execution, and a documented move-in - hands-off leasing from listing to keys.',
     features: ['18-Day Avg Placement', 'Defensible Qualification', 'Rental Protection (partner)', 'Dedicated Leasing Advisor', 'Owner Portal'],
     cta: 'Explore Owner Services',
     href: '/owners/',

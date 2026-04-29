@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   title:
     'Leasing Resources | Landlord, Tenant & Institutional Guides | MoveSmart Rentals',
   description:
-    'Field manuals for serious rental operators. Free landlord playbooks, tenant handbooks, institutional lease-up guides, and quarterly market reports from Canada and the US\u2019s white-glove leasing brokerage.',
+    'Field manuals for serious rental operators. Free landlord playbooks, tenant handbooks, institutional lease-up guides, and quarterly market reports from Canada and the US\u2019s full-service leasing and tenant placement company.',
   alternates: { canonical: '/resources/' },
   openGraph: {
     title: 'Leasing Resources | MoveSmart Rentals',

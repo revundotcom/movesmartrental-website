@@ -18,7 +18,7 @@ const TESTIMONIALS = [
     rating: 5,
   },
   {
-    quote: 'I manage 12 units across three cities. MoveSmart is the only company that treats my portfolio like their own. True white-glove service.',
+    quote: 'I manage 12 units across three cities. MoveSmart is the only company that treats my portfolio like their own. True full-service execution.',
     name: 'James K.',
     city: 'Hamilton, ON',
     propertyType: 'Multi-Unit Portfolio',

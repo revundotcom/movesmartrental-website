@@ -24,7 +24,7 @@ const PROPERTY_TYPES: PropertyType[] = [
   {
     title: 'Condos for Rent',
     description:
-      'Browse modern condo rentals with amenities like gyms, pools, and concierge services.',
+      'Browse modern condo rentals with amenities like gyms, pools, and on-site lobby attendants.',
     icon: Building,
     href: '/tenants/',
     id: 'condos',

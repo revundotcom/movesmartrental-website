@@ -20,9 +20,9 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
 
 export const metadata: Metadata = {
-  title: 'About Us | White-Glove Rental Brokerage in Canada',
+  title: 'About Us | Full-Service Rental and Leasing Company in Canada',
   description:
-    'MoveSmart Rentals is a white-glove leasing brokerage delivering full-cycle rental execution, strategic pricing, disciplined tenant qualification, and complete move-in coordination for landlords, property managers, builders, and institutional operators.',
+    'MoveSmart Rentals is a full-service leasing and tenant placement company delivering full-cycle rental execution, strategic pricing, disciplined tenant qualification, and complete move-in coordination for landlords, property managers, builders, and institutional operators.',
   alternates: {
     canonical: '/about/',
   },
@@ -45,7 +45,7 @@ const organizationSchema = buildOrganizationSchema({
   url: SITE_URL,
   logo: `${SITE_URL}/og-default.png`,
   description:
-    'White-glove rental brokerage delivering full-cycle leasing execution, strategic pricing, disciplined tenant qualification, and move-in coordination for landlords, PMCs, builders, and institutional operators across Canada.',
+    'Full-service rental and leasing company delivering full-cycle leasing execution, strategic pricing, disciplined tenant qualification, and move-in coordination for landlords, PMCs, builders, and institutional operators across Canada.',
   contactEmail: 'contact@movesmartrentals.com',
   socialLinks: [
     'https://www.linkedin.com/company/movesmart-rentals',
@@ -59,7 +59,7 @@ const organizationSchema = buildOrganizationSchema({
 const localBusinessSchema = buildLocalBusinessSchema({
   name: 'MoveSmart Rentals',
   description:
-    'White-glove leasing brokerage for Ontario landlords, property managers, builders, and institutional rental operators. Strategic pricing, tenant qualification, rental protection, and full move-in coordination.',
+    'Full-service leasing and tenant placement for Ontario landlords, property managers, builders, and institutional rental operators. Strategic pricing, tenant qualification, rental protection, and full move-in coordination.',
   url: SITE_URL,
   phone: '+18005959755',
   address: {
@@ -128,7 +128,7 @@ export default function AboutPage() {
         eyebrow="Leasing brokerage"
         headline="Full-service leasing execution for serious operators"
         accentLastWord
-        lede="MoveSmart Rentals is a white-glove rental brokerage built for landlords, property managers, builders, and institutional operators who refuse to leave the leasing phase to chance. We execute the full cycle - strategic pricing, disciplined tenant qualification, rental protection options, and complete move-in coordination - so vacancy stays short and approvals stay clean."
+        lede="MoveSmart Rentals is a full-service leasing and tenant placement company built for landlords, property managers, builders, and institutional operators who refuse to leave the leasing phase to chance. We execute the full cycle - strategic pricing, disciplined tenant qualification, rental protection options, and complete move-in coordination - so vacancy stays short and approvals stay clean."
         cta1={{ label: 'Meet the team', href: '#team' }}
         cta2={{ label: 'Contact us', href: '/contact/' }}
         aside={<FounderQuoteCard />}

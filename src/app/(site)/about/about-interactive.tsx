@@ -59,8 +59,8 @@ export function FounderEssay() {
 
           <RevealOnScroll variant="slideUp" duration={0.7}>
             <p className="mt-8 text-lg leading-[1.8] text-slate-600 sm:text-[1.15rem]">
-              We built MoveSmart Rentals to be that specialist. A white-glove
-              leasing brokerage with one job: deliver disciplined,
+              We built MoveSmart Rentals to be that specialist. A full-service
+              leasing and tenant placement company with one job: deliver disciplined,
               well-documented, market-aware leasing execution for the people
               who actually own and operate rental inventory. That means
               individual landlords with one or two doors, property managers
@@ -169,7 +169,7 @@ export function Timeline() {
 
 // ────────────────────────────────────────────────────────────────
 // Values - 01 / 02 / 03 / 04 editorial statements
-// Aligned to brand personality: Strategic, Disciplined, Concierge,
+// Aligned to brand personality: Strategic, Disciplined, Coordinated,
 // Transparent, Performance-driven.
 // ────────────────────────────────────────────────────────────────
 const VALUES = [
@@ -184,7 +184,7 @@ const VALUES = [
       'Screening is the single biggest lever in a rental file, so we treat it like one. Income verification, employment confirmation, credit review, landlord references, and a documented decision trail on every applicant. Consistent standards, no shortcuts, no surprises.',
   },
   {
-    title: 'Concierge coordination, end to end',
+    title: 'Coordinated execution, end to end',
     body:
       'Showings, applications, lease execution, utility transfers, insurance setup, key handover, and the move-in walkthrough - handled by our team and documented for the owner. The owner should not have to chase any thread of the leasing phase.',
   },

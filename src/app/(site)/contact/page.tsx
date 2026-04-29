@@ -11,23 +11,23 @@ import { ContactForm } from '@/components/contact-form'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 
 export const metadata: Metadata = {
-  title: 'Contact Us | Book a Free White-Glove Leasing Consultation',
+  title: 'Contact Us | Book a Free Full-Service Leasing Consultation',
   description:
-    'Contact MoveSmart Rentals for a free leasing consultation. Submit a property, book a call, or ask about our Canada-wide white-glove leasing brokerage. We respond within one business day.',
+    'Contact MoveSmart Rentals for a free leasing consultation. Submit a property, book a call, or ask about our Canada-wide full-service leasing and tenant placement. We respond within one business day.',
   alternates: {
     canonical: '/contact/',
   },
   openGraph: {
     title: 'Contact MoveSmart Rentals | Free Leasing Consultation',
     description:
-      'Contact MoveSmart Rentals for a free leasing consultation. Submit a property, book a call, or ask about our Canada-wide white-glove leasing brokerage.',
+      'Contact MoveSmart Rentals for a free leasing consultation. Submit a property, book a call, or ask about our Canada-wide full-service leasing and tenant placement.',
     images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'Contact MoveSmart Rentals' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Contact MoveSmart Rentals | Free Leasing Consultation',
     description:
-      'Contact MoveSmart Rentals for a free leasing consultation. Submit a property, book a call, or ask about our Canada-wide white-glove leasing brokerage.',
+      'Contact MoveSmart Rentals for a free leasing consultation. Submit a property, book a call, or ask about our Canada-wide full-service leasing and tenant placement.',
     images: ['/og-default.png'],
   },
 }

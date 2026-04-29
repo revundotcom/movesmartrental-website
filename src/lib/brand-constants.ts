@@ -24,10 +24,10 @@ export const BRAND = {
   /** Logo path */
   logo: '/og-default.png',
   /** Tagline */
-  tagline: 'White-Glove Leasing Brokerage Across Canada',
+  tagline: 'Full-Service Leasing & Tenant Placement Across Canada',
   /** Short description for schemas */
   description:
-    'White-glove leasing brokerage across Canada. Strategic pricing, professional marketing, tenant qualification, and lease execution for individual landlords and institutional operators - zero upfront, success-based fee.',
+    'Full-service leasing and tenant placement across Canada. Strategic pricing, professional marketing, tenant qualification, and lease execution for individual landlords and institutional operators, zero upfront, success-based fee.',
   /** Social profiles */
   social: {
     linkedin: 'https://www.linkedin.com/company/movesmart-rentals',
@@ -58,14 +58,14 @@ export const BRAND = {
   stats: {
     unitsLeased: '500+',
     citiesServed: '20+',
-    avgPlacementDays: 14,
-    avgFillDays: 14,
+    avgPlacementDays: 18,
+    avgFillDays: 18,
     googleRating: 4.9,
     googleReviewCount: '200+',
   },
   /** Service guarantees */
   guarantees: {
-    placementDays: 14,
+    placementDays: 18,
     responseHours: 24,
     noContracts: true,
     noUpfrontCost: true,
@@ -97,12 +97,12 @@ export const SERVICES = {
 export const STATS = {
   unitsLeased: '500+',
   citiesServed: '20+',
-  avgDaysToRent: '14',
+  avgDaysToRent: '18',
   ownerSatisfaction: '4.9',
   reviewCount: '200+',
   upfrontCost: '$0',
   tenantRetention: '95%',
-  avgPlacementDays: '14',
+  avgPlacementDays: '18',
 } as const
 
 /** Trust certifications and partnerships */

@@ -106,7 +106,7 @@ export async function generateMetadata({
   return generatePageMetadata({
     path: `/ca/${province}/${city}/${service}`,
     fallbackTitle: `${serviceTitle} in ${cityTitle}`,
-    fallbackDescription: `${serviceTitle} in ${cityTitle}, ${provinceName}. White-glove leasing brokerage with zero upfront cost and success-fee pricing.`,
+    fallbackDescription: `${serviceTitle} in ${cityTitle}, ${provinceName}. Full-service leasing and tenant placement with zero upfront cost and success-fee pricing.`,
   })
 }
 
@@ -165,7 +165,7 @@ function CityServiceView({
   schemas.push(
     buildLocalBusinessSchema({
       name: `MoveSmart Rentals - ${cityTitle}`,
-      description: `${serviceTitle} in ${cityTitle}, ${provinceName} - white-glove leasing brokerage with zero upfront cost.`,
+      description: `${serviceTitle} in ${cityTitle}, ${provinceName} - full-service leasing and tenant placement with zero upfront cost.`,
       url: pageUrl,
       phone: '+18005959755',
       address: {
@@ -289,7 +289,7 @@ function CityServiceView({
 
               <p className="mt-6 text-lg leading-relaxed text-slate-600">
                 {cityData.description ??
-                  `MoveSmart Rentals runs ${serviceTitle.toLowerCase()} in ${cityTitle}, ${provinceName} as a white-glove leasing brokerage. Our local team knows the ${cityTitle} rental market and delivers full-cycle leasing execution - strategic pricing, marketing, qualification, and lease execution - with zero upfront cost.`}
+                  `MoveSmart Rentals runs ${serviceTitle.toLowerCase()} in ${cityTitle}, ${provinceName} as a full-service leasing and tenant placement company. Our local team knows the ${cityTitle} rental market and delivers full-cycle leasing execution - strategic pricing, marketing, qualification, and lease execution - with zero upfront cost.`}
               </p>
 
               <p className="mt-4 text-lg leading-relaxed text-slate-600">
@@ -360,7 +360,7 @@ function CityServiceView({
       {/* CTA Banner */}
       <CTABannerBlock
         headline="Get Started with MoveSmart Rentals"
-        description={`${serviceTitle} in ${cityTitle} - white-glove leasing brokerage, zero upfront cost, success-fee pricing.`}
+        description={`${serviceTitle} in ${cityTitle} - full-service leasing and tenant placement, zero upfront cost, success-fee pricing.`}
         primaryCta={{ label: 'Create Free Account', href: '/contact/' }}
         secondaryCta={{ label: 'Book a Call', href: '/contact/' }}
       />

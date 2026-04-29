@@ -2,7 +2,7 @@
  * US TIER-1 CITIES - North American expansion content for MoveSmart Rentals.
  *
  * 40 city records across 10 states (4 cities each). Used for /us/[state]/[city]
- * landing pages. Brand voice: Strategic, Professional, Concierge.
+ * landing pages. Brand voice: Strategic, Professional, Transparent.
  *
  * MoveSmart positioning: cross-border leasing brokerage bridging Canadian
  * discipline with US market expertise. Zero upfront, success-fee on placement.
@@ -40,7 +40,7 @@ export const US_TIER_1_CITIES: Record<string, USCityContent> = {
     stateSlug: "florida",
     stateCode: "FL",
     seoTitle: "Miami Leasing Services | Tenant Placement | MoveSmart",
-    metaDescription: "Concierge tenant placement and leasing brokerage for Miami condos and single-family rentals. Cross-border discipline, success-fee model, zero upfront.",
+    metaDescription: "Full-service tenant placement and leasing brokerage for Miami condos and single-family rentals. Cross-border discipline, success-fee model, zero upfront.",
     heroHeadline: "Miami leasing, handled with cross-border discipline",
     heroLede: "From Brickell high-rises to Coral Gables single-families, we place qualified tenants for owners who refuse to gamble on volatile condo cycles. One success fee, no monthly drag.",
     rentalMarketSummary: "Miami's rental market moves on tourism cycles, international buyer activity, and a condo pipeline that periodically swings between scarcity and oversupply. Brickell and Edgewater absorb thousands of new units in any given delivery year, while Coconut Grove and Coral Gables stay supply-constrained. Demand is driven by hospitality workforce, finance and tech relocations, and a steady inflow of Latin American renters seeking dollar-denominated housing. Median asking rent for a Miami one-bedroom typically sits in the low-to-mid $2,000s in luxury submarkets, with two-bedrooms in Brickell often clearing $3,500. Seasonality matters: November through April brings snowbird and corporate transferee demand, while summer softens. Owners who price on stale comps or wait out the slow season often forfeit two or three months of revenue. We underwrite each listing against current absorption, not last year's peak.",
@@ -121,7 +121,7 @@ export const US_TIER_1_CITIES: Record<string, USCityContent> = {
     stateSlug: "florida",
     stateCode: "FL",
     seoTitle: "Jacksonville Leasing Services | Tenant Placement | MoveSmart",
-    metaDescription: "Concierge tenant placement for Jacksonville rentals - Riverside, San Marco, beaches. Logistics-driven demand, success-fee leasing, no monthly drag.",
+    metaDescription: "Full-service tenant placement for Jacksonville rentals - Riverside, San Marco, beaches. Logistics-driven demand, success-fee leasing, no monthly drag.",
     heroHeadline: "Jacksonville leasing for owners who want yield without the management drag",
     heroLede: "Naval base rotations, port-and-logistics hires, and Mayo Clinic relocations keep Jacksonville absorbing steadily. We place qualified tenants and exit cleanly.",
     rentalMarketSummary: "Jacksonville is a quietly strong rental market built on three demand engines: Naval Station Mayport and NAS Jacksonville generate constant military turnover; the JAXPORT logistics complex and adjacent distribution centres employ a large blue-collar base; and the Mayo Clinic campus continues to attract clinicians and researchers from across the country. Riverside and San Marco hold their pricing through cycles thanks to walkability and historic character, while the beaches submarket - Jacksonville Beach, Neptune Beach, Atlantic Beach - commands seasonal premiums. Single-family three-bedroom rentals in established neighborhoods typically clear the low-to-mid $2,000s, with downtown and beach two-bedrooms in the upper $1,000s to low $2,000s. The market rewards owners who present clean, well-staged homes - buyers from higher-cost metros expect updated finishes and won't accept the deferred-maintenance look that worked here a decade ago.",

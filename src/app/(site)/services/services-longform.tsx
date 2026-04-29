@@ -369,7 +369,7 @@ function TierTable({ rows }: { rows: TierRow[] }) {
                 </span>
               </span>
               <span className="mt-1 block font-display text-base font-normal text-white">
-                White-Glove Leasing
+                Full-Service Leasing
               </span>
               <span className="mt-1 block text-[11px] text-white/55">
                 Investor owners

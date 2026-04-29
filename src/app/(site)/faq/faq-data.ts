@@ -29,7 +29,7 @@ const ownersQuestions: FaqItem[] = [
   {
     question: 'How does MoveSmart Rentals work for property owners?',
     answer:
-      'We are a white-glove leasing brokerage. We run the leasing lifecycle end to end - strategic pricing, professional marketing, showings, applicant qualification, lease execution, and a documented move-in. You pay nothing upfront. A one-time success fee is charged only once a qualified tenant signs the lease. We are not an ongoing property manager.',
+      'We are a full-service leasing and tenant placement company. We run the leasing lifecycle end to end - strategic pricing, professional marketing, showings, applicant qualification, lease execution, and a documented move-in. You pay nothing upfront. A one-time success fee is charged only once a qualified tenant signs the lease. We are not an ongoing property manager.',
   },
   {
     question: 'How long does it take to find a tenant?',
@@ -151,7 +151,7 @@ const pricingQuestions: FaqItem[] = [
   {
     question: 'Is there a cancellation fee, and is GST/HST included?',
     answer:
-      'No cancellation fee - you can terminate the leasing engagement with 30 days notice. Fees quoted to Canadian owners are exclusive of GST/HST, which is added on the invoice as required. An itemised receipt is provided for every charge.',
+      'No cancellation fee - you can terminate the leasing engagement with 30 days notice. Fees quoted to Canadian owners do not include GST/HST, which is added on the invoice as required. An itemised receipt is provided for every charge.',
   },
 ]
 
@@ -214,7 +214,7 @@ const legalQuestions: FaqItem[] = [
   {
     question: 'Do you handle LTB filings or evictions if a tenant stops paying?',
     answer:
-      'No. LTB filings, evictions, and ongoing rent collection sit outside the leasing-execution scope. We focus exclusively on placing the right tenant on the right lease - so the asset is set up cleanly. For ongoing operations and LTB representation we maintain a referral list of trusted property management partners and paralegals.',
+      'No. LTB filings, evictions, and ongoing rent collection sit outside the leasing-execution scope. We focus on placing the right tenant on the right lease, so the asset is set up cleanly. For ongoing operations and LTB representation we maintain a referral list of trusted property management partners and paralegals.',
   },
   {
     question: 'How are deposits and interest handled at lease execution?',

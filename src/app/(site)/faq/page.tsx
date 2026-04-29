@@ -13,21 +13,21 @@ import { ALL_FAQ_ITEMS, FAQ_CATEGORIES } from './faq-data'
 export const metadata: Metadata = {
   title: 'Leasing Brokerage FAQ Canada | Common Questions Answered',
   description:
-    'Answers to frequently asked questions about MoveSmart Rentals white-glove leasing brokerage: pricing, tenant qualification, rental protection, cities served, and more.',
+    'Answers to frequently asked questions about MoveSmart Rentals full-service leasing and tenant placement: pricing, tenant qualification, rental protection, cities served, and more.',
   alternates: {
     canonical: '/faq/',
   },
   openGraph: {
     title: 'Leasing Brokerage FAQ Canada | MoveSmart Rentals',
     description:
-      'Answers to frequently asked questions about MoveSmart Rentals white-glove leasing brokerage: pricing, tenant qualification, rental protection, cities served, and more.',
+      'Answers to frequently asked questions about MoveSmart Rentals full-service leasing and tenant placement: pricing, tenant qualification, rental protection, cities served, and more.',
     images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'MoveSmart Rentals FAQ' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Leasing Brokerage FAQ Canada | MoveSmart Rentals',
     description:
-      'Answers to frequently asked questions about MoveSmart Rentals white-glove leasing brokerage: pricing, tenant qualification, rental protection, cities served, and more.',
+      'Answers to frequently asked questions about MoveSmart Rentals full-service leasing and tenant placement: pricing, tenant qualification, rental protection, cities served, and more.',
     images: ['/og-default.png'],
   },
 }

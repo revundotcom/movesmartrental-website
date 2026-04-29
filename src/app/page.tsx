@@ -23,8 +23,10 @@ import { FAQBlock } from '@/components/blocks/faq-block'
 import { StatGrid } from '@/components/blocks/stat-grid'
 import { PortalChips } from '@/components/blocks/portal-chips'
 import { ListingToMoveInBlock } from '@/components/blocks/listing-to-movein-block'
+import { PortalVisibilityBlock } from '@/components/blocks/portal-visibility-block'
 import { RentCalculator } from '@/components/blocks/rent-calculator'
 import { AudienceSegmentation } from '@/components/blocks/audience-segmentation'
+import { BuyOutputBlock } from '@/components/blocks/buy-output-block'
 import { ProblemSolutionShowcase } from '@/components/blocks/problem-solution-showcase'
 import { CaseStudySection } from '@/components/blocks/case-study-card'
 import { RentalAnalysisForm } from '@/components/blocks/rental-analysis-form'
@@ -44,7 +46,7 @@ import {
 } from '@/components/illustrations'
 import { OntarioMap } from '@/components/illustrations/ontario-map'
 
-/* ---------- Core 9 Services (white-glove leasing brokerage) ---------- */
+/* ---------- Core 9 Services (full-service leasing and tenant placement) ---------- */
 
 const CORE_SERVICES: ServiceCardData[] = [
   {
@@ -67,7 +69,7 @@ const CORE_SERVICES: ServiceCardData[] = [
     slug: 'tenant-placement',
     title: 'Showing Coordination',
     shortDescription:
-      'Scheduling, agent-led private showings, open houses, and developer tours, all coordinated by our concierge leasing team.',
+      'Scheduling, agent-led private showings, open houses, and developer tours, all coordinated by our dedicated leasing team.',
     icon: 'users',
     audience: 'both',
   },
@@ -127,9 +129,9 @@ export async function generateMetadata(): Promise<Metadata> {
   return generatePageMetadata({
     path: '/',
     fallbackTitle:
-      'MoveSmart Rentals | White-Glove Leasing Brokerage Across Canada',
+      'MoveSmart Rentals | Full-Service Leasing & Tenant Placement Across Canada',
     fallbackDescription:
-      'White-glove leasing brokerage delivering full-cycle leasing execution from listing to move-in. MLS and multi-platform advertising, professional screening, rental protection options, and zero upfront cost.',
+      'Full-service leasing and tenant placement with technology, transparency, and broad advertising exposure. End-to-end execution from listing to move-in, disciplined screening, rental protection options, and zero upfront cost.',
   })
 }
 
@@ -166,7 +168,7 @@ export default async function HomePage() {
     url: siteUrl,
     logo: `${siteUrl}/og-default.png`,
     description:
-      'White-glove leasing brokerage delivering full-cycle leasing execution for individual landlords, builders, PMCs, and institutional rental operators. Listing to move-in, with MLS and multi-platform advertising, professional screening, and rental protection options.',
+      'Full-service leasing and tenant placement company delivering end-to-end leasing execution for individual landlords, builders, PMCs, and institutional rental operators. Listing to move-in, with broad multi-platform advertising, disciplined screening, and rental protection options.',
     contactEmail: 'contact@movesmartrentals.com',
     socialLinks: [
       'https://www.facebook.com/movesmartrentals',
@@ -183,7 +185,7 @@ export default async function HomePage() {
   const localBusinessSchema = buildLocalBusinessSchema({
     name: 'MoveSmart Rentals',
     description:
-      'White-glove leasing brokerage for Canadian landlords, builders, PMCs, and institutional rental operators. Full-cycle leasing execution from listing to move-in with zero upfront cost.',
+      'Full-service leasing and tenant placement company for Canadian landlords, builders, PMCs, and institutional rental operators. End-to-end leasing execution from listing to move-in with zero upfront cost.',
     url: siteUrl,
     phone: '+18005959755',
     address: {
@@ -213,7 +215,7 @@ export default async function HomePage() {
       <section className="relative overflow-hidden">
         <HeroBlock
           headline="Get Your Property Rented to Qualified Tenants, Fast"
-          subheadline="MoveSmart Rentals is a white-glove leasing brokerage. We advertise on MLS and 50+ platforms, screen every applicant, and handle every step from listing to move-in. Nothing due upfront."
+          subheadline="Full-service leasing and tenant placement, end to end. We advertise broadly, screen every applicant, run showings 24/7, and give you live visibility from listing to move-in."
           cta1={{ label: 'Create a Free Account', href: '/contact/' }}
           cta2={{ label: 'Book a Call', href: '/contact/?intent=call' }}
           priority
@@ -287,6 +289,9 @@ export default async function HomePage() {
       {/* ── SECTION 2.5: Audience Segmentation (landlords / builders / PMCs / institutional) ── */}
       <AudienceSegmentation />
 
+      {/* ── SECTION 2.6: Buy Output, Not Headcount (B2B operator differentiator) ── */}
+      <BuyOutputBlock />
+
       {/* Wave divider */}
       <WaveDivider fill="#ffffff" />
 
@@ -296,10 +301,13 @@ export default async function HomePage() {
       {/* ── SECTION 3: Service Grid (9 core leasing services) ── */}
       <HomeServicesShowcase services={services} />
 
-      <RentCalculator />
-
       {/* ── SECTION 4: How It Works - listing to move-in ── */}
       <ListingToMoveInBlock />
+
+      {/* ── SECTION 4.5: Real-Time Portal Visibility (live KPI families) ── */}
+      <PortalVisibilityBlock />
+
+      <RentCalculator />
 
       {/* ── SECTION 5: Owner Portal - Leasing Visibility (NOT ongoing mgmt) + 9 messaging pillars ── */}
       <section className="relative overflow-hidden bg-white py-14">
@@ -335,7 +343,7 @@ export default async function HomePage() {
               </p>
               <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
                 Self-Serve.{' '}
-                <span className="font-display italic text-brand-emerald">Concierge When You Need It.</span>
+                <span className="font-display italic text-brand-emerald">Account Manager When You Need It.</span>
               </h2>
               <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
                 Track showings, applicant records, screening results, approvals, counter-offers, condition inspections, and the full communication history, in real time. Owners can self-serve online without ever picking up the phone, or escalate to a dedicated account manager whenever they want.
@@ -488,7 +496,7 @@ export default async function HomePage() {
                 Cities
               </h2>
               <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-                White-glove leasing execution across Ontario&apos;s major rental markets, with active expansion across Canada and the United States.
+                Full-service leasing execution across Ontario&apos;s major rental markets, with active expansion across Canada and the United States.
               </p>
               <div className="mt-8 flex flex-wrap gap-2">
                 {['Toronto', 'Mississauga', 'Brampton', 'Hamilton', 'Ottawa', 'London', 'Vaughan', 'Markham', 'Richmond Hill', 'Oakville', 'Burlington', 'Kitchener', 'Waterloo'].map((city) => (
@@ -684,7 +692,7 @@ export default async function HomePage() {
           {
             question: 'What does MoveSmart Rentals do?',
             answer:
-              'MoveSmart Rentals is a white-glove leasing brokerage. We deliver full-cycle leasing execution from listing to move-in: strategic pricing, professional marketing, showing coordination, offer management, tenant qualification, lease execution, and move-in coordination. We do not handle ongoing property management.',
+              'MoveSmart Rentals is a full-service leasing and tenant placement company. We deliver end-to-end leasing execution from listing to move-in: strategic pricing, professional marketing, showing coordination, offer management, tenant qualification, lease execution, and move-in coordination. We do not handle ongoing property management.',
           },
           {
             question: 'How much does it cost?',

@@ -81,6 +81,14 @@ const MOBILE_NAV_SECTIONS: ReadonlyArray<NavSectionDef> = [
       { title: 'Markham', href: '/ca/ontario/markham/' },
     ],
   },
+  {
+    label: 'Solutions',
+    items: [
+      { title: 'Developers', href: '/developers/' },
+      { title: 'Property Managers', href: '/property-managers/' },
+      { title: 'Institutional Lease-Up', href: '/institutional-lease-up/' },
+    ],
+  },
   { label: 'Pricing', href: '/pricing/' },
   {
     label: 'Resources',

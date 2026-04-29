@@ -281,8 +281,8 @@ export function PricingHeroIllustration({ className = '' }: { className?: string
           <rect x="17" y="32" width="6" height="6" rx="1" fill="#D4A853" />
         </g>
 
-        <text x="75" y="92" textAnchor="middle" fill="#FFFFFF" fontSize="13" fontWeight="800">White-Glove Leasing</text>
-        <text x="75" y="106" textAnchor="middle" fill="#FFFFFF" fontSize="9" opacity="0.6">Concierge end-to-end</text>
+        <text x="75" y="92" textAnchor="middle" fill="#FFFFFF" fontSize="13" fontWeight="800">Full-Service Leasing</text>
+        <text x="75" y="106" textAnchor="middle" fill="#FFFFFF" fontSize="9" opacity="0.6">End-to-end execution</text>
 
         <text x="75" y="140" textAnchor="middle" fill="#10B981" fontSize="22" fontWeight="800">1 mo.</text>
         <text x="75" y="154" textAnchor="middle" fill="#FFFFFF" fontSize="8" opacity="0.5">success fee on placement</text>

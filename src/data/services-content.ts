@@ -5,7 +5,7 @@
  * Sanity is used only for optional enrichment (testimonials, editable blurbs) -
  * not as a fallback for the commercial copy below.
  *
- * Brand voice: Strategic, Professional, Concierge. No hype, no superlatives.
+ * Brand voice: Strategic, Professional, Transparent. No hype, no superlatives.
  * Fee model: Zero upfront + success fee on placement.
  */
 
@@ -69,7 +69,7 @@ const TENANT_PLACEMENT: ServicePageContent = {
   ],
   solutionTitle: 'How MoveSmart delivers tenant placement',
   solutionLede:
-    'One concierge team runs strategic pricing, listing production, showings, screening, offer negotiation, lease execution, and move-in coordination on a single timeline. You approve the decisions that matter and delegate everything else.',
+    'One full-service team runs strategic pricing, listing production, showings, screening, offer negotiation, lease execution, and move-in coordination on a single timeline. You approve the decisions that matter and delegate everything else.',
   scope: [
     {
       title: 'Strategic pricing & listing launch',
@@ -213,12 +213,12 @@ const LEASING_SERVICES: ServicePageContent = {
   slug: 'leasing-services',
   title: 'Leasing Services',
   metaDescription:
-    'White-glove leasing services for Canadian landlords: strategic pricing, marketing, showings, screening, lease execution, and move-in. Zero upfront, success fee on placement.',
+    'Full-service leasing services for Canadian landlords: strategic pricing, marketing, showings, screening, lease execution, and move-in. Zero upfront, success fee on placement.',
   heroEyebrow: 'Leasing Services · Full Engagement',
   heroKicker: 'Services',
   heroHeadline: 'Every step of the lease, handled',
   heroLede:
-    'Leasing Services is the MoveSmart umbrella engagement - nine integrated workstreams that take your unit from empty to signed, paid, and occupied. One concierge team, one success fee, one source of truth in your portal.',
+    'Leasing Services is the MoveSmart umbrella engagement, nine integrated workstreams that take your unit from empty to signed, paid, and occupied. One full-service team, one success fee, one source of truth in your portal.',
   cta1Label: 'Create a Free Account',
   cta2Label: 'Book a Discovery Call',
   problemTitle: 'What goes wrong when leasing is split across five vendors',
@@ -373,7 +373,7 @@ const LEASING_SERVICES: ServicePageContent = {
     'full service leasing brokerage',
     'rental leasing agent Toronto',
     'landlord leasing services GTA',
-    'leasing concierge Ontario',
+    'full-service leasing Ontario',
     'end to end leasing Canada',
     'leasing brokerage for landlords',
   ],

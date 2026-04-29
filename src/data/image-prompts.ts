@@ -5,7 +5,7 @@
  * across city, service, guide, and OG-share surfaces. These prompts are
  * intended for DALL-E 3, Midjourney v6, Ideogram 2, and Flux Pro.
  *
- * Brand voice: strategic, professional, concierge. Visual direction:
+ * Brand voice: strategic, professional, transparent. Visual direction:
  * premium editorial, architectural dignity, restrained color grading,
  * navy (#001E57) / emerald (#009966) / gold (#D4A853) undertones.
  *
@@ -198,9 +198,9 @@ const SERVICE_SEEDS: ServiceSeed[] = [
     subject:
       'Two professionals meeting across a walnut conference table reviewing an applicant file, warm window light from the left, hands and documents in sharp focus, faces soft / partially out of frame.',
     style:
-      'Concierge-grade editorial, dignified body language, no performative handshake. Clean minimal background, single orchid stem or ceramic vessel as quiet prop.',
+      'Editorial-grade composition, dignified body language, no performative handshake. Clean minimal background, single orchid stem or ceramic vessel as quiet prop.',
     altText:
-      'Concierge tenant placement consultation at MoveSmart Rentals - qualified applicant review.',
+      'Full-service tenant placement consultation at MoveSmart Rentals - qualified applicant review.',
   },
   {
     slug: 'leasing-services',

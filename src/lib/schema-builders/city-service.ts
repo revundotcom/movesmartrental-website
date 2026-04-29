@@ -101,7 +101,7 @@ export function buildCityServiceSchema(
 
   const localBusiness = buildLocalBusinessSchema({
     name: `${provider} - ${cityName}`,
-    description: `${serviceTitle} in ${cityName}, ${provinceName} - white-glove leasing brokerage with zero upfront cost.`,
+    description: `${serviceTitle} in ${cityName}, ${provinceName}, full-service leasing and tenant placement with zero upfront cost.`,
     url: pageUrl,
     phone: phone ?? '+18005959755',
     address: {

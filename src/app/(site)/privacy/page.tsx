@@ -92,8 +92,8 @@ export default function PrivacyPolicyPage() {
               </p>
               <ul className="mt-2 list-disc space-y-1 pl-6">
                 <li>
-                  To provide, operate, and deliver our white-glove leasing
-                  brokerage services, including strategic rental pricing,
+                  To provide, operate, and deliver our full-service leasing
+                  and tenant placement services, including strategic rental pricing,
                   marketing, showings, offer management, applicant
                   qualification, rent protection (via partner), lease
                   execution, move-in coordination, and institutional

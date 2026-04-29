@@ -14,10 +14,10 @@ import { ANIMATION_DELAY_BASE } from '@/lib/constants'
 import type { HeroBlockProps } from '@/types/blocks'
 
 const ROTATING_TEXTS = [
-  "Canada's White-Glove Leasing Brokerage",
+  'Full-Service Leasing & Tenant Placement',
+  '24/7 Coverage, Listing to Move-In',
+  'Live Portal Visibility',
   'Zero Upfront Cost',
-  'MLS + 50-Portal Syndication',
-  'Listing to Move-In, Nothing Beyond',
 ]
 
 function inferCTAType(href: string): 'account_creation' | 'book_a_call' {
@@ -171,7 +171,7 @@ export function HeroBlock({
             >
               <span className="font-semibold text-brand-navy">500+ Units Leased</span>
               <span className="font-semibold text-brand-navy">20+ Cities</span>
-              <span className="font-semibold text-brand-navy">94% Applicant Approval</span>
+              <span className="font-semibold text-brand-navy">24/7 Live Coverage</span>
               <span className="font-semibold text-brand-navy">18-Day Avg. Placement</span>
             </motion.div>
 

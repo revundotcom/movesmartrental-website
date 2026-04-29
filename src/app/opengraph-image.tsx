@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 
-export const alt = 'MoveSmart Rentals - White-Glove Leasing Brokerage'
+export const alt = 'MoveSmart Rentals - Full-Service Leasing and Tenant Placement'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -87,7 +87,7 @@ export default function OpengraphImage() {
             maxWidth: 980,
           }}
         >
-          White-Glove
+          Full-Service
         </div>
         <div
           style={{
@@ -102,7 +102,7 @@ export default function OpengraphImage() {
             maxWidth: 980,
           }}
         >
-          Leasing Brokerage
+          Leasing & Placement
         </div>
 
         {/* Subhead */}
@@ -159,7 +159,7 @@ export default function OpengraphImage() {
                 textTransform: 'uppercase',
               }}
             >
-              Strategic - Professional - Concierge
+              Strategic - Professional - Transparent
             </div>
           </div>
           <div

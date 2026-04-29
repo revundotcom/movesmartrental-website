@@ -2,12 +2,12 @@
  * Ontario Tier-2 City Content
  * -------------------------------------------------------------
  * Full content for 20 Tier-2 Ontario cities served by MoveSmart
- * Rentals' white-glove leasing brokerage. Tier-1 cities (Toronto,
+ * Rentals' full-service leasing and tenant placement. Tier-1 cities (Toronto,
  * Mississauga, etc.) are handled in scripts/city-content/*.
  *
  * Positioning throughout: leasing brokerage / tenant placement /
  * rent guarantee - NOT property management. MoveSmart is a
- * concierge leasing house, not an operator.
+ * leasing-and-placement house, not an operator.
  */
 
 export interface OntarioCityContent {
@@ -43,7 +43,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
     tier: 2,
     seoTitle: 'Leasing Services in Whitby | MoveSmart Rentals',
     metaDescription:
-      'White-glove tenant placement and rent-guarantee leasing in Whitby, ON. Concierge screening for GO-commuter professionals, family rentals, and Brooklin new builds.',
+      'Full-service tenant placement and rent-guarantee leasing in Whitby, ON. Structured screening for GO-commuter professionals, family rentals, and Brooklin new builds.',
     heroHeadline: 'Whitby Leasing, Built Around Your Commuter-Grade Asset',
     heroLede:
       'MoveSmart places vetted tenants into Whitby homes and condos with the precision Durham owners expect. From Brooklin new builds to Port Whitby waterfront units, we market the GO advantage, screen rigorously, and guarantee the rent so you stay hands-off.',
@@ -126,7 +126,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
     tier: 2,
     seoTitle: 'Leasing Services in Clarington | MoveSmart Rentals',
     metaDescription:
-      'Concierge tenant placement for Clarington landlords across Bowmanville, Courtice, Newcastle and Orono. Rent-guaranteed leasing aligned with the GO extension story.',
+      'Full-service tenant placement for Clarington landlords across Bowmanville, Courtice, Newcastle and Orono. Rent-guaranteed leasing aligned with the GO extension story.',
     heroHeadline: 'Clarington Leasing, Ahead of the GO Extension',
     heroLede:
       'Clarington rentals are moving from commuter-town fringe to GTA-connected core. MoveSmart positions Bowmanville, Courtice, and Newcastle homes in front of the professionals and relocating families already pricing in the Lakeshore East extension.',
@@ -208,7 +208,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
     tier: 2,
     seoTitle: 'Leasing Services in Kingston | MoveSmart Rentals',
     metaDescription:
-      'Concierge leasing for Kingston landlords - Queen\'s student properties, RMC and hospital-adjacent homes, and downtown heritage rentals screened and placed properly.',
+      'Full-service leasing for Kingston landlords - Queen\'s student properties, RMC and hospital-adjacent homes, and downtown heritage rentals screened and placed properly.',
     heroHeadline: 'Kingston Leasing, Tuned to the Queen\'s Calendar',
     heroLede:
       'Kingston rental cycles are unlike anywhere else in Ontario - driven by a university calendar, a hospital network, and a military college. MoveSmart times listings correctly, screens student and graduate applicants properly, and places tenants who actually pay.',
@@ -375,7 +375,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
     tier: 2,
     seoTitle: 'Leasing Services in St. Catharines | MoveSmart Rentals',
     metaDescription:
-      'Concierge tenant placement for St. Catharines landlords - Brock University, Niagara Health, downtown heritage, and family rentals screened and leased properly.',
+      'Full-service tenant placement for St. Catharines landlords - Brock University, Niagara Health, downtown heritage, and family rentals screened and leased properly.',
     heroHeadline: 'St. Catharines Leasing, Across the Full Niagara Spectrum',
     heroLede:
       'From Brock student houses to Port Dalhousie waterfront condos to downtown heritage lofts, St. Catharines rentals span every tenant type. MoveSmart reads each sub-market correctly and places tenants who match.',
@@ -539,7 +539,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
     tier: 2,
     seoTitle: 'Leasing Services in Welland | MoveSmart Rentals',
     metaDescription:
-      'White-glove tenant placement for Welland landlords - Niagara College students, workforce housing, and canal-corridor family rentals leased and screened professionally.',
+      'Full-service tenant placement for Welland landlords - Niagara College students, workforce housing, and canal-corridor family rentals leased and screened professionally.',
     heroHeadline: 'Welland Leasing, Along the Canal and the College Corridor',
     heroLede:
       'Welland is a dual-engine rental market - Niagara College on one side, industrial and workforce housing on the other. MoveSmart lines up listings, tenants, and lease terms with whichever engine fits the property.',
@@ -703,7 +703,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
     tier: 2,
     seoTitle: 'Leasing Services in Peterborough | MoveSmart Rentals',
     metaDescription:
-      'Concierge tenant placement in Peterborough, ON - Trent University, Fleming College, hospital, and retiree-driven rentals placed with proper screening and rent guarantee.',
+      'Full-service tenant placement in Peterborough, ON - Trent University, Fleming College, hospital, and retiree-driven rentals placed with proper screening and rent guarantee.',
     heroHeadline: 'Peterborough Leasing, Between the Universities and the Lakes',
     heroLede:
       'Peterborough mixes two post-secondary campuses, a regional hospital network, and a retiree economy into a distinct rental market. MoveSmart treats each stream differently and places tenants who fit.',
@@ -785,7 +785,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
     tier: 2,
     seoTitle: 'Leasing Services in Newmarket | MoveSmart Rentals',
     metaDescription:
-      'White-glove leasing for Newmarket landlords - Southlake Hospital professionals, family detached rentals, and Yonge-Davis corridor condos placed by concierge.',
+      'Full-service leasing for Newmarket landlords - Southlake Hospital professionals, family detached rentals, and Yonge-Davis corridor condos placed with structured screening.',
     heroHeadline: 'Newmarket Leasing, Tuned to the Yonge-Davis Corridor',
     heroLede:
       'Newmarket blends York Region affluence with a real commuter and hospital-driven rental base. MoveSmart places professional tenants into detached, townhome, and condo inventory with the precision the submarket demands.',
@@ -867,7 +867,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
     tier: 2,
     seoTitle: 'Leasing Services in Aurora | MoveSmart Rentals',
     metaDescription:
-      'Concierge leasing for Aurora landlords - executive detached homes, estate rentals, and Bayview 404 corridor condos placed with York-Region precision.',
+      'Full-service leasing for Aurora landlords - executive detached homes, estate rentals, and Bayview 404 corridor condos placed with York-Region precision.',
     heroHeadline: 'Aurora Leasing, Matched to Executive Tenancies',
     heroLede:
       'Aurora\'s rental market skews affluent - executive relocations, detached homes on larger lots, and premium 404-corridor condos. MoveSmart matches that inventory to tenants whose files stand up to serious scrutiny.',
@@ -952,7 +952,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
       'Tenant placement and rent-guarantee leasing for Georgina landlords - Keswick, Sutton, Jackson\'s Point and Lake Simcoe waterfront rentals handled end to end.',
     heroHeadline: 'Georgina Leasing, Along the Lake Simcoe Shore',
     heroLede:
-      'Georgina rentals span Keswick, Sutton, Pefferlaw, and the Jackson\'s Point waterfront - a market where cottage heritage meets year-round commuter living. MoveSmart navigates both worlds with a concierge playbook.',
+      'Georgina rentals span Keswick, Sutton, Pefferlaw, and the Jackson\'s Point waterfront - a market where cottage heritage meets year-round commuter living. MoveSmart navigates both worlds with a structured playbook.',
     rentalMarketSummary:
       'Georgina - encompassing Keswick, Sutton, Jackson\'s Point, and Pefferlaw - has transitioned from a seasonal Lake Simcoe cottage community into a true year-round rental market. Keswick in particular has absorbed significant new-build supply and become a spillover market for Newmarket and Aurora, drawing family tenants who accept a longer commute in exchange for meaningfully lower rent. Sutton retains more of its small-town character and appeals to lifestyle renters and retirees. Waterfront inventory along the Lake Simcoe shore, particularly Jackson\'s Point, attracts a specific profile of tenant willing to pay a premium for shoreline access and four-season recreation. The commute into York Region and downtown Toronto via Highway 404 is tight but workable, and planned transit improvements have put quiet upward pressure on long-term pricing. Rents remain well below the broader York Region average.',
     landlordProblem:
@@ -1031,7 +1031,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
     tier: 2,
     seoTitle: 'Leasing Services in Bradford | MoveSmart Rentals',
     metaDescription:
-      'Concierge leasing for Bradford West Gwillimbury landlords - 400-corridor detached homes, GO station condos, and agri-industrial workforce rentals placed professionally.',
+      'Full-service leasing for Bradford West Gwillimbury landlords - 400-corridor detached homes, GO station condos, and agri-industrial workforce rentals placed professionally.',
     heroHeadline: 'Bradford Leasing, At the Intersection of 400 and the GO',
     heroLede:
       'Bradford West Gwillimbury sits at a strategic commuter crossroads - Highway 400 north-south, Barrie-line GO east-west. MoveSmart places family tenants into an inventory base built almost entirely around that advantage.',
@@ -1113,7 +1113,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
     tier: 2,
     seoTitle: 'Leasing Services in Orangeville | MoveSmart Rentals',
     metaDescription:
-      'White-glove tenant placement for Orangeville landlords - Dufferin County family rentals, small-town downtown character units, and commute-driven demand handled end to end.',
+      'Full-service tenant placement for Orangeville landlords - Dufferin County family rentals, small-town downtown character units, and commute-driven demand handled end to end.',
     heroHeadline: 'Orangeville Leasing, Across the Dufferin Line',
     heroLede:
       'Orangeville punches above its population - a Dufferin County hub with real commuter demand, heritage downtown rentals, and a family-first tenant profile. MoveSmart places the right tenants across all three lanes.',
@@ -1195,7 +1195,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
     tier: 2,
     seoTitle: 'Leasing Services in Halton Hills | MoveSmart Rentals',
     metaDescription:
-      'Concierge leasing for Halton Hills - Georgetown and Acton detached homes, escarpment-adjacent rentals, and Milton-overflow family placements done right.',
+      'Full-service leasing for Halton Hills - Georgetown and Acton detached homes, escarpment-adjacent rentals, and Milton-overflow family placements done right.',
     heroHeadline: 'Halton Hills Leasing, Built for Georgetown and Acton',
     heroLede:
       'Halton Hills - Georgetown, Acton, and the surrounding escarpment - is one of the most character-driven rental markets in Halton Region. MoveSmart places families and professionals into homes that deserve proper marketing.',
@@ -1277,7 +1277,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
     tier: 2,
     seoTitle: 'Leasing Services in Caledon | MoveSmart Rentals',
     metaDescription:
-      'White-glove tenant placement in Caledon - Bolton, Mayfield West, and estate rentals across the escarpment placed with Peel-Region precision and rent guarantee.',
+      'Full-service tenant placement in Caledon - Bolton, Mayfield West, and estate rentals across the escarpment placed with Peel-Region precision and rent guarantee.',
     heroHeadline: 'Caledon Leasing, From Bolton to the Escarpment',
     heroLede:
       'Caledon is unlike any other Peel rental market - estate acreage, new-build Bolton family homes, and Mayfield West spillover all in one municipal footprint. MoveSmart treats each lane as its own engagement.',
@@ -1359,7 +1359,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
     tier: 2,
     seoTitle: 'Leasing Services in Belleville | MoveSmart Rentals',
     metaDescription:
-      'Concierge tenant placement in Belleville - Quinte region family rentals, CFB Trenton military tenants, and downtown heritage units screened and leased professionally.',
+      'Full-service tenant placement in Belleville - Quinte region family rentals, CFB Trenton military tenants, and downtown heritage units screened and leased professionally.',
     heroHeadline: 'Belleville Leasing, Across the Quinte Region',
     heroLede:
       'Belleville anchors the Quinte corridor between Kingston and the GTA - a rental market shaped by Loyalist College, Quinte Health, and the military tenant flow from CFB Trenton. MoveSmart reads all three audiences correctly.',
@@ -1524,7 +1524,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
     tier: 2,
     seoTitle: 'Leasing Services in Sault Ste. Marie | MoveSmart Rentals',
     metaDescription:
-      'Concierge tenant placement in Sault Ste. Marie - Algoma Steel workforce, Sault College and Algoma University, and cross-border Michigan tenants leased professionally.',
+      'Full-service tenant placement in Sault Ste. Marie - Algoma Steel workforce, Sault College and Algoma University, and cross-border Michigan tenants leased professionally.',
     heroHeadline: 'Sault Ste. Marie Leasing, Across the Algoma Economy',
     heroLede:
       'The Sault\'s rental market runs on steel, cross-border traffic, and two post-secondary campuses. MoveSmart screens against each audience properly and places tenants who fit.',

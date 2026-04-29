@@ -65,7 +65,7 @@ export function PhilosophyManifesto() {
               <span className="text-brand-gold">.</span>
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-slate-600">
-              We&rsquo;re a white-glove leasing brokerage - not a software
+              We&rsquo;re a full-service leasing and tenant placement company - not a software
               company. The portal exists for one reason: so you never have to
               chase us to find out where your lease-up stands. Three principles
               guided every decision.

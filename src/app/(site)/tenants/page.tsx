@@ -112,7 +112,7 @@ const PROPERTY_TYPES = [
   },
   {
     title: 'Condos',
-    desc: 'Individually owned units in amenity-rich buildings - gyms, pools, concierge, often newer construction with in-suite laundry.',
+    desc: 'Individually owned units in amenity-rich buildings - gyms, pools, lobby attendants, often newer construction with in-suite laundry.',
   },
   {
     title: 'Houses',

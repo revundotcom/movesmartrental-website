@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 const PRODUCT_JSONLD = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  name: 'MoveSmart Rentals - White-Glove Leasing Brokerage',
+  name: 'MoveSmart Rentals - Full-Service Leasing and Tenant Placement',
   serviceType: 'Residential Leasing Brokerage',
   provider: {
     '@type': 'Organization',

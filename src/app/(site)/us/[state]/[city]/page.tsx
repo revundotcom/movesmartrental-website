@@ -72,7 +72,7 @@ export async function generateMetadata({
   return generatePageMetadata({
     path: `/us/${state}/${city}`,
     fallbackTitle: `Leasing Services in ${cityTitle}`,
-    fallbackDescription: `White-glove leasing brokerage in ${cityTitle}, ${stateName}: tenant placement, screening, lease execution, and move-in coordination. Zero upfront cost.`,
+    fallbackDescription: `Full-service leasing and tenant placement in ${cityTitle}, ${stateName}: tenant placement, screening, lease execution, and move-in coordination. Zero upfront cost.`,
   })
 }
 
@@ -124,7 +124,7 @@ export default async function USCityPage({
   // Build LocalBusiness JSON-LD
   const localBusinessSchema = buildLocalBusinessSchema({
     name: `MoveSmart Rentals - ${data.title}`,
-    description: `White-glove leasing brokerage in ${data.title}, ${data.province.title}.`,
+    description: `Full-service leasing and tenant placement in ${data.title}, ${data.province.title}.`,
     url: pageUrl,
     address: {
       streetAddress: '',
@@ -167,7 +167,7 @@ export default async function USCityPage({
       {/* Editorial hero */}
       <PageHeroBlock
         kicker={`${data.title}, ${stateAbbr}`}
-        eyebrow="White-glove leasing brokerage"
+        eyebrow="Full-service leasing and tenant placement"
         headline={`Leasing services in ${data.title}`}
         lede={
           descriptionText?.slice(0, 220) ??

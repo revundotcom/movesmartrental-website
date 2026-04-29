@@ -119,21 +119,21 @@ const US_STATES_META: Array<{
 export const metadata: Metadata = {
   title: 'Leasing Brokerage in the United States | MoveSmart Rentals',
   description:
-    'White-glove leasing brokerage expanding across the United States. Tenant placement, screening, and lease execution in Florida, Texas, California, New York, and more.',
+    'Full-service leasing and tenant placement expanding across the United States. Tenant placement, screening, and lease execution in Florida, Texas, California, New York, and more.',
   alternates: {
     canonical: '/us/',
   },
   openGraph: {
     title: 'Leasing Brokerage in the United States | MoveSmart Rentals',
     description:
-      'White-glove leasing brokerage expanding across the United States. Tenant placement, screening, and lease execution in Florida, Texas, California, New York, and more.',
+      'Full-service leasing and tenant placement expanding across the United States. Tenant placement, screening, and lease execution in Florida, Texas, California, New York, and more.',
     images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'MoveSmart Rentals United States' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Leasing Brokerage in the United States | MoveSmart Rentals',
     description:
-      'White-glove leasing brokerage expanding across the United States. Tenant placement, screening, and lease execution in Florida, Texas, California, New York, and more.',
+      'Full-service leasing and tenant placement expanding across the United States. Tenant placement, screening, and lease execution in Florida, Texas, California, New York, and more.',
     images: ['/og-default.png'],
   },
 }
@@ -180,7 +180,7 @@ export default async function USHubPage() {
         </h2>
         <p className="mx-auto mt-4 max-w-3xl text-muted-foreground">
           Building on our leasing execution across Canada, MoveSmart Rentals is
-          bringing white-glove leasing brokerage to the United States. Our US
+          bringing full-service leasing and tenant placement to the United States. Our US
           operations focus on high-growth rental markets where landlords,
           property managers, and developers need disciplined leasing execution
           with transparent pricing. From Florida&apos;s Sun Belt to
@@ -246,7 +246,7 @@ export default async function USHubPage() {
       {/* 4. CTA */}
       <CTABannerBlock
         headline="Own Rental Property in the US? Let Us Lease It."
-        description="MoveSmart Rentals is bringing white-glove leasing brokerage to America's top rental markets - zero upfront, success-fee pricing."
+        description="MoveSmart Rentals is bringing full-service leasing and tenant placement to America's top rental markets - zero upfront, success-fee pricing."
         primaryCta={{ label: 'Book a Free Consultation', href: '/contact/' }}
         secondaryCta={{ label: 'View Pricing', href: '/pricing/' }}
       />

@@ -21,21 +21,21 @@ import {
 export const metadata: Metadata = {
   title: 'Leasing Coverage - Canada & United States | MoveSmart Rentals',
   description:
-    'White-glove leasing across Canada and the United States. 20+ Ontario tier-1 cities, five provinces, ten priority U.S. states including Florida, Texas, California, New York, and Illinois.',
+    'Full-service leasing across Canada and the United States. 20+ Ontario tier-1 cities, five provinces, ten priority U.S. states including Florida, Texas, California, New York, and Illinois.',
   alternates: {
     canonical: '/locations/',
   },
   openGraph: {
     title: 'Leasing Coverage - Canada & United States | MoveSmart Rentals',
     description:
-      'Same discipline, same white-glove execution - from a basement unit in Hamilton to a 500-unit lease-up in Miami.',
+      'Same discipline, same full-service execution - from a basement unit in Hamilton to a 500-unit lease-up in Miami.',
     images: ['/og-default.png'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Leasing Coverage - Canada & United States | MoveSmart Rentals',
     description:
-      'White-glove leasing brokerage across Canada and the United States. See every province and state we serve.',
+      'Full-service leasing and tenant placement across Canada and the United States. See every province and state we serve.',
   },
 }
 
@@ -322,7 +322,7 @@ const PLACE_SCHEMA = {
   '@type': 'LocalBusiness',
   name: 'MoveSmart Rentals',
   description:
-    'White-glove residential leasing brokerage operating across Canada and the United States.',
+    'Full-service residential leasing and tenant placement operating across Canada and the United States.',
   url: 'https://movesmartrentals.com/locations/',
   areaServed: [
     // Canadian provinces
@@ -370,7 +370,7 @@ export default function LocationsPage() {
         eyebrow="Where we lease"
         headline="Leasing coverage across North America"
         accentLastWord
-        lede="Same discipline, same white-glove execution - from a basement-unit landlord in Hamilton to a 500-unit lease-up campaign in Miami. Five provinces, ten priority U.S. states, one concierge standard."
+        lede="Same discipline, same full-service execution - from a basement-unit landlord in Hamilton to a 500-unit lease-up campaign in Miami. Five provinces, ten priority U.S. states, one structured standard."
         cta1={{ label: 'Create a Free Account', href: '/signup/' }}
         cta2={{ label: 'Book a Call', href: '/contact/?intent=call' }}
       />
@@ -425,7 +425,7 @@ export default function LocationsPage() {
               <p className="mt-4 text-base leading-relaxed text-slate-600 md:text-lg">
                 Ontario is our home market and deepest bench. From Toronto to
                 Pickering, every tier-1 city below has a local leasing advisor,
-                RTA-aligned documentation, and the full nine-service concierge
+                RTA-aligned documentation, and the full nine-service leasing
                 scope.
               </p>
             </div>

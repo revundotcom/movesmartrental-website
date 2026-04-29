@@ -30,7 +30,7 @@ import {
 export const metadata: Metadata = {
   title: 'Leasing Brokerage Franchise Opportunity Canada & US',
   description:
-    'Start your own white-glove leasing brokerage with MoveSmart Rentals. Protected territory, 6-week training, proven leasing playbook, and ongoing HQ support.',
+    'Start your own full-service leasing and tenant placement business with MoveSmart Rentals. Protected territory, 6-week training, proven leasing playbook, and ongoing HQ support.',
   alternates: {
     canonical: '/franchising/',
   },
@@ -357,7 +357,7 @@ export default function FranchisingPage() {
       <PageHeroBlock
         kicker="Franchise Opportunity"
         eyebrow="Now Awarding Territories"
-        headline="Start your own white-glove leasing brokerage."
+        headline="Start your own full-service leasing business."
         accentLastWord={false}
         lede="MoveSmart Rentals is awarding protected territories to qualified operators across Canada and the United States. You bring local market knowledge and operational drive - we provide the playbook, the tech platform, and the brand that owners trust."
         cta1={{ label: 'Request the Franchise Kit', href: '/contact/?intent=franchise' }}

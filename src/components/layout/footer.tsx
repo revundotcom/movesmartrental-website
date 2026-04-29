@@ -105,9 +105,9 @@ export function Footer() {
             <div className="lg:col-span-4">
               <Logo variant="white" className="text-2xl" />
               <p className="mt-4 max-w-xs text-sm leading-relaxed text-slate-400">
-                White-glove rental brokerage delivering full-cycle leasing
-                execution for landlords, property managers, and institutional
-                rental operators across Canada and the United States.
+                Full-service leasing and tenant placement company delivering
+                end-to-end leasing execution for landlords, property managers,
+                and institutional rental operators across Canada and the United States.
               </p>
               {/* Account creation CTA */}
               <div className="mt-5">

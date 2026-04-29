@@ -36,11 +36,11 @@ const dmSerifDisplay = DM_Serif_Display({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'),
   title: {
-    default: 'MoveSmart Rentals | White-Glove Leasing Brokerage Across Canada',
+    default: 'MoveSmart Rentals | Full-Service Leasing & Tenant Placement Across Canada',
     template: '%s | MoveSmart Rentals',
   },
   description:
-    'White-glove leasing brokerage across Canada. Strategic pricing, professional marketing, tenant qualification, and lease execution with zero upfront cost. Get your free rental analysis.',
+    'Full-service leasing and tenant placement across Canada. Strategic pricing, professional marketing, tenant qualification, and lease execution with zero upfront cost. Get your free rental analysis.',
   keywords: ['leasing brokerage Canada', 'rental leasing services', 'tenant qualification', 'lease execution', 'landlord services', 'leasing services Ontario', 'tenant screening Canada'],
   authors: [{ name: 'MoveSmart Rentals', url: 'https://movesmartrentals.com' }],
   creator: 'MoveSmart Rentals',
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
         url: '/og-default.png',
         width: 1200,
         height: 630,
-        alt: 'MoveSmart Rentals - White-Glove Leasing Brokerage Across Canada',
+        alt: 'MoveSmart Rentals - Full-Service Leasing and Tenant Placement Across Canada',
       },
     ],
   },

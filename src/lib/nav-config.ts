@@ -1,9 +1,9 @@
 /* ------------------------------------------------------------------ */
 /*  Shared navigation data used by Header, Footer, and MobileNav      */
 /*                                                                    */
-/*  Brand positioning: white-glove rental brokerage delivering        */
-/*  full-cycle leasing execution for landlords, property managers,    */
-/*  and institutional rental operators.                                */
+/*  Brand positioning: full-service leasing and tenant placement      */
+/*  company delivering end-to-end leasing execution for landlords,    */
+/*  property managers, and institutional rental operators.            */
 /* ------------------------------------------------------------------ */
 
 /* ---- Header nav groups (contract §7.1 & §20.5) ----
@@ -45,13 +45,21 @@ export const NAV_GROUPS = [
     items: [
       { title: 'All Services', href: '/services/', description: 'Full-cycle leasing execution overview' },
       { title: 'Tenant Placement', href: '/services/tenant-placement/', description: 'Marketing, showings, and lease signing' },
-      { title: 'Leasing Services', href: '/services/leasing-services/', description: 'White-glove leasing for owners' },
+      { title: 'Leasing Services', href: '/services/leasing-services/', description: 'Full-service leasing for owners' },
       { title: 'Tenant Screening', href: '/services/tenant-screening/', description: 'Multi-step applicant verification' },
       { title: 'Rent Guarantee', href: '/services/rent-guarantee/', description: 'Protection against missed payments' },
       { title: 'Tenant Insurance', href: '/services/tenant-insurance/', description: 'Coverage for renters and units' },
       { title: 'Tenant Guarantor', href: '/services/tenant-guarantor/', description: 'Co-signer support for applicants' },
       { title: 'Rental Preparation', href: '/services/rental-preparation/', description: 'Staging, photography, listing prep' },
       { title: 'Institutional Lease-Up', href: '/services/institutional-lease-up/', description: 'Bulk lease-up for new builds' },
+    ],
+  },
+  {
+    label: 'Solutions',
+    items: [
+      { title: 'Developers', href: '/developers/', description: 'Lease-up campaigns, end-to-end execution, on-site leasing teams.' },
+      { title: 'Property Managers', href: '/property-managers/', description: 'Outsource leasing without losing operational control.' },
+      { title: 'Institutional Lease-Up', href: '/institutional-lease-up/', description: 'Pilot-ready leasing for institutional landlords and asset managers.' },
     ],
   },
   {
