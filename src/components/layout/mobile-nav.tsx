@@ -15,6 +15,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
+import { PORTAL_LOGIN_URL, PORTAL_REGISTER_URL } from '@/lib/portal-api'
 
 /* ------------------------------------------------------------------ */
 /*  Mobile navigation structure                                       */
@@ -45,10 +46,12 @@ const MOBILE_NAV_SECTIONS: ReadonlyArray<NavSectionDef> = [
     label: 'Tenants',
     items: [
       { title: 'Tenant Hub', href: '/tenants/' },
+      { title: 'Browse Rentals', href: '/rentals/' },
       { title: 'Apply', href: '/contact/?type=tenant' },
       { title: 'Tenant FAQ', href: '/faq/' },
     ],
   },
+  { label: 'Rentals', href: '/rentals/' },
   {
     label: 'Services',
     items: [
@@ -297,20 +300,24 @@ export function MobileNav() {
 
         {/* Bottom CTA */}
         <div className="border-t border-border/60 p-5 space-y-3">
-          <Link
-            href="/contact/?intent=call"
+          <a
+            href={PORTAL_LOGIN_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={handleNavigate}
             className="flex w-full items-center justify-center rounded-lg border border-[#0B1D3A]/20 px-4 py-3 text-sm font-medium text-[#0B1D3A] transition-colors hover:border-[#0B1D3A]/40 hover:bg-[#0B1D3A]/5"
           >
-            Book a Call
-          </Link>
-          <Link
-            href="/contact/?type=owner"
+            Login
+          </a>
+          <a
+            href={PORTAL_REGISTER_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={handleNavigate}
             className="flex w-full items-center justify-center rounded-lg bg-brand-emerald px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-emerald-dark"
           >
-            Create a Free Account
-          </Link>
+            Create Account
+          </a>
         </div>
       </SheetContent>
     </Sheet>

@@ -23,15 +23,35 @@ declare global {
   }
 }
 
+/**
+ * Phone format required by the portal lead-submit API: (123) 456-7890.
+ * The mask runs on every keystroke so the value rendered (and submitted)
+ * is always in this format — partial values during typing pass validation
+ * as long as the user keeps adding digits.
+ */
+const PHONE_REGEX = /^\(\d{3}\) \d{3}-\d{4}$/
+
+function formatPhone(input: string): string {
+  const digits = input.replace(/\D/g, '').slice(0, 10)
+  if (digits.length === 0) return ''
+  if (digits.length < 4) return `(${digits}`
+  if (digits.length < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`
+}
+
 const contactSchema = z.object({
   type: z.enum(['owner', 'tenant', 'franchise', 'other']),
   propertyType: z.string().optional(),
   unitCount: z.string().optional(),
   city: z.string().optional(),
-  name: z.string().min(2, 'Name must be at least 2 characters'),
+  firstName: z.string().min(1, 'First name is required').max(100, 'First name is too long'),
+  lastName: z.string().min(1, 'Last name is required').max(100, 'Last name is too long'),
   email: z.string().email('Please enter a valid email'),
-  phone: z.string().optional(),
-  message: z.string().min(5, 'Message must be at least 5 characters'),
+  phone: z
+    .string()
+    .min(1, 'Phone is required')
+    .regex(PHONE_REGEX, 'Use the format (123) 456-7890'),
+  message: z.string().max(5000).optional(),
 })
 
 type ContactFormData = z.infer<typeof contactSchema>
@@ -129,7 +149,8 @@ export function ContactForm() {
       propertyType: '',
       unitCount: '',
       city: '',
-      name: '',
+      firstName: '',
+      lastName: '',
       email: '',
       phone: '',
       message: '',
@@ -137,6 +158,7 @@ export function ContactForm() {
   })
 
   const selectedType = watch('type')
+  const phoneValue = watch('phone')
 
   // Auto-advance to step 2 if type came from URL
   useEffect(() => {
@@ -295,10 +317,17 @@ export function ContactForm() {
         {/* Step 3: Contact info */}
         {step === 3 && (
           <motion.div key="step3" variants={stepVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.25 }} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Name <span className="text-destructive">*</span></Label>
-              <Input id="name" placeholder="Your full name" aria-invalid={!!errors.name} {...register('name')} />
-              {errors.name && <p className="text-sm text-destructive">{errors.name.message}</p>}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="firstName">First Name <span className="text-destructive">*</span></Label>
+                <Input id="firstName" placeholder="Jane" aria-invalid={!!errors.firstName} {...register('firstName')} />
+                {errors.firstName && <p className="text-sm text-destructive">{errors.firstName.message}</p>}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="lastName">Last Name <span className="text-destructive">*</span></Label>
+                <Input id="lastName" placeholder="Smith" aria-invalid={!!errors.lastName} {...register('lastName')} />
+                {errors.lastName && <p className="text-sm text-destructive">{errors.lastName.message}</p>}
+              </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email <span className="text-destructive">*</span></Label>
@@ -306,11 +335,25 @@ export function ContactForm() {
               {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone (optional - for faster callback)</Label>
-              <Input id="phone" type="tel" placeholder="(555) 123-4567" {...register('phone')} />
+              <Label htmlFor="phone">Phone <span className="text-destructive">*</span></Label>
+              <Input
+                id="phone"
+                type="tel"
+                placeholder="(555) 123-4567"
+                inputMode="tel"
+                autoComplete="tel"
+                aria-invalid={!!errors.phone}
+                value={phoneValue || ''}
+                onChange={(e) =>
+                  setValue('phone', formatPhone(e.target.value), {
+                    shouldValidate: true,
+                  })
+                }
+              />
+              {errors.phone && <p className="text-sm text-destructive">{errors.phone.message}</p>}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="message">Message <span className="text-destructive">*</span></Label>
+              <Label htmlFor="message">Message (optional)</Label>
               <textarea
                 id="message"
                 rows={4}

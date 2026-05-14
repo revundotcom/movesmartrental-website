@@ -13,22 +13,95 @@ const STEPS = [
 const PROPERTY_TYPES = ['Condo', 'House', 'Townhouse', 'Multi-Unit', 'Basement Apartment']
 const CITIES = ['Toronto', 'Ottawa', 'Hamilton', 'Mississauga', 'Brampton', 'London', 'Kitchener-Waterloo', 'Barrie', 'Oshawa', 'Burlington', 'Other']
 
+const PHONE_REGEX = /^\(\d{3}\) \d{3}-\d{4}$/
+
+function formatPhone(input: string): string {
+  const digits = input.replace(/\D/g, '').slice(0, 10)
+  if (digits.length === 0) return ''
+  if (digits.length < 4) return `(${digits}`
+  if (digits.length < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`
+}
+
 export function RentalAnalysisForm() {
   const [step, setStep] = useState(1)
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [data, setData] = useState({
     propertyType: '',
     units: '1',
     city: '',
     bedrooms: '',
     currentRent: '',
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     phone: '',
   })
 
   const updateField = (field: string, value: string) => {
     setData((prev) => ({ ...prev, [field]: value }))
+  }
+
+  async function handleSubmit() {
+    setErrorMessage(null)
+
+    if (!data.firstName.trim() || !data.lastName.trim()) {
+      setErrorMessage('First and last name are required.')
+      return
+    }
+    if (!data.email.trim()) {
+      setErrorMessage('Email is required.')
+      return
+    }
+    if (!PHONE_REGEX.test(data.phone)) {
+      setErrorMessage('Phone must be in the format (123) 456-7890.')
+      return
+    }
+
+    setSubmitting(true)
+    try {
+      // Build a message that captures the rental-analysis specific fields
+      // (bedrooms, currentRent) that aren't part of the portal lead schema.
+      const messageParts: string[] = ['Rental Analysis Request']
+      if (data.bedrooms) messageParts.push(`Bedrooms: ${data.bedrooms}`)
+      if (data.currentRent) messageParts.push(`Current rent: ${data.currentRent}`)
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'owner',
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          phone: data.phone,
+          propertyType: data.propertyType || undefined,
+          unitCount: data.units || undefined,
+          city: data.city || undefined,
+          source: 'Website - Rental Analysis',
+          message: messageParts.join(' | '),
+        }),
+      })
+
+      if (!response.ok) {
+        let msg = 'Something went wrong. Please try again.'
+        try {
+          const result = await response.json()
+          msg = result.error || msg
+        } catch {}
+        throw new Error(msg)
+      }
+
+      setSubmitted(true)
+    } catch (err) {
+      setErrorMessage(
+        err instanceof Error ? err.message : 'Something went wrong. Please try again.',
+      )
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   if (submitted) {
@@ -85,6 +158,12 @@ export function RentalAnalysisForm() {
 
         {/* Form card */}
         <div className="bg-white/[0.06] backdrop-blur-sm border border-white/[0.1] rounded-2xl p-8">
+          {errorMessage && (
+            <div className="mb-6 rounded-lg border border-red-400/40 bg-red-500/10 p-4 text-sm text-red-200">
+              {errorMessage}
+            </div>
+          )}
+
           {step === 1 && (
             <div className="space-y-6">
               <div>
@@ -174,15 +253,27 @@ export function RentalAnalysisForm() {
 
           {step === 3 && (
             <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Full Name</label>
-                <input
-                  type="text"
-                  value={data.name}
-                  onChange={(e) => updateField('name', e.target.value)}
-                  className="w-full rounded-lg border border-white/10 bg-white/5 text-white px-4 py-3 text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-brand-emerald/50 outline-none"
-                  placeholder="John Smith"
-                />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">First Name</label>
+                  <input
+                    type="text"
+                    value={data.firstName}
+                    onChange={(e) => updateField('firstName', e.target.value)}
+                    className="w-full rounded-lg border border-white/10 bg-white/5 text-white px-4 py-3 text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-brand-emerald/50 outline-none"
+                    placeholder="Jane"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">Last Name</label>
+                  <input
+                    type="text"
+                    value={data.lastName}
+                    onChange={(e) => updateField('lastName', e.target.value)}
+                    className="w-full rounded-lg border border-white/10 bg-white/5 text-white px-4 py-3 text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-brand-emerald/50 outline-none"
+                    placeholder="Smith"
+                  />
+                </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">Email</label>
@@ -191,15 +282,17 @@ export function RentalAnalysisForm() {
                   value={data.email}
                   onChange={(e) => updateField('email', e.target.value)}
                   className="w-full rounded-lg border border-white/10 bg-white/5 text-white px-4 py-3 text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-brand-emerald/50 outline-none"
-                  placeholder="john@example.com"
+                  placeholder="jane@example.com"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Phone (optional)</label>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Phone</label>
                 <input
                   type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
                   value={data.phone}
-                  onChange={(e) => updateField('phone', e.target.value)}
+                  onChange={(e) => updateField('phone', formatPhone(e.target.value))}
                   className="w-full rounded-lg border border-white/10 bg-white/5 text-white px-4 py-3 text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-brand-emerald/50 outline-none"
                   placeholder="(416) 555-0123"
                 />
@@ -216,6 +309,7 @@ export function RentalAnalysisForm() {
               <button
                 onClick={() => setStep(step - 1)}
                 className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm"
+                disabled={submitting}
               >
                 <ArrowLeft className="w-4 h-4" /> Back
               </button>
@@ -230,11 +324,17 @@ export function RentalAnalysisForm() {
               </button>
             ) : (
               <button
-                onClick={() => setSubmitted(true)}
-                disabled={!data.name || !data.email}
+                onClick={handleSubmit}
+                disabled={
+                  submitting ||
+                  !data.firstName ||
+                  !data.lastName ||
+                  !data.email ||
+                  !PHONE_REGEX.test(data.phone)
+                }
                 className="flex items-center gap-2 px-6 py-3 rounded-lg bg-brand-emerald text-white font-heading font-semibold text-sm hover:bg-brand-emerald-hover transition-colors disabled:opacity-50"
               >
-                Get My Free Analysis <ArrowRight className="w-4 h-4" />
+                {submitting ? 'Sending...' : 'Get My Free Analysis'} <ArrowRight className="w-4 h-4" />
               </button>
             )}
           </div>

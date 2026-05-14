@@ -33,6 +33,16 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {
+        // Portal-hosted property media (cover_image.file_path served from
+        // /storage/...). Allow both production and any dev/staging subdomain.
+        protocol: 'https',
+        hostname: 'portal.revun.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.revun.com',
+      },
     ],
   },
   headers: async () => [
