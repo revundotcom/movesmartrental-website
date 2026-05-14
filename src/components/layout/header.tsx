@@ -73,12 +73,18 @@ export function Header() {
               // Contact) reads as flat items rather than dropdowns.
               if (group.items.length === 1) {
                 const only = group.items[0]
+                const isProperties = group.label === 'Properties'
                 return (
                   <NavigationMenuItem key={group.label}>
                     <NavigationMenuLink
                       render={<Link href={only.href} />}
                       active={pathname === only.href}
-                      className="cursor-pointer rounded-lg px-2.5 py-2 text-sm font-medium whitespace-nowrap text-brand-navy/75 transition-all duration-200 hover:bg-slate-100 hover:text-brand-navy data-active:bg-transparent data-active:text-brand-navy"
+                      className={cn(
+                        'cursor-pointer rounded-lg px-2.5 py-2 text-sm font-medium whitespace-nowrap transition-all duration-200',
+                        isProperties
+                          ? 'bg-emerald-50 font-semibold text-emerald-700 hover:bg-emerald-100 hover:text-emerald-800 data-active:bg-emerald-100 data-active:text-emerald-800'
+                          : 'text-brand-navy/75 hover:bg-slate-100 hover:text-brand-navy data-active:bg-transparent data-active:text-brand-navy',
+                      )}
                     >
                       {group.label}
                     </NavigationMenuLink>

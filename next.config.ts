@@ -54,6 +54,21 @@ const nextConfig: NextConfig = {
   // Redirects: mistyped /ca/{us-state} paths first, then the scaffolded
   // legacy-URL inventory (see src/data/legacy-redirects.ts).
   redirects: async (): Promise<Redirect[]> => {
+    const rentalsToProperties: Redirect[] = [
+      // The listings route was originally /rentals/. Production uses
+      // /properties/, so /rentals/* now permanently redirects.
+      {
+        source: '/rentals/',
+        destination: '/properties/',
+        permanent: true,
+      },
+      {
+        source: '/rentals/:path*',
+        destination: '/properties/:path*',
+        permanent: true,
+      },
+    ]
+
     const mistypedCountryRedirects: Redirect[] = [
       {
         source: '/ca/florida/:path*',
@@ -88,7 +103,7 @@ const nextConfig: NextConfig = {
       permanent: r.permanent,
     }))
 
-    return [...mistypedCountryRedirects, ...legacyRedirects]
+    return [...rentalsToProperties, ...mistypedCountryRedirects, ...legacyRedirects]
   },
 }
 

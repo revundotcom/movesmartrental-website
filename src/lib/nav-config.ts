@@ -36,15 +36,15 @@ export const NAV_GROUPS = [
     label: 'Tenants',
     items: [
       { title: 'Tenant Hub', href: '/tenants/', description: 'Everything renters need in one place' },
-      { title: 'Browse Rentals', href: '/rentals/', description: 'Available homes, condos & townhouses' },
+      { title: 'Browse Properties', href: '/properties/', description: 'Available homes, condos & townhouses' },
       { title: 'Apply', href: '/contact/?type=tenant', description: 'Submit a rental application' },
       { title: 'Tenant FAQ', href: '/faq/', description: 'Answers for renters and applicants' },
     ],
   },
   {
-    label: 'Rentals',
+    label: 'Properties',
     items: [
-      { title: 'Browse Rentals', href: '/rentals/', description: 'Current listings across Canada' },
+      { title: 'Browse Properties', href: '/properties/', description: 'Current verified rental listings across Canada' },
     ],
   },
   {
@@ -132,7 +132,7 @@ export const FOOTER_COLUMNS = [
     title: 'Tenant Resources',
     links: [
       { label: 'Tenant Hub', href: '/tenants/' },
-      { label: 'Browse Rentals', href: '/rentals/' },
+      { label: 'Browse Properties', href: '/properties/' },
       { label: 'Apply', href: '/contact/?type=tenant' },
       { label: 'Tenant FAQ', href: '/faq/' },
     ],

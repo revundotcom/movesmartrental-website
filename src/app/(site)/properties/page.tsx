@@ -11,21 +11,21 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
 
 export const metadata: Metadata = {
-  title: 'Rentals & Available Properties',
+  title: 'Properties & Available Rentals',
   description:
-    'Browse current rental properties from MoveSmart Rentals. Verified listings across Canada with full-service leasing, screening, and tenant placement.',
+    'Browse available rental properties from MoveSmart Rentals. Verified listings across Canada with full-service leasing, screening, and tenant placement.',
   alternates: {
-    canonical: '/rentals/',
+    canonical: '/properties/',
   },
   openGraph: {
-    title: 'Rentals & Available Properties | MoveSmart Rentals',
+    title: 'Properties & Available Rentals | MoveSmart Rentals',
     description:
       'Browse verified rental homes, condos, and townhouses across Canada.',
     images: ['/og-default.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Rentals & Available Properties | MoveSmart Rentals',
+    title: 'Properties & Available Rentals | MoveSmart Rentals',
     description:
       'Browse verified rental homes, condos, and townhouses across Canada.',
   },
@@ -61,7 +61,7 @@ function PropertyCard({ property }: { property: Property }) {
 
   return (
     <Link
-      href={`/rentals/${property.slug}/`}
+      href={`/properties/${property.slug}/`}
       className="group block"
       aria-label={`View details for ${property.unit_name}`}
     >
@@ -167,7 +167,7 @@ function Pagination({
       <div className="flex gap-2">
         {prevPage ? (
           <Link
-            href={prevPage === 1 ? '/rentals/' : `/rentals/?page=${prevPage}`}
+            href={prevPage === 1 ? '/properties/' : `/properties/?page=${prevPage}`}
             className="inline-flex items-center rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-[#0B1D3A] transition-colors hover:bg-slate-50"
             rel="prev"
           >
@@ -183,7 +183,7 @@ function Pagination({
         )}
         {nextPage ? (
           <Link
-            href={`/rentals/?page=${nextPage}`}
+            href={`/properties/?page=${nextPage}`}
             className="inline-flex items-center rounded-lg bg-[#10B981] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#059669]"
             rel="next"
           >
@@ -214,8 +214,8 @@ export default async function RentalsPage({ searchParams }: RentalsPageProps) {
   const collectionSchema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Rentals & Available Properties',
-    url: `${SITE_URL}/rentals/`,
+    name: 'Properties & Available Rentals',
+    url: `${SITE_URL}/properties/`,
     isPartOf: { '@type': 'WebSite', name: 'MoveSmart Rentals', url: SITE_URL },
   }
 
@@ -229,7 +229,7 @@ export default async function RentalsPage({ searchParams }: RentalsPageProps) {
         <BreadcrumbNav
           crumbs={[
             { label: 'Home', href: '/' },
-            { label: 'Rentals', href: '/rentals/' },
+            { label: 'Properties', href: '/properties/' },
           ]}
         />
 
@@ -238,7 +238,7 @@ export default async function RentalsPage({ searchParams }: RentalsPageProps) {
             Available Now
           </p>
           <h1 className="mt-2 font-display text-4xl text-[#0B1D3A] md:text-5xl">
-            Browse Rentals
+            Browse Properties
           </h1>
           <p className="mt-4 max-w-2xl text-base text-slate-600 md:text-lg">
             Verified rental properties managed by MoveSmart Rentals. Every

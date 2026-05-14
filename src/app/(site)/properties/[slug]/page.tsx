@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: unit.unit_name,
     description,
-    alternates: { canonical: `/rentals/${slug}/` },
+    alternates: { canonical: `/properties/${slug}/` },
     openGraph: {
       title,
       description,
@@ -191,7 +191,7 @@ function SimilarPropertyCard({ property }: { property: Property }) {
 
   return (
     <Link
-      href={`/rentals/${property.slug}/`}
+      href={`/properties/${property.slug}/`}
       className="group block overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
     >
       <div className="relative aspect-video bg-slate-100">
@@ -260,7 +260,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
     '@type': 'Apartment',
     name: unit.unit_name,
     description: unit.description || undefined,
-    url: `${SITE_URL}/rentals/${slug}/`,
+    url: `${SITE_URL}/properties/${slug}/`,
     numberOfBedrooms: unit.bedrooms ?? undefined,
     numberOfBathroomsTotal: unit.bathrooms ?? undefined,
     address: {
@@ -304,8 +304,8 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         <BreadcrumbNav
           crumbs={[
             { label: 'Home', href: '/' },
-            { label: 'Rentals', href: '/rentals/' },
-            { label: unit.unit_name, href: `/rentals/${slug}/` },
+            { label: 'Properties', href: '/properties/' },
+            { label: unit.unit_name, href: `/properties/${slug}/` },
           ]}
         />
 
