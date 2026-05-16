@@ -31,93 +31,13 @@ import { buildOrganizationSchema } from '@/lib/schema-builders/organization'
 import { buildWebSiteSchema } from '@/lib/schema-builders/website'
 import { buildLocalBusinessSchema } from '@/lib/schema-builders/local-business'
 import { generatePageMetadata } from '@/lib/metadata'
-import {
-  getFallbackServiceList,
-  getFallbackCityList,
-} from '@/lib/static-fallbacks'
-import type { ServiceCardData, CityCardData } from '@/types/blocks'
+import { getFallbackCityList } from '@/lib/static-fallbacks'
+import type { CityCardData } from '@/types/blocks'
 import {
   PortalIllustration,
   FranchiseIllustration,
 } from '@/components/illustrations'
 import { OntarioMap } from '@/components/illustrations/ontario-map'
-
-/* ---------- Core 9 Services (full-service leasing and tenant placement) ---------- */
-
-const CORE_SERVICES: ServiceCardData[] = [
-  {
-    slug: 'tenant-placement',
-    title: 'Strategic Rental Pricing',
-    shortDescription:
-      'Market analysis, comparables, and vacancy trend modelling so your property is priced to lease quickly without leaving rent on the table.',
-    icon: 'dollar-sign',
-    audience: 'owner',
-  },
-  {
-    slug: 'leasing-services',
-    title: 'Professional Marketing',
-    shortDescription:
-      'Photography, virtual tours, written copy, MLS, portal syndication, and paid social ads engineered for maximum qualified-applicant exposure.',
-    icon: 'megaphone',
-    audience: 'owner',
-  },
-  {
-    slug: 'tenant-placement',
-    title: 'Showing Coordination',
-    shortDescription:
-      'Scheduling, agent-led private showings, open houses, and developer tours, all coordinated by our dedicated leasing team.',
-    icon: 'users',
-    audience: 'both',
-  },
-  {
-    slug: 'leasing-services',
-    title: 'Offer Management',
-    shortDescription:
-      'Application intake, offer review, negotiation, and counter-offers handled with disciplined transparency and clear owner approvals.',
-    icon: 'file-text',
-    audience: 'owner',
-  },
-  {
-    slug: 'tenant-screening',
-    title: 'Tenant Qualification',
-    shortDescription:
-      'Credit, income, employment, references, risk assessment, and compliance checks documented for every applicant, every time.',
-    icon: 'shield',
-    audience: 'owner',
-  },
-  {
-    slug: 'rent-guarantee',
-    title: 'Rental Protection Options',
-    shortDescription:
-      'Partner pathways for guaranteed rental income insurance and tenant insurance coordination so your cash flow is protected at lease-up.',
-    icon: 'shield',
-    audience: 'owner',
-  },
-  {
-    slug: 'rental-preparation',
-    title: 'Lease Execution',
-    shortDescription:
-      'Lease preparation, digital signing, statutory compliance, and deposit collection completed before move-in day.',
-    icon: 'file-text',
-    audience: 'both',
-  },
-  {
-    slug: 'tenant-insurance',
-    title: 'Move-In Coordination',
-    shortDescription:
-      'Utility transfers, insurance confirmation, key release, condition inspection, and signed condition documentation.',
-    icon: 'home',
-    audience: 'both',
-  },
-  {
-    slug: 'institutional-lease-up',
-    title: 'Institutional Lease-Up',
-    shortDescription:
-      'Bulk unit onboarding, campaign strategy, on-site leasing team deployment, and reporting dashboards for builders, PMCs, and institutional operators.',
-    icon: 'monitor',
-    audience: 'owner',
-  },
-]
 
 /* ---------- Metadata ---------- */
 
@@ -135,15 +55,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage() {
   // Static local data (Sanity has been removed).
-  const featuredServices: ServiceCardData[] = getFallbackServiceList().map(
-    (s) => ({
-      title: s.title,
-      slug: s.slug.current,
-      shortDescription: s.shortDescription,
-      icon: s.icon,
-      audience: s.audience,
-    }),
-  )
   const featuredCities: CityCardData[] = getFallbackCityList()
     .slice(0, 8)
     .map((c) => ({
@@ -194,11 +105,6 @@ export default async function HomePage() {
     areaServed: 'Ontario, Canada',
     openingHours: ['Mo-Fr 09:00-18:00'],
   })
-
-  // Prefer local featured services if present, otherwise fall back to the
-  // contract-mandated 9 core leasing services defined above.
-  const services =
-    featuredServices.length > 0 ? featuredServices : CORE_SERVICES
 
   return (
     <>

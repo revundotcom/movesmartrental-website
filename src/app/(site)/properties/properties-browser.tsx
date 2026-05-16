@@ -17,14 +17,6 @@ type PriceFilter = 'any' | 'under-2000' | '2000-3000' | '3000-4000' | '4000-plus
 type TypeFilter = 'any' | string
 
 const BED_OPTIONS: BedFilter[] = ['any', '1', '2', '3', '4+']
-const PRICE_LABELS: Record<PriceFilter, string> = {
-  any: 'Any price',
-  'under-2000': 'Under $2,000',
-  '2000-3000': '$2,000 – $3,000',
-  '3000-4000': '$3,000 – $4,000',
-  'four-thousand-plus': '$4,000+',
-} as never
-// (using a literal map below to keep types simple)
 
 const PRICE_OPTIONS: { value: PriceFilter; label: string }[] = [
   { value: 'any', label: 'Any price' },
