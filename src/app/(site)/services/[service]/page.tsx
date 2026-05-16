@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 
@@ -62,6 +63,56 @@ export async function generateMetadata({
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
 
+// Curated Unsplash photo IDs matched to each leasing service.
+// Each banner uses fit=crop with width=2400 for retina-quality delivery.
+const SERVICE_BANNER_IMAGES: Record<string, { id: string; alt: string }> = {
+  'tenant-placement': {
+    id: 'photo-1502672260266-1c1ef2d93688',
+    alt: 'Modern Canadian rental living room staged for a tenant placement showing',
+  },
+  'leasing-services': {
+    id: 'photo-1560448204-e02f11c3d0e2',
+    alt: 'Bright, professionally photographed luxe condo kitchen ready for the rental market',
+  },
+  'tenant-screening': {
+    id: 'photo-1573497019940-1c28c88b4f3e',
+    alt: 'MoveSmart screener reviewing an applicant credit and reference file on a laptop',
+  },
+  'rent-guarantee': {
+    id: 'photo-1521791136064-7986c2920216',
+    alt: 'Owner and broker shaking hands after signing a rent guarantee partner agreement',
+  },
+  'tenant-insurance': {
+    id: 'photo-1450101499163-c8848c66ca85',
+    alt: 'Tenant signing an insurance coverage agreement for their rental home',
+  },
+  'tenant-guarantor': {
+    id: 'photo-1521737711867-e3b97375f902',
+    alt: 'Family members reviewing a tenancy agreement together as guarantor and applicant',
+  },
+  'rental-preparation': {
+    id: 'photo-1505691938895-1758d7feb511',
+    alt: 'Newly prepped and styled rental condo unit ready for professional listing photography',
+  },
+  'portal-and-technology': {
+    id: 'photo-1542744173-8e7e53415bb0',
+    alt: 'Owner using the MoveSmart leasing portal on a laptop to track applicants and approvals',
+  },
+  'institutional-lease-up': {
+    id: 'photo-1556761175-5973dc0f32e7',
+    alt: 'Institutional lease-up team in a meeting reviewing absorption metrics against pro-forma',
+  },
+}
+
+function getServiceBanner(slug: string) {
+  return (
+    SERVICE_BANNER_IMAGES[slug] ?? {
+      id: 'photo-1502672260266-1c1ef2d93688',
+      alt: 'Modern Canadian rental property',
+    }
+  )
+}
+
 function getRelatedCards(slugs: string[]): ServicePageContent[] {
   return slugs
     .map((s) => SERVICES_CONTENT[s])
@@ -93,6 +144,8 @@ export default async function ServicePage({
   })
 
   const relatedCards = getRelatedCards(content.relatedServices)
+  const banner = getServiceBanner(slug)
+  const bannerSrc = `https://images.unsplash.com/${banner.id}?w=2400&q=80&auto=format&fit=crop`
 
   return (
     <main>
@@ -117,9 +170,42 @@ export default async function ServicePage({
         accentLastWord={true}
         lede={content.heroLede}
         cta1={{ label: content.cta1Label, href: '/contact/?type=owner' }}
-        cta2={{ label: content.cta2Label, href: '/contact/' }}
+        cta2={
+          /\bbook\b.*\bcall\b/i.test(content.cta2Label)
+            ? undefined
+            : { label: content.cta2Label, href: '/contact/' }
+        }
         service={slug}
       />
+
+      {/* Editorial banner image matched to this service */}
+      <section className="bg-white pt-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="relative aspect-[16/6] overflow-hidden rounded-3xl shadow-xl shadow-brand-navy/15">
+            <Image
+              src={bannerSrc}
+              alt={banner.alt}
+              fill
+              className="object-cover"
+              sizes="(max-width: 1280px) 100vw, 1200px"
+              priority
+              unoptimized
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-r from-brand-navy/60 via-brand-navy/20 to-transparent"
+            />
+            <div className="absolute inset-y-0 left-0 flex max-w-lg flex-col justify-center px-8 sm:px-12">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-gold">
+                {content.heroEyebrow}
+              </p>
+              <p className="mt-3 font-display text-2xl font-normal italic leading-snug text-white sm:text-3xl md:text-4xl">
+                {content.title}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Problem points */}
       <section className="bg-white py-16 sm:py-20">
@@ -243,6 +329,22 @@ export default async function ServicePage({
         </div>
       </section>
 
+      {/* Mid-content visual break - keys handover signifying engagement closeout */}
+      <section className="bg-white pb-8">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6">
+          <div className="relative aspect-[16/7] overflow-hidden rounded-2xl shadow-lg shadow-brand-navy/10">
+            <Image
+              src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=2000&q=80&auto=format&fit=crop"
+              alt="Keys handed to a qualified tenant - the close of the leasing engagement"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 960px"
+              unoptimized
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Who it's for */}
       <section className="bg-[#FBFAF6] py-16 sm:py-20">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
@@ -310,6 +412,7 @@ export default async function ServicePage({
       <FAQBlock
         title={`Questions about ${content.title}`}
         questions={content.faqItems}
+        showQuestionsCta={false}
       />
 
       {/* Related services */}
@@ -360,9 +463,8 @@ export default async function ServicePage({
       {/* CTA */}
       <CTABannerBlock
         headline={`Ready to start with ${content.title}?`}
-        description="Create a free account to walk through the process, or book a 20-minute discovery call. No upfront cost, no obligation."
+        description="Create a free account to walk through the process. No upfront cost, no obligation."
         primaryCta={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
-        secondaryCta={{ label: 'Book a Discovery Call', href: '/contact/' }}
       />
     </main>
   )

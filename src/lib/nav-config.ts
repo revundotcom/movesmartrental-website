@@ -37,7 +37,6 @@ export const NAV_GROUPS = [
     items: [
       { title: 'Tenant Hub', href: '/tenants/', description: 'Everything renters need in one place' },
       { title: 'Browse Properties', href: '/properties/', description: 'Available homes, condos & townhouses' },
-      { title: 'Apply', href: '/contact/?type=tenant', description: 'Submit a rental application' },
       { title: 'Tenant FAQ', href: '/faq/', description: 'Answers for renters and applicants' },
     ],
   },
@@ -133,7 +132,6 @@ export const FOOTER_COLUMNS = [
     links: [
       { label: 'Tenant Hub', href: '/tenants/' },
       { label: 'Browse Properties', href: '/properties/' },
-      { label: 'Apply', href: '/contact/?type=tenant' },
       { label: 'Tenant FAQ', href: '/faq/' },
     ],
   },

@@ -105,6 +105,8 @@ export interface FAQBlockProps {
   questions: FaqItem[]
   title?: string
   schemaEnabled?: boolean // inject FAQPage JSON-LD
+  /** When false, hides the "Still have questions?" closer block. Defaults to true. */
+  showQuestionsCta?: boolean
 }
 
 export interface ServiceGridBlockProps {

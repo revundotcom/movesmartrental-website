@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import {
   ShieldCheck,
   BookOpen,
@@ -297,9 +298,32 @@ const HERO_SNAPSHOT: Array<{ label: string; value: string }> = [
 function HeroSpecSheet() {
   return (
     <div className="relative">
+      {/* Editorial hero image - franchisee team collaborating */}
+      <div className="relative mb-8 aspect-[4/3] w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-brand-navy/10">
+        <Image
+          src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1400&q=80"
+          alt="MoveSmart franchise team in a working meeting"
+          fill
+          unoptimized
+          sizes="(min-width: 1024px) 460px, 100vw"
+          className="object-cover"
+          priority
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-tr from-brand-navy/35 via-transparent to-transparent"
+        />
+        <div className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 shadow-sm backdrop-blur">
+          <span className="size-1.5 rounded-full bg-brand-gold" aria-hidden="true" />
+          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-navy">
+            Owner-operator. Backed by HQ.
+          </span>
+        </div>
+      </div>
+
       <div
         aria-hidden="true"
-        className="absolute -top-3 left-0 h-px w-16 bg-brand-gold"
+        className="mb-3 h-px w-16 bg-brand-gold"
       />
       <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-navy/55">
         Franchise snapshot
@@ -361,7 +385,12 @@ export default function FranchisingPage() {
         accentLastWord={false}
         lede="MoveSmart Rentals is awarding protected territories to qualified operators across Canada and the United States. You bring local market knowledge and operational drive - we provide the playbook, the tech platform, and the brand that owners trust."
         cta1={{ label: 'Request the Franchise Kit', href: '/contact/?intent=franchise' }}
-        cta2={{ label: 'Book Discovery Call', href: '/contact/?type=franchise&intent=call' }}
+        meta={[
+          { label: 'Markets', value: 'CA + US' },
+          { label: 'Brand age', value: '12 yrs' },
+          { label: 'Tech stack', value: 'Included' },
+          { label: 'Lead pipeline', value: 'National' },
+        ]}
         aside={<HeroSpecSheet />}
       />
 
@@ -422,6 +451,49 @@ export default function FranchisingPage() {
         />
       </section>
 
+      {/* ── SECTION 2b: Editorial visual band - multi-unit growth imagery ── */}
+      <section className="bg-white py-16 sm:py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-12 md:gap-8">
+            <div className="md:col-span-7">
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-brand-navy/10 md:aspect-[16/10]">
+                <Image
+                  src="https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1600&q=80"
+                  alt="Modern multi-unit residential buildings - the inventory MoveSmart franchisees lease"
+                  fill
+                  unoptimized
+                  sizes="(min-width: 768px) 720px, 100vw"
+                  className="object-cover"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col justify-center md:col-span-5">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                Why this category
+              </p>
+              <h3 className="mt-3 font-display text-3xl font-normal leading-tight text-brand-navy sm:text-4xl">
+                The inventory is everywhere &mdash; the operators
+                <span className="italic text-brand-emerald"> are not</span>
+                <span aria-hidden="true" className="text-brand-gold">.</span>
+              </h3>
+              <p className="mt-4 font-serif text-base leading-[1.7] text-slate-700 sm:text-[17px]">
+                Every condo tower, every townhouse street, every duplex on a quiet block needs the
+                same nine leasing services done right. Most independent owners want help, and most
+                local markets don&rsquo;t have a brand they trust. That gap is your territory.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── SECTION 3: What you get - vertical numbered editorial list (no cards) ── */}
       <section className="bg-[#FBFAF6] py-24 sm:py-28">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
@@ -467,6 +539,63 @@ export default function FranchisingPage() {
               )
             })}
           </ol>
+        </div>
+      </section>
+
+      {/* ── SECTION 3b: Office / branding bridge (NEW image alongside investment) ── */}
+      <section className="bg-white pt-20 sm:pt-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14">
+            {/* Image */}
+            <RevealOnScroll variant="scaleIn" duration={0.8}>
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-lg ring-1 ring-brand-navy/10">
+                <Image
+                  src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=1600&q=80&auto=format&fit=crop"
+                  alt="Modern open-plan office workspace, typical of a MoveSmart franchise location"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  unoptimized
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent"
+                />
+                <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 shadow-sm backdrop-blur">
+                  <span className="size-1.5 rounded-full bg-brand-emerald" aria-hidden="true" />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-navy">
+                    Home-office or storefront &mdash; both work
+                  </span>
+                </div>
+              </div>
+            </RevealOnScroll>
+
+            {/* Content */}
+            <RevealOnScroll variant="slideUp" duration={0.7}>
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                A real business with a real footprint
+              </p>
+              <h2 className="mt-3 font-display text-3xl font-normal leading-[1.1] text-brand-navy sm:text-4xl">
+                Lean to start.
+                <span className="font-display italic text-brand-emerald"> Scalable</span> when you&rsquo;re ready
+                <span className="text-brand-gold">.</span>
+              </h2>
+              <p className="mt-4 font-serif text-base leading-[1.75] text-slate-700">
+                Most franchisees launch from a small commercial office or a dedicated home setup,
+                then expand to a storefront in year two or three as the team grows. The numbers below
+                cover the lean launch path &mdash; storefront upgrades are optional, not required.
+              </p>
+              <ul className="mt-6 space-y-2 font-serif text-sm text-slate-600">
+                <li>&middot; Build-out budget covers signage, desks, photography kit, and branding.</li>
+                <li>&middot; No franchise-mandated commercial real estate lease in year one.</li>
+                <li>&middot; HQ supplies brand guidelines, signage templates, and the visual identity system.</li>
+              </ul>
+            </RevealOnScroll>
+          </div>
         </div>
       </section>
 
@@ -651,6 +780,42 @@ export default function FranchisingPage() {
         </div>
       </section>
 
+      {/* ── SECTION 6b: Full-width city banner (NEW image) ── */}
+      <section className="relative bg-[#FBFAF6] py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <RevealOnScroll variant="scaleIn" duration={0.9}>
+            <div className="relative aspect-[21/9] w-full overflow-hidden rounded-2xl shadow-lg ring-1 ring-brand-navy/10">
+              <Image
+                src="https://images.unsplash.com/photo-1567002260456-bce4cb6c30be?w=1600&q=80&auto=format&fit=crop"
+                alt="Downtown Toronto skyline - one of many MoveSmart franchise markets across Canada and the US"
+                fill
+                className="object-cover"
+                sizes="100vw"
+                unoptimized
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-tr from-brand-navy/65 via-brand-navy/25 to-transparent"
+              />
+              <div className="absolute inset-0 flex items-end p-6 sm:p-10 lg:p-14">
+                <div className="max-w-2xl">
+                  <p className="font-sans text-[11px] font-bold uppercase tracking-[0.28em] text-brand-gold">
+                    Canada &middot; United States
+                  </p>
+                  <p className="mt-3 font-display text-3xl font-normal italic leading-tight text-white sm:text-4xl lg:text-5xl">
+                    A national brand. <br className="hidden sm:block" />A local owner-operator.
+                  </p>
+                  <p className="mt-4 max-w-xl font-serif text-sm leading-relaxed text-white/85 sm:text-base">
+                    Territories are awarded by metro and ZIP/postal-code boundary so every franchisee
+                    owns a defensible local market &mdash; underwritten by a national brand.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </RevealOnScroll>
+        </div>
+      </section>
+
       {/* ── SECTION 7: Territory section - full-bleed navy, parallax illustration ── */}
       <TerritoryParallax awarded={TERRITORY_AWARDED} available={TERRITORY_AVAILABLE} />
 
@@ -729,15 +894,15 @@ export default function FranchisingPage() {
           questions={FRANCHISE_FAQS}
           title="Franchise FAQ"
           schemaEnabled={false}
+          showQuestionsCta={false}
         />
       </RevealOnScroll>
 
       {/* ── SECTION 11: Final CTA banner ── */}
       <CTABannerBlock
         headline="Limited territories. Apply now."
-        description="If your market is open and you meet the qualifications, we can have you in onboarding within 60 days. Request the Franchise Kit to get the full FDD overview and a discovery-call invite."
+        description="If your market is open and you meet the qualifications, we can have you in onboarding within 60 days. Request the Franchise Kit to get the full FDD overview."
         primaryCta={{ label: 'Request Franchise Kit', href: '/contact/?intent=franchise' }}
-        secondaryCta={{ label: 'Book Discovery Call', href: '/contact/?type=franchise&intent=call' }}
       />
     </main>
   )

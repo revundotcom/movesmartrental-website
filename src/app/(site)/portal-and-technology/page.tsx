@@ -20,8 +20,83 @@ import {
   OwnerTenantSplit,
   PhilosophyManifesto,
   SecurityTrustStrip,
-  StickyProductTour,
 } from './portal-interactive'
+
+import { BrowserFrame } from '@/components/ui/browser-frame'
+import { OwnerDashboardMockup } from '@/components/portal-mockups/owner-dashboard-mockup'
+import { PropertiesListMockup } from '@/components/portal-mockups/properties-list-mockup'
+import { ShowingsOffersMockup } from '@/components/portal-mockups/showings-offers-mockup'
+import { AnalyticsMockup } from '@/components/portal-mockups/analytics-mockup'
+import { WalletMockup } from '@/components/portal-mockups/wallet-mockup'
+import { OwnerServicesMockup } from '@/components/portal-mockups/owner-services-mockup'
+import { EventsCalendarMockup } from '@/components/portal-mockups/events-calendar-mockup'
+import { PortalScreensTabbed } from './portal-screens-tabbed'
+
+const PORTAL_SCREENS = [
+  {
+    title: 'Owner Dashboard',
+    description:
+      'A single home base for every property in your portfolio — offers, tours, occupancy, and the units that need your attention today.',
+    url: 'movesmart.ca/owner/dashboard',
+    component: <OwnerDashboardMockup />,
+  },
+  {
+    title: 'Properties',
+    description:
+      'Filter by condo, house, or apartment. See lease status, listing status, and which units have showings scheduled this week.',
+    url: 'movesmart.ca/owner/properties',
+    component: <PropertiesListMockup />,
+  },
+  {
+    title: 'Showings & Offers',
+    description:
+      'Every tour booked, every offer received, countered, or declined — with move-in dates and reference IDs you can act on.',
+    url: 'movesmart.ca/owner/showings',
+    component: <ShowingsOffersMockup />,
+  },
+  {
+    title: 'Analytics',
+    description:
+      'Watch your lead conversion pipeline — from first inquiry to signed lease — and the channels driving it.',
+    url: 'movesmart.ca/owner/analytics',
+    component: <AnalyticsMockup />,
+  },
+  {
+    title: 'Wallet',
+    description:
+      'Net income at a glance. Every transaction — rent collected, screening fees, photography, MLS — itemized and exportable.',
+    url: 'movesmart.ca/owner/wallet',
+    component: <WalletMockup />,
+  },
+  {
+    title: 'Owner Services & Transactions',
+    description:
+      'Request maintenance, book listing photography, and track income vs. expense across the year — all from one card.',
+    url: 'movesmart.ca/owner/services',
+    component: <OwnerServicesMockup />,
+  },
+  {
+    title: 'Events Calendar',
+    description:
+      'Lockbox installs, photo shoots, and key-collection appointments — synced to your month-at-a-glance calendar.',
+    url: 'movesmart.ca/owner/calendar',
+    component: <EventsCalendarMockup />,
+  },
+]
+
+function PortalScreensShowcase() {
+  // Pre-render each mockup wrapped in its BrowserFrame on the server,
+  // then hand them to the client component as plain ReactNodes — only
+  // the active one is visible at any time. This avoids cramping the
+  // mockups inside a narrow 8-col grid.
+  const screens = PORTAL_SCREENS.map((screen) => ({
+    title: screen.title,
+    description: screen.description,
+    url: screen.url,
+    frame: <BrowserFrame url={screen.url}>{screen.component}</BrowserFrame>,
+  }))
+  return <PortalScreensTabbed screens={screens} />
+}
 
 export const metadata: Metadata = generatePageMetadata({
   path: '/portal-and-technology/',
@@ -163,8 +238,8 @@ export default function PortalAndTechnologyPage() {
       {/* SECTION 3 - Owner portal feature bento (asymmetric, kept) */}
       <OwnersFeaturesBento features={PORTAL_FEATURES} />
 
-      {/* SECTION 4 - Sticky product tour with scroll-linked dashboard annotations */}
-      <StickyProductTour />
+      {/* SECTION 4 - Real portal screen mockups in browser frames */}
+      <PortalScreensShowcase />
 
       {/* SECTION 5 - Owner / Tenant clip-reveal split */}
       <OwnerTenantSplit />
@@ -198,6 +273,7 @@ export default function PortalAndTechnologyPage() {
       {/* SECTION 9 - Portal-specific FAQ */}
       <FAQBlock
         title="Portal & Technology FAQ"
+        showQuestionsCta={false}
         questions={[
           {
             question: 'Is there a mobile app?',

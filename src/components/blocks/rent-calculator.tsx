@@ -47,16 +47,16 @@ export function RentCalculator({ className = '' }: { className?: string }) {
                 How Much Could Your Property Earn?
               </h2>
               <p className="text-slate-300 text-lg mb-8 leading-relaxed">
-                Get an instant rent estimate for your property based on current market data across Ontario. No signup required.
+                Get an instant rent estimate for your property using the latest CMHC Rental Market Report and Statistics Canada figures for Ontario. No signup required.
               </p>
-              <div className="flex items-center gap-6 text-sm text-slate-400">
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-slate-400">
                 <span className="flex items-center gap-2">
                   <Calculator className="w-4 h-4 text-brand-emerald" />
-                  Based on 2026 market data
+                  Based on CMHC Rental Market Report
                 </span>
                 <span className="flex items-center gap-2">
                   <TrendingUp className="w-4 h-4 text-brand-emerald" />
-                  Updated monthly
+                  Statistics Canada · Updated quarterly
                 </span>
               </div>
             </div>
@@ -127,7 +127,7 @@ export function RentCalculator({ className = '' }: { className?: string }) {
                       </span>
                     </div>
                     <p className="text-xs text-slate-500 mt-4">
-                      * Estimates based on current market data. Actual rent depends on property condition, location, and amenities.
+                      * Estimates derived from the CMHC Rental Market Report and Statistics Canada housing data. Actual rent depends on property condition, location, and amenities.
                     </p>
                   </div>
                 )}

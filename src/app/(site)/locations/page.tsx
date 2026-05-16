@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
@@ -372,7 +373,28 @@ export default function LocationsPage() {
         accentLastWord
         lede="Same discipline, same full-service execution - from a basement-unit landlord in Hamilton to a 500-unit lease-up campaign in Miami. Five provinces, ten priority U.S. states, one structured standard."
         cta1={{ label: 'Create a Free Account', href: '/signup/' }}
-        cta2={{ label: 'Book a Call', href: '/contact/?intent=call' }}
+        aside={
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-brand-navy/10">
+            <Image
+              src="https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=1400&q=80"
+              alt="Toronto skyline featuring the CN Tower - our flagship Canadian market"
+              fill
+              unoptimized
+              sizes="(min-width: 1024px) 460px, 100vw"
+              className="object-cover"
+              priority
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-tr from-brand-navy/40 via-transparent to-transparent"
+            />
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 rounded-lg bg-white/95 px-4 py-3 shadow-sm backdrop-blur">
+              <p className="font-display text-base italic leading-tight text-brand-navy">
+                Five provinces. Ten states. One standard.
+              </p>
+            </div>
+          </div>
+        }
       />
 
       {/* Section 1 - Canada coverage */}
@@ -532,6 +554,18 @@ export default function LocationsPage() {
                 </ul>
               </div>
               <div className="flex flex-col justify-center border-t border-brand-navy/10 pt-8 lg:col-span-5 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
+                {/* Cityscape thumbnail */}
+                <div className="relative mb-6 aspect-[16/10] w-full overflow-hidden rounded-xl shadow-md ring-1 ring-brand-navy/10">
+                  <Image
+                    src="https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&w=1200&q=80"
+                    alt="Canadian cityscape - representative of MoveSmart cross-border coverage"
+                    fill
+                    unoptimized
+                    sizes="(min-width: 1024px) 380px, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+
                 <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
                   Start the conversation
                 </p>
@@ -547,12 +581,6 @@ export default function LocationsPage() {
                     Request an institutional RFP
                     <span aria-hidden="true" className="ml-2">→</span>
                   </Link>
-                  <Link
-                    href="/contact/?intent=call"
-                    className="inline-flex items-center justify-center rounded-full border border-brand-navy/20 px-6 py-3 font-heading text-sm font-semibold text-brand-navy transition-colors hover:border-brand-emerald hover:text-brand-emerald"
-                  >
-                    Book a scoping call
-                  </Link>
                 </div>
               </div>
             </div>
@@ -561,14 +589,13 @@ export default function LocationsPage() {
       </section>
 
       {/* Section 6 - FAQ */}
-      <FAQBlock title="Location questions, answered" questions={FAQ_ITEMS} />
+      <FAQBlock title="Location questions, answered" questions={FAQ_ITEMS} showQuestionsCta={false} />
 
       {/* Final CTA */}
       <CTABannerBlock
         headline="Ready to lease your unit - anywhere in our footprint?"
         description="Create a free account and a local leasing advisor will introduce themselves within one business day, with a rental analysis tailored to your exact address."
         primaryCta={{ label: 'Create a Free Account', href: '/signup/' }}
-        secondaryCta={{ label: 'Book a Call', href: '/contact/?intent=call' }}
       />
     </main>
   )

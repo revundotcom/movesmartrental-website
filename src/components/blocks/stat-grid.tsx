@@ -138,7 +138,7 @@ export function StatGrid() {
         animate={sectionInView ? { opacity: 1 } : {}}
         transition={{ delay: 0.8, duration: 0.5 }}
       >
-        Based on 500+ units leased across Canada. Updated monthly.
+        Based on 500+ units leased across Canada, benchmarked against the CMHC Rental Market Report and Statistics Canada housing data. Updated quarterly.
       </motion.p>
     </section>
   )

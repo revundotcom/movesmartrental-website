@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import {
   TrendingUp,
@@ -387,9 +388,37 @@ export default function ServicesPage() {
         accentLastWord={false}
         lede="From pricing strategy to move-in inspection, MoveSmart Rentals runs the leasing lifecycle end to end - so individual landlords get peace of mind, and institutional operators get a leasing team that scales with them."
         cta1={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
-        cta2={{ label: 'Book a Call', href: '/contact/?type=owner&intent=call' }}
         aside={heroAside}
       />
+
+      {/* ── 1.5. Editorial banner image: Toronto rental skyline ── */}
+      <section className="bg-white pt-8 pb-12">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="relative aspect-[16/6] overflow-hidden rounded-3xl shadow-xl shadow-brand-navy/15">
+            <Image
+              src="https://images.unsplash.com/photo-1517090504586-fde19ea6066f?w=2400&q=80&auto=format&fit=crop"
+              alt="Toronto skyline at dusk - the Canadian rental market MoveSmart leases across"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1280px) 100vw, 1200px"
+              priority
+              unoptimized
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-r from-brand-navy/70 via-brand-navy/35 to-transparent"
+            />
+            <div className="absolute inset-y-0 left-0 flex max-w-xl flex-col justify-center px-8 sm:px-12">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-gold">
+                Leasing brokerage, end to end
+              </p>
+              <p className="mt-3 font-display text-2xl font-normal italic leading-snug text-white sm:text-3xl md:text-4xl">
+                From pricing the unit to releasing the keys.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ── 2. For individual landlords - 8 service cards ── */}
       <section id="for-landlords" className="scroll-mt-24 bg-[#FBFAF6] py-16 lg:py-20">
@@ -420,6 +449,36 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* ── 2.5. Lease execution visual: signed lease and handshake ── */}
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl shadow-brand-navy/10">
+              <Image
+                src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&q=80&auto=format&fit=crop"
+                alt="Landlord and tenant signing the Ontario Standard Lease at closing"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                unoptimized
+              />
+            </div>
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                Documented at every stage
+              </p>
+              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+                A defensible paper trail{' '}
+                <span className="font-display italic text-brand-emerald">for every decision.</span>
+              </h2>
+              <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
+                Province-specific lease templates, e-signature workflow, deposits in trust, condition reports with photo evidence - every stage of the leasing engagement is structured, recorded, and stored so you have a defensible record if anything is ever questioned.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── 3. CTA strip ── */}
       <section className="bg-brand-navy py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -445,12 +504,6 @@ export default function ServicesPage() {
               >
                 Create a Free Account
                 <ArrowRight className="size-4" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/contact/?type=owner&intent=call"
-                className="inline-flex items-center justify-center rounded-full border-2 border-white/20 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/40 hover:bg-white/5"
-              >
-                Book a Call
               </Link>
             </div>
           </div>
@@ -573,15 +626,15 @@ export default function ServicesPage() {
         <FAQBlock
           questions={SERVICE_FAQ}
           title="Questions about scope and pricing"
+          showQuestionsCta={false}
         />
       </div>
 
       {/* ── 6. Final CTA banner ── */}
       <CTABannerBlock
         headline="Hand the leasing playbook off."
-        description="Create a free account or book a 20-minute call. We will pull live market rent for your unit and walk you through the nine-service workflow - no obligation."
+        description="Create a free account and we will pull live market rent for your unit and walk you through the nine-service workflow - no obligation."
         primaryCta={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
-        secondaryCta={{ label: 'Book a Call', href: '/contact/?type=owner&intent=call' }}
       />
     </main>
   )

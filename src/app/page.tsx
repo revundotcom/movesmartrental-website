@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import {
   Monitor,
@@ -6,10 +7,6 @@ import {
   Building,
   ArrowRight,
   MapPin,
-  Search,
-  FileCheck,
-  ThumbsUp,
-  Home,
   Briefcase,
   Globe,
 } from 'lucide-react'
@@ -17,7 +14,6 @@ import {
 import { Button } from '@/components/ui/button'
 import { WaveDivider } from '@/components/ui/wave-divider'
 import { HeroBlock } from '@/components/blocks/hero-block'
-import { HomeServicesShowcase } from '@/components/blocks/home-services-showcase'
 import { CityGridBlock } from '@/components/blocks/city-grid-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { StatGrid } from '@/components/blocks/stat-grid'
@@ -217,7 +213,6 @@ export default async function HomePage() {
           headline="Get Your Property Rented to Qualified Tenants, Fast"
           subheadline="Full-service leasing and tenant placement, end to end. We advertise broadly, screen every applicant, run showings 24/7, and give you live visibility from listing to move-in."
           cta1={{ label: 'Create a Free Account', href: '/contact/' }}
-          cta2={{ label: 'Book a Call', href: '/contact/?intent=call' }}
           priority
         />
       </section>
@@ -297,9 +292,6 @@ export default async function HomePage() {
 
       {/* ── SECTION 2b: Owner Problem to Solution Overview ── */}
       <ProblemSolutionShowcase />
-
-      {/* ── SECTION 3: Service Grid (9 core leasing services) ── */}
-      <HomeServicesShowcase services={services} />
 
       {/* ── SECTION 4: How It Works - listing to move-in ── */}
       <ListingToMoveInBlock />
@@ -416,64 +408,56 @@ export default async function HomePage() {
       {/* Wave divider */}
       <WaveDivider fill="#f8fafc" flip={true} />
 
+      {/* ── SECTION 5.5: Owner Visual Showcase (modern Canadian condo) ── */}
+      <section className="bg-slate-50 py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl shadow-brand-navy/15">
+              <Image
+                src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1600&q=80&auto=format&fit=crop"
+                alt="Bright modern Canadian condo unit with floor-to-ceiling windows ready for tenant move-in"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                unoptimized
+              />
+            </div>
+            <div>
+              <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
+                Built for the Canadian rental market
+              </p>
+              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
+                Properties that lease,{' '}
+                <span className="font-display italic text-brand-emerald">presented properly.</span>
+              </h2>
+              <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+                Professional photography, virtual tours, and editorial listing copy. We make your unit show as well online as it does in person, then put it in front of the qualified tenants who are actually shopping right now.
+              </p>
+              <div className="mt-8 grid grid-cols-3 gap-6">
+                <div>
+                  <p className="font-display text-3xl font-normal text-brand-navy">18d</p>
+                  <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-500">Avg days to lease</p>
+                </div>
+                <div>
+                  <p className="font-display text-3xl font-normal text-brand-navy">20+</p>
+                  <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-500">Ontario cities</p>
+                </div>
+                <div>
+                  <p className="font-display text-3xl font-normal text-brand-navy">$0</p>
+                  <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-500">Upfront cost</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── SECTION 6: Case Studies ── */}
       <CaseStudySection />
 
       {/* Wave divider */}
       <WaveDivider fill="#ffffff" />
 
-      {/* ── SECTION 6b: Tenant Journey ── */}
-      <section className="relative overflow-hidden bg-white py-16">
-        <div className="relative z-10 mx-auto max-w-6xl px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
-              For Tenants
-            </p>
-            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
-              Apply, Screen, Sign,{' '}
-              <span className="font-display italic text-brand-emerald">Move In</span>
-            </h2>
-            <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-              Browse verified listings, apply online, screen with confidence, and walk through your move-in inspection on day one.
-            </p>
-          </div>
-
-          <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              { icon: Search, step: '01', title: 'Apply', description: 'Submit a complete application through our secure portal in minutes.' },
-              { icon: FileCheck, step: '02', title: 'Screen', description: 'Credit, income, employment, references, and rental history reviewed transparently.' },
-              { icon: ThumbsUp, step: '03', title: 'Sign', description: 'Digital lease signing, deposit collection, and statutory compliance handled by our team.' },
-              { icon: Home, step: '04', title: 'Move In', description: 'Utility transfers, key release, condition inspection, and signed condition documentation.' },
-            ].map((item) => {
-              const Icon = item.icon
-              return (
-                <div key={item.step} className="group relative rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-emerald/20 hover:shadow-md">
-                  <span className="text-4xl font-black text-brand-emerald/15">{item.step}</span>
-                  <div className="mt-2 flex size-10 items-center justify-center rounded-xl bg-brand-emerald/10">
-                    <Icon className="size-5 text-brand-emerald" aria-hidden="true" />
-                  </div>
-                  <h3 className="mt-4 text-sm font-bold text-brand-navy">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
-                </div>
-              )
-            })}
-          </div>
-
-          <div className="mt-10 text-center">
-            <Button
-              variant="default"
-              size="lg"
-              className="cta-primary-shadow cursor-pointer font-bold"
-              style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}
-              nativeButton={false}
-              render={<Link href="/tenants/" />}
-            >
-              Explore Tenant Hub
-              <ArrowRight className="ml-2 size-4" aria-hidden="true" />
-            </Button>
-          </div>
-        </div>
-      </section>
 
       {/* ── SECTION 7: Featured Ontario Cities ── */}
       <section className="relative overflow-hidden bg-slate-50 py-14">
@@ -688,6 +672,7 @@ export default async function HomePage() {
       <FAQBlock
         title="Common Questions, Direct Answers"
         schemaEnabled
+        showQuestionsCta={false}
         questions={[
           {
             question: 'What does MoveSmart Rentals do?',

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
-import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { JsonLd } from '@/components/json-ld'
 import { buildOrganizationSchema, buildLocalBusinessSchema } from '@/lib/schema-builders'
 
@@ -136,9 +136,67 @@ export default function AboutPage() {
 
       <FounderEssay />
 
+      {/* Editorial banner: Toronto - our anchor market */}
+      <section className="bg-white pb-16 sm:pb-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="relative aspect-[16/6] overflow-hidden rounded-3xl shadow-2xl shadow-brand-navy/15">
+            <Image
+              src="https://images.unsplash.com/photo-1567002260456-bce4cb6c30be?w=2400&q=80&auto=format&fit=crop"
+              alt="Toronto downtown skyline - MoveSmart Rentals' anchor leasing market"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1280px) 100vw, 1200px"
+              unoptimized
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-t from-brand-navy/65 via-brand-navy/15 to-transparent"
+            />
+            <div className="absolute inset-x-0 bottom-0 px-8 pb-8 sm:px-12 sm:pb-10">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-gold">
+                Headquartered in Toronto
+              </p>
+              <p className="mt-2 font-display text-2xl font-normal italic leading-snug text-white sm:text-3xl md:text-4xl">
+                Twenty-plus Ontario cities. A leasing playbook expanding across Canada and the US.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Timeline />
 
       <Values />
+
+      {/* Editorial image: the leasing team at work */}
+      <section className="bg-white pt-12 sm:pt-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+            <div className="relative aspect-[5/4] overflow-hidden rounded-2xl shadow-xl shadow-brand-navy/15">
+              <Image
+                src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1600&q=80&auto=format&fit=crop"
+                alt="MoveSmart leasing team in a planning meeting reviewing applicant pipelines"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                unoptimized
+              />
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-navy/60">
+                Chapter 04 - Preview
+              </p>
+              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+                A small, RECO-licensed{' '}
+                <span className="font-display italic text-brand-emerald">leasing team.</span>
+              </h2>
+              <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
+                Twenty-plus years of combined rental brokerage experience, organised into named owner-files with a single leasing lead per engagement. No call-centre handoffs, no ticket-queue voids - the person who picks up the file is the person you talk to until move-in.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <Team />
 
@@ -147,12 +205,6 @@ export default function AboutPage() {
       <Press />
 
       <LongTestimonials />
-
-      <CTABannerBlock
-        headline="Have a unit, a building, or a lease-up campaign coming?"
-        description="Book a 20-minute call with our leasing team. No pressure, no obligation."
-        primaryCta={{ label: 'Book a 20-minute call', href: '/contact/' }}
-      />
     </main>
   )
 }

@@ -316,7 +316,6 @@ function LocalGuidePage({ guide, slug }: { guide: GuideContent; slug: string }) 
         headline="Ready to put this into practice?"
         description="Our leasing team can run this playbook on your unit - zero upfront, success fee on placement."
         primaryCta={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
-        secondaryCta={{ label: 'Book a Call', href: '/contact/?type=owner&intent=call' }}
       />
     </main>
   )

@@ -140,7 +140,7 @@ export default function ReviewsPage() {
             </h2>
           </div>
           <div className="mt-10">
-            <FAQBlock questions={FAQS} schemaEnabled />
+            <FAQBlock questions={FAQS} schemaEnabled showQuestionsCta={false} />
           </div>
         </div>
       </section>

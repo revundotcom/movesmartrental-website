@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { Activity, Building2, Users } from 'lucide-react'
 
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
@@ -97,8 +98,29 @@ export default async function DevelopersPage() {
         eyebrow="Lease-up campaigns"
         headline="Lease-up campaigns, executed end to end"
         lede="Bulk unit onboarding, campaign strategy, on-site leasing team deployment, and reporting dashboards. We absorb the leasing operation so your project hits stabilization on schedule."
-        cta1={{ label: 'Book a Working Call', href: '/contact/?type=developer' }}
-        cta2={{ label: 'See Pricing', href: '/pricing/' }}
+        cta1={{ label: 'See Pricing', href: '/pricing/' }}
+        aside={
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-brand-navy/10">
+            <Image
+              src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1400&q=80"
+              alt="Modern multi-unit residential building exterior, the kind of project MoveSmart leases up"
+              fill
+              unoptimized
+              sizes="(min-width: 1024px) 460px, 100vw"
+              className="object-cover"
+              priority
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-tr from-brand-navy/35 via-transparent to-transparent"
+            />
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 rounded-lg bg-white/95 px-4 py-3 shadow-sm backdrop-blur">
+              <p className="font-display text-base italic leading-tight text-brand-navy">
+                15 days to mobilize. One operator.
+              </p>
+            </div>
+          </div>
+        }
       />
 
       {/* Value props - 3 column grid */}
@@ -153,6 +175,45 @@ export default async function DevelopersPage() {
         </div>
       </section>
 
+      {/* Mid-page visual band - on-site leasing team */}
+      <section className="bg-white pb-16">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+          <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-12 md:gap-8">
+            <div className="md:col-span-7">
+              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-brand-navy/10">
+                <Image
+                  src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?auto=format&fit=crop&w=1600&q=80"
+                  alt="On-site leasing team collaborating around a project plan"
+                  fill
+                  unoptimized
+                  sizes="(min-width: 768px) 720px, 100vw"
+                  className="object-cover"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col justify-center md:col-span-5">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                Deployed to your schedule
+              </p>
+              <h3 className="mt-3 font-display text-3xl font-normal leading-tight text-brand-navy sm:text-4xl">
+                A dedicated leasing team,
+                <span className="italic text-brand-emerald"> not a call centre</span>
+                <span aria-hidden="true" className="text-brand-gold">.</span>
+              </h3>
+              <p className="mt-4 font-serif text-base leading-[1.7] text-slate-700 sm:text-[17px]">
+                Named coordinators, in-market showings, and AI-assisted approval against your
+                criteria. We staff to your absorption schedule and report on the same KPIs your
+                project finance team already tracks.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Process strip - 4 horizontal numbered steps */}
       <section className="bg-[#FBFAF6] py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -197,8 +258,8 @@ export default async function DevelopersPage() {
       {/* CTA banner */}
       <CTABannerBlock
         headline="Bring lease-up risk down to zero internal headcount."
-        description="Book a working call to align on scope, pricing, and an absorption schedule."
-        primaryCta={{ label: 'Book a Call', href: '/contact/?type=developer' }}
+        description="Align on scope, pricing, and an absorption schedule. We deploy a dedicated leasing team to your project."
+        primaryCta={{ label: 'Get Started', href: '/contact/?type=developer' }}
         secondaryCta={{ label: 'View Pricing', href: '/pricing/' }}
       />
     </main>

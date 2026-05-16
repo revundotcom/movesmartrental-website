@@ -1434,8 +1434,8 @@ const INSTITUTIONAL_LEASE_UP: ServicePageContent = {
   heroHeadline: 'Lease-up campaigns for new-build portfolios',
   heroLede:
     'MoveSmart runs dedicated lease-up campaigns for builders, developers, PMCs, and purpose-built rental operators. Bulk unit onboarding, campaign strategy, deployed leasing teams, weekly absorption reporting, and structured rollout timelines - mapped to your lender\'s underwriting assumptions, not a one-unit-at-a-time rhythm.',
-  cta1Label: 'Book a Discovery Call',
-  cta2Label: 'Request a Lease-Up Proposal',
+  cta1Label: 'Request a Lease-Up Proposal',
+  cta2Label: 'Tour the Portal',
   problemTitle: 'What goes wrong with single-agent or ad-hoc lease-ups',
   problemPoints: [
     {

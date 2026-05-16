@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { ClipboardCheck, Eye, Layers } from 'lucide-react'
 
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
@@ -109,11 +110,29 @@ export default async function PropertyManagersPage() {
         eyebrow="Outsourced leasing"
         headline="Outsource leasing without losing control"
         lede="Pass the full leasing process to our team and keep operational visibility through a portal you can audit any time. Live KPIs by asset, full communication history, and a single accountable operator."
-        cta1={{
-          label: 'Book a Strategy Call',
-          href: '/contact/?type=property-manager',
-        }}
-        cta2={{ label: 'See Pricing', href: '/pricing/' }}
+        cta1={{ label: 'See Pricing', href: '/pricing/' }}
+        aside={
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-brand-navy/10">
+            <Image
+              src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1400&q=80"
+              alt="Property operations team monitoring leasing KPIs from a workspace"
+              fill
+              unoptimized
+              sizes="(min-width: 1024px) 460px, 100vw"
+              className="object-cover"
+              priority
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-tr from-brand-navy/35 via-transparent to-transparent"
+            />
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 rounded-lg bg-white/95 px-4 py-3 shadow-sm backdrop-blur">
+              <p className="font-display text-base italic leading-tight text-brand-navy">
+                One operator. One accountable team.
+              </p>
+            </div>
+          </div>
+        }
       />
 
       {/* Value props - 3 column grid */}
@@ -163,6 +182,47 @@ export default async function PropertyManagersPage() {
                 </div>
               )
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Mid-page visual band - apartment block at scale */}
+      <section className="bg-white pb-16">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+          <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-12 md:gap-8">
+            <div className="order-2 md:order-1 md:col-span-5">
+              <div className="flex h-full flex-col justify-center">
+                <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                  Built for portfolio scale
+                </p>
+                <h3 className="mt-3 font-display text-3xl font-normal leading-tight text-brand-navy sm:text-4xl">
+                  Same discipline across every
+                  <span className="italic text-brand-emerald"> asset</span>
+                  <span aria-hidden="true" className="text-brand-gold">.</span>
+                </h3>
+                <p className="mt-4 font-serif text-base leading-[1.7] text-slate-700 sm:text-[17px]">
+                  Whether you manage 40 doors or 4,000, the leasing workflow is identical: listing,
+                  capture, qualification, signing, move-in. Live in the portal. Audit any unit, any
+                  lead, any time.
+                </p>
+              </div>
+            </div>
+            <div className="order-1 md:order-2 md:col-span-7">
+              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-brand-navy/10">
+                <Image
+                  src="https://images.unsplash.com/photo-1577415124269-fc1140a69e91?auto=format&fit=crop&w=1600&q=80"
+                  alt="Rows of windows on a residential apartment block - portfolio at scale"
+                  fill
+                  unoptimized
+                  sizes="(min-width: 768px) 720px, 100vw"
+                  className="object-cover"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -280,9 +340,9 @@ export default async function PropertyManagersPage() {
       {/* CTA banner */}
       <CTABannerBlock
         headline="Run leasing as output, not as a department."
-        description="Book a 30-minute working call to map your portfolio onto MoveSmart's leasing engine."
+        description="Map your portfolio onto MoveSmart's leasing engine. Live KPIs, one accountable operator."
         primaryCta={{
-          label: 'Book a Call',
+          label: 'Get Started',
           href: '/contact/?type=property-manager',
         }}
         secondaryCta={{ label: 'Pricing Options', href: '/pricing/' }}

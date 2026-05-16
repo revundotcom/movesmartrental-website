@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { BarChart3, Calendar, Target } from 'lucide-react'
 
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
@@ -131,6 +132,28 @@ export default async function InstitutionalLeaseUpPage() {
           href: '/contact/?type=institutional',
         }}
         cta2={{ label: 'See KPI Framework', href: '/portal-and-technology/' }}
+        aside={
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-brand-navy/10">
+            <Image
+              src="https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1400&q=80"
+              alt="Urban high-rise residential tower - institutional lease-up scale"
+              fill
+              unoptimized
+              sizes="(min-width: 1024px) 460px, 100vw"
+              className="object-cover"
+              priority
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-tr from-brand-navy/40 via-transparent to-transparent"
+            />
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 rounded-lg bg-white/95 px-4 py-3 shadow-sm backdrop-blur">
+              <p className="font-display text-base italic leading-tight text-brand-navy">
+                Three assets. 120 days. One decision.
+              </p>
+            </div>
+          </div>
+        }
       />
 
       {/* Three pillar cards */}
@@ -230,6 +253,49 @@ export default async function InstitutionalLeaseUpPage() {
             Under either option, the owner pays no leasing payroll, salaries, recruiter
             costs, benefits, or internal staffing overhead.
           </p>
+        </div>
+      </section>
+
+      {/* Trust / scale visual band - city skyline + cross-border framing */}
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+          <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-12 md:gap-8">
+            <div className="md:col-span-7">
+              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-brand-navy/10">
+                <Image
+                  src="https://images.unsplash.com/photo-1567002260456-bce4cb6c30be?auto=format&fit=crop&w=1600&q=80"
+                  alt="Urban downtown skyline - the institutional markets MoveSmart serves"
+                  fill
+                  unoptimized
+                  sizes="(min-width: 768px) 720px, 100vw"
+                  className="object-cover"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col justify-center md:col-span-5">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                Cross-border execution
+              </p>
+              <h3 className="mt-3 font-display text-3xl font-normal leading-tight text-brand-navy sm:text-4xl">
+                One operator across
+                <span className="italic text-brand-emerald"> CAD &amp; USD</span>
+                <span aria-hidden="true" className="text-brand-gold">.</span>
+              </h3>
+              <p className="mt-4 font-serif text-base leading-[1.7] text-slate-700 sm:text-[17px]">
+                MoveSmart is built for institutional operators with mixed Canadian and U.S.
+                inventory. Unified reporting, jurisdiction-specific lease templates, single program
+                lead. No internal payroll, no recruiter cost, no benefits overhead.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

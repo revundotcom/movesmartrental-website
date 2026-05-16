@@ -544,6 +544,7 @@ export default async function PropertyCategoryPage({
         questions={faq}
         title={`${meta.headlineLabel} in ${cityTitle} - FAQ`}
         schemaEnabled={true}
+        showQuestionsCta={false}
       />
 
       {/* Related categories in this city */}

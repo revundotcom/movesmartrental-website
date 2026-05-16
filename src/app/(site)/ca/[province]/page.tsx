@@ -115,8 +115,7 @@ export default async function ProvincePage({
         eyebrow={`Leasing brokerage across ${data.title}`}
         headline={`Leasing across ${data.title}`}
         lede={descriptionText ?? `Full-service leasing execution in every major ${data.title} market - strategic pricing, professional marketing, tenant qualification, and lease execution from a local team. Zero upfront cost.`}
-        cta1={{ label: 'Book a Local Call', href: '/contact/' }}
-        cta2={{ label: 'See Pricing', href: '/pricing/' }}
+        cta1={{ label: 'See Pricing', href: '/pricing/' }}
       />
 
       {/* Province narrative (plain-text description) */}
@@ -170,8 +169,8 @@ export default async function ProvincePage({
       {/* CTA Banner */}
       <CTABannerBlock
         headline={`Find MoveSmart in ${data.title}`}
-        description={`Full-service leasing services across ${data.title}. Book a 20-minute call with a local advisor - zero upfront cost.`}
-        primaryCta={{ label: 'Book a Call', href: '/contact/' }}
+        description={`Full-service leasing services across ${data.title} - zero upfront cost, success-fee on placement.`}
+        primaryCta={{ label: 'Get Started', href: '/contact/' }}
         secondaryCta={{ label: 'See Pricing', href: '/pricing/' }}
       />
     </main>

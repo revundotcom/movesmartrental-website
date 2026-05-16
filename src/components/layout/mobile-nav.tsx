@@ -47,7 +47,6 @@ const MOBILE_NAV_SECTIONS: ReadonlyArray<NavSectionDef> = [
     items: [
       { title: 'Tenant Hub', href: '/tenants/' },
       { title: 'Browse Properties', href: '/properties/' },
-      { title: 'Apply', href: '/contact/?type=tenant' },
       { title: 'Tenant FAQ', href: '/faq/' },
     ],
   },

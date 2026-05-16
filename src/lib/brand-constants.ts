@@ -136,9 +136,14 @@ export const CTA_COPY = {
   footerTrust: 'Trusted by 500+ property owners across Canada',
 } as const
 
-/** National rental market data (update monthly) */
+/**
+ * National rental market data.
+ * Source: CMHC Rental Market Report + Statistics Canada Housing Statistics.
+ * Update quarterly when CMHC publishes a new report.
+ */
 export const MARKET_DATA = {
   lastUpdated: '2026-04',
+  source: 'CMHC Rental Market Report · Statistics Canada',
   nationalAvgRent: '$2,030',
   nationalVacancyRate: '3.1%',
   ontarioRentGuideline: '2.1%',

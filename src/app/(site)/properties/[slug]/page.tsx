@@ -583,7 +583,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
                     <ArrowRight className="ml-1.5 size-4" />
                   </Link>
                 )}
-                {reserveUrl ? (
+                {reserveUrl && (
                   <a
                     href={reserveUrl}
                     target="_blank"
@@ -592,13 +592,6 @@ export default async function PropertyDetailPage({ params }: PageProps) {
                   >
                     Reserve Offer
                   </a>
-                ) : (
-                  <Link
-                    href="/contact/?intent=call"
-                    className="flex w-full items-center justify-center rounded-lg border border-slate-200 px-4 py-3 text-sm font-medium text-[#0B1D3A] transition-colors hover:bg-slate-50"
-                  >
-                    Book a Call
-                  </Link>
                 )}
               </div>
 

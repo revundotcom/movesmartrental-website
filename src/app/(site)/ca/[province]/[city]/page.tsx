@@ -188,8 +188,7 @@ export default async function CityPage({
           descriptionText?.slice(0, 220) ??
           `Local tenant placement, screening, lease execution, and move-in coordination in ${data.title}, ${data.province.title}. Zero upfront - success-fee pricing only.`
         }
-        cta1={{ label: 'Book a Local Call', href: '/contact/' }}
-        cta2={{ label: 'Browse Rentals', href: '/locations/' }}
+        cta1={{ label: 'Browse Rentals', href: '/locations/' }}
       />
 
       {/* City narrative (plain-text description from local data) */}
@@ -360,8 +359,8 @@ export default async function CityPage({
       {/* CTA Banner */}
       <CTABannerBlock
         headline={`Ready to lease in ${data.title}?`}
-        description={`Book 20 minutes with a local leasing advisor. Zero upfront, success-fee pricing, ${data.title}-specific market strategy, and RTA-compliant leases.`}
-        primaryCta={{ label: 'Book a Call', href: '/contact/' }}
+        description={`Get a free rental analysis with ${data.title}-specific market strategy. Zero upfront, success-fee pricing, and RTA-compliant leases.`}
+        primaryCta={{ label: 'Get Started', href: '/contact/' }}
         secondaryCta={{ label: 'See Pricing', href: '/pricing/' }}
       />
     </main>

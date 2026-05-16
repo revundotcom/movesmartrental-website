@@ -12,6 +12,7 @@
  */
 
 import type {
+  Property,
   PropertyListResponse,
   PropertyDetailResponse,
 } from '@/types/property'
@@ -174,6 +175,68 @@ export async function getProperties(
     console.warn('[portal-api] getProperties threw:', err)
     return null
   }
+}
+
+/**
+ * Fetch EVERY property across all paginated pages. Used by the
+ * `/properties/` browse page so visitors see the entire catalog.
+ *
+ * Strategy:
+ *   1. Fetch page 1 to learn `last_page` (Laravel-style meta).
+ *   2. If `last_page` is missing (older API shape), keep fetching
+ *      sequential pages until we get an empty `data` array.
+ *   3. Cap at MAX_PAGES so we can't burn the request loop on a
+ *      misbehaving upstream.
+ *
+ * Returns whatever properties we managed to gather; never throws.
+ */
+const MAX_PAGES = 100
+
+export async function getAllProperties(
+  options: { revalidate?: number } = {},
+): Promise<Property[]> {
+  const { revalidate = 300 } = options
+
+  const first = await getProperties({ page: 1, revalidate })
+  if (!first || !Array.isArray(first.data)) return []
+
+  const collected: Property[] = [...first.data]
+  // Prefer the API's own page count when it tells us.
+  const totalPages =
+    typeof first.last_page === 'number' && first.last_page > 0
+      ? Math.min(first.last_page, MAX_PAGES)
+      : MAX_PAGES
+
+  // Already have page 1. Fetch the rest in parallel for speed.
+  if (totalPages > 1) {
+    const pageNumbers = Array.from(
+      { length: totalPages - 1 },
+      (_, i) => i + 2,
+    )
+    const results = await Promise.all(
+      pageNumbers.map((p) => getProperties({ page: p, revalidate })),
+    )
+    for (const r of results) {
+      if (!r || !Array.isArray(r.data) || r.data.length === 0) {
+        // For APIs that lie about `last_page`, an empty page is the
+        // real stop signal. We still keep what came before.
+        if (typeof first.last_page !== 'number') break
+        continue
+      }
+      collected.push(...r.data)
+    }
+  }
+
+  // De-dupe by id (in case the API returns overlapping pages).
+  const seen = new Set<number>()
+  const unique: Property[] = []
+  for (const p of collected) {
+    if (!seen.has(p.id)) {
+      seen.add(p.id)
+      unique.push(p)
+    }
+  }
+  return unique
 }
 
 /**

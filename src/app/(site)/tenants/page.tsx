@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { CityGridBlock } from '@/components/blocks/city-grid-block'
@@ -206,6 +208,33 @@ const PULL_QUOTES: Array<{ quote: string; name: string; city: string }> = [
   },
 ]
 
+// Per-city Unsplash photo IDs so the Featured Cities tiles render real
+// imagery instead of dark fallback placeholders. Cities not in this map
+// fall back to a generic Canadian streetscape.
+const CITY_IMAGES: Record<string, string> = {
+  toronto: 'photo-1517090504586-fde19ea6066f', // CN Tower
+  ottawa: 'photo-1503614472-8c93d56e92ce', // Canadian cityscape
+  mississauga: 'photo-1545324418-cc1a3fa10c00', // modern condo
+  hamilton: 'photo-1486325212027-8081e485255e', // multi-storey
+  brampton: 'photo-1568605114967-8130f3a36994', // suburban home
+  vaughan: 'photo-1577415124269-fc1140a69e91', // apartment block
+  markham: 'photo-1564013799919-ab600027ffc6', // suburban exterior
+  'richmond-hill': 'photo-1570129477492-45c003edd2be', // modern home
+  oakville: 'photo-1567002260456-bce4cb6c30be', // Toronto downtown
+  burlington: 'photo-1502672260266-1c1ef2d93688', // bright interior
+  kitchener: 'photo-1486325212027-8081e485255e', // multi-storey
+  waterloo: 'photo-1505691938895-1758d7feb511', // modern condo
+  london: 'photo-1564013799919-ab600027ffc6', // suburban
+  ottawa_default: 'photo-1503614472-8c93d56e92ce',
+}
+
+const CITY_IMAGE_FALLBACK = 'photo-1503614472-8c93d56e92ce'
+
+function cityHeroImage(slug: string): string {
+  const id = CITY_IMAGES[slug] ?? CITY_IMAGE_FALLBACK
+  return `https://images.unsplash.com/${id}?w=900&q=80&auto=format&fit=crop`
+}
+
 export default async function TenantsPage() {
   // Static local data (Sanity has been removed). Tenants hub features the
   // top cities from the fallback city list.
@@ -217,6 +246,8 @@ export default async function TenantsPage() {
       provinceSlug: c.provinceSlug,
       population: c.population,
       medianRent: c.medianRent,
+      heroImageUrl: cityHeroImage(c.slug.current),
+      heroImageAlt: `${c.title} skyline and neighbourhood`,
     }))
 
   const heroAside = (
@@ -230,14 +261,16 @@ export default async function TenantsPage() {
       <p className="mt-2 text-sm leading-relaxed text-slate-600">
         Filter verified listings across 160+ Canadian cities. No account required to browse.
       </p>
+
+      {/* Home-type chips */}
       <div className="mt-5 flex flex-wrap gap-2">
         {[
-          { label: '1-bed', href: '/locations/' },
-          { label: '2-bed', href: '/locations/' },
-          { label: 'Condo', href: '/locations/' },
-          { label: 'Townhouse', href: '/locations/' },
-          { label: 'House', href: '/locations/' },
-          { label: 'Pet-friendly', href: '/locations/' },
+          { label: '1-bed', href: '/properties/' },
+          { label: '2-bed', href: '/properties/' },
+          { label: 'Condo', href: '/properties/' },
+          { label: 'Townhouse', href: '/properties/' },
+          { label: 'House', href: '/properties/' },
+          { label: 'Pet-friendly', href: '/properties/' },
         ].map((chip) => (
           <Link
             key={chip.label}
@@ -248,6 +281,40 @@ export default async function TenantsPage() {
           </Link>
         ))}
       </div>
+
+      {/* Popular cities row */}
+      <div className="mt-6">
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
+          Popular cities
+        </p>
+        <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm">
+          {[
+            { label: 'Toronto', href: '/ca/ontario/toronto/' },
+            { label: 'Ottawa', href: '/ca/ontario/ottawa/' },
+            { label: 'Mississauga', href: '/ca/ontario/mississauga/' },
+            { label: 'Hamilton', href: '/ca/ontario/hamilton/' },
+            { label: 'Brampton', href: '/ca/ontario/brampton/' },
+          ].map((city) => (
+            <Link
+              key={city.label}
+              href={city.href}
+              className="font-medium text-slate-600 underline decoration-brand-gold/50 decoration-2 underline-offset-[5px] transition-colors hover:text-brand-emerald hover:decoration-brand-emerald"
+            >
+              {city.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Strong CTA */}
+      <Link
+        href="/properties/"
+        className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-emerald px-4 py-3 text-sm font-bold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-brand-emerald-dark hover:shadow-md"
+      >
+        See all live listings
+        <ArrowRight className="size-4" aria-hidden="true" />
+      </Link>
+
       <div className="mt-5 border-t border-brand-navy/10 pt-4">
         <p className="text-[11px] leading-relaxed text-slate-500">
           Every listing is owner-verified. Rent, deposit, and inclusions shown are what you pay -
@@ -284,6 +351,36 @@ export default async function TenantsPage() {
         ]}
         aside={heroAside}
       />
+
+      {/* ─── Editorial image bridge: happy new tenants moving in ───────── */}
+      <section className="bg-white pt-16">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+            <div className="relative aspect-[5/4] overflow-hidden rounded-2xl shadow-xl shadow-brand-navy/10">
+              <Image
+                src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1600&q=80&auto=format&fit=crop"
+                alt="Smiling young couple celebrating after being approved for their new rental apartment"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                unoptimized
+              />
+            </div>
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                Renters first
+              </p>
+              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+                A 48-hour decision,{' '}
+                <span className="font-display italic text-brand-emerald">not a ghost.</span>
+              </h2>
+              <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
+                Newcomers with thin Canadian credit, self-employed applicants, and students all get reviewed on the full picture - income, references, rental history - not a single score. You get a clear answer fast, every time.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ─── How renting with us works (zigzag editorial) ───────────────── */}
       <section className="bg-white py-20">
@@ -395,6 +492,34 @@ export default async function TenantsPage() {
               </FeeTableRow>
             ))}
           </dl>
+        </div>
+      </section>
+
+      {/* ─── Editorial banner: agent-led showing ──────────────────────── */}
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="relative aspect-[16/7] overflow-hidden rounded-3xl shadow-2xl shadow-brand-navy/15">
+            <Image
+              src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=2400&q=80&auto=format&fit=crop"
+              alt="Prospective tenants touring an open Canadian apartment with a leasing agent"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1280px) 100vw, 1200px"
+              unoptimized
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-t from-brand-navy/55 via-brand-navy/15 to-transparent"
+            />
+            <div className="absolute inset-x-0 bottom-0 px-8 pb-8 sm:px-12 sm:pb-10">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-gold">
+                Real showings, real homes
+              </p>
+              <p className="mt-2 font-display text-2xl font-normal italic leading-snug text-white sm:text-3xl md:text-4xl">
+                Tour the unit before you apply. No bait-and-switch.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -571,7 +696,7 @@ export default async function TenantsPage() {
       </section>
 
       {/* ─── FAQ ─────────────────────────────────────────────────────────── */}
-      <FAQBlock questions={TENANT_FAQS} title="Tenant FAQs" />
+      <FAQBlock questions={TENANT_FAQS} title="Tenant FAQs" showQuestionsCta={false} />
 
       {/* ─── CTA Banner ─────────────────────────────────────────────────── */}
       <CTABannerBlock

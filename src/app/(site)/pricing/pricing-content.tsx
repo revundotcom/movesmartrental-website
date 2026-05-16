@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+import { motion } from 'framer-motion'
 import {
   ArrowRight,
   ScrollText,
@@ -11,6 +13,7 @@ import {
   PhoneCall,
   ShieldCheck,
   Building2,
+  BadgeCheck,
 } from 'lucide-react'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
@@ -32,14 +35,56 @@ function HeroAtAGlance() {
         className="absolute left-0 top-1 h-[calc(100%-0.5rem)] w-px bg-gradient-to-b from-brand-gold/70 via-brand-gold/30 to-transparent"
       />
 
+      {/* Hero image - "handing over keys" — reinforces pay-on-success */}
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+        className="relative mb-8 aspect-[4/3] w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-brand-navy/10"
+      >
+        <Image
+          src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80"
+          alt="Handing over keys to a new tenant after a signed lease"
+          fill
+          unoptimized
+          sizes="(min-width: 1024px) 480px, 100vw"
+          className="object-cover"
+          priority
+        />
+        {/* Subtle gold-emerald gradient overlay for editorial tone */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-tr from-brand-navy/30 via-transparent to-transparent"
+        />
+        {/* Caption chip */}
+        <div className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 shadow-sm backdrop-blur">
+          <span className="size-1.5 rounded-full bg-brand-emerald" aria-hidden="true" />
+          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-navy">
+            Paid only on placement
+          </span>
+        </div>
+      </motion.div>
+
       <p className="font-sans text-[10px] font-bold uppercase tracking-[0.28em] text-brand-navy/55">
         At a glance &middot; 2026 schedule
       </p>
 
-      <p className="mt-4 font-display text-[3.5rem] italic leading-[0.95] text-brand-navy sm:text-[4.5rem]">
-        $<CountUp value={0} />
+      {/* Animated $0 callout — pulsing emerald ring + scale-in */}
+      <motion.p
+        initial={{ opacity: 0, scale: 0.85 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+        className="relative mt-4 inline-block font-display text-[3.5rem] italic leading-[0.95] text-brand-navy sm:text-[4.5rem]"
+      >
+        <span className="relative inline-block">
+          $<CountUp value={0} />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-2 -z-10 rounded-full bg-emerald-400/20 blur-2xl motion-safe:animate-pulse"
+          />
+        </span>
         <span className="text-brand-gold">.</span>
-      </p>
+      </motion.p>
       <p className="mt-2 font-sans text-sm uppercase tracking-[0.18em] text-brand-navy/60">
         Due upfront. No setup, no retainer, no onboarding.
       </p>
@@ -140,6 +185,113 @@ function HowWeCharge() {
   )
 }
 
+/* ─── Editorial bridge: what "zero upfront" actually means (image + list) ───── */
+
+function ZeroUpfrontBridge() {
+  return (
+    <section className="bg-white py-16 sm:py-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14">
+          {/* Image */}
+          <RevealOnScroll variant="scaleIn" duration={0.8}>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-lg ring-1 ring-brand-navy/10">
+              <Image
+                src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1600&q=80&auto=format&fit=crop"
+                alt="Bright modern living room in a recently leased rental condo"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                unoptimized
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent"
+              />
+            </div>
+          </RevealOnScroll>
+
+          {/* Content */}
+          <RevealOnScroll variant="slideUp" duration={0.7}>
+            <p className="font-sans text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+              What zero-upfront actually covers
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-normal leading-[1.1] text-brand-navy sm:text-4xl">
+              We carry the cost of getting your unit
+              <span className="font-display italic text-brand-emerald"> market-ready</span>
+              <span className="text-brand-gold">.</span>
+            </h2>
+            <p className="mt-4 font-serif text-base leading-[1.75] text-slate-700">
+              Before a single dollar changes hands, we have already invested in your listing.
+              Everything below is on our balance sheet until a qualified tenant signs.
+            </p>
+
+            <ul className="mt-6 divide-y divide-brand-navy/10 border-y border-brand-navy/10">
+              {[
+                ['Professional photography & video', 'Camera, wide-angle lens, edited gallery.'],
+                ['MLS + 40-portal syndication', 'Realtor.ca, Zumper, Zolo, Kijiji, Marketplace.'],
+                ['Applicant screening & references', 'Credit, employment, income, prior-tenancy.'],
+                ['Lease drafting & e-signing', 'Provincially compliant lease and addenda.'],
+              ].map(([title, detail]) => (
+                <li key={title} className="flex items-baseline justify-between gap-4 py-3">
+                  <span className="font-display text-base text-brand-navy">{title}</span>
+                  <span className="hidden text-right font-serif text-xs italic text-slate-500 sm:inline">
+                    {detail}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            <p className="mt-5 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-navy/60">
+              Invoiced once &middot; only on signed lease
+            </p>
+          </RevealOnScroll>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ─── Full-width banner: bridge between comparison and guarantees ───────────── */
+
+function PricingBannerImage() {
+  return (
+    <section className="relative bg-white">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <RevealOnScroll variant="scaleIn" duration={0.9}>
+          <div className="relative aspect-[21/9] w-full overflow-hidden rounded-2xl shadow-lg ring-1 ring-brand-navy/10">
+            <Image
+              src="https://images.unsplash.com/photo-1577415124269-fc1140a69e91?w=1600&q=80&auto=format&fit=crop"
+              alt="Canadian apartment block at dusk - the kind of inventory MoveSmart leases for owners"
+              fill
+              className="object-cover"
+              sizes="100vw"
+              unoptimized
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-tr from-brand-navy/55 via-brand-navy/20 to-transparent"
+            />
+            <div className="absolute inset-0 flex items-end p-6 sm:p-10 lg:p-14">
+              <div className="max-w-2xl">
+                <p className="font-sans text-[11px] font-bold uppercase tracking-[0.28em] text-brand-gold">
+                  Built for Canadian owners
+                </p>
+                <p className="mt-3 font-display text-3xl font-normal italic leading-tight text-white sm:text-4xl lg:text-5xl">
+                  One signed lease. One fee. <br className="hidden sm:block" />Zero monthly drag.
+                </p>
+              </div>
+            </div>
+          </div>
+        </RevealOnScroll>
+      </div>
+    </section>
+  )
+}
+
 /* ─── Big price statement + magazine fee schedule table ─────────────────────── */
 
 interface FeeRow {
@@ -201,8 +353,21 @@ const FEE_SCHEDULE: FeeRow[] = [
 
 function HeadlinePriceStatement() {
   return (
-    <section id="fee-schedule" className="bg-white py-20 lg:py-28">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <section
+      id="fee-schedule"
+      className="relative overflow-hidden bg-gradient-to-br from-emerald-50/40 via-white to-emerald-50/20 py-20 lg:py-28"
+    >
+      {/* Soft radial gradient mesh for visual interest */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-60"
+        style={{
+          background:
+            'radial-gradient(ellipse at 12% 15%, rgba(16,185,129,0.10) 0%, transparent 55%), radial-gradient(ellipse at 88% 85%, rgba(212,168,83,0.08) 0%, transparent 55%)',
+        }}
+      />
+
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <RevealOnScroll variant="slideUp" duration={0.6}>
           <p className="font-sans text-[11px] font-bold uppercase tracking-[0.28em] text-brand-navy/55">
             &sect; 02 &middot; The fee schedule
@@ -213,7 +378,12 @@ function HeadlinePriceStatement() {
         <div className="mt-6 grid grid-cols-12 items-end gap-6">
           <div className="col-span-12 lg:col-span-8">
             <RevealOnScroll variant="scaleIn" duration={0.8}>
-              <p className="font-display font-normal leading-[0.85] text-brand-navy text-[5rem] sm:text-[8rem] lg:text-[12rem] xl:text-[14rem]">
+              <p className="relative inline-block font-display font-normal leading-[0.85] text-brand-navy text-[5rem] sm:text-[8rem] lg:text-[12rem] xl:text-[14rem]">
+                {/* Pulsing emerald glow ring behind the $0 */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -inset-8 -z-10 rounded-full bg-emerald-400/20 blur-3xl motion-safe:animate-pulse"
+                />
                 $<CountUp value={0} />
                 <span className="text-brand-gold">.</span>
               </p>
@@ -327,6 +497,145 @@ function HeadlinePriceStatement() {
             confirm the exact success fee in writing before any work begins. All fees exclude
             applicable GST/HST.
           </p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ─── How our pricing compares: 2-column with property image ────────────────── */
+
+function PricingComparesVisual() {
+  return (
+    <section className="bg-white py-20 lg:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
+          {/* Left: text block */}
+          <div className="lg:col-span-6">
+            <RevealOnScroll variant="slideUp" duration={0.7}>
+              <p className="font-sans text-[11px] font-bold uppercase tracking-[0.28em] text-brand-emerald">
+                How our pricing compares
+              </p>
+              <h2 className="mt-3 font-display text-4xl font-normal leading-[1.05] text-brand-navy sm:text-5xl">
+                One success fee.
+                <span className="font-display italic text-brand-emerald"> No monthly drag</span>
+                <span className="text-brand-gold">.</span>
+              </h2>
+              <p className="mt-5 font-serif text-base leading-[1.75] text-slate-700 sm:text-[17px]">
+                Traditional property managers charge a monthly percentage for the life of the
+                tenancy &mdash; that adds up to a multiple of our one-time success fee over a
+                typical two-year hold. We&rsquo;re paid once, on placement, then we step back.
+              </p>
+              <ul className="mt-7 space-y-3">
+                {[
+                  'Single fee, invoiced once on a signed lease',
+                  'No monthly retainer for the life of the tenancy',
+                  'No vendor markups, no setup or onboarding charges',
+                  'Tenant Replacement Guarantee included for six months',
+                ].map((line) => (
+                  <li key={line} className="flex items-start gap-3">
+                    <BadgeCheck
+                      className="mt-0.5 size-5 shrink-0 text-brand-emerald"
+                      strokeWidth={2}
+                      aria-hidden="true"
+                    />
+                    <span className="font-serif text-base leading-relaxed text-slate-700">
+                      {line}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </RevealOnScroll>
+          </div>
+
+          {/* Right: image of a modern condo */}
+          <div className="lg:col-span-6">
+            <RevealOnScroll variant="scaleIn" duration={0.8}>
+              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-brand-navy/10">
+                <Image
+                  src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1400&q=80"
+                  alt="Modern multi-unit residential building exterior"
+                  fill
+                  unoptimized
+                  sizes="(min-width: 1024px) 560px, 100vw"
+                  className="object-cover"
+                />
+                {/* Editorial overlay rule */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent"
+                />
+                {/* Caption pill */}
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 rounded-lg bg-white/95 px-4 py-3 shadow-sm backdrop-blur">
+                  <p className="font-display text-base italic leading-tight text-brand-navy">
+                    Built for owners of a single condo &mdash; or a 40-unit portfolio.
+                  </p>
+                </div>
+              </div>
+            </RevealOnScroll>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ─── Outcome guarantee illustration band ───────────────────────────────────── */
+
+function OutcomeGuaranteeBand() {
+  return (
+    <section className="bg-[#FBFAF6] py-20 lg:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
+          {/* Left: supporting image — signed lease / handshake */}
+          <div className="order-2 lg:order-1 lg:col-span-5">
+            <RevealOnScroll variant="scaleIn" duration={0.8}>
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-brand-navy/10">
+                <Image
+                  src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1400&q=80"
+                  alt="Owner and tenant signing a residential lease at a table"
+                  fill
+                  unoptimized
+                  sizes="(min-width: 1024px) 460px, 100vw"
+                  className="object-cover"
+                />
+              </div>
+            </RevealOnScroll>
+          </div>
+
+          {/* Right: outcome guarantee block */}
+          <div className="order-1 lg:order-2 lg:col-span-7">
+            <RevealOnScroll variant="slideUp" duration={0.7}>
+              <div className="flex items-center gap-3">
+                <BadgeCheck
+                  className="size-10 text-brand-emerald"
+                  strokeWidth={1.75}
+                  aria-hidden="true"
+                />
+                <p className="font-sans text-[11px] font-bold uppercase tracking-[0.28em] text-brand-emerald">
+                  Outcome guarantee
+                </p>
+              </div>
+              <h2 className="mt-4 font-display text-4xl font-normal leading-[1.05] text-brand-navy sm:text-5xl">
+                If we don&rsquo;t place a qualified tenant, you don&rsquo;t
+                <span className="font-display italic text-brand-emerald"> pay a dollar</span>
+                <span className="text-brand-gold">.</span>
+              </h2>
+              <p className="mt-5 font-serif text-base leading-[1.75] text-slate-700 sm:text-[17px]">
+                Our model is contractually risk-shifted. Every cost we carry &mdash; photography,
+                syndication, screening, lease prep &mdash; is on our balance sheet until your unit
+                is leased. No clawbacks, no kill-fee, no time-and-materials hidden in a footer.
+              </p>
+              <p className="mt-4 font-serif text-base leading-[1.75] text-slate-700 sm:text-[17px]">
+                We back it with the paperwork: a Tenant Replacement Guarantee for the first six
+                months and a No-Placement, No-Fee Promise written into every engagement letter.
+              </p>
+            </RevealOnScroll>
+          </div>
         </div>
       </div>
     </section>
@@ -974,18 +1283,32 @@ export function PricingContent() {
         headline="Pay Nothing Until We Place a Tenant."
         lede="MoveSmart is a full-service leasing and tenant placement company. There is no setup fee, no monthly retainer, no management percentage. You pay a single one-time success fee - typically equivalent to one month of rent - only when a qualified tenant signs the lease."
         cta1={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
-        cta2={{ label: 'Book a Call', href: '/contact/?type=owner&intent=call' }}
+        meta={[
+          { label: 'Setup fee', value: '$0' },
+          { label: 'Monthly retainer', value: '$0' },
+          { label: 'Cancel anytime', value: '30 days' },
+          { label: 'Avg placement', value: '14 days' },
+        ]}
         aside={<HeroAtAGlance />}
       />
 
       {/* 2. How we charge - numbered editorial paragraphs */}
       <HowWeCharge />
 
+      {/* 2b. Editorial bridge: what zero-upfront actually covers (NEW image) */}
+      <ZeroUpfrontBridge />
+
       {/* 3. Headline price + magazine fee schedule */}
       <HeadlinePriceStatement />
 
+      {/* 3b. How pricing compares - 2-column visual with property image */}
+      <PricingComparesVisual />
+
       {/* 4. Transparency table */}
       <TransparencyTable />
+
+      {/* 4b. Outcome guarantee illustration band */}
+      <OutcomeGuaranteeBand />
 
       {/* 5. Rent calculator (existing component) */}
       <RentCalculator />
@@ -996,6 +1319,9 @@ export function PricingContent() {
       {/* 7. Comparison table - MoveSmart vs. PM vs. DIY */}
       <ComparisonTable />
 
+      {/* 7b. Full-width editorial banner (NEW image) */}
+      <PricingBannerImage />
+
       {/* 8. Money-back & guarantees - vertical numbered notes */}
       <GuaranteesPanel />
 
@@ -1003,14 +1329,13 @@ export function PricingContent() {
       <PricingTestimonials />
 
       {/* 10. FAQ */}
-      <FAQBlock questions={PRICING_FAQS} title={'Pricing & Fees - Frequently Asked'} />
+      <FAQBlock questions={PRICING_FAQS} title={'Pricing & Fees - Frequently Asked'} showQuestionsCta={false} />
 
       {/* 11. CTA Banner - pricing-specific */}
       <CTABannerBlock
         headline="Get a written success-fee quote before you commit."
         description={'Open a free account and we\u2019ll send a no-fee placement quote tailored to your address - typically back to you within one business day.'}
         primaryCta={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
-        secondaryCta={{ label: 'Book a Call', href: '/contact/?type=owner&intent=call' }}
       />
     </main>
   )

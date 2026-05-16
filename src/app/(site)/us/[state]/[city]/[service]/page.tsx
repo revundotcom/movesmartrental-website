@@ -159,15 +159,13 @@ export default async function USCityServicePage({
           headline={`${serviceTitle} in ${cityTitle}`}
           accentLastWord={false}
           lede={serviceData.heroLede}
-          cta1={{ label: 'Book a Local Call', href: '/contact/' }}
-          cta2={{ label: 'See Pricing', href: '/pricing/' }}
+          cta1={{ label: 'See Pricing', href: '/pricing/' }}
         />
 
         <CTABannerBlock
           headline="Get Started with MoveSmart Rentals"
           description={`${serviceTitle} in ${cityTitle} - full-service leasing and tenant placement, zero upfront cost, success-fee pricing.`}
           primaryCta={{ label: 'Create Free Account', href: '/contact/' }}
-          secondaryCta={{ label: 'Book a Call', href: '/contact/' }}
         />
       </main>
     )
@@ -237,7 +235,6 @@ export default async function USCityServicePage({
         headline={`Get Started in ${cityTitle}`}
         description={`Let MoveSmart Rentals run your leasing campaign in ${cityTitle}. Full-service leasing, zero upfront, success-fee pricing.`}
         primaryCta={{ label: 'Contact Us', href: '/contact/' }}
-        secondaryCta={{ label: 'Book a Call', href: '/contact/' }}
       />
     </main>
   )

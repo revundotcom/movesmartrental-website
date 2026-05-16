@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import {
   Check,
@@ -25,10 +26,8 @@ import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { TestimonialsSection } from '@/components/blocks/testimonials-section'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
-import { CountUp } from '@/components/ui/count-up'
 import { GradientText } from '@/components/ui/gradient-text'
 import {
-  LeasingTimeline,
   MarketRow,
   SlideFromRight,
   ZigzagRow,
@@ -156,51 +155,6 @@ const CONTRACT_MESSAGING: Array<{
     title: 'Rent Protection + Insurance Pathways',
     description:
       'Optional partner pathways for rent protection and landlord insurance, surfaced at the right moment in your leasing flow.',
-  },
-]
-
-/* ---------- Leasing process timeline ---------- */
-
-const LEASING_TIMELINE: Array<{
-  day: string
-  title: string
-  description: string
-}> = [
-  {
-    day: 'Day 0',
-    title: 'Onboarding (online or call)',
-    description:
-      'Self-serve onboarding online, or a 30-minute walkthrough with an account manager if you prefer. We confirm the property, set strategic rent based on live comps, and lock preferences.',
-  },
-  {
-    day: 'Day 1-3',
-    title: 'Prep, photography & virtual tour',
-    description:
-      'Cleaning, painting, light staging and any handyman work coordinated through our partners. Professional photos and virtual tour shot. Listing copy drafted and approved by you.',
-  },
-  {
-    day: 'Day 3-4',
-    title: 'MLS + major-portal distribution',
-    description:
-      'Your listing goes live on MLS, Realtor.ca, the major rental websites, and our social distribution the same day. Inquiries route into the portal from minute one.',
-  },
-  {
-    day: 'Day 4-10',
-    title: 'Showings & qualification',
-    description:
-      'In-person and virtual showings coordinated by our team. Every applicant runs through credit, employment, reference, and rental-history checks - the full file lives in your portal.',
-  },
-  {
-    day: 'Day 10-13',
-    title: 'Offer & lease execution',
-    description:
-      'You see shortlisted applicants with our recommendation. Counter-offers handled in-portal, province-compliant lease prepared and e-signed, deposits and first-month collected.',
-  },
-  {
-    day: 'Day 14',
-    title: 'Move-in coordination',
-    description:
-      'Key handover scheduled, move-in inspection completed and documented, utilities and tenant insurance pathways shared. Handoff is clean - the tenancy starts on solid footing.',
   },
 ]
 
@@ -450,7 +404,6 @@ export default async function OwnersPage() {
         headline="Full-service leasing. Real Results."
         lede="Strategic pricing, professional marketing, structured screening, and clean lease execution - from listing to move-in. Nothing due upfront. Standard leasing success fee on placement."
         cta1={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
-        cta2={{ label: 'Book a 20-Min Call', href: '/contact/?type=owner&intent=call' }}
         aside={<HeroAside />}
       />
 
@@ -517,6 +470,37 @@ export default async function OwnersPage() {
                 </ZigzagRow>
               )
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Editorial image bridge: leasing team at work ── */}
+      <section className="bg-white pb-20">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+            <div className="relative aspect-[5/4] overflow-hidden rounded-2xl shadow-xl shadow-brand-navy/10">
+              <Image
+                src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1600&q=80&auto=format&fit=crop"
+                alt="MoveSmart leasing professional reviewing applicant files on a laptop"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                unoptimized
+              />
+            </div>
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                The leasing team behind your file
+              </p>
+              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+                A real person owns your{' '}
+                <span className="font-display italic text-brand-emerald">lease-up</span>
+                <span aria-hidden="true" className="text-brand-gold">.</span>
+              </h2>
+              <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
+                Every owner file has a named leasing lead and a documented applicant pipeline. Inquiries are triaged within hours, every showing is confirmed in writing, and every applicant runs through the same structured screening - all visible in your portal, all backed by a person you can call.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -593,37 +577,32 @@ export default async function OwnersPage() {
         </div>
       </section>
 
-      {/* ── SECTION 4: Leasing Process - VERTICAL SPINE TIMELINE (no cards) ── */}
-      <section className="bg-white py-24">
+      {/* ── Editorial image bridge: keys handover at move-in ── */}
+      <section className="bg-white pb-20">
         <div className="mx-auto max-w-6xl px-4">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
-            <RevealOnScroll variant="slideFromLeft" className="lg:col-span-4">
-              <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
-                The Leasing Playbook
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+            <div className="lg:order-2 relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl shadow-brand-navy/10">
+              <Image
+                src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&q=80&auto=format&fit=crop"
+                alt="Property owner handing over keys to a qualified new tenant on move-in day"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                unoptimized
+              />
+            </div>
+            <div className="lg:order-1">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                Move-in coordination
               </p>
-              <h2 className="mt-3 font-display text-3xl font-normal leading-tight tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
-                How we lease your{' '}
-                <span className="font-display italic text-brand-emerald">property</span>
-                <span aria-hidden="true" className="text-brand-gold">
-                  .
-                </span>
+              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+                A clean handover{' '}
+                <span className="font-display italic text-brand-emerald">on day one</span>
+                <span aria-hidden="true" className="text-brand-gold">.</span>
               </h2>
-              <p className="mt-5 text-base leading-relaxed text-slate-600">
-                A six-step playbook refined across hundreds of placements. Each step has a real owner, a real timeline, and a real handoff - no black-box marketing.
+              <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
+                Lease signed, deposits in trust, utilities coordinated, condition inspection completed and photo-documented. By the time keys change hands, every paper trail is closed and your tenant&apos;s first day in the unit feels managed - not improvised.
               </p>
-              <div className="mt-8 border-t border-brand-navy/10 pt-6">
-                <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                  Average end-to-end
-                </p>
-                <p className="mt-1 font-display text-4xl font-normal text-brand-navy">
-                  <CountUp value={14} /> days
-                </p>
-                <p className="mt-1 text-sm text-slate-500">to a signed lease and move-in.</p>
-              </div>
-            </RevealOnScroll>
-
-            <div className="lg:col-span-8">
-              <LeasingTimeline steps={LEASING_TIMELINE} />
             </div>
           </div>
         </div>
@@ -718,6 +697,31 @@ export default async function OwnersPage() {
       </section>
 
       <GoldRule />
+
+      {/* ── Editorial banner: modern Canadian condo interior ── */}
+      <section className="bg-white pb-20">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="relative aspect-[16/7] overflow-hidden rounded-3xl shadow-2xl shadow-brand-navy/15">
+            <Image
+              src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=2400&q=80&auto=format&fit=crop"
+              alt="Bright, professionally staged modern condo living room in a high-rise Canadian rental building"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1280px) 100vw, 1200px"
+              unoptimized
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-t from-brand-navy/40 via-transparent to-transparent"
+            />
+            <div className="absolute inset-x-0 bottom-0 px-8 pb-8 sm:px-12 sm:pb-10">
+              <p className="font-display text-2xl font-normal italic leading-snug text-white sm:text-3xl md:text-4xl">
+                Listings that look as good online as the unit does in person.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ── SECTION 6: Owner Economics - INLINE TYPOGRAPHIC TABLE (no cards) ── */}
       <section className="bg-white pb-24">
@@ -937,6 +941,7 @@ export default async function OwnersPage() {
       {/* ── SECTION 10: FAQ ── */}
       <FAQBlock
         title="Owner FAQs"
+        showQuestionsCta={false}
         questions={[
           {
             question: 'How much does MoveSmart leasing cost?',

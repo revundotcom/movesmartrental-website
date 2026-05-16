@@ -252,8 +252,7 @@ function CityServiceView({
         headline={heroHeadline}
         accentLastWord={false}
         lede={heroSubheadline}
-        cta1={{ label: 'Book a Local Call', href: '/contact/' }}
-        cta2={{ label: 'See Pricing', href: '/pricing/' }}
+        cta1={{ label: 'See Pricing', href: '/pricing/' }}
       />
 
       {/* Premium Local Market Section - two-column layout */}
@@ -354,7 +353,7 @@ function CityServiceView({
 
       {/* FAQ — schemaEnabled=false because FAQ JSON-LD injected above */}
       {serviceData.faqItems && serviceData.faqItems.length > 0 && (
-        <FAQBlock questions={serviceData.faqItems} schemaEnabled={false} />
+        <FAQBlock questions={serviceData.faqItems} schemaEnabled={false} showQuestionsCta={false} />
       )}
 
       {/* CTA Banner */}
@@ -362,7 +361,6 @@ function CityServiceView({
         headline="Get Started with MoveSmart Rentals"
         description={`${serviceTitle} in ${cityTitle} - full-service leasing and tenant placement, zero upfront cost, success-fee pricing.`}
         primaryCta={{ label: 'Create Free Account', href: '/contact/' }}
-        secondaryCta={{ label: 'Book a Call', href: '/contact/' }}
       />
     </>
   )

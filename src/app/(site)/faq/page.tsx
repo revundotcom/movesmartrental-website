@@ -6,7 +6,6 @@ import { buildFaqPageSchema } from '@/lib/schema-builders'
 import {
   FAQCategoryBlock,
   FAQCategoryNav,
-  FAQStillHaveQuestions,
 } from './faq-client'
 import { ALL_FAQ_ITEMS, FAQ_CATEGORIES } from './faq-data'
 
@@ -85,7 +84,7 @@ function PopularTopicsAside() {
       <p className="mt-5 text-xs leading-relaxed text-slate-500">
         Can&apos;t find what you need?{' '}
         <a
-          href="#still-have-questions"
+          href="/contact/"
           className="text-brand-navy underline decoration-brand-gold decoration-2 underline-offset-[4px] hover:text-brand-emerald"
         >
           Ask a human
@@ -140,9 +139,6 @@ export default function FAQPage() {
           <FAQCategoryBlock key={cat.id} category={cat} index={i} />
         ))}
       </div>
-
-      {/* SECTION 9 - Still have questions (editorial panel, not a card) */}
-      <FAQStillHaveQuestions />
 
     </main>
   )
