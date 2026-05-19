@@ -1,122 +1,146 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
+import { Shield, TrendingUp, MapPin } from 'lucide-react'
 
+import { PageHeroBlock } from '@/components/blocks/page-hero-block'
+import { FAQBlock } from '@/components/blocks/faq-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
-import { HeroBlock } from '@/components/blocks/hero-block'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
-import { getFallbackCityList } from '@/lib/static-fallbacks'
+import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
+import { CANADA_PROVINCES, COUNTRY_TOTALS } from '@/data/geo-market-data'
 
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
-interface ProvinceCard {
-  _id: string
-  title: string
-  slug: string
-  abbreviation?: string
-  description?: string
-  cityCount: number
-}
-
-// ---------------------------------------------------------------------------
-// Static province data (Sanity has been removed)
-// ---------------------------------------------------------------------------
-
-const CA_PROVINCES_META: Array<{
-  _id: string
-  title: string
-  slug: string
-  abbreviation: string
-  description: string
-}> = [
-  {
-    _id: 'province-ontario-static',
-    title: 'Ontario',
-    slug: 'ontario',
-    abbreviation: 'ON',
-    description:
-      'Canada\u2019s largest rental market. Toronto, the GTA, Ottawa, Hamilton, London, and Kitchener-Waterloo anchor our highest-volume leasing footprint.',
-  },
-  {
-    _id: 'province-quebec-static',
-    title: 'Quebec',
-    slug: 'quebec',
-    abbreviation: 'QC',
-    description:
-      'TAL-compliant leasing across Montreal, Quebec City, Laval, and Gatineau with French-language tenant communications.',
-  },
-  {
-    _id: 'province-british-columbia-static',
-    title: 'British Columbia',
-    slug: 'british-columbia',
-    abbreviation: 'BC',
-    description:
-      'Lower Mainland and Vancouver Island leasing with RTB-compliant lease packages across Vancouver, Surrey, Burnaby, and Victoria.',
-  },
-  {
-    _id: 'province-alberta-static',
-    title: 'Alberta',
-    slug: 'alberta',
-    abbreviation: 'AB',
-    description:
-      'Calgary and Edmonton metro leasing with disciplined pricing strategy and transparent success-fee execution.',
-  },
-  {
-    _id: 'province-nova-scotia-static',
-    title: 'Nova Scotia',
-    slug: 'nova-scotia',
-    abbreviation: 'NS',
-    description:
-      'Halifax-anchored leasing across Nova Scotia with full-cycle tenant placement and lease execution.',
-  },
-]
+import { CanadaCitiesFilter } from './canada-cities-filter'
 
 // ---------------------------------------------------------------------------
 // Metadata
 // ---------------------------------------------------------------------------
 
 export const metadata: Metadata = {
-  title: 'Leasing Brokerage in Canada | MoveSmart Rentals',
+  title: 'Leasing Brokerage Across Canada | MoveSmart Rentals',
   description:
-    'Full-service leasing and tenant placement across Canada. Tenant placement, screening, and full-cycle leasing execution in Ontario, Quebec, BC, Alberta, Nova Scotia, and more.',
+    'Full-service leasing and tenant placement across Canada’s 6 largest provinces and 44 anchor cities. RECO/RECA-compliant lease execution, CMHC-aligned pricing, transparent success-fee terms.',
   alternates: {
     canonical: '/ca/',
   },
   openGraph: {
-    title: 'Leasing Brokerage in Canada | MoveSmart Rentals',
+    title: 'Leasing Brokerage Across Canada | MoveSmart Rentals',
     description:
-      'Full-service leasing and tenant placement across Canada. Tenant placement, screening, and full-cycle leasing execution in Ontario, Quebec, BC, Alberta, Nova Scotia, and more.',
+      'Full-service leasing and tenant placement across Canada’s 6 largest provinces and 44 anchor cities. RECO/RECA-compliant lease execution and CMHC-aligned pricing.',
     images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'MoveSmart Rentals Canada' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Leasing Brokerage in Canada | MoveSmart Rentals',
+    title: 'Leasing Brokerage Across Canada | MoveSmart Rentals',
     description:
-      'Full-service leasing and tenant placement across Canada. Tenant placement, screening, and full-cycle leasing execution in Ontario, Quebec, BC, Alberta, Nova Scotia, and more.',
+      'Full-service leasing and tenant placement across Canada’s 6 largest provinces and 44 anchor cities.',
     images: ['/og-default.png'],
   },
 }
 
 // ---------------------------------------------------------------------------
+// Static data
+// ---------------------------------------------------------------------------
+
+const TORONTO_HERO =
+  'https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=2000&q=80'
+
+const EDITORIAL_BANNER =
+  'https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=2400&q=80'
+
+const CA = COUNTRY_TOTALS.canada
+
+const VALUE_PROPS: Array<{
+  icon: React.ComponentType<{ className?: string }>
+  title: string
+  description: string
+}> = [
+  {
+    icon: Shield,
+    title: 'RECO, RECA and OREA-compliant leasing',
+    description:
+      'Provincially licensed brokerage execution. Every lease, deposit and disclosure follows the Real Estate Council of Ontario, Alberta, and provincial-equivalent rules — no grey-area shortcuts that put your file at risk.',
+  },
+  {
+    icon: TrendingUp,
+    title: 'CMHC-aligned pricing intelligence',
+    description:
+      'We price against the same CMHC Rental Market Report data the lenders use. Comparable-set analysis at the unit level, refreshed every cycle, so listings hit market within 7 days at or above asking.',
+  },
+  {
+    icon: MapPin,
+    title: 'Brick-and-mortar offices in anchor metros',
+    description:
+      'Boots-on-the-ground showings in the GTA, Montreal, Vancouver, Calgary, Edmonton, Winnipeg, and Halifax. We meet your tenant in person — never a lockbox-and-pray showing strategy.',
+  },
+]
+
+const CA_FAQS: Array<{ question: string; answer: string }> = [
+  {
+    question: 'Do you handle leasing under each provincial Residential Tenancies Act?',
+    answer:
+      'Yes. Our leases are drafted to the Residential Tenancies Act of each province we serve — the standardised Form 2229 in Ontario, the TAL-mandated lease in Quebec, the Residential Tenancy Branch lease in BC, and the equivalent in Alberta, Manitoba, and Nova Scotia. Every clause is reviewed for the local act before tenants sign.',
+  },
+  {
+    question: 'How does rent control vary across Canadian provinces?',
+    answer:
+      'Ontario caps annual rent increases on units first occupied before November 15, 2018 (2026 guideline: 2.5%); newer buildings are exempt. Quebec uses the TAL fixation calculator, not a flat guideline. BC sets an annual cap (2026: 3.0%). Alberta has no rent cap but limits increases to once every 12 months. Manitoba uses an annual guideline (2026: 3.0%). Nova Scotia’s temporary 5% cap remains in force through 2027.',
+  },
+  {
+    question: 'What deposits can a landlord legally collect at lease signing?',
+    answer:
+      'In Ontario, only first and last month’s rent — no separate security or damage deposit is allowed. BC allows a half-month security deposit plus a half-month pet deposit. Alberta allows up to one month’s rent as a security deposit. Quebec prohibits all deposits except for keys. Manitoba allows a half-month security deposit. We collect exactly what each province permits — nothing more.',
+  },
+  {
+    question: 'Is MoveSmart a licensed brokerage in each province?',
+    answer:
+      'Yes. MoveSmart Rentals operates as a licensed real estate brokerage under RECO (Ontario), with affiliated brokerage relationships and licensed associate agents covering RECA (Alberta), the OACIQ (Quebec), the BC Financial Services Authority, the Manitoba Securities Commission Real Estate Division, and the Nova Scotia Real Estate Commission.',
+  },
+  {
+    question: 'How long does a typical Canadian leasing campaign take to fill a unit?',
+    answer:
+      'Median days-on-market across our 2025 Canadian portfolio was 14 days for purpose-built rentals priced to comparables, and 18 days for condo units. Toronto, Vancouver, and Ottawa run shorter (10–14 days); Calgary and Halifax sit in the 14–20 range; Edmonton and Winnipeg average 18–25 days. Mispriced listings always take longer — pricing is the lever.',
+  },
+  {
+    question: 'How do you screen Canadian tenants — Equifax, TransUnion, or both?',
+    answer:
+      'Every applicant gets a soft-pull Equifax credit report, a 5-year employment and tenancy history verification (with reference calls to the two most recent landlords), and a written income confirmation showing rent at no more than 30–35% of gross monthly income. We comply with each province’s Human Rights Code — no questions about family status, source of income, or other protected grounds.',
+  },
+  {
+    question: 'What does your full-service leasing fee structure look like in Canada?',
+    answer:
+      'Zero upfront. Our standard placement fee is one month’s rent, payable only when a qualified tenant signs and the first month is collected. No setup fees, no listing fees, no per-showing charges. Optional add-ons (rental protection, ongoing rent collection, annual renewals) are quoted separately and equally transparent.',
+  },
+  {
+    question: 'Can MoveSmart support institutional lease-up campaigns of 50+ units?',
+    answer:
+      'Yes — that’s a meaningful share of our 2025–2026 book. We have run lease-up mandates from 50-door condo conversions in Toronto to 500-door purpose-built rental launches in Calgary and Edmonton. Lender-grade absorption reporting, on-site sales-centre operations, and unit-mix pricing strategy are included on institutional engagements.',
+  },
+]
+
+// ---------------------------------------------------------------------------
+// Shared classnames
+// ---------------------------------------------------------------------------
+
+const EYEBROW_CLASS =
+  'mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald'
+const SECTION_HEADING_CLASS =
+  'font-display text-3xl font-normal leading-tight tracking-tight text-brand-navy sm:text-4xl md:text-[2.75rem]'
+const HAIRLINE = (
+  <div
+    aria-hidden="true"
+    className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent"
+  />
+)
+
+// ---------------------------------------------------------------------------
 // Page Component
 // ---------------------------------------------------------------------------
 
-export default async function CanadaHubPage() {
-  // Static local data (Sanity has been removed). City counts are derived
-  // from the local city list by matching provinceSlug.
-  const cityList = getFallbackCityList()
-  const provinces: ProvinceCard[] = CA_PROVINCES_META.map((p) => ({
-    _id: p._id,
-    title: p.title,
-    slug: p.slug,
-    abbreviation: p.abbreviation,
-    description: p.description,
-    cityCount: cityList.filter((c) => c.provinceSlug === p.slug).length,
-  }))
-
+export default function CanadaHubPage() {
   return (
     <main>
+      {/* 1. Breadcrumb */}
       <div className="mx-auto max-w-7xl px-4 pt-6">
         <BreadcrumbNav
           crumbs={[
@@ -126,87 +150,230 @@ export default async function CanadaHubPage() {
         />
       </div>
 
-      {/* 1. Hero */}
-      <HeroBlock
-        headline="Leasing Brokerage Across Canada"
-        subheadline="From coast to coast, MoveSmart Rentals is the only leasing firm that serves a basement-unit landlord and a 500-door lease-up campaign with the same discipline - zero upfront, success-fee pricing."
+      {/* 2. Hero */}
+      <PageHeroBlock
+        theme="dark"
+        kicker="Canada"
+        eyebrow="Coast-to-coast leasing"
+        headline="Leasing across Canada"
+        lede={`${CA.population} population. ${CA.rentalHouseholds} rental households. $${CA.medianRent.replace('$', '')} median 2-bed rent. Six provinces, 44 anchor cities, one disciplined leasing standard — from a single basement suite to a 500-door purpose-built lease-up.`}
+        cta1={{ label: 'List my property', href: '/contact/?type=owner' }}
+        cta2={{ label: 'Browse rentals', href: '/properties/' }}
+        backgroundImageUrl={TORONTO_HERO}
+        backgroundImageAlt="Toronto skyline with the CN Tower at dusk representing the Canadian rental market"
       />
 
-      {/* 2. Intro section */}
-      <section className="mx-auto max-w-4xl px-4 py-12 text-center md:py-16">
-        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-          Canada&apos;s Only Unified Leasing Brokerage
-        </h2>
-        <p className="mx-auto mt-4 max-w-3xl text-muted-foreground">
-          MoveSmart Rentals runs leasing campaigns across Canada&apos;s most active
-          rental markets. Whether you own one condo in downtown Toronto, a
-          duplex in Montreal, or a 300-unit lease-up in Calgary, our local
-          teams deliver strategic pricing, professional marketing, showing
-          coordination, tenant qualification, and lease execution under one
-          brand. We are the only Canadian leasing specialist bridging individual
-          landlords and institutional lease-up campaigns - with transparent
-          success-fee pricing, not opaque quotes.
-        </p>
+      {/* "Two countries, same standard" intro card (white) */}
+      <section className="relative bg-white py-16 sm:py-20">
+        {HAIRLINE}
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <RevealOnScroll variant="slideUp" className="text-center">
+            <p className={EYEBROW_CLASS}>Two countries, same standard</p>
+            <h2 className={SECTION_HEADING_CLASS}>
+              Built by a Canadian operator — for{' '}
+              <span className="italic text-brand-emerald">Canadian landlords</span>
+              <span className="text-brand-gold">.</span>
+            </h2>
+            <p className="mt-6 text-base leading-relaxed text-slate-600 sm:text-lg">
+              MoveSmart was founded in the Greater Toronto Area in 2019 — long before we ever crossed into the U.S. Every province below was opened by an owner who has filed an N12, walked a CMHC absorption report, and sat through an LTB hearing. We grew south of the border only after the Canadian playbook was proven across six provinces and 44 cities. The same lease-quality bar, screening discipline, and pricing rigour you read about in our American pages was built here first — by a team that still calls home the country in this hub.
+            </p>
+          </RevealOnScroll>
+        </div>
       </section>
 
-      {/* 3. Province cards */}
-      <section className="mx-auto max-w-7xl px-4 pb-12 md:pb-16">
-        <h2 className="mb-8 text-center text-2xl font-bold tracking-tight sm:text-3xl">
-          Explore by Province
-        </h2>
+      {/* 5. 6-province editorial grid (ivory) */}
+      <section className="relative bg-[#FBFAF6] py-20 sm:py-24">
+        {HAIRLINE}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <RevealOnScroll variant="slideUp" className="mb-14 max-w-3xl">
+            <p className={EYEBROW_CLASS}>Explore by province</p>
+            <h2 className={SECTION_HEADING_CLASS}>
+              Six provinces.{' '}
+              <span className="italic text-brand-emerald">One standard</span>
+              <span className="text-brand-gold">.</span>
+            </h2>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+              From the Ontario LTB and the Quebec TAL to the BC Residential Tenancy Branch and the Alberta RTDRS — same disciplined leasing playbook, locally compliant in every market.
+            </p>
+          </RevealOnScroll>
 
-        {provinces.length === 0 ? (
-          <p className="text-center text-muted-foreground">
-            Province listings are coming soon.
-          </p>
-        ) : (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {provinces.map((province) => (
-              <Link
-                key={province._id}
-                href={`/ca/${province.slug}/`}
-                className="group"
+            {CANADA_PROVINCES.map((province, i) => (
+              <RevealOnScroll
+                key={province.slug}
+                variant="slideUp"
+                delay={i * 0.08}
+                className="h-full"
               >
-                <div className="h-full rounded-lg border bg-card p-6 shadow-sm transition-all duration-200 group-hover:-translate-y-1 group-hover:shadow-lg">
-                  <div className="mb-2 flex items-center justify-between">
-                    <h3 className="text-xl font-semibold group-hover:text-primary">
-                      {province.title}
-                    </h3>
-                    {province.abbreviation && (
-                      <span className="rounded bg-muted px-2 py-1 text-sm font-medium text-muted-foreground">
-                        {province.abbreviation}
+                <Link
+                  href={`/ca/${province.slug}/`}
+                  className="group flex h-full flex-col overflow-hidden rounded-2xl border border-brand-navy/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-emerald/40 hover:shadow-lg"
+                >
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-brand-navy/5">
+                    <Image
+                      src={province.heroImageUrl}
+                      alt={province.heroImageAlt}
+                      fill
+                      unoptimized
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 bg-gradient-to-t from-brand-navy/80 via-brand-navy/20 to-transparent"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
+                      <h3 className="font-display text-2xl font-normal leading-tight text-white sm:text-3xl">
+                        {province.name}
+                      </h3>
+                      <span aria-hidden="true" className="text-2xl drop-shadow-md">
+                        {province.flagEmoji}
                       </span>
-                    )}
+                    </div>
                   </div>
-
-                  {province.description && (
-                    <p className="mb-4 line-clamp-3 text-sm text-muted-foreground">
-                      {province.description}
+                  <div className="flex flex-1 flex-col p-6">
+                    <p className="flex-1 text-sm leading-relaxed text-slate-600 line-clamp-4">
+                      {province.market.intro}
                     </p>
-                  )}
-
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">
-                      {province.cityCount}{' '}
-                      {province.cityCount === 1 ? 'city' : 'cities'}
-                    </span>
-                    <span className="font-medium text-primary group-hover:underline">
-                      View Province &rarr;
-                    </span>
+                    <div className="mt-5 flex flex-wrap gap-2 text-[11px] font-medium">
+                      <span className="rounded-full bg-brand-navy/[0.04] px-2.5 py-1 text-brand-navy/70">
+                        {province.market.population} people
+                      </span>
+                      <span className="rounded-full bg-brand-emerald/10 px-2.5 py-1 text-brand-emerald">
+                        {province.market.medianRent} median
+                      </span>
+                      <span className="rounded-full bg-brand-gold/10 px-2.5 py-1 text-brand-gold">
+                        {province.market.vacancyRate} vacancy
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </RevealOnScroll>
             ))}
           </div>
-        )}
+        </div>
       </section>
 
-      {/* 4. CTA */}
+      {/* 6. Editorial banner (image-driven) — visual rest stop */}
+      <section className="relative bg-white py-16 sm:py-20">
+        {HAIRLINE}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <RevealOnScroll variant="splitReveal">
+            <div className="relative overflow-hidden rounded-3xl">
+              <div className="relative aspect-[21/9] w-full bg-brand-navy/10 sm:aspect-[21/8]">
+                <Image
+                  src={EDITORIAL_BANNER}
+                  alt="Vancouver harbour and North Shore mountains representing leasing reach from coast to coast"
+                  fill
+                  unoptimized
+                  sizes="(max-width: 1280px) 100vw, 1280px"
+                  className="object-cover"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-gradient-to-r from-brand-navy/90 via-brand-navy/55 to-brand-navy/15"
+                />
+                <div className="absolute inset-0 flex items-center">
+                  <div className="max-w-2xl px-6 py-10 sm:px-12 lg:px-16">
+                    <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-gold">
+                      Halifax to Victoria
+                    </p>
+                    <p className="font-display text-2xl font-normal leading-[1.2] text-white sm:text-3xl md:text-4xl lg:text-[2.75rem]">
+                      From Halifax to Victoria — same disciplined{' '}
+                      <span className="italic text-brand-emerald">leasing playbook</span>
+                      <span className="text-brand-gold">.</span>
+                    </p>
+                    <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/80 sm:text-base">
+                      Same pricing rigour. Same tenant screening. Same lease quality. Whether the keys change hands in downtown Toronto or a Victoria condo overlooking Inner Harbour.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </RevealOnScroll>
+        </div>
+      </section>
+
+      {/* 7. All Canadian cities grid with filter (ivory) */}
+      <section className="relative bg-[#FBFAF6] py-20 sm:py-24">
+        {HAIRLINE}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)',
+            backgroundSize: '32px 32px',
+          }}
+        />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <RevealOnScroll variant="slideUp" className="mb-10 text-center">
+            <p className={EYEBROW_CLASS}>All cities</p>
+            <h2 className={SECTION_HEADING_CLASS}>
+              44 Canadian cities,{' '}
+              <span className="italic text-brand-emerald">one leasing standard</span>
+              <span className="text-brand-gold">.</span>
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+              Pick your market. Each city page carries the latest CMHC vacancy, median asking rent by bedroom count, neighbourhood breakdowns, and the local leasing nuances we run against.
+            </p>
+          </RevealOnScroll>
+
+          <CanadaCitiesFilter />
+        </div>
+      </section>
+
+      {/* 8. Why MoveSmart in Canada (white) */}
+      <section className="relative bg-white py-20 sm:py-24">
+        {HAIRLINE}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <RevealOnScroll variant="slideUp" className="mb-14 max-w-3xl">
+            <p className={EYEBROW_CLASS}>Why MoveSmart in Canada</p>
+            <h2 className={SECTION_HEADING_CLASS}>
+              Built for Canadian{' '}
+              <span className="italic text-brand-emerald">landlords</span>
+              <span className="text-brand-gold">.</span>
+            </h2>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+              Three things every Canadian owner, PMC, and developer needs from a leasing partner — and the disciplined version of each we deliver.
+            </p>
+          </RevealOnScroll>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {VALUE_PROPS.map((vp, i) => {
+              const Icon = vp.icon
+              return (
+                <RevealOnScroll key={vp.title} variant="slideUp" delay={i * 0.1}>
+                  <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-brand-navy/10 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-emerald/40 hover:shadow-md">
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
+                    />
+                    <div className="mb-5 inline-flex size-12 items-center justify-center rounded-xl bg-brand-emerald/10 text-brand-emerald transition-transform duration-300 group-hover:scale-110">
+                      <Icon className="size-6" />
+                    </div>
+                    <h3 className="font-display text-xl font-normal leading-snug text-brand-navy sm:text-2xl">
+                      {vp.title}
+                    </h3>
+                    <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
+                      {vp.description}
+                    </p>
+                  </div>
+                </RevealOnScroll>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 9. FAQ */}
+      <FAQBlock title="Leasing in Canada, answered" questions={CA_FAQS} />
+
+      {/* 10. CTA */}
       <CTABannerBlock
-        headline="Ready to Lease Your Canadian Rental?"
-        description="Landlords, property managers, and developers trust MoveSmart Rentals for zero-upfront, success-fee leasing execution."
-        primaryCta={{ label: 'Book a Free Consultation', href: '/contact/' }}
-        secondaryCta={{ label: 'View Pricing', href: '/pricing/' }}
+        headline="List your Canadian rental with MoveSmart"
+        description="Zero upfront. Success-fee only. Lease in 14 days, screened against five years of tenant history."
+        primaryCta={{ label: 'List my property', href: '/contact/?type=owner' }}
+        secondaryCta={{ label: 'Browse rentals', href: '/properties/' }}
       />
     </main>
   )

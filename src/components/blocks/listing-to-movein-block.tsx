@@ -1,75 +1,73 @@
 'use client'
 
 import { motion, useReducedMotion } from 'framer-motion'
-import {
-  DollarSign,
-  Megaphone,
-  Users,
-  FileSignature,
-  ClipboardCheck,
-  FileText,
-  KeyRound,
-  Check,
-} from 'lucide-react'
+import { Check } from 'lucide-react'
+import type { ComponentType } from 'react'
+
+import { BrowserFrame } from '@/components/ui/browser-frame'
+import { AnalyticsMockup } from '@/components/portal-mockups/analytics-mockup'
+import { OwnerDashboardMockup } from '@/components/portal-mockups/owner-dashboard-mockup'
+import { PropertiesListMockup } from '@/components/portal-mockups/properties-list-mockup'
+import { ShowingsOffersMockup } from '@/components/portal-mockups/showings-offers-mockup'
 
 /* ---------- Step data ------------------------------------------------------- */
 
 type Step = {
-  icon: typeof DollarSign
   title: string
   description: string
-  day: string
+  mockup: ComponentType
+  mockupUrl: string
 }
 
 const STEPS: readonly Step[] = [
   {
-    icon: DollarSign,
     title: 'Competitive Pricing',
     description:
       'We analyze the market and set the right rental price to maximize your return while minimizing vacancy.',
-    day: 'Day 1',
+    mockup: AnalyticsMockup,
+    mockupUrl: 'movesmart.ca/analytics',
   },
   {
-    icon: Megaphone,
     title: 'Professional Marketing',
     description:
       'Professional photography, MLS distribution, and syndication across 50+ rental platforms.',
-    day: 'Day 2, 3',
+    mockup: PropertiesListMockup,
+    mockupUrl: 'movesmart.ca/properties',
   },
   {
-    icon: Users,
     title: 'Managed Showings',
     description:
       'Our team handles all property showings, pre-screening inquiries, and follow-ups.',
-    day: 'Day 4 to 9',
+    mockup: ShowingsOffersMockup,
+    mockupUrl: 'movesmart.ca/showings',
   },
   {
-    icon: FileSignature,
     title: 'Offer Management',
     description:
       'We present and negotiate offers, ensuring the best terms for your property.',
-    day: 'Day 10, 11',
+    mockup: ShowingsOffersMockup,
+    mockupUrl: 'movesmart.ca/offers',
   },
   {
-    icon: ClipboardCheck,
     title: 'Tenant Qualification',
     description:
       'Credit checks, employment verification, references, and full rental history review.',
-    day: 'Day 12, 13',
+    mockup: AnalyticsMockup,
+    mockupUrl: 'movesmart.ca/screening',
   },
   {
-    icon: FileText,
     title: 'Lease Execution',
     description:
       'Legally compliant lease preparation, signing, and documentation handled end-to-end.',
-    day: 'Day 14, 15',
+    mockup: OwnerDashboardMockup,
+    mockupUrl: 'movesmart.ca/lease',
   },
   {
-    icon: KeyRound,
     title: 'Move-In Coordination',
     description:
       'Key handoff, condition reporting, and move-in inspection managed seamlessly.',
-    day: 'Day 16 to 18',
+    mockup: OwnerDashboardMockup,
+    mockupUrl: 'movesmart.ca/move-in',
   },
 ] as const
 
@@ -99,19 +97,6 @@ const STATUS_CARDS: readonly StatusCard[] = [
 
 export function ListingToMoveInBlock() {
   const prefersReducedMotion = useReducedMotion()
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 28 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: prefersReducedMotion ? 0 : i * 0.08,
-        duration: prefersReducedMotion ? 0 : 0.55,
-        ease: [0.22, 1, 0.36, 1] as const,
-      },
-    }),
-  }
 
   return (
     <section
@@ -157,7 +142,7 @@ export function ListingToMoveInBlock() {
 
         {/* ── Timeline ───────────────────────────────────────────────────── */}
         <div className="mt-14">
-          <Timeline prefersReducedMotion={prefersReducedMotion ?? false} cardVariants={cardVariants} />
+          <Timeline prefersReducedMotion={prefersReducedMotion ?? false} />
         </div>
 
         {/* ── Status panel ───────────────────────────────────────────────── */}
@@ -169,179 +154,14 @@ export function ListingToMoveInBlock() {
   )
 }
 
-/* ---------- Timeline (desktop horizontal, mobile vertical) ------------------ */
+/* ---------- Timeline -------------------------------------------------------- */
 
-type CardVariants = {
-  hidden: { opacity: number; y: number }
-  visible: (i: number) => {
-    opacity: number
-    y: number
-    transition: { delay: number; duration: number; ease: readonly [number, number, number, number] }
-  }
-}
-
-function Timeline({
-  prefersReducedMotion,
-  cardVariants,
-}: {
-  prefersReducedMotion: boolean
-  cardVariants: CardVariants
-}) {
-  return (
-    <>
-      {/* Desktop: horizontal 4-column grid over 2 rows */}
-      <div className="hidden lg:block">
-        <DesktopTimeline
-          prefersReducedMotion={prefersReducedMotion}
-          cardVariants={cardVariants}
-        />
-      </div>
-
-      {/* Tablet: 2-column grid with vertical connector */}
-      <div className="hidden sm:block lg:hidden">
-        <TabletTimeline
-          prefersReducedMotion={prefersReducedMotion}
-          cardVariants={cardVariants}
-        />
-      </div>
-
-      {/* Mobile: single-column vertical timeline */}
-      <div className="sm:hidden">
-        <MobileTimeline
-          prefersReducedMotion={prefersReducedMotion}
-          cardVariants={cardVariants}
-        />
-      </div>
-    </>
-  )
-}
-
-/* ---------- Desktop Timeline ------------------------------------------------ */
-
-function DesktopTimeline({
-  prefersReducedMotion,
-  cardVariants,
-}: {
-  prefersReducedMotion: boolean
-  cardVariants: CardVariants
-}) {
-  // Two rows of 4 + 3 cards, connector line draws across each row
-  const row1 = STEPS.slice(0, 4)
-  const row2 = STEPS.slice(4)
-
-  return (
-    <div className="space-y-14">
-      <TimelineRow
-        steps={row1}
-        startIndex={0}
-        prefersReducedMotion={prefersReducedMotion}
-        cardVariants={cardVariants}
-      />
-      <TimelineRow
-        steps={row2}
-        startIndex={4}
-        prefersReducedMotion={prefersReducedMotion}
-        cardVariants={cardVariants}
-      />
-    </div>
-  )
-}
-
-function TimelineRow({
-  steps,
-  startIndex,
-  prefersReducedMotion,
-  cardVariants,
-}: {
-  steps: readonly Step[]
-  startIndex: number
-  prefersReducedMotion: boolean
-  cardVariants: CardVariants
-}) {
-  const cols = steps.length
+function Timeline({ prefersReducedMotion }: { prefersReducedMotion: boolean }) {
   return (
     <div className="relative">
-      {/* Drawing connector line */}
+      {/* Vertical spine connector (visible on md+) */}
       <motion.div
-        className="absolute top-7 h-0.5 origin-left bg-gradient-to-r from-brand-emerald/50 via-brand-emerald/70 to-brand-emerald/20"
-        style={{
-          left: `calc(${100 / cols / 2}%)`,
-          right: `calc(${100 / cols / 2}%)`,
-        }}
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        transition={{
-          duration: prefersReducedMotion ? 0 : 0.9,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-        viewport={{ once: true, margin: '-80px' }}
-        aria-hidden="true"
-      />
-
-      <div
-        className="relative grid gap-6"
-        style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
-      >
-        {steps.map((step, i) => (
-          <StepCard
-            key={step.title}
-            step={step}
-            index={startIndex + i}
-            cardVariants={cardVariants}
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
-
-/* ---------- Tablet Timeline (2 columns) ------------------------------------- */
-
-function TabletTimeline({
-  prefersReducedMotion,
-  cardVariants,
-}: {
-  prefersReducedMotion: boolean
-  cardVariants: CardVariants
-}) {
-  return (
-    <div className="relative">
-      {/* Vertical center connector */}
-      <motion.div
-        className="pointer-events-none absolute left-1/2 top-0 w-0.5 -translate-x-1/2 origin-top bg-gradient-to-b from-brand-emerald/40 via-brand-emerald/60 to-brand-emerald/20"
-        style={{ height: '100%' }}
-        initial={{ scaleY: 0 }}
-        whileInView={{ scaleY: 1 }}
-        transition={{
-          duration: prefersReducedMotion ? 0 : 1.1,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-        viewport={{ once: true, margin: '-80px' }}
-        aria-hidden="true"
-      />
-      <div className="relative grid grid-cols-2 gap-6">
-        {STEPS.map((step, i) => (
-          <StepCard key={step.title} step={step} index={i} cardVariants={cardVariants} />
-        ))}
-      </div>
-    </div>
-  )
-}
-
-/* ---------- Mobile Timeline (vertical) -------------------------------------- */
-
-function MobileTimeline({
-  prefersReducedMotion,
-  cardVariants,
-}: {
-  prefersReducedMotion: boolean
-  cardVariants: CardVariants
-}) {
-  return (
-    <div className="relative">
-      {/* Vertical connector on the left */}
-      <motion.div
-        className="absolute left-7 top-0 w-0.5 origin-top bg-gradient-to-b from-brand-emerald/50 via-brand-emerald/60 to-brand-emerald/15"
+        className="pointer-events-none absolute left-7 top-0 w-0.5 origin-top bg-gradient-to-b from-brand-emerald/50 via-brand-emerald/60 to-brand-emerald/15 md:left-1/2 md:-translate-x-1/2"
         style={{ bottom: 0 }}
         initial={{ scaleY: 0 }}
         whileInView={{ scaleY: 1 }}
@@ -353,93 +173,102 @@ function MobileTimeline({
         aria-hidden="true"
       />
 
-      <ol className="relative space-y-6">
-        {STEPS.map((step, i) => {
-          const Icon = step.icon
-          return (
-            <motion.li
-              key={step.title}
-              custom={i}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-80px' }}
-              className="relative flex gap-4"
-            >
-              {/* Number badge + ring */}
-              <div className="relative z-10 shrink-0">
-                <div className="flex size-14 items-center justify-center rounded-full bg-white ring-4 ring-brand-emerald/30 shadow-lg shadow-brand-navy/5">
-                  <div className="flex size-10 items-center justify-center rounded-full bg-brand-emerald text-base font-bold text-white">
-                    {i + 1}
-                  </div>
-                </div>
-              </div>
-              {/* Card */}
-              <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                <div className="flex items-center gap-2">
-                  <div className="flex size-7 items-center justify-center rounded-lg bg-brand-emerald/10">
-                    <Icon className="size-3.5 text-brand-emerald" aria-hidden="true" />
-                  </div>
-                  <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-gold">
-                    {step.day}
-                  </p>
-                </div>
-                <h3 className="mt-2 text-base font-bold text-brand-navy">{step.title}</h3>
-                <p className="mt-1 text-sm leading-relaxed text-slate-600">
-                  {step.description}
-                </p>
-              </div>
-            </motion.li>
-          )
-        })}
+      <ol className="relative space-y-10 md:space-y-16">
+        {STEPS.map((step, i) => (
+          <StepRow
+            key={step.title}
+            step={step}
+            index={i}
+            prefersReducedMotion={prefersReducedMotion}
+          />
+        ))}
       </ol>
     </div>
   )
 }
 
-/* ---------- Step Card (desktop + tablet) ------------------------------------ */
+/* ---------- Step Row (image + text, alternating on desktop) ----------------- */
 
-function StepCard({
+function StepRow({
   step,
   index,
-  cardVariants,
+  prefersReducedMotion,
 }: {
   step: Step
   index: number
-  cardVariants: CardVariants
+  prefersReducedMotion: boolean
 }) {
-  const Icon = step.icon
+  const Mockup = step.mockup
+  const isReversed = index % 2 === 1
+
   return (
-    <motion.div
-      custom={index}
-      variants={cardVariants}
-      initial="hidden"
-      whileInView="visible"
+    <motion.li
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
-      className="group relative flex flex-col items-center text-center"
+      transition={{
+        duration: prefersReducedMotion ? 0 : 0.55,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className="relative"
     >
-      {/* Numbered badge with emerald ring */}
-      <div className="relative z-10 flex size-14 items-center justify-center rounded-full bg-white ring-4 ring-brand-emerald/30 shadow-lg shadow-brand-navy/5 transition-transform duration-300 group-hover:-translate-y-0.5">
-        <div className="flex size-10 items-center justify-center rounded-full bg-brand-emerald text-base font-bold text-white">
-          {index + 1}
+      {/* Mobile + tablet: badge sits on the left spine */}
+      <div className="md:hidden">
+        <div className="flex gap-4">
+          <div className="relative z-10 shrink-0">
+            <div className="flex size-14 items-center justify-center rounded-full bg-white ring-4 ring-brand-emerald/30 shadow-lg shadow-brand-navy/5">
+              <div className="flex size-10 items-center justify-center rounded-full bg-brand-emerald text-base font-bold text-white">
+                {index + 1}
+              </div>
+            </div>
+          </div>
+          <div className="flex-1 space-y-4">
+            <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+              <h3 className="text-base font-bold text-brand-navy">{step.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                {step.description}
+              </p>
+            </div>
+            <BrowserFrame url={step.mockupUrl} className="bg-white">
+              <div className="pointer-events-none origin-top scale-[0.78] sm:scale-90">
+                <Mockup />
+              </div>
+            </BrowserFrame>
+          </div>
         </div>
       </div>
 
-      {/* Card body */}
-      <div className="relative mt-5 w-full rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand-emerald/30 group-hover:shadow-xl group-hover:shadow-brand-navy/5">
-        {/* Icon + day tag */}
-        <div className="flex items-center justify-center gap-2">
-          <div className="flex size-8 items-center justify-center rounded-lg bg-brand-emerald/10">
-            <Icon className="size-4 text-brand-emerald" aria-hidden="true" />
+      {/* Desktop: alternating two-column layout with center spine + badge */}
+      <div className="hidden md:grid md:grid-cols-2 md:items-center md:gap-12">
+        {/* Centered badge on the spine */}
+        <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
+          <div className="flex size-14 items-center justify-center rounded-full bg-white ring-4 ring-brand-emerald/30 shadow-lg shadow-brand-navy/5">
+            <div className="flex size-10 items-center justify-center rounded-full bg-brand-emerald text-base font-bold text-white">
+              {index + 1}
+            </div>
           </div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-gold">
-            {step.day}
-          </p>
         </div>
-        <h3 className="mt-3 text-base font-bold text-brand-navy">{step.title}</h3>
-        <p className="mt-2 text-sm leading-relaxed text-slate-600">{step.description}</p>
+
+        {/* Text card */}
+        <div className={isReversed ? 'md:order-2 md:pl-16' : 'md:order-1 md:pr-16 md:text-right'}>
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-emerald/30 hover:shadow-xl hover:shadow-brand-navy/5">
+            <h3 className="text-xl font-bold text-brand-navy">{step.title}</h3>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              {step.description}
+            </p>
+          </div>
+        </div>
+
+        {/* Mockup */}
+        <div className={isReversed ? 'md:order-1 md:pr-16' : 'md:order-2 md:pl-16'}>
+          <BrowserFrame url={step.mockupUrl}>
+            <div className="pointer-events-none h-[320px] origin-top-left scale-[0.6] overflow-hidden lg:h-[360px] lg:scale-[0.7]">
+              <Mockup />
+            </div>
+          </BrowserFrame>
+        </div>
       </div>
-    </motion.div>
+    </motion.li>
   )
 }
 

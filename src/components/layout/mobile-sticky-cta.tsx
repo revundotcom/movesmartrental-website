@@ -36,7 +36,7 @@ export function MobileStickyCTA() {
           <div className="flex gap-3">
             <Link
               href="tel:+18005959755"
-              className="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-navy text-white"
+              className="flex items-center justify-center w-12 h-12 rounded-xl bg-white text-brand-emerald ring-1 ring-slate-200"
               aria-label="Call MoveSmart Rentals"
             >
               <Phone className="w-5 h-5" />
@@ -45,7 +45,7 @@ export function MobileStickyCTA() {
               href="/contact/?type=owner"
               className="flex-1 flex items-center justify-center h-12 rounded-xl bg-brand-emerald text-white font-heading font-semibold text-sm hover:bg-brand-emerald-hover transition-colors"
             >
-              Create a Free Account
+              List my property
             </Link>
           </div>
         </motion.div>

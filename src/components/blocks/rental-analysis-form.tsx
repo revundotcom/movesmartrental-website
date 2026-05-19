@@ -341,7 +341,7 @@ export function RentalAnalysisForm() {
         </div>
 
         <p className="text-center text-xs text-slate-500 mt-6">
-          Join 500+ property owners who trust MoveSmart Rentals
+          Join thousands of landlords who trust MoveSmart Rentals
         </p>
       </div>
     </section>

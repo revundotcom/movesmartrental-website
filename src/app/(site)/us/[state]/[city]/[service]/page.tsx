@@ -82,7 +82,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { state, city, service } = await params
 
-  const cityData = getFallbackUsCity(city)
+  const cityData = getFallbackUsCity(city, state)
   const serviceData = getServiceContent(service)
 
   if (cityData && serviceData) {
@@ -129,7 +129,7 @@ export default async function USCityServicePage({
     notFound()
   }
 
-  const cityData: FallbackCity | null = getFallbackUsCity(city)
+  const cityData: FallbackCity | null = getFallbackUsCity(city, state)
   const serviceData: ServicePageContent | null = getServiceContent(service)
 
   // Full CityService page when both city + service exist in local data
@@ -160,12 +160,15 @@ export default async function USCityServicePage({
           accentLastWord={false}
           lede={serviceData.heroLede}
           cta1={{ label: 'See Pricing', href: '/pricing/' }}
+          theme="dark"
+          backgroundImageUrl="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=2400&q=80"
+          backgroundImageAlt="Leasing services in the United States"
         />
 
         <CTABannerBlock
           headline="Get Started with MoveSmart Rentals"
           description={`${serviceTitle} in ${cityTitle} - full-service leasing and tenant placement, zero upfront cost, success-fee pricing.`}
-          primaryCta={{ label: 'Create Free Account', href: '/contact/' }}
+          primaryCta={{ label: 'List my property', href: '/contact/?type=owner' }}
         />
       </main>
     )
@@ -208,6 +211,9 @@ export default async function USCityServicePage({
         lede={`${formattedService} services are coming soon to ${cityTitle}, ${stateName}. Join our waitlist - priority access for founding landlords and developers.`}
         cta1={{ label: 'Join the Waitlist', href: '/contact/' }}
         cta2={{ label: 'See Pricing', href: '/pricing/' }}
+        theme="dark"
+        backgroundImageUrl="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=2400&q=80"
+        backgroundImageAlt="Leasing services in the United States"
       />
 
       {/* Coming Soon Notice */}

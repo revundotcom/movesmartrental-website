@@ -8,7 +8,7 @@ const GUARANTEES = [
     icon: Clock,
     title: '18-Day Placement Target',
     description: 'We aim to place a qualified tenant within 18 days. If we miss, we keep marketing your unit at no extra cost until we sign one.',
-    detail: 'Our average placement time is 18 days across 500+ units leased.',
+    detail: 'Strategic pricing on live comps plus same-day prep means most units lease quickly when priced right.',
   },
   {
     icon: DollarSign,
@@ -46,7 +46,7 @@ export function GuaranteeSection() {
               The MoveSmart Guarantee
             </h2>
             <p className="text-slate-300 text-lg max-w-2xl mx-auto">
-              We put our money where our mouth is. No other leasing brokerage in Canada writes these guarantees into the engagement.
+              We put our money where our mouth is. No other leasing brokerage operating across Canada and the United States writes these guarantees into the engagement.
             </p>
           </div>
         </RevealOnScroll>

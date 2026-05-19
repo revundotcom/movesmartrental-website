@@ -415,6 +415,9 @@ export default async function PropertyCategoryPage({
         cta1={{ label: 'Apply now', href: '/contact/?intent=apply' }}
         cta2={{ label: 'Talk to a broker', href: '/contact/' }}
         city={city}
+        theme="dark"
+        backgroundImageUrl="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=2400&q=80"
+        backgroundImageAlt={`Rental properties available in ${cityTitle}`}
       />
 
       {/* Proof strip */}

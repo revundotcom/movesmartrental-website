@@ -25,6 +25,11 @@ import {
   resolvePropertyImage,
 } from '@/lib/portal-api'
 import type { Property, PropertyMedia } from '@/types/property'
+import {
+  PropertyGate,
+  PropertyMediaTabs,
+} from '@/components/properties/property-detail-client'
+import { RentCalculator } from '@/components/blocks/rent-calculator'
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
@@ -93,62 +98,10 @@ function formatAvailableDate(value: string | null | undefined): string | null {
   })
 }
 
-function MediaGallery({
-  property,
-}: {
-  property: Property
-}) {
-  const cover = resolvePropertyImage(property.cover_image ?? property.cover_thumb)
-  const media: PropertyMedia[] = Array.isArray(property.media) ? property.media : []
-  const extraImages = media
-    .map((m) => resolvePropertyImage(m))
-    .filter((u): u is string => Boolean(u))
-    .slice(0, 4)
-
-  if (!cover && extraImages.length === 0) {
-    return (
-      <div className="flex aspect-[16/9] items-center justify-center rounded-2xl bg-slate-100">
-        <div className="text-center text-slate-400">
-          <MapPin className="mx-auto size-10" />
-          <p className="mt-2 text-sm">No images available</p>
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <div className="grid grid-cols-4 gap-2 md:grid-cols-4 md:gap-3">
-      {cover && (
-        <div className="relative col-span-4 aspect-[16/9] overflow-hidden rounded-2xl bg-slate-100 md:col-span-3 md:row-span-2">
-          <Image
-            src={cover}
-            alt={property.unit_name}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 60vw"
-            priority
-            unoptimized
-          />
-        </div>
-      )}
-      {extraImages.map((url, i) => (
-        <div
-          key={`${url}-${i}`}
-          className="relative col-span-2 aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 md:col-span-1"
-        >
-          <Image
-            src={url}
-            alt={`${property.unit_name} — photo ${i + 2}`}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 50vw, 20vw"
-            unoptimized
-          />
-        </div>
-      ))}
-    </div>
-  )
-}
+// "Slot-but-empty" placeholder used for IDX fields the brokerage feed will
+// fill in once TREB credentials land. Renders an em-dash so the layout slot
+// is visibly present (RECO requires the structure to exist before approval).
+const EMPTY = '—'
 
 function FeatureList({
   title,
@@ -232,6 +185,98 @@ function SimilarPropertyCard({ property }: { property: Property }) {
   )
 }
 
+/**
+ * Two-column "label / value" card. Values that come back undefined render
+ * an em-dash so the IDX-required slot is structurally present even before
+ * the TREB feed is wired in.
+ */
+function FactCard({
+  title,
+  rows,
+}: {
+  title: string
+  rows: Array<{ label: string; value?: string | number | null }>
+}) {
+  return (
+    <section
+      aria-label={title}
+      className="rounded-2xl border border-slate-200 bg-white p-6"
+    >
+      <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-[#0B1D3A]">
+        {title}
+      </h3>
+      <dl className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 text-sm sm:grid-cols-2">
+        {rows.map(({ label, value }) => (
+          <div
+            key={label}
+            className="flex justify-between gap-4 border-b border-slate-100 pb-2 last:border-0 sm:last:border-b"
+          >
+            <dt className="text-slate-500">{label}</dt>
+            <dd className="text-right font-medium text-[#0B1D3A]">
+              {value != null && value !== '' ? value : EMPTY}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  )
+}
+
+/**
+ * Room Info table. Structure required even when empty — IDX feed fills in
+ * room-level data (Living Room / Bedroom / Kitchen, etc) post-approval.
+ */
+function RoomInfoTable() {
+  const rows = [
+    'Living Room',
+    'Dining Room',
+    'Kitchen',
+    'Primary Bedroom',
+    'Bedroom 2',
+    'Bathroom',
+  ]
+  return (
+    <details
+      open
+      className="group rounded-2xl border border-slate-200 bg-white p-6"
+    >
+      <summary className="flex cursor-pointer list-none items-center justify-between font-heading text-sm font-semibold uppercase tracking-wider text-[#0B1D3A]">
+        Room Information
+        <span className="text-xs font-normal text-slate-400 group-open:hidden">
+          Show
+        </span>
+        <span className="hidden text-xs font-normal text-slate-400 group-open:inline">
+          Hide
+        </span>
+      </summary>
+      <div className="mt-4 overflow-x-auto">
+        <table className="w-full text-left text-sm">
+          <thead>
+            <tr className="border-b border-slate-200 text-xs uppercase tracking-wider text-slate-500">
+              <th className="py-2 pr-4 font-medium">Room</th>
+              <th className="py-2 pr-4 font-medium">Level</th>
+              <th className="py-2 pr-4 font-medium">Dimensions (m)</th>
+              <th className="py-2 pr-4 font-medium">Dimensions (ft)</th>
+              <th className="py-2 font-medium">Features</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((room) => (
+              <tr key={room} className="border-b border-slate-100 last:border-0">
+                <td className="py-2 pr-4 font-medium text-[#0B1D3A]">{room}</td>
+                <td className="py-2 pr-4 text-slate-500">{EMPTY}</td>
+                <td className="py-2 pr-4 text-slate-500">{EMPTY}</td>
+                <td className="py-2 pr-4 text-slate-500">{EMPTY}</td>
+                <td className="py-2 text-slate-500">{EMPTY}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </details>
+  )
+}
+
 export default async function PropertyDetailPage({ params }: PageProps) {
   const { slug } = await params
   const detail = await getProperty(slug)
@@ -253,6 +298,22 @@ export default async function PropertyDetailPage({ params }: PageProps) {
   // contact form so the lead isn't dropped.
   const scheduleUrl = portalShowingScheduleUrl(unit.zcrm_id)
   const reserveUrl = portalReserveOfferUrl(unit.zcrm_id)
+
+  // Collect every gallery image for the new lightbox-capable tabs panel.
+  const galleryImages: string[] = []
+  const cover = resolvePropertyImage(unit.cover_image ?? unit.cover_thumb)
+  if (cover) galleryImages.push(cover)
+  const media: PropertyMedia[] = Array.isArray(unit.media) ? unit.media : []
+  for (const m of media) {
+    const url = resolvePropertyImage(m)
+    if (url && !galleryImages.includes(url)) galleryImages.push(url)
+  }
+
+  // Display strings for the hero / key-facts. API values fill what they
+  // can; the remaining slots are intentionally left blank for the IDX feed.
+  const sqftDisplay =
+    unit.approximate_square_footage ||
+    (unit.above_grade_sqft ? `${unit.above_grade_sqft} sqft` : undefined)
 
   // Schema.org for rental listing.
   const productSchema = {
@@ -293,6 +354,237 @@ export default async function PropertyDetailPage({ params }: PageProps) {
       : undefined,
   }
 
+  // ------------------------------------------------------------------
+  // Build the gated body once on the server so the client gate can swap
+  // it in/out without re-fetching. Everything below the hero info bar
+  // is RECO-protected detail data.
+  // ------------------------------------------------------------------
+  const gatedBody = (
+    <div className="space-y-10">
+      {/* About */}
+      {unit.description && (
+        <section aria-label="About this property">
+          <h2 className="font-display text-2xl text-[#0B1D3A]">
+            About this property
+          </h2>
+          <div className="mt-4 whitespace-pre-line text-base leading-relaxed text-slate-700">
+            {unit.description}
+          </div>
+        </section>
+      )}
+
+      {/* Key Facts (IDX) */}
+      <FactCard
+        title="Key Facts"
+        rows={[
+          { label: 'Data Source', value: undefined },
+          { label: 'MLS ID', value: undefined },
+          { label: 'Price', value: formatPrice(unit.website_price) },
+          { label: 'Listed By', value: undefined },
+          { label: 'Days on Market', value: undefined },
+          { label: 'Property Tax / annum', value: undefined },
+          { label: 'Listing Date', value: undefined },
+          {
+            label: 'Status',
+            value: isAvailable
+              ? 'Active'
+              : unit.status || unit.availability || undefined,
+          },
+        ]}
+      />
+
+      {/* Property Details */}
+      <FactCard
+        title="Property Details"
+        rows={[
+          { label: 'Type', value: unit.property_type || unit.property_sub_type },
+          { label: 'Style', value: unit.style },
+          { label: 'Size', value: sqftDisplay },
+          { label: 'Lot Size', value: undefined },
+          { label: 'Year Built', value: building?.year_built },
+          {
+            label: 'Heating',
+            value: Array.isArray(unit.heating)
+              ? unit.heating.filter(Boolean).join(', ') || undefined
+              : undefined,
+          },
+          {
+            label: 'Cooling',
+            value: Array.isArray(unit.cooling)
+              ? unit.cooling.filter(Boolean).join(', ') || undefined
+              : undefined,
+          },
+          { label: 'Basement', value: unit.basement_type },
+        ]}
+      />
+
+      {/* Room Info */}
+      <RoomInfoTable />
+
+      {/* Utilities */}
+      <FactCard
+        title="Utilities"
+        rows={[
+          { label: 'Electricity', value: undefined },
+          { label: 'Gas', value: undefined },
+          { label: 'Water', value: undefined },
+          { label: 'Sewage', value: undefined },
+        ]}
+      />
+
+      {/* Parking */}
+      <FactCard
+        title="Parking"
+        rows={[
+          {
+            label: 'Type',
+            value: Array.isArray(unit.parking_type)
+              ? unit.parking_type.filter(Boolean).join(', ') || undefined
+              : undefined,
+          },
+          { label: 'Spaces', value: unit.total_parking_spaces },
+          { label: 'Garage', value: building?.garage as string | undefined },
+          { label: 'Driveway', value: undefined },
+        ]}
+      />
+
+      {/* Existing feature lists — kept so we don't lose data the API DOES return today */}
+      <section className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+        <FeatureList
+          title="Interior features"
+          items={unit.interior_features}
+          icon={Building2}
+        />
+        <FeatureList title="Heating" items={unit.heating} icon={Flame} />
+        <FeatureList title="Cooling" items={unit.cooling} icon={Snowflake} />
+        <FeatureList title="Parking" items={unit.parking_type} icon={Car} />
+        <FeatureList
+          title="Included in lease cost"
+          items={unit.included_in_lease_cost}
+          icon={CheckCircle2}
+        />
+        <FeatureList
+          title="Laundry"
+          items={unit.laundry_features}
+          icon={CheckCircle2}
+        />
+        <FeatureList
+          title="Security"
+          items={unit.security_features}
+          icon={CheckCircle2}
+        />
+        <FeatureList
+          title="Accessibility"
+          items={unit.accessible_features}
+          icon={CheckCircle2}
+        />
+      </section>
+
+      {/* Building information (kept from the prior layout) */}
+      {building && (
+        <section aria-label="Building information">
+          <h2 className="font-display text-2xl text-[#0B1D3A]">
+            Building information
+          </h2>
+          <dl className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 text-sm sm:grid-cols-2">
+            {building.neighbourhood && (
+              <div>
+                <dt className="text-slate-500">Neighbourhood</dt>
+                <dd className="font-medium text-[#0B1D3A]">
+                  {building.neighbourhood}
+                </dd>
+              </div>
+            )}
+            {building.cross_street && (
+              <div>
+                <dt className="text-slate-500">Cross street</dt>
+                <dd className="font-medium text-[#0B1D3A]">
+                  {building.cross_street}
+                </dd>
+              </div>
+            )}
+            {building.year_built && (
+              <div>
+                <dt className="text-slate-500">Year built</dt>
+                <dd className="font-medium text-[#0B1D3A]">
+                  {building.year_built}
+                </dd>
+              </div>
+            )}
+            {building.condo_level && (
+              <div>
+                <dt className="text-slate-500">Floor / level</dt>
+                <dd className="font-medium text-[#0B1D3A]">
+                  {building.condo_level}
+                </dd>
+              </div>
+            )}
+            {building.pets_allowed && (
+              <div>
+                <dt className="text-slate-500">Pets</dt>
+                <dd className="inline-flex items-center gap-1 font-medium text-[#0B1D3A]">
+                  <PawPrint className="size-4 text-[#10B981]" />
+                  {building.pets_allowed}
+                </dd>
+              </div>
+            )}
+            {building.elementary_school && (
+              <div>
+                <dt className="text-slate-500">Elementary school</dt>
+                <dd className="font-medium text-[#0B1D3A]">
+                  {building.elementary_school}
+                </dd>
+              </div>
+            )}
+            {building.high_school && (
+              <div>
+                <dt className="text-slate-500">High school</dt>
+                <dd className="font-medium text-[#0B1D3A]">
+                  {building.high_school}
+                </dd>
+              </div>
+            )}
+          </dl>
+
+          {Array.isArray(building.condo_amenities) &&
+            building.condo_amenities.length > 0 && (
+              <div className="mt-6">
+                <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-[#0B1D3A]">
+                  Building amenities
+                </h3>
+                <ul className="mt-3 flex flex-wrap gap-2">
+                  {building.condo_amenities.map((amenity) => (
+                    <li
+                      key={amenity}
+                      className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-[#0B1D3A]"
+                    >
+                      <CheckCircle2 className="size-3.5 text-[#10B981]" />
+                      {amenity}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+        </section>
+      )}
+
+      {/* Rent vs Buy calculator — embedded so visitors can comparison-shop
+          without leaving the listing. */}
+      <section aria-label="Rent vs buy calculator">
+        <h2 className="font-display text-2xl text-[#0B1D3A]">
+          Should you rent or buy?
+        </h2>
+        <p className="mt-2 text-sm text-slate-600">
+          Compare the monthly cost of this rental against buying a similar
+          unit in the same neighbourhood.
+        </p>
+        <div className="mt-6">
+          <RentCalculator />
+        </div>
+      </section>
+    </div>
+  )
+
   return (
     <main className="bg-white">
       <script
@@ -309,234 +601,102 @@ export default async function PropertyDetailPage({ params }: PageProps) {
           ]}
         />
 
-        <header className="mt-6">
+        {/* Photos / Map / Street View tabs (client) */}
+        <section className="mt-6">
+          <PropertyMediaTabs
+            images={galleryImages}
+            propertyName={unit.unit_name}
+            address={unit.unit_address}
+            lat={unit.latitude}
+            lng={unit.longitude}
+          />
+        </section>
+
+        {/* Hero info bar: Price · Beds/Baths/SqFt · Address · MLS status */}
+        <section
+          aria-label="Listing summary"
+          className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 px-6 py-5"
+        >
           <div className="flex flex-wrap items-center gap-3">
             <span
               className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${
                 isAvailable
                   ? 'bg-emerald-100 text-emerald-700'
-                  : 'bg-slate-100 text-slate-600'
+                  : 'bg-slate-200 text-slate-600'
               }`}
             >
-              {isAvailable ? 'Available' : unit.availability || 'Unavailable'}
+              {isAvailable ? 'Active' : unit.availability || 'Status —'}
             </span>
             {unit.property_sub_type && (
-              <span className="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-[#0B1D3A]">
+              <span className="inline-block rounded-full bg-white px-3 py-1 text-xs font-medium text-[#0B1D3A]">
                 {unit.property_sub_type}
               </span>
             )}
             {unit.furnished && (
-              <span className="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-[#0B1D3A]">
+              <span className="inline-block rounded-full bg-white px-3 py-1 text-xs font-medium text-[#0B1D3A]">
                 {unit.furnished}
               </span>
             )}
           </div>
-          <h1 className="mt-3 font-display text-3xl text-[#0B1D3A] md:text-4xl">
-            {unit.unit_name}
-          </h1>
-          <p className="mt-2 flex items-center gap-1.5 text-sm text-slate-500">
-            <MapPin className="size-4 text-slate-400" />
-            {unit.unit_address}
-          </p>
-        </header>
 
-        <section className="mt-6">
-          <MediaGallery property={unit} />
+          <div className="mt-3 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <h1 className="font-display text-3xl text-[#0B1D3A] md:text-4xl">
+                {unit.unit_name}
+              </h1>
+              <p className="mt-2 flex items-center gap-1.5 text-sm text-slate-500">
+                <MapPin className="size-4 text-slate-400" />
+                {unit.unit_address}
+              </p>
+            </div>
+            <div className="text-left md:text-right">
+              <p className="text-xs uppercase tracking-wider text-slate-500">
+                Monthly rent
+              </p>
+              <p className="font-display text-3xl text-[#10B981]">
+                {formatPrice(unit.website_price)}
+                {unit.website_price != null && (
+                  <span className="text-base text-slate-500">/mo</span>
+                )}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-4 flex flex-wrap gap-x-6 gap-y-3 border-t border-slate-200 pt-4 text-sm text-[#0B1D3A]">
+            <span className="inline-flex items-center gap-1.5">
+              <Bed className="size-4 text-[#10B981]" />
+              {unit.number_of_bedrooms || unit.bedrooms || EMPTY} Beds
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <Bath className="size-4 text-[#10B981]" />
+              {unit.number_of_bathrooms || unit.bathrooms || EMPTY} Baths
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <Maximize className="size-4 text-[#10B981]" />
+              {sqftDisplay || EMPTY}
+            </span>
+            {unit.total_parking_spaces && (
+              <span className="inline-flex items-center gap-1.5">
+                <Car className="size-4 text-[#10B981]" />
+                {unit.total_parking_spaces} Parking
+              </span>
+            )}
+            {availableDate && (
+              <span className="inline-flex items-center gap-1.5">
+                <Calendar className="size-4 text-[#10B981]" />
+                Available {availableDate}
+              </span>
+            )}
+          </div>
         </section>
 
         <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-3">
-          {/* Main column */}
+          {/* Main column — gated body */}
           <div className="lg:col-span-2">
-            <section
-              className="flex flex-wrap items-center gap-x-8 gap-y-4 rounded-2xl border border-slate-100 bg-slate-50 px-6 py-5"
-              aria-label="Key details"
-            >
-              <div>
-                <p className="text-xs uppercase tracking-wider text-slate-500">
-                  Monthly rent
-                </p>
-                <p className="font-display text-2xl text-[#10B981]">
-                  {formatPrice(unit.website_price)}
-                  {unit.website_price != null && (
-                    <span className="text-base text-slate-500">/mo</span>
-                  )}
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-[#0B1D3A]">
-                <span className="inline-flex items-center gap-1.5">
-                  <Bed className="size-4 text-[#10B981]" />
-                  {unit.number_of_bedrooms || unit.bedrooms || '—'} Beds
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <Bath className="size-4 text-[#10B981]" />
-                  {unit.number_of_bathrooms || unit.bathrooms || '—'} Baths
-                </span>
-                {(unit.approximate_square_footage ||
-                  unit.above_grade_sqft) && (
-                  <span className="inline-flex items-center gap-1.5">
-                    <Maximize className="size-4 text-[#10B981]" />
-                    {unit.approximate_square_footage ||
-                      `${unit.above_grade_sqft} sqft`}
-                  </span>
-                )}
-                {unit.total_parking_spaces && (
-                  <span className="inline-flex items-center gap-1.5">
-                    <Car className="size-4 text-[#10B981]" />
-                    {unit.total_parking_spaces} Parking
-                  </span>
-                )}
-                {availableDate && (
-                  <span className="inline-flex items-center gap-1.5">
-                    <Calendar className="size-4 text-[#10B981]" />
-                    Available {availableDate}
-                  </span>
-                )}
-              </div>
-            </section>
-
-            {unit.description && (
-              <section className="mt-8" aria-label="About this property">
-                <h2 className="font-display text-2xl text-[#0B1D3A]">
-                  About this property
-                </h2>
-                <div className="mt-4 whitespace-pre-line text-base leading-relaxed text-slate-700">
-                  {unit.description}
-                </div>
-              </section>
-            )}
-
-            <section className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
-              <FeatureList
-                title="Interior features"
-                items={unit.interior_features}
-                icon={Building2}
-              />
-              <FeatureList
-                title="Heating"
-                items={unit.heating}
-                icon={Flame}
-              />
-              <FeatureList
-                title="Cooling"
-                items={unit.cooling}
-                icon={Snowflake}
-              />
-              <FeatureList
-                title="Parking"
-                items={unit.parking_type}
-                icon={Car}
-              />
-              <FeatureList
-                title="Included in lease cost"
-                items={unit.included_in_lease_cost}
-                icon={CheckCircle2}
-              />
-              <FeatureList
-                title="Laundry"
-                items={unit.laundry_features}
-                icon={CheckCircle2}
-              />
-              <FeatureList
-                title="Security"
-                items={unit.security_features}
-                icon={CheckCircle2}
-              />
-              <FeatureList
-                title="Accessibility"
-                items={unit.accessible_features}
-                icon={CheckCircle2}
-              />
-            </section>
-
-            {building && (
-              <section className="mt-10" aria-label="Building information">
-                <h2 className="font-display text-2xl text-[#0B1D3A]">
-                  Building information
-                </h2>
-                <dl className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 text-sm sm:grid-cols-2">
-                  {building.neighbourhood && (
-                    <div>
-                      <dt className="text-slate-500">Neighbourhood</dt>
-                      <dd className="font-medium text-[#0B1D3A]">
-                        {building.neighbourhood}
-                      </dd>
-                    </div>
-                  )}
-                  {building.cross_street && (
-                    <div>
-                      <dt className="text-slate-500">Cross street</dt>
-                      <dd className="font-medium text-[#0B1D3A]">
-                        {building.cross_street}
-                      </dd>
-                    </div>
-                  )}
-                  {building.year_built && (
-                    <div>
-                      <dt className="text-slate-500">Year built</dt>
-                      <dd className="font-medium text-[#0B1D3A]">
-                        {building.year_built}
-                      </dd>
-                    </div>
-                  )}
-                  {building.condo_level && (
-                    <div>
-                      <dt className="text-slate-500">Floor / level</dt>
-                      <dd className="font-medium text-[#0B1D3A]">
-                        {building.condo_level}
-                      </dd>
-                    </div>
-                  )}
-                  {building.pets_allowed && (
-                    <div>
-                      <dt className="text-slate-500">Pets</dt>
-                      <dd className="inline-flex items-center gap-1 font-medium text-[#0B1D3A]">
-                        <PawPrint className="size-4 text-[#10B981]" />
-                        {building.pets_allowed}
-                      </dd>
-                    </div>
-                  )}
-                  {building.elementary_school && (
-                    <div>
-                      <dt className="text-slate-500">Elementary school</dt>
-                      <dd className="font-medium text-[#0B1D3A]">
-                        {building.elementary_school}
-                      </dd>
-                    </div>
-                  )}
-                  {building.high_school && (
-                    <div>
-                      <dt className="text-slate-500">High school</dt>
-                      <dd className="font-medium text-[#0B1D3A]">
-                        {building.high_school}
-                      </dd>
-                    </div>
-                  )}
-                </dl>
-
-                {Array.isArray(building.condo_amenities) &&
-                  building.condo_amenities.length > 0 && (
-                    <div className="mt-6">
-                      <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-[#0B1D3A]">
-                        Building amenities
-                      </h3>
-                      <ul className="mt-3 flex flex-wrap gap-2">
-                        {building.condo_amenities.map((amenity) => (
-                          <li
-                            key={amenity}
-                            className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-[#0B1D3A]"
-                          >
-                            <CheckCircle2 className="size-3.5 text-[#10B981]" />
-                            {amenity}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-              </section>
-            )}
+            <PropertyGate>{gatedBody}</PropertyGate>
           </div>
 
-          {/* Sidebar */}
+          {/* Sidebar (kept outside the gate so the conversion CTA is always visible) */}
           <aside className="lg:col-span-1">
             <div className="sticky top-24 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
               <p className="font-display text-3xl text-[#0B1D3A]">
@@ -597,12 +757,12 @@ export default async function PropertyDetailPage({ params }: PageProps) {
 
               <div className="mt-5 rounded-xl bg-slate-50 p-4 text-xs text-slate-500">
                 <p>
-                  Listing managed by{' '}
+                  Listing brokered by{' '}
                   <span className="font-semibold text-[#0B1D3A]">
-                    MoveSmart Rentals
+                    Valerie Real Estate Inc., Brokerage
                   </span>
-                  . Full-service leasing — screening, lease execution, and
-                  move-in coordination are included.
+                  . MoveSmart Rentals is the marketing partner — screening,
+                  lease execution, and move-in coordination are included.
                 </p>
               </div>
             </div>
@@ -621,6 +781,25 @@ export default async function PropertyDetailPage({ params }: PageProps) {
             </div>
           </section>
         )}
+
+        {/* RECO / IDX legal disclaimer footer */}
+        <section
+          aria-label="Listing disclaimer"
+          className="mt-16 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-xs leading-relaxed text-slate-600"
+        >
+          <p>
+            Listing data sourced from TREB IDX feed. This listing is brokered
+            by{' '}
+            <span className="font-semibold text-[#0B1D3A]">
+              Valerie Real Estate Inc., Brokerage
+            </span>
+            . MoveSmart Rentals is a marketing partner. Information deemed
+            reliable but not guaranteed. The trademarks REALTOR&reg;,
+            REALTORS&reg;, and the REALTOR&reg; logo are controlled by The
+            Canadian Real Estate Association (CREA) and identify real estate
+            professionals who are members of CREA.
+          </p>
+        </section>
       </div>
     </main>
   )

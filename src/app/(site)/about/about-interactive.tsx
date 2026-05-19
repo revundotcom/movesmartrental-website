@@ -108,9 +108,9 @@ export function FounderEssay() {
 const MILESTONES: { date: string; title: string }[] = [
   { date: '2020', title: 'MoveSmart founded in Toronto' },
   { date: '2021', title: 'First 50 units leased across the GTA' },
-  { date: '2022', title: 'Expanded leasing coverage to 5 Ontario cities' },
+  { date: '2022', title: 'Expanded leasing coverage to 5 Canadian cities' },
   { date: '2023', title: 'Owner reporting portal launched' },
-  { date: '2024', title: '500+ units leased milestone' },
+  { date: '2024', title: 'Cross-border expansion into US markets' },
   { date: '2025', title: 'First institutional lease-up campaigns' },
 ]
 
@@ -287,7 +287,7 @@ export function Team() {
             </h2>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-600">
               A small, RECO-licensed leasing team with twenty-plus years of
-              combined rental brokerage experience across Ontario.
+              combined rental brokerage experience across Canada and the United States.
             </p>
           </div>
         </RevealOnScroll>

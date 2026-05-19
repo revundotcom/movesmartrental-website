@@ -17,7 +17,7 @@ const GOOGLE_REVIEWS_URL =
 export const metadata: Metadata = {
   title: 'Reviews & Testimonials',
   description:
-    'Real results from real property owners. Read 200+ Google reviews and testimonials from landlords who trust MoveSmart Rentals for full-service leasing and tenant placement across Canada.',
+    'Real results from real property owners. Read testimonials from landlords who trust MoveSmart Rentals for full-service leasing and tenant placement across Canada and the United States.',
   alternates: {
     canonical: '/reviews/',
   },
@@ -39,7 +39,7 @@ const reviewPageSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
   name: 'Reviews & Testimonials',
-  description: 'Real results from real property owners across Canada.',
+  description: 'Real results from real property owners across Canada and the United States.',
   url: `${SITE_URL}/reviews/`,
   isPartOf: {
     '@type': 'WebSite',
@@ -66,12 +66,12 @@ const FAQS = [
   {
     question: 'How do I verify these reviews are real?',
     answer:
-      'Every testimonial on this page is sourced from a verified Google, BBB, or Realtor.ca review, or used with the named client\'s written permission. We abbreviate last names for owner privacy but are happy to confirm authenticity directly - contact us and we will arrange a verification call.',
+      'Every testimonial on this page is sourced from a verified Google, BBB, or Realtor.ca review, or used with the named client\'s written permission. We abbreviate last names for owner privacy but are happy to confirm authenticity directly — contact us and we will arrange a verification call.',
   },
   {
     question: 'Where can I read more reviews?',
     answer:
-      'Our complete review archive lives on Google (200+ reviews, 4.9 average), with additional reviews on the BBB, Realtor.ca, and Yelp profiles linked at the top of this page. We do not curate which reviews appear there - every owner can post freely.',
+      'Our complete review archive lives on Google, with additional reviews across BBB, Realtor.ca, and Trustpilot. We do not curate which reviews appear there — every owner can post freely.',
   },
   {
     question: 'Can I talk to a current client before signing?',
@@ -81,12 +81,57 @@ const FAQS = [
   {
     question: 'Do you publish negative reviews?',
     answer:
-      'We do not delete or hide negative reviews on third-party platforms - they are public on Google, BBB, and Realtor.ca for anyone to read. When we get critical feedback, we respond publicly with what we did to fix it. That is the standard the industry should hold to.',
+      'We do not delete or hide negative reviews on third-party platforms — they are public on Google, BBB, and Realtor.ca for anyone to read. When we get critical feedback, we respond publicly with what we did to fix it. That is the standard the industry should hold to.',
   },
   {
-    question: 'What is your overall rating?',
+    question: 'How are tenants screened before placement?',
     answer:
-      'As of April 2026: 4.9 of 5 on Google across 200+ reviews, A+ accredited on the BBB, 4.8 on Realtor.ca across 60+ reviews, and 4.7 on Yelp across 40+ reviews. Aggregated owner-retention rate sits at 96% year over year.',
+      'Every applicant goes through a structured multi-step qualification: credit pull, income and employment verification, prior-landlord references, ID verification, and a documented risk summary you approve or decline. Every decision follows applicable human-rights and fair-housing law in the jurisdiction of the unit.',
+  },
+  {
+    question: 'How is the success fee calculated?',
+    answer:
+      'Our standard placement success fee is typically equivalent to one month of contracted rent, invoiced once on lease signing. No setup fees, no monthly retainer, no marketing surcharges. The full fee schedule lives on the Pricing page.',
+  },
+  {
+    question: 'Can I leave a review if I am a tenant rather than a landlord?',
+    answer:
+      'Yes — tenant reviews are welcome on the same Google, BBB, Realtor.ca, and Trustpilot profiles. Tenant feedback helps other renters know what to expect from MoveSmart-managed listings and helps us hold our showing and screening teams to a written standard.',
+  },
+  {
+    question: 'Do you serve clients outside Canada?',
+    answer:
+      'Yes. We currently serve 10 priority US states — Florida, Texas, California, New York, Illinois, Georgia, North Carolina, Arizona, Colorado, and New Jersey — alongside six Canadian provinces. Toggle the country filter at the top of the page to see reviews from each region.',
+  },
+  {
+    question: 'How long does it usually take to place a tenant?',
+    answer:
+      'Time-to-lease varies by city, unit type, and pricing. Units priced to live-market comps with professional photography typically receive multiple qualified applicants within the first two weeks of listing. We commit to written progress updates at every milestone.',
+  },
+  {
+    question: 'What happens if a placed tenant breaks the lease early?',
+    answer:
+      'Early termination is rare with our screening process, but if it happens we re-list immediately at no additional success fee within the original 12-month guarantee window. Optional Rent Protection through partner pathways adds further coverage.',
+  },
+  {
+    question: 'Do you respond to all reviews — good and bad?',
+    answer:
+      'Yes. Every published review on Google, BBB, Realtor.ca, and Trustpilot gets an owner-level response within five business days. Praise gets a thank-you; criticism gets a concrete remediation plan, in public.',
+  },
+  {
+    question: 'Are case studies on this page real?',
+    answer:
+      'Yes. Every case study features named clients who gave written permission to publish their story. Before/after numbers are pulled from the leasing file — vacancy days, ask vs. signed rent, screening outcomes. Names appear in full where the client opted in; abbreviated where privacy was requested.',
+  },
+  {
+    question: 'How can I share my experience with MoveSmart?',
+    answer:
+      'Click "Leave a Google review" at the bottom of the page. If you prefer to send feedback privately, use the contact form — we read every message and route concerns directly to the leasing director responsible for your file.',
+  },
+  {
+    question: 'Why do some reviews mention specific advisors by name?',
+    answer:
+      'Each MoveSmart owner is assigned a named leasing advisor for the duration of the placement. Owners often single out their advisor in reviews because the relationship is personal, not a call-centre handoff. We celebrate that publicly — and it keeps advisors accountable.',
   },
 ]
 
@@ -119,6 +164,9 @@ export default function ReviewsPage() {
           { label: 'Years in business', value: '12' },
           { label: 'Owner retention', value: '96%' },
         ]}
+        theme="dark"
+        backgroundImageUrl="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=2400&q=80"
+        backgroundImageAlt="MoveSmart leasing team reviewing owner feedback on a laptop"
       />
 
       {/* 2-7. Editorial spread (client component for animation) */}

@@ -60,7 +60,7 @@ export function CaseStudySection() {
               See What We&apos;ve Done for Property Owners
             </h2>
             <p className="text-slate-600 text-lg max-w-2xl mx-auto">
-              Real stories from real property owners across Ontario. No fluff - just measurable outcomes.
+              Real stories from real property owners across Canada and the United States. No fluff - just measurable outcomes.
             </p>
           </div>
         </RevealOnScroll>

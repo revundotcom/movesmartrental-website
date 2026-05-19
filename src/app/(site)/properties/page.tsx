@@ -12,21 +12,21 @@ const SITE_URL =
 export const metadata: Metadata = {
   title: 'Properties & Available Rentals',
   description:
-    'Browse every available rental property from MoveSmart Rentals. Verified listings across Canada with full-service leasing, screening, and tenant placement.',
+    'Browse every available rental property from MoveSmart Rentals. Verified listings across Canada and the United States with full-service leasing, screening, and tenant placement.',
   alternates: {
     canonical: '/properties/',
   },
   openGraph: {
     title: 'Properties & Available Rentals | MoveSmart Rentals',
     description:
-      'Browse verified rental homes, condos, and townhouses across Canada.',
+      'Browse verified rental homes, condos, and townhouses across Canada and the United States.',
     images: ['/og-default.png'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Properties & Available Rentals | MoveSmart Rentals',
     description:
-      'Browse verified rental homes, condos, and townhouses across Canada.',
+      'Browse verified rental homes, condos, and townhouses across Canada and the United States.',
   },
 }
 
@@ -64,16 +64,18 @@ export default async function PropertiesPage() {
 
         <header className="mt-6 mb-8">
           <p className="font-heading text-sm font-semibold uppercase tracking-wider text-[#10B981]">
-            {properties.length > 0 ? `${properties.length} Available Now` : 'Available Now'}
+            {properties.length > 0
+              ? `${properties.length} Live Listings`
+              : 'Live Listings'}
           </p>
           <h1 className="mt-2 font-display text-4xl text-[#0B1D3A] md:text-5xl">
             Browse Properties
           </h1>
           <p className="mt-4 max-w-2xl text-base text-slate-600 md:text-lg">
-            Every verified rental property managed by MoveSmart Rentals,
-            live from our portal. Filter by city, beds, and price — every
-            listing is screened, lease-executed, and move-in coordinated
-            end-to-end.
+            Every verified rental managed by MoveSmart Rentals, live from
+            our portal. Filter by city, beds, baths, price, and type —
+            every listing is screened, lease-executed, and move-in
+            coordinated end-to-end.
           </p>
         </header>
 

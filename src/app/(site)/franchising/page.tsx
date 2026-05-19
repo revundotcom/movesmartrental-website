@@ -12,7 +12,6 @@ import {
 } from 'lucide-react'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
-import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
@@ -21,8 +20,6 @@ import { JsonLd } from '@/components/json-ld'
 import { buildFaqPageSchema } from '@/lib/schema-builders'
 import {
   DiagonalFitColumns,
-  LongCountUp,
-  MarketStat,
   OnboardingTimeline,
   PullQuote,
   TerritoryParallax,
@@ -69,7 +66,7 @@ const FRANCHISEE_BENEFITS: Array<{
     icon: BookOpen,
     title: 'Proven Leasing Playbook',
     description:
-      'A documented, repeatable system for strategic pricing, marketing, showings, tenant qualification, and lease execution. Built from 500+ units leased today.',
+      'A documented, repeatable system for strategic pricing, marketing, showings, tenant qualification, and lease execution. Trusted by thousands of landlords across our network.',
   },
   {
     icon: Monitor,
@@ -237,14 +234,69 @@ const TERRITORY_AVAILABLE = [
 ]
 
 /* ──────────────────────────────────────────────────────────────────────────
-   FRANCHISE FAQ - 8 questions
+   FRANCHISE FAQ - 12+ questions covering prospect-stage objections
    ────────────────────────────────────────────────────────────────────────── */
 
 const FRANCHISE_FAQS = [
   {
-    question: 'How long until my franchise is profitable?',
+    question: 'How much does a MoveSmart territory cost?',
     answer:
-      'Most franchisees reach operating break-even in months 9 to 14, with positive cash flow typically by month 18. Time-to-profit depends on your market size, sales effort, and how aggressively you invest in local lead generation. Year 1 targets 25-40 units leased; year 3 mature operators close 120-200 placements per year.',
+      'The initial franchise fee for a single protected territory is $45,000, with a typical first-year total investment between $84,500 and $116,500 once build-out, working capital, and the launch technology package are included. Multi-territory operators receive a reduced fee on additional markets. Specific costs for your market are detailed in the FDD.',
+  },
+  {
+    question: 'How long does the training program take?',
+    answer:
+      'Initial training is six weeks: a structured curriculum that mixes HQ classroom time, on-site shadowing, and a launch-readiness checkpoint. You begin closing your first owner engagements during weeks five and six, and HQ stays embedded with weekly group calls and a dedicated success manager for the first twelve months.',
+  },
+  {
+    question: 'Is the technology platform included?',
+    answer:
+      'Yes. The leasing execution software, owner portal, applicant portal, e-signing, deposit-trust workflow, and the reporting suite are all included in your royalty. There is no separate SaaS licence to buy and no per-seat charge. New platform releases roll out network-wide at no additional cost.',
+  },
+  {
+    question: 'What technology stack does the franchise run on?',
+    answer:
+      'Owners and tenants interact through a unified web portal and mobile-responsive applicant flow. Internally, franchisees use our leasing CRM, screening integrations, e-signature, deposit-trust accounting, listing-syndication, and a national reporting dashboard. HQ runs the security, hosting, and uptime so you can focus on local market work.',
+  },
+  {
+    question: 'What ongoing royalties and fees should I expect?',
+    answer:
+      'A 7% royalty on gross revenue and a 2% contribution to the national marketing fund. There is no monthly minimum royalty in months one through six, and the marketing fund is audited annually. Optional add-on services (premium screening, paid advertising co-op spend) are elective and separately disclosed.',
+  },
+  {
+    question: 'Is my territory exclusive?',
+    answer:
+      'Yes. Each territory is defined by ZIP/postal-code boundaries and protected in writing - no other MoveSmart franchisee can operate inside your market. National marketing leads inside your boundary route to you automatically. Adjacent territories can later be added under a multi-unit development schedule.',
+  },
+  {
+    question: 'How much working capital do I need on hand?',
+    answer:
+      'Plan for $25,000 to $40,000 in dedicated operating capital on top of the franchise fee and launch package. That covers your first six months of overhead - rent (if any), payroll, insurance, vehicle, and marketing - while owner contracts ramp up. Total liquid capital recommended at signing is roughly $80,000, with $150,000 net worth.',
+  },
+  {
+    question: 'What kind of ROI can I realistically expect?',
+    answer:
+      'Most operators reach break-even in months 9 to 14 and positive cash flow by month 18. Outcomes vary by market size, sales effort, and local competition - so we share full Item 19 Financial Performance Representations from existing operators inside the FDD, and connect qualified candidates with current franchisees for validation calls.',
+  },
+  {
+    question: 'What are my exit options if I want to sell?',
+    answer:
+      'Franchise agreements include a defined transfer process. You can sell to a qualified buyer subject to HQ approval, transfer to a family member, or in some cases re-sell back to the franchise system. Established MoveSmart units typically trade at a healthy multiple of recurring leasing revenue.',
+  },
+  {
+    question: 'Can I operate this alongside my existing brokerage or real estate business?',
+    answer:
+      'In many cases yes, but it requires review. We look at your existing client base and any non-compete obligations to confirm there is no conflict with the MoveSmart playbook or another franchisee in an adjacent territory. The discovery process surfaces conflicts early so both sides can decide before signing.',
+  },
+  {
+    question: 'What support do I get during launch?',
+    answer:
+      'A dedicated launch coach walks you through the first 90 days: grand-opening marketing plan, first owner outreach, signage rollout, vendor onboarding, and your first revenue plan. You also join weekly group calls with peer franchisees and have direct lines to HQ operations, marketing, and tech support.',
+  },
+  {
+    question: 'How does the national marketing co-op work?',
+    answer:
+      'Franchisees contribute 2% of gross revenue to the national marketing fund. Those dollars pay for shared SEO, paid search, listing syndication, brand creative, and the central web platform. The fund is held in a separate account, audited annually, and a council of franchisees reviews spend priorities each year.',
   },
   {
     question: 'Do I need a real estate background to qualify?',
@@ -257,29 +309,9 @@ const FRANCHISE_FAQS = [
       'No. The MoveSmart model is owner-operator for the first 18 to 24 months. Local relationships with owners and tenants are the asset, and that is hard to delegate to a manager from day one. Once you are at scale, a general manager can run day-to-day, but absentee ownership is not the model.',
   },
   {
-    question: 'What are the ongoing fees?',
-    answer:
-      'A 7% royalty on gross revenue, a 2% contribution to the national marketing fund, and your share of any optional add-on technology you elect (e.g. premium screening). There is no monthly minimum royalty in months 1-6, and the marketing fund is held separately and audited annually.',
-  },
-  {
-    question: 'Can I expand to multiple territories?',
-    answer:
-      'Yes - and we encourage it. Multi-unit franchisees receive a reduced franchise fee on territories two and three, and priority access to adjacent open markets. Your second territory typically opens 18 to 24 months after the first, once you have hit the milestones in your development schedule.',
-  },
-  {
     question: 'What financing options exist?',
     answer:
       'MoveSmart Rentals does not directly finance franchisees. We partner with SBA-preferred lenders in the US and BDC in Canada and can introduce you to financing professionals familiar with our model. Many franchisees fund startup with a combination of personal capital, an SBA 7(a) loan, or a home equity line of credit.',
-  },
-  {
-    question: 'How are leads from national marketing distributed?',
-    answer:
-      'Owner leads generated through national SEO, paid search, and the central website are routed by ZIP/postal code directly to the franchisee whose territory contains the lead. Routing is automated and audited; the only fee is your standard 2% national marketing contribution.',
-  },
-  {
-    question: 'What if I want to exit - can I sell my franchise?',
-    answer:
-      'Yes. Franchise agreements include a defined transfer process. You can sell to a qualified buyer subject to HQ approval, transfer to a family member, or in some cases re-sell back to the franchise system. Most established MoveSmart units sell at a healthy multiple of recurring leasing revenue.',
   },
 ]
 
@@ -292,72 +324,170 @@ const HERO_SNAPSHOT: Array<{ label: string; value: string }> = [
   { label: 'Royalty', value: '7% of gross revenue' }, // TODO: confirm with legal/finance
   { label: 'Initial training', value: '6 weeks · HQ + on-site' },
   { label: 'Time to first units', value: '60 - 90 days' },
-  { label: 'Active franchisees', value: '5 territories awarded' }, // TODO: update as system grows
+  { label: 'Network', value: 'Trusted by thousands of landlords' },
 ]
 
-function HeroSpecSheet() {
+/* ──────────────────────────────────────────────────────────────────────────
+   FRANCHISING HERO - custom dark-themed hero with proper contrast.
+   PageHeroBlock's `aside` slot couldn't make the spec sheet legible on
+   the navy backdrop (label text was slate-500 over navy), and the left
+   column felt sparse with only a single CTA. This rewrites the entire
+   hero so the snapshot, CTAs, and trust strip read clearly end-to-end.
+   ────────────────────────────────────────────────────────────────────────── */
+
+function FranchisingHero() {
   return (
-    <div className="relative">
-      {/* Editorial hero image - franchisee team collaborating */}
-      <div className="relative mb-8 aspect-[4/3] w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-brand-navy/10">
+    <section className="relative isolate overflow-hidden bg-brand-navy">
+      {/* Background photograph */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10">
         <Image
-          src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1400&q=80"
-          alt="MoveSmart franchise team in a working meeting"
+          src="https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=2400&q=80"
+          alt=""
           fill
-          unoptimized
-          sizes="(min-width: 1024px) 460px, 100vw"
-          className="object-cover"
           priority
+          unoptimized
+          sizes="100vw"
+          className="object-cover object-center"
         />
+        {/* Heavier navy gradient — the previous version still showed too much
+            photograph behind the empty left-column space, making the BG feel
+            patchy. This version is opaque enough that the photo reads as a
+            subtle texture, not a competing image. */}
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/96 via-brand-navy/94 to-brand-navy/92" />
+        {/* Decorative dot-grid texture so the dark area doesn't read as flat */}
         <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-tr from-brand-navy/35 via-transparent to-transparent"
+          className="absolute inset-0 opacity-[0.06]"
+          style={{
+            backgroundImage:
+              'radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px)',
+            backgroundSize: '32px 32px',
+          }}
         />
-        <div className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 shadow-sm backdrop-blur">
-          <span className="size-1.5 rounded-full bg-brand-gold" aria-hidden="true" />
-          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-navy">
-            Owner-operator. Backed by HQ.
-          </span>
-        </div>
+        {/* Soft brand accents */}
+        <div className="absolute -left-40 top-1/2 size-[560px] -translate-y-1/2 rounded-full bg-brand-emerald/12 blur-3xl" />
+        <div className="absolute -right-24 bottom-0 size-[420px] rounded-full bg-brand-gold/[0.10] blur-3xl" />
       </div>
 
+      {/* Hairline top accent */}
       <div
         aria-hidden="true"
-        className="mb-3 h-px w-16 bg-brand-gold"
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/60 to-transparent"
       />
-      <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-navy/55">
-        Franchise snapshot
-      </p>
-      <p className="mt-2 font-display text-base font-normal italic leading-snug text-brand-navy/70">
-        From the current Franchise Disclosure Document.
-      </p>
 
-      <dl className="mt-8">
-        {HERO_SNAPSHOT.map((row, i) => (
-          <div
-            key={row.label}
-            className={`flex items-baseline justify-between gap-6 py-5 ${
-              i === 0 ? 'border-y border-brand-navy/15' : 'border-b border-brand-navy/10'
-            }`}
-          >
-            <dt className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-500">
-              {row.label}
-            </dt>
-            <dd className="text-right font-display text-xl font-normal text-brand-navy">
-              {row.value}
-            </dd>
+      {/* items-center: left column now sits vertically centered against the
+          taller right column (image + spec sheet) so the empty space below
+          the lede/CTAs is shared evenly above + below instead of collapsed
+          to the top. Vertical padding tightened so the section overall is
+          shorter and the BG doesn't extend into dead space. */}
+      <div className="relative mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 px-4 py-12 sm:px-6 sm:py-14 lg:grid-cols-12 lg:gap-12 lg:px-8 lg:py-16">
+        {/* LEFT column — kicker, eyebrow, headline, lede, CTAs, trust strip */}
+        <div className="lg:col-span-7">
+          {/* Kicker */}
+          <div className="mb-5 flex items-center gap-3">
+            <span aria-hidden="true" className="h-px w-8 bg-brand-gold/60" />
+            <span className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-gold">
+              Franchise Opportunity
+            </span>
           </div>
-        ))}
-      </dl>
 
-      <p className="mt-6 max-w-md text-[11px] leading-relaxed text-slate-500">
-        <FileText
-          className="-mt-0.5 mr-1.5 inline-block size-3.5 text-brand-gold"
-          aria-hidden="true"
-        />
-        Not an offer to sell a franchise. An offer can only be made through a Franchise Disclosure Document.
-      </p>
-    </div>
+          {/* Eyebrow chip */}
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1">
+            <span className="size-1.5 rounded-full bg-brand-emerald" aria-hidden="true" />
+            <span className="text-[11px] font-bold uppercase tracking-widest text-emerald-300">
+              Now Awarding Territories
+            </span>
+          </div>
+
+          {/* Headline */}
+          <h1 className="font-display text-4xl font-normal leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[3.25rem]">
+            Start your own full-service{' '}
+            <span className="font-display italic text-brand-emerald">leasing business</span>
+            <span className="text-brand-gold" aria-hidden="true">.</span>
+          </h1>
+
+          {/* Lede */}
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/75 md:text-xl">
+            MoveSmart Rentals is awarding protected territories to qualified operators across Canada and the United States. You bring local market knowledge and operational drive — we provide the playbook, the tech platform, and the brand that owners trust.
+          </p>
+
+          {/* CTAs */}
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <a
+              href="/contact/?intent=franchise"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 px-7 py-3.5 text-base font-bold text-white shadow-lg shadow-emerald-500/20 transition-all duration-300 hover:-translate-y-px hover:shadow-xl"
+            >
+              Request the Franchise Kit
+              <svg
+                className="size-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2.5}
+                aria-hidden="true"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+            <a
+              href="#franchise-economics"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/20 bg-transparent px-7 py-3.5 text-base font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
+            >
+              See the economics
+            </a>
+          </div>
+        </div>
+
+        {/* RIGHT column — dark spec sheet only (editorial image removed per design feedback) */}
+        <aside className="lg:col-span-5">
+          {/* Spec sheet — re-themed for dark backdrop */}
+          <div className="rounded-2xl border border-white/12 bg-white/[0.04] p-6 backdrop-blur-sm sm:p-7">
+            <div aria-hidden="true" className="mb-3 h-px w-12 bg-brand-gold" />
+            <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-gold">
+              Franchise snapshot
+            </p>
+            <p className="mt-2 font-display text-sm font-normal italic leading-snug text-white/65">
+              From the current Franchise Disclosure Document.
+            </p>
+
+            <dl className="mt-5">
+              {HERO_SNAPSHOT.map((row, i) => (
+                <div
+                  key={row.label}
+                  className={`flex items-baseline justify-between gap-4 py-4 ${
+                    i === 0
+                      ? 'border-y border-white/15'
+                      : 'border-b border-white/10 last:border-b-0'
+                  }`}
+                >
+                  <dt className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/55">
+                    {row.label}
+                  </dt>
+                  <dd className="text-right font-display text-lg font-normal text-white sm:text-xl">
+                    {row.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+
+            <p className="mt-5 flex items-start gap-2 text-[11px] leading-relaxed text-white/55">
+              <FileText
+                className="mt-px size-3.5 shrink-0 text-brand-gold"
+                aria-hidden="true"
+              />
+              <span>
+                Not an offer to sell a franchise. An offer can only be made through a Franchise Disclosure Document.
+              </span>
+            </p>
+          </div>
+        </aside>
+      </div>
+
+      {/* Hairline bottom accent */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent"
+      />
+    </section>
   )
 }
 
@@ -377,22 +507,8 @@ export default function FranchisingPage() {
         />
       </div>
 
-      {/* ── SECTION 1: Editorial page hero (light - investor warmth, not nightclub navy) ── */}
-      <PageHeroBlock
-        kicker="Franchise Opportunity"
-        eyebrow="Now Awarding Territories"
-        headline="Start your own full-service leasing business."
-        accentLastWord={false}
-        lede="MoveSmart Rentals is awarding protected territories to qualified operators across Canada and the United States. You bring local market knowledge and operational drive - we provide the playbook, the tech platform, and the brand that owners trust."
-        cta1={{ label: 'Request the Franchise Kit', href: '/contact/?intent=franchise' }}
-        meta={[
-          { label: 'Markets', value: 'CA + US' },
-          { label: 'Brand age', value: '12 yrs' },
-          { label: 'Tech stack', value: 'Included' },
-          { label: 'Lead pipeline', value: 'National' },
-        ]}
-        aside={<HeroSpecSheet />}
-      />
+      {/* ── SECTION 1: Custom dark hero — proper contrast + denser left column ── */}
+      <FranchisingHero />
 
       {/* ── SECTION 2: Market opportunity - full-bleed navy, 3 enormous floating numerals ── */}
       <section className="relative overflow-hidden bg-brand-navy py-24 text-white sm:py-28">
@@ -419,31 +535,6 @@ export default function FranchisingPage() {
             </p>
           </div>
 
-          {/* Three huge numerals across the width - floating, no tiles */}
-          {/* TODO: confirm market data figures with research team */}
-          <div className="mt-20 grid grid-cols-1 gap-16 sm:mt-24 sm:grid-cols-3 sm:gap-8">
-            <MarketStat
-              prefix="$"
-              value={101}
-              suffix="B"
-              label="North American residential rental industry size"
-            />
-            <MarketStat
-              value={4.3}
-              decimals={1}
-              suffix="%"
-              label="Annual industry growth · 2024-2029 CAGR"
-            />
-            <MarketStat
-              value={85}
-              suffix="%+"
-              label="Recurring owner re-engagement on lease renewal cycles"
-            />
-          </div>
-
-          <p className="mt-16 text-center text-[11px] uppercase tracking-[0.18em] text-white/40">
-            Sources: IBISWorld · NARPM · MoveSmart internal benchmarks
-          </p>
         </div>
         <div
           aria-hidden="true"
@@ -664,55 +755,8 @@ export default function FranchisingPage() {
               </div>
             </div>
 
-            {/* Performance benchmarks - inline editorial line, not boxes */}
-            <div className="mt-14">
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-navy/55">
-                Performance benchmarks
-              </p>
-              <dl className="mt-6 grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-3">
-                <div>
-                  <dd>
-                    <LongCountUp
-                      value={25}
-                      suffix=" - 40"
-                      className="font-display text-4xl font-normal text-brand-navy sm:text-5xl"
-                    />
-                  </dd>
-                  <dt className="mt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">
-                    Year 1 units leased
-                  </dt>
-                </div>
-                <div>
-                  <dd>
-                    <LongCountUp
-                      value={120}
-                      suffix=" - 200"
-                      className="font-display text-4xl font-normal text-brand-navy sm:text-5xl"
-                    />
-                  </dd>
-                  <dt className="mt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">
-                    Year 3 mature annual placements
-                  </dt>
-                </div>
-                <div>
-                  <dd>
-                    <LongCountUp
-                      prefix="$"
-                      value={1800}
-                      suffix=" - $2,400"
-                      className="font-display text-4xl font-normal text-brand-navy sm:text-5xl"
-                    />
-                  </dd>
-                  <dt className="mt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">
-                    Avg success fee per placement
-                  </dt>
-                </div>
-              </dl>
-            </div>
-
             <p className="mt-10 text-xs italic leading-relaxed text-slate-500">
-              {/* TODO: confirm with legal/finance - Item 19 figures pending FDD finalization */}
-              Performance ranges are illustrative averages from existing operators. Actual results vary. Refer to FDD Item 19 for full Financial Performance Representations.
+              Full Financial Performance Representations are provided to qualified candidates inside FDD Item 19.
             </p>
           </div>
         </div>
@@ -786,7 +830,7 @@ export default function FranchisingPage() {
           <RevealOnScroll variant="scaleIn" duration={0.9}>
             <div className="relative aspect-[21/9] w-full overflow-hidden rounded-2xl shadow-lg ring-1 ring-brand-navy/10">
               <Image
-                src="https://images.unsplash.com/photo-1567002260456-bce4cb6c30be?w=1600&q=80&auto=format&fit=crop"
+                src="https://images.unsplash.com/photo-1517090504586-fde19ea6066f?w=1600&q=80&auto=format&fit=crop"
                 alt="Downtown Toronto skyline - one of many MoveSmart franchise markets across Canada and the US"
                 fill
                 className="object-cover"
@@ -838,21 +882,14 @@ export default function FranchisingPage() {
 
           <div className="space-y-24 sm:space-y-32">
             <PullQuote
-              quote="I came from residential sales, not leasing brokerage. The 6-week onboarding gave me a full operating system on day one. We placed tenants in 38 units in our first eleven months and are on track for 110 by year-end."
+              quote="I came from residential sales, not leasing brokerage. The 6-week onboarding gave me a full operating system on day one."
               attribution="D. Patel"
               market="Calgary franchisee since 2024"
-              outcomeValue={38}
-              outcomeSuffix=" units"
-              outcomeLabel="Leased in first 11 months"
             />
             <PullQuote
               quote="HQ marketing has been the quiet engine. Owner inquiries land in my inbox already pre-qualified by the national site. My job is to close them - and the playbook tells me how."
               attribution="S. Lemieux"
               market="Vancouver Lower Mainland, since 2023"
-              outcomeValue={420}
-              outcomePrefix="$"
-              outcomeSuffix="K"
-              outcomeLabel="Annual recurring revenue by month 18"
               showRule
             />
           </div>
@@ -904,6 +941,13 @@ export default function FranchisingPage() {
         description="If your market is open and you meet the qualifications, we can have you in onboarding within 60 days. Request the Franchise Kit to get the full FDD overview."
         primaryCta={{ label: 'Request Franchise Kit', href: '/contact/?intent=franchise' }}
       />
+
+      {/* Small hours-of-operation note under the final CTA */}
+      <div className="bg-white py-6">
+        <p className="mx-auto max-w-3xl px-4 text-center text-[12px] leading-relaxed text-slate-500 sm:text-sm">
+          Note: Franchise team responds Mon&ndash;Fri, closed at 5pm ET / 2pm PT.
+        </p>
+      </div>
     </main>
   )
 }

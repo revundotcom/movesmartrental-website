@@ -21,18 +21,19 @@ interface UrlEntry {
   priority: number
 }
 
-// 10 expansion states (inline fallback if no data file)
+// 10 expansion states (inline fallback if no data file). Kept in sync with
+// `US_STATES_LIST` in `@/data/us-cities`.
 const US_STATES: string[] = [
-  'california',
-  'texas',
   'florida',
+  'texas',
+  'california',
   'new-york',
   'illinois',
-  'arizona',
   'georgia',
-  'washington',
-  'massachusetts',
   'north-carolina',
+  'arizona',
+  'colorado',
+  'new-jersey',
 ]
 
 const SERVICE_COMBOS = [

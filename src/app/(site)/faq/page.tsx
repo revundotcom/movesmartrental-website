@@ -45,20 +45,20 @@ function PopularTopicsAside() {
   ]
 
   return (
-    <aside className="relative">
+    <aside className="relative rounded-2xl border border-white/15 bg-white/[0.06] p-6 backdrop-blur-md sm:p-7">
       <div
         aria-hidden="true"
-        className="absolute -left-4 top-0 h-px w-16 bg-brand-gold"
+        className="absolute -top-px left-6 h-px w-16 bg-brand-gold"
       />
-      <p className="pt-4 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-navy/60">
+      <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-gold">
         Popular topics
       </p>
-      <ul className="mt-5 space-y-0 divide-y divide-brand-navy/10 border-y border-brand-navy/10">
+      <ul className="mt-5 space-y-0 divide-y divide-white/10 border-y border-white/10">
         {popular.map((item, i) => (
           <li key={item.id}>
             <a
               href={`#faq-${item.id}`}
-              className="group flex items-baseline justify-between gap-4 py-3.5 transition-colors hover:text-brand-emerald"
+              className="group flex items-baseline justify-between gap-4 py-3.5 transition-colors"
             >
               <span className="flex items-baseline gap-3">
                 <span
@@ -67,13 +67,13 @@ function PopularTopicsAside() {
                 >
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <span className="font-display text-lg text-brand-navy group-hover:text-brand-emerald">
+                <span className="font-display text-lg text-white group-hover:text-brand-emerald">
                   {item.label}
                 </span>
               </span>
               <span
                 aria-hidden="true"
-                className="translate-x-0 text-brand-navy/40 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-brand-emerald"
+                className="translate-x-0 text-white/50 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-brand-emerald"
               >
                 →
               </span>
@@ -81,11 +81,11 @@ function PopularTopicsAside() {
           </li>
         ))}
       </ul>
-      <p className="mt-5 text-xs leading-relaxed text-slate-500">
+      <p className="mt-5 text-xs leading-relaxed text-white/60">
         Can&apos;t find what you need?{' '}
         <a
           href="/contact/"
-          className="text-brand-navy underline decoration-brand-gold decoration-2 underline-offset-[4px] hover:text-brand-emerald"
+          className="text-white underline decoration-brand-gold decoration-2 underline-offset-[4px] hover:text-brand-emerald"
         >
           Ask a human
         </a>
@@ -125,6 +125,9 @@ export default function FAQPage() {
         cta1={{ label: 'Browse by topic', href: '#browse' }}
         cta2={{ label: 'Contact us', href: '/contact/' }}
         aside={<PopularTopicsAside />}
+        theme="dark"
+        backgroundImageUrl="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=2400&q=80"
+        backgroundImageAlt="Open notebook with questions and answers about renting"
       />
 
       {/* Invisible anchor to match the hero CTA "Browse by topic" */}

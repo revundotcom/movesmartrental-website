@@ -187,11 +187,11 @@ export function ServiceGridBlock({
                         </div>
                       )}
 
-                      {/* Hero stat */}
+                      {/* Hero label (no numeric brag — see meeting notes) */}
                       {isHero && (
                         <div className="mb-3">
-                          <p className="font-display text-[56px] font-black leading-none text-emerald-400">500+</p>
-                          <p className="mt-1 text-xs uppercase tracking-[0.18em] text-white/40">Tenants placed</p>
+                          <p className="font-display text-3xl font-black leading-none text-emerald-400">Full-cycle leasing</p>
+                          <p className="mt-1 text-xs uppercase tracking-[0.18em] text-white/40">Listing to move-in</p>
                         </div>
                       )}
 
@@ -253,8 +253,8 @@ export function ServiceGridBlock({
                       )}
                       {isHero && (
                         <div className="mb-2">
-                          <p className="font-display text-4xl font-black leading-none text-emerald-400">500+</p>
-                          <p className="mt-1 text-xs uppercase tracking-widest text-white/40">Tenants placed</p>
+                          <p className="font-display text-2xl font-black leading-none text-emerald-400">Full-cycle leasing</p>
+                          <p className="mt-1 text-xs uppercase tracking-widest text-white/40">Listing to move-in</p>
                         </div>
                       )}
                       <h3 className={`${isHero ? 'mt-2 text-xl' : 'text-base'} font-bold ${style.title}`}>

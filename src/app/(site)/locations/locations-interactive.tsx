@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 
@@ -40,6 +41,27 @@ export interface USCity {
   stateSlug: string
 }
 
+export interface USCityImage {
+  name: string
+  slug: string
+  state: string
+  stateSlug: string
+  img: string
+  alt: string
+}
+
+export interface CountrySplitState {
+  name: string
+  slug: string
+  cityCount: number
+}
+
+export interface CountrySplitProvince {
+  name: string
+  slug: string
+  cityCount: number
+}
+
 // ─────────────────────────────────────────────────────────────
 // Canada - Province Grid
 // ─────────────────────────────────────────────────────────────
@@ -70,18 +92,13 @@ export function ProvinceGrid({ provinces }: { provinces: ProvinceCard[] }) {
             <p className="mt-3 text-sm leading-relaxed text-slate-600">
               {p.positioning}
             </p>
-            <div className="mt-6 flex items-end justify-between border-t border-brand-navy/10 pt-4">
-              <div>
-                <p className="font-display text-2xl font-normal text-brand-navy">
-                  {p.cityCount}+
-                </p>
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-                  Tier-1 cities
-                </p>
-              </div>
-              <span className="font-heading text-sm font-semibold text-brand-emerald transition-colors group-hover:text-brand-navy">
-                Explore {p.name} <span aria-hidden="true">→</span>
-              </span>
+            <div className="mt-6 border-t border-brand-navy/10 pt-4">
+              <p className="font-display text-2xl font-normal text-brand-navy">
+                {p.cityCount}+
+              </p>
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+                Tier-1 cities
+              </p>
             </div>
           </Link>
         ))}
@@ -112,10 +129,10 @@ export function OntarioCityDirectory({ cities }: { cities: OntarioCity[] }) {
       <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <p className="font-heading text-sm text-slate-600">
           <span className="font-semibold text-brand-navy">{cities.length}</span>{' '}
-          tier-1 Ontario cities serviced
+          tier-1 Canadian cities serviced
         </p>
         <label className="relative block w-full max-w-xs">
-          <span className="sr-only">Filter Ontario cities</span>
+          <span className="sr-only">Filter Canadian cities</span>
           <input
             type="search"
             value={query}
@@ -129,7 +146,7 @@ export function OntarioCityDirectory({ cities }: { cities: OntarioCity[] }) {
       <RevealOnScroll variant="fade" duration={0.7}>
         {filtered.length === 0 ? (
           <p className="rounded-2xl border border-dashed border-brand-navy/15 bg-white/60 p-8 text-center font-heading text-sm text-slate-500">
-            No Ontario cities match &ldquo;{query}&rdquo;. Try a different
+            No Canadian cities match &ldquo;{query}&rdquo;. Try a different
             filter, or browse the full list.
           </p>
         ) : (
@@ -305,5 +322,205 @@ export function USCityDirectory({ cities }: { cities: USCity[] }) {
         )}
       </RevealOnScroll>
     </div>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────
+// Country Split - two-column USA + Canada compact card grids
+// ─────────────────────────────────────────────────────────────
+
+export function CountrySplit({
+  states,
+  provinces,
+}: {
+  states: CountrySplitState[]
+  provinces: CountrySplitProvince[]
+}) {
+  return (
+    <RevealOnScroll variant="fade" duration={0.8}>
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-12">
+        {/* LEFT - United States */}
+        <div className="rounded-3xl border border-brand-navy/10 bg-white p-7 sm:p-9">
+          <div className="mb-6 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl" aria-hidden="true">
+                🇺🇸
+              </span>
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
+                  United States
+                </p>
+                <h3 className="font-display text-2xl font-normal leading-tight text-brand-navy">
+                  10 priority states
+                </h3>
+              </div>
+            </div>
+            <span className="hidden rounded-full border border-brand-emerald/30 bg-brand-emerald/5 px-3 py-1 font-heading text-[11px] font-semibold uppercase tracking-wider text-brand-emerald sm:inline-block">
+              Now live
+            </span>
+          </div>
+          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {states.map((s) => (
+              <li key={s.slug}>
+                <Link
+                  href={`/us/${s.slug}/`}
+                  className="group flex items-center justify-between gap-3 rounded-xl border border-brand-navy/10 bg-[#FBFAF6] px-4 py-3 transition-all duration-200 hover:border-brand-emerald/40 hover:bg-white hover:shadow-[0_12px_28px_-22px_rgba(10,46,37,0.35)]"
+                >
+                  <div>
+                    <p className="font-display text-base font-normal text-brand-navy group-hover:text-brand-emerald">
+                      {s.name}
+                    </p>
+                    <p className="mt-0.5 text-[11px] text-slate-500">
+                      {s.cityCount} cities served
+                    </p>
+                  </div>
+                  <span className="font-heading text-xs font-semibold text-brand-emerald transition-colors group-hover:text-brand-navy">
+                    View cities <span aria-hidden="true">→</span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* RIGHT - Canada */}
+        <div className="rounded-3xl border border-brand-navy/10 bg-white p-7 sm:p-9">
+          <div className="mb-6 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl" aria-hidden="true">
+                🇨🇦
+              </span>
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-gold">
+                  Canada
+                </p>
+                <h3 className="font-display text-2xl font-normal leading-tight text-brand-navy">
+                  6 provinces
+                </h3>
+              </div>
+            </div>
+            <span className="hidden rounded-full border border-brand-gold/40 bg-brand-gold/10 px-3 py-1 font-heading text-[11px] font-semibold uppercase tracking-wider text-brand-navy sm:inline-block">
+              Home markets
+            </span>
+          </div>
+          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {provinces.map((p) => (
+              <li key={p.slug}>
+                <Link
+                  href={`/ca/${p.slug}/`}
+                  className="group flex items-center justify-between gap-3 rounded-xl border border-brand-navy/10 bg-[#FBFAF6] px-4 py-3 transition-all duration-200 hover:border-brand-emerald/40 hover:bg-white hover:shadow-[0_12px_28px_-22px_rgba(10,46,37,0.35)]"
+                >
+                  <div>
+                    <p className="font-display text-base font-normal text-brand-navy group-hover:text-brand-emerald">
+                      {p.name}
+                    </p>
+                    <p className="mt-0.5 text-[11px] text-slate-500">
+                      {p.cityCount} cities served
+                    </p>
+                  </div>
+                  <span className="font-heading text-xs font-semibold text-brand-emerald transition-colors group-hover:text-brand-navy">
+                    View cities <span aria-hidden="true">→</span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </RevealOnScroll>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────
+// Office hours band - small horizontal strip
+// ─────────────────────────────────────────────────────────────
+
+export function OfficeHoursBand() {
+  return (
+    <RevealOnScroll variant="fade" duration={0.6}>
+      <div className="mx-auto max-w-5xl rounded-2xl border border-brand-navy/10 bg-white p-5 shadow-[0_12px_32px_-24px_rgba(10,46,37,0.35)] sm:p-6">
+        <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
+          <div className="flex items-center gap-3">
+            <span
+              aria-hidden="true"
+              className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-emerald/10 text-brand-emerald"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </span>
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
+                Live coverage hours
+              </p>
+              <p className="mt-1 font-display text-base font-normal text-brand-navy sm:text-lg">
+                Mon–Fri · 9 AM – 5 PM local time
+              </p>
+            </div>
+          </div>
+          <div className="h-px w-full bg-brand-navy/10 sm:h-12 sm:w-px" aria-hidden="true" />
+          <p className="font-heading text-sm leading-relaxed text-slate-600">
+            After-hours leasing inquiries are handled by our AI assistant with a{' '}
+            <span className="font-semibold text-brand-navy">
+              next-business-day callback
+            </span>{' '}
+            from a named advisor in your market.
+          </p>
+        </div>
+      </div>
+    </RevealOnScroll>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────
+// US Tier-1 City Image Grid - imagery cards
+// ─────────────────────────────────────────────────────────────
+
+export function USCityImageGrid({ cities }: { cities: USCityImage[] }) {
+  return (
+    <RevealOnScroll variant="fade" duration={0.7}>
+      <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        {cities.map((city) => (
+          <li key={`${city.stateSlug}-${city.slug}`}>
+            <Link
+              href={`/us/${city.stateSlug}/${city.slug}/`}
+              className="group relative block aspect-[4/5] overflow-hidden rounded-2xl ring-1 ring-brand-navy/10 transition-all duration-300 hover:ring-brand-emerald/40 hover:shadow-[0_20px_40px_-24px_rgba(10,46,37,0.45)]"
+            >
+              <Image
+                src={city.img}
+                alt={city.alt}
+                fill
+                unoptimized
+                sizes="(min-width: 1280px) 220px, (min-width: 1024px) 24vw, (min-width: 640px) 32vw, 50vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-t from-brand-navy/90 via-brand-navy/30 to-transparent"
+              />
+              <div className="absolute inset-x-0 bottom-0 p-4">
+                <p className="font-display text-xl font-normal italic leading-tight text-white">
+                  {city.name}
+                </p>
+                <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white/70">
+                  {city.state}
+                </p>
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </RevealOnScroll>
   )
 }

@@ -1,27 +1,14 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import {
-  TrendingUp,
-  Megaphone,
-  CalendarCheck,
-  Handshake,
-  ShieldCheck,
-  Umbrella,
-  FileSignature,
-  KeyRound,
-  Building2,
-  ArrowRight,
-  Check,
-  type LucideIcon,
-} from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
-import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 import { BRAND } from '@/lib/brand-constants'
+import { BentoTile, RevealRow } from './client-parts'
 
 export const metadata: Metadata = {
   title: 'Leasing Brokerage Services | MoveSmart Rentals Canada',
@@ -45,151 +32,121 @@ export const metadata: Metadata = {
 }
 
 /* ──────────────────────────────────────────────────────────────────
- * The 9 leasing-execution services (per brand brief).
- * MoveSmart Rentals is a leasing brokerage - NOT a property
- * management company. No rent collection, no ongoing maintenance,
- * no LTB/eviction filing, no monthly statements.
+ * The 9 leasing-execution services, mapped to the live
+ * `/services/[service]/` slugs in `src/data/services-content.ts`.
+ * For the bento grid: each service is assigned a verified photo from
+ * the page's locked photo set and a size profile.
  * ────────────────────────────────────────────────────────────────── */
 
-type Service = {
+type ServiceCard = {
   number: string
+  slug: string
+  tag: string
   title: string
-  intent: string
-  scope: string[]
-  icon: LucideIcon
-  audience: 'individual' | 'institutional' | 'both'
+  summary: string
+  imageId: string
+  imageAlt: string
 }
 
-const SERVICES: Service[] = [
-  {
+const SERVICES: Record<string, ServiceCard> = {
+  tenantPlacement: {
     number: '01',
-    title: 'Strategic Rental Pricing',
-    intent: 'Set the right price the first time - not after two weeks of silence.',
-    icon: TrendingUp,
-    audience: 'both',
-    scope: [
-      'Live market analysis against active and recently-leased comparables',
-      'Vacancy trend review for the building, neighbourhood, and submarket',
-      'Pricing strategy discussion with you - aggressive fill vs. premium positioning',
-      'Written pricing rationale you can reference at renewal',
-    ],
+    slug: 'tenant-placement',
+    tag: 'End-to-end placement',
+    title: 'Tenant Placement',
+    summary:
+      'Pricing, marketing, showings, screening, lease, and move-in - one team running the full placement loop on a single timeline.',
+    imageId: 'photo-1554224155-6726b3ff858f',
+    imageAlt: 'Property owner handing house keys to a new tenant on move-in day',
   },
-  {
+  leasingServices: {
     number: '02',
-    title: 'Professional Marketing Execution',
-    intent: 'Magazine-grade marketing that earns the asking rent.',
-    icon: Megaphone,
-    audience: 'both',
-    scope: [
-      'Wide-angle professional photography, virtual tours, and floor plans',
-      'Listing copy written for both renter appeal and search visibility',
-      'MLS listing plus syndication to every major Canadian rental portal',
-      'One-time pre-listing prep coordination - paint touch-ups, deep clean, staging, light handyman, landscaping refresh',
-      'Social media placement and targeted paid ad campaigns where suitable',
-    ],
+    slug: 'leasing-services',
+    tag: 'Marketing & showings',
+    title: 'Leasing Services',
+    summary:
+      'Professional photography, MLS plus Canadian portal syndication, agent-led showings, and offer management for one unit or a portfolio.',
+    imageId: 'photo-1493809842364-78817add7ffb',
+    imageAlt: 'Modern Canadian high-rise rental towers from a low-angle perspective',
   },
-  {
+  tenantScreening: {
     number: '03',
-    title: 'Showing Coordination',
-    intent: 'Every qualified prospect through the door - without the calendar drain.',
-    icon: CalendarCheck,
-    audience: 'both',
-    scope: [
-      'Inquiry triage, scheduling, and confirmation handling',
-      'Agent-led private showings with pre-screened prospects',
-      'Open-house coordination for high-traffic units and weekends',
-      'Developer lease-up tour blocks for purpose-built rental and pre-construction',
-    ],
+    slug: 'tenant-screening',
+    tag: 'Risk-graded review',
+    title: 'Tenant Screening',
+    summary:
+      'Credit, income, employment, and reference verification with a written risk summary - a defensible yes or a documented no on every applicant.',
+    imageId: 'photo-1450101499163-c8848c66ca85',
+    imageAlt: 'MoveSmart leasing team reviewing applicant files at the signing table',
   },
-  {
+  rentGuarantee: {
     number: '04',
-    title: 'Offer Management',
-    intent: 'A clean process from first interest to mutual agreement.',
-    icon: Handshake,
-    audience: 'both',
-    scope: [
-      'Application collection and standardised intake from every applicant',
-      'Offer review and side-by-side comparison framing for your decision',
-      'Negotiation support on rent, term, deposit, and inclusions',
-      'Counter-offer drafting and back-and-forth management',
-    ],
+    slug: 'rent-guarantee',
+    tag: 'Income protection',
+    title: 'Rent Guarantee',
+    summary:
+      'Optional partner pathway that puts a floor under your rental income - guaranteed monthly rent with clear coverage and claim mechanics.',
+    imageId: 'photo-1556745753-b2904692b3cd',
+    imageAlt: 'Small-business owner reviewing income statements at her counter',
   },
-  {
+  tenantInsurance: {
     number: '05',
-    title: 'Tenant Qualification',
-    intent: 'A defensible "yes" - or a documented "no" - on every applicant.',
-    icon: ShieldCheck,
-    audience: 'both',
-    scope: [
-      'Credit checks through accredited bureaus',
-      'Income verification with paystubs, NOAs, and bank statements',
-      'Employment verification and direct employer outreach',
-      'Reference verification with current and prior landlords',
-      'Risk assessment summary plus provincial compliance checks',
-    ],
+    slug: 'tenant-insurance',
+    tag: 'Lease condition',
+    title: 'Tenant Insurance',
+    summary:
+      'Tenant insurance coordinated as a lease condition with certificates confirmed before key release - liability covered from day one.',
+    imageId: 'photo-1502672023488-70e25813eb80',
+    imageAlt: 'Bright open-plan Canadian rental living room ready for move-in',
   },
-  {
+  tenantGuarantor: {
     number: '06',
-    title: 'Rental Protection Options',
-    intent: 'Optional partner pathways that put a floor under your rental income.',
-    icon: Umbrella,
-    audience: 'both',
-    scope: [
-      'Guaranteed rental income insurance through vetted partners',
-      'Tenant insurance coordination as a lease condition',
-      'Financial qualification validation against partner underwriting standards',
-      'Plain-English explanation of coverage, exclusions, and claim mechanics',
-    ],
+    slug: 'tenant-guarantor',
+    tag: 'Application strengthener',
+    title: 'Tenant Guarantor',
+    summary:
+      'Structured guarantor program for newcomers, students, and thin-file applicants - underwriting and documentation handled end to end.',
+    imageId: 'photo-1551836022-d5d88e9218df',
+    imageAlt: 'Two professionals in advisory conversation in a bright office',
   },
-  {
+  rentalPreparation: {
     number: '07',
-    title: 'Lease Execution',
-    intent: 'A compliant, signed lease - with the deposit in trust.',
-    icon: FileSignature,
-    audience: 'both',
-    scope: [
-      'Lease preparation on province-specific, current-form templates',
-      'Digital signing through audited e-signature workflow',
-      'Compliance confirmation against provincial residential tenancy rules',
-      'First-and-last or last-month deposit collection and trust handling',
-    ],
+    slug: 'rental-preparation',
+    tag: 'Pre-listing prep',
+    title: 'Rental Preparation',
+    summary:
+      'One-time prep work - paint touch-ups, deep clean, light handyman, staging, and landscaping refresh - so the unit shows at its asking rent.',
+    imageId: 'photo-1502672023488-70e25813eb80',
+    imageAlt: 'Freshly prepared modern condo ready for the rental market',
   },
-  {
+  portalTech: {
     number: '08',
-    title: 'Move-In Coordination',
-    intent: 'A documented hand-over your future self will thank you for.',
-    icon: KeyRound,
-    audience: 'both',
-    scope: [
-      'Utility transfer coordination with the tenant',
-      'Tenant insurance certificate confirmation before key release',
-      'Key release scheduling at the unit or a secure pickup point',
-      'Move-in inspection with full condition documentation',
-      'Photo verification report archived for your records and any future dispute',
-    ],
+    slug: 'portal-and-technology',
+    tag: 'Owner & tenant portal',
+    title: 'Portal & Technology',
+    summary:
+      'Owner and tenant portals with showings, offers, screening files, lease docs, and live leasing analytics - one place for every decision.',
+    imageId: 'photo-1556745753-b2904692b3cd',
+    imageAlt: 'Operator reviewing leasing portal analytics on a tablet device',
   },
-  {
+  institutionalLeaseUp: {
     number: '09',
-    title: 'Institutional Lease-Up Services',
-    intent: 'Bulk leasing infrastructure for builders, PMCs, and purpose-built operators.',
-    icon: Building2,
-    audience: 'institutional',
-    scope: [
-      'Bulk unit onboarding and asset-level data ingestion',
-      'Campaign strategy across pre-leasing, soft launch, and stabilization',
-      'Dedicated leasing team deployment - on-site or remote, single point of contact',
-      'Live reporting dashboards with funnel, conversion, and absorption metrics',
-      'Vacancy and lease-up performance tracking against pro-forma',
-      'Structured rollout timelines aligned to occupancy permit and turnover schedules',
-    ],
+    slug: 'institutional-lease-up',
+    tag: 'Bulk lease-up',
+    title: 'Institutional Lease-Up',
+    summary:
+      'Bulk leasing infrastructure for builders, PMCs, and purpose-built operators - dedicated teams, live reporting, lease-up against pro-forma.',
+    imageId: 'photo-1542744173-8e7e53415bb0',
+    imageAlt: 'Institutional operators meeting at a conference table to plan a lease-up',
   },
-]
+}
 
-const INDIVIDUAL_SERVICES = SERVICES.filter((s) => s.audience !== 'institutional')
-const INSTITUTIONAL_SERVICE = SERVICES.find((s) => s.audience === 'institutional')!
+function unsplash(id: string, w = 1600) {
+  return `https://images.unsplash.com/${id}?w=${w}&q=80&auto=format&fit=crop`
+}
 
 /* ──────────────────────────────────────────────────────────────────
- * FAQ - fee model and scope clarifications
+ * Service-focused FAQ - fee model and scope clarifications
  * ────────────────────────────────────────────────────────────────── */
 
 const SERVICE_FAQ = [
@@ -228,71 +185,62 @@ const SERVICE_FAQ = [
     answer:
       'Every applicant goes through credit, income, employment, and reference verification, plus a written risk summary and provincial compliance check. You receive a defensible record for every approval and decline.',
   },
+]
+
+/* ──────────────────────────────────────────────────────────────────
+ * Commitments shown in the staggered editorial rows below the bento
+ * ────────────────────────────────────────────────────────────────── */
+
+const COMMITMENTS = [
   {
-    question: 'What does "Rental Protection Options" actually cover?',
-    answer:
-      'It is a partner pathway, not an in-house insurance product. We coordinate guaranteed-rent insurance, tenant insurance as a lease condition, and validate applicants against partner underwriting standards. Coverage, premiums, and claim mechanics sit with the carrier.',
+    number: '01',
+    title: 'Zero upfront, zero monthly percentage',
+    body:
+      'No retainer, no setup fee, no ongoing slice of your rent. A single success fee on placement - or you pay nothing at all.',
+  },
+  {
+    number: '02',
+    title: 'Documented decisions at every stage',
+    body:
+      'Pricing rationale, marketing assets, showing logs, screening files, signed lease, and move-in inspection - archived in your portal and exportable on demand.',
+  },
+  {
+    number: '03',
+    title: 'A single point of contact, end to end',
+    body:
+      'One dedicated leasing lead from listing prep to key handover. No call-centre triage, no losing the thread between two agents.',
   },
 ]
 
 /* ──────────────────────────────────────────────────────────────────
- * Service card - reused across both audience sections
+ * Stats strip - 4 quick proof points, rendered as ruled inline rows
  * ────────────────────────────────────────────────────────────────── */
 
-function ServiceCard({ service }: { service: Service }) {
-  const Icon = service.icon
-  return (
-    <article className="group relative flex h-full flex-col rounded-2xl border border-brand-navy/10 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-emerald/30 hover:shadow-lg">
-      <div
-        aria-hidden="true"
-        className="absolute right-0 top-0 h-px w-16 bg-gradient-to-l from-brand-gold to-transparent"
-      />
-      <div className="flex items-start justify-between">
-        <div className="inline-flex size-12 items-center justify-center rounded-xl bg-emerald-50 text-brand-emerald transition-transform duration-300 group-hover:scale-105">
-          <Icon className="size-6" aria-hidden="true" />
-        </div>
-        <span className="font-mono text-[11px] font-semibold tracking-wider text-brand-navy/35">
-          {service.number}
-        </span>
-      </div>
-      <h3 className="mt-5 font-display text-xl font-normal leading-snug text-brand-navy">
-        {service.title}
-        <span aria-hidden="true" className="text-brand-gold">.</span>
-      </h3>
-      <p className="mt-2 text-sm italic leading-relaxed text-brand-emerald/90">
-        {service.intent}
-      </p>
-      <ul className="mt-5 space-y-2.5 border-t border-brand-navy/5 pt-5">
-        {service.scope.map((item) => (
-          <li key={item} className="flex items-start gap-2.5 text-sm leading-relaxed text-slate-600">
-            <Check
-              className="mt-0.5 size-4 shrink-0 text-brand-emerald"
-              aria-hidden="true"
-              strokeWidth={2.5}
-            />
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    </article>
-  )
-}
+const STATS_STRIP = [
+  { value: '20+', label: 'Cities served', detail: 'GTA + Ontario priority, expanding west' },
+  { value: '18d', label: 'Avg days to lease', detail: 'Pricing-to-key-handover, on Canadian portals' },
+  { value: '12+', label: 'Portals syndicated', detail: 'MLS, Realtor.ca, Kijiji, Zumper, Padmapper' },
+  { value: '$0', label: 'Upfront cost', detail: 'Success-fee on placement, no retainer' },
+]
 
 export default function ServicesPage() {
   /* ── JSON-LD: each service as Service entity for SEO/AEO ── */
+  const servicesArray = Object.values(SERVICES)
+
   const servicesJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'MoveSmart Rentals Leasing Services',
     description:
       'Nine end-to-end leasing services for Canadian landlords and institutional rental operators.',
-    itemListElement: SERVICES.map((s, i) => ({
+    itemListElement: servicesArray.map((s, i) => ({
       '@type': 'ListItem',
       position: i + 1,
       item: {
         '@type': 'Service',
         name: s.title,
-        description: s.intent,
+        description: s.summary,
+        url: `${BRAND.url}/services/${s.slug}/`,
         provider: {
           '@type': 'Organization',
           name: BRAND.name,
@@ -318,43 +266,45 @@ export default function ServicesPage() {
 
   /* ── Hero aside: dual-audience card ── */
   const heroAside = (
-    <div className="relative overflow-hidden rounded-2xl border border-brand-navy/10 bg-white/85 p-6 shadow-sm backdrop-blur-sm">
+    <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-white/10 p-6 shadow-sm backdrop-blur-md sm:p-7">
       <div
         aria-hidden="true"
         className="absolute right-0 top-0 h-px w-24 bg-gradient-to-l from-brand-gold to-transparent"
       />
-      <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-navy/55">
+      <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-gold">
         Who we serve
       </p>
-      <h2 className="mt-2 font-display text-xl font-normal text-brand-navy">
+      <h2 className="mt-2 font-display text-xl font-normal text-white sm:text-2xl">
         Two audiences, one playbook
-        <span aria-hidden="true" className="text-brand-gold">.</span>
+        <span aria-hidden="true" className="text-brand-gold">
+          .
+        </span>
       </h2>
       <div className="mt-5 space-y-4">
         <a
-          href="#for-landlords"
-          className="group block rounded-xl border border-brand-navy/10 bg-[#FBFAF6] p-4 transition-colors hover:border-brand-emerald/40"
+          href="#services-bento"
+          className="group block rounded-2xl border border-white/15 bg-white/5 p-4 transition-colors hover:border-brand-emerald/50 hover:bg-white/10"
         >
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-brand-emerald">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-300">
             For individual landlords
           </p>
-          <p className="mt-1.5 text-sm font-medium text-brand-navy group-hover:underline group-hover:decoration-brand-gold group-hover:underline-offset-4">
+          <p className="mt-1.5 text-sm font-medium text-white group-hover:underline group-hover:decoration-brand-gold group-hover:underline-offset-4">
             One unit or a small portfolio - placed end to end.
           </p>
         </a>
         <a
-          href="#for-institutional"
-          className="group block rounded-xl border border-brand-navy/10 bg-[#FBFAF6] p-4 transition-colors hover:border-brand-emerald/40"
+          href="#services-bento"
+          className="group block rounded-2xl border border-white/15 bg-white/5 p-4 transition-colors hover:border-brand-emerald/50 hover:bg-white/10"
         >
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-brand-emerald">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-300">
             For builders, PMCs &amp; operators
           </p>
-          <p className="mt-1.5 text-sm font-medium text-brand-navy group-hover:underline group-hover:decoration-brand-gold group-hover:underline-offset-4">
+          <p className="mt-1.5 text-sm font-medium text-white group-hover:underline group-hover:decoration-brand-gold group-hover:underline-offset-4">
             Bulk lease-up infrastructure with reporting against pro-forma.
           </p>
         </a>
       </div>
-      <p className="mt-5 border-t border-brand-navy/10 pt-4 text-[11px] leading-relaxed text-slate-500">
+      <p className="mt-5 border-t border-white/15 pt-4 text-[11px] leading-relaxed text-white/65">
         Zero upfront. Zero monthly percentage. Success-based fee on placement.
       </p>
     </div>
@@ -380,248 +330,434 @@ export default function ServicesPage() {
         />
       </div>
 
-      {/* ── 1. Editorial page hero ── */}
+      {/* ── 1. HERO - dark photographic Toronto skyline backdrop ──── */}
       <PageHeroBlock
         kicker="Services"
         eyebrow="Full-Service Leasing &amp; Tenant Placement"
         headline="Nine services. One leased unit."
         accentLastWord={false}
         lede="From pricing strategy to move-in inspection, MoveSmart Rentals runs the leasing lifecycle end to end - so individual landlords get peace of mind, and institutional operators get a leasing team that scales with them."
-        cta1={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
+        cta1={{ label: 'List my property', href: '/contact/?type=owner' }}
+        cta2={{ label: 'Browse rentals', href: '/properties/' }}
         aside={heroAside}
+        theme="dark"
+        backgroundImageUrl="https://images.unsplash.com/photo-1517090504586-fde19ea6066f?w=2400&q=80&auto=format&fit=crop"
+        backgroundImageAlt="Toronto skyline at dusk - the Canadian rental market MoveSmart leases across"
       />
 
-      {/* ── 1.5. Editorial banner image: Toronto rental skyline ── */}
-      <section className="bg-white pt-8 pb-12">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="relative aspect-[16/6] overflow-hidden rounded-3xl shadow-xl shadow-brand-navy/15">
-            <Image
-              src="https://images.unsplash.com/photo-1517090504586-fde19ea6066f?w=2400&q=80&auto=format&fit=crop"
-              alt="Toronto skyline at dusk - the Canadian rental market MoveSmart leases across"
-              fill
-              className="object-cover"
-              sizes="(max-width: 1280px) 100vw, 1200px"
-              priority
-              unoptimized
-            />
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-r from-brand-navy/70 via-brand-navy/35 to-transparent"
-            />
-            <div className="absolute inset-y-0 left-0 flex max-w-xl flex-col justify-center px-8 sm:px-12">
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-gold">
-                Leasing brokerage, end to end
+      {/* ── 2. BENTO GRID - asymmetric service tiles ──────────────── */}
+      <section
+        id="services-bento"
+        className="relative scroll-mt-24 overflow-hidden bg-[#FBFAF6] py-20 sm:py-24"
+      >
+        {/* Decorative dot grid */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)',
+            backgroundSize: '28px 28px',
+          }}
+        />
+
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <RevealOnScroll variant="clipReveal" duration={0.6}>
+            <div className="mb-12 grid items-end gap-8 md:mb-14 md:grid-cols-12">
+              <div className="md:col-span-7">
+                <p className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                  <span aria-hidden="true" className="block h-px w-8 bg-brand-emerald/60" />
+                  The nine services
+                </p>
+                <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
+                  Every step of leasing,{' '}
+                  <span className="font-display italic text-brand-emerald">in one place</span>
+                  <span aria-hidden="true" className="text-brand-gold">
+                    .
+                  </span>
+                </h2>
+              </div>
+              <p className="text-base leading-relaxed text-slate-600 sm:text-lg md:col-span-5">
+                Nine interlocking services that take your unit from market read to move-in inspection. Tap any tile to see how that service runs.
               </p>
-              <p className="mt-3 font-display text-2xl font-normal italic leading-snug text-white sm:text-3xl md:text-4xl">
-                From pricing the unit to releasing the keys.
+            </div>
+          </RevealOnScroll>
+
+          {/* ── BENTO GRID ───────────────────────────────────────────
+              Layout (lg+):
+              Row 1: [Placement WIDE col-2 row-2] [Leasing TALL col-1 row-2] [Stat 20+ col-1]
+              Row 2: continued tall tiles ............................. [CTA "Talk" col-1]
+              Row 3: [Screening col-1] [Lease-Up WIDE col-2] [Insurance col-1]
+              Row 4: [Editorial Insurance TALL col-2 row-2] [Guarantor col-1] [Stat $0 col-1]
+              Row 5: continued .................................. [Prep col-1] [Portal col-1]
+              Row 6: [Rent Guar WIDE col-2] [Stat 18d col-1] [Final CTA col-1]
+          ─────────────────────────────────────────────────────────── */}
+          <div className="grid auto-rows-[180px] grid-cols-1 gap-4 sm:auto-rows-[200px] sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
+            {/* TILE 1 - Tenant Placement (LARGE: col-2 row-2) hero of the grid */}
+            <BentoTile
+              index={0}
+              variant="image"
+              className="sm:col-span-2 sm:row-span-2 lg:col-span-2 lg:row-span-2"
+              href={`/services/${SERVICES.tenantPlacement.slug}/`}
+              tag={SERVICES.tenantPlacement.tag}
+              number={SERVICES.tenantPlacement.number}
+              title={SERVICES.tenantPlacement.title}
+              summary={SERVICES.tenantPlacement.summary}
+              imageSrc={unsplash(SERVICES.tenantPlacement.imageId)}
+              imageAlt={SERVICES.tenantPlacement.imageAlt}
+              bodySize="xl"
+            />
+
+            {/* TILE 2 - Leasing Services (TALL: col-1 row-2) */}
+            <BentoTile
+              index={1}
+              variant="image"
+              className="sm:col-span-1 sm:row-span-2 lg:col-span-1 lg:row-span-2"
+              href={`/services/${SERVICES.leasingServices.slug}/`}
+              tag={SERVICES.leasingServices.tag}
+              number={SERVICES.leasingServices.number}
+              title={SERVICES.leasingServices.title}
+              summary={SERVICES.leasingServices.summary}
+              imageSrc={unsplash(SERVICES.leasingServices.imageId)}
+              imageAlt={SERVICES.leasingServices.imageAlt}
+              bodySize="lg"
+            />
+
+            {/* TILE 3 - Stat tile (SMALL) */}
+            <BentoTile
+              index={2}
+              variant="stat"
+              className="sm:col-span-1 lg:col-span-1"
+              tag="Across Canada"
+              statValue="20+"
+              statLabel="Cities served"
+              summary="GTA-led, expanding west across Ontario, BC, and Alberta."
+              bg="emerald"
+            />
+
+            {/* TILE 4 - CTA tile (SMALL) */}
+            <BentoTile
+              index={3}
+              variant="cta"
+              className="sm:col-span-1 lg:col-span-1"
+              href="/contact/?type=owner&intent=call"
+              tag="Talk to advisor"
+              title="Book a 15-min call"
+              ctaLabel="Schedule"
+              bg="navy"
+            />
+
+            {/* TILE 5 - Tenant Screening (MEDIUM) */}
+            <BentoTile
+              index={4}
+              variant="image"
+              className="sm:col-span-1 lg:col-span-1"
+              href={`/services/${SERVICES.tenantScreening.slug}/`}
+              tag={SERVICES.tenantScreening.tag}
+              number={SERVICES.tenantScreening.number}
+              title={SERVICES.tenantScreening.title}
+              imageSrc={unsplash(SERVICES.tenantScreening.imageId)}
+              imageAlt={SERVICES.tenantScreening.imageAlt}
+              bodySize="md"
+            />
+
+            {/* TILE 6 - Institutional Lease-Up (WIDE: col-2) */}
+            <BentoTile
+              index={5}
+              variant="image"
+              className="sm:col-span-2 lg:col-span-2"
+              href={`/services/${SERVICES.institutionalLeaseUp.slug}/`}
+              tag={SERVICES.institutionalLeaseUp.tag}
+              number={SERVICES.institutionalLeaseUp.number}
+              title={SERVICES.institutionalLeaseUp.title}
+              summary={SERVICES.institutionalLeaseUp.summary}
+              imageSrc={unsplash(SERVICES.institutionalLeaseUp.imageId)}
+              imageAlt={SERVICES.institutionalLeaseUp.imageAlt}
+              bodySize="lg"
+            />
+
+            {/* TILE 7 - Tenant Insurance (MEDIUM, image) */}
+            <BentoTile
+              index={6}
+              variant="image"
+              className="sm:col-span-1 lg:col-span-1"
+              href={`/services/${SERVICES.tenantInsurance.slug}/`}
+              tag={SERVICES.tenantInsurance.tag}
+              number={SERVICES.tenantInsurance.number}
+              title={SERVICES.tenantInsurance.title}
+              imageSrc={unsplash(SERVICES.tenantInsurance.imageId)}
+              imageAlt={SERVICES.tenantInsurance.imageAlt}
+              bodySize="md"
+            />
+
+            {/* TILE 8 - Tenant Guarantor (TALL: row-2) */}
+            <BentoTile
+              index={7}
+              variant="image"
+              className="sm:col-span-1 sm:row-span-2 lg:col-span-1 lg:row-span-2"
+              href={`/services/${SERVICES.tenantGuarantor.slug}/`}
+              tag={SERVICES.tenantGuarantor.tag}
+              number={SERVICES.tenantGuarantor.number}
+              title={SERVICES.tenantGuarantor.title}
+              summary={SERVICES.tenantGuarantor.summary}
+              imageSrc={unsplash(SERVICES.tenantGuarantor.imageId)}
+              imageAlt={SERVICES.tenantGuarantor.imageAlt}
+              bodySize="lg"
+            />
+
+            {/* TILE 9 - Rental Preparation (MEDIUM) */}
+            <BentoTile
+              index={8}
+              variant="image"
+              className="sm:col-span-1 lg:col-span-2"
+              href={`/services/${SERVICES.rentalPreparation.slug}/`}
+              tag={SERVICES.rentalPreparation.tag}
+              number={SERVICES.rentalPreparation.number}
+              title={SERVICES.rentalPreparation.title}
+              summary={SERVICES.rentalPreparation.summary}
+              imageSrc={unsplash(SERVICES.rentalPreparation.imageId)}
+              imageAlt={SERVICES.rentalPreparation.imageAlt}
+              bodySize="md"
+            />
+
+            {/* TILE 10 - Stat tile $0 (SMALL) */}
+            <BentoTile
+              index={9}
+              variant="stat"
+              className="sm:col-span-1 lg:col-span-1"
+              tag="Fee model"
+              statValue="$0"
+              statLabel="Upfront cost"
+              summary="Success fee on placement - or you pay nothing at all."
+              bg="gold"
+            />
+
+            {/* TILE 11 - Portal & Technology (MEDIUM) */}
+            <BentoTile
+              index={10}
+              variant="image"
+              className="sm:col-span-1 lg:col-span-1"
+              href={`/services/${SERVICES.portalTech.slug}/`}
+              tag={SERVICES.portalTech.tag}
+              number={SERVICES.portalTech.number}
+              title={SERVICES.portalTech.title}
+              imageSrc={unsplash(SERVICES.portalTech.imageId)}
+              imageAlt={SERVICES.portalTech.imageAlt}
+              bodySize="md"
+            />
+
+            {/* TILE 12 - Rent Guarantee (WIDE: col-2) */}
+            <BentoTile
+              index={11}
+              variant="image"
+              className="sm:col-span-2 lg:col-span-2"
+              href={`/services/${SERVICES.rentGuarantee.slug}/`}
+              tag={SERVICES.rentGuarantee.tag}
+              number={SERVICES.rentGuarantee.number}
+              title={SERVICES.rentGuarantee.title}
+              summary={SERVICES.rentGuarantee.summary}
+              imageSrc={unsplash(SERVICES.rentGuarantee.imageId)}
+              imageAlt={SERVICES.rentGuarantee.imageAlt}
+              bodySize="lg"
+            />
+
+            {/* TILE 13 - Stat 18d (SMALL) */}
+            <BentoTile
+              index={12}
+              variant="stat"
+              className="sm:col-span-1 lg:col-span-1"
+              tag="Time to lease"
+              statValue="18d"
+              statLabel="Avg pricing-to-key handover"
+              summary="On Canadian rental portals, all property types."
+              bg="cream"
+            />
+
+            {/* TILE 14 - Final CTA (SMALL) */}
+            <BentoTile
+              index={13}
+              variant="cta"
+              className="sm:col-span-1 lg:col-span-1"
+              href="/contact/?type=owner"
+              tag="Ready to list?"
+              title="Get a market read"
+              summary="Live rent comps for your unit - no obligation."
+              ctaLabel="Start now"
+              bg="emerald"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ── 3. EDITORIAL BRIDGE - full-service execution photograph ─ */}
+      <section className="relative overflow-hidden bg-white py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
+            <div className="relative aspect-[5/4] overflow-hidden rounded-[2rem] shadow-2xl shadow-brand-navy/20 lg:col-span-7">
+              <Image
+                src="https://images.unsplash.com/photo-1502672023488-70e25813eb80?w=1600&q=80&auto=format&fit=crop"
+                alt="Spacious move-in-ready open-plan living room in a Canadian rental"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 58vw"
+                unoptimized
+              />
+              {/* Floating proof badge */}
+              <div className="absolute -bottom-4 -right-4 hidden rounded-2xl border border-emerald-100 bg-white p-4 shadow-xl shadow-brand-navy/15 sm:block">
+                <div className="flex items-center gap-3">
+                  <div className="flex size-10 items-center justify-center rounded-full bg-emerald-100">
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="size-5 text-brand-emerald"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M20 6 9 17l-5-5" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-emerald">
+                      Move-in
+                    </p>
+                    <p className="font-display text-lg text-brand-navy">Inspected</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="lg:col-span-5">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                Full-service execution
               </p>
+              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
+                A defensible paper trail{' '}
+                <span className="font-display italic text-brand-emerald">
+                  for every decision
+                </span>
+                <span aria-hidden="true" className="text-brand-gold">
+                  .
+                </span>
+              </h2>
+              <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
+                Province-specific lease templates, e-signature workflow, deposits held in trust, condition reports with photo evidence - every stage of the engagement is structured, recorded, and archived. If anything is ever questioned, the answer is already in the file.
+              </p>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Link
+                  href="/contact/?type=owner"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-md transition-all duration-300 hover:-translate-y-px hover:bg-emerald-500 hover:shadow-lg"
+                >
+                  Get a market read
+                  <ArrowRight className="size-4" aria-hidden="true" />
+                </Link>
+                <Link
+                  href="/owners/"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-brand-navy/15 bg-white px-6 py-3 text-sm font-semibold text-brand-navy transition-all duration-300 hover:-translate-y-px hover:border-brand-emerald/40 hover:bg-emerald-50"
+                >
+                  Owner overview
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── 2. For individual landlords - 8 service cards ── */}
-      <section id="for-landlords" className="scroll-mt-24 bg-[#FBFAF6] py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <RevealOnScroll>
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
-                For individual landlords
+      {/* ── 4. STATS STRIP - staggered ruled rows (not a uniform 4-up grid) ─ */}
+      <section className="relative isolate overflow-hidden bg-[#0B1D3A] py-20 text-white sm:py-24">
+        {/* Subtle radial accents */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-32 top-1/3 size-[500px] -translate-y-1/2 rounded-full bg-brand-emerald/10 blur-3xl"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-24 bottom-0 size-[420px] rounded-full bg-brand-gold/[0.08] blur-3xl"
+        />
+        {/* Gold hairlines */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
+        />
+
+        <div className="relative mx-auto max-w-6xl px-4">
+          <RevealOnScroll variant="clipReveal" duration={0.6}>
+            <div className="mb-12 max-w-2xl">
+              <p className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-gold">
+                <span aria-hidden="true" className="block h-px w-8 bg-brand-gold/60" />
+                Proof in numbers
               </p>
-              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
-                Full-service leasing,{' '}
-                <span className="font-display italic text-brand-emerald">end to end</span>
-                <span aria-hidden="true" className="text-brand-gold">.</span>
+              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-white sm:text-4xl md:text-5xl">
+                The leasing engine,{' '}
+                <span className="font-display italic text-brand-emerald">measured</span>
+                <span aria-hidden="true" className="text-brand-gold">
+                  .
+                </span>
               </h2>
-              <p className="mt-4 text-base leading-relaxed text-slate-600">
-                Eight interlocking services that take your unit from listed to leased -
-                with documented decisions at every stage and a defensible paper trail
-                for everything that matters.
-              </p>
             </div>
           </RevealOnScroll>
 
-          <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {INDIVIDUAL_SERVICES.map((service) => (
-              <ServiceCard key={service.number} service={service} />
+          <div className="divide-y divide-white/10 border-y border-white/10">
+            {STATS_STRIP.map((stat, idx) => (
+              <RevealRow
+                key={stat.label}
+                index={idx}
+                className="grid grid-cols-1 items-baseline gap-4 py-7 md:grid-cols-12 md:gap-8"
+              >
+                <div className="md:col-span-3">
+                  <p
+                    className="font-display text-5xl font-normal leading-none text-brand-gold sm:text-6xl md:text-7xl"
+                    aria-hidden="true"
+                  >
+                    {stat.value}
+                    <span className="text-brand-emerald">.</span>
+                  </p>
+                </div>
+                <div
+                  className={`md:col-span-4 ${idx % 2 === 1 ? 'md:col-start-5' : ''}`}
+                >
+                  <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-emerald-300">
+                    {stat.label}
+                  </p>
+                </div>
+                <div className="md:col-span-5">
+                  <p className="text-sm leading-relaxed text-white/65 sm:text-base">
+                    {stat.detail}
+                  </p>
+                </div>
+              </RevealRow>
+            ))}
+          </div>
+
+          {/* Commitments below the stats - same staggered cadence */}
+          <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
+            {COMMITMENTS.map((c, idx) => (
+              <RevealRow
+                key={c.number}
+                index={idx}
+                className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm sm:p-7"
+              >
+                <span
+                  className="font-display text-3xl font-normal leading-none text-brand-gold sm:text-4xl"
+                  aria-hidden="true"
+                >
+                  {c.number}
+                </span>
+                <h3 className="mt-4 font-display text-lg font-normal leading-snug text-white sm:text-xl">
+                  {c.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-white/65">{c.body}</p>
+              </RevealRow>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── 2.5. Lease execution visual: signed lease and handshake ── */}
-      <section className="bg-white py-16">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl shadow-brand-navy/10">
-              <Image
-                src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&q=80&auto=format&fit=crop"
-                alt="Landlord and tenant signing the Ontario Standard Lease at closing"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                unoptimized
-              />
-            </div>
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
-                Documented at every stage
-              </p>
-              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
-                A defensible paper trail{' '}
-                <span className="font-display italic text-brand-emerald">for every decision.</span>
-              </h2>
-              <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
-                Province-specific lease templates, e-signature workflow, deposits in trust, condition reports with photo evidence - every stage of the leasing engagement is structured, recorded, and stored so you have a defensible record if anything is ever questioned.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 3. CTA strip ── */}
-      <section className="bg-brand-navy py-12">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
-            <div className="max-w-xl">
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-gold">
-                Ready when you are
-              </p>
-              <h2 className="mt-2 font-display text-2xl font-normal text-white sm:text-3xl">
-                Get a market read on your unit{' '}
-                <span className="font-display italic text-emerald-300">this week</span>
-                <span aria-hidden="true" className="text-brand-gold">.</span>
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-white/65">
-                No upfront cost. No monthly percentage. A success fee only when a
-                qualified tenant signs.
-              </p>
-            </div>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/contact/?type=owner"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-md transition-all duration-300 hover:-translate-y-px hover:bg-emerald-500 hover:shadow-lg"
-              >
-                Create a Free Account
-                <ArrowRight className="size-4" aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 4. For institutional operators ── */}
-      <section id="for-institutional" className="scroll-mt-24 bg-white py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <RevealOnScroll>
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
-                For builders, PMCs &amp; purpose-built operators
-              </p>
-              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
-                Institutional{' '}
-                <span className="font-display italic text-brand-emerald">lease-up</span>
-                <span aria-hidden="true" className="text-brand-gold">.</span>
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-slate-600">
-                When it is not one unit but eighty, one hundred, or a tower at a time -
-                we deploy a dedicated leasing team, run pre-leasing campaigns, and report
-                live against your pro-forma.
-              </p>
-            </div>
-          </RevealOnScroll>
-
-          <RevealOnScroll>
-            <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-12">
-              {/* Big feature card */}
-              <article className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0a1929] via-[#0b2240] to-[#062318] p-8 shadow-lg lg:col-span-7 lg:p-10">
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -right-16 -top-16 size-64 rounded-full bg-emerald-500/15 blur-3xl"
-                />
-                <div className="relative">
-                  <div className="flex items-center gap-3">
-                    <div className="inline-flex size-12 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-300">
-                      <Building2 className="size-6" aria-hidden="true" />
-                    </div>
-                    <span className="font-mono text-[11px] font-semibold tracking-wider text-white/40">
-                      {INSTITUTIONAL_SERVICE.number}
-                    </span>
-                  </div>
-                  <h3 className="mt-6 font-display text-3xl font-normal text-white sm:text-4xl">
-                    {INSTITUTIONAL_SERVICE.title}
-                    <span aria-hidden="true" className="text-brand-gold">.</span>
-                  </h3>
-                  <p className="mt-3 text-base italic leading-relaxed text-emerald-300/90">
-                    {INSTITUTIONAL_SERVICE.intent}
-                  </p>
-                  <ul className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    {INSTITUTIONAL_SERVICE.scope.map((item) => (
-                      <li
-                        key={item}
-                        className="flex items-start gap-2.5 text-sm leading-relaxed text-white/75"
-                      >
-                        <Check
-                          className="mt-0.5 size-4 shrink-0 text-emerald-400"
-                          aria-hidden="true"
-                          strokeWidth={2.5}
-                        />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
-
-              {/* Side: who it's for + CTA */}
-              <aside className="flex flex-col gap-5 lg:col-span-5">
-                <div className="rounded-2xl border border-brand-navy/10 bg-[#FBFAF6] p-7">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-navy/55">
-                    Built for
-                  </p>
-                  <ul className="mt-4 space-y-3 text-sm text-brand-navy">
-                    <li className="flex items-start gap-2.5">
-                      <Check className="mt-0.5 size-4 shrink-0 text-brand-emerald" strokeWidth={2.5} aria-hidden="true" />
-                      <span>Builders &amp; developers nearing first occupancy</span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <Check className="mt-0.5 size-4 shrink-0 text-brand-emerald" strokeWidth={2.5} aria-hidden="true" />
-                      <span>Property management companies expanding leasing capacity</span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <Check className="mt-0.5 size-4 shrink-0 text-brand-emerald" strokeWidth={2.5} aria-hidden="true" />
-                      <span>Purpose-built rental operators stabilising new assets</span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <Check className="mt-0.5 size-4 shrink-0 text-brand-emerald" strokeWidth={2.5} aria-hidden="true" />
-                      <span>Portfolio owners with multi-unit absorption windows</span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="rounded-2xl border border-brand-emerald/30 bg-emerald-50/60 p-7">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
-                    Engagement model
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-brand-navy">
-                    Project-scoped pricing. Dedicated leasing lead. Live reporting
-                    dashboards. Engagements typically begin 60-120 days before first
-                    occupancy.
-                  </p>
-                  <Link
-                    href="/contact/?type=owner&intent=call"
-                    className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-emerald hover:underline hover:decoration-brand-gold hover:underline-offset-4"
-                  >
-                    Talk to our lease-up team
-                    <ArrowRight className="size-4" aria-hidden="true" />
-                  </Link>
-                </div>
-              </aside>
-            </div>
-          </RevealOnScroll>
-        </div>
-      </section>
-
-      {/* ── 5. FAQ ── */}
+      {/* ── 5. FAQ ─────────────────────────────────────────────────── */}
       <div id="faq" className="scroll-mt-24">
         <FAQBlock
           questions={SERVICE_FAQ}
@@ -630,12 +766,60 @@ export default function ServicesPage() {
         />
       </div>
 
-      {/* ── 6. Final CTA banner ── */}
-      <CTABannerBlock
-        headline="Hand the leasing playbook off."
-        description="Create a free account and we will pull live market rent for your unit and walk you through the nine-service workflow - no obligation."
-        primaryCta={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
-      />
+      {/* ── 6. CUSTOM DARK CTA - replaces killed CTABannerBlock ──── */}
+      <section className="relative isolate overflow-hidden bg-brand-navy py-20 text-white sm:py-24">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-24 top-1/2 size-[420px] -translate-y-1/2 rounded-full bg-brand-emerald/15 blur-3xl"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-32 bottom-0 size-[360px] rounded-full bg-brand-gold/[0.10] blur-3xl"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
+        />
+
+        <div className="relative mx-auto max-w-6xl px-4">
+          <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
+            <div className="max-w-2xl">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-gold">
+                Ready when you are
+              </p>
+              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-white sm:text-4xl md:text-5xl">
+                Hand the leasing playbook{' '}
+                <span className="font-display italic text-emerald-300">off</span>
+                <span aria-hidden="true" className="text-brand-gold">
+                  .
+                </span>
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-white/70 sm:text-lg">
+                List your property and we will pull live market rent for your unit and walk you through the nine-service workflow - no obligation, no upfront cost.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/contact/?type=owner"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-emerald px-7 py-3.5 text-sm font-bold text-white shadow-lg transition-all duration-300 hover:-translate-y-px hover:bg-emerald-500 hover:shadow-xl"
+              >
+                List my property
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+              <Link
+                href="/contact/?type=owner&intent=call"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-px hover:border-brand-gold/60 hover:bg-white/10"
+              >
+                Talk to a leasing advisor
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   )
 }

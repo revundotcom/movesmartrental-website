@@ -60,7 +60,7 @@ export function TenantsPropertyTypes() {
             Find Your Perfect Home
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-            From downtown condos to suburban houses - verified listings across Ontario with
+            From downtown condos to suburban houses - verified listings across Canada and the United States with
             transparent pricing.
           </p>
         </div>

@@ -96,7 +96,7 @@ export function CityGridBlock({
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-7xl px-4">
-        {showHeading && province && (
+        {showHeading && province ? (
           <RevealOnScroll>
             <motion.div variants={revealItem} className="mb-10 flex items-end justify-between">
               <div>
@@ -126,6 +126,26 @@ export function CityGridBlock({
               </div>
             </motion.div>
           </RevealOnScroll>
+        ) : (
+          /* Headless mode: still expose desktop arrow controls */
+          <div className="mb-6 hidden items-center justify-end gap-2 md:flex">
+            <button
+              onClick={() => scroll('left')}
+              disabled={!canScrollLeft}
+              aria-label="Scroll left"
+              className="flex size-10 items-center justify-center rounded-full border border-[#0B1D3A]/20 text-[#0B1D3A] transition-all hover:border-[#0B1D3A] hover:bg-[#0B1D3A] hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+            >
+              <ChevronLeft className="size-5" />
+            </button>
+            <button
+              onClick={() => scroll('right')}
+              disabled={!canScrollRight}
+              aria-label="Scroll right"
+              className="flex size-10 items-center justify-center rounded-full border border-[#0B1D3A]/20 text-[#0B1D3A] transition-all hover:border-[#0B1D3A] hover:bg-[#0B1D3A] hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+            >
+              <ChevronRight className="size-5" />
+            </button>
+          </div>
         )}
 
         {/* Carousel scroll container */}
@@ -169,9 +189,10 @@ export function CityGridBlock({
           </div>
         </div>
 
-        {/* Mobile swipe hint - only on first render / small screens */}
-        <p className="mt-3 text-center text-xs text-[#0B1D3A]/40 md:hidden">
-          Swipe to explore all cities &rarr;
+        {/* Swipe / scroll hint */}
+        <p className="mt-3 text-center text-xs text-[#0B1D3A]/40">
+          <span className="md:hidden">Swipe to explore all cities &rarr;</span>
+          <span className="hidden md:inline">Scroll or use the arrows to explore all cities &rarr;</span>
         </p>
       </div>
     </section>

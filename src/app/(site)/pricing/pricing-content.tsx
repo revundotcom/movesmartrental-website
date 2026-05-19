@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import {
   ArrowRight,
@@ -17,171 +18,357 @@ import {
 } from 'lucide-react'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
-import { PageHeroBlock } from '@/components/blocks/page-hero-block'
+import { Button } from '@/components/ui/button'
 import { FAQBlock } from '@/components/blocks/faq-block'
-import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { RentCalculator } from '@/components/blocks/rent-calculator'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 import { CountUp } from '@/components/ui/count-up'
 
-/* ─── Hero aside: "At a glance" typographic block (no card) ─────────────────── */
+/* ─── Pricing Hero - dark photographic backdrop, split-pane copy + $0 spec ──── */
 
-function HeroAtAGlance() {
+function PricingHero() {
   return (
-    <div className="relative pl-6 lg:pl-8">
-      {/* Vertical gold rule */}
-      <span
-        aria-hidden="true"
-        className="absolute left-0 top-1 h-[calc(100%-0.5rem)] w-px bg-gradient-to-b from-brand-gold/70 via-brand-gold/30 to-transparent"
-      />
-
-      {/* Hero image - "handing over keys" — reinforces pay-on-success */}
-      <motion.div
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mb-8 aspect-[4/3] w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-brand-navy/10"
-      >
+    <section className="relative isolate overflow-hidden bg-brand-navy">
+      {/* Photographic backdrop: glasses + pen + lease document */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10">
         <Image
-          src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80"
-          alt="Handing over keys to a new tenant after a signed lease"
+          src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2400&q=80"
+          alt=""
           fill
-          unoptimized
-          sizes="(min-width: 1024px) 480px, 100vw"
-          className="object-cover"
           priority
+          unoptimized
+          sizes="100vw"
+          className="object-cover object-center"
         />
-        {/* Subtle gold-emerald gradient overlay for editorial tone */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-tr from-brand-navy/30 via-transparent to-transparent"
-        />
-        {/* Caption chip */}
-        <div className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 shadow-sm backdrop-blur">
-          <span className="size-1.5 rounded-full bg-brand-emerald" aria-hidden="true" />
-          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-navy">
-            Paid only on placement
-          </span>
-        </div>
-      </motion.div>
-
-      <p className="font-sans text-[10px] font-bold uppercase tracking-[0.28em] text-brand-navy/55">
-        At a glance &middot; 2026 schedule
-      </p>
-
-      {/* Animated $0 callout — pulsing emerald ring + scale-in */}
-      <motion.p
-        initial={{ opacity: 0, scale: 0.85 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mt-4 inline-block font-display text-[3.5rem] italic leading-[0.95] text-brand-navy sm:text-[4.5rem]"
-      >
-        <span className="relative inline-block">
-          $<CountUp value={0} />
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute -inset-2 -z-10 rounded-full bg-emerald-400/20 blur-2xl motion-safe:animate-pulse"
-          />
-        </span>
-        <span className="text-brand-gold">.</span>
-      </motion.p>
-      <p className="mt-2 font-sans text-sm uppercase tracking-[0.18em] text-brand-navy/60">
-        Due upfront. No setup, no retainer, no onboarding.
-      </p>
-
-      <p className="mt-6 font-display text-[3.5rem] italic leading-[0.95] text-brand-navy sm:text-[4.5rem]">
-        One-time
-        <span className="text-brand-gold">.</span>
-      </p>
-      <p className="mt-2 font-sans text-sm uppercase tracking-[0.18em] text-brand-navy/60">
-        Leasing success fee &mdash; only when a qualified tenant signs.
-      </p>
-
-      {/* Inline fact chips */}
-      <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-navy/65">
-        <span>$<CountUp value={0} /> retainer</span>
-        <span aria-hidden="true" className="text-brand-gold">/</span>
-        <span>No monthly fee</span>
-        <span aria-hidden="true" className="text-brand-gold">/</span>
-        <span><CountUp value={0} /> hidden</span>
+        {/* Heavy navy/dark gradient so text stays legible */}
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/95 via-brand-navy/85 to-brand-navy/70" />
+        {/* Subtle emerald glow accent */}
+        <div className="absolute -left-32 top-1/2 size-[520px] -translate-y-1/2 rounded-full bg-brand-emerald/10 blur-3xl" />
+        <div className="absolute -right-24 bottom-0 size-[420px] rounded-full bg-brand-gold/8 blur-3xl" />
       </div>
 
-      <a
-        href="#fee-schedule"
-        className="mt-7 inline-flex items-center gap-2 border-b border-brand-emerald/40 pb-1 font-sans text-sm font-semibold text-brand-emerald transition-colors hover:border-brand-emerald hover:text-brand-navy"
-      >
-        Read the full fee schedule
-        <ArrowRight className="size-4" strokeWidth={2.25} />
-      </a>
-    </div>
+      {/* Gold hairline top */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
+      />
+
+      {/* Breadcrumb sits inline at the top, light over dark */}
+      <div className="relative mx-auto max-w-7xl px-4 pt-8 [&_*]:text-white/60 [&_a:hover]:text-white">
+        <BreadcrumbNav
+          crumbs={[
+            { label: 'Home', href: '/' },
+            { label: 'Pricing', href: '/pricing/' },
+          ]}
+        />
+      </div>
+
+      <div className="relative mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-10 px-4 py-14 sm:px-6 sm:py-16 lg:grid-cols-12 lg:gap-12 lg:px-8 lg:py-20">
+        {/* LEFT: kicker, eyebrow, headline, lede, CTAs (content preserved verbatim) */}
+        <div className="lg:col-span-7">
+          {/* Kicker */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-5 flex items-center gap-3"
+          >
+            <span aria-hidden="true" className="h-px w-8 bg-brand-gold/60" />
+            <span className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-gold">
+              Pricing
+            </span>
+          </motion.div>
+
+          {/* Eyebrow chip */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1"
+          >
+            <span className="size-1.5 rounded-full bg-brand-emerald" aria-hidden="true" />
+            <span className="text-[11px] font-bold uppercase tracking-widest text-emerald-300">
+              Zero Upfront. Success-Fee Leasing.
+            </span>
+          </motion.div>
+
+          {/* Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="font-display text-4xl font-normal leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[3.5rem]"
+          >
+            Pay Nothing Until We Place a{' '}
+            <span className="font-display italic text-brand-emerald">Tenant</span>
+            <span aria-hidden="true" className="text-brand-gold">
+              .
+            </span>
+          </motion.h1>
+
+          {/* Lede */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-6 max-w-2xl text-lg leading-relaxed text-white/75 md:text-xl"
+          >
+            MoveSmart is a full-service leasing and tenant placement company. There is no setup fee, no monthly retainer, no management percentage. You pay a single one-time success fee - typically equivalent to one month of rent - only when a qualified tenant signs the lease.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
+          >
+            <Button
+              size="lg"
+              className="cursor-pointer px-7 py-6 text-base font-bold text-white shadow-md transition-all duration-300 hover:-translate-y-px hover:shadow-lg"
+              style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}
+              nativeButton={false}
+              render={<Link href="/contact/?type=owner" />}
+            >
+              List my property
+              <ArrowRight className="ml-2 size-4" strokeWidth={2.5} aria-hidden="true" />
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="cursor-pointer border-2 border-white/20 bg-transparent px-7 py-6 text-base font-semibold text-white hover:border-white/40 hover:bg-white/5"
+              nativeButton={false}
+              render={<Link href="/properties/" />}
+            >
+              Browse rentals
+            </Button>
+          </motion.div>
+        </div>
+
+        {/* RIGHT: $0 / One-time spec sheet on glass */}
+        <motion.aside
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          className="relative lg:col-span-5 lg:pl-8"
+        >
+          {/* Vertical gold rule on desktop */}
+          <span
+            aria-hidden="true"
+            className="hidden lg:absolute lg:left-0 lg:top-1 lg:block lg:h-[calc(100%-0.5rem)] lg:w-px lg:bg-gradient-to-b lg:from-brand-gold/70 lg:via-brand-gold/30 lg:to-transparent"
+          />
+
+          <p className="font-sans text-[10px] font-bold uppercase tracking-[0.28em] text-brand-gold">
+            At a glance &middot; 2026 schedule
+          </p>
+
+          {/* $0 callout */}
+          <motion.p
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="relative mt-4 inline-block font-display text-[3.5rem] italic leading-[0.95] text-white sm:text-[4.5rem]"
+          >
+            <span className="relative inline-block">
+              $<CountUp value={0} />
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -inset-2 -z-10 rounded-full bg-emerald-400/25 blur-2xl motion-safe:animate-pulse"
+              />
+            </span>
+            <span className="text-brand-gold">.</span>
+          </motion.p>
+          <p className="mt-2 font-sans text-sm uppercase tracking-[0.18em] text-white/60">
+            Due upfront. No setup, no retainer, no onboarding.
+          </p>
+
+          <p className="mt-6 font-display text-[3.5rem] italic leading-[0.95] text-white sm:text-[4.5rem]">
+            One-time
+            <span className="text-brand-gold">.</span>
+          </p>
+          <p className="mt-2 font-sans text-sm uppercase tracking-[0.18em] text-white/60">
+            Leasing success fee &mdash; only when a qualified tenant signs.
+          </p>
+
+          {/* Inline fact chips */}
+          <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/65">
+            <span>$<CountUp value={0} /> retainer</span>
+            <span aria-hidden="true" className="text-brand-gold">/</span>
+            <span>No monthly fee</span>
+            <span aria-hidden="true" className="text-brand-gold">/</span>
+            <span><CountUp value={0} /> hidden</span>
+          </div>
+
+          <a
+            href="#fee-schedule"
+            className="mt-7 inline-flex items-center gap-2 border-b border-brand-emerald/40 pb-1 font-sans text-sm font-semibold text-emerald-300 transition-colors hover:border-brand-emerald hover:text-white"
+          >
+            Read the full fee schedule
+            <ArrowRight className="size-4" strokeWidth={2.25} />
+          </a>
+        </motion.aside>
+      </div>
+
+      {/* Gold hairline bottom */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent"
+      />
+    </section>
   )
 }
 
-/* ─── How we charge: 3 numbered editorial paragraphs ────────────────────────── */
+/* ─── How we charge: image-led 3-card editorial grid ────────────────────────── */
 
-const HOW_WE_CHARGE = [
+const HOW_WE_CHARGE: Array<{
+  title: string
+  body: string
+  imageSrc: string
+  imageAlt: string
+  tag: string
+  highlight: string
+}> = [
   {
-    title: 'Zero upfront. Always.',
+    tag: 'Zero upfront',
+    highlight: '$0',
+    title: 'Nothing to engage us.',
+    imageSrc:
+      'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&q=80&auto=format&fit=crop',
+    imageAlt: 'Owner handing over keys to a new tenant on move-in day',
     body:
-      'You pay nothing to engage MoveSmart. No setup fee. No onboarding fee. No monthly retainer. Photography, syndication, screening, and lease preparation are all carried by us until a tenant is in place. Our economics are aligned with yours from the first conversation - if we don\u2019t place a qualified tenant, we don\u2019t earn a dollar.',
+      'No setup fee, no onboarding fee, no monthly retainer. Photography, syndication, screening, and lease preparation are all carried by us until a tenant is in place. If we do not place a qualified tenant, we do not earn a dollar.',
   },
   {
-    title: 'A single leasing success fee.',
+    tag: 'One success fee',
+    highlight: 'Once',
+    title: 'Paid only when a lease is signed.',
+    imageSrc:
+      'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1600&q=80',
+    imageAlt: 'Owner and tenant signing a residential lease at a table',
     body:
-      'When a qualified tenant signs a lease we negotiated, you pay a one-time success fee - a fee structure tailored to property type and market, typically equivalent to one month of contracted rent. It is invoiced once, on placement, and is the only fee you owe for the leasing engagement. We are a leasing brokerage, not an ongoing manager: there is no monthly percentage, ever.',
+      'When a qualified tenant signs a lease we negotiated, you pay a single one-time success fee \u2014 typically equivalent to one month of contracted rent. Invoiced once, on placement. We are a leasing brokerage, not an ongoing manager: there is no monthly percentage, ever.',
   },
   {
+    tag: 'No surprises',
+    highlight: 'Nothing',
     title: 'And nothing in between.',
+    imageSrc:
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1600&q=80&auto=format&fit=crop',
+    imageAlt: 'Bright modern living room in a recently leased condo',
     body:
-      'No vendor markups. No marketing surcharges. No listing-prep surcharges. No clawbacks. The only optional charges are clearly named add-ons: Rent Protection (priced through our underwriting partner) and paid advertising beyond our standard syndication. Institutional lease-up engagements are quoted per RFP. Everything else is on this page.',
+      'No vendor markups. No marketing surcharges. No listing-prep surcharges. No clawbacks. Optional add-ons (Rent Protection, paid advertising beyond standard syndication) are clearly named and owner-approved. Institutional lease-up engagements are quoted per RFP. Everything else is on this page.',
   },
-] as const
+]
 
 function HowWeCharge() {
   return (
-    <section className="bg-[#FBFAF6] py-20 lg:py-28">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden bg-[#FBFAF6] py-20 lg:py-28">
+      {/* Decorative dot grid */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+        }}
+      />
+
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <RevealOnScroll variant="slideUp" duration={0.7}>
-          <p className="font-sans text-[11px] font-bold uppercase tracking-[0.28em] text-brand-navy/55">
-            &sect; 01 &middot; How we charge
-          </p>
+          <div className="flex items-center gap-3">
+            <span aria-hidden="true" className="h-px w-8 bg-brand-gold/60" />
+            <p className="font-sans text-[11px] font-bold uppercase tracking-[0.28em] text-brand-navy/55">
+              &sect; 01 &middot; How we charge
+            </p>
+          </div>
           <h2 className="mt-3 max-w-3xl font-display text-4xl font-normal leading-[1.05] text-brand-navy sm:text-5xl">
             One fee. Earned on
             <span className="font-display italic text-brand-emerald"> results</span>
             <span className="text-brand-gold">.</span>
           </h2>
+          <p className="mt-5 max-w-2xl font-serif text-base leading-relaxed text-slate-600 sm:text-lg">
+            Three principles shape every engagement letter we sign. Each one is visible long before you commit a dollar.
+          </p>
         </RevealOnScroll>
 
-        {/* Double-rule top */}
-        <div className="mt-12 border-t-2 border-double border-brand-navy/25" />
-
-        <RevealOnScroll variant="slideUp" stagger={0.12} duration={0.6}>
-          {HOW_WE_CHARGE.map((para, i) => (
-            <div
-              key={para.title}
-              className="grid grid-cols-12 gap-6 border-b border-brand-navy/10 py-10 last:border-b-0"
-            >
-              <div className="col-span-12 sm:col-span-2">
-                <span className="font-display text-5xl italic leading-none text-brand-gold">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-              </div>
-              <div className="col-span-12 sm:col-span-10">
-                <h3 className="font-display text-2xl font-normal leading-tight text-brand-navy sm:text-3xl">
-                  {para.title}
-                </h3>
-                <p className="mt-3 max-w-2xl font-serif text-base leading-[1.7] text-slate-700 sm:text-[17px]">
-                  {para.body}
-                </p>
-              </div>
-            </div>
+        <div className="mt-14 grid grid-cols-1 gap-6 sm:gap-7 lg:grid-cols-3">
+          {HOW_WE_CHARGE.map((principle, i) => (
+            <HowWeChargeCard key={principle.title} index={i} {...principle} />
           ))}
-        </RevealOnScroll>
-
-        {/* Double-rule bottom */}
-        <div className="border-t-2 border-double border-brand-navy/25" />
+        </div>
       </div>
     </section>
+  )
+}
+
+function HowWeChargeCard({
+  index,
+  tag,
+  title,
+  body,
+  imageSrc,
+  imageAlt,
+  highlight,
+}: {
+  index: number
+  tag: string
+  title: string
+  body: string
+  imageSrc: string
+  imageAlt: string
+  highlight: string
+}) {
+  const numeral = String(index + 1).padStart(2, '0')
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.7, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
+      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-brand-emerald/30 hover:shadow-2xl hover:shadow-brand-navy/10"
+    >
+      {/* Hero image */}
+      <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+        <Image
+          src={imageSrc}
+          alt={imageAlt}
+          fill
+          className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+          sizes="(max-width: 1024px) 100vw, 400px"
+          unoptimized
+        />
+        {/* Navy gradient for legibility */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-t from-brand-navy/80 via-brand-navy/15 to-transparent"
+        />
+
+        {/* Top-left numeral pill */}
+        <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-white backdrop-blur-md">
+          <span className="size-1.5 rounded-full bg-brand-gold" aria-hidden="true" />
+          <span>{numeral}</span>
+        </div>
+
+        {/* Bottom-left tag + giant highlight word */}
+        <div className="absolute inset-x-5 bottom-5">
+          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-gold">
+            {tag}
+          </p>
+          <p className="mt-1 font-display text-4xl italic leading-none text-white sm:text-5xl">
+            {highlight}
+            <span className="text-brand-gold">.</span>
+          </p>
+        </div>
+      </div>
+
+      {/* Body */}
+      <div className="flex flex-1 flex-col gap-4 p-6 sm:p-7">
+        <h3 className="font-display text-2xl font-normal leading-snug text-brand-navy">
+          {title}
+        </h3>
+        <p className="font-serif text-[15px] leading-[1.75] text-slate-700">{body}</p>
+      </div>
+    </motion.article>
   )
 }
 
@@ -259,13 +446,13 @@ function ZeroUpfrontBridge() {
 
 function PricingBannerImage() {
   return (
-    <section className="relative bg-white">
+    <section className="relative bg-white py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <RevealOnScroll variant="scaleIn" duration={0.9}>
-          <div className="relative aspect-[21/9] w-full overflow-hidden rounded-2xl shadow-lg ring-1 ring-brand-navy/10">
+          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl shadow-lg ring-1 ring-brand-navy/10 sm:aspect-[2/1] lg:aspect-[21/8]">
             <Image
-              src="https://images.unsplash.com/photo-1577415124269-fc1140a69e91?w=1600&q=80&auto=format&fit=crop"
-              alt="Canadian apartment block at dusk - the kind of inventory MoveSmart leases for owners"
+              src="https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=2400&q=80"
+              alt="Toronto skyline at dusk — the Canadian rental market MoveSmart leases for owners"
               fill
               className="object-cover"
               sizes="100vw"
@@ -273,7 +460,7 @@ function PricingBannerImage() {
             />
             <div
               aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-tr from-brand-navy/55 via-brand-navy/20 to-transparent"
+              className="absolute inset-0 bg-gradient-to-tr from-brand-navy/70 via-brand-navy/30 to-transparent"
             />
             <div className="absolute inset-0 flex items-end p-6 sm:p-10 lg:p-14">
               <div className="max-w-2xl">
@@ -374,41 +561,69 @@ function HeadlinePriceStatement() {
           </p>
         </RevealOnScroll>
 
-        {/* Headline price moment - enormous typography */}
-        <div className="mt-6 grid grid-cols-12 items-end gap-6">
-          <div className="col-span-12 lg:col-span-8">
-            <RevealOnScroll variant="scaleIn" duration={0.8}>
-              <p className="relative inline-block font-display font-normal leading-[0.85] text-brand-navy text-[5rem] sm:text-[8rem] lg:text-[12rem] xl:text-[14rem]">
-                {/* Pulsing emerald glow ring behind the $0 */}
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -inset-8 -z-10 rounded-full bg-emerald-400/20 blur-3xl motion-safe:animate-pulse"
-                />
-                $<CountUp value={0} />
-                <span className="text-brand-gold">.</span>
-              </p>
-            </RevealOnScroll>
+        {/* Headline price moment — image-backed navy band */}
+        <RevealOnScroll variant="scaleIn" duration={0.9}>
+          <div className="mt-6 relative overflow-hidden rounded-3xl shadow-2xl shadow-brand-navy/20 ring-1 ring-brand-navy/10">
+            {/* Background image */}
+            <div className="absolute inset-0">
+              <Image
+                src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=2400&q=80&auto=format&fit=crop"
+                alt=""
+                fill
+                className="object-cover"
+                sizes="100vw"
+                unoptimized
+              />
+              {/* Heavy navy gradient so text/numbers stay legible */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-br from-brand-navy/95 via-brand-navy/88 to-brand-navy/75"
+              />
+              {/* Subtle emerald accent glow */}
+              <div
+                aria-hidden="true"
+                className="absolute -left-32 top-1/2 size-[420px] -translate-y-1/2 rounded-full bg-brand-emerald/15 blur-3xl"
+              />
+            </div>
+
+            {/* Content grid sits above the image */}
+            <div className="relative grid grid-cols-12 items-center gap-6 px-6 py-14 sm:px-10 sm:py-16 lg:px-14 lg:py-20">
+              <div className="col-span-12 lg:col-span-7">
+                <p className="font-sans text-[10px] font-bold uppercase tracking-[0.28em] text-brand-gold">
+                  Due upfront to engage MoveSmart
+                </p>
+                <p className="relative mt-3 inline-block font-display font-normal leading-[0.85] text-white text-[5rem] sm:text-[8rem] lg:text-[11rem] xl:text-[13rem]">
+                  {/* Pulsing emerald glow ring behind the $0 */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -inset-8 -z-10 rounded-full bg-emerald-400/25 blur-3xl motion-safe:animate-pulse"
+                  />
+                  $<CountUp value={0} />
+                  <span className="text-brand-gold">.</span>
+                </p>
+              </div>
+              <div className="col-span-12 lg:col-span-5">
+                <RevealOnScroll variant="slideUp" duration={0.7} delay={0.2}>
+                  <p className="font-sans text-xs font-bold uppercase tracking-[0.28em] text-emerald-300">
+                    Always
+                  </p>
+                  <p className="mt-3 font-serif text-base leading-[1.7] text-white/85">
+                    You pay nothing to engage MoveSmart. The only fee on a standard leasing engagement
+                    is a one-time success fee, charged when a qualified tenant signs the lease &mdash;
+                    typically one month rent equivalent.
+                  </p>
+                  <a
+                    href="/contact/?type=owner"
+                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-emerald px-5 py-2.5 font-sans text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition-all hover:bg-emerald-600 hover:shadow-xl"
+                  >
+                    Get a free rental analysis
+                    <ArrowRight className="size-4" strokeWidth={2.25} />
+                  </a>
+                </RevealOnScroll>
+              </div>
+            </div>
           </div>
-          <div className="col-span-12 lg:col-span-4 lg:pb-8">
-            <RevealOnScroll variant="slideUp" duration={0.7} delay={0.2}>
-              <p className="font-sans text-xs font-bold uppercase tracking-[0.28em] text-brand-emerald">
-                Due upfront. Always.
-              </p>
-              <p className="mt-3 font-serif text-base leading-[1.7] text-slate-700">
-                You pay nothing to engage MoveSmart. The only fee on a standard leasing engagement
-                is a one-time success fee, charged when a qualified tenant signs the lease &mdash;
-                typically one month rent equivalent.
-              </p>
-              <a
-                href="/contact/?type=owner"
-                className="mt-5 inline-flex items-center gap-2 border-b border-brand-emerald/40 pb-1 font-sans text-sm font-semibold text-brand-emerald transition-colors hover:border-brand-emerald hover:text-brand-navy"
-              >
-                Get a free rental analysis
-                <ArrowRight className="size-4" strokeWidth={2.25} />
-              </a>
-            </RevealOnScroll>
-          </div>
-        </div>
+        </RevealOnScroll>
 
         {/* Magazine fee schedule - restaurant menu with dotted leaders */}
         <div className="mt-20">
@@ -830,286 +1045,6 @@ function TransparencyTable() {
   )
 }
 
-/* ─── Worked examples: three engagement archetypes ──────────────────────────── */
-
-const WORKED_EXAMPLES = [
-  {
-    tag: 'Engagement A',
-    title: 'Single Toronto condo.',
-    setup:
-      'A two-bedroom condo at $3,200/month. Owner is relocating and needs a qualified tenant before closing on a new property.',
-    fee: 'Success fee equivalent to one month rent.',
-    timing: 'Invoiced once, on signed lease. Typically deducted from first month\u2019s rent so nothing comes from your bank account.',
-    upfront: '$0',
-    recurring: 'None. We do not manage the unit after placement unless engaged separately.',
-  },
-  {
-    tag: 'Engagement B',
-    title: 'Townhouse portfolio (4 units).',
-    setup:
-      'An owner with four townhouses across the GTA, three turning over within ninety days. A coordinated lease-up calendar reduces vacancy weeks.',
-    fee: 'Per-unit success fee with a portfolio discount applied. Quoted in writing before work begins.',
-    timing: 'Each fee invoiced as its corresponding unit is leased - not all upfront.',
-    upfront: '$0',
-    recurring: 'None.',
-  },
-  {
-    tag: 'Engagement C',
-    title: 'Institutional lease-up.',
-    setup:
-      'A property management company or builder bringing 40+ units to market on a defined absorption schedule. Custom service scope: dedicated agent team, onsite leasing office option, weekly absorption reporting.',
-    fee: 'Custom pricing, structured per RFP - commonly a blend of monthly engagement allowance plus per-lease success fee.',
-    timing: 'Defined in master services agreement. Not billed against this published schedule.',
-    upfront: 'Per RFP',
-    recurring: 'Per RFP',
-  },
-] as const
-
-function WorkedExamples() {
-  return (
-    <section
-      className="relative overflow-hidden py-20 lg:py-28"
-      style={{ background: 'linear-gradient(180deg, #0B1D3A 0%, #0a1a33 100%)' }}
-    >
-      {/* Gold hairlines */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent" />
-
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <RevealOnScroll variant="slideUp" duration={0.7}>
-          <p className="font-sans text-[11px] font-bold uppercase tracking-[0.28em] text-brand-gold">
-            &sect; 04 &middot; Worked examples
-          </p>
-          <h2 className="mt-3 max-w-4xl font-display text-4xl font-normal leading-[1.05] text-white sm:text-5xl">
-            Three engagements. One pricing
-            <span className="font-display italic text-brand-emerald"> philosophy</span>
-            <span className="text-brand-gold">.</span>
-          </h2>
-          <p className="mt-4 max-w-2xl font-serif text-base leading-relaxed text-white/65">
-            How the success-fee model lands across a single condo, a small portfolio, and an
-            institutional lease-up program.
-          </p>
-        </RevealOnScroll>
-
-        <div className="mt-14 border-t-2 border-double border-brand-gold/30" />
-
-        <RevealOnScroll variant="slideUp" stagger={0.12} duration={0.6}>
-          {WORKED_EXAMPLES.map((ex) => (
-            <div
-              key={ex.tag}
-              className="grid grid-cols-12 gap-6 border-b border-white/10 py-12 last:border-b-0"
-            >
-              <div className="col-span-12 sm:col-span-3">
-                <p className="font-sans text-[10px] font-bold uppercase tracking-[0.28em] text-brand-gold">
-                  {ex.tag}
-                </p>
-                <h3 className="mt-2 font-display text-2xl italic leading-tight text-white sm:text-3xl">
-                  {ex.title}
-                </h3>
-              </div>
-              <div className="col-span-12 sm:col-span-9">
-                <p className="font-serif text-base leading-[1.7] text-white/80 sm:text-[17px]">
-                  {ex.setup}
-                </p>
-
-                <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
-                  <div>
-                    <dt className="font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-300">
-                      Fee structure
-                    </dt>
-                    <dd className="mt-1 font-serif text-sm leading-relaxed text-white/80">
-                      {ex.fee}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-300">
-                      Timing
-                    </dt>
-                    <dd className="mt-1 font-serif text-sm leading-relaxed text-white/80">
-                      {ex.timing}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-300">
-                      Due upfront
-                    </dt>
-                    <dd className="mt-1 font-display text-2xl text-white">{ex.upfront}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-300">
-                      Recurring
-                    </dt>
-                    <dd className="mt-1 font-display text-2xl text-white">{ex.recurring}</dd>
-                  </div>
-                </dl>
-              </div>
-            </div>
-          ))}
-        </RevealOnScroll>
-
-        <div className="border-t-2 border-double border-brand-gold/30" />
-
-        <RevealOnScroll variant="scaleIn" duration={0.8} delay={0.1}>
-          <p className="mt-10 text-center font-serif text-base italic leading-relaxed text-white/70">
-            Every engagement is quoted in writing before work begins. No surprises, no escalators.
-          </p>
-        </RevealOnScroll>
-      </div>
-    </section>
-  )
-}
-
-/* ─── Comparison: MoveSmart vs. traditional PM vs. DIY ──────────────────────── */
-
-interface CompareRow {
-  label: string
-  movesmart: string
-  traditional: string
-  diy: string
-}
-
-const COMPARE_ROWS: CompareRow[] = [
-  {
-    label: 'Upfront cost',
-    movesmart: '$0',
-    traditional: 'Setup + onboarding fee common',
-    diy: 'Listing fees, screening tools, paid ads',
-  },
-  {
-    label: 'Recurring monthly fee',
-    movesmart: 'None - we are a leasing brokerage',
-    traditional: 'Percentage of monthly rent, every month',
-    diy: 'None, but you carry the ongoing time cost',
-  },
-  {
-    label: 'When you pay',
-    movesmart: 'Once, on signed lease',
-    traditional: 'Every month for the life of the contract',
-    diy: 'On every transaction - plus your hours',
-  },
-  {
-    label: 'Vacancy alignment',
-    movesmart: 'We earn nothing until a tenant signs',
-    traditional: 'Some plans charge during vacancy',
-    diy: 'You absorb the entire vacancy cost',
-  },
-  {
-    label: 'Tenant Replacement Guarantee',
-    movesmart: 'Included - first six months',
-    traditional: 'Varies by provider',
-    diy: 'You start over from scratch',
-  },
-  {
-    label: 'Vendor markup on repairs',
-    movesmart: 'Not applicable - we do not manage',
-    traditional: 'Often 10-20% markup',
-    diy: 'None, but you source every vendor',
-  },
-  {
-    label: 'Cancellation',
-    movesmart: '30-day notice. No clawback.',
-    traditional: 'Often 60-120 days, with exit fees',
-    diy: 'Anytime',
-  },
-]
-
-function ComparisonTable() {
-  return (
-    <section className="bg-white py-20 lg:py-28">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <RevealOnScroll variant="slideUp" duration={0.7}>
-          <p className="font-sans text-[11px] font-bold uppercase tracking-[0.28em] text-brand-navy/55">
-            &sect; 05 &middot; How we compare
-          </p>
-          <h2 className="mt-3 max-w-4xl font-display text-4xl font-normal leading-[1.05] text-brand-navy sm:text-5xl">
-            Success-fee leasing vs. monthly management vs.
-            <span className="font-display italic text-brand-emerald"> doing it yourself</span>
-            <span className="text-brand-gold">.</span>
-          </h2>
-          <p className="mt-4 max-w-2xl font-serif text-base leading-relaxed text-slate-600">
-            We are not a property manager. We are a full-service leasing and tenant placement company. Here is how the
-            three options actually compare on cost, alignment, and risk.
-          </p>
-        </RevealOnScroll>
-
-        {/* Desktop table */}
-        <div className="mt-12 hidden border-t-2 border-double border-brand-navy/30 md:block">
-          <div className="grid grid-cols-12 gap-4 border-b border-brand-navy/15 py-4">
-            <div className="col-span-3 font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-brand-navy/55">
-              Dimension
-            </div>
-            <div className="col-span-3 font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
-              MoveSmart leasing brokerage
-            </div>
-            <div className="col-span-3 font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-brand-navy/55">
-              Traditional property manager
-            </div>
-            <div className="col-span-3 font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-brand-navy/55">
-              Do-it-yourself
-            </div>
-          </div>
-
-          <RevealOnScroll variant="slideUp" stagger={0.05} duration={0.5}>
-            {COMPARE_ROWS.map((row) => (
-              <div
-                key={row.label}
-                className="grid grid-cols-12 items-baseline gap-4 border-b border-brand-navy/10 py-5"
-              >
-                <p className="col-span-3 font-display text-base font-normal text-brand-navy sm:text-lg">
-                  {row.label}
-                </p>
-                <p className="col-span-3 font-serif text-sm leading-relaxed text-brand-navy">
-                  <span className="font-semibold">{row.movesmart}</span>
-                </p>
-                <p className="col-span-3 font-serif text-sm italic leading-relaxed text-slate-500">
-                  {row.traditional}
-                </p>
-                <p className="col-span-3 font-serif text-sm italic leading-relaxed text-slate-500">
-                  {row.diy}
-                </p>
-              </div>
-            ))}
-          </RevealOnScroll>
-          <div className="border-t-2 border-double border-brand-navy/30" />
-        </div>
-
-        {/* Mobile: stacked per row */}
-        <div className="mt-12 border-t-2 border-double border-brand-navy/30 md:hidden">
-          <RevealOnScroll variant="slideUp" stagger={0.05} duration={0.5}>
-            {COMPARE_ROWS.map((row) => (
-              <div key={row.label} className="border-b border-brand-navy/10 py-5">
-                <p className="font-display text-lg font-normal text-brand-navy">{row.label}</p>
-                <dl className="mt-3 space-y-2">
-                  <div>
-                    <dt className="font-sans text-[10px] font-bold uppercase tracking-[0.18em] text-brand-emerald">
-                      MoveSmart
-                    </dt>
-                    <dd className="mt-0.5 font-serif text-sm text-brand-navy">{row.movesmart}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-sans text-[10px] font-bold uppercase tracking-[0.18em] text-brand-navy/55">
-                      Traditional PM
-                    </dt>
-                    <dd className="mt-0.5 font-serif text-sm italic text-slate-500">
-                      {row.traditional}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="font-sans text-[10px] font-bold uppercase tracking-[0.18em] text-brand-navy/55">
-                      Do-it-yourself
-                    </dt>
-                    <dd className="mt-0.5 font-serif text-sm italic text-slate-500">{row.diy}</dd>
-                  </div>
-                </dl>
-              </div>
-            ))}
-          </RevealOnScroll>
-          <div className="border-t-2 border-double border-brand-navy/30" />
-        </div>
-      </div>
-    </section>
-  )
-}
 
 /* ─── Guarantees: numbered editorial notes (vertical stack, NOT cards) ──────── */
 
@@ -1266,31 +1201,8 @@ const PRICING_FAQS = [
 export function PricingContent() {
   return (
     <main>
-      {/* Breadcrumb */}
-      <div className="mx-auto max-w-7xl px-4 pt-8">
-        <BreadcrumbNav
-          crumbs={[
-            { label: 'Home', href: '/' },
-            { label: 'Pricing', href: '/pricing/' },
-          ]}
-        />
-      </div>
-
-      {/* 1. Hero - editorial PageHeroBlock with typographic aside */}
-      <PageHeroBlock
-        kicker="Pricing"
-        eyebrow="Zero Upfront. Success-Fee Leasing."
-        headline="Pay Nothing Until We Place a Tenant."
-        lede="MoveSmart is a full-service leasing and tenant placement company. There is no setup fee, no monthly retainer, no management percentage. You pay a single one-time success fee - typically equivalent to one month of rent - only when a qualified tenant signs the lease."
-        cta1={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
-        meta={[
-          { label: 'Setup fee', value: '$0' },
-          { label: 'Monthly retainer', value: '$0' },
-          { label: 'Cancel anytime', value: '30 days' },
-          { label: 'Avg placement', value: '14 days' },
-        ]}
-        aside={<HeroAtAGlance />}
-      />
+      {/* 1. Hero - dark photographic backdrop with split-pane $0 / One-time spec */}
+      <PricingHero />
 
       {/* 2. How we charge - numbered editorial paragraphs */}
       <HowWeCharge />
@@ -1313,30 +1225,17 @@ export function PricingContent() {
       {/* 5. Rent calculator (existing component) */}
       <RentCalculator />
 
-      {/* 6. Worked examples - three engagement archetypes */}
-      <WorkedExamples />
-
-      {/* 7. Comparison table - MoveSmart vs. PM vs. DIY */}
-      <ComparisonTable />
-
-      {/* 7b. Full-width editorial banner (NEW image) */}
+      {/* 6. Full-width editorial banner (NEW image) */}
       <PricingBannerImage />
 
-      {/* 8. Money-back & guarantees - vertical numbered notes */}
+      {/* 7. Money-back & guarantees - vertical numbered notes */}
       <GuaranteesPanel />
 
-      {/* 9. Testimonials */}
+      {/* 8. Testimonials */}
       <PricingTestimonials />
 
-      {/* 10. FAQ */}
+      {/* 9. FAQ */}
       <FAQBlock questions={PRICING_FAQS} title={'Pricing & Fees - Frequently Asked'} showQuestionsCta={false} />
-
-      {/* 11. CTA Banner - pricing-specific */}
-      <CTABannerBlock
-        headline="Get a written success-fee quote before you commit."
-        description={'Open a free account and we\u2019ll send a no-fee placement quote tailored to your address - typically back to you within one business day.'}
-        primaryCta={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
-      />
     </main>
   )
 }

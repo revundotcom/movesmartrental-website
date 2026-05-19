@@ -65,7 +65,7 @@ const CONTACT_FAQS = [
   {
     question: 'Do you serve my city?',
     answer:
-      'We serve 20+ cities across Ontario, British Columbia, Alberta, and select US markets. Tell us your city in the form and we will confirm coverage within a day.',
+      'We serve 20+ cities across Canada and select US markets. Tell us your city in the form and we will confirm coverage within a day.',
   },
   {
     question: 'Can I speak to someone outside business hours?',
@@ -104,10 +104,10 @@ const TRUST_BADGES = [
 ]
 
 const SOCIAL_STATS = [
-  { value: '4.9 / 5', label: 'Google rating', detail: '200+ verified reviews' },
-  { value: '500+', label: 'Landlords served', detail: 'Across 20+ Canadian cities' },
-  { value: '12 yrs', label: 'In business', detail: 'Operating since 2014' },
-  { value: '96%', label: 'Owner retention', detail: 'Year over year' },
+  { value: 'Thousands', label: 'Landlords served', detail: 'Across North America' },
+  { value: 'North America', label: 'Coverage', detail: 'Canadian provinces + US states' },
+  { value: 'Self-serve', label: 'Owner portal', detail: 'Real-time leasing visibility' },
+  { value: '$0', label: 'Upfront cost', detail: 'Success fee on placement' },
 ]
 
 const REACH_OPTIONS = [
@@ -183,7 +183,7 @@ export default function ContactPage() {
           </div>
           <p className="mt-6 inline-flex items-center gap-2 text-xs font-semibold text-slate-500">
             <Shield className="size-3.5 text-brand-emerald" aria-hidden="true" />
-            500+ Canadian landlords trust us · 4.9 / 5 across 200+ Google reviews
+            Trusted by thousands of landlords across North America
           </p>
         </div>
       </section>
@@ -312,7 +312,7 @@ export default function ContactPage() {
                 <span className="text-brand-gold">.</span>
               </h2>
               <p className="mt-4 text-base leading-relaxed text-slate-600">
-                We&apos;re in the heart of the Toronto financial district — with leasing teams covering 20+ cities across Canada.
+                We&apos;re headquartered in Toronto&apos;s financial district — with leasing teams covering 20+ cities across Canada and the United States.
               </p>
             </div>
           </RevealOnScroll>
@@ -387,7 +387,7 @@ export default function ContactPage() {
               </p>
               <h2 className="mt-3 font-display text-3xl font-normal leading-tight tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
                 Trusted by{' '}
-                <span className="font-display italic text-brand-emerald">500+ landlords</span>
+                <span className="font-display italic text-brand-emerald">thousands of landlords</span>
                 <span className="text-brand-gold">.</span>
               </h2>
               <p className="mt-4 text-base leading-relaxed text-slate-600">

@@ -204,7 +204,7 @@ const ONTARIO_CITIES: FallbackCity[] = [
       'Brampton Transit plus GO Transit (Kitchener line) via the Brampton and Mount Pleasant stations provide commuter service to Toronto in about 45 minutes.',
     description:
       'Brampton has one of the fastest-growing populations in Canada with strong demand for 3-4 bedroom homes and townhouses. The rental market tilts toward young families and multi-generational households.',
-    heroImageUrl: 'https://images.unsplash.com/photo-1581141117898-2be4de754b12?auto=format&fit=crop&w=1600&q=80',
+    heroImageUrl: 'https://images.unsplash.com/photo-1605276373954-0c4a0dac5b12?auto=format&fit=crop&w=1600&q=80',
     heroImageAlt: 'Brampton Ontario high-rise buildings illuminated at night',
     province: ONTARIO_PROVINCE_REF,
   },
@@ -458,459 +458,625 @@ const ONTARIO_CITIES: FallbackCity[] = [
 ]
 
 // ---------------------------------------------------------------------------
-// US cities (full data for city pages)
+// Other Canadian provinces: Quebec, BC, Alberta, Manitoba, Nova Scotia
+// Full FallbackCity entries (so getFallbackCaCity finds them) + a
+// FallbackProvince aggregate for the /ca/[province]/ page route.
 // ---------------------------------------------------------------------------
 
-const FL_PROVINCE: FallbackCity['province'] = {
-  title: 'Florida',
-  slug: { current: 'florida' },
-  country: 'us',
-  abbreviation: 'FL',
+const QC_PROVINCE_REF: FallbackCity['province'] = {
+  title: 'Quebec',
+  slug: { current: 'quebec' },
+  country: 'ca',
+  abbreviation: 'QC',
 }
-const TX_PROVINCE: FallbackCity['province'] = {
-  title: 'Texas',
-  slug: { current: 'texas' },
-  country: 'us',
-  abbreviation: 'TX',
+const BC_PROVINCE_REF: FallbackCity['province'] = {
+  title: 'British Columbia',
+  slug: { current: 'british-columbia' },
+  country: 'ca',
+  abbreviation: 'BC',
 }
-const CA_PROVINCE: FallbackCity['province'] = {
-  title: 'California',
-  slug: { current: 'california' },
-  country: 'us',
-  abbreviation: 'CA',
+const AB_PROVINCE_REF: FallbackCity['province'] = {
+  title: 'Alberta',
+  slug: { current: 'alberta' },
+  country: 'ca',
+  abbreviation: 'AB',
 }
-const NY_PROVINCE: FallbackCity['province'] = {
-  title: 'New York',
-  slug: { current: 'new-york' },
-  country: 'us',
-  abbreviation: 'NY',
+const MB_PROVINCE_REF: FallbackCity['province'] = {
+  title: 'Manitoba',
+  slug: { current: 'manitoba' },
+  country: 'ca',
+  abbreviation: 'MB',
 }
-const IL_PROVINCE: FallbackCity['province'] = {
-  title: 'Illinois',
-  slug: { current: 'illinois' },
-  country: 'us',
-  abbreviation: 'IL',
+const NS_PROVINCE_REF: FallbackCity['province'] = {
+  title: 'Nova Scotia',
+  slug: { current: 'nova-scotia' },
+  country: 'ca',
+  abbreviation: 'NS',
 }
 
-const US_CITIES: FallbackCity[] = [
-  // Florida
+const QUEBEC_CITIES: FallbackCity[] = [
   {
-    _id: 'city-miami-static',
-    title: 'Miami',
-    slug: { current: 'miami' },
-    tier: 2,
-    population: 442000,
-    medianRent: 3100,
-    vacancyRate: 3.2,
-    neighbourhoods: ['Brickell', 'Wynwood', 'Miami Beach', 'Coral Gables', 'Coconut Grove', 'Downtown', 'Little Havana', 'Edgewater'],
-    transitInfo: 'Miami Metrorail connects downtown to Dadeland and the airport; Metromover covers Downtown and Brickell; extensive bus network from Miami-Dade Transit.',
-    description: 'Miami\'s rental market is among the fastest-growing in the US, driven by tech-sector relocations, international investors, and strong seasonal snowbird demand. Brickell and Wynwood lead high-rise inventory growth.',
-    province: FL_PROVINCE,
-  },
-  {
-    _id: 'city-orlando-static',
-    title: 'Orlando',
-    slug: { current: 'orlando' },
-    tier: 2,
-    population: 309000,
-    medianRent: 2300,
-    vacancyRate: 4.1,
-    neighbourhoods: ['Downtown', 'Lake Nona', 'Winter Park', 'College Park', 'Thornton Park', 'Baldwin Park', 'Mills 50', 'SoDo'],
-    transitInfo: 'LYNX bus network covers greater Orlando; SunRail commuter rail connects Kissimmee to DeBary.',
-    description: 'Orlando combines stable tourism-sector employment, Lake Nona\'s Medical City growth, and UCF-area student rentals. Demand is consistent year-round.',
-    province: FL_PROVINCE,
-  },
-  {
-    _id: 'city-tampa-static',
-    title: 'Tampa',
-    slug: { current: 'tampa' },
-    tier: 2,
-    population: 398000,
-    medianRent: 2450,
-    vacancyRate: 3.8,
-    neighbourhoods: ['Downtown', 'Hyde Park', 'Channelside', 'Ybor City', 'Seminole Heights', 'Westshore', 'South Tampa', 'Carrollwood'],
-    transitInfo: 'HART buses cover Tampa; TECO Streetcar runs Downtown to Ybor City.',
-    description: 'Tampa\'s rental demand tracks strong in-migration from the Northeast, a booming financial-services sector, and proximity to Gulf Coast beaches.',
-    province: FL_PROVINCE,
-  },
-  {
-    _id: 'city-jacksonville-static',
-    title: 'Jacksonville',
-    slug: { current: 'jacksonville' },
-    tier: 2,
-    population: 971000,
-    medianRent: 1850,
-    vacancyRate: 4.5,
-    neighbourhoods: ['Downtown', 'Riverside', 'San Marco', 'Mandarin', 'Southside', 'Ponte Vedra', 'Arlington', 'Westside'],
-    transitInfo: 'JTA bus and Skyway automated monorail serve downtown and surrounding districts.',
-    description: 'Florida\'s largest city by area offers lower rents than Miami/Tampa with steady military and logistics-sector demand.',
-    province: FL_PROVINCE,
-  },
-  {
-    _id: 'city-fort-lauderdale-static',
-    title: 'Fort Lauderdale',
-    slug: { current: 'fort-lauderdale' },
-    tier: 2,
-    population: 184000,
-    medianRent: 2750,
-    vacancyRate: 3.5,
-    neighbourhoods: ['Downtown', 'Las Olas', 'Victoria Park', 'Rio Vista', 'Coral Ridge', 'Wilton Manors', 'Flagler Village', 'Colee Hammock'],
-    transitInfo: 'Broward County Transit plus Tri-Rail commuter service to Miami and West Palm Beach.',
-    description: 'Fort Lauderdale combines beach-adjacent rentals, a growing financial-district footprint, and overflow demand from Miami.',
-    province: FL_PROVINCE,
-  },
-  // Texas
-  {
-    _id: 'city-austin-static',
-    title: 'Austin',
-    slug: { current: 'austin' },
-    tier: 2,
-    population: 966000,
-    medianRent: 2400,
-    vacancyRate: 6.2,
-    neighbourhoods: ['Downtown', 'South Congress', 'East Austin', 'Zilker', 'Hyde Park', 'Mueller', 'West Campus', 'Barton Hills'],
-    transitInfo: 'CapMetro buses and MetroRail commuter line; Project Connect light rail is in planning.',
-    description: 'Austin\'s tech-fueled growth drove nation-leading rent increases through 2024; 2025 has seen supply catch demand, creating rare tenant-favorable conditions.',
-    province: TX_PROVINCE,
-  },
-  {
-    _id: 'city-houston-static',
-    title: 'Houston',
-    slug: { current: 'houston' },
-    tier: 2,
-    population: 2300000,
-    medianRent: 1850,
-    vacancyRate: 7.1,
-    neighbourhoods: ['Downtown', 'Midtown', 'The Heights', 'Montrose', 'River Oaks', 'Rice Village', 'Upper Kirby', 'Galleria'],
-    transitInfo: 'METRO buses and three light rail lines; expansive but car-dependent metro.',
-    description: 'The fourth-largest US city offers the widest range of rental price points, with energy-sector and medical center employment driving diverse demand.',
-    province: TX_PROVINCE,
-  },
-  {
-    _id: 'city-dallas-static',
-    title: 'Dallas',
-    slug: { current: 'dallas' },
-    tier: 2,
-    population: 1300000,
-    medianRent: 1950,
-    vacancyRate: 6.8,
-    neighbourhoods: ['Downtown', 'Uptown', 'Deep Ellum', 'Bishop Arts', 'Oak Lawn', 'Lakewood', 'Lower Greenville', 'M Streets'],
-    transitInfo: 'DART light rail + bus network covers Dallas and suburbs; Trinity Railway Express to Fort Worth.',
-    description: 'Dallas anchors the 7M-person DFW metroplex; corporate relocations fuel steady rental demand in Uptown and the core.',
-    province: TX_PROVINCE,
-  },
-  {
-    _id: 'city-san-antonio-static',
-    title: 'San Antonio',
-    slug: { current: 'san-antonio' },
-    tier: 2,
-    population: 1470000,
-    medianRent: 1650,
-    vacancyRate: 7.5,
-    neighbourhoods: ['Downtown', 'Pearl District', 'King William', 'Southtown', 'Alamo Heights', 'Stone Oak', 'The Dominion', 'Monte Vista'],
-    transitInfo: 'VIA Metropolitan Transit buses serve the San Antonio metro.',
-    description: 'San Antonio balances affordability and steady military, healthcare, and tourism employment.',
-    province: TX_PROVINCE,
-  },
-  {
-    _id: 'city-fort-worth-static',
-    title: 'Fort Worth',
-    slug: { current: 'fort-worth' },
-    tier: 2,
-    population: 958000,
+    _id: 'city-montreal-static',
+    title: 'Montreal',
+    slug: { current: 'montreal' },
+    tier: 1,
+    population: 1780000,
     medianRent: 1700,
-    vacancyRate: 7.0,
-    neighbourhoods: ['Downtown', 'Sundance Square', 'West 7th', 'TCU / Westcliff', 'Near Southside', 'Fairmount', 'Arlington Heights', 'Crestwood'],
-    transitInfo: 'Trinity Metro buses and TEXRail commuter service to DFW Airport.',
-    description: 'Fort Worth complements Dallas with lower rents and strong aerospace, oil & gas, and logistics employment.',
-    province: TX_PROVINCE,
-  },
-  // California
-  {
-    _id: 'city-los-angeles-static',
-    title: 'Los Angeles',
-    slug: { current: 'los-angeles' },
-    tier: 2,
-    population: 3890000,
-    medianRent: 2950,
-    vacancyRate: 4.0,
-    neighbourhoods: ['Downtown', 'Hollywood', 'Silver Lake', 'Echo Park', 'Venice', 'Santa Monica', 'Koreatown', 'West Hollywood'],
-    transitInfo: 'LA Metro operates 6 rail lines plus extensive bus network; A Line light rail connects to Long Beach.',
-    description: 'LA\'s rental market is governed by the Rent Stabilization Ordinance across many pre-1978 buildings; compliance expertise is essential.',
-    province: CA_PROVINCE,
+    vacancyRate: 1.5,
+    neighbourhoods: ['Plateau-Mont-Royal', 'Mile End', 'Rosemont', 'Villeray', 'Griffintown', 'Verdun', 'Outremont', 'Le Sud-Ouest'],
+    transitInfo:
+      'STM operates the Montreal Métro (four lines) and an extensive bus network; REM light rail is expanding service to the South Shore, West Island, and North Shore.',
+    description:
+      'Montreal is Canada\'s most idiosyncratic rental market - plex stock dominates the inner neighbourhoods, leasing aligns to the July 1 moving day, and TAL rent-increase grids shape pricing discipline. Demand is strong year-round across both francophone and anglophone tenant pools.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1519178614-68673b201f36?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Montreal skyline with Mount Royal cross at dusk',
+    province: QC_PROVINCE_REF,
   },
   {
-    _id: 'city-san-diego-static',
-    title: 'San Diego',
-    slug: { current: 'san-diego' },
-    tier: 2,
-    population: 1386000,
-    medianRent: 2800,
-    vacancyRate: 3.6,
-    neighbourhoods: ['Downtown', 'Gaslamp Quarter', 'La Jolla', 'Pacific Beach', 'North Park', 'Hillcrest', 'Ocean Beach', 'Little Italy'],
-    transitInfo: 'San Diego Trolley light rail plus MTS buses; Coaster commuter rail to Oceanside.',
-    description: 'San Diego combines naval/defense employment, biotech, and UCSD-area demand with limited housing supply.',
-    province: CA_PROVINCE,
+    _id: 'city-quebec-city-static',
+    title: 'Quebec City',
+    slug: { current: 'quebec-city' },
+    tier: 1,
+    population: 549000,
+    medianRent: 1450,
+    vacancyRate: 1.2,
+    neighbourhoods: ['Vieux-Québec', 'Saint-Roch', 'Saint-Jean-Baptiste', 'Sainte-Foy', 'Limoilou', 'Montcalm', 'Sillery'],
+    transitInfo:
+      'RTC bus network covers the city; tramway construction is underway connecting Cap-Rouge to Charlesbourg, with delivery scheduled later this decade.',
+    description:
+      'Quebec City rentals are anchored by Laval University, the provincial government, and a stable francophone population. Vacancy is consistently tight in Sainte-Foy and downtown plex pockets, with strong owner-occupier dynamics shaping inventory.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1519832979-6fa011b87667?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Quebec City Old Town Chateau Frontenac and historic buildings',
+    province: QC_PROVINCE_REF,
   },
   {
-    _id: 'city-san-francisco-static',
-    title: 'San Francisco',
-    slug: { current: 'san-francisco' },
-    tier: 2,
-    population: 808000,
-    medianRent: 3400,
-    vacancyRate: 5.5,
-    neighbourhoods: ['SoMa', 'Mission', 'Castro', 'Noe Valley', 'Pacific Heights', 'Marina', 'North Beach', 'Sunset'],
-    transitInfo: 'BART, Muni Metro, cable cars, and extensive bus network; Caltrain to Peninsula.',
-    description: 'SF\'s rental market is governed by strict rent control and just-cause eviction rules. Tech-sector recovery and AI-driven hiring have normalized post-pandemic vacancies.',
-    province: CA_PROVINCE,
+    _id: 'city-laval-static',
+    title: 'Laval',
+    slug: { current: 'laval' },
+    tier: 1,
+    population: 438000,
+    medianRent: 1600,
+    vacancyRate: 1.8,
+    neighbourhoods: ['Chomedey', 'Sainte-Rose', 'Vimont', 'Duvernay', 'Pont-Viau', 'Laval-des-Rapides', 'Saint-Vincent-de-Paul'],
+    transitInfo:
+      'STL bus network plus three STM Métro stations on the Orange Line (Cartier, De la Concorde, Montmorency) link Laval to downtown Montreal in 25 minutes.',
+    description:
+      'Laval is the third-largest city in Quebec and the bedroom community of choice for Montreal-adjacent families. The rental market favours 2-3 bedroom condos near Métro stations and detached homes in Sainte-Rose and Duvernay.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1592595896616-c37162298647?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Laval Quebec suburban residential street with autumn trees',
+    province: QC_PROVINCE_REF,
   },
   {
-    _id: 'city-san-jose-static',
-    title: 'San Jose',
-    slug: { current: 'san-jose' },
-    tier: 2,
-    population: 1013000,
-    medianRent: 3200,
-    vacancyRate: 4.2,
-    neighbourhoods: ['Downtown', 'Willow Glen', 'Rose Garden', 'Almaden Valley', 'Cambrian', 'Evergreen', 'Berryessa', 'North San Jose'],
-    transitInfo: 'VTA light rail and buses; Caltrain and BART Silicon Valley extension.',
-    description: 'Silicon Valley\'s largest city; demand tracks tech hiring cycles with premium pricing in neighborhoods close to major campuses.',
-    province: CA_PROVINCE,
+    _id: 'city-gatineau-static',
+    title: 'Gatineau',
+    slug: { current: 'gatineau' },
+    tier: 1,
+    population: 295000,
+    medianRent: 1550,
+    vacancyRate: 1.6,
+    neighbourhoods: ['Hull', 'Aylmer', 'Gatineau (sector)', 'Buckingham', 'Masson-Angers', 'Le Plateau'],
+    transitInfo:
+      'STO bus network plus Rapibus BRT corridor; cross-river access to OC Transpo Ottawa via the Portage and Alexandra bridges.',
+    description:
+      'Gatineau\'s rental market is driven by federal government employment on both sides of the Ottawa River. Bilingual tenant pools and steady public-sector demand keep vacancy persistently low in Hull and Aylmer.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1591400304123-7d10f2f5add9?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Gatineau Quebec view across the river toward Ottawa Parliament',
+    province: QC_PROVINCE_REF,
   },
   {
-    _id: 'city-sacramento-static',
-    title: 'Sacramento',
-    slug: { current: 'sacramento' },
-    tier: 2,
-    population: 525000,
-    medianRent: 2050,
-    vacancyRate: 3.9,
-    neighbourhoods: ['Downtown', 'Midtown', 'East Sacramento', 'Land Park', 'Curtis Park', 'Natomas', 'Oak Park', 'Pocket'],
-    transitInfo: 'SacRT light rail and buses; Amtrak Capitol Corridor to Bay Area.',
-    description: 'California\'s capital offers state-government-sector stability and lower rents than coastal markets.',
-    province: CA_PROVINCE,
-  },
-  // New York
-  {
-    _id: 'city-new-york-city-static',
-    title: 'New York City',
-    slug: { current: 'new-york-city' },
-    tier: 2,
-    population: 8336000,
-    medianRent: 3800,
-    vacancyRate: 2.4,
-    neighbourhoods: ['Manhattan', 'Brooklyn', 'Queens', 'Bronx', 'Staten Island', 'Upper East Side', 'Williamsburg', 'Long Island City'],
-    transitInfo: 'MTA Subway (24/7), buses, and LIRR/Metro-North commuter rails serve the five boroughs.',
-    description: 'NYC\'s rental market includes rent-stabilized units (DHCR-registered), market-rate rentals, and co-op sublets. Compliance expertise is central to every management engagement.',
-    province: NY_PROVINCE,
+    _id: 'city-longueuil-static',
+    title: 'Longueuil',
+    slug: { current: 'longueuil' },
+    tier: 1,
+    population: 254000,
+    medianRent: 1500,
+    vacancyRate: 1.7,
+    neighbourhoods: ['Vieux-Longueuil', 'Greenfield Park', 'Saint-Hubert', 'Saint-Lambert', 'LeMoyne', 'Boucherville-adjacent'],
+    transitInfo:
+      'RTL bus network plus the STM Yellow Line Métro (Longueuil-Université-de-Sherbrooke) connect to downtown Montreal in under 10 minutes.',
+    description:
+      'Longueuil anchors Montreal\'s South Shore with a mix of plex inventory, mid-rise condos, and family homes. The REM South Shore branch has redrawn commute economics, lifting rents in Brossard-adjacent pockets.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Longueuil Quebec waterfront and city view across the St Lawrence',
+    province: QC_PROVINCE_REF,
   },
   {
-    _id: 'city-buffalo-static',
-    title: 'Buffalo',
-    slug: { current: 'buffalo' },
-    tier: 2,
-    population: 278000,
+    _id: 'city-sherbrooke-static',
+    title: 'Sherbrooke',
+    slug: { current: 'sherbrooke' },
+    tier: 1,
+    population: 172000,
+    medianRent: 1250,
+    vacancyRate: 2.0,
+    neighbourhoods: ['Centre-ville', 'Fleurimont', 'Mont-Bellevue', 'Lennoxville', 'Rock Forest', 'Brompton'],
+    transitInfo:
+      'STS bus network serves the Sherbrooke metro; Université de Sherbrooke and Bishop\'s University drive student-cycle demand.',
+    description:
+      'Sherbrooke combines a deep university tenant base (Université de Sherbrooke, Bishop\'s, CÉGEP de Sherbrooke) with a regional-hub healthcare economy. September leasing cycle dominates; year-round vacancy stays moderate.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Sherbrooke Quebec downtown street with historic stone buildings',
+    province: QC_PROVINCE_REF,
+  },
+]
+
+const BC_CITIES: FallbackCity[] = [
+  {
+    _id: 'city-vancouver-static',
+    title: 'Vancouver',
+    slug: { current: 'vancouver' },
+    tier: 1,
+    population: 695000,
+    medianRent: 2700,
+    vacancyRate: 0.9,
+    neighbourhoods: ['Downtown', 'Yaletown', 'Coal Harbour', 'Kitsilano', 'Mount Pleasant', 'Commercial Drive', 'Kerrisdale', 'West End'],
+    transitInfo:
+      'TransLink operates the SkyTrain (Expo, Millennium, Canada Lines), SeaBus to North Vancouver, and an extensive bus network across Metro Vancouver.',
+    description:
+      'Vancouver is North America\'s tightest rental market with sub-1% vacancy across most submarkets. Rent control is tied to CPI, the Empty Homes Tax applies to underutilized stock, and the Speculation and Vacancy Tax layers on top. Tenant screening discipline is non-negotiable.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1559511260-66a654ae982a?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Vancouver skyline with mountains and harbour at sunset',
+    province: BC_PROVINCE_REF,
+  },
+  {
+    _id: 'city-burnaby-static',
+    title: 'Burnaby',
+    slug: { current: 'burnaby' },
+    tier: 1,
+    population: 250000,
+    medianRent: 2400,
+    vacancyRate: 1.0,
+    neighbourhoods: ['Metrotown', 'Brentwood', 'Lougheed', 'Edmonds', 'Burnaby Heights', 'Capitol Hill', 'Deer Lake'],
+    transitInfo:
+      'SkyTrain Expo and Millennium Lines serve Burnaby with multiple high-density transit hubs at Metrotown, Brentwood, and Lougheed.',
+    description:
+      'Burnaby has become Metro Vancouver\'s densest secondary rental market, with high-rise transit-oriented inventory around Metrotown and Brentwood. SFU drives steady student demand at Burnaby Mountain.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Burnaby BC Metrotown high-rise towers with mountain backdrop',
+    province: BC_PROVINCE_REF,
+  },
+  {
+    _id: 'city-surrey-static',
+    title: 'Surrey',
+    slug: { current: 'surrey' },
+    tier: 1,
+    population: 568000,
+    medianRent: 2200,
+    vacancyRate: 1.3,
+    neighbourhoods: ['Surrey Central', 'Guildford', 'Newton', 'Cloverdale', 'South Surrey', 'Fleetwood', 'Whalley'],
+    transitInfo:
+      'SkyTrain Expo Line terminates at King George (Surrey Central); the Surrey Langley SkyTrain extension is under construction. Extensive TransLink bus coverage.',
+    description:
+      'Surrey is BC\'s fastest-growing city by population and the densest pipeline of new rental construction in Metro Vancouver. Demand is dominated by young families and a diverse South Asian and Filipino-Canadian tenant base.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Surrey BC downtown high-rise development with mountain views',
+    province: BC_PROVINCE_REF,
+  },
+  {
+    _id: 'city-richmond-bc-static',
+    title: 'Richmond',
+    slug: { current: 'richmond' },
+    tier: 1,
+    population: 209000,
+    medianRent: 2350,
+    vacancyRate: 1.1,
+    neighbourhoods: ['Brighouse', 'Steveston', 'Thompson', 'Hamilton', 'East Cambie', 'Sea Island', 'Broadmoor'],
+    transitInfo:
+      'Canada Line SkyTrain connects Richmond to downtown Vancouver and YVR airport in 25 minutes; TransLink buses cover the rest of the city.',
+    description:
+      'Richmond has Canada\'s highest concentration of Chinese-Canadian residents and an exceptionally strong international applicant pool. Listings perform best with Mandarin and Cantonese marketing alongside English.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1606744824163-985d376605aa?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Richmond BC waterfront fishing village at Steveston',
+    province: BC_PROVINCE_REF,
+  },
+  {
+    _id: 'city-victoria-static',
+    title: 'Victoria',
+    slug: { current: 'victoria' },
+    tier: 1,
+    population: 92000,
+    medianRent: 2250,
+    vacancyRate: 1.2,
+    neighbourhoods: ['Downtown', 'James Bay', 'Fernwood', 'Fairfield', 'Oak Bay-adjacent', 'Vic West', 'Rockland'],
+    transitInfo:
+      'BC Transit operates the Victoria bus network; ferry service via BC Ferries to Vancouver and floatplane connections to downtown YVR.',
+    description:
+      'Victoria\'s rental market is shaped by the BC government workforce, University of Victoria, Camosun College, and a strong retiree base. Heritage stock dominates the inner neighbourhoods with strict character-protection rules.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Victoria BC Inner Harbour with Parliament buildings at dusk',
+    province: BC_PROVINCE_REF,
+  },
+  {
+    _id: 'city-coquitlam-static',
+    title: 'Coquitlam',
+    slug: { current: 'coquitlam' },
+    tier: 1,
+    population: 154000,
+    medianRent: 2300,
+    vacancyRate: 1.2,
+    neighbourhoods: ['Coquitlam Centre', 'Burke Mountain', 'Westwood Plateau', 'Maillardville', 'Austin Heights', 'Eagle Ridge'],
+    transitInfo:
+      'SkyTrain Evergreen extension (Millennium Line) serves Coquitlam Centre, Lincoln, and Lafarge Lake-Douglas stations; West Coast Express commuter rail runs to downtown Vancouver.',
+    description:
+      'Coquitlam has been the Tri-Cities growth leader since the Evergreen extension opened. Transit-oriented high-rise inventory around Coquitlam Centre is the dominant new-rental category, with family demand strong in Burke Mountain.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Coquitlam BC town centre high-rises with mountains',
+    province: BC_PROVINCE_REF,
+  },
+  {
+    _id: 'city-kelowna-static',
+    title: 'Kelowna',
+    slug: { current: 'kelowna' },
+    tier: 1,
+    population: 145000,
+    medianRent: 2100,
+    vacancyRate: 1.5,
+    neighbourhoods: ['Downtown', 'Lower Mission', 'Glenmore', 'Rutland', 'Kelowna North', 'Upper Mission', 'Black Mountain'],
+    transitInfo:
+      'BC Transit Kelowna Regional service plus YLW airport connectivity; the city is highway-oriented with car-dependent rental patterns.',
+    description:
+      'Kelowna leads BC interior rental growth, anchored by UBC Okanagan, Okanagan College, a growing tech sector, and lifestyle in-migration from the Lower Mainland and Alberta. Demand spikes seasonally with university intake and tourism.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1605276373954-0c4a0dac5b12?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Kelowna BC Okanagan Lake waterfront with vineyards and mountains',
+    province: BC_PROVINCE_REF,
+  },
+]
+
+const ALBERTA_CITIES: FallbackCity[] = [
+  {
+    _id: 'city-calgary-static',
+    title: 'Calgary',
+    slug: { current: 'calgary' },
+    tier: 1,
+    population: 1340000,
+    medianRent: 1900,
+    vacancyRate: 2.6,
+    neighbourhoods: ['Downtown', 'Beltline', 'Kensington', 'Inglewood', 'Mission', 'Mount Pleasant', 'Bridgeland', 'Bowness'],
+    transitInfo:
+      'Calgary Transit operates the CTrain LRT (Red and Blue lines) plus an extensive bus network; the Green Line LRT is under construction north-to-south through downtown.',
+    description:
+      'Calgary\'s rental market is among Canada\'s strongest with no provincial rent cap and free-market pricing between tenancies. In-migration from Ontario and BC has driven sustained rent growth; energy sector recovery anchors stable demand.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Calgary skyline with Calgary Tower and Rocky Mountains backdrop',
+    province: AB_PROVINCE_REF,
+  },
+  {
+    _id: 'city-edmonton-static',
+    title: 'Edmonton',
+    slug: { current: 'edmonton' },
+    tier: 1,
+    population: 1010000,
+    medianRent: 1550,
+    vacancyRate: 3.1,
+    neighbourhoods: ['Downtown', 'Old Strathcona', 'Oliver', 'Garneau', 'Glenora', 'Westmount', 'Ritchie', 'Bonnie Doon'],
+    transitInfo:
+      'Edmonton Transit Service operates the Capital and Metro LRT lines plus an extensive bus network; the Valley Line LRT southeast extension is operational.',
+    description:
+      'Edmonton offers Canada\'s most accessible major-metro rents with provincial-government, University of Alberta, and healthcare workforce demand. Year-round leasing cycle without a strong July or September peak.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1611611158876-41699b77a059?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Edmonton Alberta skyline along the North Saskatchewan River',
+    province: AB_PROVINCE_REF,
+  },
+  {
+    _id: 'city-red-deer-static',
+    title: 'Red Deer',
+    slug: { current: 'red-deer' },
+    tier: 1,
+    population: 106000,
+    medianRent: 1350,
+    vacancyRate: 4.5,
+    neighbourhoods: ['Downtown', 'Sunnybrook', 'Anders', 'Inglewood', 'Eastview', 'Riverside Meadows', 'Glendale'],
+    transitInfo:
+      'Red Deer Transit provides bus service across the city; the Highway 2 corridor links to Calgary and Edmonton in about 90 minutes each way.',
+    description:
+      'Red Deer anchors central Alberta\'s service economy with oil-and-gas-adjacent demand, Red Deer Polytechnic students, and stable working-family rental needs. Vacancy is the highest among Alberta\'s tier-1 cities.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1597007030739-6d2e7172ee5b?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Red Deer Alberta downtown skyline at twilight',
+    province: AB_PROVINCE_REF,
+  },
+  {
+    _id: 'city-lethbridge-static',
+    title: 'Lethbridge',
+    slug: { current: 'lethbridge' },
+    tier: 1,
+    population: 105000,
+    medianRent: 1300,
+    vacancyRate: 4.8,
+    neighbourhoods: ['Downtown', 'West Lethbridge', 'South Lethbridge', 'North Lethbridge', 'Varsity Village', 'Indian Battle Heights'],
+    transitInfo:
+      'Lethbridge Transit covers the city with bus service connecting University of Lethbridge campus to downtown and residential areas.',
+    description:
+      'Lethbridge is Alberta\'s southern hub anchored by the University of Lethbridge, Lethbridge College, and a strong agricultural processing sector. Student-cycle leasing peaks in August-September.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Lethbridge Alberta High Level Bridge across the Oldman River',
+    province: AB_PROVINCE_REF,
+  },
+  {
+    _id: 'city-airdrie-static',
+    title: 'Airdrie',
+    slug: { current: 'airdrie' },
+    tier: 1,
+    population: 84000,
+    medianRent: 1750,
+    vacancyRate: 3.5,
+    neighbourhoods: ['Bayside', 'Cooper\'s Crossing', 'Williamstown', 'King\'s Heights', 'Sagewood', 'Downtown Airdrie'],
+    transitInfo:
+      'Airdrie Transit runs commuter routes plus ICE Express service to downtown Calgary in about 45 minutes; QEII Highway is the primary commuter corridor.',
+    description:
+      'Airdrie has been one of Canada\'s fastest-growing municipalities for a decade, drawing Calgary commuters into new-build subdivisions. Rental stock skews to newer detached homes and townhouses with strong family-tenant demand.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1591474200742-8e512e6f98f8?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Airdrie Alberta suburban new-build community at sunset',
+    province: AB_PROVINCE_REF,
+  },
+]
+
+const MANITOBA_CITIES: FallbackCity[] = [
+  {
+    _id: 'city-winnipeg-static',
+    title: 'Winnipeg',
+    slug: { current: 'winnipeg' },
+    tier: 1,
+    population: 750000,
+    medianRent: 1500,
+    vacancyRate: 3.4,
+    neighbourhoods: ['Downtown', 'Exchange District', 'Osborne Village', 'Wolseley', 'St. Boniface', 'River Heights', 'Corydon', 'West End'],
+    transitInfo:
+      'Winnipeg Transit operates an extensive bus network plus the Southwest and Eastern Transitways; rapid transit BRT corridors serve U of M and beyond.',
+    description:
+      'Winnipeg is Manitoba\'s rental anchor with University of Manitoba demand, a strong public-sector workforce, and steady year-round leasing. The Manitoba Residential Tenancies Branch sets annual guideline rent increases.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Winnipeg Manitoba downtown skyline along the Red River',
+    province: MB_PROVINCE_REF,
+  },
+  {
+    _id: 'city-brandon-static',
+    title: 'Brandon',
+    slug: { current: 'brandon' },
+    tier: 1,
+    population: 52000,
     medianRent: 1250,
     vacancyRate: 4.2,
-    neighbourhoods: ['Downtown', 'Allentown', 'Elmwood Village', 'North Buffalo', 'South Buffalo', 'Parkside', 'Riverside', 'Kenmore'],
-    transitInfo: 'NFTA Metro Rail light rail plus buses; short drive to Niagara Falls.',
-    description: 'Buffalo offers the most affordable entry-point rentals in New York State with strong student demand around UB and Buffalo State.',
-    province: NY_PROVINCE,
+    neighbourhoods: ['Downtown', 'East End', 'South End', 'North Hill', 'Westridge', 'Brookwood'],
+    transitInfo:
+      'Brandon Transit serves the city with bus routes; Brandon University and Assiniboine Community College drive student-cycle housing demand.',
+    description:
+      'Brandon is Manitoba\'s second-largest city and a regional agricultural and education hub. Brandon University, ACC, and CFB Shilo workforce demand keep year-round vacancy moderate.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1604881991720-f91add269bed?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Brandon Manitoba prairie city downtown street view',
+    province: MB_PROVINCE_REF,
   },
   {
-    _id: 'city-rochester-static',
-    title: 'Rochester',
-    slug: { current: 'rochester' },
-    tier: 2,
-    population: 211000,
+    _id: 'city-steinbach-static',
+    title: 'Steinbach',
+    slug: { current: 'steinbach' },
+    tier: 1,
+    population: 18000,
+    medianRent: 1300,
+    vacancyRate: 3.8,
+    neighbourhoods: ['Downtown', 'Southland', 'Westland', 'Park West', 'Loewen Boulevard area'],
+    transitInfo:
+      'Steinbach is a car-dependent community south-east of Winnipeg; Highway 12 is the primary commuter corridor with regular shuttle service to Winnipeg.',
+    description:
+      'Steinbach is one of Manitoba\'s fastest-growing communities with strong Mennonite heritage and a diversifying immigrant workforce. New-build rental demand is steady from families and young professionals priced out of Winnipeg.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1605276373954-0c4a0dac5b12?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Steinbach Manitoba small city main street at twilight',
+    province: MB_PROVINCE_REF,
+  },
+]
+
+const NOVA_SCOTIA_CITIES: FallbackCity[] = [
+  {
+    _id: 'city-halifax-static',
+    title: 'Halifax',
+    slug: { current: 'halifax' },
+    tier: 1,
+    population: 480000,
+    medianRent: 1800,
+    vacancyRate: 1.0,
+    neighbourhoods: ['Downtown', 'South End', 'North End', 'West End', 'Clayton Park', 'Bedford', 'Spryfield', 'Fairview'],
+    transitInfo:
+      'Halifax Transit operates a comprehensive bus network plus three ferry routes across the harbour; Bus Rapid Transit corridors are in planning.',
+    description:
+      'Halifax\'s rental market is the tightest in Atlantic Canada with sub-1% vacancy in the urban core. Dalhousie, Saint Mary\'s, and the navy/federal workforce drive demand. A provincial rent cap remains in effect and post-2022 renoviction protections are strict.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Halifax Nova Scotia waterfront harbour at sunset',
+    province: NS_PROVINCE_REF,
+  },
+  {
+    _id: 'city-dartmouth-static',
+    title: 'Dartmouth',
+    slug: { current: 'dartmouth' },
+    tier: 1,
+    population: 70000,
+    medianRent: 1700,
+    vacancyRate: 1.2,
+    neighbourhoods: ['Downtown Dartmouth', 'Woodside', 'Crichton Park', 'Manor Park', 'Dartmouth Crossing', 'Cole Harbour'],
+    transitInfo:
+      'Halifax Transit ferries connect Dartmouth to the Halifax peninsula in 12 minutes; bus service blankets the city and links to Cole Harbour and Eastern Passage.',
+    description:
+      'Dartmouth shares Halifax\'s sub-2% vacancy environment with lower per-square-foot rents and growing condo inventory along the waterfront. Workforce tenant demand is anchored by Burnside Industrial Park.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Dartmouth Nova Scotia waterfront across the harbour from Halifax',
+    province: NS_PROVINCE_REF,
+  },
+  {
+    _id: 'city-sydney-static',
+    title: 'Sydney',
+    slug: { current: 'sydney' },
+    tier: 1,
+    population: 30000,
     medianRent: 1200,
-    vacancyRate: 4.5,
-    neighbourhoods: ['Downtown', 'Park Avenue', 'East Avenue', 'Corn Hill', 'South Wedge', 'Highland Park', 'Neighborhood of the Arts', 'Charlotte'],
-    transitInfo: 'RTS buses serve Rochester and surrounding Monroe County.',
-    description: 'Rochester\'s university and medical-center employment (University of Rochester, RIT) drives steady rental demand at accessible rents.',
-    province: NY_PROVINCE,
-  },
-  {
-    _id: 'city-albany-static',
-    title: 'Albany',
-    slug: { current: 'albany' },
-    tier: 2,
-    population: 99000,
-    medianRent: 1550,
-    vacancyRate: 4.0,
-    neighbourhoods: ['Downtown', 'Center Square', 'Pine Hills', 'Park South', 'Delaware Avenue', 'New Scotland', 'Buckingham Lake', 'Uptown'],
-    transitInfo: 'CDTA buses serve the Capital District; Amtrak via Albany-Rensselaer station.',
-    description: 'New York\'s capital anchors state-government employment and SUNY Albany demand.',
-    province: NY_PROVINCE,
-  },
-  {
-    _id: 'city-syracuse-static',
-    title: 'Syracuse',
-    slug: { current: 'syracuse' },
-    tier: 2,
-    population: 148000,
-    medianRent: 1150,
-    vacancyRate: 4.8,
-    neighbourhoods: ['Downtown', 'Armory Square', 'Hawley-Green', 'Eastwood', 'University Hill', 'Westcott', 'Tipperary Hill', 'Strathmore'],
-    transitInfo: 'Centro buses serve Syracuse and surrounding Onondaga County.',
-    description: 'Syracuse combines Syracuse University student demand with growing logistics-sector (Micron, Amazon) employment.',
-    province: NY_PROVINCE,
-  },
-  // Illinois
-  {
-    _id: 'city-chicago-static',
-    title: 'Chicago',
-    slug: { current: 'chicago' },
-    tier: 2,
-    population: 2697000,
-    medianRent: 2150,
-    vacancyRate: 5.2,
-    neighbourhoods: ['Loop', 'River North', 'West Loop', 'Lincoln Park', 'Wicker Park', 'Logan Square', 'Lakeview', 'Pilsen'],
-    transitInfo: 'CTA L trains (8 lines) plus extensive bus network; Metra commuter rail across the region.',
-    description: 'The nation\'s third-largest rental market combines world-class transit, the Chicago RLTO tenant-protection framework, and distinct neighborhood submarkets.',
-    province: IL_PROVINCE,
-  },
-  {
-    _id: 'city-aurora-static',
-    title: 'Aurora',
-    slug: { current: 'aurora' },
-    tier: 2,
-    population: 180000,
-    medianRent: 1650,
-    vacancyRate: 5.0,
-    neighbourhoods: ['Downtown', 'Stonebridge', 'Fox Valley', 'Orchard Valley', 'Ginger Creek', 'Barrington Lakes', 'Prestbury', 'Lincoln Prairie'],
-    transitInfo: 'Pace buses; Metra BNSF line to downtown Chicago in 60 minutes.',
-    description: 'Illinois\' second-largest city offers commutable-to-Chicago rentals with stronger single-family inventory.',
-    province: IL_PROVINCE,
-  },
-  {
-    _id: 'city-naperville-static',
-    title: 'Naperville',
-    slug: { current: 'naperville' },
-    tier: 2,
-    population: 149000,
-    medianRent: 2100,
-    vacancyRate: 4.5,
-    neighbourhoods: ['Downtown', 'North Naperville', 'South Naperville', 'White Eagle', 'Tall Grass', 'Ashwood Park', 'Moser Highlands', 'Brookdale'],
-    transitInfo: 'Pace buses; Metra BNSF line to downtown Chicago.',
-    description: 'One of the top-ranked US suburbs for families; premium rentals with top-rated schools.',
-    province: IL_PROVINCE,
-  },
-  {
-    _id: 'city-rockford-static',
-    title: 'Rockford',
-    slug: { current: 'rockford' },
-    tier: 2,
-    population: 148000,
-    medianRent: 1100,
-    vacancyRate: 5.5,
-    neighbourhoods: ['Downtown', 'Edgebrook', 'Churchill Grove', 'Signal Hill', 'North End', 'East Side', 'Cherry Valley', 'Rock Cut'],
-    transitInfo: 'RMTD buses serve Rockford.',
-    description: 'Rockford offers the most affordable rentals in northern Illinois with logistics-sector and aerospace employment.',
-    province: IL_PROVINCE,
-  },
-  {
-    _id: 'city-springfield-il-static',
-    title: 'Springfield',
-    slug: { current: 'springfield' },
-    tier: 2,
-    population: 114000,
-    medianRent: 1050,
-    vacancyRate: 5.8,
-    neighbourhoods: ['Downtown', 'Leland Grove', 'Panther Creek', 'Jerome', 'Southern View', 'Koke Mill', 'Springfield Plaza', 'Old Aristocracy Hill'],
-    transitInfo: 'SMTD buses serve the Springfield metro area.',
-    description: 'Illinois\' capital offers state-government stability and the most affordable rent in the state.',
-    province: IL_PROVINCE,
+    vacancyRate: 2.8,
+    neighbourhoods: ['Downtown', 'Whitney Pier', 'Ashby', 'Hardwood Hill', 'Westmount', 'North End'],
+    transitInfo:
+      'Transit Cape Breton operates bus service across the Cape Breton Regional Municipality including Sydney, Glace Bay, and New Waterford.',
+    description:
+      'Sydney is Cape Breton\'s rental anchor with Cape Breton University, healthcare-sector employment, and immigration-driven population recovery. The provincial rent cap and tribunal review framework apply.',
+    heroImageUrl: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1600&q=80',
+    heroImageAlt: 'Sydney Nova Scotia Cape Breton harbour view',
+    province: NS_PROVINCE_REF,
   },
 ]
 
-// ---------------------------------------------------------------------------
-// US states (5 footer-linked + core market data)
-// ---------------------------------------------------------------------------
+const QUEBEC_PROVINCE: FallbackProvince = {
+  _id: 'province-quebec-static',
+  title: 'Quebec',
+  slug: { current: 'quebec' },
+  country: 'ca',
+  abbreviation: 'QC',
+  description:
+    'Quebec\'s rental market is shaped by the July 1 moving cycle, the TAL rent-regulation grid, and Bill 96 language rules. Plex inventory dominates Montreal\'s inner neighbourhoods alongside a growing downtown condo core, and Quebec City, Laval, Gatineau, and Sherbrooke each carry distinct sub-market dynamics. MoveSmart runs bilingual, TAL-aware placements across the province.',
+  cities: QUEBEC_CITIES.map((c) => ({
+    title: c.title,
+    slug: c.slug,
+    tier: c.tier,
+    population: c.population,
+    medianRent: c.medianRent,
+    provinceSlug: 'quebec',
+  })),
+}
 
-const US_STATES: FallbackProvince[] = [
-  {
-    _id: 'state-florida-static',
-    title: 'Florida',
-    slug: { current: 'florida' },
+const BC_PROVINCE: FallbackProvince = {
+  _id: 'province-bc-static',
+  title: 'British Columbia',
+  slug: { current: 'british-columbia' },
+  country: 'ca',
+  abbreviation: 'BC',
+  description:
+    'British Columbia rentals are governed by the Residential Tenancy Branch with a CPI-tied rent cap. Metro Vancouver carries North America\'s tightest urban vacancy, layered with Empty Homes Tax and Speculation and Vacancy Tax compliance. MoveSmart serves Vancouver, Burnaby, Surrey, Richmond, Coquitlam, Victoria, and Kelowna with RTB-compliant leases and CPI-aware pricing discipline.',
+  cities: BC_CITIES.map((c) => ({
+    title: c.title,
+    slug: c.slug,
+    tier: c.tier,
+    population: c.population,
+    medianRent: c.medianRent,
+    provinceSlug: 'british-columbia',
+  })),
+}
+
+const ALBERTA_PROVINCE: FallbackProvince = {
+  _id: 'province-alberta-static',
+  title: 'Alberta',
+  slug: { current: 'alberta' },
+  country: 'ca',
+  abbreviation: 'AB',
+  description:
+    'Alberta is the only major Canadian province without a rent cap - pricing between tenancies is free-market under the Residential Tenancies Act. Calgary and Edmonton anchor the major-metro inventory with sustained in-migration from Ontario and BC, and Red Deer, Lethbridge, and Airdrie round out the tier-1 service area.',
+  cities: ALBERTA_CITIES.map((c) => ({
+    title: c.title,
+    slug: c.slug,
+    tier: c.tier,
+    population: c.population,
+    medianRent: c.medianRent,
+    provinceSlug: 'alberta',
+  })),
+}
+
+const MANITOBA_PROVINCE: FallbackProvince = {
+  _id: 'province-manitoba-static',
+  title: 'Manitoba',
+  slug: { current: 'manitoba' },
+  country: 'ca',
+  abbreviation: 'MB',
+  description:
+    'Manitoba rentals are governed by the Residential Tenancies Branch with annual guideline rent-increase percentages. Winnipeg anchors the market with University of Manitoba and public-sector demand, with Brandon and Steinbach serving as regional secondary markets with growing inventory.',
+  cities: MANITOBA_CITIES.map((c) => ({
+    title: c.title,
+    slug: c.slug,
+    tier: c.tier,
+    population: c.population,
+    medianRent: c.medianRent,
+    provinceSlug: 'manitoba',
+  })),
+}
+
+const NOVA_SCOTIA_PROVINCE: FallbackProvince = {
+  _id: 'province-nova-scotia-static',
+  title: 'Nova Scotia',
+  slug: { current: 'nova-scotia' },
+  country: 'ca',
+  abbreviation: 'NS',
+  description:
+    'Nova Scotia\'s rental market is shaped by a provincial rent cap, strict post-2022 renoviction protections, and Halifax\'s sub-1% urban vacancy. Dalhousie, Saint Mary\'s, the navy, and federal workforce drive Halifax demand; Dartmouth and Sydney round out the tier-1 service area.',
+  cities: NOVA_SCOTIA_CITIES.map((c) => ({
+    title: c.title,
+    slug: c.slug,
+    tier: c.tier,
+    population: c.population,
+    medianRent: c.medianRent,
+    provinceSlug: 'nova-scotia',
+  })),
+}
+
+// ---------------------------------------------------------------------------
+// US cities (full data for city pages)
+// ---------------------------------------------------------------------------
+// Sourced from the static data layer at `@/data/us-cities`. Adding a new
+// state or city there will propagate automatically through these fallbacks,
+// the city/state pages, and the generated sitemap.
+import {
+  US_STATES_LIST,
+  US_CITIES_LIST,
+  type USStateEntry,
+  type USCityEntry,
+} from '@/data/us-cities'
+
+function stateProvinceRef(state: USStateEntry): FallbackCity['province'] {
+  return {
+    title: state.name,
+    slug: { current: state.slug },
     country: 'us',
-    abbreviation: 'FL',
-    description:
-      'Florida\'s rental market is driven by population inflows from the Northeast and international investors. Demand is strongest in Miami, Tampa, and Orlando metros with seasonal spikes from snowbird renters.',
-    cities: [
-      { title: 'Miami', slug: { current: 'miami' }, tier: 2, population: 442000, medianRent: 3100, provinceSlug: 'florida' },
-      { title: 'Orlando', slug: { current: 'orlando' }, tier: 2, population: 309000, medianRent: 2300, provinceSlug: 'florida' },
-      { title: 'Tampa', slug: { current: 'tampa' }, tier: 2, population: 398000, medianRent: 2450, provinceSlug: 'florida' },
-      { title: 'Jacksonville', slug: { current: 'jacksonville' }, tier: 2, population: 971000, medianRent: 1850, provinceSlug: 'florida' },
-      { title: 'Fort Lauderdale', slug: { current: 'fort-lauderdale' }, tier: 2, population: 184000, medianRent: 2750, provinceSlug: 'florida' },
-    ],
-  },
-  {
-    _id: 'state-texas-static',
-    title: 'Texas',
-    slug: { current: 'texas' },
-    country: 'us',
-    abbreviation: 'TX',
-    description:
-      'Texas is the fastest-growing state by new-resident rental demand. Austin, Houston, and the DFW metroplex lead in managed-property inventory, with strong rent growth in Tier-1 submarkets.',
-    cities: [
-      { title: 'Austin', slug: { current: 'austin' }, tier: 2, population: 966000, medianRent: 2400, provinceSlug: 'texas' },
-      { title: 'Houston', slug: { current: 'houston' }, tier: 2, population: 2300000, medianRent: 1850, provinceSlug: 'texas' },
-      { title: 'Dallas', slug: { current: 'dallas' }, tier: 2, population: 1300000, medianRent: 1950, provinceSlug: 'texas' },
-      { title: 'San Antonio', slug: { current: 'san-antonio' }, tier: 2, population: 1470000, medianRent: 1650, provinceSlug: 'texas' },
-      { title: 'Fort Worth', slug: { current: 'fort-worth' }, tier: 2, population: 958000, medianRent: 1700, provinceSlug: 'texas' },
-    ],
-  },
-  {
-    _id: 'state-california-static',
-    title: 'California',
-    slug: { current: 'california' },
-    country: 'us',
-    abbreviation: 'CA',
-    description:
-      'California rentals are the most competitive in North America with strict tenant-protection statutes. Our California advisors specialize in AB-1482 compliance and Costa-Hawkins considerations.',
-    cities: [
-      { title: 'Los Angeles', slug: { current: 'los-angeles' }, tier: 2, population: 3890000, medianRent: 2950, provinceSlug: 'california' },
-      { title: 'San Diego', slug: { current: 'san-diego' }, tier: 2, population: 1386000, medianRent: 2800, provinceSlug: 'california' },
-      { title: 'San Francisco', slug: { current: 'san-francisco' }, tier: 2, population: 808000, medianRent: 3400, provinceSlug: 'california' },
-      { title: 'San Jose', slug: { current: 'san-jose' }, tier: 2, population: 1013000, medianRent: 3200, provinceSlug: 'california' },
-      { title: 'Sacramento', slug: { current: 'sacramento' }, tier: 2, population: 525000, medianRent: 2050, provinceSlug: 'california' },
-    ],
-  },
-  {
-    _id: 'state-new-york-static',
-    title: 'New York',
-    slug: { current: 'new-york' },
-    country: 'us',
-    abbreviation: 'NY',
-    description:
-      'New York\'s rental market spans Manhattan\'s ultra-competitive submarkets through emerging Brooklyn and Queens neighborhoods. Rent stabilization rules and DHCR registration are central to compliant management.',
-    cities: [
-      { title: 'New York City', slug: { current: 'new-york-city' }, tier: 2, population: 8336000, medianRent: 3800, provinceSlug: 'new-york' },
-      { title: 'Buffalo', slug: { current: 'buffalo' }, tier: 2, population: 278000, medianRent: 1250, provinceSlug: 'new-york' },
-      { title: 'Rochester', slug: { current: 'rochester' }, tier: 2, population: 211000, medianRent: 1200, provinceSlug: 'new-york' },
-      { title: 'Albany', slug: { current: 'albany' }, tier: 2, population: 99000, medianRent: 1550, provinceSlug: 'new-york' },
-      { title: 'Syracuse', slug: { current: 'syracuse' }, tier: 2, population: 148000, medianRent: 1150, provinceSlug: 'new-york' },
-    ],
-  },
-  {
-    _id: 'state-illinois-static',
-    title: 'Illinois',
-    slug: { current: 'illinois' },
-    country: 'us',
-    abbreviation: 'IL',
-    description:
-      'Illinois rentals are concentrated in the Chicago metro, with growing demand in collar counties. The Residential Tenants\' Right to Repair Act and Chicago RLTO shape our compliance playbook.',
-    cities: [
-      { title: 'Chicago', slug: { current: 'chicago' }, tier: 2, population: 2697000, medianRent: 2150, provinceSlug: 'illinois' },
-      { title: 'Aurora', slug: { current: 'aurora' }, tier: 2, population: 180000, medianRent: 1650, provinceSlug: 'illinois' },
-      { title: 'Naperville', slug: { current: 'naperville' }, tier: 2, population: 149000, medianRent: 2100, provinceSlug: 'illinois' },
-      { title: 'Rockford', slug: { current: 'rockford' }, tier: 2, population: 148000, medianRent: 1100, provinceSlug: 'illinois' },
-      { title: 'Springfield', slug: { current: 'springfield' }, tier: 2, population: 114000, medianRent: 1050, provinceSlug: 'illinois' },
-    ],
-  },
-]
+    abbreviation: state.abbreviation,
+  }
+}
+
+const US_STATE_PROVINCE_BY_SLUG: Record<string, FallbackCity['province']> =
+  Object.fromEntries(
+    US_STATES_LIST.map((s) => [s.slug, stateProvinceRef(s)] as const),
+  )
+
+function cityToFallback(entry: USCityEntry): FallbackCity {
+  const province =
+    US_STATE_PROVINCE_BY_SLUG[entry.stateSlug] ??
+    ({
+      title: entry.stateSlug,
+      slug: { current: entry.stateSlug },
+      country: 'us',
+    } as FallbackCity['province'])
+
+  return {
+    _id: `city-${entry.stateSlug}-${entry.slug.current}-static`,
+    title: entry.title,
+    slug: entry.slug,
+    tier: 2,
+    population: entry.population,
+    medianRent: entry.medianRent,
+    description: entry.marketNote,
+    heroImageUrl: entry.heroImageUrl,
+    heroImageAlt: entry.heroImageAlt,
+    province,
+  }
+}
+
+const US_CITIES: FallbackCity[] = US_CITIES_LIST.map(cityToFallback)
+
+const US_STATES: FallbackProvince[] = US_STATES_LIST.map((state) => ({
+  _id: `state-${state.slug}-static`,
+  title: state.name,
+  slug: { current: state.slug },
+  country: 'us',
+  abbreviation: state.abbreviation,
+  description: state.description,
+  cities: US_CITIES_LIST.filter((c) => c.stateSlug === state.slug).map(
+    (c) => ({
+      title: c.title,
+      slug: c.slug,
+      tier: 2,
+      population: c.population,
+      medianRent: c.medianRent,
+      provinceSlug: state.slug,
+    }),
+  ),
+}))
 
 // ---------------------------------------------------------------------------
 // Ontario province (aggregates the Ontario cities above)
@@ -995,11 +1161,44 @@ const SERVICES: FallbackService[] = [
 // Lookups
 // ---------------------------------------------------------------------------
 
+const ALL_CA_CITIES: FallbackCity[] = [
+  ...ONTARIO_CITIES,
+  ...QUEBEC_CITIES,
+  ...BC_CITIES,
+  ...ALBERTA_CITIES,
+  ...MANITOBA_CITIES,
+  ...NOVA_SCOTIA_CITIES,
+]
+
+const ALL_CA_PROVINCES: FallbackProvince[] = [
+  ONTARIO_PROVINCE,
+  QUEBEC_PROVINCE,
+  BC_PROVINCE,
+  ALBERTA_PROVINCE,
+  MANITOBA_PROVINCE,
+  NOVA_SCOTIA_PROVINCE,
+]
+
 export function getFallbackCaCity(slug: string): FallbackCity | null {
-  return ONTARIO_CITIES.find((c) => c.slug.current === slug) ?? null
+  return ALL_CA_CITIES.find((c) => c.slug.current === slug) ?? null
 }
 
-export function getFallbackUsCity(slug: string): FallbackCity | null {
+/**
+ * Look up a US city by slug. When two states share a slug (e.g. Aurora in
+ * both Illinois and Colorado), pass `stateSlug` to disambiguate. Without
+ * `stateSlug`, returns the first match (legacy single-arg behaviour).
+ */
+export function getFallbackUsCity(
+  slug: string,
+  stateSlug?: string,
+): FallbackCity | null {
+  if (stateSlug) {
+    return (
+      US_CITIES.find(
+        (c) => c.slug.current === slug && c.province.slug.current === stateSlug,
+      ) ?? null
+    )
+  }
   return US_CITIES.find((c) => c.slug.current === slug) ?? null
 }
 
@@ -1009,7 +1208,8 @@ export function getFallbackCity(slug: string): FallbackCity | null {
 }
 
 export function getFallbackProvince(slug: string): FallbackProvince | null {
-  if (slug === 'ontario') return ONTARIO_PROVINCE
+  const caMatch = ALL_CA_PROVINCES.find((p) => p.slug.current === slug)
+  if (caMatch) return caMatch
   return US_STATES.find((s) => s.slug.current === slug) ?? null
 }
 
@@ -1030,10 +1230,10 @@ export function getFallbackCityList(): Array<{
   heroImageUrl?: string
   heroImageAlt?: string
 }> {
-  const caCities = ONTARIO_CITIES.map((c) => ({
+  const caCities = ALL_CA_CITIES.map((c) => ({
     title: c.title,
     slug: c.slug,
-    provinceSlug: 'ontario',
+    provinceSlug: c.province.slug.current,
     population: c.population,
     medianRent: c.medianRent,
     heroImageUrl: c.heroImageUrl,

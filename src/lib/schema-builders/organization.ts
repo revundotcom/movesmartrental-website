@@ -104,10 +104,11 @@ export function buildOrganizationSchema(
       availableLanguage: ['English'],
     },
     sameAs: data.socialLinks ?? [
-      'https://www.linkedin.com/company/movesmart-rentals',
+      'https://www.linkedin.com/company/movesmart-rentals/',
       'https://www.instagram.com/movesmartrentals',
       'https://www.facebook.com/movesmartrentals',
-      'https://www.youtube.com/@movesmartrentals',
+      'https://www.tiktok.com/@movesmartrentals',
+      'https://x.com/Movesmartrental',
     ],
     areaServed: areaServedCodes.map((code) => ({
       '@type': 'Country',

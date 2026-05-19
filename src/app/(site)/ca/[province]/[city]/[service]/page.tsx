@@ -253,6 +253,9 @@ function CityServiceView({
         accentLastWord={false}
         lede={heroSubheadline}
         cta1={{ label: 'See Pricing', href: '/pricing/' }}
+        theme="dark"
+        backgroundImageUrl="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=2400&q=80"
+        backgroundImageAlt="Leasing services in Canada"
       />
 
       {/* Premium Local Market Section - two-column layout */}
@@ -360,7 +363,7 @@ function CityServiceView({
       <CTABannerBlock
         headline="Get Started with MoveSmart Rentals"
         description={`${serviceTitle} in ${cityTitle} - full-service leasing and tenant placement, zero upfront cost, success-fee pricing.`}
-        primaryCta={{ label: 'Create Free Account', href: '/contact/' }}
+        primaryCta={{ label: 'List my property', href: '/contact/?type=owner' }}
       />
     </>
   )

@@ -16,7 +16,7 @@ const AUDIENCES = [
     icon: Building,
     title: 'For Property Owners',
     description: 'Full-service leasing and tenant placement with zero upfront cost. Strategic pricing, professional marketing, tenant qualification, lease execution, and a documented move-in - hands-off leasing from listing to keys.',
-    features: ['18-Day Avg Placement', 'Defensible Qualification', 'Rental Protection (partner)', 'Dedicated Leasing Advisor', 'Owner Portal'],
+    features: ['18-Day Avg Placement', 'Defensible Qualification', 'Rental Protection', 'MLS + 20+ platforms', 'Dedicated Leasing Advisor', 'Owner Portal'],
     cta: 'Explore Owner Services',
     href: '/owners/',
     accent: 'emerald' as const,
@@ -24,10 +24,10 @@ const AUDIENCES = [
   {
     icon: Home,
     title: 'For Tenants',
-    description: 'Find your next home from our pipeline of professionally listed rentals across Canada. Verified listings, transparent pricing, and a smooth application-to-move-in experience.',
-    features: ['Verified Listings', 'Online Applications', 'Transparent Pricing', 'Responsive Leasing Team', 'Secure E-Sign'],
-    cta: 'Browse Rentals',
-    href: '/tenants/',
+    description: 'Find your next home from our pipeline of professionally listed rentals across Canada and the United States. Verified listings, transparent pricing, and a smooth application-to-move-in experience.',
+    features: ['Verified Listings', 'Online Applications', 'Online Payments', 'Transparent Pricing', 'Responsive Leasing Team', 'Secure E-Sign'],
+    cta: 'Browse rentals',
+    href: '/properties/',
     accent: 'gold' as const,
   },
 ]

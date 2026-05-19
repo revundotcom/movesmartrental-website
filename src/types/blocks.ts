@@ -87,6 +87,12 @@ export interface HeroBlockProps {
   illustration?: React.ReactNode
   /** Eyebrow badge text override. Default: rotating brand texts */
   eyebrow?: string
+  /** Optional 3-column stat strip that replaces the default 2x2 proof row. */
+  statStrip?: Array<{
+    value: string
+    valueSuffix?: string
+    label: string
+  }>
 }
 
 export interface CTABannerBlockProps {

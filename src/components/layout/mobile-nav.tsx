@@ -15,7 +15,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
-import { PORTAL_LOGIN_URL, PORTAL_REGISTER_URL } from '@/lib/portal-api'
+import { PORTAL_LOGIN_URL } from '@/lib/portal-api'
 
 /* ------------------------------------------------------------------ */
 /*  Mobile navigation structure                                       */
@@ -39,7 +39,7 @@ const MOBILE_NAV_SECTIONS: ReadonlyArray<NavSectionDef> = [
       { title: 'Pricing', href: '/pricing/' },
       { title: 'Portal & Technology', href: '/portal-and-technology/' },
       { title: 'Reviews', href: '/reviews/' },
-      { title: 'Create a Free Account', href: '/contact/?type=owner' },
+      { title: 'List my property', href: '/contact/?type=owner' },
     ],
   },
   {
@@ -54,26 +54,22 @@ const MOBILE_NAV_SECTIONS: ReadonlyArray<NavSectionDef> = [
   {
     label: 'Services',
     items: [
-      { title: 'All Services', href: '/services/' },
       { title: 'Tenant Placement', href: '/services/tenant-placement/' },
       { title: 'Leasing Services', href: '/services/leasing-services/' },
       { title: 'Tenant Screening', href: '/services/tenant-screening/' },
       { title: 'Rent Guarantee', href: '/services/rent-guarantee/' },
-      // TODO(phase-2): real /services/tenant-insurance/
-      { title: 'Tenant Insurance', href: '/services/' },
-      // TODO(phase-2): real /services/tenant-guarantor/
-      { title: 'Tenant Guarantor', href: '/services/' },
+      { title: 'Tenant Insurance', href: '/services/tenant-insurance/' },
+      { title: 'Tenant Guarantor', href: '/services/tenant-guarantor/' },
       { title: 'Rental Preparation', href: '/services/rental-preparation/' },
       { title: 'Portal & Technology', href: '/portal-and-technology/' },
-      // TODO(phase-2): real /services/institutional-lease-up/
-      { title: 'Institutional Lease-Up', href: '/services/' },
+      { title: 'Institutional Lease-Up', href: '/institutional-lease-up/' },
     ],
   },
   {
     label: 'Locations',
     // TODO(phase-2): real /locations/ hub.
     items: [
-      { title: 'All Ontario Locations', href: '/ca/ontario/' },
+      { title: 'All Canadian Locations', href: '/ca/ontario/' },
       { title: 'Toronto', href: '/ca/ontario/toronto/' },
       { title: 'Mississauga', href: '/ca/ontario/mississauga/' },
       { title: 'Brampton', href: '/ca/ontario/brampton/' },
@@ -308,15 +304,13 @@ export function MobileNav() {
           >
             Login
           </a>
-          <a
-            href={PORTAL_REGISTER_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/contact/?type=owner"
             onClick={handleNavigate}
             className="flex w-full items-center justify-center rounded-lg bg-brand-emerald px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-emerald-dark"
           >
-            Create Account
-          </a>
+            List my property
+          </Link>
         </div>
       </SheetContent>
     </Sheet>

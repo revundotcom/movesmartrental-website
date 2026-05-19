@@ -17,7 +17,7 @@ import { ZigzagStep, FeeTableRow, PullQuoteReveal } from './tenants-interactive'
 export const metadata: Metadata = {
   title: 'Rental Homes Canada | Apartments, Condos & Houses for Rent',
   description:
-    'Browse verified rental listings across Canada. Apartments, condos, houses, and townhouses in Toronto, Mississauga, Ottawa, Hamilton, and 160+ cities. Apply online in minutes.',
+    'Browse verified rental listings across Canada and the United States. Apartments, condos, houses, and townhouses in Toronto, Mississauga, Miami, Austin, and 160+ cities. Apply online in minutes.',
   alternates: {
     canonical: '/tenants/',
   },
@@ -80,49 +80,89 @@ const TENANT_FAQS = [
   },
 ]
 
-/* ---------- How renting with us works (4 editorial rows) ---------- */
+/* ---------- How renting with us works (4 image-led editorial rows) ---------- */
 
-const HOW_IT_WORKS = [
+const HOW_IT_WORKS: Array<{
+  number: string
+  title: string
+  body: string
+  imageSrc: string
+  imageAlt: string
+}> = [
   {
     number: '01',
     title: 'Browse verified listings',
     body: 'Every listing on MoveSmart is owner-verified with accurate rent, deposit, and inclusions clearly posted. No bait-and-switch, no stale photos - filter by city, bedrooms, and budget and shortlist homes in minutes.',
+    imageSrc:
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1600&q=80&auto=format&fit=crop',
+    imageAlt: 'Bright modern Canadian rental condo interior',
   },
   {
     number: '02',
     title: 'Apply online in minutes',
     body: 'Upload your ID, proof of income, and references through our secure portal. One application works across every MoveSmart listing - no re-typing, no printing, no faxing anything to anyone.',
+    imageSrc:
+      'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1600&q=80&auto=format&fit=crop',
+    imageAlt: 'Renter completing an online rental application on a laptop',
   },
   {
     number: '03',
     title: 'Transparent screening',
     body: 'We run credit, employment, and reference checks to the same standard for every applicant and issue a decision within 48 hours. You get a clear answer fast, not a ghost after a showing.',
+    imageSrc:
+      'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1600&q=80&auto=format&fit=crop',
+    imageAlt: 'MoveSmart leasing team reviewing applicant files',
   },
   {
     number: '04',
     title: 'Sign, pay, move in',
     body: 'Sign the Ontario Standard Lease digitally, pay your last-month deposit by e-transfer or pre-auth, and pick up your keys on move-in day. Your tenant portal goes live the same morning for rent, maintenance, and documents.',
+    imageSrc:
+      'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&q=80&auto=format&fit=crop',
+    imageAlt: 'Property owner handing over keys to a new tenant on move-in day',
   },
 ]
 
-/* ---------- Property types (editorial two-column) ---------- */
+/* ---------- Property types (image-led card grid) ---------- */
 
-const PROPERTY_TYPES = [
+const PROPERTY_TYPES: Array<{
+  title: string
+  desc: string
+  imageSrc: string
+  imageAlt: string
+  tag: string
+}> = [
   {
     title: 'Apartments',
+    tag: 'Purpose-built rentals',
     desc: 'Purpose-built rental buildings - elevators, on-site management, transit-friendly locations, often with utilities bundled.',
+    imageSrc:
+      'https://images.unsplash.com/photo-1577415124269-fc1140a69e91?w=1600&q=80&auto=format&fit=crop',
+    imageAlt: 'Modern Canadian apartment building exterior',
   },
   {
     title: 'Condos',
+    tag: 'Amenity-rich towers',
     desc: 'Individually owned units in amenity-rich buildings - gyms, pools, lobby attendants, often newer construction with in-suite laundry.',
+    imageSrc:
+      'https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1600&q=80&auto=format&fit=crop',
+    imageAlt: 'Bright modern condo interior with large windows',
   },
   {
     title: 'Houses',
+    tag: 'Family detached',
     desc: 'Detached and semi-detached homes with yards, driveways, and basements - ideal for families and long-term renters.',
+    imageSrc:
+      'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1600&q=80&auto=format&fit=crop',
+    imageAlt: 'Family home in a residential Canadian neighbourhood',
   },
   {
     title: 'Townhouses',
+    tag: 'Planned communities',
     desc: 'Multi-level homes with the footprint of a house and the maintenance profile of a condo - often in planned communities.',
+    imageSrc:
+      'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1600&q=80&auto=format&fit=crop',
+    imageAlt: 'Row of modern Canadian townhouses',
   },
 ]
 
@@ -191,20 +231,35 @@ const FEE_ROWS: Array<{ label: string; value: string; note?: string }> = [
   },
 ]
 
-/* ---------- Pull-quote testimonials ---------- */
+/* ---------- Tenant testimonials (photo cards with avatar imagery) ---------- */
 
-const PULL_QUOTES: Array<{ quote: string; name: string; city: string }> = [
+const PULL_QUOTES: Array<{
+  quote: string
+  name: string
+  city: string
+  unit: string
+  imageSrc: string
+  imageAlt: string
+}> = [
   {
     quote:
       'I applied on a Tuesday and had keys in my hand nine days later. Every number on the listing matched the lease. That never happened to me before.',
     name: 'Priya',
     city: 'Mississauga, ON',
+    unit: '2-bed condo, Square One',
+    imageSrc:
+      'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80&auto=format&fit=crop',
+    imageAlt: 'Priya, MoveSmart tenant in Mississauga',
   },
   {
     quote:
       'Our dishwasher died on a Sunday. I logged a ticket at 9pm and a tech was here Monday afternoon. I stopped dreading maintenance calls.',
     name: 'Marcus',
     city: 'Hamilton, ON',
+    unit: 'Detached house, Westdale',
+    imageSrc:
+      'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80&auto=format&fit=crop',
+    imageAlt: 'Marcus, MoveSmart tenant in Hamilton',
   },
 ]
 
@@ -220,7 +275,7 @@ const CITY_IMAGES: Record<string, string> = {
   vaughan: 'photo-1577415124269-fc1140a69e91', // apartment block
   markham: 'photo-1564013799919-ab600027ffc6', // suburban exterior
   'richmond-hill': 'photo-1570129477492-45c003edd2be', // modern home
-  oakville: 'photo-1567002260456-bce4cb6c30be', // Toronto downtown
+  oakville: 'photo-1517090504586-fde19ea6066f', // Toronto downtown
   burlington: 'photo-1502672260266-1c1ef2d93688', // bright interior
   kitchener: 'photo-1486325212027-8081e485255e', // multi-storey
   waterloo: 'photo-1505691938895-1758d7feb511', // modern condo
@@ -341,7 +396,7 @@ export default async function TenantsPage() {
         eyebrow="Find your next home"
         headline="Verified rentals, fair applications, real home."
         lede="Browse owner-verified apartments, condos, houses, and townhouses across 160+ Canadian cities. Apply online in minutes and get a decision within 48 hours."
-        cta1={{ label: 'Browse Rentals', href: '/locations/' }}
+        cta1={{ label: 'Browse rentals', href: '/properties/' }}
         cta2={{ label: 'Tenant FAQ', href: '/faq/' }}
         meta={[
           { label: 'Cities', value: '20+' },
@@ -350,6 +405,9 @@ export default async function TenantsPage() {
           { label: 'Response', value: '< 24h' },
         ]}
         aside={heroAside}
+        theme="dark"
+        backgroundImageUrl="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=2400&q=80"
+        backgroundImageAlt="Couple settling into a bright modern rental apartment"
       />
 
       {/* ─── Editorial image bridge: happy new tenants moving in ───────── */}
@@ -365,6 +423,20 @@ export default async function TenantsPage() {
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 unoptimized
               />
+              {/* Floating decision badge */}
+              <div className="absolute -bottom-4 -right-4 hidden rounded-2xl border border-emerald-100 bg-white p-4 shadow-xl shadow-brand-navy/15 sm:block">
+                <div className="flex items-center gap-3">
+                  <div className="flex size-10 items-center justify-center rounded-full bg-emerald-100">
+                    <svg viewBox="0 0 24 24" className="size-5 text-brand-emerald" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M20 6 9 17l-5-5" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-emerald">Approved</p>
+                    <p className="font-display text-lg text-brand-navy">48 hours</p>
+                  </div>
+                </div>
+              </div>
             </div>
             <div>
               <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
@@ -382,12 +454,13 @@ export default async function TenantsPage() {
         </div>
       </section>
 
-      {/* ─── How renting with us works (zigzag editorial) ───────────────── */}
-      <section className="bg-white py-20">
+      {/* ─── How renting with us works (image-led zigzag) ───────────────── */}
+      <section className="bg-white py-20 sm:py-24">
         <div className="mx-auto max-w-6xl px-4">
           <RevealOnScroll variant="clipReveal" duration={0.6}>
             <div className="mb-14 max-w-2xl">
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+              <p className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                <span aria-hidden="true" className="block h-px w-8 bg-brand-emerald/60" />
                 The Process
               </p>
               <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
@@ -395,47 +468,62 @@ export default async function TenantsPage() {
                 <span className="font-display italic text-brand-emerald">works</span>
                 <span className="text-brand-gold" aria-hidden="true">.</span>
               </h2>
+              <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
+                Four steps, from first click to keys-in-hand. Every one of them visible in your tenant portal.
+              </p>
             </div>
           </RevealOnScroll>
 
-          <ol className="space-y-2">
+          <ol className="relative space-y-6 sm:space-y-8">
             {HOW_IT_WORKS.map((step, idx) => {
               const isEven = idx % 2 === 0
               return (
                 <ZigzagStep
                   key={step.number}
                   index={idx}
-                  className={`grid grid-cols-1 items-start gap-6 border-t border-brand-navy/10 py-10 md:grid-cols-12 md:gap-10 ${
-                    isEven ? '' : 'md:text-right'
-                  }`}
+                  className="grid grid-cols-1 items-center gap-6 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-xl hover:shadow-brand-navy/10 md:grid-cols-12 md:gap-0"
                 >
-                  {/* Numeral */}
+                  {/* Image */}
                   <div
-                    className={`md:col-span-3 ${
-                      isEven ? 'md:order-1' : 'md:order-2 md:text-right'
+                    className={`relative aspect-[4/3] w-full overflow-hidden md:col-span-5 md:aspect-auto md:h-full md:min-h-[320px] ${
+                      isEven ? 'md:order-1' : 'md:order-2'
                     }`}
                   >
-                    <span
-                      className="font-display text-6xl font-normal leading-none text-brand-gold sm:text-7xl md:text-8xl"
+                    <Image
+                      src={step.imageSrc}
+                      alt={step.imageAlt}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 500px"
+                      className="object-cover"
+                      unoptimized
+                    />
+                    {/* Soft gradient overlay */}
+                    <div
                       aria-hidden="true"
+                      className="absolute inset-0 bg-gradient-to-tr from-brand-navy/30 via-transparent to-transparent"
+                    />
+                    {/* Floating numeral */}
+                    <span
+                      aria-hidden="true"
+                      className="absolute left-5 top-5 flex size-14 items-center justify-center rounded-2xl border border-white/30 bg-white/15 font-display text-2xl italic text-white shadow-lg backdrop-blur-md sm:size-16 sm:text-3xl"
                     >
                       {step.number}
                     </span>
                   </div>
+
                   {/* Copy */}
                   <div
-                    className={`md:col-span-9 ${
-                      isEven ? 'md:order-2' : 'md:order-1 md:text-right'
+                    className={`p-6 sm:p-8 md:col-span-7 md:p-10 ${
+                      isEven ? 'md:order-2' : 'md:order-1'
                     }`}
                   >
-                    <h3 className="font-display text-2xl font-normal text-brand-navy sm:text-3xl">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                      Step {step.number}
+                    </p>
+                    <h3 className="mt-2 font-display text-2xl font-normal leading-snug text-brand-navy sm:text-3xl">
                       {step.title}
                     </h3>
-                    <p
-                      className={`mt-3 text-base leading-relaxed text-slate-600 sm:text-lg ${
-                        isEven ? 'max-w-2xl' : 'max-w-2xl md:ml-auto'
-                      }`}
-                    >
+                    <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-600 sm:text-[17px]">
                       {step.body}
                     </p>
                   </div>
@@ -446,12 +534,22 @@ export default async function TenantsPage() {
         </div>
       </section>
 
-      {/* ─── Property types (editorial two-col list) ───────────────────── */}
-      <section className="bg-[#FBFAF6] py-20">
-        <div className="mx-auto max-w-6xl px-4">
+      {/* ─── Property types (image-led card grid) ─────────────────────── */}
+      <section className="relative overflow-hidden bg-[#FBFAF6] py-20 sm:py-24">
+        {/* Decorative dot grid */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)',
+            backgroundSize: '28px 28px',
+          }}
+        />
+        <div className="relative mx-auto max-w-6xl px-4">
           <RevealOnScroll variant="clipReveal" duration={0.6}>
             <div className="mb-12 max-w-2xl">
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+              <p className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                <span aria-hidden="true" className="block h-px w-8 bg-brand-emerald/60" />
                 Browse by property type
               </p>
               <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
@@ -459,39 +557,62 @@ export default async function TenantsPage() {
                 <span className="font-display italic text-brand-emerald">home</span>
                 <span className="text-brand-gold" aria-hidden="true">.</span>
               </h2>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">
+                Four formats, every one of them owner-verified. Pick the layout that fits your life — then filter the live listings.
+              </p>
             </div>
           </RevealOnScroll>
 
-          <dl className="grid grid-cols-1 gap-x-12 gap-y-0 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 sm:gap-7 md:grid-cols-2 lg:grid-cols-4">
             {PROPERTY_TYPES.map((type, idx) => (
               <FeeTableRow
                 key={type.title}
                 index={idx}
-                className="flex flex-col gap-2 border-t border-brand-navy/10 py-8 last:border-b-0 sm:py-10"
+                className="h-full"
               >
-                <dt className="font-display text-2xl font-normal text-brand-navy sm:text-3xl">
-                  {type.title}
-                </dt>
-                <dd className="text-base leading-relaxed text-slate-600">{type.desc}</dd>
                 <Link
-                  href="/locations/"
-                  className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-brand-emerald transition-colors hover:text-emerald-700"
+                  href="/properties/"
+                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-brand-emerald/30 hover:shadow-2xl hover:shadow-brand-navy/10"
                 >
-                  Browse {type.title.toLowerCase()}
-                  <svg
-                    className="size-3.5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2.5}
-                    aria-hidden="true"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
+                  {/* Hero image */}
+                  <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+                    <Image
+                      src={type.imageSrc}
+                      alt={type.imageAlt}
+                      fill
+                      className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+                      sizes="(max-width: 1024px) 100vw, 320px"
+                      unoptimized
+                    />
+                    {/* Navy gradient for legibility */}
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 bg-gradient-to-t from-brand-navy/80 via-brand-navy/10 to-transparent"
+                    />
+                    {/* Tag pill */}
+                    <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md">
+                      <span className="size-1 rounded-full bg-brand-gold" aria-hidden="true" />
+                      {type.tag}
+                    </div>
+                    {/* Title at bottom-left */}
+                    <p className="absolute inset-x-4 bottom-3 font-display text-2xl font-normal italic leading-none text-white sm:text-3xl">
+                      {type.title}
+                      <span className="text-brand-gold">.</span>
+                    </p>
+                  </div>
+
+                  {/* Body */}
+                  <div className="flex flex-1 flex-col gap-4 p-5 sm:p-6">
+                    <p className="text-sm leading-relaxed text-slate-600 sm:text-[15px]">{type.desc}</p>
+                    <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-brand-emerald transition-colors group-hover:text-emerald-700">
+                      Browse {type.title.toLowerCase()}
+                      <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                    </span>
+                  </div>
                 </Link>
               </FeeTableRow>
             ))}
-          </dl>
+          </div>
         </div>
       </section>
 
@@ -530,12 +651,39 @@ export default async function TenantsPage() {
         </div>
       )}
 
-      {/* ─── Why rent from MoveSmart (editorial 01/02/03) ─────────────── */}
-      <section className="bg-brand-navy py-20 text-white">
-        <div className="mx-auto max-w-6xl px-4">
+      {/* ─── Why rent from MoveSmart - DARK PHOTOGRAPHIC BACKDROP ─────── */}
+      <section className="relative isolate overflow-hidden bg-brand-navy py-24 text-white sm:py-28">
+        {/* Photographic backdrop: Canadian skyline at dusk */}
+        <div aria-hidden="true" className="absolute inset-0 -z-10">
+          <Image
+            src="https://images.unsplash.com/photo-1517090504586-fde19ea6066f?w=2400&q=80&auto=format&fit=crop"
+            alt=""
+            fill
+            className="object-cover object-center"
+            sizes="100vw"
+            unoptimized
+          />
+          {/* Layered navy gradient for legibility */}
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/95 via-brand-navy/88 to-brand-navy/80" />
+          <div className="absolute -left-32 top-1/3 size-[520px] -translate-y-1/2 rounded-full bg-brand-emerald/10 blur-3xl" />
+          <div className="absolute -right-24 bottom-0 size-[420px] rounded-full bg-brand-gold/8 blur-3xl" />
+        </div>
+
+        {/* Gold hairlines top + bottom */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
+        />
+
+        <div className="relative mx-auto max-w-6xl px-4">
           <RevealOnScroll variant="clipReveal" duration={0.6}>
             <div className="mb-14 max-w-2xl">
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-gold">
+              <p className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-gold">
+                <span aria-hidden="true" className="block h-px w-8 bg-brand-gold/60" />
                 Why MoveSmart
               </p>
               <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-white sm:text-4xl md:text-5xl">
@@ -543,10 +691,13 @@ export default async function TenantsPage() {
                 <span className="font-display italic text-brand-emerald">done right</span>
                 <span className="text-brand-gold" aria-hidden="true">.</span>
               </h2>
+              <p className="mt-5 text-base leading-relaxed text-white/65 sm:text-lg">
+                Three commitments we hold to every renter, every application, every move-in.
+              </p>
             </div>
           </RevealOnScroll>
 
-          <div className="divide-y divide-white/10">
+          <div className="divide-y divide-white/12 border-t border-white/12">
             {WHY_PILLARS.map((pillar, idx) => (
               <FeeTableRow
                 key={pillar.number}
@@ -555,14 +706,14 @@ export default async function TenantsPage() {
               >
                 <div className="md:col-span-3">
                   <span
-                    className="font-display text-5xl font-normal leading-none text-brand-gold sm:text-6xl"
+                    className="font-display text-5xl font-normal leading-none text-brand-gold sm:text-6xl md:text-7xl"
                     aria-hidden="true"
                   >
                     {pillar.number}
                   </span>
                 </div>
                 <div className="md:col-span-9">
-                  <h3 className="font-display text-2xl font-normal text-white sm:text-3xl">
+                  <h3 className="font-display text-2xl font-normal leading-snug text-white sm:text-3xl">
                     {pillar.title}
                   </h3>
                   <p className="mt-3 max-w-3xl text-base leading-relaxed text-white/70 sm:text-lg">
@@ -647,48 +798,94 @@ export default async function TenantsPage() {
                 <CountUp value={20} suffix="+" />
               </p>
               <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Canadian cities served
+                Cities across Canada &amp; the US
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ─── Pull-quote testimonials ──────────────────────────────────── */}
-      <section className="bg-[#FBFAF6] py-20">
-        <div className="mx-auto max-w-5xl px-4">
+      {/* ─── Tenant testimonials (photo cards) ─────────────────────────── */}
+      <section className="relative overflow-hidden bg-[#FBFAF6] py-20 sm:py-24">
+        {/* Decorative dot grid */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-[0.035]"
+          style={{
+            backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)',
+            backgroundSize: '28px 28px',
+          }}
+        />
+        <div className="relative mx-auto max-w-6xl px-4">
           <RevealOnScroll variant="clipReveal" duration={0.6}>
-            <p className="mb-12 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
-              Tenant stories
-            </p>
+            <div className="mb-12 max-w-2xl">
+              <p className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                <span aria-hidden="true" className="block h-px w-8 bg-brand-emerald/60" />
+                Tenant stories
+              </p>
+              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
+                Real renters,{' '}
+                <span className="font-display italic text-brand-emerald">real moves</span>
+                <span className="text-brand-gold" aria-hidden="true">.</span>
+              </h2>
+              <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
+                Two recent placements who chose to put it on the record.
+              </p>
+            </div>
           </RevealOnScroll>
 
-          <div className="space-y-16">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
             {PULL_QUOTES.map((q, idx) => (
               <PullQuoteReveal
                 key={q.name}
                 delay={idx * 0.1}
-                className="relative max-w-4xl"
+                className="not-italic"
               >
-                <span
-                  aria-hidden="true"
-                  className="absolute -left-2 -top-8 font-display text-7xl leading-none text-brand-gold/60 sm:-left-6 sm:text-8xl"
-                >
-                  &ldquo;
-                </span>
-                <p className="font-display text-2xl font-normal italic leading-[1.35] text-brand-navy sm:text-3xl md:text-4xl">
-                  {q.quote}
-                </p>
-                <footer className="mt-6 flex items-center gap-3">
+                <div className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-brand-emerald/30 hover:shadow-2xl hover:shadow-brand-navy/10">
+                  {/* Top accent rule */}
                   <span
                     aria-hidden="true"
-                    className="h-px w-8 bg-brand-gold/60"
+                    className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/60 to-transparent"
                   />
-                  <cite className="not-italic">
-                    <span className="font-semibold text-brand-navy">{q.name}</span>
-                    <span className="text-slate-500"> - {q.city}</span>
-                  </cite>
-                </footer>
+
+                  <div className="flex flex-1 flex-col gap-6 p-7 sm:p-9">
+                    {/* Quote glyph */}
+                    <span
+                      aria-hidden="true"
+                      className="font-display text-6xl leading-none text-brand-gold/70 sm:text-7xl"
+                    >
+                      &ldquo;
+                    </span>
+
+                    <p className="-mt-4 font-display text-xl font-normal italic leading-snug text-brand-navy sm:text-2xl md:text-[1.6rem]">
+                      {q.quote}
+                    </p>
+
+                    <footer className="mt-auto flex items-center gap-4 border-t border-slate-100 pt-5">
+                      <div className="relative size-12 shrink-0 overflow-hidden rounded-full ring-2 ring-brand-emerald/20">
+                        <Image
+                          src={q.imageSrc}
+                          alt={q.imageAlt}
+                          fill
+                          sizes="48px"
+                          className="object-cover"
+                          unoptimized
+                        />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-semibold text-brand-navy">{q.name}</p>
+                        <p className="text-xs text-slate-500">
+                          {q.unit} &middot; {q.city}
+                        </p>
+                      </div>
+                      {/* Verified badge */}
+                      <span className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-brand-emerald">
+                        <span className="size-1.5 rounded-full bg-brand-emerald" aria-hidden="true" />
+                        Verified
+                      </span>
+                    </footer>
+                  </div>
+                </div>
               </PullQuoteReveal>
             ))}
           </div>
@@ -701,7 +898,7 @@ export default async function TenantsPage() {
       {/* ─── CTA Banner ─────────────────────────────────────────────────── */}
       <CTABannerBlock
         headline="Ready to find your home?"
-        primaryCta={{ label: 'Browse Listings', href: '/locations/' }}
+        primaryCta={{ label: 'Browse rentals', href: '/properties/' }}
       />
     </main>
   )

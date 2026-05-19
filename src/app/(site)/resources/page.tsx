@@ -69,7 +69,7 @@ function WhatsNewAside({ items }: { items: EditorialArticle[] }) {
   // TODO(phase-3): swap placeholder list once Sanity is seeded with guide drops.
   const placeholders: EditorialArticle[] = [
     {
-      title: 'Q2 2026 Ontario rental market report',
+      title: 'Q2 2026 Canadian rental market report',
       slug: '#',
       publishedAt: '2026-04-03',
     },
@@ -321,6 +321,9 @@ export default async function ResourcesPage() {
         cta1={{ label: 'Browse the library', href: '#pillars' }}
         cta2={{ label: 'Talk to the team', href: '/contact/?type=owner' }}
         aside={<WhatsNewAside items={recent} />}
+        theme="dark"
+        backgroundImageUrl="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=2400&q=80"
+        backgroundImageAlt="Lease documents and paperwork — MoveSmart resource library"
       />
 
       <ResourcesEditorial

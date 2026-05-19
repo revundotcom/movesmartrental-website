@@ -9,27 +9,33 @@ import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 
 import {
+  CountrySplit,
+  OfficeHoursBand,
   OntarioCityDirectory,
   ProvinceGrid,
   StateGrid,
   USCityDirectory,
+  USCityImageGrid,
+  type CountrySplitProvince,
+  type CountrySplitState,
   type OntarioCity,
   type ProvinceCard,
   type StateCard,
   type USCity,
+  type USCityImage,
 } from './locations-interactive'
 
 export const metadata: Metadata = {
   title: 'Leasing Coverage - Canada & United States | MoveSmart Rentals',
   description:
-    'Full-service leasing across Canada and the United States. 20+ Ontario tier-1 cities, five provinces, ten priority U.S. states including Florida, Texas, California, New York, and Illinois.',
+    'Full-service leasing across North America. Six Canadian provinces and ten priority U.S. states - Florida, Texas, California, New York, Illinois, Georgia, North Carolina, Arizona, Colorado, and New Jersey - with brick-and-mortar advisors in every anchor market.',
   alternates: {
     canonical: '/locations/',
   },
   openGraph: {
     title: 'Leasing Coverage - Canada & United States | MoveSmart Rentals',
     description:
-      'Same discipline, same full-service execution - from a basement unit in Hamilton to a 500-unit lease-up in Miami.',
+      'Same discipline, same full-service execution across Canada and the United States - from a basement unit in Hamilton to a 500-unit lease-up in Miami.',
     images: ['/og-default.png'],
   },
   twitter: {
@@ -41,7 +47,7 @@ export const metadata: Metadata = {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Canadian provinces (5 priority)
+// Canadian provinces (6 priority)
 // ─────────────────────────────────────────────────────────────
 
 const CANADIAN_PROVINCES: ProvinceCard[] = [
@@ -82,13 +88,22 @@ const CANADIAN_PROVINCES: ProvinceCard[] = [
       'Calgary, Edmonton, Red Deer, Lethbridge and Airdrie. Built for energy-corridor mobility - flexible hold-over clauses and fast qualification for corporate transferees.',
   },
   {
+    name: 'Manitoba',
+    slug: 'manitoba',
+    country: 'CA',
+    cityCount: 3,
+    note: 'Prairie anchor',
+    positioning:
+      'Winnipeg, Brandon and Steinbach. RTB-aligned leasing for the Prairie capital with newcomer-friendly screening and condo-board-ready documentation.',
+  },
+  {
     name: 'Nova Scotia',
     slug: 'nova-scotia',
     country: 'CA',
-    cityCount: 5,
+    cityCount: 3,
     note: 'Atlantic anchor',
     positioning:
-      'Halifax, Dartmouth, Bedford, Sydney and Truro. Atlantic-region pricing discipline with an eye on the military, healthcare and post-secondary rental demand drivers.',
+      'Halifax, Dartmouth and Sydney. Atlantic-region pricing discipline tuned to military, healthcare and post-secondary rental demand drivers.',
   },
 ]
 
@@ -127,7 +142,7 @@ const US_STATES: StateCard[] = [
   {
     name: 'Florida',
     slug: 'florida',
-    cityCount: 5,
+    cityCount: 8,
     note: 'Snowbird seasonality',
     positioning:
       'Miami, Orlando, Tampa and Jacksonville. Snowbird hold-overs, HOA-compliant marketing and furnished-vs-unfurnished pricing built in.',
@@ -136,7 +151,7 @@ const US_STATES: StateCard[] = [
   {
     name: 'Texas',
     slug: 'texas',
-    cityCount: 5,
+    cityCount: 7,
     note: 'Institutional lease-up',
     positioning:
       'Houston, Dallas, Austin and San Antonio. Institutional lease-up capacity for build-to-rent communities absorbing record new supply.',
@@ -145,7 +160,7 @@ const US_STATES: StateCard[] = [
   {
     name: 'California',
     slug: 'california',
-    cityCount: 5,
+    cityCount: 9,
     note: 'Rent-control fluent',
     positioning:
       'Los Angeles, San Diego, San Francisco, San Jose and Sacramento. AB 1482 and local rent-control ordinances handled inside every lease.',
@@ -154,7 +169,7 @@ const US_STATES: StateCard[] = [
   {
     name: 'New York',
     slug: 'new-york',
-    cityCount: 5,
+    cityCount: 6,
     note: 'Five-borough coverage',
     positioning:
       'NYC proper, Brooklyn, Queens, Buffalo and Rochester. HSTPA-compliant workflows, co-op board packages, and upstate SFH leasing.',
@@ -163,7 +178,7 @@ const US_STATES: StateCard[] = [
   {
     name: 'Illinois',
     slug: 'illinois',
-    cityCount: 4,
+    cityCount: 5,
     note: 'Chicagoland focus',
     positioning:
       'Chicago, Aurora, Naperville and Rockford. CRLTO-aware leasing for Chicago condos and Chicagoland SFH portfolios.',
@@ -181,7 +196,7 @@ const US_STATES: StateCard[] = [
   {
     name: 'North Carolina',
     slug: 'north-carolina',
-    cityCount: 4,
+    cityCount: 5,
     note: 'Research-triangle talent',
     positioning:
       'Charlotte, Raleigh, Greensboro and Durham. Tuned for research-triangle relocations and uptown high-rise stock.',
@@ -208,13 +223,29 @@ const US_STATES: StateCard[] = [
   {
     name: 'New Jersey',
     slug: 'new-jersey',
-    cityCount: 4,
+    cityCount: 5,
     note: 'NYC-adjacent',
     positioning:
       'Newark, Jersey City, Paterson and Elizabeth. PATH-corridor professionals with cross-Hudson mobility and strict disclosure workflows.',
     status: 'Now live',
   },
 ]
+
+// ─────────────────────────────────────────────────────────────
+// Country split - condensed cards for two-column layout
+// ─────────────────────────────────────────────────────────────
+
+const COUNTRY_SPLIT_STATES: CountrySplitState[] = US_STATES.map((s) => ({
+  name: s.name,
+  slug: s.slug,
+  cityCount: s.cityCount,
+}))
+
+const COUNTRY_SPLIT_PROVINCES: CountrySplitProvince[] = CANADIAN_PROVINCES.map((p) => ({
+  name: p.name,
+  slug: p.slug,
+  cityCount: p.cityCount,
+}))
 
 // ─────────────────────────────────────────────────────────────
 // U.S. tier-1 cities (40+ - per spec)
@@ -278,6 +309,133 @@ const US_TIER_1_CITIES: USCity[] = [
 ]
 
 // ─────────────────────────────────────────────────────────────
+// U.S. tier-1 cities with imagery (featured visual grid)
+// ─────────────────────────────────────────────────────────────
+
+const US_FEATURED_CITY_IMAGES: USCityImage[] = [
+  {
+    name: 'Miami',
+    slug: 'miami',
+    state: 'Florida',
+    stateSlug: 'florida',
+    img: 'https://images.unsplash.com/photo-1535498730771-e735b998cd64?w=600&q=80&auto=format&fit=crop',
+    alt: 'Miami skyline and beachfront condo towers',
+  },
+  {
+    name: 'Austin',
+    slug: 'austin',
+    state: 'Texas',
+    stateSlug: 'texas',
+    img: 'https://images.unsplash.com/photo-1531218150217-54595bc2b934?w=600&q=80&auto=format&fit=crop',
+    alt: 'Austin Texas downtown skyline at twilight',
+  },
+  {
+    name: 'Los Angeles',
+    slug: 'los-angeles',
+    state: 'California',
+    stateSlug: 'california',
+    img: 'https://images.unsplash.com/photo-1444723121867-7a241cacace9?w=600&q=80&auto=format&fit=crop',
+    alt: 'Los Angeles downtown skyline at sunset',
+  },
+  {
+    name: 'New York City',
+    slug: 'new-york-city',
+    state: 'New York',
+    stateSlug: 'new-york',
+    img: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=600&q=80&auto=format&fit=crop',
+    alt: 'New York City skyline with Empire State Building',
+  },
+  {
+    name: 'Chicago',
+    slug: 'chicago',
+    state: 'Illinois',
+    stateSlug: 'illinois',
+    img: 'https://images.unsplash.com/photo-1494522855154-9297ac14b55f?w=600&q=80&auto=format&fit=crop',
+    alt: 'Chicago downtown skyline along the river',
+  },
+  {
+    name: 'Atlanta',
+    slug: 'atlanta',
+    state: 'Georgia',
+    stateSlug: 'georgia',
+    img: 'https://images.unsplash.com/photo-1575917649705-5b59aaa12e6b?w=600&q=80&auto=format&fit=crop',
+    alt: 'Atlanta Georgia midtown skyline',
+  },
+  {
+    name: 'Charlotte',
+    slug: 'charlotte',
+    state: 'North Carolina',
+    stateSlug: 'north-carolina',
+    img: 'https://images.unsplash.com/photo-1571687949921-1306bfb24b72?w=600&q=80&auto=format&fit=crop',
+    alt: 'Charlotte North Carolina uptown skyline',
+  },
+  {
+    name: 'Phoenix',
+    slug: 'phoenix',
+    state: 'Arizona',
+    stateSlug: 'arizona',
+    img: 'https://images.unsplash.com/photo-1558551649-e44c8f992010?w=600&q=80&auto=format&fit=crop',
+    alt: 'Phoenix Arizona desert cityscape',
+  },
+  {
+    name: 'Denver',
+    slug: 'denver',
+    state: 'Colorado',
+    stateSlug: 'colorado',
+    img: 'https://images.unsplash.com/photo-1546156929-a4c0ac411f47?w=600&q=80&auto=format&fit=crop',
+    alt: 'Denver Colorado skyline with the Rockies',
+  },
+  {
+    name: 'Jersey City',
+    slug: 'jersey-city',
+    state: 'New Jersey',
+    stateSlug: 'new-jersey',
+    img: 'https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?w=600&q=80&auto=format&fit=crop',
+    alt: 'Jersey City waterfront skyline facing Manhattan',
+  },
+  {
+    name: 'San Francisco',
+    slug: 'san-francisco',
+    state: 'California',
+    stateSlug: 'california',
+    img: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=600&q=80&auto=format&fit=crop',
+    alt: 'San Francisco skyline with the Golden Gate Bridge',
+  },
+  {
+    name: 'Houston',
+    slug: 'houston',
+    state: 'Texas',
+    stateSlug: 'texas',
+    img: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=80&auto=format&fit=crop',
+    alt: 'Houston Texas downtown skyline',
+  },
+  {
+    name: 'Dallas',
+    slug: 'dallas',
+    state: 'Texas',
+    stateSlug: 'texas',
+    img: 'https://images.unsplash.com/photo-1545194445-dddb8f4487c6?w=600&q=80&auto=format&fit=crop',
+    alt: 'Dallas Texas skyline at dusk',
+  },
+  {
+    name: 'Tampa',
+    slug: 'tampa',
+    state: 'Florida',
+    stateSlug: 'florida',
+    img: 'https://images.unsplash.com/photo-1605723517503-3cadb5818a0c?w=600&q=80&auto=format&fit=crop',
+    alt: 'Tampa Florida waterfront and downtown',
+  },
+  {
+    name: 'Orlando',
+    slug: 'orlando',
+    state: 'Florida',
+    stateSlug: 'florida',
+    img: 'https://images.unsplash.com/photo-1597466599360-3b9775841aec?w=600&q=80&auto=format&fit=crop',
+    alt: 'Orlando Florida cityscape and skyline',
+  },
+]
+
+// ─────────────────────────────────────────────────────────────
 // FAQ
 // ─────────────────────────────────────────────────────────────
 
@@ -285,7 +443,7 @@ const FAQ_ITEMS = [
   {
     question: 'Which cities and states does MoveSmart actively serve?',
     answer:
-      'In Canada we actively lease in 20+ Ontario tier-1 cities plus Quebec, British Columbia, Alberta and Nova Scotia. In the United States we cover ten priority states - Florida, Texas, California, New York, Illinois, Georgia, North Carolina, Arizona, Colorado and New Jersey - with a named leasing advisor per priority metro. The full map above shows every live jurisdiction.',
+      'In Canada we actively lease across six provinces - Ontario, Quebec, British Columbia, Alberta, Manitoba and Nova Scotia - with named tier-1 advisors in every major metro. In the United States we cover ten priority states - Florida, Texas, California, New York, Illinois, Georgia, North Carolina, Arizona, Colorado and New Jersey - with brick-and-mortar coverage in every anchor market. The sections above show every live jurisdiction.',
   },
   {
     question: 'When do you add new cities?',
@@ -331,6 +489,7 @@ const PLACE_SCHEMA = {
     { '@type': 'AdministrativeArea', name: 'Quebec, Canada' },
     { '@type': 'AdministrativeArea', name: 'British Columbia, Canada' },
     { '@type': 'AdministrativeArea', name: 'Alberta, Canada' },
+    { '@type': 'AdministrativeArea', name: 'Manitoba, Canada' },
     { '@type': 'AdministrativeArea', name: 'Nova Scotia, Canada' },
     // U.S. states
     { '@type': 'AdministrativeArea', name: 'Florida, USA' },
@@ -369,15 +528,19 @@ export default function LocationsPage() {
       <PageHeroBlock
         kicker="Locations"
         eyebrow="Where we lease"
-        headline="Leasing coverage across North America"
+        headline="Full-service leasing across North America"
         accentLastWord
-        lede="Same discipline, same full-service execution - from a basement-unit landlord in Hamilton to a 500-unit lease-up campaign in Miami. Five provinces, ten priority U.S. states, one structured standard."
-        cta1={{ label: 'Create a Free Account', href: '/signup/' }}
+        lede="MoveSmart Rentals operates across Canada and the United States, with brick-and-mortar advisors anchoring our priority markets in both countries. Six Canadian provinces, ten priority U.S. states, one structured standard of execution."
+        cta1={{ label: 'List my property', href: '/contact/?type=owner' }}
+        cta2={{ label: 'Browse rentals', href: '/properties/' }}
+        theme="dark"
+        backgroundImageUrl="https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=2400&q=80"
+        backgroundImageAlt="North American city skyline representing the MoveSmart leasing footprint"
         aside={
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-brand-navy/10">
             <Image
               src="https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=1400&q=80"
-              alt="Toronto skyline featuring the CN Tower - our flagship Canadian market"
+              alt="North American skyline imagery representing MoveSmart's cross-border leasing footprint"
               fill
               unoptimized
               sizes="(min-width: 1024px) 460px, 100vw"
@@ -390,12 +553,50 @@ export default function LocationsPage() {
             />
             <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 rounded-lg bg-white/95 px-4 py-3 shadow-sm backdrop-blur">
               <p className="font-display text-base italic leading-tight text-brand-navy">
-                Five provinces. Ten states. One standard.
+                Six provinces. Ten states. One standard.
               </p>
             </div>
           </div>
         }
       />
+
+      {/* Country split - two-column USA + Canada */}
+      <section id="north-america" className="bg-white py-16 sm:py-20">
+        <div className="mx-auto max-w-6xl px-4">
+          <RevealOnScroll variant="fade">
+            <div className="mb-10 max-w-3xl">
+              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
+                North America footprint
+              </p>
+              <h2 className="font-display text-4xl font-normal leading-[1.1] text-brand-navy sm:text-5xl">
+                Two countries, one
+                <span className="italic text-brand-emerald"> playbook</span>
+                <span className="text-brand-gold" aria-hidden="true">
+                  .
+                </span>
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-slate-600 md:text-lg">
+                Choose a country to drill into the states, provinces, and cities
+                we actively lease in. Every market on this page has a named
+                advisor and jurisdiction-specific lease templates already in
+                production.
+              </p>
+            </div>
+          </RevealOnScroll>
+
+          <CountrySplit
+            states={COUNTRY_SPLIT_STATES}
+            provinces={COUNTRY_SPLIT_PROVINCES}
+          />
+        </div>
+      </section>
+
+      {/* Office hours band */}
+      <section className="bg-[#FBFAF6] py-10">
+        <div className="mx-auto max-w-6xl px-4">
+          <OfficeHoursBand />
+        </div>
+      </section>
 
       {/* Section 1 - Canada coverage */}
       <section id="canada" className="relative bg-[#FBFAF6] py-20">
@@ -417,7 +618,7 @@ export default function LocationsPage() {
                 </span>
               </h2>
               <p className="mt-4 text-base leading-relaxed text-slate-600 md:text-lg">
-                Five priority provinces with a named advisor in every tier-1
+                Six priority provinces with a named advisor in every tier-1
                 metro. Each province card links to the full provincial directory
                 with rental market data, leasing timelines, and local regulatory
                 notes.
@@ -429,26 +630,25 @@ export default function LocationsPage() {
         </div>
       </section>
 
-      {/* Section 2 - Ontario tier-1 cities */}
-      <section id="ontario" className="bg-white py-20">
+      {/* Section 2 - Featured Canadian cities (Ontario tier-1) */}
+      <section id="canada-cities" className="bg-white py-20">
         <div className="mx-auto max-w-6xl px-4">
           <RevealOnScroll variant="fade">
             <div className="mb-10 max-w-3xl">
               <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
-                Flagship · Ontario
+                Canada · Tier-1 directory
               </p>
               <h2 className="font-display text-4xl font-normal leading-[1.1] text-brand-navy sm:text-5xl">
-                Twenty Ontario cities, one leasing
-                <span className="italic text-brand-emerald"> standard</span>
+                Featured cities across
+                <span className="italic text-brand-emerald"> Canada</span>
                 <span className="text-brand-gold" aria-hidden="true">
                   .
                 </span>
               </h2>
               <p className="mt-4 text-base leading-relaxed text-slate-600 md:text-lg">
-                Ontario is our home market and deepest bench. From Toronto to
-                Pickering, every tier-1 city below has a local leasing advisor,
-                RTA-aligned documentation, and the full nine-service leasing
-                scope.
+                A live snapshot of the Canadian metros our team is actively
+                leasing in. Each city has a local leasing advisor, RTA-aligned
+                documentation, and the full nine-service leasing scope.
               </p>
             </div>
           </RevealOnScroll>
@@ -512,6 +712,34 @@ export default function LocationsPage() {
           </RevealOnScroll>
 
           <USCityDirectory cities={US_TIER_1_CITIES} />
+        </div>
+      </section>
+
+      {/* Section 4b - Featured U.S. cities visual grid */}
+      <section id="us-featured-cities" className="bg-white py-20">
+        <div className="mx-auto max-w-6xl px-4">
+          <RevealOnScroll variant="fade">
+            <div className="mb-10 max-w-3xl">
+              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-emerald">
+                United States · Featured metros
+              </p>
+              <h2 className="font-display text-4xl font-normal leading-[1.1] text-brand-navy sm:text-5xl">
+                Anchor U.S. cities, ready to
+                <span className="italic text-brand-emerald"> lease</span>
+                <span className="text-brand-gold" aria-hidden="true">
+                  .
+                </span>
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-slate-600 md:text-lg">
+                A visual snapshot of the U.S. anchor markets where MoveSmart
+                already runs day-to-day leasing. Each card links to the city
+                playbook with rent benchmarks, vacancy trends, and local
+                regulatory notes.
+              </p>
+            </div>
+          </RevealOnScroll>
+
+          <USCityImageGrid cities={US_FEATURED_CITY_IMAGES} />
         </div>
       </section>
 
@@ -594,8 +822,8 @@ export default function LocationsPage() {
       {/* Final CTA */}
       <CTABannerBlock
         headline="Ready to lease your unit - anywhere in our footprint?"
-        description="Create a free account and a local leasing advisor will introduce themselves within one business day, with a rental analysis tailored to your exact address."
-        primaryCta={{ label: 'Create a Free Account', href: '/signup/' }}
+        description="List your property and a local leasing advisor will introduce themselves within one business day, with a rental analysis tailored to your exact address."
+        primaryCta={{ label: 'List my property', href: '/contact/?type=owner' }}
       />
     </main>
   )

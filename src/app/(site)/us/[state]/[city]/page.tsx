@@ -64,7 +64,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { state, city } = await params
 
-  const data = getFallbackUsCity(city)
+  const data = getFallbackUsCity(city, state)
 
   const cityTitle = data?.title ?? city
   const stateName = data?.province?.title ?? state
@@ -74,26 +74,6 @@ export async function generateMetadata({
     fallbackTitle: `Leasing Services in ${cityTitle}`,
     fallbackDescription: `Full-service leasing and tenant placement in ${cityTitle}, ${stateName}: tenant placement, screening, lease execution, and move-in coordination. Zero upfront cost.`,
   })
-}
-
-// ---------------------------------------------------------------------------
-// Formatting Helpers
-// ---------------------------------------------------------------------------
-
-function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  }).format(amount)
-}
-
-function formatPopulation(pop: number): string {
-  return pop.toLocaleString('en-US')
-}
-
-function formatPercentage(rate: number): string {
-  return `${rate.toFixed(1)}%`
 }
 
 // ---------------------------------------------------------------------------
@@ -111,7 +91,7 @@ export default async function USCityPage({
     notFound()
   }
 
-  const data: FallbackCity | null = getFallbackUsCity(city)
+  const data: FallbackCity | null = getFallbackUsCity(city, state)
 
   if (!data) {
     notFound()
@@ -173,7 +153,10 @@ export default async function USCityPage({
           descriptionText?.slice(0, 220) ??
           `Local tenant placement, screening, lease execution, and move-in coordination in ${data.title}, ${data.province.title}. Zero upfront - success-fee pricing only.`
         }
-        cta1={{ label: 'Browse Rentals', href: '/locations/' }}
+        cta1={{ label: 'Browse rentals', href: '/properties/' }}
+        theme="dark"
+        backgroundImageUrl="https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=2400&q=80"
+        backgroundImageAlt={`${data.title} skyline`}
       />
 
       {/* City narrative */}
@@ -193,62 +176,6 @@ export default async function USCityPage({
                 {descriptionText}
               </p>
             </div>
-          </div>
-        </section>
-      )}
-
-      {/* Market snapshot */}
-      {(data.population != null ||
-        data.medianRent != null ||
-        data.vacancyRate != null ||
-        (data.neighbourhoods && data.neighbourhoods.length > 0)) && (
-        <section className="bg-[#FBFAF6] py-12 sm:py-14">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <p className="text-center text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
-              Market snapshot
-            </p>
-            <dl className="mt-6 grid grid-cols-2 gap-8 border-y border-brand-navy/10 py-10 sm:grid-cols-4 sm:divide-x sm:divide-brand-navy/10 sm:gap-0">
-              {data.population != null && (
-                <div className="text-center sm:px-4">
-                  <dt className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-emerald">
-                    Population
-                  </dt>
-                  <dd className="mt-2 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
-                    {formatPopulation(data.population)}
-                  </dd>
-                </div>
-              )}
-              {data.medianRent != null && (
-                <div className="text-center sm:px-4">
-                  <dt className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-emerald">
-                    Median rent
-                  </dt>
-                  <dd className="mt-2 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
-                    {formatCurrency(data.medianRent)}
-                  </dd>
-                </div>
-              )}
-              {data.vacancyRate != null && (
-                <div className="text-center sm:px-4">
-                  <dt className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-emerald">
-                    Vacancy rate
-                  </dt>
-                  <dd className="mt-2 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
-                    {formatPercentage(data.vacancyRate)}
-                  </dd>
-                </div>
-              )}
-              {data.neighbourhoods && data.neighbourhoods.length > 0 && (
-                <div className="text-center sm:px-4">
-                  <dt className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-emerald">
-                    Neighborhoods
-                  </dt>
-                  <dd className="mt-2 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
-                    {data.neighbourhoods.length}+
-                  </dd>
-                </div>
-              )}
-            </dl>
           </div>
         </section>
       )}

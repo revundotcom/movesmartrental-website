@@ -118,7 +118,7 @@ export default function OpengraphImage() {
             lineHeight: 1.35,
           }}
         >
-          Full-cycle leasing execution for landlords, property managers, and institutional rental operators across Canada.
+          Full-cycle leasing execution for landlords, property managers, and institutional rental operators across Canada and the United States.
         </div>
 
         {/* Footer row */}

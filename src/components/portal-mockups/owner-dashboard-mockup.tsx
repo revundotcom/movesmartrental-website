@@ -67,10 +67,10 @@ export function OwnerDashboardMockup() {
       </aside>
 
       {/* Main */}
-      <div className="flex-1 p-4 sm:p-6">
+      <div className="min-w-0 flex-1 p-4 sm:p-5">
         {/* Header */}
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <div>
+          <div className="min-w-0">
             <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
               Owner Dashboard
             </p>
@@ -89,7 +89,7 @@ export function OwnerDashboardMockup() {
         {/* Stats + types row */}
         <div className="mt-5 grid grid-cols-1 gap-3 lg:grid-cols-5">
           {/* Stats */}
-          <div className="lg:col-span-3 grid grid-cols-3 gap-3">
+          <div className="lg:col-span-3 grid grid-cols-2 gap-3">
             <div className="rounded-xl border border-slate-100 bg-white p-3 shadow-sm">
               <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
                 Offers
@@ -101,38 +101,6 @@ export function OwnerDashboardMockup() {
                 Tours
               </p>
               <p className="mt-1 font-display text-2xl text-brand-navy">6</p>
-            </div>
-            <div className="rounded-xl border border-slate-100 bg-white p-3 shadow-sm">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
-                Occupancy
-              </p>
-              <div className="mt-1 flex items-center gap-2">
-                {/* Circular progress */}
-                <div className="relative size-9">
-                  <svg viewBox="0 0 36 36" className="size-9 -rotate-90">
-                    <circle
-                      cx="18"
-                      cy="18"
-                      r="14"
-                      fill="none"
-                      stroke="#E2E8F0"
-                      strokeWidth="3"
-                    />
-                    <circle
-                      cx="18"
-                      cy="18"
-                      r="14"
-                      fill="none"
-                      stroke="#10B981"
-                      strokeWidth="3"
-                      strokeDasharray="88"
-                      strokeDashoffset="83.6"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
-                <p className="font-display text-xl text-brand-navy">5%</p>
-              </div>
             </div>
           </div>
 

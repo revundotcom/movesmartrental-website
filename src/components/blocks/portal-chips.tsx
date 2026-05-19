@@ -6,7 +6,7 @@ export function PortalChips() {
   return (
     <>
       <motion.div
-        className="absolute -right-6 -top-4 flex items-center gap-2.5 rounded-2xl border border-slate-200 bg-white px-4 py-2.5 shadow-xl"
+        className="absolute -right-2 -top-10 flex items-center gap-2.5 rounded-2xl border border-slate-200 bg-white px-4 py-2.5 shadow-xl sm:-right-6"
         animate={{ y: [0, -8, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
       >

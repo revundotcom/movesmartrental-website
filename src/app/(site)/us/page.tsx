@@ -1,163 +1,149 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
+import { Shield, TrendingUp, MapPin } from 'lucide-react'
 
+import { PageHeroBlock } from '@/components/blocks/page-hero-block'
+import { FAQBlock } from '@/components/blocks/faq-block'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
-import { HeroBlock } from '@/components/blocks/hero-block'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
-import { getFallbackCityList } from '@/lib/static-fallbacks'
+import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
+import { US_STATES, COUNTRY_TOTALS } from '@/data/geo-market-data'
 
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
-interface StateCard {
-  _id: string
-  title: string
-  slug: string
-  abbreviation?: string
-  description?: string
-  cityCount: number
-}
-
-// ---------------------------------------------------------------------------
-// Static state data (Sanity has been removed)
-// ---------------------------------------------------------------------------
-
-const US_STATES_META: Array<{
-  _id: string
-  title: string
-  slug: string
-  abbreviation: string
-  description: string
-}> = [
-  {
-    _id: 'state-florida-static',
-    title: 'Florida',
-    slug: 'florida',
-    abbreviation: 'FL',
-    description:
-      'Sun Belt leasing demand driven by Northeast migration and international investors. Strongest in Miami, Tampa, Orlando, and Fort Lauderdale.',
-  },
-  {
-    _id: 'state-texas-static',
-    title: 'Texas',
-    slug: 'texas',
-    abbreviation: 'TX',
-    description:
-      'Fastest-growing state by new-resident rental demand. Austin, Houston, and the DFW metroplex anchor our Texas footprint.',
-  },
-  {
-    _id: 'state-california-static',
-    title: 'California',
-    slug: 'california',
-    abbreviation: 'CA',
-    description:
-      'The most competitive rental market in North America with strict tenant-protection statutes. AB-1482 and Costa-Hawkins specialist leasing.',
-  },
-  {
-    _id: 'state-new-york-static',
-    title: 'New York',
-    slug: 'new-york',
-    abbreviation: 'NY',
-    description:
-      'From Manhattan\u2019s ultra-competitive submarkets through emerging Brooklyn and Queens neighbourhoods. DHCR-aware, rent-stabilization-aware leasing.',
-  },
-  {
-    _id: 'state-illinois-static',
-    title: 'Illinois',
-    slug: 'illinois',
-    abbreviation: 'IL',
-    description:
-      'Chicago metro leasing with Chicago RLTO compliance plus collar-county growth submarkets.',
-  },
-  {
-    _id: 'state-georgia-static',
-    title: 'Georgia',
-    slug: 'georgia',
-    abbreviation: 'GA',
-    description:
-      'Atlanta-anchored leasing across a fast-growing Sun Belt state with strong in-migration and build-to-rent inventory.',
-  },
-  {
-    _id: 'state-north-carolina-static',
-    title: 'North Carolina',
-    slug: 'north-carolina',
-    abbreviation: 'NC',
-    description:
-      'Charlotte and Raleigh-Durham leasing across one of the strongest tech-and-finance inbound migration corridors in the US.',
-  },
-  {
-    _id: 'state-arizona-static',
-    title: 'Arizona',
-    slug: 'arizona',
-    abbreviation: 'AZ',
-    description:
-      'Phoenix-metro leasing with disciplined pricing for a market shaped by seasonal rental cycles and California in-migration.',
-  },
-  {
-    _id: 'state-colorado-static',
-    title: 'Colorado',
-    slug: 'colorado',
-    abbreviation: 'CO',
-    description:
-      'Denver-anchored leasing with Front Range coverage for a market that balances strong wage growth and steady rental demand.',
-  },
-  {
-    _id: 'state-new-jersey-static',
-    title: 'New Jersey',
-    slug: 'new-jersey',
-    abbreviation: 'NJ',
-    description:
-      'Northern New Jersey leasing with a focus on NYC-commuter submarkets and dense rental inventory along the Hudson corridor.',
-  },
-]
+import { UsCitiesFilter } from './us-cities-filter'
 
 // ---------------------------------------------------------------------------
 // Metadata
 // ---------------------------------------------------------------------------
 
 export const metadata: Metadata = {
-  title: 'Leasing Brokerage in the United States | MoveSmart Rentals',
+  title: 'Leasing Brokerage Across the United States | MoveSmart Rentals',
   description:
-    'Full-service leasing and tenant placement expanding across the United States. Tenant placement, screening, and lease execution in Florida, Texas, California, New York, and more.',
+    'Full-service leasing and tenant placement across 10 US states and 57 anchor cities. State-licensed brokerage partners, ZIP-level pricing, transparent success-fee terms.',
   alternates: {
     canonical: '/us/',
   },
   openGraph: {
-    title: 'Leasing Brokerage in the United States | MoveSmart Rentals',
+    title: 'Leasing Brokerage Across the United States | MoveSmart Rentals',
     description:
-      'Full-service leasing and tenant placement expanding across the United States. Tenant placement, screening, and lease execution in Florida, Texas, California, New York, and more.',
+      'Full-service leasing and tenant placement across 10 US states and 57 anchor cities. State-licensed brokerage partners and ZIP-level pricing.',
     images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'MoveSmart Rentals United States' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Leasing Brokerage in the United States | MoveSmart Rentals',
+    title: 'Leasing Brokerage Across the United States | MoveSmart Rentals',
     description:
-      'Full-service leasing and tenant placement expanding across the United States. Tenant placement, screening, and lease execution in Florida, Texas, California, New York, and more.',
+      'Full-service leasing and tenant placement across 10 US states and 57 anchor cities.',
     images: ['/og-default.png'],
   },
+}
+
+// ---------------------------------------------------------------------------
+// Static data
+// ---------------------------------------------------------------------------
+
+const NYC_HERO =
+  'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=2000&q=80'
+
+// Austin skyline — used for the mid-page editorial banner (not the NYC hero).
+const EDITORIAL_BANNER =
+  'https://images.unsplash.com/photo-1531218150217-54595bc2b934?auto=format&fit=crop&w=2400&q=80'
+
+const US = COUNTRY_TOTALS.us
+
+const VALUE_PROPS: Array<{
+  icon: React.ComponentType<{ className?: string }>
+  title: string
+  description: string
+}> = [
+  {
+    icon: Shield,
+    title: 'State-licensed brokerage partners',
+    description:
+      'Every market we touch runs through a state-licensed real estate brokerage — FREC (Florida), TREC (Texas), DRE (California), NYSDOS (New York), and equivalents. Lease execution, deposit handling, and disclosures follow the local statute, never a federal shortcut.',
+  },
+  {
+    icon: TrendingUp,
+    title: 'ZIP-level pricing intelligence',
+    description:
+      'We price against Zillow ZORI, RealPage, CoStar, and local MLS comps at the ZIP level — not the metro level. Asking rent gets set against unit-mix-matched comps refreshed every week, not against a stale CMA pulled at listing time.',
+  },
+  {
+    icon: MapPin,
+    title: 'Multi-state portfolio coverage',
+    description:
+      'Whether you own one Florida vacation rental, six Texas duplexes, or a 200-unit Phoenix lease-up, you get one point of contact, one reporting cadence, and one consolidated success-fee invoice across every state.',
+  },
+]
+
+const US_FAQS: Array<{ question: string; answer: string }> = [
+  {
+    question: 'How does landlord-tenant law vary state to state?',
+    answer:
+      'Significantly. Notice periods to terminate range from 30 days (most states) to 90 days (California for tenancies of one year or more). Security deposit limits run from one month (Florida, Georgia) to two months (California, Massachusetts) to unlimited (Texas). Eviction filing requirements, late-fee caps, and habitability standards all sit at the state — and often city — level. We lease against the specific statute for every jurisdiction we touch.',
+  },
+  {
+    question: 'What are the security deposit limits in the states you serve?',
+    answer:
+      'Florida — no statutory cap, but must be held in a separate account with annual interest disclosure. Texas — no cap. California — two months for unfurnished, three for furnished (changes phasing in under AB 12). New York — one month cap. Illinois — one month cap in Chicago, no statewide cap. Georgia — no cap. North Carolina — two months for terms over one year. Arizona — 1.5 months. Colorado — no cap, but 60-day return deadline. New Jersey — 1.5 months.',
+  },
+  {
+    question: 'How do you ensure Fair Housing Act compliance on every listing?',
+    answer:
+      'Every listing, screening criterion, and tenant communication is reviewed against the federal Fair Housing Act (race, colour, religion, sex including gender identity and sexual orientation, national origin, disability, familial status) plus the additional protected classes in each state we operate in (source of income, age, marital status, and others). Our screening criteria are documented and applied identically to every applicant — no discretionary deviation.',
+  },
+  {
+    question: 'Do your listings syndicate through IDX and the major rental portals?',
+    answer:
+      'Yes. We syndicate to Zillow, Trulia, HotPads, Apartments.com, Rent.com, Realtor.com, Redfin, Apartment List, Zumper, and the local MLS IDX feed in every market that supports rental IDX. Photography, floor plans, 3D tours, and unit-mix detail flow to all 50+ portals from a single source so the listing reads identically everywhere.',
+  },
+  {
+    question: 'How do you handle ESA (emotional support animal) and service animal requests?',
+    answer:
+      'Strictly per HUD guidance and the federal Fair Housing Act. Service animals (ADA) and ESAs (FHA) are not pets — no pet deposit, no breed restriction, no extra rent. We require the standard HUD-approved reasonable accommodation request with a treating-provider letter and apply the standard two-question framework for service animals. Owners are protected, applicants are respected, and the file is audit-defensible.',
+  },
+  {
+    question: 'How fast does a US leasing campaign typically close?',
+    answer:
+      'Median days-on-market across our 2025 US portfolio was 21 days. Phoenix, Charlotte, and Atlanta sit at 14–18 days; Austin and Miami at 18–24 days; New York and Jersey City at 18–28 days depending on building class. California submarkets vary widely — coastal LA averages 24 days, Inland Empire closer to 30. Mispriced listings always run longer.',
+  },
+  {
+    question: 'What does your US fee structure look like?',
+    answer:
+      'Zero upfront. Standard placement fee is 75–100% of one month’s rent, payable only when a qualified tenant signs the lease and pays the first month. No setup fees, no listing fees, no marketing pass-throughs. Optional add-ons — rental protection, monthly rent collection, annual renewal — are quoted separately, tier-priced, and equally transparent.',
+  },
+  {
+    question: 'Do you support 1031 exchange owners and accidental landlords?',
+    answer:
+      'Yes — both segments are core to our US book. For 1031 exchange owners we coordinate with your qualified intermediary, structure the lease to align with passive-rental treatment, and deliver Schedule E-ready year-end statements. For accidental landlords (out-of-state job relocation, inherited property, slow-sale conversion to rental), we take the property from empty to leased in 14–21 days with zero owner involvement past the initial intake.',
+  },
+]
+
+// ---------------------------------------------------------------------------
+// Shared eyebrow + hairline classes (visual spine)
+// ---------------------------------------------------------------------------
+
+const EYEBROW = 'text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald'
+const HEADING =
+  'font-display text-3xl font-normal leading-tight tracking-tight text-brand-navy sm:text-4xl md:text-[2.75rem]'
+
+function GoldHairline() {
+  return (
+    <div
+      aria-hidden="true"
+      className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent"
+    />
+  )
 }
 
 // ---------------------------------------------------------------------------
 // Page Component
 // ---------------------------------------------------------------------------
 
-export default async function USHubPage() {
-  // Static local data (Sanity has been removed). City counts are derived
-  // from the local city list by matching provinceSlug (which holds the
-  // state slug for US entries).
-  const cityList = getFallbackCityList()
-  const states: StateCard[] = US_STATES_META.map((s) => ({
-    _id: s._id,
-    title: s.title,
-    slug: s.slug,
-    abbreviation: s.abbreviation,
-    description: s.description,
-    cityCount: cityList.filter((c) => c.provinceSlug === s.slug).length,
-  }))
-
+export default function USHubPage() {
   return (
     <main>
+      {/* 1. Breadcrumb */}
       <div className="mx-auto max-w-7xl px-4 pt-6">
         <BreadcrumbNav
           crumbs={[
@@ -167,88 +153,239 @@ export default async function USHubPage() {
         />
       </div>
 
-      {/* 1. Hero */}
-      <HeroBlock
-        headline="Leasing Brokerage Across the United States"
-        subheadline="MoveSmart Rentals is expanding into America's top rental markets, bringing our zero-upfront, success-fee leasing model to US landlords, property managers, and developers."
+      {/* 2. Hero (kept verbatim) */}
+      <PageHeroBlock
+        theme="dark"
+        kicker="United States"
+        eyebrow="Multi-state leasing"
+        headline="Leasing across the United States"
+        lede={`${US.population} population. ${US.rentalHouseholds} rental households. ${US.medianRent} median 2-bed rent. Ten states, 57 anchor cities — same disciplined leasing playbook from a single Miami condo to a 500-door Austin lease-up.`}
+        cta1={{ label: 'List my property', href: '/contact/?type=owner' }}
+        cta2={{ label: 'Browse rentals', href: '/properties/' }}
+        backgroundImageUrl={NYC_HERO}
+        backgroundImageAlt="Manhattan skyline at dusk representing the US rental market"
       />
 
-      {/* 2. Intro section */}
-      <section className="mx-auto max-w-4xl px-4 py-12 text-center md:py-16">
-        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-          Expanding Into America&apos;s Top Markets
-        </h2>
-        <p className="mx-auto mt-4 max-w-3xl text-muted-foreground">
-          Building on our leasing execution across Canada, MoveSmart Rentals is
-          bringing full-service leasing and tenant placement to the United States. Our US
-          operations focus on high-growth rental markets where landlords,
-          property managers, and developers need disciplined leasing execution
-          with transparent pricing. From Florida&apos;s Sun Belt to
-          California&apos;s tech corridors, we deliver strategic rental pricing,
-          professional marketing, tenant qualification, and lease execution -
-          zero upfront, success-fee only.
-        </p>
+      {/* "Built American, expanding everywhere" intro card (white) */}
+      <section className="relative bg-white py-16 sm:py-20">
+        <GoldHairline />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <RevealOnScroll variant="slideUp">
+            <div className="relative mx-auto max-w-3xl overflow-hidden rounded-3xl border border-brand-navy/10 bg-[#FBFAF6] px-6 py-10 text-center shadow-sm sm:px-12 sm:py-14">
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/60 to-transparent"
+              />
+              <p className={`mb-4 ${EYEBROW}`}>Built American, expanding everywhere</p>
+              <h2 className="font-display text-2xl font-normal leading-tight tracking-tight text-brand-navy sm:text-3xl md:text-[2.25rem]">
+                An American-rooted brokerage, now leasing across{' '}
+                <span className="italic text-brand-emerald">ten states</span>
+                <span className="text-brand-gold">.</span>
+              </h2>
+              <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+                MoveSmart was built around US landlord-tenant practice — Florida deposits, Texas eviction filings, California rent caps, New York broker law. Today we run the same disciplined playbook across ten states and 57 anchor cities, through state-licensed brokerage partners, with a single consolidated relationship for every owner. One contract, one fee structure, fifty-seven local pricing engines.
+              </p>
+            </div>
+          </RevealOnScroll>
+        </div>
       </section>
 
-      {/* 3. State cards */}
-      <section className="mx-auto max-w-7xl px-4 pb-12 md:pb-16">
-        <h2 className="mb-8 text-center text-2xl font-bold tracking-tight sm:text-3xl">
-          Explore by State
-        </h2>
+      {/* 5. State cards (ivory) */}
+      <section className="relative bg-[#FBFAF6] py-20 sm:py-24">
+        <GoldHairline />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <RevealOnScroll variant="slideUp" className="mb-14 max-w-3xl">
+            <p className={`mb-3 ${EYEBROW}`}>Explore by state</p>
+            <h2 className={HEADING}>
+              Ten states.{' '}
+              <span className="italic text-brand-emerald">One standard</span>
+              <span className="text-brand-gold">.</span>
+            </h2>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+              From Florida’s no-state-income-tax Sun Belt to California’s tech corridors and the New York–New Jersey commuter belt — leasing executed against the specific state landlord-tenant act, not a federal one-size-fits-all template.
+            </p>
+          </RevealOnScroll>
 
-        {states.length === 0 ? (
-          <p className="text-center text-muted-foreground">
-            State listings are coming soon. Check back as we expand into new
-            markets.
-          </p>
-        ) : (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {states.map((state) => (
-              <Link
-                key={state._id}
-                href={`/us/${state.slug}/`}
-                className="group"
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {US_STATES.map((state, i) => (
+              <RevealOnScroll
+                key={state.slug}
+                variant="slideUp"
+                delay={i * 0.06}
+                className="h-full"
               >
-                <div className="h-full rounded-lg border bg-card p-6 shadow-sm transition-all duration-200 group-hover:-translate-y-1 group-hover:shadow-lg">
-                  <div className="mb-2 flex items-center justify-between">
-                    <h3 className="text-xl font-semibold group-hover:text-primary">
-                      {state.title}
-                    </h3>
-                    {state.abbreviation && (
-                      <span className="rounded bg-muted px-2 py-1 text-sm font-medium text-muted-foreground">
-                        {state.abbreviation}
+                <Link
+                  href={`/us/${state.slug}/`}
+                  className="group flex h-full flex-col overflow-hidden rounded-2xl border border-brand-navy/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-emerald/40 hover:shadow-lg"
+                >
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-brand-navy/5">
+                    <Image
+                      src={state.heroImageUrl}
+                      alt={state.heroImageAlt}
+                      fill
+                      unoptimized
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 bg-gradient-to-t from-brand-navy/80 via-brand-navy/20 to-transparent"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
+                      <h3 className="font-display text-2xl font-normal leading-tight text-white sm:text-3xl">
+                        {state.name}
+                      </h3>
+                      <span aria-hidden="true" className="text-2xl drop-shadow-md">
+                        {state.flagEmoji}
                       </span>
-                    )}
+                    </div>
                   </div>
-
-                  {state.description && (
-                    <p className="mb-4 line-clamp-3 text-sm text-muted-foreground">
-                      {state.description}
+                  <div className="flex flex-1 flex-col gap-4 p-6">
+                    <p className="line-clamp-3 text-sm leading-relaxed text-slate-600">
+                      {state.market.intro}
                     </p>
-                  )}
-
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">
-                      {state.cityCount}{' '}
-                      {state.cityCount === 1 ? 'city' : 'cities'}
-                    </span>
-                    <span className="font-medium text-primary group-hover:underline">
-                      View State &rarr;
-                    </span>
+                    <div className="mt-auto flex flex-wrap gap-2 border-t border-brand-navy/10 pt-4 text-[11px] font-medium">
+                      <span className="rounded-full bg-brand-navy/[0.04] px-2.5 py-1 text-brand-navy/70">
+                        {state.market.population}
+                      </span>
+                      <span className="rounded-full bg-brand-emerald/10 px-2.5 py-1 text-brand-emerald">
+                        {state.market.medianRent} median
+                      </span>
+                      <span className="rounded-full bg-brand-gold/10 px-2.5 py-1 text-brand-gold">
+                        {state.market.vacancyRate} vacancy
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </RevealOnScroll>
             ))}
           </div>
-        )}
+        </div>
       </section>
 
-      {/* 4. CTA */}
+      {/* 6. Editorial banner — visual rest stop between states and all-cities (white) */}
+      <section className="relative bg-white py-16 sm:py-20">
+        <GoldHairline />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <RevealOnScroll variant="splitReveal">
+            <div className="relative overflow-hidden rounded-3xl">
+              <div className="relative aspect-[21/9] w-full bg-brand-navy/10 sm:aspect-[21/8]">
+                <Image
+                  src={EDITORIAL_BANNER}
+                  alt="Austin, Texas skyline at dusk representing leasing reach across the United States"
+                  fill
+                  unoptimized
+                  sizes="(max-width: 1280px) 100vw, 1280px"
+                  className="object-cover"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-gradient-to-r from-brand-navy/90 via-brand-navy/55 to-brand-navy/15"
+                />
+                <div className="absolute inset-0 flex items-center">
+                  <div className="max-w-2xl px-6 py-10 sm:px-12 lg:px-16">
+                    <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-gold">
+                      Miami to Denver
+                    </p>
+                    <p className="font-display text-2xl font-normal leading-[1.2] text-white sm:text-3xl md:text-4xl lg:text-[2.75rem]">
+                      From Miami to Denver — same disciplined{' '}
+                      <span className="italic text-brand-emerald">leasing playbook</span>
+                      <span className="text-brand-gold">.</span>
+                    </p>
+                    <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/80 sm:text-base">
+                      Same pricing rigour. Same tenant screening. Same lease quality. State-by-state compliance with the local landlord-tenant act, one consolidated relationship for the owner.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </RevealOnScroll>
+        </div>
+      </section>
+
+      {/* 7. All US cities grid with filter (ivory) */}
+      <section className="relative bg-[#FBFAF6] py-20 sm:py-24">
+        <GoldHairline />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)',
+            backgroundSize: '32px 32px',
+          }}
+        />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <RevealOnScroll variant="slideUp" className="mb-10 text-center">
+            <p className={`mb-3 ${EYEBROW}`}>All cities</p>
+            <h2 className={HEADING}>
+              57 American cities,{' '}
+              <span className="italic text-brand-emerald">one leasing standard</span>
+              <span className="text-brand-gold">.</span>
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+              Pick your market. Each city page carries the latest Zillow ZORI rent index, ACS population and median household income, neighbourhood breakdowns, and the state-specific leasing nuances we run against.
+            </p>
+          </RevealOnScroll>
+
+          <UsCitiesFilter />
+        </div>
+      </section>
+
+      {/* 8. Why MoveSmart in the US (white) */}
+      <section className="relative bg-white py-20 sm:py-24">
+        <GoldHairline />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <RevealOnScroll variant="slideUp" className="mb-14 max-w-3xl">
+            <p className={`mb-3 ${EYEBROW}`}>Why MoveSmart in the US</p>
+            <h2 className={HEADING}>
+              Built for American{' '}
+              <span className="italic text-brand-emerald">landlords</span>
+              <span className="text-brand-gold">.</span>
+            </h2>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+              Three things every US owner, PMC, and developer needs from a leasing partner — and the disciplined version of each we deliver across all ten states.
+            </p>
+          </RevealOnScroll>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {VALUE_PROPS.map((vp, i) => {
+              const Icon = vp.icon
+              return (
+                <RevealOnScroll key={vp.title} variant="slideUp" delay={i * 0.1}>
+                  <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-brand-navy/10 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-emerald/40 hover:shadow-md">
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
+                    />
+                    <div className="mb-5 inline-flex size-12 items-center justify-center rounded-xl bg-brand-emerald/10 text-brand-emerald transition-transform duration-300 group-hover:scale-110">
+                      <Icon className="size-6" />
+                    </div>
+                    <h3 className="font-display text-xl font-normal leading-snug text-brand-navy sm:text-2xl">
+                      {vp.title}
+                    </h3>
+                    <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
+                      {vp.description}
+                    </p>
+                  </div>
+                </RevealOnScroll>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 9. FAQ (kept) */}
+      <FAQBlock
+        title="Leasing in the United States, answered"
+        questions={US_FAQS}
+      />
+
+      {/* 10. Closing CTA (kept) */}
       <CTABannerBlock
-        headline="Own Rental Property in the US? Let Us Lease It."
-        description="MoveSmart Rentals is bringing full-service leasing and tenant placement to America's top rental markets - zero upfront, success-fee pricing."
-        primaryCta={{ label: 'Book a Free Consultation', href: '/contact/' }}
-        secondaryCta={{ label: 'View Pricing', href: '/pricing/' }}
+        headline="List your US rental with MoveSmart"
+        description="Zero upfront. Success-fee only. Lease in 21 days, screened against five years of tenant history and state-specific Fair Housing rules."
+        primaryCta={{ label: 'List my property', href: '/contact/?type=owner' }}
+        secondaryCta={{ label: 'Browse rentals', href: '/properties/' }}
       />
     </main>
   )

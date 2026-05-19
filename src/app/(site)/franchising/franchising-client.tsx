@@ -11,9 +11,8 @@ import {
   useTransform,
 } from 'framer-motion'
 import { ArrowRight, TrendingUp } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
-
-import { FranchiseIllustration } from '@/components/illustrations'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -329,13 +328,46 @@ export function TerritoryParallax({ awarded, available }: TerritorySectionProps)
           </p>
         </div>
 
-        {/* Full-bleed illustration with parallax (desktop only) */}
+        {/* Real map photograph with parallax drift (desktop only) */}
         <div className="relative mt-16 flex justify-center">
           <motion.div
             style={reduce ? undefined : { y }}
-            className="relative w-full max-w-3xl px-6"
+            className="relative w-full max-w-4xl px-6"
           >
-            <FranchiseIllustration className="w-full opacity-90" />
+            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-brand-navy/40 ring-1 ring-brand-emerald/15">
+              <Image
+                src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=2400&q=80"
+                alt="World map highlighting MoveSmart Rentals franchise expansion across Canada and the United States"
+                fill
+                sizes="(max-width: 1024px) 100vw, 960px"
+                className="object-cover"
+                unoptimized
+              />
+              {/* Navy tint so the map blends with the section backdrop */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-br from-brand-navy/55 via-brand-navy/25 to-brand-navy/55"
+              />
+              {/* Emerald wash to brand the map without obscuring it */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-tr from-brand-emerald/[0.08] via-transparent to-brand-gold/[0.08]"
+              />
+              {/* Top + bottom gold hairline rules for editorial framing */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
+              />
+              {/* Footer caption pill */}
+              <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white backdrop-blur-md">
+                <span className="size-1.5 rounded-full bg-brand-emerald" aria-hidden="true" />
+                Expanding · Canada + United States
+              </div>
+            </div>
           </motion.div>
         </div>
 
@@ -415,11 +447,11 @@ interface PullQuoteProps {
   quote: string
   attribution: string
   market: string
-  outcomeValue: number
+  outcomeValue?: number
   outcomePrefix?: string
   outcomeSuffix?: string
   outcomeDecimals?: number
-  outcomeLabel: string
+  outcomeLabel?: string
   /** Optional separator above quote */
   showRule?: boolean
   children?: ReactNode
@@ -436,6 +468,7 @@ export function PullQuote({
   outcomeLabel,
   showRule = false,
 }: PullQuoteProps) {
+  const hasOutcome = typeof outcomeValue === 'number' && outcomeLabel
   return (
     <figure className="relative mx-auto max-w-3xl text-center">
       {showRule && (
@@ -453,19 +486,23 @@ export function PullQuote({
           <span className="mx-2 text-brand-navy/30">/</span>
           <span className="text-brand-navy/55">{market}</span>
         </p>
-        <p className="mt-8">
-          <LongCountUp
-            value={outcomeValue}
-            prefix={outcomePrefix}
-            suffix={outcomeSuffix}
-            decimals={outcomeDecimals}
-            durationMs={2400}
-            className="font-display text-6xl font-normal text-brand-navy sm:text-7xl lg:text-[5.5rem]"
-          />
-        </p>
-        <p className="mt-3 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-navy/55">
-          {outcomeLabel}
-        </p>
+        {hasOutcome && (
+          <>
+            <p className="mt-8">
+              <LongCountUp
+                value={outcomeValue as number}
+                prefix={outcomePrefix}
+                suffix={outcomeSuffix}
+                decimals={outcomeDecimals}
+                durationMs={2400}
+                className="font-display text-6xl font-normal text-brand-navy sm:text-7xl lg:text-[5.5rem]"
+              />
+            </p>
+            <p className="mt-3 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-navy/55">
+              {outcomeLabel}
+            </p>
+          </>
+        )}
       </figcaption>
     </figure>
   )

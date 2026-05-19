@@ -24,23 +24,25 @@ export const BRAND = {
   /** Logo path */
   logo: '/og-default.png',
   /** Tagline */
-  tagline: 'Full-Service Leasing & Tenant Placement Across Canada',
+  tagline: 'Full-Service Leasing & Tenant Placement Across Canada & the United States',
   /** Short description for schemas */
   description:
-    'Full-service leasing and tenant placement across Canada. Strategic pricing, professional marketing, tenant qualification, and lease execution for individual landlords and institutional operators, zero upfront, success-based fee.',
+    'Full-service leasing and tenant placement across Canada and the United States. Strategic pricing, professional marketing, tenant qualification, and lease execution for individual landlords and institutional operators, zero upfront, success-based fee.',
   /** Social profiles */
   social: {
-    linkedin: 'https://www.linkedin.com/company/movesmart-rentals',
+    linkedin: 'https://www.linkedin.com/company/movesmart-rentals/',
     instagram: 'https://www.instagram.com/movesmartrentals',
     facebook: 'https://www.facebook.com/movesmartrentals',
-    youtube: 'https://www.youtube.com/@movesmartrentals',
+    tiktok: 'https://www.tiktok.com/@movesmartrentals',
+    x: 'https://x.com/Movesmartrental',
   },
   /** Social links array for schema sameAs */
   socialLinks: [
-    'https://www.linkedin.com/company/movesmart-rentals',
+    'https://www.linkedin.com/company/movesmart-rentals/',
     'https://www.instagram.com/movesmartrentals',
     'https://www.facebook.com/movesmartrentals',
-    'https://www.youtube.com/@movesmartrentals',
+    'https://www.tiktok.com/@movesmartrentals',
+    'https://x.com/Movesmartrental',
   ],
   /** Canonical service names - the 9 leasing-execution services */
   services: [
@@ -56,7 +58,7 @@ export const BRAND = {
   ],
   /** Key statistics for trust signals - update quarterly */
   stats: {
-    unitsLeased: '500+',
+    unitsLeased: 'Thousands',
     citiesServed: '20+',
     avgPlacementDays: 18,
     avgFillDays: 18,
@@ -95,7 +97,7 @@ export const SERVICES = {
 
 /** Key statistics for trust signals - update quarterly */
 export const STATS = {
-  unitsLeased: '500+',
+  unitsLeased: 'Thousands',
   citiesServed: '20+',
   avgDaysToRent: '18',
   ownerSatisfaction: '4.9',
@@ -131,9 +133,9 @@ export const CTA_COPY = {
   citySpecific: (city: string, service?: string) =>
     service ? `Get ${service} in ${city}` : `Get Started in ${city}`,
   /** For form proximity */
-  formSocial: 'Join 500+ Canadian landlords',
+  formSocial: 'Join thousands of landlords across North America',
   /** For footer */
-  footerTrust: 'Trusted by 500+ property owners across Canada',
+  footerTrust: 'Trusted by thousands of property owners across North America',
 } as const
 
 /**

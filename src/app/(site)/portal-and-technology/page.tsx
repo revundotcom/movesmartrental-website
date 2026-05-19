@@ -1,17 +1,8 @@
 import type { Metadata } from 'next'
-import {
-  CalendarCheck,
-  Inbox,
-  ClipboardCheck,
-  FileSignature,
-  KeyRound,
-  Lock,
-} from 'lucide-react'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
-import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { OwnersFeaturesBento } from '@/components/blocks/owners-features-bento'
 import { generatePageMetadata } from '@/lib/metadata'
 
@@ -21,6 +12,15 @@ import {
   PhilosophyManifesto,
   SecurityTrustStrip,
 } from './portal-interactive'
+
+import {
+  BuiltForOwners,
+  EditorialPortalHero,
+  PressLogos,
+  TestimonialsWall,
+  ThreeRoles,
+  WorkflowImageStrip,
+} from './portal-imagery'
 
 import { BrowserFrame } from '@/components/ui/browser-frame'
 import { OwnerDashboardMockup } from '@/components/portal-mockups/owner-dashboard-mockup'
@@ -106,63 +106,6 @@ export const metadata: Metadata = generatePageMetadata({
 })
 
 /* ─────────────────────────────────────────────────────────────────────────── */
-/* Hero aside - small editorial "what you'll see today" panel                  */
-/* ─────────────────────────────────────────────────────────────────────────── */
-
-const HERO_ASIDE_ITEMS = [
-  { icon: KeyRound, label: 'Listings', detail: 'live · views · inquiries' },
-  { icon: CalendarCheck, label: 'Showings', detail: 'booked · feedback logged' },
-  { icon: Inbox, label: 'Applicants', detail: 'received · under review' },
-  { icon: ClipboardCheck, label: 'Screening', detail: 'credit · income · references' },
-  { icon: FileSignature, label: 'Lease & Move-in', detail: 'signed · keys handed over' },
-]
-
-function HeroAsideCard() {
-  return (
-    <div className="relative overflow-hidden rounded-3xl border border-brand-navy/10 bg-white p-7 shadow-sm">
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
-      />
-      <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-navy/55">
-        What you&rsquo;ll see today
-      </p>
-      <h3 className="mt-2 font-display text-xl font-normal text-brand-navy">
-        Five stages.{' '}
-        <span className="font-display italic text-brand-emerald">One leasing view</span>
-        <span className="text-brand-gold">.</span>
-      </h3>
-
-      <ul className="mt-5 divide-y divide-slate-100">
-        {HERO_ASIDE_ITEMS.map((item) => {
-          const Icon = item.icon
-          return (
-            <li key={item.label} className="flex items-center gap-3 py-3">
-              <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-brand-emerald/10">
-                <Icon className="size-4 text-brand-emerald" aria-hidden="true" />
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-brand-navy">
-                  {item.label}
-                </p>
-                <p className="text-xs text-slate-500">{item.detail}</p>
-              </div>
-            </li>
-          )
-        })}
-      </ul>
-
-      <div className="mt-5 flex items-center gap-2 rounded-xl border border-slate-100 bg-slate-50/60 px-3 py-2.5">
-        <Lock className="size-3.5 text-slate-500" aria-hidden="true" />
-        <p className="text-[11px] text-slate-600">
-          Bank-grade encryption · Canadian data residency
-        </p>
-      </div>
-    </div>
-  )
-}
-
-/* ─────────────────────────────────────────────────────────────────────────── */
 /* Owner portal feature bento (six tiles, leasing-lifecycle focused)           */
 /* ─────────────────────────────────────────────────────────────────────────── */
 
@@ -221,56 +164,43 @@ export default function PortalAndTechnologyPage() {
         />
       </div>
 
-      {/* SECTION 1 - Editorial inner-page hero */}
-      <PageHeroBlock
-        kicker="Portal & Technology"
-        eyebrow="Leasing Transparency, End-to-End"
-        headline="Total Visibility Into Your Leasing"
-        lede="Most brokerages go dark the day your listing goes live. Our portal is the opposite - watch every showing, application, screening check, and approval as it happens, from listing through signed lease and move-in."
-        cta1={{ label: 'Tour the Portal', href: '#walkthrough' }}
-        cta2={{ label: 'Get a Demo', href: '/contact/?intent=demo' }}
-        aside={<HeroAsideCard />}
-      />
+      {/* SECTION 1 - Editorial hero with composited dashboard + notification card */}
+      <EditorialPortalHero />
 
-      {/* SECTION 2 - Philosophy: 01 / 02 / 03 numbered editorial */}
+      {/* SECTION 2 - Press logos */}
+      <PressLogos />
+
+      {/* SECTION 3 - Philosophy: 01 / 02 / 03 numbered editorial */}
       <PhilosophyManifesto />
 
-      {/* SECTION 3 - Owner portal feature bento (asymmetric, kept) */}
+      {/* SECTION 4 - Built in the leasing trenches (image + copy + stat tiles) */}
+      <BuiltForOwners />
+
+      {/* SECTION 5 - Editorial 5-step workflow image strip */}
+      <WorkflowImageStrip />
+
+      {/* SECTION 6 - Owner portal feature bento (asymmetric, kept) */}
       <OwnersFeaturesBento features={PORTAL_FEATURES} />
 
-      {/* SECTION 4 - Real portal screen mockups in browser frames */}
+      {/* SECTION 7 - Real portal screen mockups in browser frames */}
       <PortalScreensShowcase />
 
-      {/* SECTION 5 - Owner / Tenant clip-reveal split */}
+      {/* SECTION 9 - Three roles (Owner / Applicant / Leasing Agent photo cards) */}
+      <ThreeRoles />
+
+      {/* SECTION 10 - Owner / Tenant clip-reveal split */}
       <OwnerTenantSplit />
 
-      {/* SECTION 6 - Notifications timeline */}
+      {/* SECTION 11 - Notifications timeline */}
       <NotificationTimeline />
 
-      {/* SECTION 7 - Security trust strip (single horizontal strip) */}
+      {/* SECTION 12 - Security trust strip (single horizontal strip) */}
       <SecurityTrustStrip />
 
-      {/* SECTION 8 - Testimonials */}
-      <section className="bg-[#FBFAF6] py-20">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
-              Owners On The Portal
-            </p>
-            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-[2.75rem]">
-              &ldquo;I always knew where my{' '}
-              <span className="font-display italic text-brand-emerald">lease-up</span>
-              <span className="text-brand-gold">&nbsp;stood.&rdquo;</span>
-            </h2>
-            <p className="mt-5 text-lg leading-relaxed text-slate-600">
-              The visibility owners ask us about most isn&rsquo;t a metric - it&rsquo;s
-              the feeling of never being in the dark while their unit is on the market.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* SECTION 13 - Testimonials wall */}
+      <TestimonialsWall />
 
-      {/* SECTION 9 - Portal-specific FAQ */}
+      {/* SECTION 14 - Portal-specific FAQ */}
       <FAQBlock
         title="Portal & Technology FAQ"
         showQuestionsCta={false}
@@ -313,7 +243,7 @@ export default function PortalAndTechnologyPage() {
         ]}
       />
 
-      {/* SECTION 10 - Portal-specific CTA banner */}
+      {/* SECTION 15 - Portal-specific CTA banner */}
       <CTABannerBlock
         headline="See it in 5 minutes."
         description="Book a portal walkthrough with one of our leasing managers - no slides, no sales pitch, just a real owner login on a screen-share."

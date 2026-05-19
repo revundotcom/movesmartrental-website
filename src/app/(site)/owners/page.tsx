@@ -3,12 +3,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import {
   Check,
-  ClipboardCheck,
-  Eye,
-  KeyRound,
   X,
   Minus,
   ArrowRight,
+  Clock,
   DollarSign,
   Monitor,
   Users,
@@ -29,11 +27,13 @@ import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 import { GradientText } from '@/components/ui/gradient-text'
 import {
   MarketRow,
+  PainPointCard,
+  PortalShowcase,
   SlideFromRight,
-  ZigzagRow,
 } from './client-parts'
 
 const CONTRACT_ICON_MAP: Record<string, LucideIcon> = {
+  Clock,
   DollarSign,
   Monitor,
   Users,
@@ -66,28 +66,55 @@ export const metadata: Metadata = {
   },
 }
 
-/* ---------- Landlord pain points (zigzag) - leasing-focused ---------- */
+/* ---------- Landlord pain points - leasing-focused ---------- */
 
-const PAIN_POINTS: Array<{ problem: string; solution: string }> = [
+const PAIN_POINTS: Array<{
+  problem: string
+  solution: string
+  iconKey: string
+  imageSrc: string
+  imageAlt: string
+  tag: string
+}> = [
   {
+    tag: 'Pricing & Vacancy',
+    iconKey: 'DollarSign',
+    imageSrc:
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1600&q=80&auto=format&fit=crop',
+    imageAlt: 'Empty bright apartment ready to lease',
     problem:
       'Vacant units sitting empty for weeks while you guess at the right asking rent.',
     solution:
-      'Strategic, data-backed pricing on day one - calibrated to live comps in your neighbourhood, not last year\u2019s averages. Most listings reach signed lease in roughly 18 days.',
+      'Strategic, data-backed pricing on day one \u2014 calibrated to live comps in your neighbourhood, not last year\u2019s averages. Most listings reach signed lease in roughly 18 days.',
   },
   {
+    tag: 'Marketing & Reach',
+    iconKey: 'Megaphone',
+    imageSrc:
+      'https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1600&q=80&auto=format&fit=crop',
+    imageAlt: 'Modern Canadian condo presented with editorial photography',
     problem:
       'Listing photos that do not sell the unit and copy that gets lost in the feed.',
     solution:
       'Professional photography, virtual tours, and editorial listing copy syndicated to MLS, Realtor.ca, and the major rental websites the same day prep wraps.',
   },
   {
+    tag: 'Showings & Screening',
+    iconKey: 'Shield',
+    imageSrc:
+      'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1600&q=80&auto=format&fit=crop',
+    imageAlt: 'MoveSmart leasing professional reviewing applicant files',
     problem:
       'Applicant chaos: a flood of inquiries, no-show showings, and screening you cannot defend.',
     solution:
-      'Showings coordinated and confirmed by our team. Every applicant runs through a structured, documented screen - credit, employment, references, rental history - visible to you in the portal.',
+      'Showings coordinated and confirmed by our team. Every applicant runs through a structured, documented screen \u2014 credit, employment, references, rental history \u2014 visible to you in the portal.',
   },
   {
+    tag: 'Lease & Move-In',
+    iconKey: 'CheckCircle',
+    imageSrc:
+      'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&q=80&auto=format&fit=crop',
+    imageAlt: 'Property owner handing over keys to a qualified new tenant on move-in day',
     problem:
       'Pricing guesswork, sloppy lease paperwork, and a messy move-in that sets the tenancy off badly.',
     solution:
@@ -95,7 +122,7 @@ const PAIN_POINTS: Array<{ problem: string; solution: string }> = [
   },
 ]
 
-/* ---------- Contract-required messaging (9 owner pillars) ---------- */
+/* ---------- Contract-required messaging (10 owner pillars) ---------- */
 
 const CONTRACT_MESSAGING: Array<{
   iconKey: string
@@ -156,34 +183,11 @@ const CONTRACT_MESSAGING: Array<{
     description:
       'Optional partner pathways for rent protection and landlord insurance, surfaced at the right moment in your leasing flow.',
   },
-]
-
-/* ---------- Portal feature strip - leasing-focused ---------- */
-
-const PORTAL_FEATURES = [
   {
-    icon: Eye,
-    title: 'Showings & inquiries',
+    iconKey: 'Clock',
+    title: 'Time-Bound Listing Promise',
     description:
-      'Every inquiry, every booked showing, every no-show - logged with timestamps and the team member who handled it.',
-  },
-  {
-    icon: Users,
-    title: 'Applicant pipeline',
-    description:
-      'See every applicant as they move from inquiry through showing, application, and recommendation. Approve or counter in one click.',
-  },
-  {
-    icon: ClipboardCheck,
-    title: 'Screening reports',
-    description:
-      'Full applicant files: credit, employment, references, rental history. You see what we see before you approve.',
-  },
-  {
-    icon: KeyRound,
-    title: 'Lease & move-in',
-    description:
-      'Signed lease, deposits collected, move-in inspection report, and the full communication history - all in one place.',
+      'Your unit goes live on MLS and 20+ rental portals within 72 hours of contract sign-off — photography, copy, and syndication included. If we miss that window, the engagement is yours to walk away from with zero obligation.',
   },
 ]
 
@@ -250,9 +254,9 @@ const MARKETS: Array<{
   cities: string
 }> = [
   {
-    region: 'Ontario',
+    region: 'Canada',
     href: '/ca/ontario/',
-    blurb: 'Our largest footprint - GTA, Ottawa Valley, and Southwestern Ontario.',
+    blurb: 'Our largest footprint - GTA, Ottawa Valley, and Southwestern Canada.',
     cities: 'Toronto · Ottawa · Mississauga · Hamilton · Brampton · London · Kitchener',
   },
   {
@@ -403,104 +407,57 @@ export default async function OwnersPage() {
         eyebrow="For Property Owners"
         headline="Full-service leasing. Real Results."
         lede="Strategic pricing, professional marketing, structured screening, and clean lease execution - from listing to move-in. Nothing due upfront. Standard leasing success fee on placement."
-        cta1={{ label: 'Create a Free Account', href: '/contact/?type=owner' }}
+        cta1={{ label: 'List my property', href: '/contact/?type=owner' }}
+        cta2={{ label: 'Browse rentals', href: '/properties/' }}
         aside={<HeroAside />}
+        theme="dark"
+        backgroundImageUrl="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=2400&q=80"
+        backgroundImageAlt="Real estate professional handing house keys to a property owner"
       />
 
-      {/* ── SECTION 2: Pain Points - ZIGZAG EDITORIAL ROWS ── */}
-      <section className="bg-white pb-20 sm:pb-24">
-        <div className="mx-auto max-w-6xl px-4">
+      {/* ── SECTION 2: Pain Points - IMAGE-LED CARD GRID ── */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-white via-[#FBFAF6]/40 to-white pb-20 pt-4 sm:pb-24">
+        {/* Subtle decorative dot grid */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-[0.035]"
+          style={{
+            backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)',
+            backgroundSize: '28px 28px',
+          }}
+        />
+
+        <div className="relative mx-auto max-w-6xl px-4">
           <RevealOnScroll variant="slideFromLeft" className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
+            <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-brand-emerald">
+              <span className="block h-px w-8 bg-brand-emerald/60" aria-hidden="true" />
               The Problem
             </p>
             <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
-              Four leasing{' '}
-              <span className="font-display italic text-brand-emerald">aches</span>, four answers
+              The leasing{' '}
+              <span className="font-display italic text-brand-emerald">aches</span> owners hit across 20+ markets
               <span aria-hidden="true" className="text-brand-gold">
                 .
               </span>
             </h2>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+              Four friction points show up in nearly every owner conversation. Here&rsquo;s how we resolve each one — by design, not by exception.
+            </p>
           </RevealOnScroll>
 
-          <div className="mt-14 divide-y divide-brand-navy/10 border-y border-brand-navy/10">
-            {PAIN_POINTS.map((point, idx) => {
-              const fromLeft = idx % 2 === 0
-              const numeral = String(idx + 1).padStart(2, '0')
-              return (
-                <ZigzagRow key={point.problem} index={idx} className="py-12 sm:py-16">
-                  <div
-                    className={`grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-10 ${
-                      fromLeft ? '' : 'lg:[direction:rtl]'
-                    }`}
-                  >
-                    {/* Oversized counter */}
-                    <div className="lg:col-span-3 lg:[direction:ltr]">
-                      <p
-                        aria-hidden="true"
-                        className="font-display text-7xl font-normal italic leading-none text-brand-gold/60 sm:text-8xl"
-                      >
-                        {numeral}
-                      </p>
-                      <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.18em] text-brand-emerald">
-                        {fromLeft ? 'Pain · Fix' : 'Fix · Pain'}
-                      </p>
-                    </div>
-
-                    {/* Problem */}
-                    <div className="lg:col-span-4 lg:[direction:ltr]">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-rose-500/80">
-                        Problem
-                      </p>
-                      <p className="mt-2 font-display text-xl font-normal leading-snug text-brand-navy sm:text-2xl">
-                        {point.problem}
-                      </p>
-                    </div>
-
-                    {/* Solution */}
-                    <div className="lg:col-span-5 lg:border-l lg:border-brand-navy/10 lg:pl-8 lg:[direction:ltr]">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-emerald">
-                        How we fix it
-                      </p>
-                      <p className="mt-2 text-base leading-relaxed text-slate-700 sm:text-lg">
-                        {point.solution}
-                      </p>
-                    </div>
-                  </div>
-                </ZigzagRow>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Editorial image bridge: leasing team at work ── */}
-      <section className="bg-white pb-20">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-            <div className="relative aspect-[5/4] overflow-hidden rounded-2xl shadow-xl shadow-brand-navy/10">
-              <Image
-                src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1600&q=80&auto=format&fit=crop"
-                alt="MoveSmart leasing professional reviewing applicant files on a laptop"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                unoptimized
+          <div className="mt-14 grid grid-cols-1 gap-6 sm:gap-7 lg:grid-cols-2 lg:gap-8">
+            {PAIN_POINTS.map((point, idx) => (
+              <PainPointCard
+                key={point.problem}
+                index={idx}
+                tag={point.tag}
+                iconKey={point.iconKey}
+                imageSrc={point.imageSrc}
+                imageAlt={point.imageAlt}
+                problem={point.problem}
+                solution={point.solution}
               />
-            </div>
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
-                The leasing team behind your file
-              </p>
-              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
-                A real person owns your{' '}
-                <span className="font-display italic text-brand-emerald">lease-up</span>
-                <span aria-hidden="true" className="text-brand-gold">.</span>
-              </h2>
-              <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
-                Every owner file has a named leasing lead and a documented applicant pipeline. Inquiries are triaged within hours, every showing is confirmed in writing, and every applicant runs through the same structured screening - all visible in your portal, all backed by a person you can call.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -534,7 +491,7 @@ export default async function OwnersPage() {
               The Contract
             </p>
             <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
-              Nine commitments, written into{' '}
+              Ten commitments, written into{' '}
               <span className="font-display italic text-brand-emerald">every owner agreement</span>
               <span aria-hidden="true" className="text-brand-gold">
                 .
@@ -577,37 +534,6 @@ export default async function OwnersPage() {
         </div>
       </section>
 
-      {/* ── Editorial image bridge: keys handover at move-in ── */}
-      <section className="bg-white pb-20">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-            <div className="lg:order-2 relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl shadow-brand-navy/10">
-              <Image
-                src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&q=80&auto=format&fit=crop"
-                alt="Property owner handing over keys to a qualified new tenant on move-in day"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                unoptimized
-              />
-            </div>
-            <div className="lg:order-1">
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
-                Move-in coordination
-              </p>
-              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
-                A clean handover{' '}
-                <span className="font-display italic text-brand-emerald">on day one</span>
-                <span aria-hidden="true" className="text-brand-gold">.</span>
-              </h2>
-              <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
-                Lease signed, deposits in trust, utilities coordinated, condition inspection completed and photo-documented. By the time keys change hands, every paper trail is closed and your tenant&apos;s first day in the unit feels managed - not improvised.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ── PULL QUOTE 2 - Gradient statement, halfway down the page ── */}
       <section className="relative bg-brand-navy py-28 sm:py-36">
         <div
@@ -624,21 +550,21 @@ export default async function OwnersPage() {
               The owner promise
             </p>
             <p className="mt-8 font-display text-4xl font-normal leading-[1.05] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-              <span className="text-white">Your unit, leased in </span>
+              <span className="text-white">A leasing process you can </span>
               <GradientText variant="emerald" className="font-display italic">
-                fourteen days
+                actually see
               </GradientText>
-              <span className="text-white">. Your evenings, </span>
+              <span className="text-white">. Evenings that stay </span>
               <GradientText variant="emerald" className="font-display italic">
                 yours
               </GradientText>
-              <span className="text-white"> again.</span>
+              <span className="text-white">.</span>
             </p>
           </RevealOnScroll>
         </div>
       </section>
 
-      {/* ── SECTION 5: Portal Feature Strip (the ONE allowed card grid) ── */}
+      {/* ── SECTION 5: Portal Feature Strip - now image-rich with real mockups ── */}
       <section className="bg-white py-24">
         <div className="mx-auto max-w-6xl px-4">
           <RevealOnScroll variant="slideFromLeft" className="mx-auto max-w-2xl text-center">
@@ -657,34 +583,12 @@ export default async function OwnersPage() {
             </p>
           </RevealOnScroll>
 
-          <RevealOnScroll
-            variant="slideUp"
-            stagger={0.08}
-            className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
-          >
-            {PORTAL_FEATURES.map((feature) => {
-              const Icon = feature.icon
-              return (
-                <div
-                  key={feature.title}
-                  className="group relative flex flex-col rounded-2xl border border-brand-navy/10 bg-[#FBFAF6] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand-emerald/30 hover:bg-white hover:shadow-md"
-                >
-                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent" />
-                  <div className="mb-5 flex size-11 items-center justify-center rounded-xl bg-white ring-1 ring-brand-navy/10">
-                    <Icon className="size-5 text-brand-emerald" aria-hidden="true" />
-                  </div>
-                  <h3 className="font-display text-lg font-normal text-brand-navy">
-                    {feature.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                    {feature.description}
-                  </p>
-                </div>
-              )
-            })}
+          {/* Tabbed portal showcase — click a feature on the left to swap the screen on the right */}
+          <RevealOnScroll variant="slideUp" duration={0.7} className="mt-14">
+            <PortalShowcase />
           </RevealOnScroll>
 
-          <div className="mt-10 text-center">
+          <div className="mt-12 text-center">
             <Link
               href="/portal-and-technology/"
               className="inline-flex items-center gap-2 text-sm font-semibold text-brand-navy hover:text-brand-emerald"
@@ -878,30 +782,60 @@ export default async function OwnersPage() {
         </div>
       </section>
 
-      {/* ── SECTION 9: Markets We Serve - EDITORIAL LIST (no grid) ── */}
-      <section className="bg-white py-24">
-        <div className="mx-auto max-w-5xl px-4">
+      {/* ── SECTION 9: Markets We Serve - DARK PHOTOGRAPHIC BACKDROP ── */}
+      <section className="relative isolate overflow-hidden bg-brand-navy py-24 text-white sm:py-28">
+        {/* Photographic backdrop */}
+        <div aria-hidden="true" className="absolute inset-0 -z-10">
+          <Image
+            src="https://images.unsplash.com/photo-1517090504586-fde19ea6066f?w=2400&q=80&auto=format&fit=crop"
+            alt=""
+            fill
+            className="object-cover object-center"
+            sizes="100vw"
+            unoptimized
+          />
+          {/* Layered navy + gold accents for legibility and warmth */}
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/95 via-brand-navy/88 to-brand-navy/80" />
+          <div className="absolute -left-32 top-1/3 size-[520px] -translate-y-1/2 rounded-full bg-brand-emerald/10 blur-3xl" />
+          <div className="absolute -right-24 bottom-0 size-[420px] rounded-full bg-brand-gold/8 blur-3xl" />
+        </div>
+
+        {/* Gold hairlines top + bottom for editorial feel */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
+        />
+
+        <div className="relative mx-auto max-w-5xl px-4">
           <RevealOnScroll variant="slideFromLeft" className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
+            <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-brand-gold">
+              <span aria-hidden="true" className="block h-px w-8 bg-brand-gold/60" />
               Coverage
             </p>
-            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
+            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-white sm:text-4xl md:text-5xl">
               Markets we{' '}
               <span className="font-display italic text-brand-emerald">serve</span>
               <span aria-hidden="true" className="text-brand-gold">
                 .
               </span>
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-600">
-              Twenty-plus cities across Canada and the United States, with licensed brokers and on-the-ground showing teams in every region.
+            <p className="mt-4 text-base leading-relaxed text-white/70">
+              20+ Canadian cities plus cross-border US coverage, with licensed brokers and on-the-ground showing teams in every region.
             </p>
           </RevealOnScroll>
 
-          {/* Single-column editorial list, big bold city names, hairline dividers */}
-          <div className="mt-14 divide-y divide-brand-navy/15 border-y border-brand-navy/15">
+          {/* Single-column editorial list — inverted for dark backdrop */}
+          <div className="mt-14 divide-y divide-white/12 border-y border-white/12">
             {MARKETS.map((market, idx) => (
               <MarketRow key={market.region} index={idx}>
-                <div className="block py-8 sm:py-10">
+                <Link
+                  href={market.href}
+                  className="group block py-8 transition-colors duration-300 hover:bg-white/[0.03] sm:py-10"
+                >
                   <div className="grid grid-cols-1 items-baseline gap-y-3 px-2 sm:grid-cols-12 sm:gap-x-8">
                     <div className="flex items-baseline gap-4 sm:col-span-5">
                       <span
@@ -910,18 +844,18 @@ export default async function OwnersPage() {
                       >
                         {String(idx + 1).padStart(2, '0')}
                       </span>
-                      <h3 className="font-display text-3xl font-normal leading-none text-brand-navy sm:text-4xl md:text-5xl">
+                      <h3 className="font-display text-3xl font-normal leading-none text-white transition-colors group-hover:text-brand-emerald sm:text-4xl md:text-5xl">
                         {market.region}
                       </h3>
                     </div>
-                    <p className="text-base leading-relaxed text-slate-700 sm:col-span-7">
+                    <p className="text-base leading-relaxed text-white/70 sm:col-span-7">
                       {market.blurb}
                     </p>
                   </div>
-                  <p className="mt-3 px-2 text-xs uppercase tracking-wider text-slate-500 sm:ml-12">
+                  <p className="mt-3 px-2 text-xs uppercase tracking-wider text-white/45 sm:ml-12">
                     {market.cities}
                   </p>
-                </div>
+                </Link>
               </MarketRow>
             ))}
           </div>
@@ -929,7 +863,7 @@ export default async function OwnersPage() {
           <div className="mt-10 text-center">
             <Link
               href="/locations/"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-brand-navy hover:text-brand-emerald"
+              className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/10"
             >
               See every city we cover
               <ArrowRight className="size-4" aria-hidden="true" />
@@ -978,8 +912,77 @@ export default async function OwnersPage() {
             answer:
               'Our scope is leasing execution - from listing to move-in. Once the lease is signed, deposits collected, and the move-in inspection is complete, the engagement is fulfilled. We are a leasing brokerage, not a property management firm.',
           },
+          {
+            question: 'Will I get a proper invoice and HST/GST receipt for the success fee?',
+            answer:
+              'Yes. The success fee is billed via a formal invoice with HST/GST itemized separately so your accountant can claim input tax credits where eligible. We can also provide a year-end summary for owners with multiple placements in a calendar year.',
+          },
+          {
+            question: 'My condo board requires approval for new tenants. Do you handle that?',
+            answer:
+              'Yes. We prepare and submit the full board package on your behalf — applicant credit and reference summary, lease, ID, and any building-specific forms — and coordinate with the property manager or board administrator through approval. Common in Toronto, Mississauga, and Vancouver high-rises.',
+          },
+          {
+            question: 'Can I specify a "no pets" or other applicant criteria?',
+            answer:
+              'You set the criteria. We document your preferences during onboarding — pets, smoking, occupancy limits, minimum income multiple, lease term, anything Human Rights legislation permits — and apply them consistently during screening. We flag any criteria that may raise a discrimination concern and suggest a compliant equivalent.',
+          },
+          {
+            question: 'My current tenant is leaving. When should I list?',
+            answer:
+              'Ideally 30–45 days before vacancy. We can pre-market with placeholder photos and a "coming soon" listing as soon as notice is given, schedule showings to start the week the unit becomes accessible, and aim for the new tenant to move in the day after the prior lease ends. Most owners avoid even a single vacant week this way.',
+          },
+          {
+            question: 'Can you lease my unit privately, off-MLS?',
+            answer:
+              'Yes — for sensitive listings (occupied units, executive relocations, builder pre-leasing), we run an off-market campaign through our internal agent network, partner relocation services, and private buyer database. Lower exposure than MLS, but useful where confidentiality matters more than maximum applicant volume.',
+          },
         ]}
       />
+
+      {/* ── FINAL CTA BANNER - the single sign-off (List my property → contact) ── */}
+      <section className="relative overflow-hidden bg-brand-navy py-24 sm:py-28">
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 mx-auto h-px max-w-md bg-gradient-to-r from-transparent via-brand-gold/60 to-transparent"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 bottom-0 mx-auto h-px max-w-md bg-gradient-to-r from-transparent via-brand-gold/60 to-transparent"
+        />
+        <div className="mx-auto max-w-4xl px-4 text-center">
+          <RevealOnScroll variant="slideUp" duration={0.7}>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-brand-gold">
+              Ready when you are
+            </p>
+            <h2 className="mt-6 font-display text-3xl font-normal leading-tight tracking-tight text-white sm:text-4xl md:text-5xl">
+              List your property{' '}
+              <GradientText variant="emerald" className="font-display italic">
+                with us
+              </GradientText>
+              <span className="text-brand-gold">.</span>
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">
+              Nothing due upfront. Standard leasing success fee on placement. Tell us about your unit and a leasing lead will be in touch within one business day.
+            </p>
+            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+              <Link
+                href="/contact/?type=owner"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-emerald px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-brand-emerald/20 transition-all hover:bg-emerald-600 hover:shadow-xl"
+              >
+                List my property
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+              <Link
+                href="/properties/"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white transition-all hover:border-white/40 hover:bg-white/10"
+              >
+                Browse rentals
+              </Link>
+            </div>
+          </RevealOnScroll>
+        </div>
+      </section>
 
     </main>
   )

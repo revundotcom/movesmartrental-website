@@ -29,7 +29,6 @@ export const NAV_GROUPS = [
       { title: 'Pricing', href: '/pricing/', description: 'Transparent leasing fees, no monthly lock-in' },
       { title: 'Portal & Technology', href: '/portal-and-technology/', description: 'Owner portal and reporting tools' },
       { title: 'Reviews', href: '/reviews/', description: 'See what landlords say about MoveSmart' },
-      { title: 'Create a Free Account', href: '/contact/?type=owner', description: 'Get started with a free account' },
     ],
   },
   {
@@ -43,13 +42,12 @@ export const NAV_GROUPS = [
   {
     label: 'Properties',
     items: [
-      { title: 'Browse Properties', href: '/properties/', description: 'Current verified rental listings across Canada' },
+      { title: 'Browse Properties', href: '/properties/', description: 'Current verified rental listings across Canada and the US' },
     ],
   },
   {
     label: 'Services',
     items: [
-      { title: 'All Services', href: '/services/', description: 'Full-cycle leasing execution overview' },
       { title: 'Tenant Placement', href: '/services/tenant-placement/', description: 'Marketing, showings, and lease signing' },
       { title: 'Leasing Services', href: '/services/leasing-services/', description: 'Full-service leasing for owners' },
       { title: 'Tenant Screening', href: '/services/tenant-screening/', description: 'Multi-step applicant verification' },
@@ -57,7 +55,7 @@ export const NAV_GROUPS = [
       { title: 'Tenant Insurance', href: '/services/tenant-insurance/', description: 'Coverage for renters and units' },
       { title: 'Tenant Guarantor', href: '/services/tenant-guarantor/', description: 'Co-signer support for applicants' },
       { title: 'Rental Preparation', href: '/services/rental-preparation/', description: 'Staging, photography, listing prep' },
-      { title: 'Institutional Lease-Up', href: '/services/institutional-lease-up/', description: 'Bulk lease-up for new builds' },
+      { title: 'Institutional Lease-Up', href: '/institutional-lease-up/', description: 'Bulk lease-up for new builds' },
     ],
   },
   {
@@ -124,7 +122,7 @@ export const FOOTER_COLUMNS = [
       { label: 'Owner Hub', href: '/owners/' },
       { label: 'Pricing', href: '/pricing/' },
       { label: 'Owner FAQ', href: '/faq/' },
-      { label: 'Create a Free Account', href: '/contact/?type=owner' },
+      { label: 'List my property', href: '/contact/?type=owner' },
     ],
   },
   {
@@ -136,27 +134,19 @@ export const FOOTER_COLUMNS = [
     ],
   },
   {
-    title: 'Canada',
+    title: 'Canada — Provinces',
     links: [
-      { label: 'Toronto', href: '/ca/ontario/toronto/' },
-      { label: 'Mississauga', href: '/ca/ontario/mississauga/' },
-      { label: 'Brampton', href: '/ca/ontario/brampton/' },
-      { label: 'Hamilton', href: '/ca/ontario/hamilton/' },
-      { label: 'Ottawa', href: '/ca/ontario/ottawa/' },
-      { label: 'London', href: '/ca/ontario/london/' },
-      { label: 'Vaughan', href: '/ca/ontario/vaughan/' },
-      { label: 'Markham', href: '/ca/ontario/markham/' },
-      { label: 'Richmond Hill', href: '/ca/ontario/richmond-hill/' },
-      { label: 'Oakville', href: '/ca/ontario/oakville/' },
-      { label: 'Burlington', href: '/ca/ontario/burlington/' },
-      { label: 'Kitchener', href: '/ca/ontario/kitchener/' },
-      { label: 'Waterloo', href: '/ca/ontario/waterloo/' },
-      { label: 'Cambridge', href: '/ca/ontario/cambridge/' },
-      { label: 'Guelph', href: '/ca/ontario/guelph/' },
+      { label: 'Ontario', href: '/ca/ontario/' },
+      { label: 'Quebec', href: '/ca/quebec/' },
+      { label: 'British Columbia', href: '/ca/british-columbia/' },
+      { label: 'Alberta', href: '/ca/alberta/' },
+      { label: 'Manitoba', href: '/ca/manitoba/' },
+      { label: 'Nova Scotia', href: '/ca/nova-scotia/' },
+      { label: 'View all Canadian cities', href: '/ca/' },
     ],
   },
   {
-    title: 'United States',
+    title: 'United States — States',
     links: [
       // TODO(phase-2): build /us/{state}/ landing pages. Links are
       // placed now to lock in IA and crawl paths.
@@ -170,6 +160,7 @@ export const FOOTER_COLUMNS = [
       { label: 'Arizona', href: '/us/arizona/' },
       { label: 'Colorado', href: '/us/colorado/' },
       { label: 'New Jersey', href: '/us/new-jersey/' },
+      { label: 'View all US cities', href: '/us/' },
     ],
   },
   {

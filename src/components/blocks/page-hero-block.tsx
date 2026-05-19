@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import type { ReactNode } from 'react'
@@ -55,6 +56,15 @@ export interface PageHeroBlockProps {
   aside?: ReactNode
   /** Theme: light (default, ivory bg) or dark (navy bg). */
   theme?: 'light' | 'dark'
+  /**
+   * Optional full-bleed background photograph. When provided alongside
+   * `theme="dark"` the photo sits behind a heavy navy gradient + emerald/gold
+   * radial glows — same treatment as the /pricing/ hero. Pick a content-relevant
+   * HD image (1600w+ Unsplash works well).
+   */
+  backgroundImageUrl?: string
+  /** Alt text for the background image. Defaults to empty (decorative). */
+  backgroundImageAlt?: string
   /** Tracking context */
   city?: string
   service?: string
@@ -65,59 +75,87 @@ function inferCTAType(href: string): 'account_creation' | 'book_a_call' {
   return 'book_a_call'
 }
 
-export function PageHeroBlock({
-  kicker,
-  eyebrow,
-  headline,
-  accentLastWord = true,
-  lede,
-  cta1,
-  cta2,
-  meta,
-  aside,
-  theme = 'light',
-  city,
-  service,
-}: PageHeroBlockProps) {
+export function PageHeroBlock(props: PageHeroBlockProps) {
+  // The `meta` prop is intentionally accepted but not rendered — the page-wide
+  // stat strip was removed per design feedback. The prop remains on the
+  // interface so existing callers compile without churn.
+  const {
+    kicker,
+    eyebrow,
+    headline,
+    accentLastWord = true,
+    lede,
+    cta1,
+    cta2,
+    aside,
+    theme = 'light',
+    backgroundImageUrl,
+    backgroundImageAlt = '',
+    city,
+    service,
+  } = props
   const words = headline.split(' ')
   const lastWord = accentLastWord ? words.pop() : undefined
   const leadingWords = words.join(' ')
 
   const isDark = theme === 'dark'
+  const hasPhoto = isDark && !!backgroundImageUrl
 
   return (
     <section
       className={
         isDark
-          ? 'relative overflow-hidden bg-brand-navy'
+          ? 'relative isolate overflow-hidden bg-brand-navy'
           : 'relative overflow-hidden bg-[#FBFAF6]'
       }
     >
       {/* Hairline top accent - gold ruler, brick-and-mortar feel */}
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/60 to-transparent"
+        className="absolute inset-x-0 top-0 z-10 h-px bg-gradient-to-r from-transparent via-brand-gold/60 to-transparent"
       />
 
-      {/* Soft tonal wash */}
-      {isDark ? (
-        <div
-          aria-hidden="true"
-          className="absolute inset-0"
-          style={{
-            background:
-              'radial-gradient(ellipse at 80% 20%, rgba(16,185,129,0.08) 0%, transparent 60%)',
-          }}
-        />
-      ) : (
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 opacity-[0.35]"
-          style={{
-            background:
-              'radial-gradient(ellipse at 85% 15%, rgba(212,168,83,0.10) 0%, transparent 55%), radial-gradient(ellipse at 0% 100%, rgba(16,185,129,0.06) 0%, transparent 50%)',
-          }}
-        />
+      {/* Photographic backdrop (dark theme only) */}
+      {hasPhoto && (
+        <div aria-hidden={backgroundImageAlt ? undefined : 'true'} className="absolute inset-0 -z-10">
+          <Image
+            src={backgroundImageUrl!}
+            alt={backgroundImageAlt}
+            fill
+            priority
+            unoptimized
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          {/* Heavy navy gradient so text stays legible */}
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/95 via-brand-navy/85 to-brand-navy/70" />
+          {/* Emerald + gold accent glows */}
+          <div className="absolute -left-32 top-1/2 size-[520px] -translate-y-1/2 rounded-full bg-brand-emerald/10 blur-3xl" />
+          <div className="absolute -right-24 bottom-0 size-[420px] rounded-full bg-brand-gold/[0.08] blur-3xl" />
+        </div>
+      )}
+
+      {/* Soft tonal wash (only when no backdrop photo is used) */}
+      {!hasPhoto && (
+        isDark ? (
+          <div
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              background:
+                'radial-gradient(ellipse at 80% 20%, rgba(16,185,129,0.08) 0%, transparent 60%)',
+            }}
+          />
+        ) : (
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 opacity-[0.35]"
+            style={{
+              background:
+                'radial-gradient(ellipse at 85% 15%, rgba(212,168,83,0.10) 0%, transparent 55%), radial-gradient(ellipse at 0% 100%, rgba(16,185,129,0.06) 0%, transparent 50%)',
+            }}
+          />
+        )
       )}
 
       <div className="relative mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
@@ -272,42 +310,11 @@ export function PageHeroBlock({
               </motion.div>
             )}
 
-            {/* Meta strip - page-specific facts */}
-            {meta && meta.length > 0 && (
-              <motion.dl
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.45 }}
-                className={
-                  isDark
-                    ? 'mt-10 grid max-w-2xl grid-cols-2 gap-x-6 gap-y-4 border-t border-white/10 pt-6 sm:grid-cols-4'
-                    : 'mt-10 grid max-w-2xl grid-cols-2 gap-x-6 gap-y-4 border-t border-brand-navy/10 pt-6 sm:grid-cols-4'
-                }
-              >
-                {meta.map((m) => (
-                  <div key={m.label}>
-                    <dt
-                      className={
-                        isDark
-                          ? 'text-[10px] font-semibold uppercase tracking-wider text-white/45'
-                          : 'text-[10px] font-semibold uppercase tracking-wider text-slate-500'
-                      }
-                    >
-                      {m.label}
-                    </dt>
-                    <dd
-                      className={
-                        isDark
-                          ? 'mt-1 font-display text-2xl font-normal text-white'
-                          : 'mt-1 font-display text-2xl font-normal text-brand-navy'
-                      }
-                    >
-                      {m.value}
-                    </dd>
-                  </div>
-                ))}
-              </motion.dl>
-            )}
+            {/* meta prop intentionally not rendered — the page-wide stat strip
+                (Setup fee / Monthly retainer / Cancel anytime / Avg placement,
+                and equivalents on other pages) was removed per design feedback.
+                The prop is retained on the interface so existing callers compile,
+                but produces no UI. */}
           </div>
 
           {/* ── Right: optional aside (page-specific visual or panel) ── */}

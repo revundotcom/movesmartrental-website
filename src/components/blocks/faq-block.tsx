@@ -1,8 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
-import { Plus, ArrowRight, Mail } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 
 import type { FAQBlockProps } from '@/types/blocks'
@@ -124,7 +123,6 @@ export function FAQBlock({
   questions,
   title = 'Common Questions, Direct Answers',
   schemaEnabled = true,
-  showQuestionsCta = true,
 }: FAQBlockProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
   const prefersReducedMotion = useReducedMotion() ?? false
@@ -214,45 +212,6 @@ export function FAQBlock({
             />
           ))}
         </div>
-
-        {/* Still have questions? closer */}
-        {showQuestionsCta && (
-          <motion.div
-            variants={headerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-40px' }}
-            className="mt-12 flex flex-col items-start justify-between gap-6 rounded-2xl border border-slate-200/80 bg-white/70 px-6 py-6 backdrop-blur-sm sm:flex-row sm:items-center sm:px-8"
-          >
-            <div>
-              <p className="font-display text-lg font-normal text-brand-navy sm:text-xl">
-                Still have questions?
-              </p>
-              <p className="mt-1 text-sm text-slate-600">
-                Talk to a leasing advisor. No pressure, no obligation.
-              </p>
-            </div>
-            <div className="flex w-full flex-col-reverse items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center">
-              <Link
-                href="/contact/"
-                className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-brand-navy/80 transition-colors hover:text-brand-emerald"
-              >
-                <Mail className="size-4" aria-hidden="true" />
-                Email us
-              </Link>
-              <Link
-                href="/contact/"
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-brand-emerald px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-[1px] hover:bg-brand-emerald-hover hover:shadow-md"
-              >
-                Book a 20-minute call
-                <ArrowRight
-                  className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
-                  aria-hidden="true"
-                />
-              </Link>
-            </div>
-          </motion.div>
-        )}
 
         {schemaEnabled && (
           <script

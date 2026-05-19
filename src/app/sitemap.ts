@@ -29,10 +29,17 @@ export async function generateSitemaps() {
 
 /**
  * getFallbackCityList() returns a flat list of cities with `provinceSlug`
- * but no country discriminator. Ontario is the only CA province in the
- * static fallbacks; everything else is a US state slug.
+ * but no country discriminator. We enumerate all 6 priority CA provinces
+ * here so the sitemap correctly partitions CA vs US cities.
  */
-const CA_PROVINCE_SLUGS = new Set(['ontario'])
+const CA_PROVINCE_SLUGS = new Set([
+  'ontario',
+  'quebec',
+  'british-columbia',
+  'alberta',
+  'manitoba',
+  'nova-scotia',
+])
 
 function isCaCity(provinceSlug: string): boolean {
   return CA_PROVINCE_SLUGS.has(provinceSlug)

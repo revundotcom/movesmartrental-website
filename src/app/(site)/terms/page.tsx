@@ -2,11 +2,12 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
+import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 
 export const metadata: Metadata = {
   title: 'Terms of Service | MoveSmart Rentals',
   description:
-    'Terms of Service for MoveSmart Rentals. Read our terms and conditions for using our leasing brokerage services and website.',
+    'Terms of Service for MoveSmart Rentals, a multi-jurisdictional leasing brokerage. Read the terms governing your use of our website and services.',
   alternates: {
     canonical: '/terms/',
   },
@@ -28,27 +29,29 @@ export default function TermsOfServicePage() {
         />
       </div>
 
-      {/* Hero */}
-      <section className="bg-brand-navy py-16 text-white">
-        <div className="mx-auto max-w-3xl px-4 text-center">
-          <h1 className="font-display text-4xl font-bold tracking-tight sm:text-5xl">
-            Terms of Service
-          </h1>
-          <p className="mt-4 text-lg text-white/70">Last updated: March 2026</p>
-        </div>
-      </section>
+      <PageHeroBlock
+        kicker="Legal"
+        eyebrow="Terms & Conditions"
+        headline="Terms of Service"
+        accentLastWord={false}
+        lede="Effective: May 18, 2026. These Terms govern your access to and use of movesmartrentals.com and the leasing services we provide across Canada and select US states."
+        theme="dark"
+        backgroundImageUrl="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2400&q=80"
+        backgroundImageAlt="Legal lease agreement and signing pen"
+      />
 
       {/* Content */}
       <section className="py-16">
         <div className="mx-auto max-w-3xl px-4">
           <div className="space-y-10 text-gray-700 leading-relaxed">
             <p>
-              Welcome to movesmartrentals.com (the &quot;Site&quot;), operated by
-              MoveSmart Rentals, a service of Revun (&quot;we,&quot;
-              &quot;us,&quot; or &quot;our&quot;). By accessing or using this
-              Site and our services, you agree to be bound by these Terms of
-              Service (&quot;Terms&quot;). If you do not agree with these Terms,
-              please do not use the Site.
+              These Terms of Service (the &quot;Terms&quot;) are a binding
+              agreement between you and MoveSmart Rentals (&quot;MoveSmart,&quot;
+              &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;). They cover
+              your use of movesmartrentals.com (the &quot;Site&quot;), any
+              connected portals or applications, and the leasing services we
+              market through this Site. Please read them carefully. If you do
+              not agree, do not use the Site.
             </p>
 
             {/* 1 */}
@@ -57,218 +60,542 @@ export default function TermsOfServicePage() {
                 1. Acceptance of Terms
               </h2>
               <p className="mt-3">
-                By accessing, browsing, or using our Site or services, you
-                acknowledge that you have read, understood, and agree to be
-                bound by these Terms and our{' '}
+                By accessing the Site, creating an account, submitting a form,
+                booking a consultation, or otherwise using our services, you
+                confirm that you have read, understood, and agreed to these
+                Terms and to our{' '}
                 <Link
                   href="/privacy/"
                   className="text-brand-emerald underline hover:no-underline"
                 >
                   Privacy Policy
                 </Link>
-                . These Terms apply to all visitors, users, property owners,
-                tenants, and others who access or use the Site.
+                .
+              </p>
+              <p className="mt-2">
+                These Terms apply to all visitors, prospective tenants,
+                landlords, property owners, real-estate professionals, and
+                institutional clients who interact with the Site.
               </p>
             </div>
 
             {/* 2 */}
             <div>
               <h2 className="font-display text-2xl font-semibold text-brand-navy">
-                2. Services Description
+                2. Description of Service
               </h2>
               <p className="mt-3">
-                MoveSmart Rentals provides leasing brokerage services
-                including, but not limited to: strategic rental pricing,
-                professional marketing, showing coordination, tenant
-                qualification, optional rental protection (partner pathway),
-                lease execution, and move-in coordination. Our services are
-                available primarily in Ontario, Canada, with additional markets
-                as indicated on the Site.
+                MoveSmart Rentals is a leasing-focused real-estate brokerage. We
+                provide full-service tenant placement and leasing services,
+                including:
               </p>
+              <ul className="mt-2 list-disc space-y-1 pl-6">
+                <li>Strategic rental pricing and market analysis</li>
+                <li>Listing syndication to MLS systems and rental portals</li>
+                <li>Photography, marketing, and showings coordination</li>
+                <li>Tenant qualification, screening, and reference checks</li>
+                <li>Offer management and lease execution</li>
+                <li>Move-in coordination and key handover</li>
+                <li>
+                  Institutional and multi-unit lease-up engagements for
+                  developers and asset managers
+                </li>
+              </ul>
               <p className="mt-2">
-                We reserve the right to modify, suspend, or discontinue any
-                aspect of our services at any time without prior notice.
+                MoveSmart Rentals does <strong>not</strong> provide ongoing
+                property-management services such as rent collection,
+                maintenance dispatch, or accounting once a tenancy is in place,
+                unless a separate written agreement specifies otherwise.
               </p>
             </div>
 
             {/* 3 */}
             <div>
               <h2 className="font-display text-2xl font-semibold text-brand-navy">
-                3. User Accounts
+                3. Brokerage Relationship
               </h2>
               <p className="mt-3">
-                Certain features of our services may require you to create an
-                account. You are responsible for maintaining the confidentiality
-                of your account credentials and for all activities that occur
-                under your account. You agree to:
+                In Canada, MoveSmart Rentals operates under{' '}
+                <strong>Valerie Real Estate Inc., Brokerage</strong>, which
+                serves as our licensed brokerage of record. In the United
+                States, we operate through licensed brokerage partners in each
+                state where we transact. The applicable licensed brokerage for
+                any given transaction will be disclosed in the service
+                agreement and on related documents.
               </p>
-              <ul className="mt-2 list-disc space-y-1 pl-6">
-                <li>Provide accurate and complete information during registration.</li>
-                <li>Update your information promptly if it changes.</li>
-                <li>Notify us immediately of any unauthorized use of your account.</li>
-                <li>Not share your account credentials with any third party.</li>
-              </ul>
               <p className="mt-2">
-                We reserve the right to suspend or terminate accounts that
-                violate these Terms or engage in fraudulent activity.
+                This Site is informational and marketing in nature. Browsing the
+                Site, downloading a guide, or requesting a consultation does
+                not, by itself, create an agency, fiduciary, or
+                client-brokerage relationship.
+              </p>
+              <p className="mt-2">
+                Any actual leasing engagement, representation, or agency
+                relationship is established only through a separate written
+                agreement signed by both you and the applicable licensed
+                brokerage.
               </p>
             </div>
 
             {/* 4 */}
             <div>
               <h2 className="font-display text-2xl font-semibold text-brand-navy">
-                4. Property Listings
+                4. User Accounts
               </h2>
               <p className="mt-3">
-                Property information displayed on the Site is provided for
-                informational purposes. While we strive to ensure accuracy, we
-                do not guarantee that all listing details (including
-                availability, pricing, photos, and descriptions) are complete,
-                current, or error-free. Property owners are responsible for the
-                accuracy of information they provide.
+                Some features of the Site, including landlord portals and
+                tenant application tracking, require an account.
               </p>
-              <p className="mt-2">
-                MoveSmart Rentals reserves the right to remove or modify any
-                listing that violates applicable laws, our policies, or these
-                Terms.
-              </p>
+              <ul className="mt-2 list-disc space-y-1 pl-6">
+                <li>
+                  <strong>Eligibility.</strong> You must be at least 18 years
+                  old and have the legal capacity to enter into a binding
+                  contract in your jurisdiction.
+                </li>
+                <li>
+                  <strong>Accuracy of information.</strong> You agree to
+                  provide accurate, current, and complete information, and to
+                  keep it updated.
+                </li>
+                <li>
+                  <strong>Account security.</strong> You are responsible for
+                  safeguarding your credentials and for all activity under your
+                  account. Notify us promptly at{' '}
+                  <a
+                    href="mailto:security@movesmartrentals.com"
+                    className="text-brand-emerald underline hover:no-underline"
+                  >
+                    security@movesmartrentals.com
+                  </a>{' '}
+                  if you suspect unauthorized access.
+                </li>
+                <li>
+                  <strong>Termination.</strong> We may suspend or terminate any
+                  account that violates these Terms, is suspected of fraud, or
+                  is inactive for an extended period, with or without notice.
+                </li>
+              </ul>
             </div>
 
             {/* 5 */}
             <div>
               <h2 className="font-display text-2xl font-semibold text-brand-navy">
-                5. Fees and Payment
+                5. Listing Information & IDX Data
               </h2>
               <p className="mt-3">
-                Fees for our leasing brokerage services are outlined in
-                individual service agreements between MoveSmart Rentals and
-                property owners. General pricing information on the Site is
-                provided for reference and may not reflect all applicable fees,
-                taxes, or charges.
+                Property listings displayed on the Site may be sourced from
+                multiple feeds, including the Toronto Regional Real Estate
+                Board (TRREB) and other Canadian Real Estate Association
+                (CREA) MLS systems via IDX, US MLS feeds licensed by our
+                partner brokerages, and listings directly uploaded by
+                MoveSmart clients.
               </p>
-              <ul className="mt-2 list-disc space-y-1 pl-6">
-                <li>All fees are in Canadian Dollars (CAD) unless otherwise stated.</li>
-                <li>Payment terms are governed by your individual service agreement.</li>
-                <li>Late payments may be subject to additional charges as specified in your agreement.</li>
-              </ul>
+              <p className="mt-2">
+                Listing data is provided for personal, non-commercial use and is{' '}
+                <em>deemed reliable but not guaranteed</em>. Availability,
+                price, square footage, photos, and unit descriptions may
+                change without notice. You should independently verify every
+                detail with the listing brokerage or your MoveSmart
+                representative before relying on it for any decision.
+              </p>
+              <p className="mt-2">
+                The trademarks REALTOR&reg;, REALTORS&reg;, and the REALTOR&reg; logo
+                are controlled by The Canadian Real Estate Association (CREA)
+                and identify real-estate professionals who are members of
+                CREA. Trademarks MLS&reg;, Multiple Listing Service&reg;, and the
+                associated logos are owned by CREA and identify the quality of
+                services provided by real-estate professionals who are members
+                of CREA.
+              </p>
             </div>
 
             {/* 6 */}
             <div>
               <h2 className="font-display text-2xl font-semibold text-brand-navy">
-                6. Intellectual Property
+                6. User Conduct
               </h2>
-              <p className="mt-3">
-                All content on the Site, including text, graphics, logos,
-                images, videos, software, and design elements, is the property
-                of MoveSmart Rentals or its licensors and is protected by
-                Canadian and international copyright, trademark, and
-                intellectual property laws.
-              </p>
-              <p className="mt-2">
-                You may not reproduce, distribute, modify, create derivative
-                works from, publicly display, or otherwise use any content from
-                the Site without our prior written consent.
-              </p>
+              <p className="mt-3">When using the Site, you agree not to:</p>
+              <ul className="mt-2 list-disc space-y-1 pl-6">
+                <li>
+                  Scrape, crawl, index, or otherwise extract listing data,
+                  contact information, or content by automated means without
+                  our prior written consent.
+                </li>
+                <li>
+                  Use bots, scripts, or other automated tools to access the
+                  Site, submit forms, or interact with agents.
+                </li>
+                <li>
+                  Misrepresent your identity, employment, income, credit, or
+                  any other material fact in an application or inquiry.
+                </li>
+                <li>
+                  Harass, intimidate, or discriminate against other users,
+                  landlords, tenants, or MoveSmart agents.
+                </li>
+                <li>
+                  Post or transmit content that is unlawful, defamatory,
+                  obscene, infringing, or that violates fair-housing or
+                  human-rights laws.
+                </li>
+                <li>
+                  Interfere with, probe, or attempt to disrupt the Site&apos;s
+                  infrastructure, security, or availability.
+                </li>
+              </ul>
             </div>
 
             {/* 7 */}
             <div>
               <h2 className="font-display text-2xl font-semibold text-brand-navy">
-                7. Limitation of Liability
+                7. Tenant Applications
               </h2>
               <p className="mt-3">
-                To the fullest extent permitted by applicable law, MoveSmart
-                Rentals, its directors, officers, employees, and affiliates
-                shall not be liable for any indirect, incidental, special,
-                consequential, or punitive damages arising from or related to:
+                Submitting a rental application through the Site is an
+                expression of interest, not an offer of tenancy and not a
+                guarantee that you will be approved.
               </p>
-              <ul className="mt-2 list-disc space-y-1 pl-6">
-                <li>Your use of or inability to use the Site or our services.</li>
-                <li>Any errors, inaccuracies, or omissions in Site content.</li>
-                <li>Unauthorized access to or alteration of your data.</li>
-                <li>Any third-party conduct or content on the Site.</li>
-              </ul>
               <p className="mt-2">
-                Our total liability for any claim arising under these Terms
-                shall not exceed the amount you have paid to us in the twelve
-                (12) months preceding the claim.
+                Final approval rests with the landlord or their authorized
+                representative, who may consider credit, income, references,
+                rental history, and other lawful criteria. All decisions are
+                made in accordance with applicable fair-housing, human-rights,
+                and anti-discrimination laws in the jurisdiction where the
+                property is located.
+              </p>
+              <p className="mt-2">
+                Application fees, if any, are governed by local law and the
+                listing terms; MoveSmart does not charge tenants a fee to
+                apply through our Site.
               </p>
             </div>
 
             {/* 8 */}
             <div>
               <h2 className="font-display text-2xl font-semibold text-brand-navy">
-                8. Indemnification
+                8. Property Listings (Landlords)
               </h2>
               <p className="mt-3">
-                You agree to indemnify, defend, and hold harmless MoveSmart
-                Rentals, its affiliates, officers, directors, employees, and
-                agents from and against any claims, liabilities, damages,
-                losses, costs, and expenses (including reasonable legal fees)
-                arising from:
+                If you list a property with us, you represent and warrant
+                that:
               </p>
               <ul className="mt-2 list-disc space-y-1 pl-6">
-                <li>Your use of the Site or services.</li>
-                <li>Your violation of these Terms.</li>
-                <li>Your violation of any applicable law or regulation.</li>
-                <li>Any information or content you submit through the Site.</li>
+                <li>
+                  You are the legal owner of the property or have express
+                  written authority from the owner to market and lease it.
+                </li>
+                <li>
+                  All information you provide, including unit description,
+                  amenities, rent, deposits, and availability, is accurate and
+                  not misleading.
+                </li>
+                <li>
+                  The property is in compliance with applicable zoning,
+                  building, fire, and short-term-rental regulations.
+                </li>
+                <li>
+                  You will respond to applicant inquiries and decisions
+                  promptly and lawfully.
+                </li>
               </ul>
+              <p className="mt-2">
+                We reserve the right to refuse, modify, or remove any listing
+                that we believe violates these Terms, applicable law, or our
+                fair-housing policy.
+              </p>
             </div>
 
             {/* 9 */}
             <div>
               <h2 className="font-display text-2xl font-semibold text-brand-navy">
-                9. Governing Law
+                9. Rent Payments
               </h2>
               <p className="mt-3">
-                These Terms shall be governed by and construed in accordance
-                with the laws of the Province of Ontario and the federal laws of
-                Canada applicable therein, without regard to conflict of law
-                principles. Any disputes arising under these Terms shall be
-                subject to the sole jurisdiction of the courts located in
-                Ontario, Canada.
+                Where rent collection or deposit handling is offered through
+                the Site, payment processing is performed by third-party
+                providers (such as licensed payment processors and trust
+                accounts maintained by the licensed brokerage). MoveSmart
+                Rentals is <strong>not</strong> a bank, money transmitter,
+                escrow agent, or trust company.
+              </p>
+              <p className="mt-2">
+                Funds are subject to the policies and timing of the underlying
+                processor and to applicable real-estate trust-account rules in
+                the jurisdiction of the transaction.
               </p>
             </div>
 
             {/* 10 */}
             <div>
               <h2 className="font-display text-2xl font-semibold text-brand-navy">
-                10. Changes to Terms
+                10. Fees and Charges
               </h2>
               <p className="mt-3">
-                We reserve the right to update or modify these Terms at any
-                time. Changes will be effective immediately upon posting to the
-                Site. Your continued use of the Site after changes are posted
-                constitutes acceptance of the revised Terms. We encourage you to
-                review these Terms periodically.
+                MoveSmart operates on a success-fee model for standard tenant
+                placement:
               </p>
+              <ul className="mt-2 list-disc space-y-1 pl-6">
+                <li>
+                  Landlords pay <strong>no upfront cost</strong> to list a
+                  rental with us. Our placement fee is earned only when a
+                  qualified tenant signs a lease.
+                </li>
+                <li>
+                  Tenants pay <strong>no fee</strong> to apply through
+                  MoveSmart.
+                </li>
+                <li>
+                  Institutional, lease-up, and add-on services (e.g.,
+                  professional photography upgrades, retainer engagements,
+                  consulting) are quoted separately and governed by a written
+                  agreement.
+                </li>
+                <li>
+                  Unless otherwise stated, fees are quoted in Canadian Dollars
+                  for Canadian transactions and in US Dollars for US
+                  transactions.
+                </li>
+              </ul>
             </div>
 
             {/* 11 */}
             <div>
               <h2 className="font-display text-2xl font-semibold text-brand-navy">
-                11. Severability
+                11. Intellectual Property
               </h2>
               <p className="mt-3">
-                If any provision of these Terms is found to be invalid or
-                unenforceable, the remaining provisions shall continue in full
-                force and effect.
+                The Site, including its software, text, graphics, photography,
+                video, logos, brand marks, and underlying code, is owned by
+                MoveSmart Rentals or its licensors and is protected by
+                copyright, trademark, and other intellectual-property laws.
+              </p>
+              <p className="mt-2">
+                Subject to your compliance with these Terms, we grant you a
+                limited, non-exclusive, non-transferable, revocable license to
+                access and use the Site for personal, non-commercial purposes
+                related to leasing a property. All other rights are reserved.
               </p>
             </div>
 
             {/* 12 */}
             <div>
               <h2 className="font-display text-2xl font-semibold text-brand-navy">
-                12. Contact Information
+                12. Disclaimers and Limitation of Liability
               </h2>
               <p className="mt-3">
-                If you have any questions about these Terms of Service, please
-                contact us:
+                The Site and its content are provided{' '}
+                <strong>&quot;as is&quot;</strong> and{' '}
+                <strong>&quot;as available&quot;</strong>, without warranties
+                of any kind, whether express or implied. To the fullest extent
+                permitted by law, we disclaim all warranties of
+                merchantability, fitness for a particular purpose,
+                non-infringement, and any warranty regarding the accuracy,
+                completeness, or timeliness of listing data.
+              </p>
+              <p className="mt-2">
+                To the maximum extent permitted by applicable law:
+              </p>
+              <ul className="mt-2 list-disc space-y-1 pl-6">
+                <li>
+                  MoveSmart will not be liable for any indirect, incidental,
+                  special, consequential, exemplary, or punitive damages,
+                  including loss of profits, data, goodwill, or rental income.
+                </li>
+                <li>
+                  Our aggregate liability for any claim arising out of or
+                  relating to these Terms or the Site is capped at the{' '}
+                  <strong>greater of (a) the total fees you have paid to
+                  MoveSmart in the twelve (12) months preceding the claim, or
+                  (b) one hundred Canadian dollars (CAD $100)</strong>.
+                </li>
+              </ul>
+              <p className="mt-2">
+                Some jurisdictions do not allow certain limitations of
+                liability, in which case the limitations above apply only to
+                the extent permitted.
+              </p>
+            </div>
+
+            {/* 13 */}
+            <div>
+              <h2 className="font-display text-2xl font-semibold text-brand-navy">
+                13. Indemnification
+              </h2>
+              <p className="mt-3">
+                You agree to indemnify, defend, and hold harmless MoveSmart
+                Rentals, Valerie Real Estate Inc., Brokerage, our US partner
+                brokerages, and our respective directors, officers, employees,
+                and agents from any claims, liabilities, damages, losses, and
+                expenses (including reasonable legal fees) arising from your
+                breach of these Terms, your misuse of the Site, your violation
+                of any law, or any content you submit through the Site.
+              </p>
+            </div>
+
+            {/* 14 */}
+            <div>
+              <h2 className="font-display text-2xl font-semibold text-brand-navy">
+                14. Privacy
+              </h2>
+              <p className="mt-3">
+                Our collection and use of personal information is described in
+                our{' '}
+                <Link
+                  href="/privacy/"
+                  className="text-brand-emerald underline hover:no-underline"
+                >
+                  Privacy Policy
+                </Link>
+                , which is incorporated into these Terms by reference. By
+                using the Site, you also consent to the privacy practices
+                described there.
+              </p>
+            </div>
+
+            {/* 15 */}
+            <div>
+              <h2 className="font-display text-2xl font-semibold text-brand-navy">
+                15. Cookies and Tracking
+              </h2>
+              <p className="mt-3">
+                The Site uses cookies, pixels, and similar technologies for
+                essential functionality, analytics, and marketing. Details on
+                the categories of cookies we use, how to manage them, and
+                applicable opt-out mechanisms are set out in our{' '}
+                <Link
+                  href="/privacy/"
+                  className="text-brand-emerald underline hover:no-underline"
+                >
+                  Privacy Policy
+                </Link>
+                .
+              </p>
+            </div>
+
+            {/* 16 */}
+            <div>
+              <h2 className="font-display text-2xl font-semibold text-brand-navy">
+                16. Governing Law
+              </h2>
+              <p className="mt-3">
+                These Terms are governed by the laws of the Province of
+                Ontario and the federal laws of Canada applicable therein,
+                without regard to conflict-of-law principles.
+              </p>
+              <p className="mt-2">
+                For users in the United States, any matter that, as a matter
+                of law, must be governed by the law of your US state of
+                residence or the state where the subject property is located
+                (for example, fair-housing or consumer-protection rules) will
+                be governed by that state&apos;s law to the extent legally
+                required. All other matters remain governed by Ontario law.
+              </p>
+            </div>
+
+            {/* 17 */}
+            <div>
+              <h2 className="font-display text-2xl font-semibold text-brand-navy">
+                17. Dispute Resolution
+              </h2>
+              <p className="mt-3">
+                If a dispute arises out of or relates to these Terms or the
+                Site, the parties will first attempt in good faith to resolve
+                it through informal negotiation. Either party may initiate
+                negotiation by giving written notice describing the dispute.
+              </p>
+              <p className="mt-2">
+                If the dispute is not resolved within thirty (30) days of that
+                notice, the parties agree to submit the dispute to{' '}
+                <strong>binding arbitration in Toronto, Ontario</strong>,
+                under the rules of the{' '}
+                <strong>ADR Institute of Canada, Inc.</strong> The arbitration
+                will be conducted in English by a single arbitrator. Judgment
+                on the award may be entered in any court of competent
+                jurisdiction.
+              </p>
+              <p className="mt-2">
+                Nothing in this section prevents either party from seeking
+                injunctive or equitable relief in a court of competent
+                jurisdiction to protect intellectual-property rights or
+                confidential information.
+              </p>
+            </div>
+
+            {/* 18 */}
+            <div>
+              <h2 className="font-display text-2xl font-semibold text-brand-navy">
+                18. Changes to Terms
+              </h2>
+              <p className="mt-3">
+                We may revise these Terms from time to time to reflect changes
+                in our services, technology, or applicable law. Updated Terms
+                are effective when posted, with the new effective date shown
+                at the top of the page.
+              </p>
+              <p className="mt-2">
+                Your continued use of the Site after an update constitutes
+                acceptance of the revised Terms. If a change is material, we
+                will use reasonable efforts to notify account holders by
+                email.
+              </p>
+            </div>
+
+            {/* 19 */}
+            <div>
+              <h2 className="font-display text-2xl font-semibold text-brand-navy">
+                19. Severability
+              </h2>
+              <p className="mt-3">
+                If any provision of these Terms is held invalid, illegal, or
+                unenforceable by a court or arbitrator of competent
+                jurisdiction, that provision will be modified to the minimum
+                extent necessary or, if it cannot be modified, severed. The
+                remaining provisions will continue in full force and effect.
+              </p>
+            </div>
+
+            {/* 20 */}
+            <div>
+              <h2 className="font-display text-2xl font-semibold text-brand-navy">
+                20. Entire Agreement
+              </h2>
+              <p className="mt-3">
+                These Terms, together with our{' '}
+                <Link
+                  href="/privacy/"
+                  className="text-brand-emerald underline hover:no-underline"
+                >
+                  Privacy Policy
+                </Link>{' '}
+                and any signed service agreements (such as a leasing
+                representation agreement, listing agreement, or institutional
+                engagement letter), constitute the entire agreement between
+                you and MoveSmart Rentals concerning your use of the Site and
+                our services. They supersede any prior or contemporaneous
+                communications on the same subject matter.
+              </p>
+            </div>
+
+            {/* 21 */}
+            <div>
+              <h2 className="font-display text-2xl font-semibold text-brand-navy">
+                21. Contact
+              </h2>
+              <p className="mt-3">
+                Questions about these Terms can be sent to our legal team:
               </p>
               <ul className="mt-2 list-none space-y-1 pl-0">
                 <li>
-                  <strong>Email:</strong>{' '}
+                  <strong>Legal:</strong>{' '}
+                  <a
+                    href="mailto:legal@movesmartrentals.com"
+                    className="text-brand-emerald underline hover:no-underline"
+                  >
+                    legal@movesmartrentals.com
+                  </a>
+                </li>
+                <li>
+                  <strong>General:</strong>{' '}
                   <a
                     href="mailto:contact@movesmartrentals.com"
                     className="text-brand-emerald underline hover:no-underline"
@@ -277,17 +604,21 @@ export default function TermsOfServicePage() {
                   </a>
                 </li>
                 <li>
-                  <strong>Website:</strong>{' '}
+                  <strong>Phone:</strong>{' '}
                   <a
-                    href="https://movesmartrentals.com"
+                    href="tel:+14165551234"
                     className="text-brand-emerald underline hover:no-underline"
                   >
-                    movesmartrentals.com
+                    +1 (416) 555-1234
                   </a>
+                </li>
+                <li>
+                  <strong>Mailing address:</strong> MoveSmart Rentals, c/o
+                  Valerie Real Estate Inc., Brokerage, Toronto, Ontario, Canada
                 </li>
               </ul>
               <p className="mt-4">
-                For general inquiries, visit our{' '}
+                For non-legal inquiries, visit our{' '}
                 <Link
                   href="/contact/"
                   className="text-brand-emerald underline hover:no-underline"

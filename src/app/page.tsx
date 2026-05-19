@@ -6,38 +6,28 @@ import {
   User,
   Building,
   ArrowRight,
-  MapPin,
-  Briefcase,
-  Globe,
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { WaveDivider } from '@/components/ui/wave-divider'
 import { HeroBlock } from '@/components/blocks/hero-block'
-import { CityGridBlock } from '@/components/blocks/city-grid-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
-import { StatGrid } from '@/components/blocks/stat-grid'
 import { PortalChips } from '@/components/blocks/portal-chips'
-import { ListingToMoveInBlock } from '@/components/blocks/listing-to-movein-block'
 import { PortalVisibilityBlock } from '@/components/blocks/portal-visibility-block'
 import { RentCalculator } from '@/components/blocks/rent-calculator'
 import { AudienceSegmentation } from '@/components/blocks/audience-segmentation'
 import { BuyOutputBlock } from '@/components/blocks/buy-output-block'
 import { ProblemSolutionShowcase } from '@/components/blocks/problem-solution-showcase'
 import { CaseStudySection } from '@/components/blocks/case-study-card'
-import { RentalAnalysisForm } from '@/components/blocks/rental-analysis-form'
+import { NorthAmericaShowcase } from '@/components/blocks/north-america-showcase'
 import { JsonLd } from '@/components/json-ld'
 import { buildOrganizationSchema } from '@/lib/schema-builders/organization'
 import { buildWebSiteSchema } from '@/lib/schema-builders/website'
 import { buildLocalBusinessSchema } from '@/lib/schema-builders/local-business'
 import { generatePageMetadata } from '@/lib/metadata'
-import { getFallbackCityList } from '@/lib/static-fallbacks'
-import type { CityCardData } from '@/types/blocks'
-import {
-  PortalIllustration,
-  FranchiseIllustration,
-} from '@/components/illustrations'
-import { OntarioMap } from '@/components/illustrations/ontario-map'
+import { PORTAL_LOGIN_URL } from '@/lib/portal-api'
+import { BrowserFrame } from '@/components/ui/browser-frame'
+import { OwnerDashboardMockup } from '@/components/portal-mockups/owner-dashboard-mockup'
 
 /* ---------- Metadata ---------- */
 
@@ -45,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return generatePageMetadata({
     path: '/',
     fallbackTitle:
-      'MoveSmart Rentals | Full-Service Leasing & Tenant Placement Across Canada',
+      'MoveSmart Rentals | Full-Service Leasing & Tenant Placement Across Canada and the United States',
     fallbackDescription:
       'Full-service leasing and tenant placement with technology, transparency, and broad advertising exposure. End-to-end execution from listing to move-in, disciplined screening, rental protection options, and zero upfront cost.',
   })
@@ -54,19 +44,6 @@ export async function generateMetadata(): Promise<Metadata> {
 /* ---------- Page ---------- */
 
 export default async function HomePage() {
-  // Static local data (Sanity has been removed).
-  const featuredCities: CityCardData[] = getFallbackCityList()
-    .slice(0, 8)
-    .map((c) => ({
-      title: c.title,
-      slug: c.slug.current,
-      provinceSlug: c.provinceSlug,
-      population: c.population,
-      medianRent: c.medianRent,
-      heroImageUrl: c.heroImageUrl,
-      heroImageAlt: c.heroImageAlt,
-    }))
-
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
 
@@ -80,7 +57,9 @@ export default async function HomePage() {
     socialLinks: [
       'https://www.facebook.com/movesmartrentals',
       'https://www.instagram.com/movesmartrentals',
-      'https://www.linkedin.com/company/movesmartrentals',
+      'https://www.linkedin.com/company/movesmart-rentals/',
+      'https://www.tiktok.com/@movesmartrentals',
+      'https://x.com/Movesmartrental',
     ],
   })
 
@@ -116,23 +95,26 @@ export default async function HomePage() {
       {/* ── SECTION 1: Hero ── */}
       <section className="relative overflow-hidden">
         <HeroBlock
-          headline="Get Your Property Rented to Qualified Tenants, Fast"
-          subheadline="Full-service leasing and tenant placement, end to end. We advertise broadly, screen every applicant, run showings 24/7, and give you live visibility from listing to move-in."
-          cta1={{ label: 'Create a Free Account', href: '/contact/' }}
+          headline="Leasing, handled"
+          subheadline="MoveSmart Rentals is a full-service leasing partner powered by our proprietary technology — built to help landlords lease faster, reduce vacancy, and screen every applicant. We syndicate your unit to the MLS and 20+ platforms and handle every step from listing to move-in."
+          cta1={{ label: 'List my property', href: '/contact/?type=owner' }}
+          cta2={{ label: 'Browse rentals', href: '/properties/' }}
+          statStrip={[
+            { value: '$11B', valueSuffix: ' AUM', label: 'Partner network' },
+            { value: '20+', valueSuffix: ' portals', label: 'MLS · Realtor.ca · Kijiji · FB · IG' },
+            { value: 'Audit-ready', label: 'Every file, time-stamped' },
+          ]}
           priority
         />
       </section>
 
-      {/* ── SECTION 2: Trust / Stats Bar ── */}
+      {/* ── SECTION 2: Trust / Press marquee ── */}
       <section className="relative overflow-hidden border-b border-border bg-gradient-to-r from-slate-50 via-white to-slate-50 py-10">
         {/* Decorative line accent */}
         <div className="absolute left-0 top-0 h-0.5 w-full bg-gradient-to-r from-transparent via-brand-emerald/40 to-transparent" aria-hidden="true" />
         <div className="mx-auto max-w-6xl px-4">
-          {/* Counting stats row */}
-          <StatGrid />
-
           {/* Media / trust logo marquee */}
-          <div className="mt-8 border-t border-slate-100 pt-8">
+          <div>
             <p className="text-center text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/50">
               As seen in
             </p>
@@ -199,9 +181,6 @@ export default async function HomePage() {
       {/* ── SECTION 2b: Owner Problem to Solution Overview ── */}
       <ProblemSolutionShowcase />
 
-      {/* ── SECTION 4: How It Works - listing to move-in ── */}
-      <ListingToMoveInBlock />
-
       {/* ── SECTION 4.5: Real-Time Portal Visibility (live KPI families) ── */}
       <PortalVisibilityBlock />
 
@@ -220,15 +199,17 @@ export default async function HomePage() {
 
         <div className="relative z-10 mx-auto max-w-7xl px-4">
           <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
-            {/* Left: portal mockup */}
+            {/* Left: real portal dashboard mockup wrapped in a browser frame */}
             <div className="relative flex items-center justify-center">
-              <div className="relative w-full max-w-[520px]">
+              <div className="relative w-full max-w-[560px]">
                 <div
                   className="absolute -bottom-6 left-1/2 h-16 w-4/5 -translate-x-1/2 rounded-full bg-brand-navy/10 blur-2xl"
                   aria-hidden="true"
                 />
-                <div className="relative overflow-hidden rounded-3xl border border-slate-200 shadow-2xl shadow-brand-navy/10">
-                  <PortalIllustration className="w-full" />
+                <div className="relative overflow-hidden rounded-2xl shadow-2xl shadow-brand-navy/15 ring-1 ring-slate-200">
+                  <BrowserFrame url="movesmart.ca/owner/dashboard">
+                    <OwnerDashboardMockup />
+                  </BrowserFrame>
                 </div>
                 <PortalChips />
               </div>
@@ -299,7 +280,13 @@ export default async function HomePage() {
                   className="cta-primary-shadow cursor-pointer font-bold"
                   style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}
                   nativeButton={false}
-                  render={<Link href="/owners/" />}
+                  render={
+                    <a
+                      href={PORTAL_LOGIN_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    />
+                  }
                 >
                   Explore Owner Portal
                   <ArrowRight className="ml-2 size-4" aria-hidden="true" />
@@ -341,17 +328,32 @@ export default async function HomePage() {
               </p>
               <div className="mt-8 grid grid-cols-3 gap-6">
                 <div>
-                  <p className="font-display text-3xl font-normal text-brand-navy">18d</p>
-                  <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-500">Avg days to lease</p>
-                </div>
-                <div>
-                  <p className="font-display text-3xl font-normal text-brand-navy">20+</p>
-                  <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-500">Ontario cities</p>
+                  <p className="font-display text-3xl font-normal text-brand-navy">MLS+</p>
+                  <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-500">20+ platforms</p>
                 </div>
                 <div>
                   <p className="font-display text-3xl font-normal text-brand-navy">$0</p>
                   <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-500">Upfront cost</p>
                 </div>
+                <div>
+                  <p className="font-display text-3xl font-normal text-brand-navy">N.A.</p>
+                  <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-500">North America</p>
+                </div>
+              </div>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="/contact/?type=owner"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-sm shadow-emerald-900/20 transition-all duration-200 hover:-translate-y-px hover:bg-emerald-600 hover:shadow-md"
+                >
+                  List my property
+                  <ArrowRight className="size-4" aria-hidden="true" />
+                </Link>
+                <Link
+                  href="/properties/"
+                  className="inline-flex items-center justify-center rounded-lg border border-brand-navy/15 bg-white px-6 py-3 text-sm font-semibold text-brand-navy transition-all duration-200 hover:-translate-y-px hover:border-brand-navy/30 hover:bg-slate-50"
+                >
+                  Browse rentals
+                </Link>
               </div>
             </div>
           </div>
@@ -365,118 +367,8 @@ export default async function HomePage() {
       <WaveDivider fill="#ffffff" />
 
 
-      {/* ── SECTION 7: Featured Ontario Cities ── */}
-      <section className="relative overflow-hidden bg-slate-50 py-14">
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          aria-hidden="true"
-          style={{ backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)', backgroundSize: '24px 24px' }}
-        />
-
-        <div className="relative z-10 mx-auto max-w-7xl px-4">
-          <div className="mb-10 grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-            <div>
-              <p className="inline-flex items-center gap-1.5 text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
-                <MapPin className="size-4" aria-hidden="true" />
-                Service Areas
-              </p>
-              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
-                Leasing Across{' '}
-                <span className="font-display italic text-brand-emerald">20+ Ontario</span>{' '}
-                Cities
-              </h2>
-              <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-                Full-service leasing execution across Ontario&apos;s major rental markets, with active expansion across Canada and the United States.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-2">
-                {['Toronto', 'Mississauga', 'Brampton', 'Hamilton', 'Ottawa', 'London', 'Vaughan', 'Markham', 'Richmond Hill', 'Oakville', 'Burlington', 'Kitchener', 'Waterloo'].map((city) => (
-                  <span
-                    key={city}
-                    className="rounded-full border border-brand-emerald/20 bg-brand-emerald/6 px-3 py-1 text-xs font-semibold text-brand-navy"
-                  >
-                    {city}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="flex items-center justify-center">
-              <div className="relative w-full max-w-[440px]">
-                <div
-                  className="absolute inset-0 rounded-3xl blur-2xl"
-                  style={{ background: 'radial-gradient(ellipse, rgba(16,185,129,0.1) 0%, transparent 70%)' }}
-                  aria-hidden="true"
-                />
-                <div className="relative overflow-hidden rounded-3xl border border-slate-100 bg-brand-navy p-4 shadow-2xl shadow-brand-navy/20">
-                  <OntarioMap className="w-full" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <CityGridBlock cities={featuredCities} columns={4} showHeading={false} />
-      </section>
-
-      {/* ── SECTION 7.5: North America Positioning (Canada + US expansion) ── */}
-      <section className="relative overflow-hidden bg-white py-16">
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          aria-hidden="true"
-          style={{ backgroundImage: 'radial-gradient(#0B1D3A 1px, transparent 1px)', backgroundSize: '32px 32px' }}
-        />
-
-        <div className="relative z-10 mx-auto max-w-6xl px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="inline-flex items-center gap-1.5 text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
-              <Globe className="size-4" aria-hidden="true" />
-              North America Footprint
-            </p>
-            <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
-              Built in Canada.{' '}
-              <span className="font-display italic text-brand-emerald">Expanding Across the US.</span>
-            </h2>
-            <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-              MoveSmart Rentals scales the same disciplined leasing playbook across both sides of the border, with brick-and-mortar offices in our anchor markets and a unified portal for owners and operators.
-            </p>
-          </div>
-
-          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-            {[
-              {
-                icon: MapPin,
-                title: 'Canada - Ontario Anchor',
-                description:
-                  'Active leasing across Toronto, the GTA, Ottawa, Hamilton, London, Kitchener-Waterloo, and 14 additional Ontario markets.',
-              },
-              {
-                icon: Globe,
-                title: 'United States - Expansion',
-                description:
-                  'Rolling out the MoveSmart leasing brokerage model into priority US metros for individual landlords and institutional rental operators.',
-              },
-              {
-                icon: Briefcase,
-                title: 'Institutional Lease-Up',
-                description:
-                  'Bulk lease-up campaigns, on-site leasing teams, and reporting dashboards for builders, developers, and PMC partners across both countries.',
-              },
-            ].map((item) => {
-              const Icon = item.icon
-              return (
-                <div
-                  key={item.title}
-                  className="group rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-emerald/20 hover:shadow-md"
-                >
-                  <div className="flex size-11 items-center justify-center rounded-xl bg-brand-emerald/10">
-                    <Icon className="size-5 text-brand-emerald" aria-hidden="true" />
-                  </div>
-                  <h3 className="mt-4 text-base font-bold text-brand-navy">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
+      {/* ── SECTION 7: North America Service Areas (provinces + states + city carousel) ── */}
+      <NorthAmericaShowcase />
 
       {/* Wave divider */}
       <WaveDivider fill="#0B1D3A" />
@@ -494,13 +386,24 @@ export default async function HomePage() {
         <div className="relative z-10 mx-auto max-w-7xl px-4">
           <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
             <div className="flex items-center justify-center">
-              <div className="relative w-full max-w-[480px]">
+              <div className="relative w-full max-w-[520px]">
                 <div
                   className="absolute inset-0 rounded-3xl blur-3xl"
                   style={{ background: 'radial-gradient(ellipse, rgba(16,185,129,0.2) 0%, transparent 70%)' }}
                   aria-hidden="true"
                 />
-                <FranchiseIllustration className="relative w-full" />
+                <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-brand-emerald/10 ring-1 ring-brand-emerald/20">
+                  <Image
+                    src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1600&q=80&auto=format&fit=crop"
+                    alt="World map showing MoveSmart Rentals franchise expansion across Canada and the United States"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 520px"
+                    unoptimized
+                  />
+                  {/* Navy tint so the map blends with the dark franchising section */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/40 via-transparent to-brand-navy/60" aria-hidden="true" />
+                </div>
               </div>
             </div>
 
@@ -521,7 +424,7 @@ export default async function HomePage() {
 
               <div className="mt-8 space-y-3">
                 {[
-                  { title: 'Proven Leasing Playbook', desc: 'Battle-tested across 20+ Ontario markets' },
+                  { title: 'Proven Leasing Playbook', desc: 'Battle-tested across 20+ Canadian markets' },
                   { title: 'Full Operational Support', desc: 'Training, leasing tech stack, and dedicated ops team' },
                   { title: 'Cross-Border Demand', desc: 'Millions of rental units across Canada and the US' },
                 ].map((item) => (
@@ -565,13 +468,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Wave divider */}
-      <WaveDivider fill="#0B1D3A" flip={true} />
-
-      {/* ── SECTION 8.5: Free Rental Analysis Form ── */}
-      <RentalAnalysisForm />
-
-      {/* Wave divider */}
+      {/* Wave divider — navy franchising section into white FAQ below */}
       <WaveDivider fill="#ffffff" />
 
       {/* ── SECTION 9: FAQ - leasing-focused ── */}
@@ -613,7 +510,72 @@ export default async function HomePage() {
           {
             question: 'Where do you operate?',
             answer:
-              'MoveSmart Rentals currently leases across 20+ Ontario cities including Toronto, Mississauga, Brampton, Hamilton, Ottawa, London, Vaughan, Markham, Richmond Hill, Oakville, Burlington, Kitchener, and Waterloo. We are actively expanding across Canada and into the United States.',
+              'MoveSmart Rentals operates across North America. In the United States we serve 10 priority states including Florida, Texas, California, New York, Illinois, Georgia, North Carolina, Arizona, Colorado, and New Jersey. In Canada we lease across Ontario, Quebec, British Columbia, Alberta, Manitoba, and Nova Scotia.',
+          },
+          {
+            question: 'How fast can you find a tenant for my property?',
+            answer:
+              'Time-to-lease varies by city, unit type, and pricing. Units priced to live-market comps with professional photography typically receive multiple qualified applicants within the first two weeks of listing. We commit to written progress updates at every milestone.',
+          },
+          {
+            question: 'Do I need to be present for showings?',
+            answer:
+              'No. Our licensed leasing advisors run every showing on your behalf. Owners receive a digest of every tour booked, the applicant feedback, and any offers — visible live in your portal.',
+          },
+          {
+            question: 'What platforms do you advertise my unit on?',
+            answer:
+              'Your unit is syndicated to MLS and 20+ partner platforms including Realtor.ca, Zillow, Kijiji, Facebook Marketplace, Instagram, and our own MoveSmart property feed. We do not rely on a single channel.',
+          },
+          {
+            question: 'How is your screening different from a DIY background check?',
+            answer:
+              'We run a structured multi-step qualification on every applicant: credit pull, income and employment verification, prior-landlord references, ID verification, and a documented risk summary you approve or decline. All decisions follow applicable human-rights and fair-housing law in the jurisdiction of the unit.',
+          },
+          {
+            question: 'What happens if a tenant stops paying rent?',
+            answer:
+              'Rent default is rare with structured screening, but optional rental protection is available through our partner network. Coverage activates after the standard waiting period and protects up to a defined monthly cap. Details are presented during the engagement based on your unit.',
+          },
+          {
+            question: 'Can I see properties on the website without creating an account?',
+            answer:
+              'You can browse property summaries and photos without logging in. Detailed listing data — listing brokerage, room dimensions, key facts, parking, and full MLS data fields — is gated behind a free account, per the IDX and MLS data-display rules that govern Canadian and US listing feeds.',
+          },
+          {
+            question: 'Are you a brokerage or a property manager?',
+            answer:
+              'We are a full-service leasing and tenant placement brokerage. We do NOT handle ongoing property management — no rent collection, no maintenance dispatch, no repairs. Our scope is listing through move-in. We partner with brokerages such as Valerie Real Estate Inc. for the brokerage relationship that the IDX feed requires.',
+          },
+          {
+            question: 'Can a tenant apply online?',
+            answer:
+              'Yes. Applications, ID submission, credit authorization, e-signatures, lease execution, deposit collection, and rent payments all flow through the MoveSmart tenant portal. No paper, no in-person paperwork required.',
+          },
+          {
+            question: 'Do you serve institutional landlords and developers?',
+            answer:
+              'Yes. We run bulk lease-up campaigns for builders, REITs, and PMCs across both Canada and the US — including on-site leasing teams, weekly absorption reporting, and integration with your existing property management software.',
+          },
+          {
+            question: 'What does it cost a tenant to apply?',
+            answer:
+              'Nothing. Tenant applications, ID verification, and credit checks are free for the applicant. Tenants pay only the rent and required deposits stipulated in the executed lease.',
+          },
+          {
+            question: 'Are you licensed and regulated?',
+            answer:
+              'Yes. In Canada we operate under Valerie Real Estate Inc. Brokerage and comply with provincial regulators such as the Real Estate Council of Ontario (RECO) and the Residential Tenancies Act. In the US we operate through licensed brokerage partners in each state we serve.',
+          },
+          {
+            question: 'How is technology built into the service?',
+            answer:
+              'Every step is timestamped in the MoveSmart portal: showings, applicant interactions, offers, screening decisions, signed documents, and move-in coordination. Owners and operators have audit-ready visibility on demand, with optional Slack and email notifications.',
+          },
+          {
+            question: 'Do you offer franchising?',
+            answer:
+              'Yes. MoveSmart Rentals is actively expanding the franchise network across both Canada and the United States. Request a franchise kit from the Franchising page for territory availability and the financial model.',
           },
         ]}
       />

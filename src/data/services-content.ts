@@ -40,13 +40,13 @@ const TENANT_PLACEMENT: ServicePageContent = {
   slug: 'tenant-placement',
   title: 'Tenant Placement',
   metaDescription:
-    'Full-cycle tenant placement in Ontario: listing launch, marketing, showings, screening, lease execution, and move-in. Zero upfront cost, success fee on placement.',
+    'Full-cycle tenant placement across Canada and the United States: listing launch, marketing, showings, screening, lease execution, and move-in. Zero upfront cost, success fee on placement.',
   heroEyebrow: 'Tenant Placement · End-to-End Leasing',
   heroKicker: 'Services',
   heroHeadline: 'End-to-end tenant placement, managed',
   heroLede:
     'From the first listing photo to the move-in inspection, MoveSmart runs the entire placement workflow for your unit. You see every showing, application, and screening decision in the portal - and you only pay a success fee when the lease is signed.',
-  cta1Label: 'Create a Free Account',
+  cta1Label: 'List my property',
   cta2Label: 'Book a Discovery Call',
   problemTitle: 'What goes wrong without a structured placement process',
   problemPoints: [
@@ -219,7 +219,7 @@ const LEASING_SERVICES: ServicePageContent = {
   heroHeadline: 'Every step of the lease, handled',
   heroLede:
     'Leasing Services is the MoveSmart umbrella engagement, nine integrated workstreams that take your unit from empty to signed, paid, and occupied. One full-service team, one success fee, one source of truth in your portal.',
-  cta1Label: 'Create a Free Account',
+  cta1Label: 'List my property',
   cta2Label: 'Book a Discovery Call',
   problemTitle: 'What goes wrong when leasing is split across five vendors',
   problemPoints: [
@@ -392,7 +392,7 @@ const TENANT_SCREENING: ServicePageContent = {
   heroHeadline: 'Applicants qualified on a written rubric',
   heroLede:
     'Every applicant runs through the same documented screen - credit, income, employment, references, risk assessment, and compliance checks. You get a decision-ready report in your portal, not a gut feeling on a phone call.',
-  cta1Label: 'Create a Free Account',
+  cta1Label: 'List my property',
   cta2Label: 'Book a Discovery Call',
   problemTitle: 'What goes wrong without structured screening',
   problemPoints: [
@@ -565,7 +565,7 @@ const RENT_GUARANTEE: ServicePageContent = {
   heroHeadline: 'Rental income, protected',
   heroLede:
     'MoveSmart coordinates partner-underwritten rent guarantee policies, tenant insurance coordination, and financial qualification validation - so a missed rent cheque does not become a missed mortgage payment. Coverage options are provided by licensed insurance partners; MoveSmart handles the qualification and integration with your lease.',
-  cta1Label: 'Create a Free Account',
+  cta1Label: 'List my property',
   cta2Label: 'Book a Discovery Call',
   problemTitle: 'What goes wrong without rental protection',
   problemPoints: [
@@ -738,7 +738,7 @@ const TENANT_INSURANCE: ServicePageContent = {
   heroHeadline: 'Tenant insurance, enforced at signing',
   heroLede:
     'MoveSmart enforces the tenant insurance clause at lease signing, collects proof of coverage, and routes applicants to vetted insurance partners if they need a policy. No more lease clauses that exist only on paper.',
-  cta1Label: 'Create a Free Account',
+  cta1Label: 'List my property',
   cta2Label: 'Book a Discovery Call',
   problemTitle: 'What goes wrong when tenant insurance is optional',
   problemPoints: [
@@ -907,7 +907,7 @@ const TENANT_GUARANTOR: ServicePageContent = {
   heroHeadline: 'A structured path for strong tenants who need a co-signer',
   heroLede:
     'When an applicant is a good fit but does not quite meet income or credit thresholds alone, a qualified guarantor can bridge the gap. MoveSmart runs a structured guarantor screen with clear liability documentation - not an informal handshake on the rider.',
-  cta1Label: 'Create a Free Account',
+  cta1Label: 'List my property',
   cta2Label: 'Book a Discovery Call',
   problemTitle: 'What goes wrong with ad-hoc guarantor arrangements',
   problemPoints: [
@@ -1080,7 +1080,7 @@ const RENTAL_PREPARATION: ServicePageContent = {
   heroHeadline: 'A unit that photographs, shows, and leases',
   heroLede:
     'Rental Preparation is the one-time, pre-listing workstream that gets a unit ready to be photographed, marketed, and shown at top market rent. Photography and media on one side; paint, cleaning, and small repairs on the other. We coordinate every trade and produce every asset.',
-  cta1Label: 'Create a Free Account',
+  cta1Label: 'List my property',
   cta2Label: 'Book a Discovery Call',
   problemTitle: 'What goes wrong when units are listed before they are ready',
   problemPoints: [
@@ -1261,7 +1261,7 @@ const PORTAL_AND_TECHNOLOGY: ServicePageContent = {
   heroHeadline: 'Every showing, every applicant, one portal',
   heroLede:
     'The MoveSmart portal gives owners real-time visibility into every step of the lease. Showings, applicants, screening reports, approvals, counter-offers, marketing distribution, and move-in coordination all live in one place - with an audit trail on every action.',
-  cta1Label: 'Create a Free Account',
+  cta1Label: 'List my property',
   cta2Label: 'Tour the Portal',
   problemTitle: 'What goes wrong when leasing lives in email threads',
   problemPoints: [

@@ -20,7 +20,7 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
 
 export const metadata: Metadata = {
-  title: 'About Us | Full-Service Rental and Leasing Company in Canada',
+  title: 'About Us | Full-Service Rental and Leasing Company Across Canada and the US',
   description:
     'MoveSmart Rentals is a full-service leasing and tenant placement company delivering full-cycle rental execution, strategic pricing, disciplined tenant qualification, and complete move-in coordination for landlords, property managers, builders, and institutional operators.',
   alternates: {
@@ -45,13 +45,14 @@ const organizationSchema = buildOrganizationSchema({
   url: SITE_URL,
   logo: `${SITE_URL}/og-default.png`,
   description:
-    'Full-service rental and leasing company delivering full-cycle leasing execution, strategic pricing, disciplined tenant qualification, and move-in coordination for landlords, PMCs, builders, and institutional operators across Canada.',
+    'Full-service rental and leasing company delivering full-cycle leasing execution, strategic pricing, disciplined tenant qualification, and move-in coordination for landlords, PMCs, builders, and institutional operators across Canada and the United States.',
   contactEmail: 'contact@movesmartrentals.com',
   socialLinks: [
-    'https://www.linkedin.com/company/movesmart-rentals',
+    'https://www.linkedin.com/company/movesmart-rentals/',
     'https://www.instagram.com/movesmartrentals',
     'https://www.facebook.com/movesmartrentals',
-    'https://www.youtube.com/@movesmartrentals',
+    'https://www.tiktok.com/@movesmartrentals',
+    'https://x.com/Movesmartrental',
   ],
   foundingDate: '2024',
 })
@@ -59,7 +60,7 @@ const organizationSchema = buildOrganizationSchema({
 const localBusinessSchema = buildLocalBusinessSchema({
   name: 'MoveSmart Rentals',
   description:
-    'Full-service leasing and tenant placement for Ontario landlords, property managers, builders, and institutional rental operators. Strategic pricing, tenant qualification, rental protection, and full move-in coordination.',
+    'Full-service leasing and tenant placement for Canadian landlords, property managers, builders, and institutional rental operators. Strategic pricing, tenant qualification, rental protection, and full move-in coordination.',
   url: SITE_URL,
   phone: '+18005959755',
   address: {
@@ -132,6 +133,9 @@ export default function AboutPage() {
         cta1={{ label: 'Meet the team', href: '#team' }}
         cta2={{ label: 'Contact us', href: '/contact/' }}
         aside={<FounderQuoteCard />}
+        theme="dark"
+        backgroundImageUrl="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2400&q=80"
+        backgroundImageAlt="MoveSmart leasing team collaborating in office"
       />
 
       <FounderEssay />
@@ -141,7 +145,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="relative aspect-[16/6] overflow-hidden rounded-3xl shadow-2xl shadow-brand-navy/15">
             <Image
-              src="https://images.unsplash.com/photo-1567002260456-bce4cb6c30be?w=2400&q=80&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1517090504586-fde19ea6066f?w=2400&q=80&auto=format&fit=crop"
               alt="Toronto downtown skyline - MoveSmart Rentals' anchor leasing market"
               fill
               className="object-cover"
@@ -157,7 +161,7 @@ export default function AboutPage() {
                 Headquartered in Toronto
               </p>
               <p className="mt-2 font-display text-2xl font-normal italic leading-snug text-white sm:text-3xl md:text-4xl">
-                Twenty-plus Ontario cities. A leasing playbook expanding across Canada and the US.
+                Twenty-plus Canadian cities. A leasing playbook expanding across Canada and the US.
               </p>
             </div>
           </div>

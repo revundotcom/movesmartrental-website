@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
 import { MapPin } from 'lucide-react'
 import { z } from 'zod'
 
@@ -78,26 +77,6 @@ export async function generateMetadata({
     fallbackTitle: `Leasing Services in ${cityTitle}`,
     fallbackDescription: `Full-service leasing and tenant placement in ${cityTitle}, ${provinceName}: tenant placement, screening, lease execution, and move-in coordination. Zero upfront cost.`,
   })
-}
-
-// ---------------------------------------------------------------------------
-// Formatting Helpers
-// ---------------------------------------------------------------------------
-
-function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('en-CA', {
-    style: 'currency',
-    currency: 'CAD',
-    maximumFractionDigits: 0,
-  }).format(amount)
-}
-
-function formatPopulation(pop: number): string {
-  return pop.toLocaleString('en-CA')
-}
-
-function formatPercentage(rate: number): string {
-  return `${rate.toFixed(1)}%`
 }
 
 // ---------------------------------------------------------------------------
@@ -188,7 +167,10 @@ export default async function CityPage({
           descriptionText?.slice(0, 220) ??
           `Local tenant placement, screening, lease execution, and move-in coordination in ${data.title}, ${data.province.title}. Zero upfront - success-fee pricing only.`
         }
-        cta1={{ label: 'Browse Rentals', href: '/locations/' }}
+        cta1={{ label: 'Browse rentals', href: '/properties/' }}
+        theme="dark"
+        backgroundImageUrl="https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=2400&q=80"
+        backgroundImageAlt={`${data.title} skyline representing the local leasing market`}
       />
 
       {/* City narrative (plain-text description from local data) */}
@@ -208,62 +190,6 @@ export default async function CityPage({
                 {descriptionText}
               </p>
             </div>
-          </div>
-        </section>
-      )}
-
-      {/* Market snapshot - editorial strip with pipe dividers */}
-      {(data.population != null ||
-        data.medianRent != null ||
-        data.vacancyRate != null ||
-        (data.neighbourhoods && data.neighbourhoods.length > 0)) && (
-        <section className="bg-[#FBFAF6] py-12 sm:py-14">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <p className="text-center text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
-              Market snapshot
-            </p>
-            <dl className="mt-6 grid grid-cols-2 gap-8 border-y border-brand-navy/10 py-10 sm:grid-cols-4 sm:divide-x sm:divide-brand-navy/10 sm:gap-0">
-              {data.population != null && (
-                <div className="text-center sm:px-4">
-                  <dt className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-emerald">
-                    Population
-                  </dt>
-                  <dd className="mt-2 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
-                    {formatPopulation(data.population)}
-                  </dd>
-                </div>
-              )}
-              {data.medianRent != null && (
-                <div className="text-center sm:px-4">
-                  <dt className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-emerald">
-                    Median rent
-                  </dt>
-                  <dd className="mt-2 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
-                    {formatCurrency(data.medianRent)}
-                  </dd>
-                </div>
-              )}
-              {data.vacancyRate != null && (
-                <div className="text-center sm:px-4">
-                  <dt className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-emerald">
-                    Vacancy rate
-                  </dt>
-                  <dd className="mt-2 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
-                    {formatPercentage(data.vacancyRate)}
-                  </dd>
-                </div>
-              )}
-              {data.neighbourhoods && data.neighbourhoods.length > 0 && (
-                <div className="text-center sm:px-4">
-                  <dt className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-emerald">
-                    Neighbourhoods
-                  </dt>
-                  <dd className="mt-2 font-display text-3xl font-normal text-brand-navy sm:text-4xl">
-                    {data.neighbourhoods.length}+
-                  </dd>
-                </div>
-              )}
-            </dl>
           </div>
         </section>
       )}
@@ -338,18 +264,10 @@ export default async function CityPage({
           </div>
           <ul className="mt-10 divide-y divide-brand-navy/10 border-y border-brand-navy/10">
             {PROPERTY_TYPES.map((pt) => (
-              <li key={pt.slug}>
-                <Link
-                  href={`/ca/${province}/${city}/${pt.slug}/`}
-                  className="group flex items-baseline justify-between gap-4 py-5 transition-colors hover:bg-white/60"
-                >
-                  <span className="font-display text-xl text-brand-navy group-hover:text-brand-emerald sm:text-2xl">
-                    {pt.label}
-                  </span>
-                  <span className="text-sm text-slate-500 group-hover:text-brand-navy">
-                    in {data.title} →
-                  </span>
-                </Link>
+              <li key={pt.slug} className="py-5">
+                <span className="font-display text-xl text-brand-navy sm:text-2xl">
+                  {pt.label}
+                </span>
               </li>
             ))}
           </ul>
