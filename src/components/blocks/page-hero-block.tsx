@@ -36,6 +36,8 @@ export interface PageHeroBlockProps {
   headline: string
   /** The last word of the headline gets the emerald serif accent. Disable for one-word heads. */
   accentLastWord?: boolean
+  /** Hide the trailing gold accent dot after the headline. */
+  hideAccentDot?: boolean
   /** Lede paragraph below headline */
   lede?: string
   cta1?: CtaButton
@@ -84,6 +86,7 @@ export function PageHeroBlock(props: PageHeroBlockProps) {
     eyebrow,
     headline,
     accentLastWord = true,
+    hideAccentDot = false,
     lede,
     cta1,
     cta2,
@@ -233,12 +236,14 @@ export function PageHeroBlock(props: PageHeroBlockProps) {
                   <span className="font-display italic text-brand-emerald">
                     {lastWord}
                   </span>
-                  <span
-                    aria-hidden="true"
-                    className="text-brand-gold"
-                  >
-                    .
-                  </span>
+                  {!hideAccentDot && (
+                    <span
+                      aria-hidden="true"
+                      className="text-brand-gold"
+                    >
+                      .
+                    </span>
+                  )}
                 </>
               )}
             </motion.h1>

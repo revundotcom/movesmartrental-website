@@ -394,7 +394,8 @@ export default async function TenantsPage() {
       <PageHeroBlock
         kicker="Tenant Hub"
         eyebrow="Find your next home"
-        headline="Verified rentals, fair applications, real home."
+        headline="Verified rentals, fair applications, real homes."
+        hideAccentDot
         lede="Browse owner-verified apartments, condos, houses, and townhouses across 160+ Canadian cities. Apply online in minutes and get a decision within 48 hours."
         cta1={{ label: 'Browse rentals', href: '/properties/' }}
         cta2={{ label: 'Tenant FAQ', href: '/faq/' }}
