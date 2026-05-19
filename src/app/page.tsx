@@ -100,9 +100,9 @@ export default async function HomePage() {
           cta1={{ label: 'List my property', href: '/contact/?type=owner' }}
           cta2={{ label: 'Browse rentals', href: '/properties/' }}
           statStrip={[
-            { value: '$11B', valueSuffix: ' AUM', label: 'Partner network' },
-            { value: '20+', valueSuffix: ' portals', label: 'MLS · Realtor.ca · Kijiji · FB · IG' },
-            { value: 'Audit-ready', label: 'Every file, time-stamped' },
+            { value: 'MLS + Rental Network', label: 'Broad listing exposure' },
+            { value: 'Live Owner Portal', label: 'Real-time leasing visibility' },
+            { value: 'Screened Applicant Flow', label: 'Applications organized for review' },
           ]}
           priority
         />
