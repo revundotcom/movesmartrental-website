@@ -117,36 +117,23 @@ export const FOOTER_COLUMNS = [
     ],
   },
   {
-    title: 'Owner Resources',
-    links: [
-      { label: 'Owner Hub', href: '/owners/' },
-      { label: 'Pricing', href: '/pricing/' },
-      { label: 'Owner FAQ', href: '/faq/' },
-      { label: 'List my property', href: '/contact/?type=owner' },
-    ],
-  },
-  {
-    title: 'Tenant Resources',
-    links: [
-      { label: 'Tenant Hub', href: '/tenants/' },
-      { label: 'Browse Properties', href: '/properties/' },
-      { label: 'Tenant FAQ', href: '/faq/' },
-    ],
-  },
-  {
-    title: 'Canada — Provinces',
+    title: 'Canada',
     links: [
       { label: 'Ontario', href: '/ca/ontario/' },
       { label: 'Quebec', href: '/ca/quebec/' },
       { label: 'British Columbia', href: '/ca/british-columbia/' },
       { label: 'Alberta', href: '/ca/alberta/' },
       { label: 'Manitoba', href: '/ca/manitoba/' },
+      { label: 'Saskatchewan', href: '/ca/saskatchewan/' },
       { label: 'Nova Scotia', href: '/ca/nova-scotia/' },
+      { label: 'New Brunswick', href: '/ca/new-brunswick/' },
+      { label: 'Newfoundland and Labrador', href: '/ca/newfoundland-and-labrador/' },
+      { label: 'Prince Edward Island', href: '/ca/prince-edward-island/' },
       { label: 'View all Canadian cities', href: '/ca/' },
     ],
   },
   {
-    title: 'United States — States',
+    title: 'United States',
     links: [
       // TODO(phase-2): build /us/{state}/ landing pages. Links are
       // placed now to lock in IA and crawl paths.
@@ -161,6 +148,23 @@ export const FOOTER_COLUMNS = [
       { label: 'Colorado', href: '/us/colorado/' },
       { label: 'New Jersey', href: '/us/new-jersey/' },
       { label: 'View all US cities', href: '/us/' },
+    ],
+  },
+  {
+    title: 'Owner Resources',
+    links: [
+      { label: 'Owner Hub', href: '/owners/' },
+      { label: 'Pricing', href: '/pricing/' },
+      { label: 'Owner FAQ', href: '/faq/' },
+      { label: 'List my property', href: '/contact/?type=owner' },
+    ],
+  },
+  {
+    title: 'Tenant Resources',
+    links: [
+      { label: 'Tenant Hub', href: '/tenants/' },
+      { label: 'Browse Properties', href: '/properties/' },
+      { label: 'Tenant FAQ', href: '/faq/' },
     ],
   },
   {

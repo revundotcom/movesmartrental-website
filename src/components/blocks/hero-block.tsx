@@ -177,6 +177,12 @@ export function HeroBlock({
                     <div key={stat.label} className={i === 0 ? '' : 'sm:pl-6'}>
                       <p className="font-display text-2xl font-normal leading-tight text-brand-navy sm:text-[1.6rem]">
                         <span className="italic text-brand-emerald">{stat.value}</span>
+                        {stat.valueAccent && (
+                          <>
+                            {' '}
+                            <span className="text-brand-navy">{stat.valueAccent}</span>
+                          </>
+                        )}
                         {stat.valueSuffix && (
                           <span className="text-brand-navy">{stat.valueSuffix}</span>
                         )}

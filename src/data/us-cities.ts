@@ -52,51 +52,105 @@ export interface USCityEntry {
 // shots when a specific city photo would risk being wrong. Per client
 // requirement: generic-but-correct beats specific-but-incorrect.
 
-const IMG = {
-  // State-level hero photos (real, broad cityscape/landscape shots)
-  florida:
-    'https://images.unsplash.com/photo-1535498730771-e735b998cd64?auto=format&fit=crop&w=1600&q=80', // Miami skyline at sunset
-  texas:
-    'https://images.unsplash.com/photo-1531218150217-54595bc2b934?auto=format&fit=crop&w=1600&q=80', // Austin / Texas state capitol
-  california:
-    'https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=1600&q=80', // California coastal city
-  newYork:
-    'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1600&q=80', // NYC skyline
-  illinois:
-    'https://images.unsplash.com/photo-1494522855154-9297ac14b55f?auto=format&fit=crop&w=1600&q=80', // Chicago downtown
-  georgia:
-    'https://images.unsplash.com/photo-1575917649705-5b59aaa12e6b?auto=format&fit=crop&w=1600&q=80', // Atlanta skyline
-  northCarolina:
-    'https://images.unsplash.com/photo-1571687949921-1306bfb24b72?auto=format&fit=crop&w=1600&q=80', // Charlotte uptown skyline
-  arizona:
-    'https://images.unsplash.com/photo-1558551649-e44c8f992010?auto=format&fit=crop&w=1600&q=80', // Phoenix / Arizona desert city
-  colorado:
-    'https://images.unsplash.com/photo-1546156929-a4c0ac411f47?auto=format&fit=crop&w=1600&q=80', // Denver skyline with Rockies
-  newJersey:
-    'https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=1600&q=80', // Jersey City / Hudson waterfront
+const u = (id: string) =>
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1600&q=80`
 
-  // Generic-correct American cityscape pool (used for cities where a
-  // specific identifiable skyline image would be risky)
-  genericSkyline1:
-    'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=1600&q=80', // generic US downtown skyline at twilight
-  genericSkyline2:
-    'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1600&q=80', // city skyline with high-rises
-  genericSkyline3:
-    'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=1600&q=80', // dusk metropolitan downtown
-  genericSkyline4:
-    'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1600&q=80', // modern city skyline at golden hour
-  genericSkyline5:
-    'https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=1600&q=80', // California-style cityscape
-  genericSuburb1:
-    'https://images.unsplash.com/photo-1592595896616-c37162298647?auto=format&fit=crop&w=1600&q=80', // American suburban residential
-  genericMidsize1:
-    'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80', // modern multi-residential exterior
-  genericWaterfront1:
-    'https://images.unsplash.com/photo-1546412414-e1885259563a?auto=format&fit=crop&w=1600&q=80', // US waterfront city
-  genericDesert1:
-    'https://images.unsplash.com/photo-1558551649-e44c8f992010?auto=format&fit=crop&w=1600&q=80', // sunbelt desert city
-  genericSunbelt1:
-    'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=1600&q=80', // sunbelt skyline
+const IMG = {
+  // ── State hero images (recognizable hero city per state) ──
+  florida: u('photo-1535498730771-e735b998cd64'), // Miami skyline at sunset
+  texas: u('photo-1531218150217-54595bc2b934'), // Austin / Texas state capitol
+  california: u('photo-1444723121867-7a241cacace9'), // California coastal city
+  newYork: u('photo-1496442226666-8d4d0e62e6e9'), // NYC skyline
+  illinois: u('photo-1494522855154-9297ac14b55f'), // Chicago downtown
+  georgia: u('photo-1575917649705-5b59aaa12e6b'), // Atlanta skyline
+  northCarolina: u('photo-1571687949921-1306bfb24b72'), // Charlotte uptown skyline
+  arizona: u('photo-1558551649-e44c8f992010'), // Phoenix / Arizona desert city
+  colorado: u('photo-1546156929-a4c0ac411f47'), // Denver skyline with Rockies
+  newJersey: u('photo-1485871981521-5b1fd3805eee'), // Jersey City waterfront
+
+  // ── Florida cities ──
+  miami: u('photo-1535498730771-e735b998cd64'),
+  orlando: u('photo-1609184889233-eff6dd93def4'),
+  tampa: u('photo-1609964956781-519678450be5'),
+  jacksonville: u('photo-1735593070456-cb12973a0b70'),
+
+  // ── Texas cities ──
+  austin: u('photo-1531218150217-54595bc2b934'),
+  houston: u('photo-1530089711124-9ca31fb9e863'),
+  dallas: u('photo-1563219125-60d10ffe8877'),
+  sanAntonio: u('photo-1605649666555-e321522c3023'),
+  fortWorth: u('photo-1641084700087-34b4e134e31f'),
+  elPaso: u('photo-1654225750669-5b914cad1cf5'),
+  plano: u('photo-1568605114967-8130f3a36994'),
+
+  // ── California cities ──
+  losAngeles: u('photo-1444723121867-7a241cacace9'),
+  sanDiego: u('photo-1514939775307-d44e7f10cabd'),
+  sanFrancisco: u('photo-1501594907352-04cda38ebc29'),
+  sanJose: u('photo-1499310226026-b9d598980b90'),
+  sacramento: u('photo-1707815618019-087c1c90986b'),
+  longBeach: u('photo-1550266679-e12e22602d34'),
+  oakland: u('photo-1582479140190-06e96d4e3cde'),
+  fresno: u('photo-1519867850-74775a87e783'),
+  anaheim: u('photo-1592081621037-b5822c178fd9'),
+
+  // ── New York cities ──
+  newYorkCity: u('photo-1496442226666-8d4d0e62e6e9'),
+  brooklyn: u('photo-1452796651103-7c07fca7a2c1'),
+  buffalo: u('photo-1507358422555-4b80419c147e'),
+  rochester: u('photo-1717479063980-0d3ca28f6e90'),
+  yonkers: u('photo-1583696763007-cc6a75bd1a34'),
+
+  // ── Illinois cities ──
+  chicago: u('photo-1494522855154-9297ac14b55f'),
+  auroraIL: u('photo-1732241930079-d903d77d75dd'),
+  naperville: u('photo-1651487952896-ff8510549da3'),
+  rockford: u('photo-1645475798187-90878451b7a6'),
+  springfield: u('photo-1642799819201-c3ccf956b013'),
+
+  // ── Georgia cities ──
+  atlanta: u('photo-1575917649705-5b59aaa12e6b'),
+  augusta: u('photo-1599666782476-691b0014fd87'),
+  savannah: u('photo-1592663283246-c843227611ce'),
+  columbusGA: u('photo-1574208949082-9fd24df40f33'),
+
+  // ── North Carolina cities ──
+  charlotte: u('photo-1571687949921-1306bfb24b72'),
+  raleigh: u('photo-1744347543986-b92bca6922bf'),
+  durham: u('photo-1633622258559-b435a03cef19'),
+  greensboro: u('photo-1644013974938-12bdf141bd11'),
+  winstonSalem: u('photo-1631803025020-5112aa51845d'),
+
+  // ── Arizona cities ──
+  phoenix: u('photo-1558551649-e44c8f992010'),
+  tucson: u('photo-1698273191536-0577ff2b94cc'),
+  mesa: u('photo-1575149536487-4c9ac49fc258'),
+  scottsdale: u('photo-1617407867245-f1315ab14d98'),
+
+  // ── Colorado cities ──
+  denver: u('photo-1546156929-a4c0ac411f47'),
+  coloradoSprings: u('photo-1547077053-560662bfd989'),
+  auroraCO: u('photo-1632763339064-689a03b1d2d5'),
+  fortCollins: u('photo-1614180714956-fc7378a5db20'),
+
+  // ── New Jersey cities ──
+  jerseyCity: u('photo-1485871981521-5b1fd3805eee'),
+  newark: u('photo-1655781723092-55bba63bdc0b'),
+  paterson: u('photo-1688103996241-a679e1a70dec'),
+  elizabeth: u('photo-1634145525156-5b47f9042c13'),
+  edison: u('photo-1592595896616-c37162298647'),
+
+  // ── Generic fallbacks (kept for cities without a dedicated entry yet) ──
+  genericSkyline1: u('photo-1480714378408-67cf0d13bc1b'),
+  genericSkyline2: u('photo-1449824913935-59a10b8d2000'),
+  genericSkyline3: u('photo-1518391846015-55a9cc003b25'),
+  genericSkyline4: u('photo-1477959858617-67f85cf4f1df'),
+  genericSkyline5: u('photo-1444723121867-7a241cacace9'),
+  genericSuburb1: u('photo-1592595896616-c37162298647'),
+  genericMidsize1: u('photo-1568605114967-8130f3a36994'),
+  genericWaterfront1: u('photo-1546412414-e1885259563a'),
+  genericDesert1: u('photo-1558551649-e44c8f992010'),
+  genericSunbelt1: u('photo-1518391846015-55a9cc003b25'),
 } as const
 
 // ---------------------------------------------------------------------------
@@ -220,7 +274,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'florida',
     population: 309000,
     medianRent: 2100,
-    heroImageUrl: IMG.genericMidsize1,
+    heroImageUrl: IMG.orlando,
     heroImageAlt: 'Orlando Florida downtown street with modern buildings',
     marketNote:
       'Lake Nona Medical City, theme-park hospitality, and UCF drive year-round absorption across one of the most diversified Sun Belt metros.',
@@ -231,7 +285,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'florida',
     population: 398000,
     medianRent: 2300,
-    heroImageUrl: IMG.genericWaterfront1,
+    heroImageUrl: IMG.tampa,
     heroImageAlt: 'Tampa Florida waterfront cityscape at golden hour',
     marketNote:
       'Sustained domestic in-migration from the Northeast keeps Tampa Bay supply-constrained across Westshore, Hyde Park, and South Tampa.',
@@ -242,7 +296,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'florida',
     population: 971000,
     medianRent: 1750,
-    heroImageUrl: IMG.genericSkyline3,
+    heroImageUrl: IMG.jacksonville,
     heroImageAlt: 'Jacksonville Florida riverfront skyline with high-rises',
     marketNote:
       'Florida’s largest city by area with steady military, logistics, and financial-services demand at accessible rents.',
@@ -299,7 +353,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'texas',
     population: 2300000,
     medianRent: 1700,
-    heroImageUrl: IMG.genericSkyline1,
+    heroImageUrl: IMG.houston,
     heroImageAlt: 'Houston Texas downtown skyline at twilight',
     marketNote:
       'The fourth-largest US city offers the widest range of rental price points, with energy-sector and medical-center employment driving diverse demand.',
@@ -310,7 +364,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'texas',
     population: 1300000,
     medianRent: 1850,
-    heroImageUrl: IMG.genericSkyline2,
+    heroImageUrl: IMG.dallas,
     heroImageAlt: 'Dallas Texas downtown skyline with modern high-rises',
     marketNote:
       'Dallas anchors the 7-million-person DFW metroplex; corporate relocations fuel steady rental demand in Uptown, Deep Ellum, and the core.',
@@ -333,7 +387,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'texas',
     population: 1470000,
     medianRent: 1500,
-    heroImageUrl: IMG.genericSunbelt1,
+    heroImageUrl: IMG.sanAntonio,
     heroImageAlt: 'San Antonio Texas River Walk and downtown skyline',
     marketNote:
       'Affordability plus steady military, healthcare, and tourism employment make San Antonio the calmest of the major Texas leasing markets.',
@@ -344,7 +398,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'texas',
     population: 958000,
     medianRent: 1600,
-    heroImageUrl: IMG.genericSkyline3,
+    heroImageUrl: IMG.fortWorth,
     heroImageAlt: 'Fort Worth Texas downtown buildings and Sundance Square',
     marketNote:
       'Fort Worth complements Dallas with lower rents and strong aerospace, oil-and-gas, and logistics employment across the western metroplex.',
@@ -355,7 +409,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'texas',
     population: 678000,
     medianRent: 1250,
-    heroImageUrl: IMG.genericDesert1,
+    heroImageUrl: IMG.elPaso,
     heroImageAlt: 'El Paso Texas desert cityscape with Franklin Mountains',
     marketNote:
       'Border-economy demand plus Fort Bliss military housing pressure keep El Paso’s low-rent inventory consistently absorbed.',
@@ -366,7 +420,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'texas',
     population: 286000,
     medianRent: 1950,
-    heroImageUrl: IMG.genericSuburb1,
+    heroImageUrl: IMG.plano,
     heroImageAlt: 'Plano Texas suburban residential and corporate campus',
     marketNote:
       'North Dallas corporate-relocation hub anchored by Toyota, Liberty Mutual, and JP Morgan campuses with premium single-family rental demand.',
@@ -379,7 +433,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'california',
     population: 3890000,
     medianRent: 2900,
-    heroImageUrl: IMG.genericSkyline5,
+    heroImageUrl: IMG.losAngeles,
     heroImageAlt: 'Los Angeles California cityscape with palm trees and downtown',
     marketNote:
       'LA’s rental market is governed by the Rent Stabilization Ordinance across many pre-1978 buildings; compliance expertise is essential.',
@@ -390,7 +444,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'california',
     population: 1386000,
     medianRent: 2700,
-    heroImageUrl: IMG.genericWaterfront1,
+    heroImageUrl: IMG.sanDiego,
     heroImageAlt: 'San Diego California waterfront skyline and harbor',
     marketNote:
       'Naval and defence employment, biotech, and UCSD-area demand combine with limited housing supply to keep rents high year-round.',
@@ -401,7 +455,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'california',
     population: 808000,
     medianRent: 3300,
-    heroImageUrl: IMG.genericSkyline5,
+    heroImageUrl: IMG.sanFrancisco,
     heroImageAlt: 'San Francisco California cityscape with Victorian houses',
     marketNote:
       'Strict rent control and just-cause eviction rules apply; tech-sector recovery and AI-driven hiring have normalized post-pandemic vacancies.',
@@ -412,7 +466,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'california',
     population: 1013000,
     medianRent: 3100,
-    heroImageUrl: IMG.genericSkyline2,
+    heroImageUrl: IMG.sanJose,
     heroImageAlt: 'San Jose California downtown skyline and Silicon Valley',
     marketNote:
       'Silicon Valley’s largest city; demand tracks tech hiring cycles with premium pricing close to major campuses.',
@@ -423,7 +477,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'california',
     population: 525000,
     medianRent: 2000,
-    heroImageUrl: IMG.genericSkyline3,
+    heroImageUrl: IMG.sacramento,
     heroImageAlt: 'Sacramento California capitol dome and downtown skyline',
     marketNote:
       'California’s capital offers state-government-sector stability and lower rents than coastal markets, with strong inland-relocation demand.',
@@ -434,7 +488,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'california',
     population: 456000,
     medianRent: 2350,
-    heroImageUrl: IMG.genericWaterfront1,
+    heroImageUrl: IMG.longBeach,
     heroImageAlt: 'Long Beach California harbor skyline at golden hour',
     marketNote:
       'Port-economy, naval-medical, and CSU Long Beach demand anchor a market priced as the value play to Greater LA across the bay.',
@@ -445,7 +499,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'california',
     population: 433000,
     medianRent: 2450,
-    heroImageUrl: IMG.genericSkyline4,
+    heroImageUrl: IMG.oakland,
     heroImageAlt: 'Oakland California downtown skyline and bay bridge view',
     marketNote:
       'East Bay leasing across Lake Merritt, Temescal, and Rockridge; Oakland Rent Adjustment Program applies to most pre-1996 multi-family.',
@@ -456,7 +510,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'california',
     population: 545000,
     medianRent: 1550,
-    heroImageUrl: IMG.genericMidsize1,
+    heroImageUrl: IMG.fresno,
     heroImageAlt: 'Fresno California Central Valley downtown street view',
     marketNote:
       'Central Valley agricultural-economy and Fresno State demand support steady absorption at the lowest median rent of any major California city.',
@@ -467,7 +521,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'california',
     population: 346000,
     medianRent: 2400,
-    heroImageUrl: IMG.genericSuburb1,
+    heroImageUrl: IMG.anaheim,
     heroImageAlt: 'Anaheim California Orange County residential cityscape',
     marketNote:
       'Orange County hospitality-economy anchored by Disneyland with strong year-round tourism-workforce and corporate-relocation rental demand.',
@@ -515,7 +569,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'new-york',
     population: 278000,
     medianRent: 1200,
-    heroImageUrl: IMG.genericMidsize1,
+    heroImageUrl: IMG.buffalo,
     heroImageAlt: 'Buffalo New York downtown street and historic architecture',
     marketNote:
       'Most affordable entry-point rentals in New York State with strong student demand around UB and Buffalo State.',
@@ -526,7 +580,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'new-york',
     population: 211000,
     medianRent: 1200,
-    heroImageUrl: IMG.genericMidsize1,
+    heroImageUrl: IMG.rochester,
     heroImageAlt: 'Rochester New York downtown street with historic buildings',
     marketNote:
       'University of Rochester and RIT employment drive steady demand at accessible rents, with strong medical-sector tenant depth.',
@@ -537,7 +591,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'new-york',
     population: 211000,
     medianRent: 2300,
-    heroImageUrl: IMG.genericSuburb1,
+    heroImageUrl: IMG.yonkers,
     heroImageAlt: 'Yonkers New York Hudson River waterfront residential view',
     marketNote:
       'Westchester’s largest city with strong Metro-North commuter-rail demand from NYC professionals priced out of the Bronx.',
@@ -562,7 +616,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'illinois',
     population: 180000,
     medianRent: 1600,
-    heroImageUrl: IMG.genericSuburb1,
+    heroImageUrl: IMG.auroraIL,
     heroImageAlt: 'Aurora Illinois suburban residential cityscape',
     marketNote:
       'Illinois’ second-largest city offers commutable-to-Chicago rentals via Metra BNSF with stronger single-family inventory.',
@@ -573,7 +627,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'illinois',
     population: 149000,
     medianRent: 2050,
-    heroImageUrl: IMG.genericSuburb1,
+    heroImageUrl: IMG.naperville,
     heroImageAlt: 'Naperville Illinois downtown riverwalk and residential streets',
     marketNote:
       'One of the top-ranked US suburbs for families; premium rentals anchored by top-rated school districts and Metra BNSF access.',
@@ -584,7 +638,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'illinois',
     population: 148000,
     medianRent: 1100,
-    heroImageUrl: IMG.genericMidsize1,
+    heroImageUrl: IMG.rockford,
     heroImageAlt: 'Rockford Illinois downtown buildings along the Rock River',
     marketNote:
       'Most affordable rentals in northern Illinois with logistics-sector and aerospace employment anchoring steady mid-market demand.',
@@ -595,7 +649,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'illinois',
     population: 114000,
     medianRent: 1050,
-    heroImageUrl: IMG.genericMidsize1,
+    heroImageUrl: IMG.springfield,
     heroImageAlt: 'Springfield Illinois state capitol and historic downtown',
     marketNote:
       'Illinois’ capital offers state-government stability and the most affordable rent in the state, with steady civil-service tenant tenure.',
@@ -620,7 +674,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'georgia',
     population: 200000,
     medianRent: 1250,
-    heroImageUrl: IMG.genericMidsize1,
+    heroImageUrl: IMG.augusta,
     heroImageAlt: 'Augusta Georgia Riverwalk and downtown street view',
     marketNote:
       'Fort Eisenhower military demand plus Medical College of Georgia tenant base; affordable rents with steady year-round absorption.',
@@ -631,7 +685,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'georgia',
     population: 148000,
     medianRent: 1650,
-    heroImageUrl: IMG.genericWaterfront1,
+    heroImageUrl: IMG.savannah,
     heroImageAlt: 'Savannah Georgia historic district with Spanish moss oaks',
     marketNote:
       'Historic-district rental yield plus port-economy and SCAD student demand; one of the most tourism-shaped Southeastern leasing markets.',
@@ -642,7 +696,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'georgia',
     population: 207000,
     medianRent: 1150,
-    heroImageUrl: IMG.genericMidsize1,
+    heroImageUrl: IMG.columbusGA,
     heroImageAlt: 'Columbus Georgia Chattahoochee Riverwalk and downtown',
     marketNote:
       'Fort Moore military demand and Columbus State employment anchor the most affordable major-city rental market in Georgia.',
@@ -667,7 +721,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'north-carolina',
     population: 467000,
     medianRent: 1700,
-    heroImageUrl: IMG.genericSkyline3,
+    heroImageUrl: IMG.raleigh,
     heroImageAlt: 'Raleigh North Carolina state capitol and downtown skyline',
     marketNote:
       'Research Triangle Park tech employment plus state-government and university demand drive one of the country’s strongest rent-growth markets.',
@@ -678,7 +732,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'north-carolina',
     population: 285000,
     medianRent: 1600,
-    heroImageUrl: IMG.genericMidsize1,
+    heroImageUrl: IMG.durham,
     heroImageAlt: 'Durham North Carolina American Tobacco Campus and downtown',
     marketNote:
       'Duke University and Duke Health employment anchor a steady year-round market with strong rental yield in the American Tobacco Historic District.',
@@ -689,7 +743,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'north-carolina',
     population: 299000,
     medianRent: 1300,
-    heroImageUrl: IMG.genericMidsize1,
+    heroImageUrl: IMG.greensboro,
     heroImageAlt: 'Greensboro North Carolina downtown and historic district',
     marketNote:
       'Piedmont Triad logistics employment and UNC Greensboro demand support affordable mid-market rentals across a transit-accessible footprint.',
@@ -700,7 +754,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'north-carolina',
     population: 250000,
     medianRent: 1250,
-    heroImageUrl: IMG.genericMidsize1,
+    heroImageUrl: IMG.winstonSalem,
     heroImageAlt: 'Winston-Salem North Carolina downtown arts district view',
     marketNote:
       'Wake Forest University and Atrium Health-Wake Forest Baptist employment plus a strong arts-district revival anchor the market.',
@@ -725,7 +779,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'arizona',
     population: 547000,
     medianRent: 1350,
-    heroImageUrl: IMG.genericDesert1,
+    heroImageUrl: IMG.tucson,
     heroImageAlt: 'Tucson Arizona desert cityscape with Catalina Mountains',
     marketNote:
       'University of Arizona, Davis-Monthan AFB, and Raytheon employment anchor the steadiest year-round Arizona rental submarket.',
@@ -736,7 +790,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'arizona',
     population: 511000,
     medianRent: 1500,
-    heroImageUrl: IMG.genericSuburb1,
+    heroImageUrl: IMG.mesa,
     heroImageAlt: 'Mesa Arizona East Valley suburban residential cityscape',
     marketNote:
       'East Valley’s largest city with strong build-to-rent inventory and steady ASU Polytechnic and ASU East Mesa student demand.',
@@ -747,7 +801,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'arizona',
     population: 242000,
     medianRent: 2100,
-    heroImageUrl: IMG.genericSuburb1,
+    heroImageUrl: IMG.scottsdale,
     heroImageAlt: 'Scottsdale Arizona luxury residential with desert mountains',
     marketNote:
       'Premium Phoenix-metro submarket with seasonal snowbird demand, executive-relocation single-family rentals, and Old Town entertainment-district condos.',
@@ -772,7 +826,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'colorado',
     population: 488000,
     medianRent: 1650,
-    heroImageUrl: IMG.genericMidsize1,
+    heroImageUrl: IMG.coloradoSprings,
     heroImageAlt: 'Colorado Springs cityscape with Pikes Peak in distance',
     marketNote:
       'Air Force Academy, Peterson SFB, and Fort Carson military demand drive predictable, steady absorption with disciplined pricing.',
@@ -783,7 +837,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'colorado',
     population: 391000,
     medianRent: 1700,
-    heroImageUrl: IMG.genericSuburb1,
+    heroImageUrl: IMG.auroraCO,
     heroImageAlt: 'Aurora Colorado suburban Denver-area residential cityscape',
     marketNote:
       'Denver’s largest suburb anchored by Anschutz Medical Campus and Buckley SFB; strong family-rental and clinician-relocation demand.',
@@ -794,7 +848,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'colorado',
     population: 170000,
     medianRent: 1750,
-    heroImageUrl: IMG.genericMidsize1,
+    heroImageUrl: IMG.fortCollins,
     heroImageAlt: 'Fort Collins Colorado historic Old Town district',
     marketNote:
       'Colorado State University drives the lease cycle; Old Town walkability and strong tech-sector employment create competitive year-round pricing.',
@@ -819,7 +873,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'new-jersey',
     population: 305000,
     medianRent: 1900,
-    heroImageUrl: IMG.genericSkyline3,
+    heroImageUrl: IMG.newark,
     heroImageAlt: 'Newark New Jersey downtown skyline at dusk',
     marketNote:
       'NJ Transit and PATH commuter demand plus Rutgers-Newark and NJIT anchor a multi-family-heavy market with strong yield characteristics.',
@@ -830,7 +884,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'new-jersey',
     population: 159000,
     medianRent: 1800,
-    heroImageUrl: IMG.genericMidsize1,
+    heroImageUrl: IMG.paterson,
     heroImageAlt: 'Paterson New Jersey historic Great Falls and downtown',
     marketNote:
       'Dense Passaic County multi-family market with strong tenant demand and meaningfully lower rents than the Hudson waterfront submarkets.',
@@ -841,7 +895,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'new-jersey',
     population: 137000,
     medianRent: 1850,
-    heroImageUrl: IMG.genericMidsize1,
+    heroImageUrl: IMG.elizabeth,
     heroImageAlt: 'Elizabeth New Jersey downtown street with mid-rise buildings',
     marketNote:
       'Union County multi-family corridor with strong NJ Transit Northeast Corridor access; consistent tenant absorption across rowhomes and walk-ups.',
@@ -852,7 +906,7 @@ export const US_CITIES_LIST: USCityEntry[] = [
     stateSlug: 'new-jersey',
     population: 107000,
     medianRent: 2200,
-    heroImageUrl: IMG.genericSuburb1,
+    heroImageUrl: IMG.edison,
     heroImageAlt: 'Edison New Jersey suburban residential and corporate corridor',
     marketNote:
       'Middlesex County corporate-park employment and strong South-Asian-Canadian and South-Asian-American family demand drive premium single-family rentals.',

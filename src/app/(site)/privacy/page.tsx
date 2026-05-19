@@ -39,7 +39,7 @@ export default function PrivacyPolicyPage() {
         meta={[
           { label: 'Last updated', value: LAST_UPDATED },
           { label: 'Regulator', value: 'OPC Canada' },
-          { label: 'Brokerage', value: 'Valerie Real Estate' },
+          { label: 'Brokerage', value: 'Valery Real Estate' },
           { label: 'Privacy officer', value: 'On staff' },
         ]}
         theme="dark"
@@ -58,7 +58,7 @@ export default function PrivacyPolicyPage() {
               &quot;us,&quot; or &quot;our&quot;) is a full-service residential leasing
               brokerage operating across Canada and in select United States markets.
               In Canada, all real estate trades are conducted through our licensed
-              brokerage partner, <strong>Valerie Real Estate Inc., Brokerage</strong>,
+              brokerage partner, <strong>Valery Real Estate Inc., Brokerage</strong>,
               which is registered under the Real Estate Council of Ontario (RECO) and
               the equivalent provincial regulators where we operate.
             </p>
@@ -205,8 +205,8 @@ export default function PrivacyPolicyPage() {
             <p>
               In Canada, all trades in real estate, lease executions, and trust
               account transactions flow through{' '}
-              <strong>Valerie Real Estate Inc., Brokerage</strong>, our licensed
-              brokerage partner. Valerie Real Estate accesses application and
+              <strong>Valery Real Estate Inc., Brokerage</strong>, our licensed
+              brokerage partner. Valery Real Estate accesses application and
               tenancy records as required by RECO and provincial regulations.
             </p>
 

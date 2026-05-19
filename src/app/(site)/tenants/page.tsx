@@ -80,7 +80,7 @@ const TENANT_FAQS = [
   },
 ]
 
-/* ---------- How renting with us works (4 image-led editorial rows) ---------- */
+/* ---------- How renting works with us (4 image-led editorial rows) ---------- */
 
 const HOW_IT_WORKS: Array<{
   number: string
@@ -455,7 +455,7 @@ export default async function TenantsPage() {
         </div>
       </section>
 
-      {/* ─── How renting with us works (image-led zigzag) ───────────────── */}
+      {/* ─── How renting works with us (image-led zigzag) ───────────────── */}
       <section className="bg-white py-20 sm:py-24">
         <div className="mx-auto max-w-6xl px-4">
           <RevealOnScroll variant="clipReveal" duration={0.6}>
@@ -465,8 +465,9 @@ export default async function TenantsPage() {
                 The Process
               </p>
               <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
-                How renting with us{' '}
-                <span className="font-display italic text-brand-emerald">works</span>
+                How renting{' '}
+                <span className="font-display italic text-brand-emerald">works</span>{' '}
+                with us
                 <span className="text-brand-gold" aria-hidden="true">.</span>
               </h2>
               <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">

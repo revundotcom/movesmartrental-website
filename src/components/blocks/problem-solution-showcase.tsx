@@ -66,10 +66,10 @@ export function ProblemSolutionShowcase() {
   })
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 60,
-    damping: 28,
-    mass: 0.35,
-    restDelta: 0.001,
+    stiffness: 110,
+    damping: 24,
+    mass: 0.2,
+    restDelta: 0.0005,
   })
 
   // Total height = (PAIRS.length) * 100vh so each phase gets its own viewport slice.
@@ -120,14 +120,22 @@ export function ProblemSolutionShowcase() {
           }}
         />
 
-        <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-10 px-4 sm:px-6 lg:grid-cols-[420px_1fr] lg:gap-16 lg:px-8">
-          {/* LEFT: pinned header + step indicator */}
+        <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-10 px-4 sm:px-6 lg:grid-cols-[340px_220px_1fr] lg:gap-10 lg:px-8">
+          {/* LEFT: pinned header */}
           <div className="lg:pt-2">
             <Header />
+            {/* On small screens the step indicator stacks under the header */}
+            <div className="mt-8 lg:hidden">
+              <StepIndicator progress={smoothProgress} />
+            </div>
+          </div>
+
+          {/* MIDDLE: vertical step rail, visible alongside the card on lg+ */}
+          <div className="hidden lg:flex lg:flex-col lg:justify-center lg:pt-4">
             <StepIndicator progress={smoothProgress} />
           </div>
 
-          {/* RIGHT: phase stage — height matches the left text column so they align */}
+          {/* RIGHT: phase stage */}
           <div className="relative h-[360px] sm:h-[380px] md:h-[400px]">
             {PAIRS.map((pair, i) => (
               <Phase
@@ -180,15 +188,15 @@ function Header() {
 
 function StepIndicator({ progress }: { progress: MotionValue<number> }) {
   return (
-    <div className="mt-10 flex items-center gap-3">
+    <ol className="mt-10 flex flex-col gap-3">
       {PAIRS.map((pair, i) => (
-        <StepDot key={pair.key} index={i} total={PAIRS.length} progress={progress} pair={pair} />
+        <StepRow key={pair.key} index={i} total={PAIRS.length} progress={progress} pair={pair} />
       ))}
-    </div>
+    </ol>
   )
 }
 
-function StepDot({
+function StepRow({
   index,
   total,
   progress,
@@ -203,22 +211,49 @@ function StepDot({
   const start = index / total
   const end = (index + 1) / total
 
-  // Opacity ramps up as we enter this phase, stays at 1 through end, then sustains
-  const opacity = useTransform(progress, [start - 0.05, start, end], [0.35, 1, 1])
-  const scale = useTransform(progress, [start - 0.05, start, end], [0.85, 1.1, 1])
+  // Smooth ramp into the active state, then sustain
+  const fill = useTransform(
+    progress,
+    [Math.max(start - 0.06, 0), start, end - 0.001, end],
+    ['0%', '100%', '100%', index === total - 1 ? '100%' : '100%'],
+  )
+  const opacity = useTransform(progress, [Math.max(start - 0.08, 0), start], [0.45, 1])
+  const numeralColor = useTransform(
+    progress,
+    [Math.max(start - 0.06, 0), start],
+    ['rgba(11,29,58,0.35)', 'rgba(15,142,107,1)'],
+  )
 
   return (
-    <div className="flex flex-col items-start gap-2">
-      <motion.span
-        style={{ opacity, scale }}
-        className="block size-2.5 rounded-full bg-brand-emerald"
-        aria-hidden="true"
-      />
-      <span className="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-brand-navy/55">
-        0{index + 1}
-      </span>
-      <span className="sr-only">{pair.tag}</span>
-    </div>
+    <li className="relative">
+      <motion.div
+        style={{ opacity }}
+        className="flex items-center gap-4"
+      >
+        {/* Bar — big gray, fills in emerald as you scroll into this phase */}
+        <div
+          className="relative h-2 w-20 shrink-0 overflow-hidden rounded-full bg-slate-200"
+          aria-hidden="true"
+        >
+          <motion.span
+            style={{ width: fill }}
+            className="absolute inset-y-0 left-0 block rounded-full bg-gradient-to-r from-brand-emerald to-emerald-500"
+          />
+        </div>
+        {/* Numeral + title */}
+        <div className="flex items-baseline gap-3">
+          <motion.span
+            style={{ color: numeralColor }}
+            className="font-display text-base font-bold tabular-nums"
+          >
+            {String(index + 1).padStart(2, '0')}
+          </motion.span>
+          <span className="text-sm font-semibold text-brand-navy">
+            {pair.tag}
+          </span>
+        </div>
+      </motion.div>
+    </li>
   )
 }
 
@@ -243,8 +278,8 @@ function Phase({
   const end = (index + 1) * slice
 
   // Wider fade window for smoother cross-dissolves between phases.
-  const fadeIn = start + slice * 0.28
-  const fadeOut = end - slice * 0.28
+  const fadeIn = start + slice * 0.18
+  const fadeOut = end - slice * 0.18
 
   const opacity = useTransform(
     progress,

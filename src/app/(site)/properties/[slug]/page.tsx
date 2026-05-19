@@ -8,7 +8,6 @@ import {
   Maximize,
   MapPin,
   Calendar,
-  ArrowRight,
   CheckCircle2,
   Building2,
   Car,
@@ -193,16 +192,27 @@ function SimilarPropertyCard({ property }: { property: Property }) {
 function FactCard({
   title,
   rows,
+  id,
+  bold = false,
 }: {
   title: string
   rows: Array<{ label: string; value?: string | number | null }>
+  id?: string
+  bold?: boolean
 }) {
   return (
     <section
+      id={id}
       aria-label={title}
-      className="rounded-2xl border border-slate-200 bg-white p-6"
+      className="scroll-mt-28 rounded-2xl border border-slate-200 bg-white p-6"
     >
-      <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-[#0B1D3A]">
+      <h3
+        className={
+          bold
+            ? 'font-heading text-base font-bold uppercase tracking-wider text-[#0B1D3A]'
+            : 'font-heading text-sm font-normal uppercase tracking-wider text-[#0B1D3A]/80'
+        }
+      >
         {title}
       </h3>
       <dl className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 text-sm sm:grid-cols-2">
@@ -237,8 +247,9 @@ function RoomInfoTable() {
   ]
   return (
     <details
+      id="room-information"
       open
-      className="group rounded-2xl border border-slate-200 bg-white p-6"
+      className="group scroll-mt-28 rounded-2xl border border-slate-200 bg-white p-6"
     >
       <summary className="flex cursor-pointer list-none items-center justify-between font-heading text-sm font-semibold uppercase tracking-wider text-[#0B1D3A]">
         Room Information
@@ -361,6 +372,29 @@ export default async function PropertyDetailPage({ params }: PageProps) {
   // ------------------------------------------------------------------
   const gatedBody = (
     <div className="space-y-10">
+      {/* Sticky quick-nav bar — jump to in-page sections */}
+      <nav
+        aria-label="Property section navigation"
+        className="sticky top-16 z-30 -mx-4 flex items-center gap-2 overflow-x-auto border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur-md sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+      >
+        <div className="flex items-center gap-2 overflow-x-auto">
+          {[
+            { label: 'Key Facts', href: '#key-facts' },
+            { label: 'Property Details', href: '#property-details' },
+            { label: 'Room Information', href: '#room-information' },
+            { label: 'Utilities', href: '#utilities' },
+          ].map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="shrink-0 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-[#0B1D3A] transition-colors hover:border-brand-emerald/40 hover:bg-emerald-50 hover:text-brand-emerald"
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+      </nav>
+
       {/* About */}
       {unit.description && (
         <section aria-label="About this property">
@@ -375,7 +409,9 @@ export default async function PropertyDetailPage({ params }: PageProps) {
 
       {/* Key Facts (IDX) */}
       <FactCard
+        id="key-facts"
         title="Key Facts"
+        bold
         rows={[
           { label: 'Data Source', value: undefined },
           { label: 'MLS ID', value: undefined },
@@ -395,6 +431,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
 
       {/* Property Details */}
       <FactCard
+        id="property-details"
         title="Property Details"
         rows={[
           { label: 'Type', value: unit.property_type || unit.property_sub_type },
@@ -423,6 +460,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
 
       {/* Utilities */}
       <FactCard
+        id="utilities"
         title="Utilities"
         rows={[
           { label: 'Electricity', value: undefined },
@@ -724,34 +762,40 @@ export default async function PropertyDetailPage({ params }: PageProps) {
               </p>
 
               <div className="mt-4 space-y-2">
+                {/* Apply Now — primary CTA, routes to portal apply/reserve flow */}
+                {reserveUrl ? (
+                  <a
+                    href={reserveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex w-full items-center justify-center rounded-lg bg-[#10B981] px-4 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#059669]"
+                  >
+                    Apply Now
+                  </a>
+                ) : (
+                  <Link
+                    href={`/contact/?type=tenant&intent=apply&property=${encodeURIComponent(slug)}`}
+                    className="flex w-full items-center justify-center rounded-lg bg-[#10B981] px-4 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#059669]"
+                  >
+                    Apply Now
+                  </Link>
+                )}
                 {scheduleUrl ? (
                   <a
                     href={scheduleUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex w-full items-center justify-center rounded-lg bg-[#10B981] px-4 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#059669]"
+                    className="flex w-full items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#0B1D3A] transition-colors hover:border-[#10B981]/40 hover:bg-emerald-50"
                   >
                     Schedule a Tour
-                    <ArrowRight className="ml-1.5 size-4" />
                   </a>
                 ) : (
                   <Link
                     href={`/contact/?type=tenant&property=${encodeURIComponent(slug)}`}
-                    className="flex w-full items-center justify-center rounded-lg bg-[#10B981] px-4 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#059669]"
+                    className="flex w-full items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#0B1D3A] transition-colors hover:border-[#10B981]/40 hover:bg-emerald-50"
                   >
                     Request a Viewing
-                    <ArrowRight className="ml-1.5 size-4" />
                   </Link>
-                )}
-                {reserveUrl && (
-                  <a
-                    href={reserveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex w-full items-center justify-center rounded-lg border border-[#0B1D3A] bg-[#0B1D3A] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#0B1D3A]/90"
-                  >
-                    Reserve Offer
-                  </a>
                 )}
               </div>
 
@@ -759,7 +803,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
                 <p>
                   Listing brokered by{' '}
                   <span className="font-semibold text-[#0B1D3A]">
-                    Valerie Real Estate Inc., Brokerage
+                    Valery Real Estate Inc., Brokerage
                   </span>
                   . MoveSmart Rentals is the marketing partner — screening,
                   lease execution, and move-in coordination are included.
@@ -791,7 +835,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
             Listing data sourced from TREB IDX feed. This listing is brokered
             by{' '}
             <span className="font-semibold text-[#0B1D3A]">
-              Valerie Real Estate Inc., Brokerage
+              Valery Real Estate Inc., Brokerage
             </span>
             . MoveSmart Rentals is a marketing partner. Information deemed
             reliable but not guaranteed. The trademarks REALTOR&reg;,

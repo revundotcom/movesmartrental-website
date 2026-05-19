@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
@@ -12,10 +13,26 @@ import {
   Search,
   X,
   SlidersHorizontal,
+  Map as MapIcon,
+  List as ListIcon,
 } from 'lucide-react'
 
 import { resolvePropertyImage } from '@/lib/portal-api'
 import type { Property } from '@/types/property'
+
+const PropertiesMap = dynamic(
+  () => import('./properties-map').then((m) => m.PropertiesMap),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-[640px] w-full items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 text-sm text-slate-500">
+        Loading map…
+      </div>
+    ),
+  },
+)
+
+type ViewMode = 'list' | 'map'
 
 interface Props {
   properties: Property[]
@@ -261,6 +278,7 @@ export function PropertiesBrowser({ properties }: Props) {
   const [maxSqft, setMaxSqft] = useState<string>('')
   const [sortKey, setSortKey] = useState<SortKey>('newest')
   const [moreOpen, setMoreOpen] = useState<boolean>(false)
+  const [view, setView] = useState<ViewMode>('list')
 
   const cities = useMemo(() => {
     const set = new Set<string>()
@@ -421,6 +439,39 @@ export function PropertiesBrowser({ properties }: Props) {
             {moreOpen ? 'Hide filters' : 'More filters'}
           </button>
 
+          <div
+            className="inline-flex overflow-hidden rounded-lg border border-slate-200 bg-white"
+            role="group"
+            aria-label="View toggle"
+          >
+            <button
+              type="button"
+              onClick={() => setView('list')}
+              aria-pressed={view === 'list'}
+              className={`inline-flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-colors ${
+                view === 'list'
+                  ? 'bg-[#0B1D3A] text-white'
+                  : 'text-[#0B1D3A] hover:bg-slate-50'
+              }`}
+            >
+              <ListIcon className="size-4" />
+              List
+            </button>
+            <button
+              type="button"
+              onClick={() => setView('map')}
+              aria-pressed={view === 'map'}
+              className={`inline-flex items-center gap-1.5 border-l border-slate-200 px-3 py-2.5 text-sm font-medium transition-colors ${
+                view === 'map'
+                  ? 'bg-[#0B1D3A] text-white'
+                  : 'text-[#0B1D3A] hover:bg-slate-50'
+              }`}
+            >
+              <MapIcon className="size-4" />
+              Map
+            </button>
+          </div>
+
           {hasActiveFilter && (
             <button
               type="button"
@@ -571,7 +622,7 @@ export function PropertiesBrowser({ properties }: Props) {
         </div>
       </section>
 
-      {/* Grid */}
+      {/* Results: empty state, map view, or grid */}
       {filtered.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-10 text-center">
           <h2 className="font-display text-2xl text-[#0B1D3A]">
@@ -589,6 +640,8 @@ export function PropertiesBrowser({ properties }: Props) {
             Clear all filters
           </button>
         </div>
+      ) : view === 'map' ? (
+        <PropertiesMap properties={filtered} />
       ) : (
         <section
           className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"

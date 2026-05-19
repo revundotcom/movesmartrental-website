@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion, useReducedMotion } from 'framer-motion'
 import {
   Activity,
@@ -34,6 +35,8 @@ type KpiCard = {
   badge: string
   title: string
   bullets: readonly Bullet[]
+  imageSrc: string
+  imageAlt: string
 }
 
 /* ---------- Card data ----------------------------------------------------- */
@@ -41,6 +44,10 @@ type KpiCard = {
 const DEMAND_CARD: KpiCard = {
   badge: 'Demand',
   title: 'Lead volume and source mix',
+  imageSrc:
+    'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1200&q=80',
+  imageAlt:
+    'Rental inquiry arriving on a mobile phone — inbound lead capture across channels',
   bullets: [
     { label: 'Total leads, live', icon: BarChart3 },
     { label: 'Source mix across all channels', icon: Layers },
@@ -55,6 +62,10 @@ const DEMAND_CARD: KpiCard = {
 const ENGAGEMENT_CARD: KpiCard = {
   badge: 'Engagement',
   title: 'Response and communication',
+  imageSrc:
+    'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=80',
+  imageAlt:
+    'MoveSmart leasing team handling tenant inquiries by call, text, and email',
   bullets: [
     { label: 'Calls, texts, emails, web chat', icon: Headphones },
     { label: 'Response time by channel', icon: Clock },
@@ -68,6 +79,10 @@ const ENGAGEMENT_CARD: KpiCard = {
 const CONVERSION_CARD: KpiCard = {
   badge: 'Conversion',
   title: 'Pipeline to move-in',
+  imageSrc:
+    'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80',
+  imageAlt:
+    'Keys handed over to a new tenant at move-in — lease signed and conversion complete',
   bullets: [
     { label: 'Tours booked', icon: Target },
     { label: 'Tours attended', icon: CheckCircle2 },
@@ -225,6 +240,26 @@ function KpiFamilyCard({
         <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-brand-emerald-light">
           KPI Family
         </span>
+      </div>
+
+      {/* Header image strip */}
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-100">
+        <Image
+          src={card.imageSrc}
+          alt={card.imageAlt}
+          fill
+          sizes="(max-width: 768px) 100vw, 400px"
+          unoptimized
+          className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-t from-brand-navy/55 via-brand-navy/15 to-transparent"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/60 to-transparent"
+        />
       </div>
 
       {/* Body */}

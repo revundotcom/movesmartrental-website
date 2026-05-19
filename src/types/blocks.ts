@@ -91,6 +91,11 @@ export interface HeroBlockProps {
   statStrip?: Array<{
     value: string
     valueSuffix?: string
+    /**
+     * Optional second word rendered in navy beside the emerald `value`. Used to
+     * create a two-tone split (e.g., "MLS" emerald + "Rental Network" navy).
+     */
+    valueAccent?: string
     label: string
   }>
 }

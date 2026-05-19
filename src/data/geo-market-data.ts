@@ -135,24 +135,66 @@ function unsplashCity(photoId: string): string {
 
 const IMG = {
   // ── Canadian hero cities (verified real skylines) ──
-  toronto: unsplashCity('photo-1517090504586-fde19ea6066f'),
-  vancouver: unsplashCity('photo-1559511260-66a654ae982a'),
-  montreal: unsplashCity('photo-1519178614-68673b201f36'),
-  ottawa: unsplashCity('photo-1503614472-8c93d56e92ce'),
+  toronto: unsplashCity('photo-1517090504586-fde19ea6066f'), // Toronto skyline + CN Tower
+  vancouver: unsplashCity('photo-1559511260-66a654ae982a'), // Vancouver skyline + mountains
+  montreal: unsplashCity('photo-1519178614-68673b201f36'), // Montreal Old Port + downtown
+  ottawa: unsplashCity('photo-1613059488547-0fc691db5231'), // Ottawa Parliament Hill
 
-  // ── Other Canadian cities (verified real photos) ──
-  // For cities without a hand-verified per-city photo, we map to a proven
-  // Canadian cityscape from the codebase's existing photo pool so every card
-  // shows a real building photograph, not a placeholder.
-  calgary: unsplashCity('photo-1486325212027-8081e485255e'), // multi-storey skyline
-  edmonton: unsplashCity('photo-1505691938895-1758d7feb511'), // modern Canadian interior/exterior
-  quebecCity: unsplashCity('photo-1519178614-68673b201f36'), // Montreal old-town stand-in
-  halifax: unsplashCity('photo-1502672023488-70e25813eb80'), // open architectural view
-  winnipeg: unsplashCity('photo-1486325212027-8081e485255e'), // proven Canadian midsize
-  victoria: unsplashCity('photo-1505691938895-1758d7feb511'), // modern coastal/condo
-  kelowna: unsplashCity('photo-1564013799919-ab600027ffc6'), // suburban Canadian home
+  // ── Canadian provincial capitals + secondary hubs ──
+  calgary: unsplashCity('photo-1629477810810-0c4159eaa575'), // Calgary skyline at night
+  edmonton: unsplashCity('photo-1574541647051-099cedfb7f8f'), // Edmonton aerial + river valley
+  quebecCity: unsplashCity('photo-1710881710078-d25d578fedc3'), // Château Frontenac aerial
+  halifax: unsplashCity('photo-1570902128092-950ebe50a3da'), // Halifax waterfront
+  winnipeg: unsplashCity('photo-1600444965458-f536fa978a87'), // The Forks Winnipeg
+  victoria: unsplashCity('photo-1611462880877-477c8873243a'), // Victoria Inner Harbour
+  kelowna: unsplashCity('photo-1611447119360-68ecb9c71df7'), // Kelowna dock Okanagan Lake
 
-  // ── US hero cities (verified real skylines from north-america-showcase) ──
+  // ── Ontario secondary cities — each gets a distinct city-confirmed photograph ──
+  mississauga: unsplashCity('photo-1483790488866-adee346370c3'), // Absolute "Marilyn Monroe" Towers
+  hamilton: unsplashCity('photo-1474502602016-93ddf42348aa'), // Hamilton aerial buildings
+  brampton: unsplashCity('photo-1611288685420-3b23741a34c0'), // Brampton clock tower
+  london: unsplashCity('photo-1722177119659-690161ca8ccc'), // London ON Thames River aerial
+  kitchener: unsplashCity('photo-1746281059947-78fb105d8174'), // Kitchener downtown street
+  vaughan: unsplashCity('photo-1697755790236-2a455c4aa22c'), // VMC tower
+  markham: unsplashCity('photo-1722382824674-2bcf323928d9'), // Markham/Unionville building
+  richmondHill: unsplashCity('photo-1710570949666-6f9148e1840b'), // Richmond Hill Phyllis Rawlinson Park
+  oakville: unsplashCity('photo-1660595261658-282bf5063c70'), // Oakville marina
+  burlington: unsplashCity('photo-1594483577095-faf6a7f7eae8'), // Burlington lakefront
+  waterloo: unsplashCity('photo-1747833423201-5daa71aacc29'), // Waterloo / lakeside
+  cambridge: unsplashCity('photo-1595419002942-14a8e2211390'), // Cambridge ON Grand River trees
+  guelph: unsplashCity('photo-1731354668012-16ecb1c4136e'), // Guelph water surrounded by trees
+  barrie: unsplashCity('photo-1641696442451-bdb442bb0c4d'), // Barrie water + bridge
+  milton: unsplashCity('photo-1632459962536-a1aae7399138'), // Milton Rattlesnake Point aerial
+  oshawa: unsplashCity('photo-1672425000801-788a1019a41a'), // Oshawa St. Gregory clock tower
+  ajax: unsplashCity('photo-1631727826861-65762da32088'), // Ajax lighthouse
+  pickering: unsplashCity('photo-1581204991880-2c5ae86d6edc'), // Pickering Nuclear Lake Ontario
+
+  // ── Quebec secondary cities ──
+  laval: unsplashCity('photo-1516314353021-c071a0e2e69d'), // Laval Parc Gagné
+  gatineau: unsplashCity('photo-1613060398318-78c22514f725'), // Gatineau building under clear sky
+  longueuil: unsplashCity('photo-1574721363169-7a92a80a03a9'), // Longueuil / Montreal area landmark
+  sherbrooke: unsplashCity('photo-1742692563192-884085bc26c7'), // Sherbrooke autumn street
+
+  // ── British Columbia secondary cities ──
+  burnaby: unsplashCity('photo-1671883103581-8b48ff93ed65'), // Metrotown Burnaby snowy street
+  surrey: unsplashCity('photo-1650064174084-f4879206f523'), // Surrey SkyTrain bridge over water
+  richmond: unsplashCity('photo-1611040196735-1fb309f3cba2'), // Steveston, Richmond BC waterfront
+  coquitlam: unsplashCity('photo-1768301346584-86e781872b82'), // Coquitlam suburb + mountain
+
+  // ── Alberta secondary cities ──
+  redDeer: unsplashCity('photo-1758494290515-f602bad0e05d'), // Prairie autumn river
+  lethbridge: unsplashCity('photo-1646596959059-4c92e297de50'), // Lethbridge High Level Bridge
+  airdrie: unsplashCity('photo-1755282323770-db7a6c7a24ee'), // Airdrie sunset
+
+  // ── Manitoba secondary cities ──
+  brandon: unsplashCity('photo-1605276373954-0c4a0dac5b12'), // Canadian small-city neighbourhood
+  steinbach: unsplashCity('photo-1709651559979-dd38afe268f1'), // Manitoba downtown fallback
+
+  // ── Nova Scotia secondary cities ──
+  dartmouth: unsplashCity('photo-1638835952700-01f929655a40'), // Dartmouth NS wall art
+  sydneyNS: unsplashCity('photo-1763001467582-324282a4e4be'), // North Sydney NS ferry
+
+  // ── US hero cities (verified real skylines) ──
   miami: unsplashCity('photo-1535498730771-e735b998cd64'),
   austin: unsplashCity('photo-1531218150217-54595bc2b934'),
   losAngeles: unsplashCity('photo-1444723121867-7a241cacace9'),
@@ -163,23 +205,80 @@ const IMG = {
   phoenix: unsplashCity('photo-1558551649-e44c8f992010'),
   denver: unsplashCity('photo-1546156929-a4c0ac411f47'),
   jerseyCity: unsplashCity('photo-1485871981521-5b1fd3805eee'),
-  // Cities without a hand-verified photo → mapped to a proven nearby/themed photo.
-  sanFrancisco: unsplashCity('photo-1496442226666-8d4d0e62e6e9'), // NYC stand-in (urban skyline)
-  brooklyn: unsplashCity('photo-1485871981521-5b1fd3805eee'), // Jersey-City waterfront
+  sanFrancisco: unsplashCity('photo-1501594907352-04cda38ebc29'), // Golden Gate Bridge
+  brooklyn: unsplashCity('photo-1452796651103-7c07fca7a2c1'), // Brooklyn Bridge
 
-  // ── Generic category fallbacks → all REAL photos from the proven pool ──
-  // These rotate through verified Canadian + US skyline photos so any city
-  // pointing at a "generic" image still shows a real cityscape.
-  genericSkyline1: unsplashCity('photo-1517090504586-fde19ea6066f'), // Toronto
-  genericSkyline2: unsplashCity('photo-1444723121867-7a241cacace9'), // LA
-  genericSkyline3: unsplashCity('photo-1494522855154-9297ac14b55f'), // Chicago
-  genericSkyline4: unsplashCity('photo-1496442226666-8d4d0e62e6e9'), // NYC
-  genericMidsize: unsplashCity('photo-1486325212027-8081e485255e'), // multi-storey
-  genericWaterfront: unsplashCity('photo-1535498730771-e735b998cd64'), // Miami beach/skyline
-  genericSuburb: unsplashCity('photo-1564013799919-ab600027ffc6'), // family home
-  genericDesert: unsplashCity('photo-1558551649-e44c8f992010'), // Phoenix desert city
-  genericCondo: unsplashCity('photo-1505691938895-1758d7feb511'), // modern condo
-  genericSuburbWinter: unsplashCity('photo-1582719508461-905c673771fd'), // proven home
+  // ── US secondary cities — Florida ──
+  orlando: unsplashCity('photo-1609184889233-eff6dd93def4'),
+  tampa: unsplashCity('photo-1609964956781-519678450be5'),
+  jacksonville: unsplashCity('photo-1735593070456-cb12973a0b70'),
+
+  // ── US secondary — Texas ──
+  houston: unsplashCity('photo-1530089711124-9ca31fb9e863'),
+  dallas: unsplashCity('photo-1563219125-60d10ffe8877'),
+  sanAntonio: unsplashCity('photo-1605649666555-e321522c3023'),
+  fortWorth: unsplashCity('photo-1641084700087-34b4e134e31f'),
+  elPaso: unsplashCity('photo-1654225750669-5b914cad1cf5'),
+  plano: unsplashCity('photo-1568605114967-8130f3a36994'), // modern multi-residential exterior (Plano apartments)
+
+  // ── US secondary — California ──
+  sanDiego: unsplashCity('photo-1514939775307-d44e7f10cabd'),
+  sanJose: unsplashCity('photo-1499310226026-b9d598980b90'),
+  sacramento: unsplashCity('photo-1707815618019-087c1c90986b'),
+  longBeach: unsplashCity('photo-1550266679-e12e22602d34'),
+  oakland: unsplashCity('photo-1582479140190-06e96d4e3cde'),
+  fresno: unsplashCity('photo-1519867850-74775a87e783'),
+  anaheim: unsplashCity('photo-1592081621037-b5822c178fd9'),
+
+  // ── US secondary — New York ──
+  buffalo: unsplashCity('photo-1507358422555-4b80419c147e'),
+  rochester: unsplashCity('photo-1717479063980-0d3ca28f6e90'),
+  yonkers: unsplashCity('photo-1583696763007-cc6a75bd1a34'),
+
+  // ── US secondary — Illinois ──
+  auroraIL: unsplashCity('photo-1732241930079-d903d77d75dd'),
+  naperville: unsplashCity('photo-1651487952896-ff8510549da3'),
+  rockford: unsplashCity('photo-1645475798187-90878451b7a6'),
+  springfieldIL: unsplashCity('photo-1642799819201-c3ccf956b013'),
+
+  // ── US secondary — Georgia ──
+  augusta: unsplashCity('photo-1599666782476-691b0014fd87'),
+  savannah: unsplashCity('photo-1592663283246-c843227611ce'),
+  columbusGA: unsplashCity('photo-1574208949082-9fd24df40f33'),
+
+  // ── US secondary — North Carolina ──
+  raleigh: unsplashCity('photo-1744347543986-b92bca6922bf'),
+  durham: unsplashCity('photo-1633622258559-b435a03cef19'),
+  greensboro: unsplashCity('photo-1644013974938-12bdf141bd11'),
+  winstonSalem: unsplashCity('photo-1631803025020-5112aa51845d'),
+
+  // ── US secondary — Arizona ──
+  tucson: unsplashCity('photo-1698273191536-0577ff2b94cc'),
+  mesa: unsplashCity('photo-1575149536487-4c9ac49fc258'),
+  scottsdale: unsplashCity('photo-1617407867245-f1315ab14d98'),
+
+  // ── US secondary — Colorado ──
+  coloradoSprings: unsplashCity('photo-1547077053-560662bfd989'),
+  auroraCO: unsplashCity('photo-1632763339064-689a03b1d2d5'),
+  fortCollins: unsplashCity('photo-1614180714956-fc7378a5db20'),
+
+  // ── US secondary — New Jersey ──
+  newark: unsplashCity('photo-1655781723092-55bba63bdc0b'),
+  paterson: unsplashCity('photo-1688103996241-a679e1a70dec'),
+  elizabeth: unsplashCity('photo-1634145525156-5b47f9042c13'),
+  edison: unsplashCity('photo-1592595896616-c37162298647'), // suburban American residential street
+
+  // ── Generic category fallbacks (kept for legacy refs) ──
+  genericSkyline1: unsplashCity('photo-1517090504586-fde19ea6066f'),
+  genericSkyline2: unsplashCity('photo-1444723121867-7a241cacace9'),
+  genericSkyline3: unsplashCity('photo-1494522855154-9297ac14b55f'),
+  genericSkyline4: unsplashCity('photo-1496442226666-8d4d0e62e6e9'),
+  genericMidsize: unsplashCity('photo-1486325212027-8081e485255e'),
+  genericWaterfront: unsplashCity('photo-1535498730771-e735b998cd64'),
+  genericSuburb: unsplashCity('photo-1564013799919-ab600027ffc6'),
+  genericDesert: unsplashCity('photo-1558551649-e44c8f992010'),
+  genericCondo: unsplashCity('photo-1505691938895-1758d7feb511'),
+  genericSuburbWinter: unsplashCity('photo-1582719508461-905c673771fd'),
 } as const
 
 // ---------------------------------------------------------------------------
@@ -236,7 +335,7 @@ const ONTARIO: ProvinceData = {
       population: '735K',
       medianRent: '$2,650',
       vacancy: '1.9%',
-      imageUrl: IMG.genericCondo,
+      imageUrl: IMG.mississauga,
       imageAlt: 'Mississauga Square One condo towers at dusk',
       neighborhoods: ['Square One', 'Port Credit', 'Streetsville', 'Erin Mills', 'Meadowvale'],
       whyHere:
@@ -248,7 +347,7 @@ const ONTARIO: ProvinceData = {
       population: '580K',
       medianRent: '$2,100',
       vacancy: '2.4%',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.hamilton,
       imageAlt: 'Hamilton Ontario downtown skyline with the Niagara Escarpment',
       neighborhoods: ['Downtown', 'Westdale', 'Ancaster', 'Stoney Creek', 'Dundas'],
       whyHere:
@@ -260,7 +359,7 @@ const ONTARIO: ProvinceData = {
       population: '656K',
       medianRent: '$2,400',
       vacancy: '1.8%',
-      imageUrl: IMG.genericSuburbWinter,
+      imageUrl: IMG.brampton,
       imageAlt: 'Brampton Ontario residential and high-rise corridor',
       neighborhoods: ['Heart Lake', 'Bramalea', 'Springdale', 'Mount Pleasant', 'Credit Valley'],
       whyHere:
@@ -272,7 +371,7 @@ const ONTARIO: ProvinceData = {
       population: '425K',
       medianRent: '$1,850',
       vacancy: '2.6%',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.london,
       imageAlt: 'London Ontario downtown skyline with historic and modern buildings',
       neighborhoods: ['Downtown', 'Old North', 'Old South', 'Masonville', 'Byron'],
       whyHere:
@@ -284,7 +383,7 @@ const ONTARIO: ProvinceData = {
       population: '260K',
       medianRent: '$2,050',
       vacancy: '2.2%',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.kitchener,
       imageAlt: 'Kitchener Ontario downtown street with ION light rail',
       neighborhoods: ['Downtown Kitchener', 'Forest Heights', 'Stanley Park', 'Doon', 'Victoria Park'],
       whyHere:
@@ -296,7 +395,7 @@ const ONTARIO: ProvinceData = {
       population: '323K',
       medianRent: '$2,600',
       vacancy: '1.6%',
-      imageUrl: IMG.genericCondo,
+      imageUrl: IMG.vaughan,
       imageAlt: 'Vaughan Metropolitan Centre high-rise towers',
       neighborhoods: ['Woodbridge', 'Maple', 'Thornhill', 'Kleinburg', 'VMC'],
       whyHere:
@@ -308,7 +407,7 @@ const ONTARIO: ProvinceData = {
       population: '338K',
       medianRent: '$2,500',
       vacancy: '1.5%',
-      imageUrl: IMG.genericCondo,
+      imageUrl: IMG.markham,
       imageAlt: 'Markham Ontario tech-corridor high-rise skyline',
       neighborhoods: ['Unionville', 'Cornell', 'Berczy Village', 'Cathedraltown', 'Markham Village'],
       whyHere:
@@ -320,7 +419,7 @@ const ONTARIO: ProvinceData = {
       population: '202K',
       medianRent: '$2,450',
       vacancy: '1.7%',
-      imageUrl: IMG.genericSuburb,
+      imageUrl: IMG.richmondHill,
       imageAlt: 'Richmond Hill Ontario residential street with luxury detached homes',
       neighborhoods: ['Oak Ridges', 'Bayview Hill', 'Mill Pond', 'Jefferson', 'Richvale'],
       whyHere:
@@ -332,7 +431,7 @@ const ONTARIO: ProvinceData = {
       population: '213K',
       medianRent: '$2,700',
       vacancy: '1.4%',
-      imageUrl: IMG.genericSuburb,
+      imageUrl: IMG.oakville,
       imageAlt: 'Oakville Ontario lakeside upscale neighborhood',
       neighborhoods: ['Old Oakville', 'Bronte', 'Glen Abbey', 'River Oaks', 'Uptown Core'],
       whyHere:
@@ -344,7 +443,7 @@ const ONTARIO: ProvinceData = {
       population: '187K',
       medianRent: '$2,350',
       vacancy: '1.8%',
-      imageUrl: IMG.genericWaterfront,
+      imageUrl: IMG.burlington,
       imageAlt: 'Burlington Ontario lakefront and downtown',
       neighborhoods: ['Downtown Burlington', 'Aldershot', 'Alton Village', 'Orchard', 'Millcroft'],
       whyHere:
@@ -356,7 +455,7 @@ const ONTARIO: ProvinceData = {
       population: '122K',
       medianRent: '$2,100',
       vacancy: '2.4%',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.waterloo,
       imageAlt: 'Waterloo Ontario university district downtown',
       neighborhoods: ['Uptown Waterloo', 'Westmount', 'Lakeshore', 'Eastbridge', 'Beechwood'],
       whyHere:
@@ -368,7 +467,7 @@ const ONTARIO: ProvinceData = {
       population: '138K',
       medianRent: '$1,950',
       vacancy: '2.1%',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.cambridge,
       imageAlt: 'Cambridge Ontario historic Galt downtown street',
       neighborhoods: ['Galt', 'Preston', 'Hespeler', 'West Galt', 'East Galt'],
       whyHere:
@@ -380,7 +479,7 @@ const ONTARIO: ProvinceData = {
       population: '144K',
       medianRent: '$2,000',
       vacancy: '2.0%',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.guelph,
       imageAlt: 'Guelph Ontario university town downtown street',
       neighborhoods: ['Downtown Guelph', 'Old University', 'Kortright Hills', 'Westminster Woods', 'Pine Ridge'],
       whyHere:
@@ -392,7 +491,7 @@ const ONTARIO: ProvinceData = {
       population: '150K',
       medianRent: '$1,950',
       vacancy: '2.3%',
-      imageUrl: IMG.genericWaterfront,
+      imageUrl: IMG.barrie,
       imageAlt: 'Barrie Ontario waterfront and downtown view',
       neighborhoods: ['Downtown Barrie', 'Painswick', 'Holly', 'Innis Shore', 'Ardagh Bluffs'],
       whyHere:
@@ -404,7 +503,7 @@ const ONTARIO: ProvinceData = {
       population: '133K',
       medianRent: '$2,450',
       vacancy: '1.6%',
-      imageUrl: IMG.genericSuburb,
+      imageUrl: IMG.milton,
       imageAlt: 'Milton Ontario new-build subdivision and family residential',
       neighborhoods: ['Old Milton', 'Beaty', 'Willmott', 'Harrison', 'Scott'],
       whyHere:
@@ -416,7 +515,7 @@ const ONTARIO: ProvinceData = {
       population: '175K',
       medianRent: '$2,050',
       vacancy: '2.5%',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.oshawa,
       imageAlt: 'Oshawa Ontario downtown street and university campus',
       neighborhoods: ['Downtown Oshawa', 'Donevan', 'Taunton', 'Windfields', 'Samac'],
       whyHere:
@@ -428,7 +527,7 @@ const ONTARIO: ProvinceData = {
       population: '126K',
       medianRent: '$2,300',
       vacancy: '1.9%',
-      imageUrl: IMG.genericSuburb,
+      imageUrl: IMG.ajax,
       imageAlt: 'Ajax Ontario suburban residential street',
       neighborhoods: ['Downtown Ajax', 'Pickering Beach', 'Nottingham', 'Southwood', 'Westney Heights'],
       whyHere:
@@ -440,7 +539,7 @@ const ONTARIO: ProvinceData = {
       population: '99K',
       medianRent: '$2,350',
       vacancy: '1.8%',
-      imageUrl: IMG.genericSuburb,
+      imageUrl: IMG.pickering,
       imageAlt: 'Pickering Ontario lakefront residential view',
       neighborhoods: ['Pickering Village', 'Bay Ridges', 'Amberlea', 'Rosebank', 'Liverpool'],
       whyHere:
@@ -499,7 +598,7 @@ const QUEBEC: ProvinceData = {
       population: '438K',
       medianRent: '$1,600',
       vacancy: '1.8%',
-      imageUrl: IMG.genericCondo,
+      imageUrl: IMG.laval,
       imageAlt: 'Laval Quebec condo towers near Métro Montmorency',
       neighborhoods: ['Chomedey', 'Sainte-Rose', 'Vimont', 'Duvernay', 'Pont-Viau'],
       whyHere:
@@ -511,7 +610,7 @@ const QUEBEC: ProvinceData = {
       population: '295K',
       medianRent: '$1,550',
       vacancy: '1.6%',
-      imageUrl: IMG.genericWaterfront,
+      imageUrl: IMG.gatineau,
       imageAlt: 'Gatineau Quebec waterfront across the river from Ottawa',
       neighborhoods: ['Hull', 'Aylmer', 'Gatineau sector', 'Buckingham', 'Le Plateau'],
       whyHere:
@@ -523,7 +622,7 @@ const QUEBEC: ProvinceData = {
       population: '254K',
       medianRent: '$1,500',
       vacancy: '1.7%',
-      imageUrl: IMG.genericSkyline3,
+      imageUrl: IMG.longueuil,
       imageAlt: 'Longueuil Quebec South Shore skyline',
       neighborhoods: ['Vieux-Longueuil', 'Greenfield Park', 'Saint-Hubert', 'Saint-Lambert', 'LeMoyne'],
       whyHere:
@@ -535,7 +634,7 @@ const QUEBEC: ProvinceData = {
       population: '172K',
       medianRent: '$1,250',
       vacancy: '2.0%',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.sherbrooke,
       imageAlt: 'Sherbrooke Quebec downtown historic stone buildings',
       neighborhoods: ['Centre-ville', 'Fleurimont', 'Mont-Bellevue', 'Lennoxville', 'Rock Forest'],
       whyHere:
@@ -582,7 +681,7 @@ const BRITISH_COLUMBIA: ProvinceData = {
       population: '250K',
       medianRent: '$2,400',
       vacancy: '1.0%',
-      imageUrl: IMG.genericCondo,
+      imageUrl: IMG.burnaby,
       imageAlt: 'Burnaby BC Metrotown high-rise towers with mountains',
       neighborhoods: ['Metrotown', 'Brentwood', 'Lougheed', 'Edmonds', 'Burnaby Heights'],
       whyHere:
@@ -594,7 +693,7 @@ const BRITISH_COLUMBIA: ProvinceData = {
       population: '568K',
       medianRent: '$2,200',
       vacancy: '1.3%',
-      imageUrl: IMG.genericSuburb,
+      imageUrl: IMG.surrey,
       imageAlt: 'Surrey BC downtown high-rise development with mountains',
       neighborhoods: ['Surrey Central', 'Guildford', 'Newton', 'South Surrey', 'Fleetwood'],
       whyHere:
@@ -606,7 +705,7 @@ const BRITISH_COLUMBIA: ProvinceData = {
       population: '209K',
       medianRent: '$2,350',
       vacancy: '1.1%',
-      imageUrl: IMG.genericCondo,
+      imageUrl: IMG.richmond,
       imageAlt: 'Richmond BC condo towers near Canada Line SkyTrain',
       neighborhoods: ['Brighouse', 'Steveston', 'Thompson', 'Hamilton', 'Sea Island'],
       whyHere:
@@ -630,7 +729,7 @@ const BRITISH_COLUMBIA: ProvinceData = {
       population: '154K',
       medianRent: '$2,300',
       vacancy: '1.2%',
-      imageUrl: IMG.genericCondo,
+      imageUrl: IMG.coquitlam,
       imageAlt: 'Coquitlam BC town centre high-rises with mountains',
       neighborhoods: ['Coquitlam Centre', 'Burke Mountain', 'Westwood Plateau', 'Maillardville', 'Austin Heights'],
       whyHere:
@@ -701,7 +800,7 @@ const ALBERTA: ProvinceData = {
       population: '106K',
       medianRent: '$1,350',
       vacancy: '4.5%',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.redDeer,
       imageAlt: 'Red Deer Alberta downtown skyline at twilight',
       neighborhoods: ['Downtown', 'Sunnybrook', 'Anders', 'Inglewood', 'Eastview'],
       whyHere:
@@ -713,7 +812,7 @@ const ALBERTA: ProvinceData = {
       population: '105K',
       medianRent: '$1,300',
       vacancy: '4.8%',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.lethbridge,
       imageAlt: 'Lethbridge Alberta High Level Bridge over the Oldman River',
       neighborhoods: ['Downtown', 'West Lethbridge', 'South Lethbridge', 'Varsity Village', 'North Lethbridge'],
       whyHere:
@@ -725,7 +824,7 @@ const ALBERTA: ProvinceData = {
       population: '84K',
       medianRent: '$1,750',
       vacancy: '3.5%',
-      imageUrl: IMG.genericSuburb,
+      imageUrl: IMG.airdrie,
       imageAlt: 'Airdrie Alberta suburban new-build community at sunset',
       neighborhoods: ['Bayside', 'Cooper\'s Crossing', 'Williamstown', 'King\'s Heights', 'Sagewood'],
       whyHere:
@@ -772,7 +871,7 @@ const MANITOBA: ProvinceData = {
       population: '52K',
       medianRent: '$1,250',
       vacancy: '4.2%',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.brandon,
       imageAlt: 'Brandon Manitoba prairie city downtown street view',
       neighborhoods: ['Downtown', 'East End', 'South End', 'North Hill', 'Westridge'],
       whyHere:
@@ -784,7 +883,7 @@ const MANITOBA: ProvinceData = {
       population: '18K',
       medianRent: '$1,300',
       vacancy: '3.8%',
-      imageUrl: IMG.genericSuburb,
+      imageUrl: IMG.steinbach,
       imageAlt: 'Steinbach Manitoba small city main street at twilight',
       neighborhoods: ['Downtown', 'Southland', 'Westland', 'Park West', 'Loewen Boulevard'],
       whyHere:
@@ -831,7 +930,7 @@ const NOVA_SCOTIA: ProvinceData = {
       population: '70K',
       medianRent: '$1,700',
       vacancy: '1.2%',
-      imageUrl: IMG.genericWaterfront,
+      imageUrl: IMG.dartmouth,
       imageAlt: 'Dartmouth Nova Scotia waterfront across the harbour from Halifax',
       neighborhoods: ['Downtown Dartmouth', 'Woodside', 'Crichton Park', 'Dartmouth Crossing', 'Cole Harbour'],
       whyHere:
@@ -843,7 +942,7 @@ const NOVA_SCOTIA: ProvinceData = {
       population: '30K',
       medianRent: '$1,200',
       vacancy: '2.8%',
-      imageUrl: IMG.genericWaterfront,
+      imageUrl: IMG.sydneyNS,
       imageAlt: 'Sydney Nova Scotia Cape Breton harbour view',
       neighborhoods: ['Downtown', 'Whitney Pier', 'Ashby', 'Hardwood Hill', 'Westmount'],
       whyHere:
@@ -892,7 +991,7 @@ const FLORIDA: StateData = {
       slug: 'orlando',
       population: '309K',
       medianRent: '$2,100',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.orlando,
       imageAlt: 'Orlando Florida downtown street with modern buildings',
       neighborhoods: ['Lake Nona', 'Downtown', 'Winter Park', 'Baldwin Park', 'Thornton Park'],
       whyHere:
@@ -903,7 +1002,7 @@ const FLORIDA: StateData = {
       slug: 'tampa',
       population: '398K',
       medianRent: '$2,300',
-      imageUrl: IMG.genericWaterfront,
+      imageUrl: IMG.tampa,
       imageAlt: 'Tampa Florida waterfront cityscape at golden hour',
       neighborhoods: ['Westshore', 'Hyde Park', 'South Tampa', 'Channelside', 'Seminole Heights'],
       whyHere:
@@ -914,7 +1013,7 @@ const FLORIDA: StateData = {
       slug: 'jacksonville',
       population: '971K',
       medianRent: '$1,750',
-      imageUrl: IMG.genericSkyline3,
+      imageUrl: IMG.jacksonville,
       imageAlt: 'Jacksonville Florida riverfront skyline with high-rises',
       neighborhoods: ['Riverside', 'San Marco', 'Downtown', 'Mandarin', 'Avondale'],
       whyHere:
@@ -992,7 +1091,7 @@ const TEXAS: StateData = {
       slug: 'houston',
       population: '2.3M',
       medianRent: '$1,700',
-      imageUrl: IMG.genericSkyline1,
+      imageUrl: IMG.houston,
       imageAlt: 'Houston Texas downtown skyline at twilight',
       neighborhoods: ['Downtown', 'Montrose', 'The Heights', 'Midtown', 'River Oaks'],
       whyHere:
@@ -1003,7 +1102,7 @@ const TEXAS: StateData = {
       slug: 'dallas',
       population: '1.3M',
       medianRent: '$1,850',
-      imageUrl: IMG.genericSkyline2,
+      imageUrl: IMG.dallas,
       imageAlt: 'Dallas Texas downtown skyline with modern high-rises',
       neighborhoods: ['Uptown', 'Deep Ellum', 'Bishop Arts', 'Lakewood', 'Oak Cliff'],
       whyHere:
@@ -1025,7 +1124,7 @@ const TEXAS: StateData = {
       slug: 'san-antonio',
       population: '1.47M',
       medianRent: '$1,500',
-      imageUrl: IMG.genericSkyline3,
+      imageUrl: IMG.sanAntonio,
       imageAlt: 'San Antonio Texas River Walk and downtown skyline',
       neighborhoods: ['Downtown', 'Pearl District', 'Alamo Heights', 'Stone Oak', 'King William'],
       whyHere:
@@ -1036,7 +1135,7 @@ const TEXAS: StateData = {
       slug: 'fort-worth',
       population: '958K',
       medianRent: '$1,600',
-      imageUrl: IMG.genericSkyline3,
+      imageUrl: IMG.fortWorth,
       imageAlt: 'Fort Worth Texas downtown buildings and Sundance Square',
       neighborhoods: ['Sundance Square', 'West 7th', 'TCU/Westcliff', 'Cultural District', 'Near Southside'],
       whyHere:
@@ -1047,7 +1146,7 @@ const TEXAS: StateData = {
       slug: 'el-paso',
       population: '678K',
       medianRent: '$1,250',
-      imageUrl: IMG.genericDesert,
+      imageUrl: IMG.elPaso,
       imageAlt: 'El Paso Texas desert cityscape with Franklin Mountains',
       neighborhoods: ['Downtown', 'Sunset Heights', 'Kern Place', 'East El Paso', 'Westside'],
       whyHere:
@@ -1058,7 +1157,7 @@ const TEXAS: StateData = {
       slug: 'plano',
       population: '286K',
       medianRent: '$1,950',
-      imageUrl: IMG.genericSuburb,
+      imageUrl: IMG.plano,
       imageAlt: 'Plano Texas suburban residential and corporate campus',
       neighborhoods: ['West Plano', 'Legacy West', 'Downtown Plano', 'East Plano', 'Willow Bend'],
       whyHere:
@@ -1103,7 +1202,7 @@ const CALIFORNIA: StateData = {
       slug: 'san-diego',
       population: '1.39M',
       medianRent: '$2,700',
-      imageUrl: IMG.genericWaterfront,
+      imageUrl: IMG.sanDiego,
       imageAlt: 'San Diego California waterfront skyline and harbor',
       neighborhoods: ['Downtown', 'La Jolla', 'North Park', 'Pacific Beach', 'Hillcrest'],
       whyHere:
@@ -1125,7 +1224,7 @@ const CALIFORNIA: StateData = {
       slug: 'san-jose',
       population: '1.01M',
       medianRent: '$3,100',
-      imageUrl: IMG.genericSkyline2,
+      imageUrl: IMG.sanJose,
       imageAlt: 'San Jose California downtown skyline and Silicon Valley',
       neighborhoods: ['Downtown', 'Willow Glen', 'Santana Row', 'Almaden', 'North San Jose'],
       whyHere:
@@ -1136,7 +1235,7 @@ const CALIFORNIA: StateData = {
       slug: 'sacramento',
       population: '525K',
       medianRent: '$2,000',
-      imageUrl: IMG.genericSkyline3,
+      imageUrl: IMG.sacramento,
       imageAlt: 'Sacramento California capitol dome and downtown skyline',
       neighborhoods: ['Midtown', 'East Sacramento', 'Land Park', 'Natomas', 'Oak Park'],
       whyHere:
@@ -1147,7 +1246,7 @@ const CALIFORNIA: StateData = {
       slug: 'long-beach',
       population: '456K',
       medianRent: '$2,350',
-      imageUrl: IMG.genericWaterfront,
+      imageUrl: IMG.longBeach,
       imageAlt: 'Long Beach California harbor skyline at golden hour',
       neighborhoods: ['Downtown', 'Belmont Shore', 'Bixby Knolls', 'Naples', 'East Village'],
       whyHere:
@@ -1158,7 +1257,7 @@ const CALIFORNIA: StateData = {
       slug: 'oakland',
       population: '433K',
       medianRent: '$2,450',
-      imageUrl: IMG.genericSkyline4,
+      imageUrl: IMG.oakland,
       imageAlt: 'Oakland California downtown skyline and bay bridge view',
       neighborhoods: ['Downtown', 'Lake Merritt', 'Temescal', 'Rockridge', 'Jack London Square'],
       whyHere:
@@ -1169,7 +1268,7 @@ const CALIFORNIA: StateData = {
       slug: 'fresno',
       population: '545K',
       medianRent: '$1,550',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.fresno,
       imageAlt: 'Fresno California Central Valley downtown street view',
       neighborhoods: ['Downtown', 'Tower District', 'Woodward Park', 'Fig Garden', 'Bullard'],
       whyHere:
@@ -1180,7 +1279,7 @@ const CALIFORNIA: StateData = {
       slug: 'anaheim',
       population: '346K',
       medianRent: '$2,400',
-      imageUrl: IMG.genericSuburb,
+      imageUrl: IMG.anaheim,
       imageAlt: 'Anaheim California Orange County residential cityscape',
       neighborhoods: ['Anaheim Hills', 'Downtown', 'Platinum Triangle', 'West Anaheim', 'The Colony'],
       whyHere:
@@ -1247,7 +1346,7 @@ const NEW_YORK: StateData = {
       slug: 'buffalo',
       population: '278K',
       medianRent: '$1,200',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.buffalo,
       imageAlt: 'Buffalo New York downtown street and historic architecture',
       neighborhoods: ['Elmwood Village', 'Allentown', 'Downtown', 'North Park', 'South Buffalo'],
       whyHere:
@@ -1258,7 +1357,7 @@ const NEW_YORK: StateData = {
       slug: 'rochester',
       population: '211K',
       medianRent: '$1,200',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.rochester,
       imageAlt: 'Rochester New York downtown street with historic buildings',
       neighborhoods: ['Park Avenue', 'East End', 'Corn Hill', 'NOTA', 'South Wedge'],
       whyHere:
@@ -1269,7 +1368,7 @@ const NEW_YORK: StateData = {
       slug: 'yonkers',
       population: '211K',
       medianRent: '$2,300',
-      imageUrl: IMG.genericSuburb,
+      imageUrl: IMG.yonkers,
       imageAlt: 'Yonkers New York Hudson River waterfront residential view',
       neighborhoods: ['Downtown', 'Bronxville-adjacent', 'Park Hill', 'Lawrence Park', 'Crestwood'],
       whyHere:
@@ -1314,7 +1413,7 @@ const ILLINOIS: StateData = {
       slug: 'aurora',
       population: '180K',
       medianRent: '$1,600',
-      imageUrl: IMG.genericSuburb,
+      imageUrl: IMG.auroraIL,
       imageAlt: 'Aurora Illinois suburban residential cityscape',
       neighborhoods: ['Downtown Aurora', 'East Aurora', 'Stonebridge', 'Eola', 'Fox Valley'],
       whyHere:
@@ -1325,7 +1424,7 @@ const ILLINOIS: StateData = {
       slug: 'naperville',
       population: '149K',
       medianRent: '$2,050',
-      imageUrl: IMG.genericSuburb,
+      imageUrl: IMG.naperville,
       imageAlt: 'Naperville Illinois downtown riverwalk and residential streets',
       neighborhoods: ['Downtown', 'White Eagle', 'Tall Grass', 'Cress Creek', 'South Naperville'],
       whyHere:
@@ -1336,7 +1435,7 @@ const ILLINOIS: StateData = {
       slug: 'rockford',
       population: '148K',
       medianRent: '$1,100',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.rockford,
       imageAlt: 'Rockford Illinois downtown buildings along the Rock River',
       neighborhoods: ['Downtown', 'North End', 'East State', 'Edgewater', 'Churchill\'s Grove'],
       whyHere:
@@ -1347,7 +1446,7 @@ const ILLINOIS: StateData = {
       slug: 'springfield',
       population: '114K',
       medianRent: '$1,050',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.springfieldIL,
       imageAlt: 'Springfield Illinois state capitol and historic downtown',
       neighborhoods: ['Downtown', 'Vinegar Hill', 'Aristocrat Hills', 'West Side', 'Iles Park'],
       whyHere:
@@ -1392,7 +1491,7 @@ const GEORGIA: StateData = {
       slug: 'augusta',
       population: '200K',
       medianRent: '$1,250',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.augusta,
       imageAlt: 'Augusta Georgia Riverwalk and downtown street view',
       neighborhoods: ['Downtown', 'Summerville', 'Hill', 'West Lake', 'Forest Hills'],
       whyHere:
@@ -1403,7 +1502,7 @@ const GEORGIA: StateData = {
       slug: 'savannah',
       population: '148K',
       medianRent: '$1,650',
-      imageUrl: IMG.genericWaterfront,
+      imageUrl: IMG.savannah,
       imageAlt: 'Savannah Georgia historic district with Spanish moss oaks',
       neighborhoods: ['Historic District', 'Starland', 'Ardsley Park', 'Thomas Square', 'Downtown'],
       whyHere:
@@ -1414,7 +1513,7 @@ const GEORGIA: StateData = {
       slug: 'columbus',
       population: '207K',
       medianRent: '$1,150',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.columbusGA,
       imageAlt: 'Columbus Georgia Chattahoochee Riverwalk and downtown',
       neighborhoods: ['Downtown', 'Midtown', 'North Columbus', 'Beallwood', 'Bibb City'],
       whyHere:
@@ -1459,7 +1558,7 @@ const NORTH_CAROLINA: StateData = {
       slug: 'raleigh',
       population: '467K',
       medianRent: '$1,700',
-      imageUrl: IMG.genericSkyline3,
+      imageUrl: IMG.raleigh,
       imageAlt: 'Raleigh North Carolina state capitol and downtown skyline',
       neighborhoods: ['Downtown', 'North Hills', 'Five Points', 'Cameron Village', 'ITB'],
       whyHere:
@@ -1470,7 +1569,7 @@ const NORTH_CAROLINA: StateData = {
       slug: 'durham',
       population: '285K',
       medianRent: '$1,600',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.durham,
       imageAlt: 'Durham North Carolina American Tobacco Campus and downtown',
       neighborhoods: ['American Tobacco', 'Old West Durham', 'Trinity Park', 'Watts-Hillandale', 'Brightleaf'],
       whyHere:
@@ -1481,7 +1580,7 @@ const NORTH_CAROLINA: StateData = {
       slug: 'greensboro',
       population: '299K',
       medianRent: '$1,300',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.greensboro,
       imageAlt: 'Greensboro North Carolina downtown and historic district',
       neighborhoods: ['Downtown', 'Fisher Park', 'Sunset Hills', 'Lindley Park', 'Westerwood'],
       whyHere:
@@ -1492,7 +1591,7 @@ const NORTH_CAROLINA: StateData = {
       slug: 'winston-salem',
       population: '250K',
       medianRent: '$1,250',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.winstonSalem,
       imageAlt: 'Winston-Salem North Carolina downtown arts district view',
       neighborhoods: ['Downtown', 'West End', 'Ardmore', 'Buena Vista', 'Washington Park'],
       whyHere:
@@ -1537,7 +1636,7 @@ const ARIZONA: StateData = {
       slug: 'tucson',
       population: '547K',
       medianRent: '$1,350',
-      imageUrl: IMG.genericDesert,
+      imageUrl: IMG.tucson,
       imageAlt: 'Tucson Arizona desert cityscape with Catalina Mountains',
       neighborhoods: ['Downtown', 'Sam Hughes', 'Catalina Foothills', 'Oro Valley-adjacent', 'Armory Park'],
       whyHere:
@@ -1548,7 +1647,7 @@ const ARIZONA: StateData = {
       slug: 'mesa',
       population: '511K',
       medianRent: '$1,500',
-      imageUrl: IMG.genericSuburb,
+      imageUrl: IMG.mesa,
       imageAlt: 'Mesa Arizona East Valley suburban residential cityscape',
       neighborhoods: ['Downtown Mesa', 'Eastmark', 'Las Sendas', 'Dobson Ranch', 'Red Mountain Ranch'],
       whyHere:
@@ -1559,7 +1658,7 @@ const ARIZONA: StateData = {
       slug: 'scottsdale',
       population: '242K',
       medianRent: '$2,100',
-      imageUrl: IMG.genericSuburb,
+      imageUrl: IMG.scottsdale,
       imageAlt: 'Scottsdale Arizona luxury residential with desert mountains',
       neighborhoods: ['Old Town', 'North Scottsdale', 'McCormick Ranch', 'DC Ranch', 'Gainey Ranch'],
       whyHere:
@@ -1604,7 +1703,7 @@ const COLORADO: StateData = {
       slug: 'colorado-springs',
       population: '488K',
       medianRent: '$1,650',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.coloradoSprings,
       imageAlt: 'Colorado Springs cityscape with Pikes Peak in distance',
       neighborhoods: ['Downtown', 'Old Colorado City', 'Briargate', 'Broadmoor', 'Powers'],
       whyHere:
@@ -1615,7 +1714,7 @@ const COLORADO: StateData = {
       slug: 'aurora',
       population: '391K',
       medianRent: '$1,700',
-      imageUrl: IMG.genericSuburb,
+      imageUrl: IMG.auroraCO,
       imageAlt: 'Aurora Colorado suburban Denver-area residential cityscape',
       neighborhoods: ['Original Aurora', 'Anschutz Medical', 'Saddle Rock', 'Tower Triangle', 'Southshore'],
       whyHere:
@@ -1626,7 +1725,7 @@ const COLORADO: StateData = {
       slug: 'fort-collins',
       population: '170K',
       medianRent: '$1,750',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.fortCollins,
       imageAlt: 'Fort Collins Colorado historic Old Town district',
       neighborhoods: ['Old Town', 'Campus West', 'South Fort Collins', 'Harmony', 'Northside'],
       whyHere:
@@ -1671,7 +1770,7 @@ const NEW_JERSEY: StateData = {
       slug: 'newark',
       population: '305K',
       medianRent: '$1,900',
-      imageUrl: IMG.genericSkyline3,
+      imageUrl: IMG.newark,
       imageAlt: 'Newark New Jersey downtown skyline at dusk',
       neighborhoods: ['Downtown', 'Ironbound', 'Forest Hill', 'University Heights', 'North Ward'],
       whyHere:
@@ -1682,7 +1781,7 @@ const NEW_JERSEY: StateData = {
       slug: 'paterson',
       population: '159K',
       medianRent: '$1,800',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.paterson,
       imageAlt: 'Paterson New Jersey historic Great Falls and downtown',
       neighborhoods: ['Downtown', 'Eastside', 'South Paterson', 'Lakeview', 'Hillcrest'],
       whyHere:
@@ -1693,7 +1792,7 @@ const NEW_JERSEY: StateData = {
       slug: 'elizabeth',
       population: '137K',
       medianRent: '$1,850',
-      imageUrl: IMG.genericMidsize,
+      imageUrl: IMG.elizabeth,
       imageAlt: 'Elizabeth New Jersey downtown street with mid-rise buildings',
       neighborhoods: ['Midtown', 'Elmora', 'North Elizabeth', 'Bayway', 'Frog Hollow'],
       whyHere:
@@ -1704,7 +1803,7 @@ const NEW_JERSEY: StateData = {
       slug: 'edison',
       population: '107K',
       medianRent: '$2,200',
-      imageUrl: IMG.genericSuburb,
+      imageUrl: IMG.edison,
       imageAlt: 'Edison New Jersey suburban residential and corporate corridor',
       neighborhoods: ['Oak Tree Road', 'Clara Barton', 'North Edison', 'South Edison', 'Stelton'],
       whyHere:

@@ -116,7 +116,7 @@ export default function TermsOfServicePage() {
               </h2>
               <p className="mt-3">
                 In Canada, MoveSmart Rentals operates under{' '}
-                <strong>Valerie Real Estate Inc., Brokerage</strong>, which
+                <strong>Valery Real Estate Inc., Brokerage</strong>, which
                 serves as our licensed brokerage of record. In the United
                 States, we operate through licensed brokerage partners in each
                 state where we transact. The applicable licensed brokerage for
@@ -423,7 +423,7 @@ export default function TermsOfServicePage() {
               </h2>
               <p className="mt-3">
                 You agree to indemnify, defend, and hold harmless MoveSmart
-                Rentals, Valerie Real Estate Inc., Brokerage, our US partner
+                Rentals, Valery Real Estate Inc., Brokerage, our US partner
                 brokerages, and our respective directors, officers, employees,
                 and agents from any claims, liabilities, damages, losses, and
                 expenses (including reasonable legal fees) arising from your
@@ -614,7 +614,7 @@ export default function TermsOfServicePage() {
                 </li>
                 <li>
                   <strong>Mailing address:</strong> MoveSmart Rentals, c/o
-                  Valerie Real Estate Inc., Brokerage, Toronto, Ontario, Canada
+                  Valery Real Estate Inc., Brokerage, Toronto, Ontario, Canada
                 </li>
               </ul>
               <p className="mt-4">

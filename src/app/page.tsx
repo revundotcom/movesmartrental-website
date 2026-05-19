@@ -20,6 +20,7 @@ import { BuyOutputBlock } from '@/components/blocks/buy-output-block'
 import { ProblemSolutionShowcase } from '@/components/blocks/problem-solution-showcase'
 import { CaseStudySection } from '@/components/blocks/case-study-card'
 import { NorthAmericaShowcase } from '@/components/blocks/north-america-showcase'
+import { DigitalWorldMap } from '@/components/blocks/digital-world-map'
 import { JsonLd } from '@/components/json-ld'
 import { buildOrganizationSchema } from '@/lib/schema-builders/organization'
 import { buildWebSiteSchema } from '@/lib/schema-builders/website'
@@ -100,9 +101,9 @@ export default async function HomePage() {
           cta1={{ label: 'List my property', href: '/contact/?type=owner' }}
           cta2={{ label: 'Browse rentals', href: '/properties/' }}
           statStrip={[
-            { value: 'MLS + Rental Network', label: 'Broad listing exposure' },
-            { value: 'Live Owner Portal', label: 'Real-time leasing visibility' },
-            { value: 'Screened Applicant Flow', label: 'Applications organized for review' },
+            { value: 'MLS', valueAccent: '+ Rental Network', label: 'Broad listing exposure' },
+            { value: 'Live Owner', valueAccent: 'Portal', label: 'Real-time leasing visibility' },
+            { value: 'Screened', valueAccent: 'Applicant Flow', label: 'Applications organized for review' },
           ]}
           priority
         />
@@ -386,24 +387,8 @@ export default async function HomePage() {
         <div className="relative z-10 mx-auto max-w-7xl px-4">
           <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
             <div className="flex items-center justify-center">
-              <div className="relative w-full max-w-[520px]">
-                <div
-                  className="absolute inset-0 rounded-3xl blur-3xl"
-                  style={{ background: 'radial-gradient(ellipse, rgba(16,185,129,0.2) 0%, transparent 70%)' }}
-                  aria-hidden="true"
-                />
-                <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-brand-emerald/10 ring-1 ring-brand-emerald/20">
-                  <Image
-                    src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1600&q=80&auto=format&fit=crop"
-                    alt="World map showing MoveSmart Rentals franchise expansion across Canada and the United States"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 520px"
-                    unoptimized
-                  />
-                  {/* Navy tint so the map blends with the dark franchising section */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/40 via-transparent to-brand-navy/60" aria-hidden="true" />
-                </div>
+              <div className="relative w-full max-w-[560px]">
+                <DigitalWorldMap />
               </div>
             </div>
 
@@ -545,7 +530,7 @@ export default async function HomePage() {
           {
             question: 'Are you a brokerage or a property manager?',
             answer:
-              'We are a full-service leasing and tenant placement brokerage. We do NOT handle ongoing property management — no rent collection, no maintenance dispatch, no repairs. Our scope is listing through move-in. We partner with brokerages such as Valerie Real Estate Inc. for the brokerage relationship that the IDX feed requires.',
+              'We are a full-service leasing and tenant placement brokerage. We do NOT handle ongoing property management — no rent collection, no maintenance dispatch, no repairs. Our scope is listing through move-in. We partner with brokerages such as Valery Real Estate Inc. for the brokerage relationship that the IDX feed requires.',
           },
           {
             question: 'Can a tenant apply online?',
@@ -565,7 +550,7 @@ export default async function HomePage() {
           {
             question: 'Are you licensed and regulated?',
             answer:
-              'Yes. In Canada we operate under Valerie Real Estate Inc. Brokerage and comply with provincial regulators such as the Real Estate Council of Ontario (RECO) and the Residential Tenancies Act. In the US we operate through licensed brokerage partners in each state we serve.',
+              'Yes. In Canada we operate under Valery Real Estate Inc. Brokerage and comply with provincial regulators such as the Real Estate Council of Ontario (RECO) and the Residential Tenancies Act. In the US we operate through licensed brokerage partners in each state we serve.',
           },
           {
             question: 'How is technology built into the service?',
