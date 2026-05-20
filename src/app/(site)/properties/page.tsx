@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { getAllProperties } from '@/lib/portal-api'
@@ -94,7 +93,6 @@ export default async function PropertiesPage() {
               className="mt-6 inline-flex items-center rounded-lg bg-[#10B981] px-5 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#059669]"
             >
               Contact a leasing agent
-              <ArrowRight className="ml-1.5 size-4" />
             </Link>
           </div>
         ) : (

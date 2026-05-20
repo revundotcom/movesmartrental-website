@@ -9,7 +9,6 @@ import {
   Bath,
   Maximize,
   MapPin,
-  ArrowRight,
   Search,
   X,
   SlidersHorizontal,
@@ -254,7 +253,6 @@ function PropertyCard({ property }: { property: Property }) {
           <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4">
             <span className="inline-flex items-center text-sm font-semibold text-[#10B981] transition-colors group-hover:text-[#059669]">
               View Details
-              <ArrowRight className="ml-1.5 size-4 transition-transform group-hover:translate-x-1" />
             </span>
             <span className="text-[10px] uppercase tracking-wider text-slate-400">
               Opens in new tab
@@ -379,7 +377,7 @@ export function PropertiesBrowser({ properties }: Props) {
   }
 
   const inputClass =
-    'w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-[#0B1D3A] placeholder:text-slate-400 focus:border-[#10B981] focus:outline-none focus:ring-2 focus:ring-emerald-200'
+    'w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-base text-[#0B1D3A] placeholder:text-slate-400 focus:border-[#10B981] focus:outline-none focus:ring-2 focus:ring-emerald-200 sm:text-sm'
 
   return (
     <>
@@ -397,14 +395,14 @@ export function PropertiesBrowser({ properties }: Props) {
               placeholder="Search by address or neighbourhood…"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 bg-white py-2.5 pl-9 pr-3 text-sm text-[#0B1D3A] placeholder:text-slate-400 focus:border-[#10B981] focus:outline-none focus:ring-2 focus:ring-emerald-200"
+              className="w-full rounded-lg border border-slate-200 bg-white py-2.5 pl-9 pr-3 text-base text-[#0B1D3A] placeholder:text-slate-400 focus:border-[#10B981] focus:outline-none focus:ring-2 focus:ring-emerald-200 sm:text-sm"
             />
           </div>
 
           <select
             value={cityFilter}
             onChange={(e) => setCityFilter(e.target.value)}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-[#0B1D3A] focus:border-[#10B981] focus:outline-none focus:ring-2 focus:ring-emerald-200"
+            className="rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-base text-[#0B1D3A] focus:border-[#10B981] focus:outline-none focus:ring-2 focus:ring-emerald-200 sm:text-sm"
             aria-label="Filter by city"
           >
             <option value="any">All cities</option>
@@ -418,7 +416,7 @@ export function PropertiesBrowser({ properties }: Props) {
           <select
             value={sortKey}
             onChange={(e) => setSortKey(e.target.value as SortKey)}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-[#0B1D3A] focus:border-[#10B981] focus:outline-none focus:ring-2 focus:ring-emerald-200"
+            className="rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-base text-[#0B1D3A] focus:border-[#10B981] focus:outline-none focus:ring-2 focus:ring-emerald-200 sm:text-sm"
             aria-label="Sort properties"
           >
             {SORT_OPTIONS.map((o) => (

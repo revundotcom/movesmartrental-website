@@ -259,12 +259,6 @@ function CityCard({ city }: CityCardProps) {
                 )}
               </div>
             </div>
-            {/* Arrow */}
-            <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-emerald-500/0 transition-all duration-300 group-hover:bg-emerald-500/20">
-              <svg className="size-4 -translate-x-0.5 text-white/0 transition-all duration-300 group-hover:translate-x-0 group-hover:text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </div>
           </div>
         </div>
       </div>

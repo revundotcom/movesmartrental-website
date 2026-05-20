@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Bed, Bath, Maximize, MapPin, ArrowRight } from 'lucide-react'
+import { Bed, Bath, Maximize, MapPin } from 'lucide-react'
 
 import type { PropertyCardBlockProps } from '@/types/blocks'
 
@@ -103,7 +103,6 @@ export function PropertyCardBlock({ listings }: PropertyCardBlockProps) {
                 <div className="mt-4 border-t border-slate-100 pt-4">
                   <span className="inline-flex items-center text-sm font-medium text-[#10B981] transition-colors group-hover:text-[#059669]">
                     View Details
-                    <ArrowRight className="ml-1.5 size-4 transition-transform group-hover:translate-x-1" />
                   </span>
                 </div>
               </div>

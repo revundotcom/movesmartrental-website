@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { JsonLd } from '@/components/json-ld'
@@ -166,7 +165,6 @@ export default function LeasingServicesPage() {
                     className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-navy px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-navy/20 transition-all hover:-translate-y-0.5 hover:bg-brand-navy/90 hover:shadow-xl"
                   >
                     {content.cta1Label}
-                    <ArrowRight className="size-4" aria-hidden="true" />
                   </Link>
                   <Link
                     href="/pricing/"
@@ -578,7 +576,6 @@ export default function LeasingServicesPage() {
                     className="mt-6 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-brand-navy underline decoration-brand-gold decoration-2 underline-offset-4 transition-colors hover:text-brand-emerald"
                   >
                     Full fee schedule
-                    <ArrowRight className="size-4" aria-hidden="true" />
                   </Link>
                 </div>
               </div>
@@ -623,10 +620,6 @@ export default function LeasingServicesPage() {
                               {r.heroLede.split('.')[0]}.
                             </span>
                           </span>
-                          <ArrowRight
-                            className="size-4 shrink-0 text-brand-gold transition-transform group-hover:translate-x-0.5"
-                            aria-hidden="true"
-                          />
                         </Link>
                       </li>
                     ))}
@@ -728,7 +721,6 @@ export default function LeasingServicesPage() {
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-gold px-6 py-3 text-sm font-bold text-brand-navy shadow-lg shadow-brand-gold/20 transition-all hover:-translate-y-0.5 hover:bg-brand-gold/90 hover:shadow-xl"
             >
               {content.cta1Label}
-              <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
             <Link
               href="/pricing/"

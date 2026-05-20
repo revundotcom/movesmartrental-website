@@ -375,9 +375,9 @@ export default async function PropertyDetailPage({ params }: PageProps) {
       {/* Sticky quick-nav bar — jump to in-page sections */}
       <nav
         aria-label="Property section navigation"
-        className="sticky top-16 z-30 -mx-4 flex items-center gap-2 overflow-x-auto border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur-md sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+        className="sticky top-14 z-30 -mx-4 border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur-md sm:-mx-6 sm:top-16 sm:px-6 lg:-mx-8 lg:px-8"
       >
-        <div className="flex items-center gap-2 overflow-x-auto">
+        <div className="-mx-1 flex items-center gap-2 overflow-x-auto px-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {[
             { label: 'Key Facts', href: '#key-facts' },
             { label: 'Property Details', href: '#property-details' },
@@ -387,7 +387,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
             <a
               key={item.href}
               href={item.href}
-              className="shrink-0 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-[#0B1D3A] transition-colors hover:border-brand-emerald/40 hover:bg-emerald-50 hover:text-brand-emerald"
+              className="shrink-0 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-[#0B1D3A] transition-colors hover:border-brand-emerald/40 hover:bg-emerald-50 hover:text-brand-emerald"
             >
               {item.label}
             </a>
@@ -736,7 +736,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
 
           {/* Sidebar (kept outside the gate so the conversion CTA is always visible) */}
           <aside className="lg:col-span-1">
-            <div className="sticky top-24 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6 lg:sticky lg:top-24">
               <p className="font-display text-3xl text-[#0B1D3A]">
                 {formatPrice(unit.website_price)}
                 {unit.website_price != null && (

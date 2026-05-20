@@ -105,15 +105,11 @@ export const FOOTER_COLUMNS = [
       { label: 'Leasing Services', href: '/services/leasing-services/' },
       { label: 'Tenant Screening', href: '/services/tenant-screening/' },
       { label: 'Rent Guarantee', href: '/services/rent-guarantee/' },
-      // TODO(phase-2): real /services/tenant-insurance/
-      { label: 'Tenant Insurance', href: '/services/' },
-      // TODO(phase-2): real /services/tenant-guarantor/
-      { label: 'Tenant Guarantor', href: '/services/' },
+      { label: 'Tenant Insurance', href: '/services/tenant-insurance/' },
+      { label: 'Tenant Guarantor', href: '/services/tenant-guarantor/' },
       { label: 'Rental Preparation', href: '/services/rental-preparation/' },
-      // TODO(phase-2): real /services/portal-and-technology/
       { label: 'Portal & Technology', href: '/portal-and-technology/' },
-      // TODO(phase-2): real /services/institutional-lease-up/
-      { label: 'Institutional Lease-Up', href: '/services/' },
+      { label: 'Institutional Lease-Up', href: '/institutional-lease-up/' },
     ],
   },
   {
@@ -124,12 +120,7 @@ export const FOOTER_COLUMNS = [
       { label: 'British Columbia', href: '/ca/british-columbia/' },
       { label: 'Alberta', href: '/ca/alberta/' },
       { label: 'Manitoba', href: '/ca/manitoba/' },
-      { label: 'Saskatchewan', href: '/ca/saskatchewan/' },
       { label: 'Nova Scotia', href: '/ca/nova-scotia/' },
-      { label: 'New Brunswick', href: '/ca/new-brunswick/' },
-      { label: 'Newfoundland and Labrador', href: '/ca/newfoundland-and-labrador/' },
-      { label: 'Prince Edward Island', href: '/ca/prince-edward-island/' },
-      { label: 'View all Canadian cities', href: '/ca/' },
     ],
   },
   {
@@ -147,7 +138,6 @@ export const FOOTER_COLUMNS = [
       { label: 'Arizona', href: '/us/arizona/' },
       { label: 'Colorado', href: '/us/colorado/' },
       { label: 'New Jersey', href: '/us/new-jersey/' },
-      { label: 'View all US cities', href: '/us/' },
     ],
   },
   {

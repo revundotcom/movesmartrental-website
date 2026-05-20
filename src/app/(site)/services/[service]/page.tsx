@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
@@ -707,7 +706,6 @@ export default async function ServicePage({
             className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-navy underline decoration-brand-gold decoration-2 underline-offset-4 transition-colors hover:text-brand-emerald"
           >
             See the full fee schedule
-            <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </div>
       </section>
@@ -767,10 +765,6 @@ export default async function ServicePage({
                     </p>
                     <span className="mt-auto inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.18em] text-brand-emerald">
                       Learn more
-                      <ArrowRight
-                        className="size-3.5 transition-transform group-hover:translate-x-0.5"
-                        aria-hidden="true"
-                      />
                     </span>
                   </Link>
                 </StaggerRow>
@@ -826,7 +820,6 @@ export default async function ServicePage({
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-emerald/20 transition-all hover:-translate-y-0.5 hover:bg-brand-emerald-dark hover:shadow-xl"
             >
               {content.cta1Label}
-              <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
             <Link
               href="/pricing/"

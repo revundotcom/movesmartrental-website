@@ -104,16 +104,16 @@ export function OwnerDashboardMockup() {
             </div>
           </div>
 
-          {/* Pill counts */}
-          <div className="flex flex-wrap items-center gap-2 lg:col-span-2 lg:justify-end">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-600">
-              Condos <span className="rounded-full bg-brand-navy px-1.5 py-0.5 text-white">3</span>
+          {/* Pill counts — single line on mobile, can wrap only on lg+ */}
+          <div className="flex flex-nowrap items-center gap-1.5 overflow-x-auto sm:gap-2 lg:col-span-2 lg:flex-wrap lg:justify-end lg:overflow-visible">
+            <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-slate-600 sm:gap-1.5 sm:px-2.5 sm:py-1 sm:text-[10px]">
+              Condos <span className="rounded-full bg-brand-navy px-1 py-0.5 text-white sm:px-1.5">3</span>
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-600">
-              Houses <span className="rounded-full bg-brand-navy px-1.5 py-0.5 text-white">5</span>
+            <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-slate-600 sm:gap-1.5 sm:px-2.5 sm:py-1 sm:text-[10px]">
+              Houses <span className="rounded-full bg-brand-navy px-1 py-0.5 text-white sm:px-1.5">5</span>
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-600">
-              Apartments <span className="rounded-full bg-brand-navy px-1.5 py-0.5 text-white">14</span>
+            <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-slate-600 sm:gap-1.5 sm:px-2.5 sm:py-1 sm:text-[10px]">
+              Apartments <span className="rounded-full bg-brand-navy px-1 py-0.5 text-white sm:px-1.5">14</span>
             </span>
           </div>
         </div>

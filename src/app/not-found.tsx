@@ -7,7 +7,6 @@ import {
   Briefcase,
   MapPin,
   Mail,
-  ArrowRight,
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -124,10 +123,6 @@ export default function NotFound() {
                     {link.description}
                   </p>
                 </div>
-                <ArrowRight
-                  className="mt-0.5 size-4 shrink-0 text-muted-foreground/30 transition-colors group-hover:text-brand-emerald"
-                  aria-hidden="true"
-                />
               </Link>
             )
           })}

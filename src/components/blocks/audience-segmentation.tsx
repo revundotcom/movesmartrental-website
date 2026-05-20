@@ -6,7 +6,6 @@ import { motion, useReducedMotion } from 'framer-motion'
 import {
   Building,
   Home,
-  ArrowRight,
   Check,
   Sparkles,
 } from 'lucide-react'
@@ -17,7 +16,7 @@ const AUDIENCES = [
     title: 'For Property Owners',
     description: 'Full-service leasing and tenant placement with zero upfront cost. Strategic pricing, professional marketing, tenant qualification, lease execution, and a documented move-in - hands-off leasing from listing to keys.',
     features: ['18-Day Avg Placement', 'Defensible Qualification', 'Rental Protection', 'MLS + 20+ platforms', 'Dedicated Leasing Advisor', 'Owner Portal'],
-    cta: 'Explore Owner Services',
+    cta: 'Owner Services',
     href: '/owners/',
     accent: 'emerald' as const,
   },
@@ -56,7 +55,7 @@ export function AudienceSegmentation() {
     : { duration: 0.6, ease }
 
   return (
-    <section className="relative overflow-hidden bg-[#FBFAF6] py-16 md:py-20">
+    <section className="relative overflow-hidden bg-[#FBFAF6] py-16 sm:py-20 md:py-24">
       {/* Soft ivory wash */}
       <div
         aria-hidden="true"
@@ -75,17 +74,17 @@ export function AudienceSegmentation() {
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
             Choose Your Path
           </p>
-          <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
+          <h2 className="mt-4 font-display text-3xl font-normal tracking-tight text-brand-navy sm:mt-5 sm:text-4xl md:text-5xl">
             Two doors,{' '}
             <span className="font-display italic text-brand-emerald">one standard</span>
           </h2>
-          <p className="mt-5 text-lg leading-relaxed text-slate-600">
+          <p className="mt-5 text-base leading-relaxed text-slate-600 sm:mt-6 sm:text-lg">
             Whether you own the property or are searching for your next home, MoveSmart Rentals runs the same disciplined playbook on both sides of the lease.
           </p>
         </motion.div>
 
         {/* Editorial split */}
-        <div className="mt-12 grid grid-cols-1 gap-8 md:mt-14 md:grid-cols-2 lg:gap-10">
+        <div className="mt-14 grid grid-cols-1 gap-8 sm:mt-16 md:grid-cols-2 lg:gap-10">
           {AUDIENCES.map((audience, i) => (
             <AudienceCard
               key={audience.title}
@@ -237,10 +236,9 @@ function AudienceCard({
           </span>
           <Link
             href={audience.href}
-            className={`inline-flex items-center gap-2 rounded-full px-4 py-2 font-heading text-sm font-semibold text-white transition-all duration-300 ${accentBg} hover:shadow-lg hover:shadow-brand-navy/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-emerald`}
+            className={`inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 font-heading text-sm font-semibold text-white transition-all duration-300 ${accentBg} hover:shadow-lg hover:shadow-brand-navy/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-emerald`}
           >
             {audience.cta}
-            <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </div>
       </div>

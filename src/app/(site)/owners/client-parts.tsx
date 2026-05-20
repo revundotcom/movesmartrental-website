@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import {
-  ArrowRight,
   Check,
   CheckCircle,
   DollarSign,
@@ -295,12 +294,8 @@ export function PainPointCard({
           </p>
         </div>
 
-        {/* Arrow divider */}
+        {/* Divider */}
         <div className="flex items-center gap-3" aria-hidden="true">
-          <span className="block h-px flex-1 bg-slate-200" />
-          <span className="flex size-7 items-center justify-center rounded-full border border-brand-emerald/30 bg-brand-emerald/10 text-brand-emerald">
-            <ArrowRight className="size-3.5" strokeWidth={2.5} />
-          </span>
           <span className="block h-px flex-1 bg-slate-200" />
         </div>
 

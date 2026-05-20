@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { z } from 'zod'
-import { ArrowRight, MapPin, ShieldCheck, Sparkles, Users } from 'lucide-react'
+import { MapPin, ShieldCheck, Sparkles, Users } from 'lucide-react'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
@@ -852,7 +852,6 @@ export default async function ProvincePage({
               className="inline-flex items-center gap-2 rounded-full bg-brand-emerald px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-emerald-hover"
             >
               List my property
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
             <Link
               href={`/ca/${province}/`}

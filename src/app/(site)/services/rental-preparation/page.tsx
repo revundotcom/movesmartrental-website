@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { JsonLd } from '@/components/json-ld'
@@ -172,7 +171,6 @@ export default function RentalPreparationPage() {
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-emerald/20 transition-all hover:-translate-y-0.5 hover:bg-brand-emerald-dark hover:shadow-xl"
                 >
                   {content.cta1Label}
-                  <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
                 <Link
                   href="/pricing/"
@@ -845,7 +843,6 @@ export default function RentalPreparationPage() {
                       className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-navy underline decoration-brand-gold decoration-2 underline-offset-4 transition-colors hover:text-brand-emerald"
                     >
                       See the full fee schedule
-                      <ArrowRight className="size-4" aria-hidden="true" />
                     </Link>
                   </div>
                 </div>
@@ -877,10 +874,6 @@ export default function RentalPreparationPage() {
                   className="group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-brand-navy shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-emerald/40 hover:bg-emerald-50/40 hover:text-brand-emerald hover:shadow-md"
                 >
                   {r.title}
-                  <ArrowRight
-                    className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
-                    aria-hidden="true"
-                  />
                 </Link>
               ))}
             </div>
@@ -941,7 +934,6 @@ export default function RentalPreparationPage() {
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-emerald/20 transition-all hover:-translate-y-0.5 hover:bg-brand-emerald-dark hover:shadow-xl"
             >
               {content.cta1Label}
-              <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
             <Link
               href="/pricing/"

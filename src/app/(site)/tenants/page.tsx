@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { CityGridBlock } from '@/components/blocks/city-grid-block'
@@ -367,7 +366,6 @@ export default async function TenantsPage() {
         className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-emerald px-4 py-3 text-sm font-bold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-brand-emerald-dark hover:shadow-md"
       >
         See all live listings
-        <ArrowRight className="size-4" aria-hidden="true" />
       </Link>
 
       <div className="mt-5 border-t border-brand-navy/10 pt-4">
@@ -608,7 +606,6 @@ export default async function TenantsPage() {
                     <p className="text-sm leading-relaxed text-slate-600 sm:text-[15px]">{type.desc}</p>
                     <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-brand-emerald transition-colors group-hover:text-emerald-700">
                       Browse {type.title.toLowerCase()}
-                      <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                     </span>
                   </div>
                 </Link>
@@ -753,7 +750,7 @@ export default async function TenantsPage() {
               <FeeTableRow
                 key={row.label}
                 index={idx}
-                className="grid grid-cols-12 items-baseline gap-4 border-b border-brand-navy/10 py-5 sm:py-6"
+                className="grid grid-cols-12 items-baseline gap-2 border-b border-brand-navy/10 py-5 sm:gap-4 sm:py-6"
               >
                 <div className="col-span-12 sm:col-span-4">
                   <p className="text-sm font-bold uppercase tracking-wider text-brand-navy sm:text-[13px]">

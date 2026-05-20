@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useReducedMotion } from 'framer-motion'
-import { Check, X, ArrowRight } from 'lucide-react'
+import { Check, X } from 'lucide-react'
 
 const AVOID_ITEMS = [
   'Hiring leasing coordinators',
@@ -39,7 +39,7 @@ export function BuyOutputBlock() {
       : { duration: 0.4, ease, delay: 0.2 + i * 0.05 }
 
   return (
-    <section className="relative overflow-hidden bg-white py-16 md:py-20">
+    <section className="relative overflow-hidden bg-white py-16 sm:py-20 md:py-24">
       {/* Subtle ivory wash */}
       <div
         aria-hidden="true"
@@ -58,20 +58,20 @@ export function BuyOutputBlock() {
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-emerald">
             For B2B Operators
           </p>
-          <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl">
+          <h2 className="mt-4 font-display text-3xl font-normal tracking-tight text-brand-navy sm:mt-5 sm:text-4xl md:text-5xl">
             Buy leasing output,
             <br />
             <span className="font-display italic text-brand-emerald">
               not headcount
             </span>
           </h2>
-          <p className="mt-5 text-lg leading-relaxed text-slate-600">
+          <p className="mt-5 text-base leading-relaxed text-slate-600 sm:mt-6 sm:text-lg">
             Test a controlled leasing model with no internal payroll, no staffing complexity, no long-term fixed overhead. One accountable team delivered as a service.
           </p>
         </motion.div>
 
         {/* Two-column comparison */}
-        <div className="mt-12 grid grid-cols-1 gap-6 md:mt-14 md:grid-cols-2 md:gap-8">
+        <div className="mt-14 grid grid-cols-1 gap-6 sm:mt-16 sm:gap-7 md:grid-cols-2 md:gap-8">
           {/* Left: What you avoid (rose) */}
           <motion.article
             initial={prefersReducedMotion ? false : { opacity: 0, y: 32 }}
@@ -89,7 +89,7 @@ export function BuyOutputBlock() {
               Build an internal leasing team
             </h3>
 
-            <ul className="mt-6 space-y-3">
+            <ul className="mt-6 space-y-3 sm:space-y-4">
               {AVOID_ITEMS.map((item, i) => (
                 <motion.li
                   key={item}
@@ -137,7 +137,7 @@ export function BuyOutputBlock() {
               Buy MoveSmart leasing output
             </h3>
 
-            <ul className="mt-6 space-y-3">
+            <ul className="mt-6 space-y-3 sm:space-y-4">
               {GET_ITEMS.map((item, i) => (
                 <motion.li
                   key={item}
@@ -201,7 +201,6 @@ export function BuyOutputBlock() {
             {/* Executive takeaway */}
             <div className="lg:col-span-4 lg:text-right">
               <span className="inline-flex items-center gap-2 rounded-full border border-brand-gold/30 bg-brand-gold/10 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.22em] text-brand-gold">
-                <ArrowRight className="size-3" aria-hidden="true" />
                 Executive Takeaway
               </span>
               <p className="mt-3 font-heading text-base font-bold leading-snug text-white">

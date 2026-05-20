@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
@@ -695,14 +694,14 @@ export default async function PropertyManagersPage() {
               title="Response"
               value="<5 minutes"
               delay={0.5}
-              className="absolute -left-4 top-6 rounded-2xl border border-white/40 bg-white/95 p-4 shadow-xl shadow-black/30 backdrop-blur"
+              className="absolute -left-4 top-6 hidden rounded-2xl border border-white/40 bg-white/95 p-4 shadow-xl shadow-black/30 backdrop-blur sm:block"
             />
             <FloatingBadge
               iconKey="ShieldCheck"
               title="Brokerage"
               value="RECO registered"
               delay={0.7}
-              className="absolute -right-4 bottom-24 rounded-2xl border border-white/40 bg-white/95 p-4 shadow-xl shadow-black/30 backdrop-blur"
+              className="absolute -right-4 bottom-24 hidden rounded-2xl border border-white/40 bg-white/95 p-4 shadow-xl shadow-black/30 backdrop-blur sm:block"
             />
             <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 rounded-lg bg-white/95 px-4 py-3 shadow-sm backdrop-blur">
               <p className="font-display text-base italic leading-tight text-brand-navy">
@@ -940,7 +939,6 @@ export default async function PropertyManagersPage() {
                 className="inline-flex items-center gap-2 rounded-full border border-brand-gold/40 bg-brand-gold/10 px-5 py-2.5 text-sm font-semibold text-brand-gold transition hover:bg-brand-gold/15"
               >
                 See the portal
-                <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
             </div>
           </Reveal>
@@ -1285,7 +1283,6 @@ export default async function PropertyManagersPage() {
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 px-8 py-4 text-base font-bold text-white shadow-xl shadow-emerald-900/30 transition hover:-translate-y-0.5 hover:shadow-2xl"
               >
                 Talk to an operator
-                <ArrowRight className="size-5" aria-hidden="true" />
               </Link>
               <Link
                 href="/pricing/"

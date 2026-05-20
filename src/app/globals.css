@@ -3,6 +3,13 @@
 @import "shadcn/tailwind.css";
 
 html {
+  /* Note: scroll-behavior: smooth on <html> breaks browser back-button
+     scroll restoration in Chromium. Smooth scrolling is opt-in via the
+     .smooth-scroll utility below, applied to specific anchor links only. */
+  scroll-behavior: auto;
+}
+
+.smooth-scroll {
   scroll-behavior: smooth;
 }
 

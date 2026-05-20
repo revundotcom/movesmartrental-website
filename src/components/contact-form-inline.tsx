@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { motion } from 'framer-motion'
-import { Building2, User, Briefcase, HelpCircle, ArrowRight, Check, Loader2 } from 'lucide-react'
+import { Building2, User, Briefcase, HelpCircle, Check, Loader2 } from 'lucide-react'
 
 import { Confetti } from '@/components/ui/confetti'
 import { pushEvent } from '@/lib/analytics'
@@ -73,6 +73,9 @@ export function ContactFormInline() {
   const validTypes = ['owner', 'tenant', 'franchise', 'other'] as const
   const defaultType: FormValues['type'] =
     typeParam && (validTypes as readonly string[]).includes(typeParam) ? typeParam : 'owner'
+  // Pre-fill from URL params (e.g. newsletter signup redirects with ?email=...)
+  const emailParam = searchParams.get('email') ?? ''
+  const defaultEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailParam) ? emailParam : ''
 
   useEffect(() => {
     if (!RECAPTCHA_SITE_KEY || !RECAPTCHA_KEY_PATTERN.test(RECAPTCHA_SITE_KEY)) return
@@ -97,7 +100,7 @@ export function ContactFormInline() {
       type: defaultType,
       firstName: '',
       lastName: '',
-      email: '',
+      email: defaultEmail,
       phone: '',
       city: '',
       propertyType: '',
@@ -160,7 +163,7 @@ export function ContactFormInline() {
           </h3>
           <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600">
             A real human on our leasing team will reply within one business day — usually within
-            2 to 4 hours during Monday–Saturday, 8 AM to 8 PM ET.
+            2 to 4 hours during Monday–Friday, 9 AM to 5 PM ET.
           </p>
           <p className="mt-5 text-sm text-slate-500">
             Need us sooner? Call{' '}
@@ -242,7 +245,7 @@ export function ContactFormInline() {
               autoComplete="given-name"
               placeholder="Jane"
               {...register('firstName')}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-brand-navy placeholder:text-slate-400 focus:border-brand-emerald focus:outline-none focus:ring-2 focus:ring-emerald-200"
+              className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-base text-brand-navy placeholder:text-slate-400 focus:border-brand-emerald focus:outline-none focus:ring-2 focus:ring-emerald-200 sm:text-sm"
             />
           </Field>
           <Field label="Last name" required error={errors.lastName?.message}>
@@ -251,7 +254,7 @@ export function ContactFormInline() {
               autoComplete="family-name"
               placeholder="Smith"
               {...register('lastName')}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-brand-navy placeholder:text-slate-400 focus:border-brand-emerald focus:outline-none focus:ring-2 focus:ring-emerald-200"
+              className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-base text-brand-navy placeholder:text-slate-400 focus:border-brand-emerald focus:outline-none focus:ring-2 focus:ring-emerald-200 sm:text-sm"
             />
           </Field>
           <Field label="Email" required error={errors.email?.message}>
@@ -260,7 +263,7 @@ export function ContactFormInline() {
               autoComplete="email"
               placeholder="jane@example.com"
               {...register('email')}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-brand-navy placeholder:text-slate-400 focus:border-brand-emerald focus:outline-none focus:ring-2 focus:ring-emerald-200"
+              className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-base text-brand-navy placeholder:text-slate-400 focus:border-brand-emerald focus:outline-none focus:ring-2 focus:ring-emerald-200 sm:text-sm"
             />
           </Field>
           <Field label="Phone" required error={errors.phone?.message} helper="Format: (123) 456-7890">
@@ -273,7 +276,7 @@ export function ContactFormInline() {
               onChange={(e) =>
                 setValue('phone', formatPhone(e.target.value), { shouldValidate: true })
               }
-              className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-brand-navy placeholder:text-slate-400 focus:border-brand-emerald focus:outline-none focus:ring-2 focus:ring-emerald-200"
+              className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-base text-brand-navy placeholder:text-slate-400 focus:border-brand-emerald focus:outline-none focus:ring-2 focus:ring-emerald-200 sm:text-sm"
             />
           </Field>
           <Field label="City" helper="Optional">
@@ -282,7 +285,7 @@ export function ContactFormInline() {
               autoComplete="address-level2"
               placeholder="Toronto"
               {...register('city')}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-brand-navy placeholder:text-slate-400 focus:border-brand-emerald focus:outline-none focus:ring-2 focus:ring-emerald-200"
+              className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-base text-brand-navy placeholder:text-slate-400 focus:border-brand-emerald focus:outline-none focus:ring-2 focus:ring-emerald-200 sm:text-sm"
             />
           </Field>
         </div>
@@ -355,7 +358,7 @@ export function ContactFormInline() {
               rows={5}
               placeholder="Tell us about your property, your timeline, and what you're trying to solve. Three sentences is plenty."
               {...register('message')}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-brand-navy placeholder:text-slate-400 focus:border-brand-emerald focus:outline-none focus:ring-2 focus:ring-emerald-200"
+              className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-base text-brand-navy placeholder:text-slate-400 focus:border-brand-emerald focus:outline-none focus:ring-2 focus:ring-emerald-200 sm:text-sm"
             />
           </Field>
         </div>
@@ -384,7 +387,6 @@ export function ContactFormInline() {
           ) : (
             <>
               Send Message
-              <ArrowRight className="size-4" aria-hidden="true" />
             </>
           )}
         </button>

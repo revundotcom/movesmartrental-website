@@ -45,7 +45,7 @@ export function HeroBlock({
   const leadingWords = words.join(' ')
 
   return (
-    <section className="relative flex min-h-[90vh] items-center overflow-hidden bg-[#FBFAF6] md:min-h-screen">
+    <section className="relative flex items-center overflow-hidden bg-[#FBFAF6] py-10 sm:py-12 md:min-h-screen md:py-0">
       {/* Background */}
       {backgroundImageUrl ? (
         <>
@@ -94,8 +94,8 @@ export function HeroBlock({
       )}
 
       {/* Content: two-column layout on desktop */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-16 md:py-20">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-2 sm:px-6 md:py-20 lg:px-8">
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
           {/* Left: text content */}
           <div>
             {/* Eyebrow badge with rotating text */}
@@ -120,7 +120,7 @@ export function HeroBlock({
             </motion.div>
 
             <motion.h1
-              className="font-display text-4xl font-normal leading-[1.15] tracking-tight text-brand-navy sm:text-5xl sm:leading-[1.1] md:text-6xl"
+              className="font-display text-[2.25rem] font-normal leading-[1.2] tracking-tight text-brand-navy sm:text-5xl sm:leading-[1.15] md:text-6xl md:leading-[1.1]"
               initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
@@ -154,7 +154,7 @@ export function HeroBlock({
 
             {subheadline && (
               <motion.p
-                className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600 md:text-xl"
+                className="mt-5 max-w-xl text-base leading-relaxed text-slate-600 sm:mt-7 sm:text-lg md:mt-8 md:text-xl"
                 initial={{ opacity: 0, y: 32 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
@@ -166,16 +166,16 @@ export function HeroBlock({
             {/* Proof stats row */}
             {statStrip && statStrip.length > 0 && (
               <motion.div
-                className="mt-8 max-w-2xl"
+                className="mt-6 max-w-2xl sm:mt-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
               >
                 <div className="h-px w-full bg-brand-navy/10" aria-hidden="true" />
-                <div className="grid grid-cols-1 gap-y-4 py-5 sm:grid-cols-3 sm:divide-x sm:divide-brand-navy/10">
+                <div className="grid grid-cols-1 gap-y-5 py-4 sm:grid-cols-3 sm:gap-y-4 sm:divide-x sm:divide-brand-navy/10 sm:py-5">
                   {statStrip.map((stat, i) => (
                     <div key={stat.label} className={i === 0 ? '' : 'sm:pl-6'}>
-                      <p className="font-display text-2xl font-normal leading-tight text-brand-navy sm:text-[1.6rem]">
+                      <p className="font-display text-xl font-normal leading-tight text-brand-navy sm:text-2xl md:text-[1.6rem]">
                         <span className="italic text-brand-emerald">{stat.value}</span>
                         {stat.valueAccent && (
                           <>
@@ -187,7 +187,7 @@ export function HeroBlock({
                           <span className="text-brand-navy">{stat.valueSuffix}</span>
                         )}
                       </p>
-                      <p className="mt-1.5 text-[0.7rem] font-bold uppercase tracking-[0.22em] text-slate-500">
+                      <p className="mt-1.5 text-[0.65rem] font-bold uppercase tracking-[0.22em] text-slate-500 sm:text-[0.7rem]">
                         {stat.label}
                       </p>
                     </div>
@@ -200,7 +200,7 @@ export function HeroBlock({
             {/* CTA buttons */}
             {(cta1 || cta2) && (
               <motion.div
-                className="mt-10 flex flex-col gap-4 sm:flex-row"
+                className="mt-7 flex flex-row flex-wrap items-center gap-3 sm:mt-10 sm:gap-4"
                 initial={{ opacity: 0, y: 32 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
@@ -210,7 +210,7 @@ export function HeroBlock({
                     <Button
                       variant="default"
                       size="lg"
-                      className="cta-primary-shadow group/btn cursor-pointer border-transparent px-8 py-6 text-base font-bold text-white transition-all duration-300 hover:-translate-y-1"
+                      className="cta-primary-shadow group/btn cursor-pointer border-transparent px-5 py-4 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-1 sm:px-8 sm:py-6 sm:text-base"
                       style={{
                         background: 'linear-gradient(135deg, #10B981, #059669)',
                       }}
@@ -218,9 +218,6 @@ export function HeroBlock({
                       render={<Link href={cta1.href} />}
                     >
                       {cta1.label}
-                      <svg className="ml-2 size-4 transition-transform duration-200 group-hover/btn:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
                     </Button>
                   </CTATracker>
                 )}
@@ -229,7 +226,7 @@ export function HeroBlock({
                     <Button
                       variant="outline"
                       size="lg"
-                      className="cursor-pointer border-2 border-brand-navy/15 bg-white px-8 py-6 text-base font-semibold text-brand-navy transition-all duration-300 hover:-translate-y-1 hover:border-brand-navy/30 hover:bg-slate-50"
+                      className="cursor-pointer border-2 border-brand-navy/15 bg-white px-5 py-4 text-sm font-semibold text-brand-navy transition-all duration-300 hover:-translate-y-1 hover:border-brand-navy/30 hover:bg-slate-50 sm:px-8 sm:py-6 sm:text-base"
                       nativeButton={false}
                       render={<Link href={cta2.href} />}
                     >

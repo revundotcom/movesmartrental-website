@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
@@ -649,7 +648,6 @@ export default function ServicesPage() {
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-md transition-all duration-300 hover:-translate-y-px hover:bg-emerald-500 hover:shadow-lg"
                 >
                   Get a market read
-                  <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
                 <Link
                   href="/owners/"
@@ -808,7 +806,6 @@ export default function ServicesPage() {
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-emerald px-7 py-3.5 text-sm font-bold text-white shadow-lg transition-all duration-300 hover:-translate-y-px hover:bg-emerald-500 hover:shadow-xl"
               >
                 List my property
-                <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
               <Link
                 href="/contact/?type=owner&intent=call"

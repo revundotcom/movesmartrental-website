@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
@@ -261,7 +260,6 @@ export default async function InstitutionalLeaseUpPage() {
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-emerald px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-emerald/25 transition-all hover:-translate-y-0.5 hover:bg-brand-emerald-dark hover:shadow-xl"
               >
                 Request Pilot Brief
-                <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
               <Link
                 href="/contact/?intent=call"
@@ -629,7 +627,6 @@ export default async function InstitutionalLeaseUpPage() {
                 className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-emerald px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-emerald/20 transition-all hover:-translate-y-0.5 hover:bg-brand-emerald-dark hover:shadow-xl md:w-auto"
               >
                 Request Pilot Brief
-                <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
               <Link
                 href="/contact/?intent=call"

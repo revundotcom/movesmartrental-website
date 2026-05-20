@@ -35,7 +35,10 @@ export function VerticalCutReveal({
   return (
     <span ref={ref} className={cn('inline flex-wrap', className)}>
       {words.map((word, i) => (
-        <span key={i} className={cn('inline-flex overflow-hidden', wordClassName)}>
+        <span
+          key={i}
+          className={cn('inline-flex overflow-hidden pb-[0.15em]', wordClassName)}
+        >
           <motion.span
             className="inline-block"
             initial={{ y: '100%' }}

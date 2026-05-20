@@ -8,7 +8,6 @@ import {
   Star,
   Quote,
   CheckCircle2,
-  ArrowRight,
   ArrowUpRight,
   ShieldCheck,
 } from 'lucide-react'
@@ -846,7 +845,6 @@ function LeaveAReview() {
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-navy underline decoration-brand-gold decoration-2 underline-offset-[6px] hover:text-brand-emerald"
           >
             Or send feedback privately
-            <ArrowRight className="size-4" />
           </Link>
         </div>
       </div>

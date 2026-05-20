@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Building2, User, Briefcase, HelpCircle, ArrowRight, ArrowLeft, Check } from 'lucide-react'
+import { Building2, User, Briefcase, HelpCircle, ArrowLeft, Check } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -308,7 +308,7 @@ export function ContactForm() {
                 <ArrowLeft className="size-4" /> Back
               </Button>
               <Button type="button" onClick={() => setStep(3)} className="flex-1 gap-1" style={{ background: 'linear-gradient(135deg, #10B981, #059669)', color: 'white' }}>
-                Continue <ArrowRight className="size-4" />
+                Continue
               </Button>
             </div>
           </motion.div>

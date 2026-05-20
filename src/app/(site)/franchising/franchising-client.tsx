@@ -10,7 +10,7 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
-import { ArrowRight, TrendingUp } from 'lucide-react'
+import { TrendingUp } from 'lucide-react'
 import Link from 'next/link'
 
 import { DigitalWorldMap } from '@/components/blocks/digital-world-map'
@@ -394,7 +394,6 @@ export function TerritoryParallax({ awarded, available }: TerritorySectionProps)
             className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-300 transition-colors hover:text-emerald-200"
           >
             Check availability for your market
-            <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </div>
       </div>

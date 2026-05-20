@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Building, MapPin, User, ArrowRight, ArrowLeft, CheckCircle } from 'lucide-react'
+import { Building, MapPin, User, ArrowLeft, CheckCircle } from 'lucide-react'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 
 const STEPS = [
@@ -157,9 +157,20 @@ export function RentalAnalysisForm() {
         </div>
 
         {/* Form card */}
-        <div className="bg-white/[0.06] backdrop-blur-sm border border-white/[0.1] rounded-2xl p-8">
+        <form
+          className="bg-white/[0.06] backdrop-blur-sm border border-white/[0.1] rounded-2xl p-8"
+          onSubmit={(e) => {
+            e.preventDefault()
+            if (step < 3) {
+              setStep(step + 1)
+            } else {
+              handleSubmit()
+            }
+          }}
+          noValidate
+        >
           {errorMessage && (
-            <div className="mb-6 rounded-lg border border-red-400/40 bg-red-500/10 p-4 text-sm text-red-200">
+            <div role="alert" className="mb-6 rounded-lg border border-red-400/40 bg-red-500/10 p-4 text-sm text-red-200">
               {errorMessage}
             </div>
           )}
@@ -172,6 +183,7 @@ export function RentalAnalysisForm() {
                   {PROPERTY_TYPES.map((type) => (
                     <button
                       key={type}
+                      type="button"
                       onClick={() => updateField('propertyType', type)}
                       className={`py-3 px-4 rounded-lg text-sm font-medium transition-all ${
                         data.propertyType === type
@@ -190,6 +202,7 @@ export function RentalAnalysisForm() {
                   {['1', '2', '3', '4+'].map((n) => (
                     <button
                       key={n}
+                      type="button"
                       onClick={() => updateField('units', n)}
                       className={`py-3 rounded-lg text-sm font-medium transition-all ${
                         data.units === n
@@ -212,7 +225,7 @@ export function RentalAnalysisForm() {
                 <select
                   value={data.city}
                   onChange={(e) => updateField('city', e.target.value)}
-                  className="w-full rounded-lg border border-white/10 bg-white/5 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-brand-emerald/50 outline-none"
+                  className="w-full rounded-lg border border-white/10 bg-white/5 text-white px-4 py-3 text-base focus:ring-2 focus:ring-brand-emerald/50 outline-none sm:text-sm"
                 >
                   <option value="" className="text-slate-900">Select a city</option>
                   {CITIES.map((c) => (
@@ -226,6 +239,7 @@ export function RentalAnalysisForm() {
                   {['1', '2', '3', '4+'].map((b) => (
                     <button
                       key={b}
+                      type="button"
                       onClick={() => updateField('bedrooms', b)}
                       className={`py-3 rounded-lg text-sm font-medium transition-all ${
                         data.bedrooms === b
@@ -245,7 +259,7 @@ export function RentalAnalysisForm() {
                   placeholder="e.g. $2,400 or 'Not sure'"
                   value={data.currentRent}
                   onChange={(e) => updateField('currentRent', e.target.value)}
-                  className="w-full rounded-lg border border-white/10 bg-white/5 text-white px-4 py-3 text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-brand-emerald/50 outline-none"
+                  className="w-full rounded-lg border border-white/10 bg-white/5 text-white px-4 py-3 text-base placeholder:text-slate-500 focus:ring-2 focus:ring-brand-emerald/50 outline-none sm:text-sm"
                 />
               </div>
             </div>
@@ -260,7 +274,7 @@ export function RentalAnalysisForm() {
                     type="text"
                     value={data.firstName}
                     onChange={(e) => updateField('firstName', e.target.value)}
-                    className="w-full rounded-lg border border-white/10 bg-white/5 text-white px-4 py-3 text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-brand-emerald/50 outline-none"
+                    className="w-full rounded-lg border border-white/10 bg-white/5 text-white px-4 py-3 text-base placeholder:text-slate-500 focus:ring-2 focus:ring-brand-emerald/50 outline-none sm:text-sm"
                     placeholder="Jane"
                   />
                 </div>
@@ -270,7 +284,7 @@ export function RentalAnalysisForm() {
                     type="text"
                     value={data.lastName}
                     onChange={(e) => updateField('lastName', e.target.value)}
-                    className="w-full rounded-lg border border-white/10 bg-white/5 text-white px-4 py-3 text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-brand-emerald/50 outline-none"
+                    className="w-full rounded-lg border border-white/10 bg-white/5 text-white px-4 py-3 text-base placeholder:text-slate-500 focus:ring-2 focus:ring-brand-emerald/50 outline-none sm:text-sm"
                     placeholder="Smith"
                   />
                 </div>
@@ -281,7 +295,7 @@ export function RentalAnalysisForm() {
                   type="email"
                   value={data.email}
                   onChange={(e) => updateField('email', e.target.value)}
-                  className="w-full rounded-lg border border-white/10 bg-white/5 text-white px-4 py-3 text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-brand-emerald/50 outline-none"
+                  className="w-full rounded-lg border border-white/10 bg-white/5 text-white px-4 py-3 text-base placeholder:text-slate-500 focus:ring-2 focus:ring-brand-emerald/50 outline-none sm:text-sm"
                   placeholder="jane@example.com"
                 />
               </div>
@@ -293,7 +307,7 @@ export function RentalAnalysisForm() {
                   autoComplete="tel"
                   value={data.phone}
                   onChange={(e) => updateField('phone', formatPhone(e.target.value))}
-                  className="w-full rounded-lg border border-white/10 bg-white/5 text-white px-4 py-3 text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-brand-emerald/50 outline-none"
+                  className="w-full rounded-lg border border-white/10 bg-white/5 text-white px-4 py-3 text-base placeholder:text-slate-500 focus:ring-2 focus:ring-brand-emerald/50 outline-none sm:text-sm"
                   placeholder="(416) 555-0123"
                 />
               </div>
@@ -307,6 +321,7 @@ export function RentalAnalysisForm() {
           <div className="flex justify-between items-center mt-8 pt-6 border-t border-white/10">
             {step > 1 ? (
               <button
+                type="button"
                 onClick={() => setStep(step - 1)}
                 className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm"
                 disabled={submitting}
@@ -317,14 +332,14 @@ export function RentalAnalysisForm() {
 
             {step < 3 ? (
               <button
-                onClick={() => setStep(step + 1)}
+                type="submit"
                 className="flex items-center gap-2 px-6 py-3 rounded-lg bg-brand-emerald text-white font-heading font-semibold text-sm hover:bg-brand-emerald-hover transition-colors"
               >
-                Next <ArrowRight className="w-4 h-4" />
+                Next
               </button>
             ) : (
               <button
-                onClick={handleSubmit}
+                type="submit"
                 disabled={
                   submitting ||
                   !data.firstName ||
@@ -334,11 +349,11 @@ export function RentalAnalysisForm() {
                 }
                 className="flex items-center gap-2 px-6 py-3 rounded-lg bg-brand-emerald text-white font-heading font-semibold text-sm hover:bg-brand-emerald-hover transition-colors disabled:opacity-50"
               >
-                {submitting ? 'Sending...' : 'Get My Free Analysis'} <ArrowRight className="w-4 h-4" />
+                {submitting ? 'Sending...' : 'Get My Free Analysis'}
               </button>
             )}
           </div>
-        </div>
+        </form>
 
         <p className="text-center text-xs text-slate-500 mt-6">
           Join thousands of landlords who trust MoveSmart Rentals

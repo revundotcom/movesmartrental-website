@@ -40,8 +40,8 @@ export function BreadcrumbNav({ crumbs }: BreadcrumbNavProps) {
 
   return (
     <>
-      <Breadcrumb className="mb-4">
-        <BreadcrumbList>
+      <Breadcrumb className="mb-4 text-xs sm:text-sm">
+        <BreadcrumbList className="flex-wrap">
           {crumbs.map((crumb, index) => {
             const isLast = index === crumbs.length - 1
 

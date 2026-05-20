@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { JsonLd } from '@/components/json-ld'
@@ -252,7 +251,6 @@ export default function TenantInsurancePage() {
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-emerald px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-500/20 transition-all hover:-translate-y-0.5 hover:bg-brand-emerald/90 hover:shadow-xl"
                   >
                     {content.cta1Label}
-                    <ArrowRight className="size-4" aria-hidden="true" />
                   </Link>
                   <Link
                     href="/contact/?type=discovery"
@@ -706,7 +704,6 @@ export default function TenantInsurancePage() {
               className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.16em] text-brand-emerald underline decoration-2 underline-offset-4 transition-colors hover:text-brand-navy"
             >
               All services
-              <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
 
@@ -728,7 +725,6 @@ export default function TenantInsurancePage() {
                   </p>
                   <span className="mt-auto inline-flex items-center gap-2 text-sm font-bold text-brand-emerald transition-transform group-hover:translate-x-0.5">
                     Read more
-                    <ArrowRight className="size-4" aria-hidden="true" />
                   </span>
                 </Link>
               </RevealUp>
@@ -787,7 +783,6 @@ export default function TenantInsurancePage() {
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-bold text-brand-emerald shadow-xl shadow-emerald-950/30 transition-all hover:-translate-y-0.5 hover:bg-rose-50 hover:text-rose-700"
                 >
                   {content.cta1Label}
-                  <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
                 <Link
                   href="/contact/?type=discovery"

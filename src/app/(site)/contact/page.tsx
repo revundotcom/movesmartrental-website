@@ -7,13 +7,9 @@ import {
   MapPin,
   Clock,
   Phone,
-  ArrowRight,
   ArrowUpRight,
   Shield,
   Star,
-  ShieldCheck,
-  Award,
-  CheckCircle2,
 } from 'lucide-react'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
@@ -50,7 +46,7 @@ const CONTACT_FAQS = [
   {
     question: 'How fast will I hear back?',
     answer:
-      'We respond to every inquiry within one business day - most within 2-4 hours during Monday-Saturday, 8 AM to 8 PM ET.',
+      'We respond to every inquiry within one business day - most within 2-4 hours during Monday-Friday, 9 AM to 5 PM ET.',
   },
   {
     question: 'Is the initial consultation really free?',
@@ -96,26 +92,12 @@ const SOCIAL_PROOF_REVIEWS = [
   },
 ]
 
-const TRUST_BADGES = [
-  { name: 'BBB A+ Accredited', icon: ShieldCheck },
-  { name: 'TRESA Licensed', icon: Award },
-  { name: 'PMAO Member', icon: Award },
-  { name: 'CRA Compliant', icon: CheckCircle2 },
-]
-
-const SOCIAL_STATS = [
-  { value: 'Thousands', label: 'Landlords served', detail: 'Across North America' },
-  { value: 'North America', label: 'Coverage', detail: 'Canadian provinces + US states' },
-  { value: 'Self-serve', label: 'Owner portal', detail: 'Real-time leasing visibility' },
-  { value: '$0', label: 'Upfront cost', detail: 'Success fee on placement' },
-]
-
 const REACH_OPTIONS = [
   {
     icon: Phone,
     label: 'Call us',
     primary: '+1 (800) 595-9755',
-    helper: 'Mon–Sat, 8 AM – 8 PM ET',
+    helper: 'Mon–Fri, 9 AM – 5 PM ET',
     href: 'tel:+18005959755',
   },
   {
@@ -171,7 +153,6 @@ export default function ContactPage() {
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-emerald-600 hover:shadow-md"
             >
               Send a Message
-              <ArrowRight className="size-4" aria-hidden="true" />
             </a>
             <a
               href="tel:+18005959755"
@@ -237,46 +218,12 @@ export default function ContactPage() {
                             className="size-4 text-slate-300 transition-colors group-hover:text-brand-emerald"
                             aria-hidden="true"
                           />
-                        ) : (
-                          <ArrowRight
-                            className="size-4 text-slate-300 transition-transform group-hover:translate-x-0.5 group-hover:text-brand-emerald"
-                            aria-hidden="true"
-                          />
-                        )}
+                        ) : null}
                       </a>
                     )
                   })}
                 </div>
 
-                {/* Trust note */}
-                <div className="mt-8 rounded-2xl border border-emerald-100 bg-emerald-50/50 p-5">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
-                    What happens next
-                  </p>
-                  <ul className="mt-3 space-y-2 text-sm text-slate-700">
-                    <li className="flex items-start gap-2">
-                      <span
-                        aria-hidden="true"
-                        className="mt-1.5 inline-block size-1.5 shrink-0 rounded-full bg-brand-emerald"
-                      />
-                      <span>A real human reads every message — no auto-responders.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span
-                        aria-hidden="true"
-                        className="mt-1.5 inline-block size-1.5 shrink-0 rounded-full bg-brand-emerald"
-                      />
-                      <span>First reply within 4 business hours, max one business day.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span
-                        aria-hidden="true"
-                        className="mt-1.5 inline-block size-1.5 shrink-0 rounded-full bg-brand-emerald"
-                      />
-                      <span>Your details are never shared. See our privacy policy.</span>
-                    </li>
-                  </ul>
-                </div>
               </RevealOnScroll>
             </aside>
 
@@ -342,9 +289,9 @@ export default function ContactPage() {
                   label="Support hours"
                   body={
                     <>
-                      Monday – Saturday
+                      Monday – Friday
                       <br />
-                      <span className="text-base font-normal text-slate-500">8 AM – 8 PM ET</span>
+                      <span className="text-base font-normal text-slate-500">9 AM – 5 PM ET</span>
                     </>
                   }
                   footnote="Typical first reply in under 4 hours during business hours."
@@ -353,7 +300,7 @@ export default function ContactPage() {
                 <OfficeFact
                   icon={Phone}
                   label="After-hours emergency"
-                  body="24/7 emergency line"
+                  body="24/7 Emergency Line"
                   footnote="For active owners and tenants only. Call the main number and press 9."
                   link={{ label: '+1 (800) 595-9755', href: 'tel:+18005959755' }}
                 />
@@ -396,21 +343,6 @@ export default function ContactPage() {
             </div>
           </RevealOnScroll>
 
-          {/* Aggregate stat strip */}
-          <RevealOnScroll variant="slideUp">
-            <div className="grid grid-cols-2 gap-4 rounded-2xl border border-brand-navy/10 bg-[#FBFAF6] p-6 sm:p-8 lg:grid-cols-4">
-              {SOCIAL_STATS.map((s) => (
-                <div key={s.label} className="text-center">
-                  <p className="font-display text-3xl text-brand-navy sm:text-4xl">{s.value}</p>
-                  <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.18em] text-brand-emerald">
-                    {s.label}
-                  </p>
-                  <p className="mt-1 text-xs text-slate-500">{s.detail}</p>
-                </div>
-              ))}
-            </div>
-          </RevealOnScroll>
-
           {/* Review snippets */}
           <RevealOnScroll variant="slideUp" stagger={0.08}>
             <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -441,27 +373,6 @@ export default function ContactPage() {
             </div>
           </RevealOnScroll>
 
-          {/* Trust badges row */}
-          <RevealOnScroll variant="slideUp">
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-3 border-t border-brand-navy/10 pt-8">
-              <span className="mr-2 text-[11px] font-bold uppercase tracking-[0.22em] text-slate-400">
-                Accredited by
-              </span>
-              {TRUST_BADGES.map((b) => {
-                const Icon = b.icon
-                return (
-                  <span
-                    key={b.name}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-brand-navy/15 bg-white px-3.5 py-1.5 text-xs font-semibold text-brand-navy"
-                  >
-                    <Icon className="size-3.5 text-brand-emerald" aria-hidden="true" />
-                    {b.name}
-                  </span>
-                )
-              })}
-            </div>
-          </RevealOnScroll>
-
           {/* Link out to full reviews */}
           <div className="mt-10 text-center">
             <Link
@@ -469,7 +380,6 @@ export default function ContactPage() {
               className="inline-flex items-center gap-2 rounded-full border border-brand-navy bg-white px-6 py-3 text-sm font-semibold text-brand-navy transition-all hover:bg-brand-navy hover:text-white"
             >
               Read all 200+ reviews
-              <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
         </div>
@@ -527,7 +437,6 @@ function OfficeFact({
           className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-emerald hover:text-brand-emerald/80"
         >
           {link.label}
-          <ArrowRight className="size-3.5" aria-hidden="true" />
         </Link>
       )}
     </div>

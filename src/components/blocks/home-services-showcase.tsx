@@ -4,7 +4,7 @@ import { memo, useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence, MotionConfig } from 'framer-motion'
-import { ArrowRight, Check, Shield, Key, Building2, MapPin, Calendar, FileText, Sparkles } from 'lucide-react'
+import { Check, Shield, Key, Building2, MapPin, Calendar, FileText, Sparkles } from 'lucide-react'
 
 import type { ServiceCardData } from '@/types/blocks'
 
@@ -966,7 +966,6 @@ const ServiceEntry = memo(function ServiceEntry({
           className="group mt-6 inline-flex items-center gap-2 text-sm font-bold text-brand-emerald hover:text-emerald-700"
         >
           <span>Explore {service.title.toLowerCase()}</span>
-          <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
         </Link>
       </motion.div>
     </div>

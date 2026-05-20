@@ -81,11 +81,8 @@ export function ProblemSolutionShowcase() {
           <Header />
           <ol className="mt-12 space-y-6">
             {PAIRS.map((pair, i) => (
-              <li
-                key={pair.key}
-                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
-              >
-                <StaticCard pair={pair} index={i} />
+              <li key={pair.key}>
+                <StaticPhaseCard pair={pair} index={i} />
               </li>
             ))}
           </ol>
@@ -95,61 +92,93 @@ export function ProblemSolutionShowcase() {
   }
 
   return (
-    <section
-      ref={containerRef}
-      className="relative bg-white"
-      style={{ height: `${PAIRS.length * 100}vh` }}
-      aria-label="Leasing Friction, Resolved"
-    >
-      {/* Sticky stage — everything inside stays pinned for the duration of the section */}
-      <div className="sticky top-0 flex h-screen w-full items-center overflow-hidden">
-        {/* Soft ivory wash */}
+    <>
+      {/* ──────────────────────────────────────────────────────────────
+          MOBILE / TABLET (< md): vertical stack — every pair fully
+          visible, no scroll-pin, no cross-fade. Before + Resolved
+          stacked one after the other so the user can read everything
+          at their own pace.
+          ────────────────────────────────────────────────────────────── */}
+      <section
+        className="relative bg-white py-14 md:hidden"
+        aria-label="Leasing Friction, Resolved"
+      >
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-[#FBFAF6]/60 to-white"
         />
+        <div className="relative z-10 mx-auto max-w-2xl px-4 sm:px-6">
+          <Header />
+          <ol className="mt-10 space-y-6">
+            {PAIRS.map((pair, i) => (
+              <li key={pair.key}>
+                <StaticPhaseCard pair={pair} index={i} />
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
 
-        {/* Subtle decorative grid */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              'radial-gradient(#0B1D3A 1px, transparent 1px)',
-            backgroundSize: '28px 28px',
-          }}
-        />
+      {/* ──────────────────────────────────────────────────────────────
+          DESKTOP (md+): pinned scroll stage with cross-fading phase
+          cards — unchanged from the original treatment.
+          ────────────────────────────────────────────────────────────── */}
+      <section
+        ref={containerRef}
+        className="relative hidden bg-white md:block"
+        style={{ height: `${PAIRS.length * 100}vh` }}
+        aria-label="Leasing Friction, Resolved"
+      >
+        {/* Sticky stage — everything inside stays pinned for the duration of the section */}
+        <div className="sticky top-0 flex h-screen w-full items-center overflow-hidden">
+          {/* Soft ivory wash */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-[#FBFAF6]/60 to-white"
+          />
 
-        <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-10 px-4 sm:px-6 lg:grid-cols-[340px_220px_1fr] lg:gap-10 lg:px-8">
-          {/* LEFT: pinned header */}
-          <div className="lg:pt-2">
-            <Header />
-            {/* On small screens the step indicator stacks under the header */}
-            <div className="mt-8 lg:hidden">
+          {/* Subtle decorative grid */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage:
+                'radial-gradient(#0B1D3A 1px, transparent 1px)',
+              backgroundSize: '28px 28px',
+            }}
+          />
+
+          <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-10 px-4 sm:px-6 lg:grid-cols-[340px_220px_1fr] lg:gap-10 lg:px-8">
+            {/* LEFT: pinned header */}
+            <div className="lg:pt-2">
+              <Header />
+              {/* On md screens the step indicator stacks under the header */}
+              <div className="mt-8 lg:hidden">
+                <StepIndicator progress={smoothProgress} />
+              </div>
+            </div>
+
+            {/* MIDDLE: vertical step rail, visible alongside the card on lg+ */}
+            <div className="hidden lg:flex lg:flex-col lg:justify-center lg:pt-4">
               <StepIndicator progress={smoothProgress} />
             </div>
-          </div>
 
-          {/* MIDDLE: vertical step rail, visible alongside the card on lg+ */}
-          <div className="hidden lg:flex lg:flex-col lg:justify-center lg:pt-4">
-            <StepIndicator progress={smoothProgress} />
-          </div>
-
-          {/* RIGHT: phase stage */}
-          <div className="relative h-[360px] sm:h-[380px] md:h-[400px]">
-            {PAIRS.map((pair, i) => (
-              <Phase
-                key={pair.key}
-                pair={pair}
-                index={i}
-                total={PAIRS.length}
-                progress={smoothProgress}
-              />
-            ))}
+            {/* RIGHT: phase stage */}
+            <div className="relative h-[380px] md:h-[400px]">
+              {PAIRS.map((pair, i) => (
+                <Phase
+                  key={pair.key}
+                  pair={pair}
+                  index={i}
+                  total={PAIRS.length}
+                  progress={smoothProgress}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }
 
@@ -331,7 +360,7 @@ function Phase({
       </div>
 
       {/* Two-column body */}
-      <div className="grid h-[calc(100%-64px)] grid-cols-1 md:grid-cols-[1fr_auto_1fr]">
+      <div className="grid h-[calc(100%-64px)] grid-cols-1 gap-0 md:grid-cols-[1fr_auto_1fr]">
         {/* Problem column */}
         <div className="relative bg-rose-50/60 px-6 py-5 sm:px-7 sm:py-6">
           <div
@@ -383,38 +412,90 @@ function Phase({
 }
 
 /* ------------------------------------------------------------------ */
-/*  Static fallback card for reduced-motion users                     */
+/*  Static phase card — used on mobile/tablet (md-) AND reduced-motion */
+/*  Renders the full Before + Resolved pair with no cross-fade, no     */
+/*  height clamp, so the user can read every word without scrolling    */
+/*  past a sticky stage.                                               */
 /* ------------------------------------------------------------------ */
 
-function StaticCard({ pair, index }: { pair: Pair; index: number }) {
+function StaticPhaseCard({ pair, index }: { pair: Pair; index: number }) {
   const step = String(index + 1).padStart(2, '0')
   return (
-    <div>
-      <div className="flex items-center gap-3">
-        <span className="font-display text-xl italic text-brand-gold">{step}</span>
-        <span className="h-4 w-px bg-slate-300" />
-        <span className="text-xs font-bold uppercase tracking-[0.25em] text-brand-navy/70">
-          {pair.tag}
+    <article className="relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-[0_12px_36px_-18px_rgba(11,29,58,0.18)]">
+      {/* Top accent bar */}
+      <span
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 block h-1 bg-gradient-to-r from-brand-gold/70 via-brand-emerald/80 to-brand-emerald/20"
+      />
+
+      {/* Header strip */}
+      <div className="flex items-center justify-between gap-3 border-b border-slate-200/70 bg-[#FBFAF6] px-5 py-3.5 sm:px-6">
+        <div className="flex items-center gap-3">
+          <span
+            className="font-display text-2xl italic leading-none text-brand-gold"
+            aria-hidden="true"
+          >
+            {step}
+          </span>
+          <span className="h-4 w-px bg-slate-300" aria-hidden="true" />
+          <span className="text-[0.7rem] font-bold uppercase tracking-[0.22em] text-brand-navy/70">
+            {pair.tag}
+          </span>
+        </div>
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[0.6rem] font-bold uppercase tracking-[0.2em] text-brand-emerald">
+          <span className="size-1.5 rounded-full bg-brand-emerald" aria-hidden="true" />
+          Resolved
         </span>
       </div>
-      <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="rounded-xl bg-rose-50/60 p-4">
-          <p className="text-[0.7rem] font-bold uppercase tracking-[0.25em] text-rose-600">
-            Before
-          </p>
-          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+
+      {/* Stacked Before → Resolved body (vertical on mobile, side-by-side on sm+) */}
+      <div className="grid grid-cols-1 gap-0 sm:grid-cols-[1fr_auto_1fr]">
+        {/* Before block */}
+        <div className="relative bg-rose-50/60 px-5 py-5 sm:px-6 sm:py-6">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_0%_0%,rgba(244,63,94,0.10),transparent_60%)]"
+          />
+          <div className="relative flex items-center gap-2">
+            <AlertCircle className="size-3.5 text-rose-500" aria-hidden="true" />
+            <p className="text-[0.7rem] font-bold uppercase tracking-[0.22em] text-rose-600">
+              Before
+            </p>
+          </div>
+          <p className="relative mt-3 text-[0.95rem] leading-relaxed text-slate-600">
             {pair.problem}
           </p>
         </div>
-        <div className="rounded-xl bg-emerald-50/60 p-4">
-          <p className="text-[0.7rem] font-bold uppercase tracking-[0.25em] text-brand-emerald">
-            The MoveSmart Way
-          </p>
-          <p className="mt-2 text-sm font-medium leading-relaxed text-brand-navy">
+
+        {/* Divider arrow */}
+        <div
+          aria-hidden="true"
+          className="relative flex items-center justify-center bg-white py-2 sm:px-4 sm:py-0"
+        >
+          <span className="h-px w-full bg-slate-200 sm:hidden" />
+          <span className="absolute inset-y-4 left-1/2 hidden w-px -translate-x-1/2 bg-slate-200 sm:block" />
+          <span className="relative z-10 inline-flex size-9 items-center justify-center rounded-full border border-brand-emerald/30 bg-white text-brand-emerald shadow-sm">
+            <ArrowRight className="size-4 rotate-90 sm:rotate-0" aria-hidden="true" />
+          </span>
+        </div>
+
+        {/* Resolved block */}
+        <div className="relative px-5 py-5 sm:px-6 sm:py-6">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_100%_100%,rgba(16,185,129,0.10),transparent_60%)]"
+          />
+          <div className="relative flex items-center gap-2">
+            <CheckCircle2 className="size-3.5 text-brand-emerald" aria-hidden="true" />
+            <p className="text-[0.7rem] font-bold uppercase tracking-[0.22em] text-brand-emerald">
+              The MoveSmart Way
+            </p>
+          </div>
+          <p className="relative mt-3 text-[0.95rem] font-medium leading-relaxed text-brand-navy">
             {pair.solution}
           </p>
         </div>
       </div>
-    </div>
+    </article>
   )
 }

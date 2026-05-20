@@ -951,6 +951,242 @@ const NOVA_SCOTIA: ProvinceData = {
   ],
 }
 
+const SASKATCHEWAN: ProvinceData = {
+  name: 'Saskatchewan',
+  slug: 'saskatchewan',
+  abbreviation: 'SK',
+  flagEmoji: '🇨🇦',
+  heroImageUrl: IMG.genericMidsize,
+  heroImageAlt: 'Saskatchewan prairie city skyline at dusk',
+  market: {
+    population: '1.22M',
+    populationSource: 'Statistics Canada, Q4 2025',
+    medianRent: '$1,300',
+    medianRentSource: 'CMHC Rental Market Report 2025 (2-bed asking rent, provincial average)',
+    vacancyRate: '4.1%',
+    vacancySource: 'CMHC Rental Market Report 2025',
+    rentGrowthYoY: '+4.8%',
+    rentalHouseholds: '175K',
+    intro:
+      'Saskatchewan rentals operate under the Office of Residential Tenancies with no provincial rent cap, giving owners pricing flexibility year over year. Saskatoon and Regina anchor demand with the University of Saskatchewan, public-sector workforce, and a resource-economy tenant base. Modest median rents combine with steady absorption, making it one of the most accessible major rental markets in Canada.',
+  },
+  topCities: [
+    {
+      name: 'Saskatoon',
+      slug: 'saskatoon',
+      population: '273K',
+      medianRent: '$1,350',
+      vacancy: '3.8%',
+      imageUrl: IMG.genericMidsize,
+      imageAlt: 'Saskatoon Saskatchewan downtown skyline along the South Saskatchewan River',
+      neighborhoods: ['Downtown', 'Nutana', 'City Park', 'Stonebridge', 'Willowgrove'],
+      whyHere:
+        'University of Saskatchewan demand and a diversified service economy keep Saskatoon\'s rental market the most active in the province.',
+    },
+    {
+      name: 'Regina',
+      slug: 'regina',
+      population: '226K',
+      medianRent: '$1,300',
+      vacancy: '4.2%',
+      imageUrl: IMG.genericMidsize,
+      imageAlt: 'Regina Saskatchewan provincial Legislative Building and Wascana Lake',
+      neighborhoods: ['Downtown', 'Cathedral', 'Lakeview', 'Harbour Landing', 'Wascana View'],
+      whyHere:
+        'Provincial capital with strong public-sector and University of Regina demand. Year-round leasing cycle with consistent absorption.',
+    },
+    {
+      name: 'Prince Albert',
+      slug: 'prince-albert',
+      population: '38K',
+      medianRent: '$1,150',
+      vacancy: '5.0%',
+      imageUrl: IMG.genericSuburb,
+      imageAlt: 'Prince Albert Saskatchewan small city street view',
+      neighborhoods: ['Downtown', 'East Hill', 'West Hill', 'Crescent Heights', 'Hazeldell'],
+      whyHere:
+        'Northern Saskatchewan service hub. SaskPolytech campus, healthcare, and resource-sector employment anchor steady mid-market demand.',
+    },
+  ],
+}
+
+const NEW_BRUNSWICK: ProvinceData = {
+  name: 'New Brunswick',
+  slug: 'new-brunswick',
+  abbreviation: 'NB',
+  flagEmoji: '🇨🇦',
+  heroImageUrl: IMG.genericWaterfront,
+  heroImageAlt: 'New Brunswick coastal waterfront town at sunset',
+  market: {
+    population: '850K',
+    populationSource: 'Statistics Canada, Q4 2025',
+    medianRent: '$1,400',
+    medianRentSource: 'CMHC Rental Market Report 2025 (2-bed asking rent, provincial average)',
+    vacancyRate: '2.0%',
+    vacancySource: 'CMHC Rental Market Report 2025',
+    rentGrowthYoY: '+6.2%',
+    rentalHouseholds: '125K',
+    intro:
+      'New Brunswick has been one of Atlantic Canada\'s fastest in-migration provinces since 2021, sustaining tight occupancy across Moncton, Saint John, and Fredericton. A provincial rent cap was introduced in 2022, and renoviction protections were strengthened in 2023. The province\'s bilingual workforce, lower cost of living, and steady federal-sector employment underpin a resilient year-round rental market.',
+  },
+  topCities: [
+    {
+      name: 'Moncton',
+      slug: 'moncton',
+      population: '79K',
+      medianRent: '$1,500',
+      vacancy: '1.8%',
+      imageUrl: IMG.genericMidsize,
+      imageAlt: 'Moncton New Brunswick downtown along the Petitcodiac River',
+      neighborhoods: ['Downtown', 'Riverview', 'Dieppe', 'West End', 'Magnetic Hill'],
+      whyHere:
+        'New Brunswick\'s economic engine. Bilingual workforce, Université de Moncton, and logistics-sector growth drive sub-2% vacancy.',
+    },
+    {
+      name: 'Saint John',
+      slug: 'saint-john',
+      population: '70K',
+      medianRent: '$1,350',
+      vacancy: '2.2%',
+      imageUrl: IMG.genericWaterfront,
+      imageAlt: 'Saint John New Brunswick uptown harbour and waterfront skyline',
+      neighborhoods: ['Uptown', 'North End', 'South End', 'West Side', 'Rothesay'],
+      whyHere:
+        'Atlantic Canada\'s oldest incorporated city. Irving industrial cluster, port-economy, and UNB Saint John student demand anchor the market.',
+    },
+    {
+      name: 'Fredericton',
+      slug: 'fredericton',
+      population: '64K',
+      medianRent: '$1,400',
+      vacancy: '1.9%',
+      imageUrl: IMG.genericMidsize,
+      imageAlt: 'Fredericton New Brunswick provincial Legislative Building along the Saint John River',
+      neighborhoods: ['Downtown', 'North Side', 'South Side', 'Hanwell', 'Skyline Acres'],
+      whyHere:
+        'Provincial capital with University of New Brunswick and STU. Public-sector workforce and academic cycle drive year-round demand.',
+    },
+  ],
+}
+
+const NEWFOUNDLAND_AND_LABRADOR: ProvinceData = {
+  name: 'Newfoundland and Labrador',
+  slug: 'newfoundland-and-labrador',
+  abbreviation: 'NL',
+  flagEmoji: '🇨🇦',
+  heroImageUrl: IMG.genericWaterfront,
+  heroImageAlt: "St. John's Newfoundland colourful row houses and harbour",
+  market: {
+    population: '540K',
+    populationSource: 'Statistics Canada, Q4 2025',
+    medianRent: '$1,300',
+    medianRentSource: 'CMHC Rental Market Report 2025 (2-bed asking rent, provincial average)',
+    vacancyRate: '2.8%',
+    vacancySource: 'CMHC Rental Market Report 2025',
+    rentGrowthYoY: '+5.0%',
+    rentalHouseholds: '85K',
+    intro:
+      "Newfoundland and Labrador's rental market is anchored by St. John's, with Memorial University, healthcare, and offshore-energy employment driving demand. The province has no general rent cap but enforces strong tenant protections under the Residential Tenancies Act. Steady population recovery since 2022 and accessible median rents have made the market one of the most stable in Atlantic Canada.",
+  },
+  topCities: [
+    {
+      name: "St. John's",
+      slug: 'st-johns',
+      population: '111K',
+      medianRent: '$1,400',
+      vacancy: '2.5%',
+      imageUrl: IMG.genericWaterfront,
+      imageAlt: "St. John's Newfoundland harbour and downtown with colourful row houses",
+      neighborhoods: ['Downtown', 'Georgetown', 'Quidi Vidi', 'Churchill Park', 'Kenmount'],
+      whyHere:
+        "Provincial capital and economic anchor. Memorial University and offshore-energy workforce drive year-round leasing demand.",
+    },
+    {
+      name: 'Mount Pearl',
+      slug: 'mount-pearl',
+      population: '23K',
+      medianRent: '$1,300',
+      vacancy: '2.9%',
+      imageUrl: IMG.genericSuburb,
+      imageAlt: 'Mount Pearl Newfoundland suburban residential street',
+      neighborhoods: ['Park Place', 'Glendale', 'Newtown', 'Donovans', 'Smallwood'],
+      whyHere:
+        "Greater St. John's suburb with strong family-tenant demand and access to the regional employment base.",
+    },
+    {
+      name: 'Corner Brook',
+      slug: 'corner-brook',
+      population: '20K',
+      medianRent: '$1,150',
+      vacancy: '3.5%',
+      imageUrl: IMG.genericMidsize,
+      imageAlt: 'Corner Brook Newfoundland Bay of Islands waterfront and mountains',
+      neighborhoods: ['Downtown', 'West End', 'Curling', 'Massey Drive', 'Petries Crossing'],
+      whyHere:
+        "Western Newfoundland's regional hub. Grenfell Campus and Corner Brook Pulp & Paper anchor mid-market demand.",
+    },
+  ],
+}
+
+const PRINCE_EDWARD_ISLAND: ProvinceData = {
+  name: 'Prince Edward Island',
+  slug: 'prince-edward-island',
+  abbreviation: 'PE',
+  flagEmoji: '🇨🇦',
+  heroImageUrl: IMG.genericWaterfront,
+  heroImageAlt: 'Prince Edward Island coastal waterfront landscape',
+  market: {
+    population: '177K',
+    populationSource: 'Statistics Canada, Q4 2025',
+    medianRent: '$1,500',
+    medianRentSource: 'CMHC Rental Market Report 2025 (2-bed asking rent, provincial average)',
+    vacancyRate: '1.5%',
+    vacancySource: 'CMHC Rental Market Report 2025',
+    rentGrowthYoY: '+7.5%',
+    rentalHouseholds: '28K',
+    intro:
+      "Prince Edward Island has Canada's tightest rental market by population, with persistent sub-2% vacancy across Charlottetown and Summerside. The province enforces a hard annual rent-increase cap through IRAC, and tenant-protection rules are among the strongest in Canada. UPEI, healthcare, and a fast-growing tourism economy drive demand, sustained by record in-migration from other provinces and abroad.",
+  },
+  topCities: [
+    {
+      name: 'Charlottetown',
+      slug: 'charlottetown',
+      population: '40K',
+      medianRent: '$1,550',
+      vacancy: '1.4%',
+      imageUrl: IMG.genericWaterfront,
+      imageAlt: 'Charlottetown Prince Edward Island historic harbour and downtown',
+      neighborhoods: ['Downtown', 'Brighton', 'Sherwood', 'Spring Park', 'East Royalty'],
+      whyHere:
+        "Provincial capital with University of Prince Edward Island and Holland College. Sub-1.5% vacancy makes screening discipline essential.",
+    },
+    {
+      name: 'Summerside',
+      slug: 'summerside',
+      population: '16K',
+      medianRent: '$1,400',
+      vacancy: '1.6%',
+      imageUrl: IMG.genericMidsize,
+      imageAlt: 'Summerside Prince Edward Island waterfront and downtown',
+      neighborhoods: ['Downtown', 'Granville', 'Slemon Park', 'Linkletter', 'Wilmot'],
+      whyHere:
+        'PEI\'s second-largest city. Slemon Park aerospace cluster and Holland College Summerside campus anchor steady demand.',
+    },
+    {
+      name: 'Stratford',
+      slug: 'stratford',
+      population: '12K',
+      medianRent: '$1,500',
+      vacancy: '1.7%',
+      imageUrl: IMG.genericSuburb,
+      imageAlt: 'Stratford Prince Edward Island suburban residential street',
+      neighborhoods: ['Bunbury', 'Cross Roads', 'Keppoch', 'Kinlock', 'Pondside'],
+      whyHere:
+        'Fast-growing Charlottetown suburb with new-build family-rental inventory and strong commuter demand.',
+    },
+  ],
+}
+
 // ---------------------------------------------------------------------------
 // U.S. states
 // ---------------------------------------------------------------------------
@@ -1822,7 +2058,11 @@ export const CANADA_PROVINCES: ProvinceData[] = [
   BRITISH_COLUMBIA,
   ALBERTA,
   MANITOBA,
+  SASKATCHEWAN,
   NOVA_SCOTIA,
+  NEW_BRUNSWICK,
+  NEWFOUNDLAND_AND_LABRADOR,
+  PRINCE_EDWARD_ISLAND,
 ]
 
 export const US_STATES: StateData[] = [

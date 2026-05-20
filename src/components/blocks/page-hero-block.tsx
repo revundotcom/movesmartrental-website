@@ -225,8 +225,8 @@ export function PageHeroBlock(props: PageHeroBlockProps) {
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
               className={
                 isDark
-                  ? 'font-display text-4xl font-normal leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[3.5rem]'
-                  : 'font-display text-4xl font-normal leading-[1.05] tracking-tight text-brand-navy sm:text-5xl lg:text-[3.5rem]'
+                  ? 'font-display text-[2.25rem] font-normal leading-[1.1] tracking-tight text-white sm:text-4xl sm:leading-[1.08] md:text-5xl lg:text-[3.5rem]'
+                  : 'font-display text-[2.25rem] font-normal leading-[1.1] tracking-tight text-brand-navy sm:text-4xl sm:leading-[1.08] md:text-5xl lg:text-[3.5rem]'
               }
             >
               {leadingWords}
@@ -270,28 +270,18 @@ export function PageHeroBlock(props: PageHeroBlockProps) {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
+                className="mt-8 flex flex-row flex-wrap items-center gap-3"
               >
                 {cta1 && (
                   <CTATracker eventType={inferCTAType(cta1.href)} city={city} service={service}>
                     <Button
                       size="lg"
-                      className="cursor-pointer px-7 py-6 text-base font-bold text-white shadow-md transition-all duration-300 hover:-translate-y-px hover:shadow-lg"
+                      className="cursor-pointer px-5 py-4 text-sm font-bold text-white shadow-md transition-all duration-300 hover:-translate-y-px hover:shadow-lg sm:px-7 sm:py-6 sm:text-base"
                       style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}
                       nativeButton={false}
                       render={<Link href={cta1.href} />}
                     >
                       {cta1.label}
-                      <svg
-                        className="ml-2 size-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2.5}
-                        aria-hidden="true"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
                     </Button>
                   </CTATracker>
                 )}
@@ -302,8 +292,8 @@ export function PageHeroBlock(props: PageHeroBlockProps) {
                       size="lg"
                       className={
                         isDark
-                          ? 'cursor-pointer border-2 border-white/20 bg-transparent px-7 py-6 text-base font-semibold text-white hover:border-white/40 hover:bg-white/5'
-                          : 'cursor-pointer border-2 border-brand-navy/15 bg-white px-7 py-6 text-base font-semibold text-brand-navy hover:border-brand-navy/30 hover:bg-slate-50'
+                          ? 'cursor-pointer border-2 border-white/20 bg-transparent px-5 py-4 text-sm font-semibold text-white hover:border-white/40 hover:bg-white/5 sm:px-7 sm:py-6 sm:text-base'
+                          : 'cursor-pointer border-2 border-brand-navy/15 bg-white px-5 py-4 text-sm font-semibold text-brand-navy hover:border-brand-navy/30 hover:bg-slate-50 sm:px-7 sm:py-6 sm:text-base'
                       }
                       nativeButton={false}
                       render={<Link href={cta2.href} />}

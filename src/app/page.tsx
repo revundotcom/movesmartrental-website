@@ -5,7 +5,6 @@ import {
   Monitor,
   User,
   Building,
-  ArrowRight,
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -110,7 +109,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── SECTION 2: Trust / Press marquee ── */}
-      <section className="relative overflow-hidden border-b border-border bg-gradient-to-r from-slate-50 via-white to-slate-50 py-10">
+      <section className="relative overflow-hidden border-b border-border bg-gradient-to-r from-slate-50 via-white to-slate-50 py-12 sm:py-14 md:py-16">
         {/* Decorative line accent */}
         <div className="absolute left-0 top-0 h-0.5 w-full bg-gradient-to-r from-transparent via-brand-emerald/40 to-transparent" aria-hidden="true" />
         <div className="mx-auto max-w-6xl px-4">
@@ -119,11 +118,11 @@ export default async function HomePage() {
             <p className="text-center text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/50">
               As seen in
             </p>
-            <div className="relative mt-5 overflow-hidden">
+            <div className="relative mt-6 overflow-hidden sm:mt-7">
               {/* Fade edges */}
               <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-white to-transparent" aria-hidden="true" />
               <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-white to-transparent" aria-hidden="true" />
-              <div className="flex animate-marquee items-center gap-16 whitespace-nowrap opacity-40 grayscale">
+              <div className="flex animate-marquee items-center gap-8 whitespace-nowrap opacity-40 grayscale sm:gap-12 md:gap-16">
                 {/* Toronto Star */}
                 <svg width="130" height="28" viewBox="0 0 130 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0" aria-label="Toronto Star">
                   <text x="0" y="21" fontFamily="Georgia, 'Times New Roman', serif" fontSize="19" fontWeight="700" fill="#0B1D3A" letterSpacing="-0.3">Toronto</text>
@@ -188,7 +187,7 @@ export default async function HomePage() {
       <RentCalculator />
 
       {/* ── SECTION 5: Owner Portal - Leasing Visibility (NOT ongoing mgmt) + 9 messaging pillars ── */}
-      <section className="relative overflow-hidden bg-white py-14">
+      <section className="relative overflow-hidden bg-white py-16 sm:py-20 md:py-24">
         <div
           className="absolute inset-0 opacity-[0.025]"
           aria-hidden="true"
@@ -229,7 +228,7 @@ export default async function HomePage() {
                 Track showings, applicant records, screening results, approvals, counter-offers, condition inspections, and the full communication history, in real time. Owners can self-serve online without ever picking up the phone, or escalate to a dedicated account manager whenever they want.
               </p>
 
-              <div className="mt-10 space-y-4">
+              <div className="mt-10 space-y-5 sm:space-y-6">
                 {[
                   {
                     icon: Monitor,
@@ -290,7 +289,6 @@ export default async function HomePage() {
                   }
                 >
                   Explore Owner Portal
-                  <ArrowRight className="ml-2 size-4" aria-hidden="true" />
                 </Button>
               </div>
             </div>
@@ -303,9 +301,9 @@ export default async function HomePage() {
       <WaveDivider fill="#f8fafc" flip={true} />
 
       {/* ── SECTION 5.5: Owner Visual Showcase (modern Canadian condo) ── */}
-      <section className="bg-slate-50 py-16">
+      <section className="bg-slate-50 py-16 sm:py-20 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+          <div className="grid grid-cols-1 items-center gap-10 sm:gap-12 lg:grid-cols-2">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl shadow-brand-navy/15">
               <Image
                 src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1600&q=80&auto=format&fit=crop"
@@ -327,27 +325,26 @@ export default async function HomePage() {
               <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
                 Professional photography, virtual tours, and editorial listing copy. We make your unit show as well online as it does in person, then put it in front of the qualified tenants who are actually shopping right now.
               </p>
-              <div className="mt-8 grid grid-cols-3 gap-6">
+              <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6">
                 <div>
-                  <p className="font-display text-3xl font-normal text-brand-navy">MLS+</p>
-                  <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-500">20+ platforms</p>
+                  <p className="font-display text-2xl font-normal text-brand-navy sm:text-3xl">MLS+</p>
+                  <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-slate-500 sm:text-xs">20+ platforms</p>
                 </div>
                 <div>
-                  <p className="font-display text-3xl font-normal text-brand-navy">$0</p>
-                  <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-500">Upfront cost</p>
+                  <p className="font-display text-2xl font-normal text-brand-navy sm:text-3xl">$0</p>
+                  <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-slate-500 sm:text-xs">Upfront cost</p>
                 </div>
-                <div>
-                  <p className="font-display text-3xl font-normal text-brand-navy">N.A.</p>
-                  <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-500">North America</p>
+                <div className="col-span-2 sm:col-span-1">
+                  <p className="font-display text-2xl font-normal text-brand-navy sm:text-3xl">N.A.</p>
+                  <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-slate-500 sm:text-xs">North America</p>
                 </div>
               </div>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-8 flex flex-row flex-wrap items-center gap-4 sm:gap-5">
                 <Link
                   href="/contact/?type=owner"
                   className="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-sm shadow-emerald-900/20 transition-all duration-200 hover:-translate-y-px hover:bg-emerald-600 hover:shadow-md"
                 >
                   List my property
-                  <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
                 <Link
                   href="/properties/"
@@ -375,7 +372,7 @@ export default async function HomePage() {
       <WaveDivider fill="#0B1D3A" />
 
       {/* ── SECTION 8: Franchising Preview ── */}
-      <section className="relative overflow-hidden bg-brand-navy py-14 text-white">
+      <section className="relative overflow-hidden bg-brand-navy py-16 text-white sm:py-20 md:py-28">
         <div
           className="absolute inset-0 opacity-[0.04]"
           aria-hidden="true"
@@ -384,10 +381,10 @@ export default async function HomePage() {
         <div className="absolute -left-20 top-1/2 size-[350px] -translate-y-1/2 rounded-full bg-brand-emerald/8 blur-3xl" aria-hidden="true" />
         <div className="absolute -right-20 top-1/2 size-[350px] -translate-y-1/2 rounded-full bg-brand-emerald/6 blur-3xl" aria-hidden="true" />
 
-        <div className="relative z-10 mx-auto max-w-7xl px-4">
-          <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
-            <div className="flex items-center justify-center">
-              <div className="relative w-full max-w-[560px]">
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            <div className="flex w-full items-center justify-center">
+              <div className="relative w-full max-w-full overflow-hidden lg:max-w-[560px]">
                 <DigitalWorldMap />
               </div>
             </div>
@@ -427,7 +424,7 @@ export default async function HomePage() {
                 ))}
               </div>
 
-              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+              <div className="mt-10 flex flex-row flex-wrap items-center gap-4 sm:gap-5">
                 <Button
                   variant="default"
                   size="lg"

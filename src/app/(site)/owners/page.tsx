@@ -5,7 +5,6 @@ import {
   Check,
   X,
   Minus,
-  ArrowRight,
   Clock,
   DollarSign,
   Monitor,
@@ -304,7 +303,7 @@ function HeroAside() {
         className="absolute -top-2 left-0 h-px w-12 bg-brand-gold"
       />
 
-      <div className="rounded-2xl border border-brand-navy/10 bg-white p-6 shadow-sm sm:p-7">
+      <div className="rounded-2xl border border-brand-navy/10 bg-white p-4 shadow-sm sm:p-6 md:p-7">
         <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-navy/55">
           What&rsquo;s included
         </p>
@@ -594,7 +593,6 @@ export default async function OwnersPage() {
               className="inline-flex items-center gap-2 text-sm font-semibold text-brand-navy hover:text-brand-emerald"
             >
               Tour the portal
-              <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
         </div>
@@ -866,7 +864,6 @@ export default async function OwnersPage() {
               className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/10"
             >
               See every city we cover
-              <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
         </div>
@@ -971,7 +968,6 @@ export default async function OwnersPage() {
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-emerald px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-brand-emerald/20 transition-all hover:bg-emerald-600 hover:shadow-xl"
               >
                 List my property
-                <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
               <Link
                 href="/properties/"

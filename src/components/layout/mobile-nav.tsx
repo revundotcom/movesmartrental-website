@@ -167,7 +167,7 @@ function NavSection({
                     href={item.href}
                     onClick={onNavigate}
                     className={cn(
-                      'block rounded-lg px-3 py-2.5 text-[15px] font-medium transition-colors hover:bg-emerald-50 hover:text-emerald-700',
+                      'block rounded-lg px-3 py-3 text-[15px] font-medium transition-colors hover:bg-emerald-50 hover:text-emerald-700',
                       isActive
                         ? 'text-brand-emerald font-bold'
                         : 'text-[#0B1D3A]'

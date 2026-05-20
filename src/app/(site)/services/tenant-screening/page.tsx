@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
@@ -516,7 +515,6 @@ export default function TenantScreeningPage() {
                     className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-navy underline decoration-brand-gold decoration-2 underline-offset-4 transition-colors hover:text-brand-emerald"
                   >
                     See the full fee schedule
-                    <ArrowRight className="size-4" aria-hidden="true" />
                   </Link>
                 </div>
               </Reveal>
@@ -538,10 +536,6 @@ export default function TenantScreeningPage() {
                             className="group flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-brand-navy transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-emerald/40 hover:text-brand-emerald hover:shadow-md"
                           >
                             <span>{r.title}</span>
-                            <ArrowRight
-                              className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
-                              aria-hidden="true"
-                            />
                           </Link>
                         </li>
                       ))}
@@ -606,7 +600,6 @@ export default function TenantScreeningPage() {
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-emerald/20 transition-all hover:-translate-y-0.5 hover:bg-brand-emerald-dark hover:shadow-xl"
             >
               {content.cta1Label}
-              <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
             <Link
               href="/pricing/"

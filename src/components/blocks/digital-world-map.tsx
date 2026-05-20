@@ -2,7 +2,7 @@
 
 import { motion, useMotionValue, animate } from 'framer-motion'
 import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
-import { Plus, Minus, Maximize2 } from 'lucide-react'
+import { Plus, Minus, Maximize2, Minimize2 } from 'lucide-react'
 import { geoEqualEarth, geoPath, type GeoPath, type GeoProjection } from 'd3-geo'
 import { feature } from 'topojson-client'
 import type { Topology, GeometryCollection } from 'topojson-specification'
@@ -66,6 +66,7 @@ export function DigitalWorldMap() {
   const [scale, setScale] = useState(1)
   const [isDragging, setIsDragging] = useState(false)
   const [countries, setCountries] = useState<CountryFeature[] | null>(null)
+  const [isFullscreen, setIsFullscreen] = useState(false)
   // Track when we're on the client to avoid hydration mismatch from
   // floating-point string formatting differences between Node and the browser.
   const [mounted, setMounted] = useState(false)
@@ -73,6 +74,29 @@ export function DigitalWorldMap() {
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  // Sync state with native fullscreen changes (e.g. user pressing Esc)
+  useEffect(() => {
+    function onFsChange() {
+      setIsFullscreen(Boolean(document.fullscreenElement))
+    }
+    document.addEventListener('fullscreenchange', onFsChange)
+    return () => document.removeEventListener('fullscreenchange', onFsChange)
+  }, [])
+
+  async function toggleFullscreen() {
+    const node = containerRef.current
+    if (!node) return
+    try {
+      if (document.fullscreenElement) {
+        await document.exitFullscreen()
+      } else if (node.requestFullscreen) {
+        await node.requestFullscreen()
+      }
+    } catch {
+      // Some browsers throw on rapid toggles; ignore quietly.
+    }
+  }
 
   // Fetch the world atlas TopoJSON on mount and convert to GeoJSON
   useEffect(() => {
@@ -225,7 +249,11 @@ export function DigitalWorldMap() {
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
-        className="relative aspect-[1000/520] w-full touch-none select-none"
+        className={
+          isFullscreen
+            ? 'relative h-screen w-screen touch-none select-none bg-[#0B1D3A]'
+            : 'relative aspect-[1000/520] w-full touch-none select-none'
+        }
         style={{
           cursor: scale > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default',
         }}
@@ -348,35 +376,35 @@ export function DigitalWorldMap() {
           </div>
         )}
 
-        {/* Country legend */}
-        <div className="pointer-events-none absolute left-4 top-4 flex flex-col gap-2 rounded-xl border border-white/10 bg-white/[0.05] px-3 py-2.5 backdrop-blur-md">
-          <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-white/85">
+        {/* Country legend — hidden on xs to save space */}
+        <div className="pointer-events-none absolute left-2 top-2 hidden flex-col gap-1.5 rounded-xl border border-white/10 bg-white/[0.05] px-2.5 py-2 backdrop-blur-md sm:left-4 sm:top-4 sm:flex sm:gap-2 sm:px-3 sm:py-2.5">
+          <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.18em] text-white/85 sm:text-[10px]">
             <span className="size-2 rounded-full bg-brand-emerald shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
             Active · CA &amp; US
           </div>
-          <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-white/85">
+          <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.18em] text-white/85 sm:text-[10px]">
             <span className="size-2 rounded-full bg-brand-gold shadow-[0_0_8px_rgba(212,168,83,0.8)]" />
             Target territories
           </div>
         </div>
 
         {/* Live counter */}
-        <div className="pointer-events-none absolute right-4 top-4 rounded-xl border border-white/10 bg-white/[0.05] px-3 py-2.5 text-right backdrop-blur-md">
-          <p className="font-display text-2xl font-normal tabular-nums text-white">
+        <div className="pointer-events-none absolute right-2 top-2 rounded-xl border border-white/10 bg-white/[0.05] px-2.5 py-2 text-right backdrop-blur-md sm:right-4 sm:top-4 sm:px-3 sm:py-2.5">
+          <p className="font-display text-lg font-normal tabular-nums text-white sm:text-2xl">
             {CITY_PINS.length}+
           </p>
-          <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-white/60">
+          <p className="text-[8px] font-bold uppercase tracking-[0.22em] text-white/60 sm:text-[9px]">
             Markets mapped
           </p>
         </div>
 
-        {/* Coordinate HUD */}
-        <div className="pointer-events-none absolute bottom-4 left-4 font-mono text-[10px] uppercase tracking-[0.18em] text-white/45">
+        {/* Coordinate HUD — hidden on xs */}
+        <div className="pointer-events-none absolute bottom-2 left-2 hidden font-mono text-[9px] uppercase tracking-[0.18em] text-white/45 sm:bottom-4 sm:left-4 sm:block sm:text-[10px]">
           ZOOM · {scale.toFixed(2)}× · DRAG TO PAN
         </div>
 
         {/* Zoom controls */}
-        <div className="absolute bottom-4 right-4 flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.05] p-1 backdrop-blur-md">
+        <div className="absolute bottom-2 right-2 flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.05] p-1 backdrop-blur-md sm:bottom-4 sm:right-4 sm:gap-1">
           <button
             type="button"
             onClick={() => zoomTo(scale - 0.5)}
@@ -388,15 +416,15 @@ export function DigitalWorldMap() {
           </button>
           <button
             type="button"
-            onClick={() => {
-              setScale(1)
-              animate(x, 0, { duration: 0.4, ease: [0.22, 1, 0.36, 1] })
-              animate(y, 0, { duration: 0.4, ease: [0.22, 1, 0.36, 1] })
-            }}
+            onClick={toggleFullscreen}
             className="flex size-8 items-center justify-center rounded-full text-white/85 transition-colors hover:bg-white/10"
-            aria-label="Reset view"
+            aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
           >
-            <Maximize2 className="size-3.5" strokeWidth={2.2} aria-hidden="true" />
+            {isFullscreen ? (
+              <Minimize2 className="size-3.5" strokeWidth={2.2} aria-hidden="true" />
+            ) : (
+              <Maximize2 className="size-3.5" strokeWidth={2.2} aria-hidden="true" />
+            )}
           </button>
           <button
             type="button"
@@ -409,8 +437,8 @@ export function DigitalWorldMap() {
           </button>
         </div>
 
-        {/* Live status pill bottom-center */}
-        <div className="pointer-events-none absolute bottom-4 left-1/2 hidden -translate-x-1/2 items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 backdrop-blur-md sm:inline-flex">
+        {/* Live status pill bottom-center — hidden on small screens to avoid overlap */}
+        <div className="pointer-events-none absolute bottom-4 left-1/2 hidden -translate-x-1/2 items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 backdrop-blur-md md:inline-flex">
           <span className="relative flex size-1.5">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-emerald opacity-75" />
             <span className="relative inline-flex size-1.5 rounded-full bg-brand-emerald" />

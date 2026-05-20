@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import {
-  ArrowRight,
   ClipboardList,
   FileSignature,
   Handshake,
@@ -246,7 +245,6 @@ export function AudienceCard({
         </p>
         <span className="mt-auto inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.18em] text-brand-emerald">
           A fit
-          <ArrowRight className="size-3.5" aria-hidden="true" />
         </span>
       </div>
     </motion.div>

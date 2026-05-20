@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { MapPin, ArrowRight } from 'lucide-react'
+import { MapPin } from 'lucide-react'
 
 interface NearbyCity {
   name: string
@@ -52,7 +52,6 @@ export function NearbyCities({ cities, currentCity, country = 'ca' }: NearbyCiti
                     <p className="text-xs text-slate-400">Median rent: ${city.medianRent.toLocaleString()}/mo</p>
                   )}
                 </div>
-                <ArrowRight className="size-4 text-slate-300 transition-all group-hover:translate-x-1 group-hover:text-emerald-500" aria-hidden="true" />
               </Link>
             </motion.div>
           ))}

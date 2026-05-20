@@ -4,7 +4,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import {
-  ArrowRight,
   ScrollText,
   Camera,
   Home,
@@ -131,7 +130,6 @@ function PricingHero() {
               render={<Link href="/contact/?type=owner" />}
             >
               List my property
-              <ArrowRight className="ml-2 size-4" strokeWidth={2.5} aria-hidden="true" />
             </Button>
             <Button
               variant="outline"
@@ -204,7 +202,6 @@ function PricingHero() {
             className="mt-7 inline-flex items-center gap-2 border-b border-brand-emerald/40 pb-1 font-sans text-sm font-semibold text-emerald-300 transition-colors hover:border-brand-emerald hover:text-white"
           >
             Read the full fee schedule
-            <ArrowRight className="size-4" strokeWidth={2.25} />
           </a>
         </motion.aside>
       </div>
@@ -617,7 +614,6 @@ function HeadlinePriceStatement() {
                     className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-emerald px-5 py-2.5 font-sans text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition-all hover:bg-emerald-600 hover:shadow-xl"
                   >
                     Get a free rental analysis
-                    <ArrowRight className="size-4" strokeWidth={2.25} />
                   </a>
                 </RevealOnScroll>
               </div>

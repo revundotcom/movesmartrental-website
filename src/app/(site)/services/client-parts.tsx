@@ -4,7 +4,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRef, type ReactNode } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -158,10 +157,6 @@ export function BentoTile({
             )}
             <span className="mt-1 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.18em] text-brand-gold transition-colors group-hover:text-amber-200">
               Learn more
-              <ArrowRight
-                className="size-3.5 transition-transform group-hover:translate-x-0.5"
-                aria-hidden="true"
-              />
             </span>
           </div>
         </Link>
@@ -277,10 +272,6 @@ export function BentoTile({
           className={`mt-6 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.18em] transition-transform ${bg === 'gold' || bg === 'cream' ? 'text-brand-navy' : 'text-white'}`}
         >
           {ctaLabel ?? 'Get started'}
-          <ArrowRight
-            className="size-3.5 transition-transform group-hover:translate-x-0.5"
-            aria-hidden="true"
-          />
         </span>
       </Link>
     </motion.div>
@@ -370,10 +361,6 @@ export function ServiceImageCard({
           </p>
           <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-brand-emerald transition-colors group-hover:text-emerald-700">
             Learn more
-            <ArrowRight
-              className="size-3.5 transition-transform group-hover:translate-x-0.5"
-              aria-hidden="true"
-            />
           </span>
         </div>
       </Link>

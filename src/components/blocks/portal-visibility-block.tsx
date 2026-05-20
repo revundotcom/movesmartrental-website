@@ -114,7 +114,7 @@ export function PortalVisibilityBlock() {
 
   return (
     <section
-      className="relative overflow-hidden bg-[#FBFAF6] py-16 md:py-20"
+      className="relative overflow-hidden bg-[#FBFAF6] py-16 sm:py-20 md:py-24"
       aria-labelledby="portal-visibility-heading"
     >
       {/* Faint navy grid background */}
@@ -145,18 +145,18 @@ export function PortalVisibilityBlock() {
           </p>
           <h2
             id="portal-visibility-heading"
-            className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl md:text-5xl"
+            className="mt-4 font-display text-3xl font-normal tracking-tight text-brand-navy sm:mt-5 sm:text-4xl md:text-5xl"
           >
             You can verify everything yourself, in{' '}
             <span className="font-display italic text-brand-emerald">real time</span>
           </h2>
-          <p className="mt-5 text-lg leading-relaxed text-slate-600">
+          <p className="mt-5 text-base leading-relaxed text-slate-600 sm:mt-6 sm:text-lg">
             Not &lsquo;trust us&rsquo;. Owners and operators see the same live data MoveSmart operates against. Every lead, every call, every showing, every offer logged and visible from the moment a property goes live.
           </p>
         </div>
 
         {/* ── KPI Card Grid ──────────────────────────────────────────────── */}
-        <div className="mt-12 grid grid-cols-1 gap-6 md:mt-14 md:grid-cols-3 md:gap-7">
+        <div className="mt-14 grid grid-cols-1 gap-6 sm:mt-16 md:grid-cols-3 md:gap-7">
           <KpiFamilyCard
             card={DEMAND_CARD}
             index={0}

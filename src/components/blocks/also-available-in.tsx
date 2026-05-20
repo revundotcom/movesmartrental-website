@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 
 interface AlsoAvailableCity {
   cityName: string
@@ -31,7 +30,6 @@ export function AlsoAvailableIn({ cities, serviceName, serviceSlug, country = 'c
               className="group inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 transition-all hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700"
             >
               {city.cityName}
-              <ArrowRight className="size-3 opacity-0 transition-all group-hover:opacity-100 group-hover:translate-x-0.5" aria-hidden="true" />
             </Link>
           ))}
         </div>
