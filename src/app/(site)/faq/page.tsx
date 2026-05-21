@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { JsonLd } from '@/components/json-ld'
@@ -83,12 +84,12 @@ function PopularTopicsAside() {
       </ul>
       <p className="mt-5 text-xs leading-relaxed text-white/60">
         Can&apos;t find what you need?{' '}
-        <a
+        <Link
           href="/contact/"
           className="text-white underline decoration-brand-gold decoration-2 underline-offset-[4px] hover:text-brand-emerald"
         >
           Ask a human
-        </a>
+        </Link>
         .
       </p>
     </aside>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -369,9 +370,9 @@ export function ContactFormInline() {
         <p className="text-center text-xs text-slate-500 sm:text-left">
           By submitting, you agree we may contact you about your inquiry. We never share your
           details — see our{' '}
-          <a href="/privacy/" className="font-semibold text-brand-emerald underline">
+          <Link href="/privacy/" className="font-semibold text-brand-emerald underline">
             privacy policy
-          </a>
+          </Link>
           .
         </p>
         <button

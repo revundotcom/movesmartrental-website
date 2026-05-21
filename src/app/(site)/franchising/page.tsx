@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 import {
   ShieldCheck,
   BookOpen,
@@ -412,12 +413,12 @@ function FranchisingHero() {
 
           {/* CTAs */}
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <a
+            <Link
               href="/contact/?intent=franchise"
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 px-7 py-3.5 text-base font-bold text-white shadow-lg shadow-emerald-500/20 transition-all duration-300 hover:-translate-y-px hover:shadow-xl"
             >
               Request the Franchise Kit
-            </a>
+            </Link>
             <a
               href="#franchise-economics"
               className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/20 bg-transparent px-7 py-3.5 text-base font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
