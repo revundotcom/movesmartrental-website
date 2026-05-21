@@ -8,6 +8,7 @@ import { SILO_SERVICE_SLUGS } from '@/data/silo-services'
 import { SILO_INDUSTRY_SLUGS } from '@/data/silo-industries'
 import { SILO_LOCATION_SLUGS } from '@/data/silo-locations'
 import { SILO_RESOURCE_SLUGS } from '@/data/silo-resources'
+import { FLAT_PAGES, SILO_BLOGS } from '@/lib/silo'
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
@@ -25,6 +26,8 @@ export async function generateSitemaps() {
     { id: 'us-services' },
     { id: 'blog' },
     { id: 'silo' },
+    { id: 'local-authority' },
+    { id: 'local-authority-blog' },
   ]
 }
 
@@ -272,7 +275,35 @@ export default function sitemap({
       return buildBlogSegment()
     case 'silo':
       return buildSiloSegment()
+    case 'local-authority':
+      return buildLocalAuthoritySegment()
+    case 'local-authority-blog':
+      return buildLocalAuthorityBlogSegment()
     default:
       return []
   }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Local Authority Silo (3,432 additive pages)                        */
+/* ------------------------------------------------------------------ */
+
+function buildLocalAuthoritySegment(): MetadataRoute.Sitemap {
+  const now = new Date()
+  return FLAT_PAGES.map((p) => ({
+    url: `${siteUrl}${p.url}/`,
+    lastModified: now,
+    changeFrequency: 'weekly' as const,
+    priority: p.type === 'city_hub' ? 0.7 : 0.6,
+  }))
+}
+
+function buildLocalAuthorityBlogSegment(): MetadataRoute.Sitemap {
+  const now = new Date()
+  return SILO_BLOGS.map((p) => ({
+    url: `${siteUrl}${p.url}/`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.5,
+  }))
 }

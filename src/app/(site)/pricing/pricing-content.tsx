@@ -607,12 +607,12 @@ function HeadlinePriceStatement() {
                     is a one-time success fee, charged when a qualified tenant signs the lease &mdash;
                     typically one month rent equivalent.
                   </p>
-                  <a
+                  <Link
                     href="/contact/?type=owner"
                     className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-emerald px-5 py-2.5 font-sans text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition-all hover:bg-emerald-600 hover:shadow-xl"
                   >
                     Get a free rental analysis
-                  </a>
+                  </Link>
                 </RevealOnScroll>
               </div>
             </div>
