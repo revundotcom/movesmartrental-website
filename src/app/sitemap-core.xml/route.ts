@@ -9,6 +9,11 @@
 
 import type { NextRequest } from 'next/server'
 
+import { SILO_INDUSTRY_SLUGS } from '@/data/silo-industries'
+import { SILO_LOCATION_SLUGS } from '@/data/silo-locations'
+import { SILO_RESOURCE_SLUGS } from '@/data/silo-resources'
+import { SILO_SERVICE_SLUGS } from '@/data/silo-services'
+
 export const dynamic = 'force-dynamic'
 export const revalidate = 3600
 
@@ -63,6 +68,31 @@ const CORE_URLS: UrlEntry[] = [
   { path: '/portal-and-technology/', changefreq: 'monthly', priority: 0.7 },
   { path: '/privacy/', changefreq: 'yearly', priority: 0.3 },
   { path: '/terms/', changefreq: 'yearly', priority: 0.3 },
+  // Silo A: new service pages
+  ...SILO_SERVICE_SLUGS.map<UrlEntry>((slug) => ({
+    path: `/services/${slug}/`,
+    changefreq: 'weekly',
+    priority: 0.75,
+  })),
+  // Silo B: industries hub and sub pages
+  { path: '/industries/', changefreq: 'weekly', priority: 0.8 },
+  ...SILO_INDUSTRY_SLUGS.map<UrlEntry>((slug) => ({
+    path: `/industries/${slug}/`,
+    changefreq: 'weekly',
+    priority: 0.7,
+  })),
+  // Silo C: city locations
+  ...SILO_LOCATION_SLUGS.map<UrlEntry>((slug) => ({
+    path: `/locations/${slug}/`,
+    changefreq: 'weekly',
+    priority: 0.75,
+  })),
+  // Silo D: resource sub pages
+  ...SILO_RESOURCE_SLUGS.map<UrlEntry>((slug) => ({
+    path: `/resources/${slug}/`,
+    changefreq: 'weekly',
+    priority: 0.65,
+  })),
 ]
 
 function escapeXml(value: string): string {
