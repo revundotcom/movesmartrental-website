@@ -19,6 +19,7 @@ const SEGMENT_SITEMAPS = [
   'sitemap-ca.xml',
   'sitemap-us.xml',
   'sitemap-resources.xml',
+  'sitemap-silo.xml',
 ]
 
 function escapeXml(value: string): string {
