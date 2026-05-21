@@ -4,10 +4,6 @@ import {
   getFallbackServiceList,
 } from '@/lib/static-fallbacks'
 import { GUIDES } from '@/data/guides'
-import { SILO_SERVICE_SLUGS } from '@/data/silo-services'
-import { SILO_INDUSTRY_SLUGS } from '@/data/silo-industries'
-import { SILO_LOCATION_SLUGS } from '@/data/silo-locations'
-import { SILO_RESOURCE_SLUGS } from '@/data/silo-resources'
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
@@ -24,58 +20,7 @@ export async function generateSitemaps() {
     { id: 'us-cities' },
     { id: 'us-services' },
     { id: 'blog' },
-    { id: 'silo' },
   ]
-}
-
-function buildSiloSegment(): MetadataRoute.Sitemap {
-  const now = new Date()
-  const entries: MetadataRoute.Sitemap = []
-
-  entries.push({
-    url: `${siteUrl}/industries/`,
-    lastModified: now,
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-  })
-
-  for (const slug of SILO_SERVICE_SLUGS) {
-    entries.push({
-      url: `${siteUrl}/services/${slug}/`,
-      lastModified: now,
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    })
-  }
-
-  for (const slug of SILO_INDUSTRY_SLUGS) {
-    entries.push({
-      url: `${siteUrl}/industries/${slug}/`,
-      lastModified: now,
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    })
-  }
-
-  for (const slug of SILO_LOCATION_SLUGS) {
-    entries.push({
-      url: `${siteUrl}/locations/${slug}/`,
-      lastModified: now,
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    })
-  }
-
-  for (const slug of SILO_RESOURCE_SLUGS) {
-    entries.push({
-      url: `${siteUrl}/resources/${slug}/`,
-      lastModified: now,
-      changeFrequency: 'weekly' as const,
-      priority: 0.6,
-    })
-  }
-
-  return entries
 }
 
 /* ------------------------------------------------------------------ */
@@ -270,8 +215,6 @@ export default function sitemap({
       return buildUsServicesSegment()
     case 'blog':
       return buildBlogSegment()
-    case 'silo':
-      return buildSiloSegment()
     default:
       return []
   }

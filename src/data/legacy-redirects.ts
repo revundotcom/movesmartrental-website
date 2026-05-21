@@ -321,9 +321,12 @@ export const LEGACY_REDIRECTS: LegacyRedirect[] = [
   },
 
   // --- Locations / cities ---
-  // NOTE: /locations/:city/ is now a real page (Silo C city hubs). The
-  // legacy redirect from /locations/:city to /ca/ontario/:city/ has been
-  // removed so the new pages render.
+  {
+    source: '/locations/:city',
+    destination: '/ca/ontario/:city/',
+    permanent: true,
+    reason: 'Legacy flat locations -> structured ca/province/city (Ontario default)',
+  },
   {
     source: '/cities/:city',
     destination: '/ca/ontario/:city/',
