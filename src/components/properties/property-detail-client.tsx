@@ -113,7 +113,7 @@ function MediaTabs({
       <div
         role="tablist"
         aria-label="Property media"
-        className="mb-4 flex w-full overflow-hidden rounded-xl border border-slate-200 bg-white text-sm"
+        className="mb-4 flex w-full overflow-hidden rounded-xl border border-slate-200 bg-white text-xs sm:text-sm"
       >
         <TabButton
           active={tab === 'photos'}
@@ -213,13 +213,13 @@ function TabButton({
       role="tab"
       aria-selected={active}
       onClick={onClick}
-      className={`flex flex-1 items-center justify-center gap-2 px-4 py-3 font-medium transition-colors ${
+      className={`flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap px-2 py-3 font-medium transition-colors sm:gap-2 sm:px-4 ${
         active
           ? 'bg-[#0B1D3A] text-white'
           : 'text-slate-600 hover:bg-slate-50 hover:text-[#0B1D3A]'
       }`}
     >
-      {icon}
+      <span className="shrink-0">{icon}</span>
       <span>{label}</span>
     </button>
   )

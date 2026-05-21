@@ -9,11 +9,11 @@ const KPIS = [
 
 const FUNNEL = [
   { pct: 100, label: 'Total Leads', value: '9,839', width: 100 },
-  { pct: 56, label: 'Tours Booked', value: '5,510', width: 85 },
-  { pct: 32.5, label: 'Tours Attended', value: '3,196', width: 70 },
-  { pct: 11.7, label: 'Offers Received', value: '1,155', width: 50 },
-  { pct: 5.5, label: 'Offers Approved', value: '545', width: 32 },
-  { pct: 5.1, label: 'Leases Signed', value: '502', width: 24 },
+  { pct: 56, label: 'Tours Booked', value: '5,510', width: 88 },
+  { pct: 32.5, label: 'Tours Attended', value: '3,196', width: 76 },
+  { pct: 11.7, label: 'Offers Received', value: '1,155', width: 64 },
+  { pct: 5.5, label: 'Offers Approved', value: '545', width: 54 },
+  { pct: 5.1, label: 'Leases Signed', value: '502', width: 46 },
 ]
 
 const CHANNELS = [
@@ -77,12 +77,12 @@ export function AnalyticsMockup() {
           <div className="mt-3 space-y-2">
             {FUNNEL.map((row, i) => (
               <div key={row.label} className="flex items-center gap-2">
-                <span className="w-12 shrink-0 text-right text-[11px] font-mono font-semibold text-slate-500">
+                <span className="w-10 shrink-0 text-right text-[11px] font-mono font-semibold text-slate-500">
                   {row.pct}%
                 </span>
-                <div className="flex flex-1 items-center">
+                <div className="flex min-w-0 flex-1 items-center">
                   <div
-                    className="flex h-7 items-center justify-between rounded-md px-2 text-[11px] font-semibold text-white"
+                    className="flex h-7 min-w-0 items-center rounded-md px-2 text-[11px] font-semibold text-white"
                     style={{
                       width: `${row.width}%`,
                       background: `linear-gradient(90deg, #0B1D3A 0%, ${
@@ -90,10 +90,12 @@ export function AnalyticsMockup() {
                       } 100%)`,
                     }}
                   >
-                    <span>{row.label}</span>
-                    <span className="ml-3 font-mono">{row.value}</span>
+                    <span className="truncate">{row.label}</span>
                   </div>
                 </div>
+                <span className="w-12 shrink-0 text-right font-mono text-[11px] font-semibold text-brand-navy">
+                  {row.value}
+                </span>
               </div>
             ))}
           </div>

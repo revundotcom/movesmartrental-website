@@ -669,24 +669,18 @@ export default function RentalPreparationPage() {
             {/* Right — the punch-list mockup itself */}
             <div className="lg:col-span-7">
               <RevealRow index={1}>
-                <div
-                  className="relative rounded-2xl border border-amber-200 bg-amber-50/30 p-6 shadow-xl shadow-brand-navy/10 sm:p-8"
-                  style={{
-                    backgroundImage:
-                      'repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(180, 83, 9, 0.10) 31px, rgba(180, 83, 9, 0.10) 32px)',
-                  }}
-                >
+                <div className="relative rounded-2xl border border-amber-200 bg-amber-50/40 p-5 shadow-xl shadow-brand-navy/10 sm:p-8">
                   {/* "Paper clip" / form header */}
-                  <div className="mb-5 flex items-center justify-between border-b-2 border-dashed border-amber-400/50 pb-4">
-                    <div>
+                  <div className="mb-5 flex flex-wrap items-start justify-between gap-3 border-b-2 border-dashed border-amber-400/50 pb-4">
+                    <div className="min-w-0">
                       <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-amber-700">
                         Prep Punch-list · WO-2026-0419
                       </p>
-                      <p className="mt-1 font-display text-xl font-normal italic text-brand-navy">
+                      <p className="mt-1 font-display text-lg font-normal italic text-brand-navy sm:text-xl">
                         217 Sample Ave · Unit 4B
                       </p>
                     </div>
-                    <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-right">
+                    <div className="shrink-0 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-right">
                       <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
                         9 of 10 done
                       </p>

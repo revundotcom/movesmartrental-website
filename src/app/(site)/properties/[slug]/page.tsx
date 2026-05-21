@@ -29,6 +29,7 @@ import {
   PropertyMediaTabs,
 } from '@/components/properties/property-detail-client'
 import { RentCalculator } from '@/components/blocks/rent-calculator'
+import { PropertyStickyCTA } from './property-sticky-cta'
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
@@ -845,6 +846,13 @@ export default async function PropertyDetailPage({ params }: PageProps) {
           </p>
         </section>
       </div>
+
+      {/* Mobile sticky CTA — Apply Now + Schedule a Tour */}
+      <PropertyStickyCTA
+        reserveUrl={reserveUrl}
+        scheduleUrl={scheduleUrl}
+        slug={slug}
+      />
     </main>
   )
 }

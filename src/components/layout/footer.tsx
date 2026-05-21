@@ -111,7 +111,11 @@ export function Footer() {
     <>
       <WaveSeparator />
       <footer className="bg-[#0B1D3A] text-white" role="contentinfo">
-        <div className="mx-auto max-w-7xl px-4 pb-8 pt-12 sm:px-6 lg:px-8 lg:pt-16">
+        {/* pb-28 on mobile keeps the footer's bottom content (disclaimer,
+            copyright, legal links) clear of the fixed mobile sticky CTA,
+            which would otherwise overlap and cut it off. The sticky CTA is
+            lg:hidden, so the desktop padding reverts to the standard pb-8. */}
+        <div className="mx-auto max-w-7xl px-4 pb-28 pt-12 sm:px-6 lg:px-8 lg:pb-8 lg:pt-16">
           {/* Top section: Logo + columns */}
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8">
             {/* Brand column */}

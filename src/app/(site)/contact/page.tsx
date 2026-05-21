@@ -16,6 +16,7 @@ import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { ContactFormInline } from '@/components/contact-form-inline'
+import { ContactStickyCTA } from './contact-sticky-cta'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 
 export const metadata: Metadata = {
@@ -399,6 +400,9 @@ export default function ContactPage() {
         description="A short, honest conversation — no slide deck, no hard sell. You'll know by the end whether we're the right fit."
         primaryCta={{ label: 'Book a Call', href: '#contact-form' }}
       />
+
+      {/* Mobile sticky CTA — Send a Message + Call */}
+      <ContactStickyCTA />
     </main>
   )
 }

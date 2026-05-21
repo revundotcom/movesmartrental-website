@@ -159,7 +159,10 @@ export function FAQCategoryBlock({
                 {String(index + 1).padStart(2, '0')} · Section
               </p>
               <RevealOnScroll variant="splitReveal" duration={0.7}>
-                <h2 className="mt-4 font-display text-3xl font-normal leading-[1.1] tracking-tight text-brand-navy sm:text-4xl">
+                {/* pb-2 keeps DM Serif Display descenders (g, y, p) inside
+                    the splitReveal clip-path box — without it the clip
+                    crops the bottom of the heading. */}
+                <h2 className="mt-4 pb-2 font-display text-3xl font-normal leading-[1.15] tracking-tight text-brand-navy sm:text-4xl">
                   {category.heading}
                   <span aria-hidden="true" className="text-brand-gold">
                     .

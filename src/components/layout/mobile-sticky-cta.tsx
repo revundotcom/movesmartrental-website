@@ -18,7 +18,9 @@ export function MobileStickyCTA() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const hideOnPaths = ['/tenants', '/contact', '/franchising']
+  // `/properties` is excluded because property pages render their own
+  // sticky CTA (Apply Now + Schedule a Tour) — see property-sticky-cta.tsx.
+  const hideOnPaths = ['/tenants', '/contact', '/franchising', '/properties']
   const shouldHide = hideOnPaths.some((p) => pathname?.startsWith(p))
 
   if (shouldHide) return null

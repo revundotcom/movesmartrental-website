@@ -95,7 +95,11 @@ function PortalScreensShowcase() {
     url: screen.url,
     frame: <BrowserFrame url={screen.url}>{screen.component}</BrowserFrame>,
   }))
-  return <PortalScreensTabbed screens={screens} />
+  return (
+    <div id="walkthrough" className="scroll-mt-24">
+      <PortalScreensTabbed screens={screens} />
+    </div>
+  )
 }
 
 export const metadata: Metadata = generatePageMetadata({

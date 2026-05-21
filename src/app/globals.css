@@ -13,6 +13,13 @@ html {
   scroll-behavior: smooth;
 }
 
+/* iPhone home-indicator clearance for fixed bottom bars (sticky CTAs).
+   Keeps at least 0.75rem of padding and adds the device safe-area inset
+   on notched iPhones so button content is never clipped at the edge. */
+.safe-area-pb {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+
 @custom-variant dark (&:is(.dark *));
 
 /*

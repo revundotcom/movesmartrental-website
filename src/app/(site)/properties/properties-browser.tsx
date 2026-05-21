@@ -381,9 +381,10 @@ export function PropertiesBrowser({ properties }: Props) {
 
   return (
     <>
-      {/* Filter bar */}
+      {/* Filter bar — scrolls with the page (not pinned) so the
+          viewport isn't crowded on small screens. */}
       <section
-        className="sticky top-16 z-20 -mx-4 mb-6 border-b border-slate-200 bg-white/95 px-4 py-4 backdrop-blur-md sm:-mx-6 sm:px-6 lg:top-[72px] lg:-mx-8 lg:px-8"
+        className="-mx-4 mb-6 border-b border-slate-200 bg-white px-4 py-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
         aria-label="Filter properties"
       >
         {/* Row 1: search + city + sort */}
@@ -434,7 +435,7 @@ export function PropertiesBrowser({ properties }: Props) {
             aria-controls="advanced-filters"
           >
             <SlidersHorizontal className="size-4" />
-            {moreOpen ? 'Hide filters' : 'More filters'}
+            {moreOpen ? 'Hide filters' : 'Filters'}
           </button>
 
           <div
@@ -481,121 +482,125 @@ export function PropertiesBrowser({ properties }: Props) {
           )}
         </div>
 
-        {/* Row 2: chip filters (beds + baths + type) */}
-        <div className="mt-3 flex flex-col gap-3 lg:flex-row lg:items-start lg:gap-6">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-              Beds
-            </span>
-            {BED_OPTIONS.map((o) => (
-              <button
-                key={o.value}
-                type="button"
-                onClick={() => setBedFilter(o.value)}
-                className={chipClass(bedFilter === o.value)}
-                aria-pressed={bedFilter === o.value}
-              >
-                {o.label}
-              </button>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-              Baths
-            </span>
-            {BATH_OPTIONS.map((o) => (
-              <button
-                key={o.value}
-                type="button"
-                onClick={() => setBathFilter(o.value)}
-                className={chipClass(bathFilter === o.value)}
-                aria-pressed={bathFilter === o.value}
-              >
-                {o.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-3 flex flex-wrap items-center gap-2">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-            Type
-          </span>
-          {TYPE_OPTIONS.map((o) => (
-            <button
-              key={o.value}
-              type="button"
-              onClick={() => setTypeFilter(o.value)}
-              className={chipClass(typeFilter === o.value)}
-              aria-pressed={typeFilter === o.value}
-            >
-              {o.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Row 3: advanced (price + sqft) — collapsible */}
+        {/* Collapsible filter panel — beds, baths, type, price, sqft.
+            All filter fields live here so the bar stays compact. */}
         {moreOpen && (
           <div
             id="advanced-filters"
-            className="mt-4 grid grid-cols-1 gap-4 rounded-lg border border-slate-100 bg-slate-50/50 p-4 sm:grid-cols-2 lg:grid-cols-4"
+            className="mt-4 space-y-4 rounded-lg border border-slate-100 bg-slate-50/50 p-4"
           >
-            <div>
-              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Min price ($/mo)
-              </label>
-              <input
-                type="number"
-                inputMode="numeric"
-                min={0}
-                placeholder="e.g. 2000"
-                value={minPrice}
-                onChange={(e) => setMinPrice(e.target.value.replace(/[^\d]/g, ''))}
-                className={inputClass}
-              />
+            {/* Beds */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="w-16 shrink-0 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Beds
+              </span>
+              {BED_OPTIONS.map((o) => (
+                <button
+                  key={o.value}
+                  type="button"
+                  onClick={() => setBedFilter(o.value)}
+                  className={chipClass(bedFilter === o.value)}
+                  aria-pressed={bedFilter === o.value}
+                >
+                  {o.label}
+                </button>
+              ))}
             </div>
-            <div>
-              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Max price ($/mo)
-              </label>
-              <input
-                type="number"
-                inputMode="numeric"
-                min={0}
-                placeholder="e.g. 4500"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(e.target.value.replace(/[^\d]/g, ''))}
-                className={inputClass}
-              />
+
+            {/* Baths */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="w-16 shrink-0 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Baths
+              </span>
+              {BATH_OPTIONS.map((o) => (
+                <button
+                  key={o.value}
+                  type="button"
+                  onClick={() => setBathFilter(o.value)}
+                  className={chipClass(bathFilter === o.value)}
+                  aria-pressed={bathFilter === o.value}
+                >
+                  {o.label}
+                </button>
+              ))}
             </div>
-            <div>
-              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Min sqft
-              </label>
-              <input
-                type="number"
-                inputMode="numeric"
-                min={0}
-                placeholder="e.g. 600"
-                value={minSqft}
-                onChange={(e) => setMinSqft(e.target.value.replace(/[^\d]/g, ''))}
-                className={inputClass}
-              />
+
+            {/* Type */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="w-16 shrink-0 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Type
+              </span>
+              {TYPE_OPTIONS.map((o) => (
+                <button
+                  key={o.value}
+                  type="button"
+                  onClick={() => setTypeFilter(o.value)}
+                  className={chipClass(typeFilter === o.value)}
+                  aria-pressed={typeFilter === o.value}
+                >
+                  {o.label}
+                </button>
+              ))}
             </div>
-            <div>
-              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Max sqft
-              </label>
-              <input
-                type="number"
-                inputMode="numeric"
-                min={0}
-                placeholder="e.g. 1500"
-                value={maxSqft}
-                onChange={(e) => setMaxSqft(e.target.value.replace(/[^\d]/g, ''))}
-                className={inputClass}
-              />
+
+            {/* Price + square footage */}
+            <div className="grid grid-cols-1 gap-4 border-t border-slate-200/70 pt-4 sm:grid-cols-2 lg:grid-cols-4">
+              <div>
+                <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  Min price ($/mo)
+                </label>
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  min={0}
+                  placeholder="e.g. 2000"
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(e.target.value.replace(/[^\d]/g, ''))}
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  Max price ($/mo)
+                </label>
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  min={0}
+                  placeholder="e.g. 4500"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(e.target.value.replace(/[^\d]/g, ''))}
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  Min sqft
+                </label>
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  min={0}
+                  placeholder="e.g. 600"
+                  value={minSqft}
+                  onChange={(e) => setMinSqft(e.target.value.replace(/[^\d]/g, ''))}
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  Max sqft
+                </label>
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  min={0}
+                  placeholder="e.g. 1500"
+                  value={maxSqft}
+                  onChange={(e) => setMaxSqft(e.target.value.replace(/[^\d]/g, ''))}
+                  className={inputClass}
+                />
+              </div>
             </div>
           </div>
         )}

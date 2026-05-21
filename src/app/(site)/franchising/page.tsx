@@ -681,7 +681,7 @@ export default function FranchisingPage() {
       </section>
 
       {/* ── SECTION 4: Investment & Financials - single ledger-style table, dotted leaders ── */}
-      <section className="bg-white py-24 sm:py-28">
+      <section id="franchise-economics" className="scroll-mt-24 bg-white py-24 sm:py-28">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">

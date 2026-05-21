@@ -383,7 +383,7 @@ function GoldRule() {
   return (
     <div
       aria-hidden="true"
-      className="mx-auto my-20 h-px max-w-xs bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
+      className="mx-auto my-8 h-px max-w-xs bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent sm:my-10"
     />
   )
 }
@@ -564,7 +564,7 @@ export default async function OwnersPage() {
       </section>
 
       {/* ── SECTION 5: Portal Feature Strip - now image-rich with real mockups ── */}
-      <section className="bg-white py-24">
+      <section className="bg-white py-16 sm:py-20 md:py-24">
         <div className="mx-auto max-w-6xl px-4">
           <RevealOnScroll variant="slideFromLeft" className="mx-auto max-w-2xl text-center">
             <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
@@ -614,10 +614,10 @@ export default async function OwnersPage() {
             />
             <div
               aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-t from-brand-navy/40 via-transparent to-transparent"
+              className="absolute inset-0 bg-gradient-to-t from-brand-navy/95 via-brand-navy/55 to-transparent"
             />
             <div className="absolute inset-x-0 bottom-0 px-8 pb-8 sm:px-12 sm:pb-10">
-              <p className="font-display text-2xl font-normal italic leading-snug text-white sm:text-3xl md:text-4xl">
+              <p className="font-display text-2xl font-normal italic leading-snug text-white drop-shadow-[0_2px_8px_rgba(11,29,58,0.85)] sm:text-3xl md:text-4xl">
                 Listings that look as good online as the unit does in person.
               </p>
             </div>
@@ -626,7 +626,7 @@ export default async function OwnersPage() {
       </section>
 
       {/* ── SECTION 6: Owner Economics - INLINE TYPOGRAPHIC TABLE (no cards) ── */}
-      <section className="bg-white pb-24">
+      <section className="bg-white pb-14 sm:pb-20 md:pb-24">
         <div className="mx-auto max-w-6xl px-4">
           <RevealOnScroll variant="slideFromLeft" className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">
@@ -722,7 +722,7 @@ export default async function OwnersPage() {
                     {row.label}
                   </p>
                   <dl className="mt-4 space-y-3 text-sm">
-                    <div className="grid grid-cols-[5.5rem_1fr] items-start gap-3">
+                    <div className="grid grid-cols-[5.5rem_1fr] items-baseline gap-3">
                       <dt className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
                         DIY
                       </dt>
@@ -730,7 +730,7 @@ export default async function OwnersPage() {
                         <VerdictInline verdict={row.diy.verdict} text={row.diy.text} />
                       </dd>
                     </div>
-                    <div className="grid grid-cols-[5.5rem_1fr] items-start gap-3">
+                    <div className="grid grid-cols-[5.5rem_1fr] items-baseline gap-3">
                       <dt className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
                         Traditional
                       </dt>
@@ -741,7 +741,7 @@ export default async function OwnersPage() {
                         />
                       </dd>
                     </div>
-                    <div className="grid grid-cols-[5.5rem_1fr] items-start gap-3">
+                    <div className="grid grid-cols-[5.5rem_1fr] items-baseline gap-3">
                       <dt className="text-[10px] font-bold uppercase tracking-wider text-brand-emerald">
                         MoveSmart
                       </dt>
@@ -766,7 +766,7 @@ export default async function OwnersPage() {
       </section>
 
       {/* ── SECTION 8: Testimonials ── */}
-      <section className="bg-white py-16">
+      <section className="bg-white py-12 sm:py-16">
         <div className="mx-auto max-w-3xl px-4">
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-widest text-brand-emerald">

@@ -120,7 +120,7 @@ function PricingHero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
+            className="mt-8 flex flex-row flex-wrap items-center gap-3"
           >
             <Button
               size="lg"
@@ -130,15 +130,6 @@ function PricingHero() {
               render={<Link href="/contact/?type=owner" />}
             >
               List my property
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="cursor-pointer border-2 border-white/20 bg-transparent px-7 py-6 text-base font-semibold text-white hover:border-white/40 hover:bg-white/5"
-              nativeButton={false}
-              render={<Link href="/properties/" />}
-            >
-              Browse rentals
             </Button>
           </motion.div>
         </div>

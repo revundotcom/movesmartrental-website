@@ -67,12 +67,19 @@ export function EditorialPortalHero() {
             >
               Get a Demo
             </Link>
-            <Link
+            <a
               href="#walkthrough"
+              onClick={(e) => {
+                const target = document.getElementById('walkthrough')
+                if (target) {
+                  e.preventDefault()
+                  target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                }
+              }}
               className="inline-flex items-center justify-center rounded-full border border-brand-navy/15 bg-white px-6 py-3 text-sm font-semibold text-brand-navy transition-all hover:-translate-y-0.5 hover:border-brand-navy/30 hover:shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy focus-visible:ring-offset-2"
             >
               Tour the Portal
-            </Link>
+            </a>
           </div>
 
           {/* Lightweight trust strip */}
