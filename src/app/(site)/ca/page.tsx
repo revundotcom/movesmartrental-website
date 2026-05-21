@@ -9,6 +9,7 @@ import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 import { CANADA_PROVINCES, COUNTRY_TOTALS } from '@/data/geo-market-data'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 
 import { CanadaCitiesFilter } from './canada-cities-filter'
 
@@ -157,7 +158,7 @@ export default function CanadaHubPage() {
         eyebrow="Coast-to-coast leasing"
         headline="Leasing across Canada"
         lede={`${CA.population} population. ${CA.rentalHouseholds} rental households. $${CA.medianRent.replace('$', '')} median 2-bed rent. Six provinces, 44 anchor cities, one disciplined leasing standard — from a single basement suite to a 500-door purpose-built lease-up.`}
-        cta1={{ label: 'List my property', href: '/contact/?type=owner' }}
+        cta1={{ label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL }}
         cta2={{ label: 'Browse rentals', href: '/properties/' }}
         backgroundImageUrl={TORONTO_HERO}
         backgroundImageAlt="Toronto skyline with the CN Tower at dusk representing the Canadian rental market"
@@ -372,7 +373,7 @@ export default function CanadaHubPage() {
       <CTABannerBlock
         headline="List your Canadian rental with MoveSmart"
         description="Zero upfront. Success-fee only. Lease in 14 days, screened against five years of tenant history."
-        primaryCta={{ label: 'List my property', href: '/contact/?type=owner' }}
+        primaryCta={{ label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL }}
         secondaryCta={{ label: 'Browse rentals', href: '/properties/' }}
       />
     </main>

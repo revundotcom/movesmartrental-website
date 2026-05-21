@@ -7,6 +7,7 @@ import { FAQBlock } from '@/components/blocks/faq-block'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 import { BRAND } from '@/lib/brand-constants'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 import { BentoTile, RevealRow } from './client-parts'
 
 export const metadata: Metadata = {
@@ -336,7 +337,7 @@ export default function ServicesPage() {
         headline="Nine services. One leased unit."
         accentLastWord={false}
         lede="From pricing strategy to move-in inspection, MoveSmart Rentals runs the leasing lifecycle end to end - so individual landlords get peace of mind, and institutional operators get a leasing team that scales with them."
-        cta1={{ label: 'List my property', href: '/contact/?type=owner' }}
+        cta1={{ label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL }}
         cta2={{ label: 'Browse rentals', href: '/properties/' }}
         aside={heroAside}
         theme="dark"
@@ -801,12 +802,14 @@ export default function ServicesPage() {
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/contact/?type=owner"
+              <a
+                href={PORTAL_OWNER_SIGNUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-emerald px-7 py-3.5 text-sm font-bold text-white shadow-lg transition-all duration-300 hover:-translate-y-px hover:bg-emerald-500 hover:shadow-xl"
               >
                 List my property
-              </Link>
+              </a>
               <Link
                 href="/contact/?type=owner&intent=call"
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-px hover:border-brand-gold/60 hover:bg-white/10"

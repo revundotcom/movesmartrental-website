@@ -22,6 +22,7 @@ import { FAQBlock } from '@/components/blocks/faq-block'
 import { RentCalculator } from '@/components/blocks/rent-calculator'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 import { CountUp } from '@/components/ui/count-up'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 
 /* ─── Pricing Hero - dark photographic backdrop, split-pane copy + $0 spec ──── */
 
@@ -127,7 +128,13 @@ function PricingHero() {
               className="cursor-pointer px-7 py-6 text-base font-bold text-white shadow-md transition-all duration-300 hover:-translate-y-px hover:shadow-lg"
               style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}
               nativeButton={false}
-              render={<Link href="/contact/?type=owner" />}
+              render={
+                <Link
+                  href={PORTAL_OWNER_SIGNUP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+              }
             >
               List my property
             </Button>

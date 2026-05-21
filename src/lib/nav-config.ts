@@ -6,6 +6,8 @@
 /*  property managers, and institutional rental operators.            */
 /* ------------------------------------------------------------------ */
 
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
+
 /* ---- Header nav groups (contract §7.1 & §20.5) ----
  *
  * Required top-nav order:
@@ -146,7 +148,7 @@ export const FOOTER_COLUMNS = [
       { label: 'Owner Hub', href: '/owners/' },
       { label: 'Pricing', href: '/pricing/' },
       { label: 'Owner FAQ', href: '/faq/' },
-      { label: 'List my property', href: '/contact/?type=owner' },
+      { label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL },
     ],
   },
   {

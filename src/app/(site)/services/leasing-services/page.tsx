@@ -12,6 +12,7 @@ import {
 } from '@/data/services-content'
 import { generatePageMetadata } from '@/lib/metadata'
 import { buildServiceSchema } from '@/lib/schema-builders/service-schema'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 
 import {
   ClipFromLeft,
@@ -160,12 +161,14 @@ export default function LeasingServicesPage() {
               </RevealUp>
               <RevealUp index={4}>
                 <div className="mt-8 flex flex-wrap items-center gap-3">
-                  <Link
-                    href="/contact/?type=owner"
+                  <a
+                    href={PORTAL_OWNER_SIGNUP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-navy px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-navy/20 transition-all hover:-translate-y-0.5 hover:bg-brand-navy/90 hover:shadow-xl"
                   >
                     {content.cta1Label}
-                  </Link>
+                  </a>
                   <Link
                     href="/pricing/"
                     className="inline-flex items-center justify-center gap-2 rounded-xl border border-brand-navy/20 bg-white px-6 py-3 text-sm font-bold text-brand-navy transition-all hover:-translate-y-0.5 hover:border-brand-gold/60 hover:bg-brand-gold/5"
@@ -716,12 +719,14 @@ export default function LeasingServicesPage() {
             and your tenant is moved in.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/contact/?type=owner"
+            <a
+              href={PORTAL_OWNER_SIGNUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-gold px-6 py-3 text-sm font-bold text-brand-navy shadow-lg shadow-brand-gold/20 transition-all hover:-translate-y-0.5 hover:bg-brand-gold/90 hover:shadow-xl"
             >
               {content.cta1Label}
-            </Link>
+            </a>
             <Link
               href="/pricing/"
               className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 px-6 py-3 text-sm font-bold text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/10"

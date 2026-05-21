@@ -9,6 +9,7 @@ import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 import { US_STATES, COUNTRY_TOTALS } from '@/data/geo-market-data'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 
 import { UsCitiesFilter } from './us-cities-filter'
 
@@ -160,7 +161,7 @@ export default function USHubPage() {
         eyebrow="Multi-state leasing"
         headline="Leasing across the United States"
         lede={`${US.population} population. ${US.rentalHouseholds} rental households. ${US.medianRent} median 2-bed rent. Ten states, 57 anchor cities — same disciplined leasing playbook from a single Miami condo to a 500-door Austin lease-up.`}
-        cta1={{ label: 'List my property', href: '/contact/?type=owner' }}
+        cta1={{ label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL }}
         cta2={{ label: 'Browse rentals', href: '/properties/' }}
         backgroundImageUrl={NYC_HERO}
         backgroundImageAlt="Manhattan skyline at dusk representing the US rental market"
@@ -384,7 +385,7 @@ export default function USHubPage() {
       <CTABannerBlock
         headline="List your US rental with MoveSmart"
         description="Zero upfront. Success-fee only. Lease in 21 days, screened against five years of tenant history and state-specific Fair Housing rules."
-        primaryCta={{ label: 'List my property', href: '/contact/?type=owner' }}
+        primaryCta={{ label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL }}
         secondaryCta={{ label: 'Browse rentals', href: '/properties/' }}
       />
     </main>

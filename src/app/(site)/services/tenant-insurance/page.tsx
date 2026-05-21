@@ -12,6 +12,7 @@ import {
 } from '@/data/services-content'
 import { generatePageMetadata } from '@/lib/metadata'
 import { buildServiceSchema } from '@/lib/schema-builders/service-schema'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 
 import {
   ChatBubble,
@@ -246,12 +247,14 @@ export default function TenantInsurancePage() {
               </RevealUp>
               <RevealUp index={3}>
                 <div className="mt-8 flex flex-wrap items-center gap-3">
-                  <Link
-                    href="/contact/?type=owner"
+                  <a
+                    href={PORTAL_OWNER_SIGNUP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-emerald px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-500/20 transition-all hover:-translate-y-0.5 hover:bg-brand-emerald/90 hover:shadow-xl"
                   >
                     {content.cta1Label}
-                  </Link>
+                  </a>
                   <Link
                     href="/contact/?type=discovery"
                     className="inline-flex items-center justify-center gap-2 rounded-full border border-brand-navy/20 bg-white/80 px-7 py-3.5 text-sm font-bold text-brand-navy backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-brand-navy/40 hover:bg-white"
@@ -778,12 +781,14 @@ export default function TenantInsurancePage() {
                 proof collected, renewal tracked.
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-                <Link
-                  href="/contact/?type=owner"
+                <a
+                  href={PORTAL_OWNER_SIGNUP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-bold text-brand-emerald shadow-xl shadow-emerald-950/30 transition-all hover:-translate-y-0.5 hover:bg-rose-50 hover:text-rose-700"
                 >
                   {content.cta1Label}
-                </Link>
+                </a>
                 <Link
                   href="/contact/?type=discovery"
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 bg-white/10 px-8 py-4 text-sm font-bold text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-white/70 hover:bg-white/20"

@@ -30,6 +30,13 @@ export const PORTAL_REGISTER_URL = `${PORTAL_BASE_URL}/register`
 export const PORTAL_LOGIN_URL = `${PORTAL_BASE_URL}/login`
 
 /**
+ * "List my property" destination. Owners go straight to portal signup
+ * (defaulted to the Owner role via `?type=owner`) so they can register /
+ * log in and list the property themselves — no inquiry form in between.
+ */
+export const PORTAL_OWNER_SIGNUP_URL = `${PORTAL_REGISTER_URL}?type=owner`
+
+/**
  * Property-interaction deep links. The portal handles auth + restores
  * the original intent after login (see "User Action Flow" in the API doc).
  * Both helpers require the unit's `zcrm_id` returned by the listing /

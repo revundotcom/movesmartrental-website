@@ -2,6 +2,12 @@ import Link from 'next/link'
 
 import { Logo } from '@/components/brand/logo'
 import { FOOTER_COLUMNS, LEGAL_LINKS } from '@/lib/nav-config'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
+
+/** Absolute http(s) URLs (e.g. the owner portal) open in a new tab. */
+function isExternalUrl(href: string): boolean {
+  return /^https?:\/\//i.test(href)
+}
 
 /* ------------------------------------------------------------------ */
 /*  Wave separator SVG                                                */
@@ -128,12 +134,14 @@ export function Footer() {
               </p>
               {/* Account creation CTA */}
               <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-                <Link
-                  href="/contact/?type=owner"
+                <a
+                  href={PORTAL_OWNER_SIGNUP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-emerald px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-emerald-900/20 transition-all duration-200 hover:-translate-y-px hover:bg-emerald-600 hover:shadow-md"
                 >
                   List my property
-                </Link>
+                </a>
                 <Link
                   href="/properties/"
                   className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/25 bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-px hover:border-white/50 hover:bg-white/10"
@@ -179,17 +187,36 @@ export function Footer() {
                     {column.title}
                   </h3>
                   <ul className="space-y-2.5">
-                    {column.links.map((link) => (
-                      <li key={`${column.title}-${link.label}`}>
-                        <Link
-                          href={link.href}
-                          className="group/fl flex items-center gap-1.5 text-sm text-slate-400 transition-all duration-150 hover:text-white"
-                        >
-                          <span className="inline-block size-1 rounded-full bg-emerald-500/0 transition-all duration-150 group-hover/fl:bg-emerald-400/80" aria-hidden="true" />
-                          {link.label}
-                        </Link>
-                      </li>
-                    ))}
+                    {column.links.map((link) => {
+                      const linkClass =
+                        'group/fl flex items-center gap-1.5 text-sm text-slate-400 transition-all duration-150 hover:text-white'
+                      const dot = (
+                        <span
+                          className="inline-block size-1 rounded-full bg-emerald-500/0 transition-all duration-150 group-hover/fl:bg-emerald-400/80"
+                          aria-hidden="true"
+                        />
+                      )
+                      return (
+                        <li key={`${column.title}-${link.label}`}>
+                          {isExternalUrl(link.href) ? (
+                            <a
+                              href={link.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={linkClass}
+                            >
+                              {dot}
+                              {link.label}
+                            </a>
+                          ) : (
+                            <Link href={link.href} className={linkClass}>
+                              {dot}
+                              {link.label}
+                            </Link>
+                          )}
+                        </li>
+                      )
+                    })}
                   </ul>
                 </div>
               ))}

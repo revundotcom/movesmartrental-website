@@ -10,6 +10,7 @@ import { JsonLd } from '@/components/json-ld'
 import { generatePageMetadata } from '@/lib/metadata'
 import { buildArticleSchema } from '@/lib/schema-builders/article'
 import { GUIDES, GUIDE_SLUGS, getGuide, type GuideContent } from '@/data/guides'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 
 // ---------------------------------------------------------------------------
 // generateStaticParams
@@ -315,7 +316,7 @@ function LocalGuidePage({ guide, slug }: { guide: GuideContent; slug: string }) 
       <CTABannerBlock
         headline="Ready to put this into practice?"
         description="Our leasing team can run this playbook on your unit - zero upfront, success fee on placement."
-        primaryCta={{ label: 'List my property', href: '/contact/?type=owner' }}
+        primaryCta={{ label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL }}
       />
     </main>
   )

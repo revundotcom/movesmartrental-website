@@ -18,6 +18,7 @@ import {
   type StateData,
 } from '@/data/geo-market-data'
 import type { FaqItem } from '@/types/blocks'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 
 import { StateCityGrid } from './_state-city-grid'
 import { StateProcessTimeline } from './_state-process-timeline'
@@ -886,12 +887,14 @@ export default async function StatePage({
                 </p>
               </div>
               <div className="flex w-full flex-col gap-3 sm:flex-row lg:w-auto">
-                <Link
-                  href="/contact/"
+                <a
+                  href={PORTAL_OWNER_SIGNUP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-emerald px-6 py-3 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:-translate-y-px hover:bg-brand-emerald-hover hover:shadow-lg"
                 >
                   List my property
-                </Link>
+                </a>
                 <Link
                   href="/rentals/"
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:border-white/40 hover:bg-white/5"

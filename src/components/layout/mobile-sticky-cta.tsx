@@ -6,6 +6,8 @@ import { Phone } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
+
 export function MobileStickyCTA() {
   const [visible, setVisible] = useState(false)
   const pathname = usePathname()
@@ -43,12 +45,14 @@ export function MobileStickyCTA() {
             >
               <Phone className="w-5 h-5" />
             </Link>
-            <Link
-              href="/contact/?type=owner"
+            <a
+              href={PORTAL_OWNER_SIGNUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex-1 flex items-center justify-center h-12 rounded-xl bg-brand-emerald text-white font-heading font-semibold text-sm hover:bg-brand-emerald-hover transition-colors"
             >
               List my property
-            </Link>
+            </a>
           </div>
         </motion.div>
       )}

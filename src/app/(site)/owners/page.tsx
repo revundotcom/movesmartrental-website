@@ -24,6 +24,7 @@ import { TestimonialsSection } from '@/components/blocks/testimonials-section'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 import { GradientText } from '@/components/ui/gradient-text'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 import {
   MarketRow,
   PainPointCard,
@@ -406,7 +407,7 @@ export default async function OwnersPage() {
         eyebrow="For Property Owners"
         headline="Full-service leasing. Real Results."
         lede="Strategic pricing, professional marketing, structured screening, and clean lease execution - from listing to move-in. Nothing due upfront. Standard leasing success fee on placement."
-        cta1={{ label: 'List my property', href: '/contact/?type=owner' }}
+        cta1={{ label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL }}
         cta2={{ label: 'Browse rentals', href: '/properties/' }}
         aside={<HeroAside />}
         theme="dark"
@@ -963,12 +964,14 @@ export default async function OwnersPage() {
               Nothing due upfront. Standard leasing success fee on placement. Tell us about your unit and a leasing lead will be in touch within one business day.
             </p>
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-              <Link
-                href="/contact/?type=owner"
+              <a
+                href={PORTAL_OWNER_SIGNUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-emerald px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-brand-emerald/20 transition-all hover:bg-emerald-600 hover:shadow-xl"
               >
                 List my property
-              </Link>
+              </a>
               <Link
                 href="/properties/"
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white transition-all hover:border-white/40 hover:bg-white/10"

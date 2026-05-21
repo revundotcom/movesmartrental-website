@@ -25,6 +25,14 @@ function inferCTAType(href: string): 'account_creation' | 'book_a_call' {
   return 'book_a_call'
 }
 
+/** Absolute http(s) URLs point off-site (e.g. the owner portal) and
+ *  should open in a new tab. */
+function externalLinkProps(href: string) {
+  return /^https?:\/\//i.test(href)
+    ? { target: '_blank', rel: 'noopener noreferrer' }
+    : {}
+}
+
 export function HeroBlock({
   headline,
   subheadline,
@@ -215,7 +223,7 @@ export function HeroBlock({
                         background: 'linear-gradient(135deg, #10B981, #059669)',
                       }}
                       nativeButton={false}
-                      render={<Link href={cta1.href} />}
+                      render={<Link href={cta1.href} {...externalLinkProps(cta1.href)} />}
                     >
                       {cta1.label}
                     </Button>
@@ -228,7 +236,7 @@ export function HeroBlock({
                       size="lg"
                       className="cursor-pointer border-2 border-brand-navy/15 bg-white px-5 py-4 text-sm font-semibold text-brand-navy transition-all duration-300 hover:-translate-y-1 hover:border-brand-navy/30 hover:bg-slate-50 sm:px-8 sm:py-6 sm:text-base"
                       nativeButton={false}
-                      render={<Link href={cta2.href} />}
+                      render={<Link href={cta2.href} {...externalLinkProps(cta2.href)} />}
                     >
                       {cta2.label}
                     </Button>

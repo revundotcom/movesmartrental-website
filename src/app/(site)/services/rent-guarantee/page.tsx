@@ -9,6 +9,7 @@ import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { getServiceContent } from '@/data/services-content'
 import { generatePageMetadata } from '@/lib/metadata'
 import { buildServiceSchema } from '@/lib/schema-builders/service-schema'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 
 import {
   ComparisonColumn,
@@ -242,12 +243,14 @@ export default function RentGuaranteePage() {
               </RevealUp>
               <RevealUp index={4}>
                 <div className="mt-8 flex flex-wrap items-center gap-3">
-                  <Link
-                    href="/contact/?type=owner"
+                  <a
+                    href={PORTAL_OWNER_SIGNUP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-emerald/25 transition-all hover:-translate-y-0.5 hover:bg-brand-emerald/90 hover:shadow-xl"
                   >
                     {content.cta1Label}
-                  </Link>
+                  </a>
                   <Link
                     href="/contact/?type=discovery"
                     className="inline-flex items-center justify-center gap-2 rounded-xl border border-brand-navy/20 bg-white px-6 py-3 text-sm font-bold text-brand-navy transition-all hover:-translate-y-0.5 hover:border-brand-emerald/50 hover:bg-brand-emerald/5"
@@ -646,12 +649,14 @@ export default function RentGuaranteePage() {
           </RevealUp>
           <RevealUp index={4}>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link
-                href="/contact/?type=owner"
+              <a
+                href={PORTAL_OWNER_SIGNUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-emerald/30 transition-all hover:-translate-y-0.5 hover:bg-brand-emerald/90 hover:shadow-xl"
               >
                 {content.cta1Label}
-              </Link>
+              </a>
               <Link
                 href="/contact/?type=discovery"
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 px-6 py-3 text-sm font-bold text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-brand-emerald/50 hover:bg-white/10"

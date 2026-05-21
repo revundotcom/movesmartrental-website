@@ -7,6 +7,7 @@ import { FAQBlock } from '@/components/blocks/faq-block'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 
 import {
   CountrySplit,
@@ -531,7 +532,7 @@ export default function LocationsPage() {
         headline="Full-service leasing across North America"
         accentLastWord
         lede="MoveSmart Rentals operates across Canada and the United States, with brick-and-mortar advisors anchoring our priority markets in both countries. Six Canadian provinces, ten priority U.S. states, one structured standard of execution."
-        cta1={{ label: 'List my property', href: '/contact/?type=owner' }}
+        cta1={{ label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL }}
         cta2={{ label: 'Browse rentals', href: '/properties/' }}
         theme="dark"
         backgroundImageUrl="https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=2400&q=80"
@@ -823,7 +824,7 @@ export default function LocationsPage() {
       <CTABannerBlock
         headline="Ready to lease your unit - anywhere in our footprint?"
         description="List your property and a local leasing advisor will introduce themselves within one business day, with a rental analysis tailored to your exact address."
-        primaryCta={{ label: 'List my property', href: '/contact/?type=owner' }}
+        primaryCta={{ label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL }}
       />
     </main>
   )

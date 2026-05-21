@@ -7,6 +7,7 @@ import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { generatePageMetadata } from '@/lib/metadata'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 import {
   getFallbackUsCity,
   getFallbackCityList,
@@ -168,7 +169,7 @@ export default async function USCityServicePage({
         <CTABannerBlock
           headline="Get Started with MoveSmart Rentals"
           description={`${serviceTitle} in ${cityTitle} - full-service leasing and tenant placement, zero upfront cost, success-fee pricing.`}
-          primaryCta={{ label: 'List my property', href: '/contact/?type=owner' }}
+          primaryCta={{ label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL }}
         />
       </main>
     )

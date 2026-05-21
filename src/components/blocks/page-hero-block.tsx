@@ -77,6 +77,19 @@ function inferCTAType(href: string): 'account_creation' | 'book_a_call' {
   return 'book_a_call'
 }
 
+/** Absolute http(s) URLs point off-site (e.g. the owner portal) and
+ *  should open in a new tab. */
+function isExternalUrl(href: string): boolean {
+  return /^https?:\/\//i.test(href)
+}
+
+/** Extra anchor props applied to external CTA links. */
+function externalLinkProps(href: string) {
+  return isExternalUrl(href)
+    ? { target: '_blank', rel: 'noopener noreferrer' }
+    : {}
+}
+
 export function PageHeroBlock(props: PageHeroBlockProps) {
   // The `meta` prop is intentionally accepted but not rendered — the page-wide
   // stat strip was removed per design feedback. The prop remains on the
@@ -279,7 +292,7 @@ export function PageHeroBlock(props: PageHeroBlockProps) {
                       className="cursor-pointer px-5 py-4 text-sm font-bold text-white shadow-md transition-all duration-300 hover:-translate-y-px hover:shadow-lg sm:px-7 sm:py-6 sm:text-base"
                       style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}
                       nativeButton={false}
-                      render={<Link href={cta1.href} />}
+                      render={<Link href={cta1.href} {...externalLinkProps(cta1.href)} />}
                     >
                       {cta1.label}
                     </Button>
@@ -296,7 +309,7 @@ export function PageHeroBlock(props: PageHeroBlockProps) {
                           : 'cursor-pointer border-2 border-brand-navy/15 bg-white px-5 py-4 text-sm font-semibold text-brand-navy hover:border-brand-navy/30 hover:bg-slate-50 sm:px-7 sm:py-6 sm:text-base'
                       }
                       nativeButton={false}
-                      render={<Link href={cta2.href} />}
+                      render={<Link href={cta2.href} {...externalLinkProps(cta2.href)} />}
                     >
                       {cta2.label}
                     </Button>

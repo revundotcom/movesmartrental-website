@@ -17,7 +17,7 @@ import { MobileNav } from '@/components/layout/mobile-nav'
 import { cn } from '@/lib/utils'
 import { NAV_GROUPS } from '@/lib/nav-config'
 import { SCROLL_THRESHOLD } from '@/lib/constants'
-import { PORTAL_LOGIN_URL } from '@/lib/portal-api'
+import { PORTAL_LOGIN_URL, PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 
 export function Header() {
   const pathname = usePathname()
@@ -132,12 +132,14 @@ export function Header() {
           >
             Login
           </a>
-          <Link
-            href="/contact/?type=owner"
+          <a
+            href={PORTAL_OWNER_SIGNUP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="cursor-pointer whitespace-nowrap rounded-lg bg-brand-emerald px-3.5 py-2 text-sm font-semibold text-white shadow-sm shadow-emerald-900/20 transition-all duration-200 hover:-translate-y-px hover:bg-emerald-600 hover:shadow-md"
           >
             List my property
-          </Link>
+          </a>
         </div>
 
         {/* Mobile navigation trigger */}

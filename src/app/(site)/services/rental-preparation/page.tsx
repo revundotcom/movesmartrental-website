@@ -7,6 +7,7 @@ import { JsonLd } from '@/components/json-ld'
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { generatePageMetadata } from '@/lib/metadata'
 import { buildServiceSchema } from '@/lib/schema-builders/service-schema'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 import {
   getServiceContent,
   SERVICES_CONTENT,
@@ -166,12 +167,14 @@ export default function RentalPreparationPage() {
               </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-3">
-                <Link
-                  href="/contact/?type=owner"
+                <a
+                  href={PORTAL_OWNER_SIGNUP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-emerald/20 transition-all hover:-translate-y-0.5 hover:bg-brand-emerald-dark hover:shadow-xl"
                 >
                   {content.cta1Label}
-                </Link>
+                </a>
                 <Link
                   href="/pricing/"
                   className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white/70 px-6 py-3 text-sm font-bold text-brand-navy backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-brand-emerald/40 hover:bg-white"
@@ -923,12 +926,14 @@ export default function RentalPreparationPage() {
             in the portal.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/contact/?type=owner"
+            <a
+              href={PORTAL_OWNER_SIGNUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-emerald/20 transition-all hover:-translate-y-0.5 hover:bg-brand-emerald-dark hover:shadow-xl"
             >
               {content.cta1Label}
-            </Link>
+            </a>
             <Link
               href="/pricing/"
               className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 px-6 py-3 text-sm font-bold text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/10"

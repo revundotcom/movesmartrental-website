@@ -9,6 +9,7 @@ import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { generatePageMetadata } from '@/lib/metadata'
 import { buildServiceSchema } from '@/lib/schema-builders/service-schema'
 import { getServiceContent, SERVICES_CONTENT, type ServicePageContent } from '@/data/services-content'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 
 import { RevealRow, TimelineRail, TimelineStep } from './tenant-placement-client'
 
@@ -118,7 +119,7 @@ export default function TenantPlacementPage() {
         headline={content.heroHeadline}
         accentLastWord={true}
         lede={content.heroLede}
-        cta1={{ label: content.cta1Label, href: '/contact/?type=owner' }}
+        cta1={{ label: content.cta1Label, href: PORTAL_OWNER_SIGNUP_URL }}
         cta2={
           /\bbook\b.*\bcall\b/i.test(content.cta2Label)
             ? undefined
@@ -473,12 +474,14 @@ export default function TenantPlacementPage() {
             Twenty-minute discovery call, no upfront cost, no obligation. We don&rsquo;t earn a fee until your lease is signed.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/contact/?type=owner"
+            <a
+              href={PORTAL_OWNER_SIGNUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-emerald/20 transition-all hover:-translate-y-0.5 hover:bg-brand-emerald-dark hover:shadow-xl"
             >
               {content.cta1Label}
-            </Link>
+            </a>
             <Link
               href="/pricing/"
               className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 px-6 py-3 text-sm font-bold text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/10"

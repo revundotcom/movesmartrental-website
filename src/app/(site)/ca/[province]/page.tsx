@@ -19,6 +19,7 @@ import {
   type ProvinceData,
 } from '@/data/geo-market-data'
 import { getFallbackProvince } from '@/lib/static-fallbacks'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 
 import { EditorialBanner, HowItWorksTimeline } from './province-client-parts'
 
@@ -683,7 +684,7 @@ export default async function ProvincePage({
         eyebrow={`${data.name} · Full-Service Leasing`}
         headline={`Leasing across ${data.name}`}
         lede={data.market.intro}
-        cta1={{ label: 'List my property', href: '/contact/' }}
+        cta1={{ label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL }}
         cta2={{ label: 'See pricing', href: '/pricing/' }}
         theme="dark"
         backgroundImageUrl={data.heroImageUrl}
@@ -819,7 +820,7 @@ export default async function ProvincePage({
       <CTABannerBlock
         headline={`Lease your property in ${data.name}`}
         description={`Zero upfront cost. Success-fee on placement. Full-service leasing across every major ${data.name} market.`}
-        primaryCta={{ label: 'List my property', href: '/contact/' }}
+        primaryCta={{ label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL }}
         secondaryCta={{
           label: `Browse rentals across ${data.name}`,
           href: `/ca/${province}/`,
@@ -847,12 +848,14 @@ export default async function ProvincePage({
             across every major {data.name} market.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              href="/contact/"
+            <a
+              href={PORTAL_OWNER_SIGNUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-brand-emerald px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-emerald-hover"
             >
               List my property
-            </Link>
+            </a>
             <Link
               href={`/ca/${province}/`}
               className="inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-3 text-sm font-semibold text-white transition-colors hover:border-white hover:bg-white/5"

@@ -15,7 +15,12 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
-import { PORTAL_LOGIN_URL } from '@/lib/portal-api'
+import { PORTAL_LOGIN_URL, PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
+
+/** Absolute http(s) URLs (e.g. the owner portal) open in a new tab. */
+function isExternalUrl(href: string): boolean {
+  return /^https?:\/\//i.test(href)
+}
 
 /* ------------------------------------------------------------------ */
 /*  Mobile navigation structure                                       */
@@ -39,7 +44,7 @@ const MOBILE_NAV_SECTIONS: ReadonlyArray<NavSectionDef> = [
       { title: 'Pricing', href: '/pricing/' },
       { title: 'Portal & Technology', href: '/portal-and-technology/' },
       { title: 'Reviews', href: '/reviews/' },
-      { title: 'List my property', href: '/contact/?type=owner' },
+      { title: 'List my property', href: PORTAL_OWNER_SIGNUP_URL },
     ],
   },
   {
@@ -161,20 +166,27 @@ function NavSection({
           <ul className="space-y-0.5 px-3 pb-3">
             {items.map((item) => {
               const isActive = pathname === item.href
+              const itemClass = cn(
+                'block rounded-lg px-3 py-3 text-[15px] font-medium transition-colors hover:bg-emerald-50 hover:text-emerald-700',
+                isActive ? 'text-brand-emerald font-bold' : 'text-[#0B1D3A]'
+              )
               return (
                 <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    onClick={onNavigate}
-                    className={cn(
-                      'block rounded-lg px-3 py-3 text-[15px] font-medium transition-colors hover:bg-emerald-50 hover:text-emerald-700',
-                      isActive
-                        ? 'text-brand-emerald font-bold'
-                        : 'text-[#0B1D3A]'
-                    )}
-                  >
-                    {item.title}
-                  </Link>
+                  {isExternalUrl(item.href) ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={onNavigate}
+                      className={itemClass}
+                    >
+                      {item.title}
+                    </a>
+                  ) : (
+                    <Link href={item.href} onClick={onNavigate} className={itemClass}>
+                      {item.title}
+                    </Link>
+                  )}
                 </li>
               )
             })}
@@ -304,13 +316,15 @@ export function MobileNav() {
           >
             Login
           </a>
-          <Link
-            href="/contact/?type=owner"
+          <a
+            href={PORTAL_OWNER_SIGNUP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={handleNavigate}
             className="flex w-full items-center justify-center rounded-lg bg-brand-emerald px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-emerald-dark"
           >
             List my property
-          </Link>
+          </a>
         </div>
       </SheetContent>
     </Sheet>

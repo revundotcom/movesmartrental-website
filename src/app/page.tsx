@@ -25,7 +25,7 @@ import { buildOrganizationSchema } from '@/lib/schema-builders/organization'
 import { buildWebSiteSchema } from '@/lib/schema-builders/website'
 import { buildLocalBusinessSchema } from '@/lib/schema-builders/local-business'
 import { generatePageMetadata } from '@/lib/metadata'
-import { PORTAL_LOGIN_URL } from '@/lib/portal-api'
+import { PORTAL_LOGIN_URL, PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 import { BrowserFrame } from '@/components/ui/browser-frame'
 import { OwnerDashboardMockup } from '@/components/portal-mockups/owner-dashboard-mockup'
 
@@ -97,7 +97,7 @@ export default async function HomePage() {
         <HeroBlock
           headline="Leasing, handled"
           subheadline="MoveSmart Rentals is a full-service leasing partner powered by our proprietary technology — built to help landlords lease faster, reduce vacancy, and screen every applicant. We syndicate your unit to the MLS and 20+ platforms and handle every step from listing to move-in."
-          cta1={{ label: 'List my property', href: '/contact/?type=owner' }}
+          cta1={{ label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL }}
           cta2={{ label: 'Browse rentals', href: '/properties/' }}
           statStrip={[
             { value: 'MLS', valueAccent: '+ Rental Network', label: 'Broad listing exposure' },
@@ -340,12 +340,14 @@ export default async function HomePage() {
                 </div>
               </div>
               <div className="mt-8 flex flex-row flex-wrap items-center gap-4 sm:gap-5">
-                <Link
-                  href="/contact/?type=owner"
+                <a
+                  href={PORTAL_OWNER_SIGNUP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-sm shadow-emerald-900/20 transition-all duration-200 hover:-translate-y-px hover:bg-emerald-600 hover:shadow-md"
                 >
                   List my property
-                </Link>
+                </a>
                 <Link
                   href="/properties/"
                   className="inline-flex items-center justify-center rounded-lg border border-brand-navy/15 bg-white px-6 py-3 text-sm font-semibold text-brand-navy transition-all duration-200 hover:-translate-y-px hover:border-brand-navy/30 hover:bg-slate-50"

@@ -9,6 +9,7 @@ import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 import { HowItWorksBlock } from '@/components/blocks/how-it-works-block'
 import { JsonLd } from '@/components/json-ld'
 import { generatePageMetadata } from '@/lib/metadata'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 import {
   buildBreadcrumbListSchema,
   buildFaqPageSchema,
@@ -363,7 +364,7 @@ function CityServiceView({
       <CTABannerBlock
         headline="Get Started with MoveSmart Rentals"
         description={`${serviceTitle} in ${cityTitle} - full-service leasing and tenant placement, zero upfront cost, success-fee pricing.`}
-        primaryCta={{ label: 'List my property', href: '/contact/?type=owner' }}
+        primaryCta={{ label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL }}
       />
     </>
   )

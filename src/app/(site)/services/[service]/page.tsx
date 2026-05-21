@@ -22,6 +22,7 @@ import {
   ScopeImageCard,
   StaggerRow,
 } from '../service-client-parts'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 
 // ---------------------------------------------------------------------------
 // Static Params - this dynamic template only serves slugs that do NOT have
@@ -326,7 +327,16 @@ export default async function ServicePage({
         headline={content.heroHeadline}
         accentLastWord={true}
         lede={content.heroLede}
-        cta1={{ label: content.cta1Label, href: '/contact/?type=owner' }}
+        cta1={{
+          label: content.cta1Label,
+          // "List my property" goes straight to owner signup; any other
+          // cta1 label (e.g. "Request a Lease-Up Proposal") keeps the
+          // contact/inquiry flow.
+          href:
+            content.cta1Label === 'List my property'
+              ? PORTAL_OWNER_SIGNUP_URL
+              : '/contact/?type=owner',
+        }}
         cta2={
           /\bbook\b.*\bcall\b/i.test(content.cta2Label)
             ? undefined
@@ -815,12 +825,23 @@ export default async function ServicePage({
             List your property to walk through the process. No upfront cost, no obligation — we don&rsquo;t earn until your lease is signed.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/contact/?type=owner"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-emerald/20 transition-all hover:-translate-y-0.5 hover:bg-brand-emerald-dark hover:shadow-xl"
-            >
-              {content.cta1Label}
-            </Link>
+            {content.cta1Label === 'List my property' ? (
+              <a
+                href={PORTAL_OWNER_SIGNUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-emerald/20 transition-all hover:-translate-y-0.5 hover:bg-brand-emerald-dark hover:shadow-xl"
+              >
+                {content.cta1Label}
+              </a>
+            ) : (
+              <Link
+                href="/contact/?type=owner"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-emerald/20 transition-all hover:-translate-y-0.5 hover:bg-brand-emerald-dark hover:shadow-xl"
+              >
+                {content.cta1Label}
+              </Link>
+            )}
             <Link
               href="/pricing/"
               className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 px-6 py-3 text-sm font-bold text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/10"

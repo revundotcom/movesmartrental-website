@@ -8,6 +8,7 @@ import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { getServiceContent } from '@/data/services-content'
 import { generatePageMetadata } from '@/lib/metadata'
 import { buildServiceSchema } from '@/lib/schema-builders/service-schema'
+import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 
 import {
   GoldRule,
@@ -171,8 +172,10 @@ export default function TenantGuarantorPage() {
 
               <RevealUp index={3}>
                 <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
-                  <Link
-                    href="/contact/?type=owner"
+                  <a
+                    href={PORTAL_OWNER_SIGNUP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="group inline-flex items-center gap-3 border-b-2 border-brand-navy pb-1 font-display text-base font-normal uppercase tracking-[0.18em] text-brand-navy transition-colors hover:border-brand-gold hover:text-brand-gold sm:text-lg"
                   >
                     {content.cta1Label}
@@ -182,7 +185,7 @@ export default function TenantGuarantorPage() {
                     >
                       &rarr;
                     </span>
-                  </Link>
+                  </a>
                   <Link
                     href="/contact/?type=discovery"
                     className="inline-flex items-center gap-2 font-display text-base italic text-slate-600 underline decoration-brand-gold decoration-1 underline-offset-[6px] transition-colors hover:text-brand-navy sm:text-lg"
@@ -758,12 +761,14 @@ export default function TenantGuarantorPage() {
                       &rarr;
                     </span>
                   </Link>
-                  <Link
-                    href="/contact/?type=owner"
+                  <a
+                    href={PORTAL_OWNER_SIGNUP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 font-display text-base italic text-slate-600 underline decoration-brand-gold decoration-1 underline-offset-[6px] transition-colors hover:text-brand-navy"
                   >
                     {content.cta1Label}
-                  </Link>
+                  </a>
                 </div>
               </RevealUp>
             </div>
