@@ -47,16 +47,12 @@ const CITY_DATA: Record<string, Record<string, number>> = {
   Halifax: { '1': 1700, '2': 2050, '3': 2400, '4': 2800 },
 }
 
-const MANAGEMENT_FEE_PERCENT = 0.08
-
 export function RentCalculator({ className = '' }: { className?: string }) {
   const [city, setCity] = useState('')
   const [bedrooms, setBedrooms] = useState('')
   const [showResult, setShowResult] = useState(false)
 
   const estimatedRent = city && bedrooms ? CITY_DATA[city]?.[bedrooms] || 0 : 0
-  const managementFee = Math.round(estimatedRent * MANAGEMENT_FEE_PERCENT)
-  const netIncome = estimatedRent - managementFee
 
   const handleCalculate = () => {
     if (city && bedrooms) setShowResult(true)
@@ -139,21 +135,9 @@ export function RentCalculator({ className = '' }: { className?: string }) {
                 {showResult && estimatedRent > 0 && (
                   <div className="mt-6 pt-6 border-t border-white/10 space-y-4">
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-300">Estimated Monthly Rent</span>
-                      <span className="font-heading font-bold text-2xl text-white tabular-nums">
-                        ${estimatedRent.toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-slate-400 text-sm">Management Fee (8%)</span>
-                      <span className="text-slate-400 text-sm tabular-nums">
-                        -${managementFee.toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center pt-4 border-t border-white/10">
-                      <span className="text-brand-emerald font-medium">Your Net Income</span>
+                      <span className="text-brand-emerald font-medium">Estimated Monthly Rent</span>
                       <span className="font-heading font-bold text-2xl text-brand-emerald tabular-nums">
-                        ${netIncome.toLocaleString()}/mo
+                        ${estimatedRent.toLocaleString()}/mo
                       </span>
                     </div>
                     <p className="text-xs text-slate-500 mt-4">
