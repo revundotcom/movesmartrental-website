@@ -7,6 +7,10 @@ html {
      scroll restoration in Chromium. Smooth scrolling is opt-in via the
      .smooth-scroll utility below, applied to specific anchor links only. */
   scroll-behavior: auto;
+  /* Prevent any stray element from causing a horizontal scroll / content
+     getting clipped off the right edge on mobile. The page only ever
+     scrolls vertically. */
+  overflow-x: hidden;
 }
 
 .smooth-scroll {

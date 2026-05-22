@@ -108,21 +108,21 @@ export function HeroBlock({
           <div>
             {/* Eyebrow badge with rotating text */}
             <motion.div
-              className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-navy/10 bg-white/70 px-4 py-1.5 shadow-sm backdrop-blur-sm sm:mb-6"
+              className="mb-5 inline-flex max-w-full items-center gap-2 rounded-full border border-brand-navy/10 bg-white/70 px-3 py-1.5 shadow-sm backdrop-blur-sm sm:mb-6 sm:px-4"
               initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
-              <span className="animate-pulse-dot inline-block size-1.5 rounded-full bg-[#10B981]" />
+              <span className="animate-pulse-dot inline-block size-1.5 shrink-0 rounded-full bg-[#10B981]" />
               {eyebrow ? (
-                <span className="rounded-md bg-emerald-100 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-emerald-700">
+                <span className="rounded-md bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-700 sm:text-xs sm:tracking-widest">
                   {eyebrow}
                 </span>
               ) : (
                 <TextRotate
                   texts={ROTATING_TEXTS}
                   rotationInterval={2500}
-                  className="rounded-md bg-emerald-100 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-emerald-700"
+                  className="rounded-md bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-700 sm:text-xs sm:tracking-widest"
                 />
               )}
             </motion.div>

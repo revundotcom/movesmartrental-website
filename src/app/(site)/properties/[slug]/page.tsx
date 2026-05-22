@@ -220,10 +220,10 @@ function FactCard({
         {rows.map(({ label, value }) => (
           <div
             key={label}
-            className="flex justify-between gap-4 border-b border-slate-100 pb-2 last:border-0 sm:last:border-b"
+            className="flex items-start justify-between gap-3 border-b border-slate-100 pb-2 last:border-0 sm:last:border-b"
           >
-            <dt className="text-slate-500">{label}</dt>
-            <dd className="text-right font-medium text-[#0B1D3A]">
+            <dt className="shrink-0 text-slate-500">{label}</dt>
+            <dd className="min-w-0 break-words text-right font-medium text-[#0B1D3A]">
               {value != null && value !== '' ? value : EMPTY}
             </dd>
           </div>
