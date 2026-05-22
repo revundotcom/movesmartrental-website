@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
@@ -65,6 +66,8 @@ type Props = {
   /** Optional CTA target overrides. */
   primaryCta?: { label: string; href: string }
   secondaryCta?: { label: string; href: string }
+  /** Optional hero image rendered in a full bleed band below the hero text. */
+  heroImage?: { src: string; alt: string; caption?: string }
 }
 
 export function SiloPageTemplate(props: Props) {
@@ -88,6 +91,7 @@ export function SiloPageTemplate(props: Props) {
     related,
     primaryCta = { label: 'Book a free consultation', href: '/contact/?type=owner' },
     secondaryCta = { label: 'See our pricing', href: '/pricing/' },
+    heroImage,
   } = props
 
   return (
@@ -136,6 +140,37 @@ export function SiloPageTemplate(props: Props) {
           </div>
         </div>
       </section>
+
+      {/* Hero image band */}
+      {heroImage && (
+        <section className="relative bg-[#0B1D3A]">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="relative -mt-8 overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/10 sm:-mt-10 lg:-mt-12">
+              <div className="relative aspect-[16/7] w-full sm:aspect-[16/6]">
+                <Image
+                  src={heroImage.src}
+                  alt={heroImage.alt}
+                  fill
+                  sizes="(min-width: 1024px) 1100px, 100vw"
+                  className="object-cover"
+                  priority
+                />
+                {heroImage.caption && (
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0B1D3A]/85 via-[#0B1D3A]/40 to-transparent p-5 sm:p-7">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-emerald-300">
+                      On the ground
+                    </p>
+                    <p className="mt-1 max-w-2xl font-display text-lg font-normal text-white sm:text-xl">
+                      {heroImage.caption}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="h-10 bg-gradient-to-b from-[#0B1D3A] to-transparent sm:h-12" />
+        </section>
+      )}
 
       {/* Market data strip */}
       {marketData && marketData.length > 0 && (
