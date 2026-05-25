@@ -1,18 +1,48 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Phone } from 'lucide-react'
 
 /**
  * Mobile sticky CTA for the Contact page.
- * Mirrors the hero's two actions — "Send a Message" (jumps to the
- * inline form) and the phone number — permanently pinned to the
- * bottom of the viewport. Rendered in final position on first paint
- * (no animation / no scroll gate / fully opaque) so the bar is
- * guaranteed visible from the moment the page loads.
+ * Both actions — "Send a Message" (jumps to the inline form) and the
+ * phone number — pinned side-by-side at the bottom of the viewport on
+ * mobile, visible the entire time the user scrolls the page.
+ *
+ * Mounted via React portal to <body> after hydration so:
+ *   1. No transformed / filtered ancestor in the page tree can become
+ *      its containing block (position:fixed always anchors to the
+ *      viewport).
+ *   2. No parent stacking context can sink the z-index below other
+ *      page chrome.
+ *   3. No parent overflow:hidden can clip the bar off-screen.
  */
 export function ContactStickyCTA() {
-  return (
-    <div className="safe-area-pb fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 bg-white p-3 shadow-[0_-8px_24px_-12px_rgba(11,29,58,0.18)] lg:hidden">
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const stickyStyle: React.CSSProperties = {
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 9999,
+    background: '#ffffff',
+    borderTop: '1px solid #e2e8f0',
+    boxShadow: '0 -8px 24px -12px rgba(11, 29, 58, 0.18)',
+    paddingTop: '0.75rem',
+    paddingLeft: '0.75rem',
+    paddingRight: '0.75rem',
+    paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))',
+  }
+
+  if (!mounted) return null
+
+  const bar = (
+    <div className="lg:hidden" style={stickyStyle}>
       <div className="flex gap-3">
         <a
           href="#contact-form"
@@ -31,4 +61,6 @@ export function ContactStickyCTA() {
       </div>
     </div>
   )
+
+  return createPortal(bar, document.body)
 }

@@ -411,17 +411,19 @@ function FranchisingHero() {
             MoveSmart Rentals is awarding protected territories to qualified operators across Canada and the United States. You bring local market knowledge and operational drive — we provide the playbook, the tech platform, and the brand that owners trust.
           </p>
 
-          {/* CTAs */}
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+          {/* CTAs — stay on the same line on mobile (flex-row from xs up) so
+              the two CTAs sit side-by-side. Padding scales down on the smallest
+              breakpoint to keep them on one row without truncating. */}
+          <div className="mt-8 flex flex-row flex-wrap items-center gap-3">
             <Link
               href="/contact/?intent=franchise"
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 px-7 py-3.5 text-base font-bold text-white shadow-lg shadow-emerald-500/20 transition-all duration-300 hover:-translate-y-px hover:shadow-xl"
+              className="inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-500/20 transition-all duration-300 hover:-translate-y-px hover:shadow-xl sm:px-7 sm:py-3.5 sm:text-base"
             >
               Request the Franchise Kit
             </Link>
             <a
               href="#franchise-economics"
-              className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/20 bg-transparent px-7 py-3.5 text-base font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
+              className="inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-lg border-2 border-white/20 bg-transparent px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5 sm:px-7 sm:py-3.5 sm:text-base"
             >
               See the economics
             </a>

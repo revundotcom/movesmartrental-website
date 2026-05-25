@@ -119,7 +119,8 @@ const REACH_OPTIONS = [
 
 export default function ContactPage() {
   return (
-    <main className="bg-white">
+    <>
+    <main className="bg-white pb-28 lg:pb-0">
       {/* ─── Breadcrumb ────────────────────────────────────────────────── */}
       <div className="mx-auto max-w-7xl px-4 pt-6 sm:pt-8">
         <BreadcrumbNav
@@ -148,7 +149,7 @@ export default function ContactPage() {
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
             Real humans, clear answers, no pressure. Whether you own one door or twenty, we&apos;ll help you figure out the right next step within one business day.
           </p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="mt-8 hidden flex-col items-center justify-center gap-3 sm:flex-row lg:flex">
             <a
               href="#contact-form"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-emerald-600 hover:shadow-md"
@@ -401,9 +402,13 @@ export default function ContactPage() {
         primaryCta={{ label: 'Book a Call', href: '#contact-form' }}
       />
 
-      {/* Mobile sticky CTA — Send a Message + Call */}
-      <ContactStickyCTA />
     </main>
+
+    {/* Mobile sticky CTA — Send a Message + Call. Rendered as a sibling
+        of <main> (not inside it) so position:fixed always anchors to the
+        viewport, never to a transformed ancestor inside the page tree. */}
+    <ContactStickyCTA />
+    </>
   )
 }
 

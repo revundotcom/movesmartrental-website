@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import Link from 'next/link'
 
 interface Props {
@@ -9,32 +11,36 @@ interface Props {
   scheduleUrl: string | null
   /** Property slug — used for the contact-form fallback links. */
   slug: string
-  /** Whether the unit is currently available to rent. The sticky bar
-   *  only renders when this is true — once a unit is leased / off-market,
-   *  there's nothing to apply for or schedule. */
-  isAvailable: boolean
 }
 
 /**
  * Mobile sticky CTA shown on individual property pages.
  * Permanently pinned to the bottom of the viewport so the two property
- * actions — Apply Now + Schedule a Tour — are always reachable. No
- * animation / no scroll gate: the bar is rendered in its final position
- * on first paint so it's never hidden behind a framer-motion transform
- * before JS hydrates.
+ * actions — Apply Now + Schedule a Tour — are always reachable on every
+ * property page, regardless of the unit's availability status (leased
+ * units still benefit from waitlist / schedule-a-tour leads).
  *
- * Both buttons reuse the portal deep links from the page body, with a
- * contact-form fallback so a lead is never dropped.
+ * Critical positioning is set via inline styles so it cannot be
+ * overridden by a Tailwind purge edge case or framework reset, and
+ * the component is rendered as a sibling of <main> so any transformed
+ * ancestor inside the page body cannot become its containing block.
  */
 export function PropertyStickyCTA({
   reserveUrl,
   scheduleUrl,
   slug,
-  isAvailable,
 }: Props) {
-  // Hide the bar entirely on unavailable / leased units — there is nothing
-  // for the visitor to apply for or schedule.
-  if (!isAvailable) return null
+  // Mount via React portal to <body> AFTER hydration. This guarantees that:
+  //   1. No transformed / filtered / clipped ancestor in the page tree
+  //      can become its containing block (position:fixed always anchors
+  //      to the viewport).
+  //   2. No parent stacking context can sink the z-index below other
+  //      page chrome.
+  //   3. No parent overflow:hidden can clip the bar off-screen.
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const applyHref =
     reserveUrl ??
@@ -42,8 +48,25 @@ export function PropertyStickyCTA({
   const scheduleHref =
     scheduleUrl ?? `/contact/?type=tenant&property=${encodeURIComponent(slug)}`
 
-  return (
-    <div className="safe-area-pb fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 bg-white p-3 shadow-[0_-8px_24px_-12px_rgba(11,29,58,0.18)] lg:hidden">
+  const stickyStyle: React.CSSProperties = {
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 9999,
+    background: '#ffffff',
+    borderTop: '1px solid #e2e8f0',
+    boxShadow: '0 -8px 24px -12px rgba(11, 29, 58, 0.18)',
+    paddingTop: '0.75rem',
+    paddingLeft: '0.75rem',
+    paddingRight: '0.75rem',
+    paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))',
+  }
+
+  if (!mounted) return null
+
+  const bar = (
+    <div className="lg:hidden" style={stickyStyle}>
       <div className="flex gap-3">
         {/* Apply Now — primary */}
         {reserveUrl ? (
@@ -85,4 +108,6 @@ export function PropertyStickyCTA({
       </div>
     </div>
   )
+
+  return createPortal(bar, document.body)
 }

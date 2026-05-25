@@ -616,7 +616,8 @@ export default async function PropertyDetailPage({ params }: PageProps) {
   )
 
   return (
-    <main className="bg-white">
+    <>
+    <main className="bg-white pb-24 lg:pb-0">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
@@ -745,50 +746,56 @@ export default async function PropertyDetailPage({ params }: PageProps) {
 
               <div className="my-5 border-t border-slate-100" />
 
-              <p className="text-sm font-medium text-[#0B1D3A]">
-                Interested in this property?
-              </p>
-              <p className="mt-1 text-xs text-slate-500">
-                Schedule a viewing or reserve this unit through the secure
-                MoveSmart portal — sign in or create an account in seconds.
-              </p>
+              {/* Inline interest prompt + CTAs — desktop only. On mobile the
+                  PropertyStickyCTA at the bottom of the viewport handles these
+                  actions, so we hide the inline duplicate to avoid two stacked
+                  Apply Now buttons in the same scroll. */}
+              <div className="hidden lg:block">
+                <p className="text-sm font-medium text-[#0B1D3A]">
+                  Interested in this property?
+                </p>
+                <p className="mt-1 text-xs text-slate-500">
+                  Schedule a viewing or reserve this unit through the secure
+                  MoveSmart portal — sign in or create an account in seconds.
+                </p>
 
-              <div className="mt-4 space-y-2">
-                {/* Apply Now — primary CTA, routes to portal apply/reserve flow */}
-                {reserveUrl ? (
-                  <a
-                    href={reserveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex w-full items-center justify-center rounded-lg bg-[#10B981] px-4 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#059669]"
-                  >
-                    Apply Now
-                  </a>
-                ) : (
-                  <Link
-                    href={`/contact/?type=tenant&intent=apply&property=${encodeURIComponent(slug)}`}
-                    className="flex w-full items-center justify-center rounded-lg bg-[#10B981] px-4 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#059669]"
-                  >
-                    Apply Now
-                  </Link>
-                )}
-                {scheduleUrl ? (
-                  <a
-                    href={scheduleUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex w-full items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#0B1D3A] transition-colors hover:border-[#10B981]/40 hover:bg-emerald-50"
-                  >
-                    Schedule a Tour
-                  </a>
-                ) : (
-                  <Link
-                    href={`/contact/?type=tenant&property=${encodeURIComponent(slug)}`}
-                    className="flex w-full items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#0B1D3A] transition-colors hover:border-[#10B981]/40 hover:bg-emerald-50"
-                  >
-                    Request a Viewing
-                  </Link>
-                )}
+                <div className="mt-4 space-y-2">
+                  {/* Apply Now — primary CTA, routes to portal apply/reserve flow */}
+                  {reserveUrl ? (
+                    <a
+                      href={reserveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex w-full items-center justify-center rounded-lg bg-[#10B981] px-4 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#059669]"
+                    >
+                      Apply Now
+                    </a>
+                  ) : (
+                    <Link
+                      href={`/contact/?type=tenant&intent=apply&property=${encodeURIComponent(slug)}`}
+                      className="flex w-full items-center justify-center rounded-lg bg-[#10B981] px-4 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#059669]"
+                    >
+                      Apply Now
+                    </Link>
+                  )}
+                  {scheduleUrl ? (
+                    <a
+                      href={scheduleUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex w-full items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#0B1D3A] transition-colors hover:border-[#10B981]/40 hover:bg-emerald-50"
+                    >
+                      Schedule a Tour
+                    </a>
+                  ) : (
+                    <Link
+                      href={`/contact/?type=tenant&property=${encodeURIComponent(slug)}`}
+                      className="flex w-full items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#0B1D3A] transition-colors hover:border-[#10B981]/40 hover:bg-emerald-50"
+                    >
+                      Request a Viewing
+                    </Link>
+                  )}
+                </div>
               </div>
 
               <div className="mt-5 rounded-xl bg-slate-50 p-4 text-xs text-slate-500">
@@ -838,15 +845,18 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         </section>
       </div>
 
-      {/* Mobile sticky CTA — Apply Now + Schedule a Tour.
-          Only rendered while the unit is available to rent; once a unit
-          is leased / off-market, the bar disappears. */}
-      <PropertyStickyCTA
-        reserveUrl={reserveUrl}
-        scheduleUrl={scheduleUrl}
-        slug={slug}
-        isAvailable={isAvailable}
-      />
     </main>
+
+    {/* Mobile sticky CTA — Apply Now + Schedule a Tour. Rendered as a
+        sibling of <main> (not inside it) so position:fixed always
+        anchors to the viewport, never to a transformed ancestor.
+        Always rendered on every property page — even leased units can
+        capture waitlist / future-availability leads via these buttons. */}
+    <PropertyStickyCTA
+      reserveUrl={reserveUrl}
+      scheduleUrl={scheduleUrl}
+      slug={slug}
+    />
+    </>
   )
 }

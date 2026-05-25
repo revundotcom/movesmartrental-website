@@ -431,40 +431,56 @@ function MobilePhotoCarousel({
           ))}
         </div>
 
+        {/* Bottom gradient so the overlaid dots + counter stay readable on
+            both bright skies and dark interiors. */}
+        {images.length > 1 && (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/55 via-black/15 to-transparent"
+          />
+        )}
+
         {/* Photo counter pill */}
-        <span className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white backdrop-blur">
+        <span className="pointer-events-none absolute right-3 top-3 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white backdrop-blur">
           {active + 1} / {images.length}
         </span>
-      </div>
 
-      {/* Pagination dots */}
-      {images.length > 1 && (
-        <div className="mt-3 flex items-center justify-center gap-1.5">
-          {showCompactDots ? (
-            <CompactDots
-              total={images.length}
-              index={active}
-              onSelect={goTo}
-              variant="light"
-            />
-          ) : (
-            images.map((_, i) => (
-              <button
-                key={`m-dot-${i}`}
-                type="button"
-                onClick={() => goTo(i)}
-                className={`h-1.5 rounded-full transition-all ${
-                  i === active
-                    ? 'w-6 bg-[#0B1D3A]'
-                    : 'w-1.5 bg-slate-300 hover:bg-slate-400'
-                }`}
-                aria-label={`Show photo ${i + 1}`}
-                aria-current={i === active ? 'true' : undefined}
-              />
-            ))
-          )}
-        </div>
-      )}
+        {/* Pagination dots — overlaid on the photo (native-app pattern) so
+            visitors always see the indicator with the image, not way below
+            the fold. Tappable through the gradient. */}
+        {images.length > 1 && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-3 flex items-center justify-center gap-1.5">
+            <div className="pointer-events-auto flex items-center gap-1.5 rounded-full bg-black/30 px-2.5 py-1.5 backdrop-blur-sm">
+              {showCompactDots ? (
+                <CompactDots
+                  total={images.length}
+                  index={active}
+                  onSelect={goTo}
+                  variant="dark"
+                />
+              ) : (
+                images.map((_, i) => (
+                  <button
+                    key={`m-dot-${i}`}
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      goTo(i)
+                    }}
+                    className={`h-1.5 rounded-full transition-all ${
+                      i === active
+                        ? 'w-6 bg-white'
+                        : 'w-1.5 bg-white/55 hover:bg-white/80'
+                    }`}
+                    aria-label={`Show photo ${i + 1}`}
+                    aria-current={i === active ? 'true' : undefined}
+                  />
+                ))
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
@@ -628,31 +644,36 @@ function Lightbox({
           <ChevronRight className="size-6" />
         </button>
 
-        {/* Pagination dots */}
+        {/* Pagination dots — wrapped in a frosted pill so they read as a
+            clear, tappable indicator instead of three tiny marks floating
+            on the void. Sized up (h-2 dots, w-8 active) to match the
+            visual weight of the rest of the lightbox chrome. */}
         {images.length > 1 && (
-          <div className="flex items-center justify-center gap-1.5 py-3">
-            {showCompactDots ? (
-              <CompactDots
-                total={images.length}
-                index={index}
-                onSelect={onSelect}
-              />
-            ) : (
-              images.map((_, i) => (
-                <button
-                  key={`dot-${i}`}
-                  type="button"
-                  onClick={() => onSelect(i)}
-                  className={`h-1.5 rounded-full transition-all ${
-                    i === index
-                      ? 'w-6 bg-white'
-                      : 'w-1.5 bg-white/40 hover:bg-white/70'
-                  }`}
-                  aria-label={`Show photo ${i + 1}`}
-                  aria-current={i === index ? 'true' : undefined}
+          <div className="flex items-center justify-center py-4">
+            <div className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2.5 backdrop-blur-md ring-1 ring-white/15">
+              {showCompactDots ? (
+                <CompactDots
+                  total={images.length}
+                  index={index}
+                  onSelect={onSelect}
                 />
-              ))
-            )}
+              ) : (
+                images.map((_, i) => (
+                  <button
+                    key={`dot-${i}`}
+                    type="button"
+                    onClick={() => onSelect(i)}
+                    className={`h-2 rounded-full transition-all ${
+                      i === index
+                        ? 'w-8 bg-white'
+                        : 'w-2 bg-white/50 hover:bg-white/80'
+                    }`}
+                    aria-label={`Show photo ${i + 1}`}
+                    aria-current={i === index ? 'true' : undefined}
+                  />
+                ))
+              )}
+            </div>
           </div>
         )}
       </div>
@@ -713,13 +734,14 @@ function CompactDots({
   for (let i = start; i < end; i++) dots.push(i)
 
   const activeClass =
-    variant === 'dark' ? 'w-6 bg-white' : 'w-6 bg-[#0B1D3A]'
+    variant === 'dark' ? 'w-8 bg-white' : 'w-6 bg-white'
   const idleClass =
     variant === 'dark'
-      ? 'w-1.5 bg-white/40 hover:bg-white/70'
-      : 'w-1.5 bg-slate-300 hover:bg-slate-400'
+      ? 'w-2 bg-white/50 hover:bg-white/80'
+      : 'w-1.5 bg-white/55 hover:bg-white/80'
   const ellipsisClass =
-    variant === 'dark' ? 'bg-white/30' : 'bg-slate-300'
+    variant === 'dark' ? 'bg-white/35' : 'bg-white/55'
+  const dotHeight = variant === 'dark' ? 'h-2' : 'h-1.5'
 
   return (
     <>
@@ -730,8 +752,11 @@ function CompactDots({
         <button
           key={`dot-${i}`}
           type="button"
-          onClick={() => onSelect(i)}
-          className={`h-1.5 rounded-full transition-all ${
+          onClick={(e) => {
+            e.stopPropagation()
+            onSelect(i)
+          }}
+          className={`${dotHeight} rounded-full transition-all ${
             i === index ? activeClass : idleClass
           }`}
           aria-label={`Show photo ${i + 1}`}
