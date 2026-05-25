@@ -1,10 +1,11 @@
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 
 import { JsonLd } from '@/components/json-ld'
-import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
-import { FAQBlock } from '@/components/blocks/faq-block'
+import {
+  SiloPageTemplate,
+  type SiloSection,
+} from '@/components/blocks/silo-page-template'
 import { BRAND } from '@/lib/brand-constants'
 import {
   FLAT_PAGES,
@@ -125,6 +126,30 @@ function buildGraph(page: SiloPage): Record<string, unknown>[] {
   return graph
 }
 
+const PLACEHOLDER_VARIANTS = [
+  '/city-placeholder-a.svg',
+  '/city-placeholder-b.svg',
+  '/city-placeholder-c.svg',
+  '/city-placeholder-d.svg',
+  '/city-placeholder-e.svg',
+  '/city-placeholder-f.svg',
+]
+
+function placeholderFor(cityKey: string): string {
+  let hash = 0
+  for (let i = 0; i < cityKey.length; i++) {
+    hash = (hash * 31 + cityKey.charCodeAt(i)) >>> 0
+  }
+  return PLACEHOLDER_VARIANTS[hash % PLACEHOLDER_VARIANTS.length]
+}
+
+const AUDIENCE_TILES = [
+  'Individual landlords managing one to ten units',
+  'Builders and developers releasing new construction',
+  'Property management companies expanding portfolios',
+  'Institutional rental operators and REITs at scale',
+]
+
 export default async function SiloFlatPage({ params }: Params) {
   const { silo } = await params
   const page = findFlatPage(silo)
@@ -137,6 +162,7 @@ export default async function SiloFlatPage({ params }: Params) {
   const cityHub = cityPages.find((p) => p.type === 'city_hub')
   const cityBlogs = SILO_BLOGS.filter((p) => p.city_key === page.city_key)
 
+  // Breadcrumbs
   const crumbs = [
     { label: 'Home', href: '/' },
     cityHub && cityHub.url !== page.url
@@ -151,200 +177,145 @@ export default async function SiloFlatPage({ params }: Params) {
     },
   ].filter(Boolean) as Array<{ label: string; href: string }>
 
+  // Hero copy
+  const heroKicker =
+    page.type === 'service_in_city' && page.service_label
+      ? page.service_label
+      : 'Property management'
+  const heroEyebrow = `${page.city}, ${page.state_abbr}`
+  const heroHeadline = page.title
+  const heroLede =
+    page.intro || page.meta_description || `${heroKicker} in ${page.city}.`
+
+  // Hero image
+  const heroImage = {
+    src: placeholderFor(page.city_key),
+    alt: `${page.city}, ${page.state_abbr} city visual for ${heroKicker}`,
+    caption: `Active ${heroKicker.toLowerCase()} coverage across ${page.city}, ${page.state_abbr} and the surrounding ${page.state} market.`,
+  }
+
+  // Market data strip
+  const marketData: { label: string; value: string }[] = [
+    { label: 'Market', value: page.city },
+    { label: 'Region', value: page.state },
+    {
+      label: 'Coverage',
+      value:
+        page.country === 'CA'
+          ? 'Canada'
+          : page.country === 'US'
+            ? 'United States'
+            : 'Canada and US',
+    },
+    { label: 'Dispatch', value: '24 / 7' },
+  ]
+  if (page.neighborhoods && page.neighborhoods.length > 0) {
+    marketData.push({
+      label: 'Neighborhoods',
+      value: `${page.neighborhoods.length}+`,
+    })
+  }
+  if (page.jurisdiction?.body) {
+    marketData.push({ label: 'Jurisdiction', value: page.jurisdiction.body })
+  }
+
+  // Body sections from bundle copy
+  const sections: SiloSection[] = []
+  if (page.local_context) {
+    sections.push({
+      title: `Local market context in ${page.city}`,
+      body: page.local_context,
+    })
+  }
+  if (page.service_details) {
+    sections.push({
+      title: 'What this looks like on the ground',
+      body: page.service_details,
+    })
+  }
+  // Sibling services as a "service lines in this city" card grid
+  if (siblingServices.length > 0) {
+    sections.push({
+      title:
+        page.type === 'city_hub'
+          ? `Service lines in ${page.city}`
+          : `Other services in ${page.city}`,
+      items: siblingServices.slice(0, 6).map((s) => ({
+        title: s.service_label || s.title,
+        body: s.service_blurb || '',
+        tag: 'View service',
+      })),
+    })
+  }
+  // Authority citations as a "sources" sub-section
+  const citations = (page.authority_citations || []).concat(
+    page.authority_citation ? [page.authority_citation] : [],
+  )
+  if (citations.length > 0) {
+    sections.push({
+      title: 'Local authority sources',
+      body: 'Cited references for this market.',
+      items: citations
+        .filter((c) => c && c.url)
+        .slice(0, 6)
+        .map((c) => ({
+          title: c.name,
+          body: c.context,
+          tag: 'External source',
+        })),
+    })
+  }
+
+  // FAQ
+  const faq = (page.faq || []).map((f) => ({ question: f.q, answer: f.a }))
+
+  // Closing CTA copy
+  const closing =
+    page.type === 'service_in_city'
+      ? `Ready to start ${(page.service_label || 'leasing').toLowerCase()} in ${page.city}?`
+      : `Ready to lease faster in ${page.city}?`
+
+  // Related: 3 next-best links — sibling services + city blogs
+  const related: { title: string; href: string; description?: string }[] = []
+  for (const s of siblingServices.slice(0, 2)) {
+    related.push({
+      title: s.title,
+      href: `${s.url}/`,
+      description: s.service_blurb,
+    })
+  }
+  for (const b of cityBlogs.slice(0, 3)) {
+    related.push({
+      title: b.title,
+      href: `${b.url}/`,
+      description: b.intro?.slice(0, 140),
+    })
+    if (related.length >= 6) break
+  }
+
   return (
     <>
       <JsonLd data={buildGraph(page)} />
-
-      <section className="border-b border-neutral-200 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-12">
-          <BreadcrumbNav crumbs={crumbs} />
-          <p className="mt-4 text-xs font-medium tracking-wider text-neutral-500 uppercase">
-            {page.type === 'city_hub'
-              ? `${page.city}, ${page.state_abbr} coverage`
-              : `${page.service_label || 'Service'} in ${page.city}, ${page.state_abbr}`}
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold text-neutral-900 md:text-4xl">
-            {page.title}
-          </h1>
-          <p className="mt-3 max-w-3xl text-neutral-700">
-            {page.meta_description}
-          </p>
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <a
-              href={`tel:${BRAND.phone}`}
-              className="inline-flex items-center justify-center rounded-md bg-neutral-900 px-5 py-3 text-sm font-medium text-white hover:bg-neutral-800"
-            >
-              Call {BRAND.phoneDisplay}
-            </a>
-            <Link
-              href="/contact/"
-              className="inline-flex items-center justify-center rounded-md border border-neutral-300 px-5 py-3 text-sm font-medium hover:border-neutral-900"
-            >
-              Request a rental analysis
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {(page.intro || page.local_context || page.service_details) && (
-        <section className="bg-white">
-          <div className="prose prose-neutral mx-auto max-w-3xl px-6 py-12">
-            {page.intro && <p>{page.intro}</p>}
-            {page.local_context && <p>{page.local_context}</p>}
-            {page.service_details && <p>{page.service_details}</p>}
-          </div>
-        </section>
-      )}
-
-      {(page.authority_citations || page.authority_citation) && (
-        <section className="border-t border-neutral-200 bg-neutral-50">
-          <div className="mx-auto max-w-3xl px-6 py-10">
-            <p className="mb-3 text-xs font-medium tracking-wider text-neutral-500 uppercase">
-              Local authority sources
-            </p>
-            <h2 className="mb-4 text-xl font-semibold text-neutral-900">
-              Cited references for this market.
-            </h2>
-            <ul className="space-y-3">
-              {(
-                (page.authority_citations || []).concat(
-                  page.authority_citation ? [page.authority_citation] : [],
-                ) as Array<{ name: string; url: string; context?: string }>
-              ).map((a, i) =>
-                a && a.url ? (
-                  <li key={i}>
-                    <a
-                      href={a.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-semibold text-neutral-900 underline"
-                    >
-                      {a.name}
-                    </a>
-                    {a.context && (
-                      <p className="mt-1 text-sm text-neutral-600">
-                        {a.context}
-                      </p>
-                    )}
-                  </li>
-                ) : null,
-              )}
-            </ul>
-          </div>
-        </section>
-      )}
-
-      {page.type === 'city_hub' && siblingServices.length > 0 && (
-        <section className="border-t border-neutral-200 bg-white">
-          <div className="mx-auto max-w-6xl px-6 py-12">
-            <p className="mb-3 text-xs font-medium tracking-wider text-neutral-500 uppercase">
-              Service lines in this city
-            </p>
-            <h2 className="mb-6 text-xl font-semibold text-neutral-900">
-              What we run in {page.city}.
-            </h2>
-            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {siblingServices.map((s) => (
-                <li key={s.url}>
-                  <Link
-                    href={`${s.url}/`}
-                    className="block rounded-lg border border-neutral-200 bg-white p-5 transition hover:border-neutral-900"
-                  >
-                    <p className="font-semibold text-neutral-900">
-                      {s.service_label}
-                    </p>
-                    {s.service_blurb && (
-                      <p className="mt-1 text-sm text-neutral-600">
-                        {s.service_blurb}
-                      </p>
-                    )}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      )}
-
-      {page.type === 'service_in_city' && (
-        <section className="border-t border-neutral-200 bg-white">
-          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-6 py-12 lg:grid-cols-3">
-            {cityHub && (
-              <Link
-                href={`${cityHub.url}/`}
-                className="rounded-lg border border-neutral-200 bg-neutral-50 p-5 transition hover:border-neutral-900"
-              >
-                <p className="mb-2 text-xs font-medium tracking-wider text-neutral-500 uppercase">
-                  City hub
-                </p>
-                <p className="font-semibold text-neutral-900">
-                  {cityHub.title}
-                </p>
-              </Link>
-            )}
-            {page.national_service_url && (
-              <Link
-                href={page.national_service_url}
-                className="rounded-lg border border-neutral-200 bg-white p-5 transition hover:border-neutral-900"
-              >
-                <p className="mb-2 text-xs font-medium tracking-wider text-neutral-500 uppercase">
-                  National service line
-                </p>
-                <p className="font-semibold text-neutral-900">
-                  {page.service_label}
-                </p>
-              </Link>
-            )}
-            {siblingServices.slice(0, 1).map((s) => (
-              <Link
-                key={s.url}
-                href={`${s.url}/`}
-                className="rounded-lg border border-neutral-200 bg-white p-5 transition hover:border-neutral-900"
-              >
-                <p className="mb-2 text-xs font-medium tracking-wider text-neutral-500 uppercase">
-                  Related in {page.city}
-                </p>
-                <p className="font-semibold text-neutral-900">
-                  {s.service_label}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {page.faq && page.faq.length > 0 && (
-        <FAQBlock
-          title="Common Questions, Direct Answers"
-          schemaEnabled={false}
-          questions={page.faq.map((f) => ({ question: f.q, answer: f.a }))}
-        />
-      )}
-
-      {cityBlogs.length > 0 && (
-        <section className="border-t border-neutral-200 bg-white">
-          <div className="mx-auto max-w-6xl px-6 py-12">
-            <p className="mb-3 text-xs font-medium tracking-wider text-neutral-500 uppercase">
-              Local guides
-            </p>
-            <h2 className="mb-6 text-xl font-semibold text-neutral-900">
-              More from {page.city}.
-            </h2>
-            <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {cityBlogs.slice(0, 9).map((b) => (
-                <li key={b.url}>
-                  <Link
-                    href={`${b.url}/`}
-                    className="block rounded-lg border border-neutral-200 bg-white p-5 transition hover:border-neutral-900"
-                  >
-                    <p className="font-semibold text-neutral-900">{b.title}</p>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      )}
+      <SiloPageTemplate
+        breadcrumbs={crumbs}
+        heroKicker={heroKicker}
+        heroEyebrow={heroEyebrow}
+        heroHeadline={heroHeadline}
+        heroLede={heroLede}
+        heroImage={heroImage}
+        marketData={marketData}
+        sections={sections}
+        audience={AUDIENCE_TILES}
+        neighborhoods={page.neighborhoods}
+        faq={faq}
+        closing={closing}
+        related={related}
+        primaryCta={{ label: 'List my property', href: '/owners/' }}
+        secondaryCta={{
+          label: `Call ${BRAND.phoneDisplay}`,
+          href: `tel:${BRAND.phone}`,
+        }}
+      />
     </>
   )
 }
