@@ -68,7 +68,13 @@ function buildPopupHtml(p: Property): string {
     ? `<img src="${escapeHtml(img)}" alt="" style="width:100%;height:120px;object-fit:cover;border-radius:6px;display:block;" />`
     : `<div style="width:100%;height:120px;background:#f1f5f9;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:11px;">No image</div>`
   return `
-    <div style="font-family:inherit;width:220px;">
+    <a
+      href="${href}"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="display:block;width:220px;font-family:inherit;color:inherit;text-decoration:none;cursor:pointer;"
+      aria-label="View details for ${address}"
+    >
       ${imgHtml}
       <div style="margin-top:8px;color:#10B981;font-weight:700;font-size:16px;">${price}</div>
       <div style="margin-top:4px;color:#0B1D3A;font-size:13px;line-height:1.35;">${address}</div>
@@ -77,8 +83,8 @@ function buildPopupHtml(p: Property): string {
         <span style="margin-right:10px;">${escapeHtml(String(beds))} bd</span>
         <span>${escapeHtml(String(baths))} ba</span>
       </div>
-      <a href="${href}" target="_blank" rel="noopener noreferrer" style="margin-top:10px;display:inline-block;color:#10B981;font-weight:600;font-size:12px;text-decoration:none;">View details →</a>
-    </div>
+      <div style="margin-top:10px;color:#10B981;font-weight:600;font-size:12px;">View details →</div>
+    </a>
   `
 }
 

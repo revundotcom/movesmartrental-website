@@ -173,6 +173,13 @@ function PropertyCard({ property }: { property: Property }) {
   const neighbourhood = property.building?.neighbourhood
   const city = property.building?.city
 
+  // When no photo is available, fall back to a Google Street View embed
+  // anchored to the unit's coordinates (preferred) or full address.
+  const streetViewSrc =
+    property.latitude && property.longitude
+      ? `https://www.google.com/maps?layer=c&cbll=${property.latitude},${property.longitude}&cbp=11,0,0,0,0&output=svembed`
+      : `https://maps.google.com/maps?q=&layer=c&cbll=&cbp=&output=svembed&q=${encodeURIComponent(property.unit_address || property.unit_name)}`
+
   return (
     <Link
       href={`/properties/${property.slug}/`}
@@ -201,10 +208,24 @@ function PropertyCard({ property }: { property: Property }) {
             )}
           </div>
         ) : (
-          <div className="relative flex aspect-[4/3] w-full items-center justify-center bg-slate-100">
-            <MapPin className="size-8 text-slate-300" />
+          <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
+            {/* Street View embed as fallback thumbnail when no photo exists.
+                `pointer-events-none` lets the parent <Link> handle the click. */}
+            <iframe
+              title={`Street view of ${property.unit_name}`}
+              src={streetViewSrc}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen={false}
+              className="pointer-events-none absolute inset-0 size-full border-0"
+              aria-hidden="true"
+            />
+            <div className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-[#0B1D3A]/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white shadow-sm backdrop-blur-sm">
+              <MapPin className="size-3" aria-hidden="true" />
+              Street View
+            </div>
             {type && (
-              <div className="absolute left-3 top-3">
+              <div className="absolute right-3 top-3">
                 <span className="inline-block rounded-full bg-[#0B1D3A]/90 px-3 py-1 text-xs font-semibold text-white shadow-sm backdrop-blur-sm">
                   {type}
                 </span>

@@ -47,10 +47,22 @@ export function PropertyCardBlock({ listings }: PropertyCardBlockProps) {
                   </div>
                 </div>
               ) : (
-                <div className="relative flex aspect-video w-full items-center justify-center bg-slate-100">
-                  <div className="text-center">
-                    <MapPin className="mx-auto size-8 text-slate-300" />
-                    <p className="mt-1 text-xs text-slate-400">No image</p>
+                <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
+                  {/* Street View embed as fallback thumbnail when no photo exists. */}
+                  <iframe
+                    title={`Street view of ${listing.title}`}
+                    src={`https://maps.google.com/maps?q=&layer=c&cbll=&cbp=&output=svembed&q=${encodeURIComponent(
+                      listing.address || listing.title,
+                    )}`}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen={false}
+                    className="pointer-events-none absolute inset-0 size-full border-0"
+                    aria-hidden="true"
+                  />
+                  <div className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-[#0B1D3A]/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white shadow-sm backdrop-blur-sm">
+                    <MapPin className="size-3" aria-hidden="true" />
+                    Street View
                   </div>
                   {/* Availability badge */}
                   <div className="absolute left-3 top-3">

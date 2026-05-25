@@ -194,12 +194,10 @@ function FactCard({
   title,
   rows,
   id,
-  bold = false,
 }: {
   title: string
   rows: Array<{ label: string; value?: string | number | null }>
   id?: string
-  bold?: boolean
 }) {
   return (
     <section
@@ -207,13 +205,7 @@ function FactCard({
       aria-label={title}
       className="scroll-mt-28 rounded-2xl border border-slate-200 bg-white p-6"
     >
-      <h3
-        className={
-          bold
-            ? 'font-heading text-base font-bold uppercase tracking-wider text-[#0B1D3A]'
-            : 'font-heading text-sm font-normal uppercase tracking-wider text-[#0B1D3A]/80'
-        }
-      >
+      <h3 className="font-heading text-base font-bold uppercase tracking-wider text-[#0B1D3A]">
         {title}
       </h3>
       <dl className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 text-sm sm:grid-cols-2">
@@ -252,7 +244,7 @@ function RoomInfoTable() {
       open
       className="group scroll-mt-28 rounded-2xl border border-slate-200 bg-white p-6"
     >
-      <summary className="flex cursor-pointer list-none items-center justify-between font-heading text-sm font-semibold uppercase tracking-wider text-[#0B1D3A]">
+      <summary className="flex cursor-pointer list-none items-center justify-between font-heading text-base font-bold uppercase tracking-wider text-[#0B1D3A]">
         Room Information
         <span className="text-xs font-normal text-slate-400 group-open:hidden">
           Show
@@ -412,7 +404,6 @@ export default async function PropertyDetailPage({ params }: PageProps) {
       <FactCard
         id="key-facts"
         title="Key Facts"
-        bold
         rows={[
           { label: 'Data Source', value: undefined },
           { label: 'MLS ID', value: undefined },
@@ -847,11 +838,14 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         </section>
       </div>
 
-      {/* Mobile sticky CTA — Apply Now + Schedule a Tour */}
+      {/* Mobile sticky CTA — Apply Now + Schedule a Tour.
+          Only rendered while the unit is available to rent; once a unit
+          is leased / off-market, the bar disappears. */}
       <PropertyStickyCTA
         reserveUrl={reserveUrl}
         scheduleUrl={scheduleUrl}
         slug={slug}
+        isAvailable={isAvailable}
       />
     </main>
   )

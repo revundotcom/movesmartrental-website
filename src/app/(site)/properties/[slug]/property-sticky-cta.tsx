@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Link from 'next/link'
 
 interface Props {
@@ -10,16 +9,33 @@ interface Props {
   scheduleUrl: string | null
   /** Property slug — used for the contact-form fallback links. */
   slug: string
+  /** Whether the unit is currently available to rent. The sticky bar
+   *  only renders when this is true — once a unit is leased / off-market,
+   *  there's nothing to apply for or schedule. */
+  isAvailable: boolean
 }
 
 /**
  * Mobile sticky CTA shown on individual property pages.
- * Permanently pinned to the bottom of the viewport (not scroll-gated) so
- * the two property actions — Apply Now + Schedule a Tour — are always
- * reachable. Both reuse the exact portal deep links from the page body,
- * with a contact-form fallback so a lead is never dropped.
+ * Permanently pinned to the bottom of the viewport so the two property
+ * actions — Apply Now + Schedule a Tour — are always reachable. No
+ * animation / no scroll gate: the bar is rendered in its final position
+ * on first paint so it's never hidden behind a framer-motion transform
+ * before JS hydrates.
+ *
+ * Both buttons reuse the portal deep links from the page body, with a
+ * contact-form fallback so a lead is never dropped.
  */
-export function PropertyStickyCTA({ reserveUrl, scheduleUrl, slug }: Props) {
+export function PropertyStickyCTA({
+  reserveUrl,
+  scheduleUrl,
+  slug,
+  isAvailable,
+}: Props) {
+  // Hide the bar entirely on unavailable / leased units — there is nothing
+  // for the visitor to apply for or schedule.
+  if (!isAvailable) return null
+
   const applyHref =
     reserveUrl ??
     `/contact/?type=tenant&intent=apply&property=${encodeURIComponent(slug)}`
@@ -27,12 +43,7 @@ export function PropertyStickyCTA({ reserveUrl, scheduleUrl, slug }: Props) {
     scheduleUrl ?? `/contact/?type=tenant&property=${encodeURIComponent(slug)}`
 
   return (
-    <motion.div
-      initial={{ y: 100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="safe-area-pb fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 bg-white/95 p-3 backdrop-blur-lg lg:hidden"
-    >
+    <div className="safe-area-pb fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 bg-white p-3 shadow-[0_-8px_24px_-12px_rgba(11,29,58,0.18)] lg:hidden">
       <div className="flex gap-3">
         {/* Apply Now — primary */}
         {reserveUrl ? (
@@ -72,6 +83,6 @@ export function PropertyStickyCTA({ reserveUrl, scheduleUrl, slug }: Props) {
           </Link>
         )}
       </div>
-    </motion.div>
+    </div>
   )
 }

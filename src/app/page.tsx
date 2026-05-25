@@ -325,20 +325,6 @@ export default async function HomePage() {
               <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
                 Professional photography, virtual tours, and editorial listing copy. We make your unit show as well online as it does in person, then put it in front of the qualified tenants who are actually shopping right now.
               </p>
-              <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6">
-                <div>
-                  <p className="font-display text-2xl font-normal text-brand-navy sm:text-3xl">MLS+</p>
-                  <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-slate-500 sm:text-xs">20+ platforms</p>
-                </div>
-                <div>
-                  <p className="font-display text-2xl font-normal text-brand-navy sm:text-3xl">$0</p>
-                  <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-slate-500 sm:text-xs">Upfront cost</p>
-                </div>
-                <div className="col-span-2 sm:col-span-1">
-                  <p className="font-display text-2xl font-normal text-brand-navy sm:text-3xl">N.A.</p>
-                  <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-slate-500 sm:text-xs">North America</p>
-                </div>
-              </div>
               <div className="mt-8 flex flex-row flex-wrap items-center gap-4 sm:gap-5">
                 <a
                   href={PORTAL_OWNER_SIGNUP_URL}
@@ -426,11 +412,11 @@ export default async function HomePage() {
                 ))}
               </div>
 
-              <div className="mt-10 flex flex-row flex-wrap items-center gap-4 sm:gap-5">
+              <div className="mt-10 flex flex-row flex-wrap items-center gap-3 sm:gap-5">
                 <Button
                   variant="default"
                   size="lg"
-                  className="cta-primary-shadow cursor-pointer font-bold"
+                  className="cta-primary-shadow cursor-pointer px-4 py-3 text-sm font-bold sm:px-8 sm:py-6 sm:text-base"
                   style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}
                   nativeButton={false}
                   render={<Link href="/franchising/" />}
@@ -440,7 +426,7 @@ export default async function HomePage() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="cursor-pointer border-white/20 bg-white/5 font-semibold text-white backdrop-blur-sm hover:border-white/40 hover:bg-white/10"
+                  className="cursor-pointer border-white/20 bg-white/5 px-4 py-3 text-sm font-semibold text-white backdrop-blur-sm hover:border-white/40 hover:bg-white/10 sm:px-8 sm:py-6 sm:text-base"
                   nativeButton={false}
                   render={<Link href="/contact/" />}
                 >

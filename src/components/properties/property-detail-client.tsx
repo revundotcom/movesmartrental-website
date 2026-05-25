@@ -13,7 +13,7 @@
  * the portal API shape directly.
  */
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import {
@@ -23,8 +23,12 @@ import {
   ImageIcon,
   Map as MapIcon,
   Camera,
-  Lock,
   Mail,
+  Phone,
+  User,
+  MessageSquare,
+  CheckCircle2,
+  Ticket,
 } from 'lucide-react'
 
 type Tab = 'photos' | 'map' | 'streetview'
@@ -56,7 +60,9 @@ function MediaTabs({
   lat?: string | null
   lng?: string | null
 }) {
-  const [tab, setTab] = useState<Tab>('photos')
+  // If the property has no photos, open the Street View tab by default so
+  // visitors immediately see something visual instead of an empty gallery.
+  const [tab, setTab] = useState<Tab>(images.length > 0 ? 'photos' : 'streetview')
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const encodedAddress = encodeURIComponent(address || propertyName)
@@ -249,53 +255,216 @@ function PhotosPanel({
   const extras = images.slice(1, 5)
 
   return (
-    <div className="grid grid-cols-4 gap-2 md:grid-cols-4 md:gap-3">
-      <button
-        type="button"
-        onClick={() => onOpen(0)}
-        className="group relative col-span-4 aspect-[16/9] overflow-hidden rounded-2xl bg-slate-100 md:col-span-3 md:row-span-2"
-        aria-label="Open photo 1 in fullscreen"
-      >
-        <Image
-          src={cover}
-          alt={propertyName}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-          sizes="(max-width: 768px) 100vw, 60vw"
-          priority
-          unoptimized
+    <>
+      {/* Mobile: swipeable single-photo carousel with dots, matches the
+          native-app pattern. Tap opens the same fullscreen lightbox. */}
+      <div className="md:hidden">
+        <MobilePhotoCarousel
+          images={images}
+          propertyName={propertyName}
+          onOpen={onOpen}
         />
-        <span className="absolute bottom-3 right-3 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white backdrop-blur">
-          {images.length} photo{images.length === 1 ? '' : 's'}
+      </div>
+
+      {/* Desktop: cover + 4-thumb mosaic */}
+      <div className="hidden grid-cols-4 gap-3 md:grid">
+        <button
+          type="button"
+          onClick={() => onOpen(0)}
+          className="group relative col-span-3 row-span-2 aspect-[16/9] overflow-hidden rounded-2xl bg-slate-100"
+          aria-label="Open photo 1 in fullscreen"
+        >
+          <Image
+            src={cover}
+            alt={propertyName}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+            sizes="60vw"
+            priority
+            unoptimized
+          />
+          <span className="absolute bottom-3 right-3 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white backdrop-blur">
+            {images.length} photo{images.length === 1 ? '' : 's'}
+          </span>
+        </button>
+        {extras.map((url, i) => {
+          const realIndex = i + 1
+          const isLast = i === extras.length - 1 && images.length > 5
+          return (
+            <button
+              key={`${url}-${i}`}
+              type="button"
+              onClick={() => onOpen(realIndex)}
+              className="group relative col-span-1 aspect-[4/3] overflow-hidden rounded-xl bg-slate-100"
+              aria-label={`Open photo ${realIndex + 1} in fullscreen`}
+            >
+              <Image
+                src={url}
+                alt={`${propertyName} — photo ${realIndex + 1}`}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+                sizes="20vw"
+                unoptimized
+              />
+              {isLast && (
+                <span className="absolute inset-0 flex items-center justify-center bg-black/55 text-sm font-semibold text-white">
+                  +{images.length - 5} more
+                </span>
+              )}
+            </button>
+          )
+        })}
+      </div>
+    </>
+  )
+}
+
+function MobilePhotoCarousel({
+  images,
+  propertyName,
+  onOpen,
+}: {
+  images: string[]
+  propertyName: string
+  onOpen: (i: number) => void
+}) {
+  const [active, setActive] = useState(0)
+  const [dragX, setDragX] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const trackRef = useRef<HTMLDivElement | null>(null)
+  const touchStartX = useRef<number | null>(null)
+  const touchStartY = useRef<number | null>(null)
+  const isHorizontal = useRef<boolean | null>(null)
+  const didDrag = useRef(false)
+
+  const goTo = useCallback(
+    (i: number) => {
+      const next = Math.max(0, Math.min(images.length - 1, i))
+      setActive(next)
+    },
+    [images.length],
+  )
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+    touchStartY.current = e.touches[0].clientY
+    isHorizontal.current = null
+    didDrag.current = false
+    setIsDragging(true)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX.current == null || touchStartY.current == null) return
+    const dx = e.touches[0].clientX - touchStartX.current
+    const dy = e.touches[0].clientY - touchStartY.current
+    if (isHorizontal.current == null) {
+      if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+        isHorizontal.current = Math.abs(dx) > Math.abs(dy)
+      }
+    }
+    if (isHorizontal.current) {
+      didDrag.current = true
+      setDragX(dx)
+    }
+  }
+
+  const handleTouchEnd = () => {
+    const width = trackRef.current?.clientWidth ?? window.innerWidth
+    const threshold = Math.min(60, width * 0.18)
+    if (isHorizontal.current && Math.abs(dragX) > threshold) {
+      if (dragX < 0) goTo(active + 1)
+      else goTo(active - 1)
+    }
+    setDragX(0)
+    setIsDragging(false)
+    touchStartX.current = null
+    touchStartY.current = null
+    isHorizontal.current = null
+  }
+
+  const handleClick = () => {
+    // Suppress click that follows a drag — the swipe wasn't a tap.
+    if (didDrag.current) return
+    onOpen(active)
+  }
+
+  const MAX_DOTS = 7
+  const showCompactDots = images.length > MAX_DOTS
+
+  return (
+    <div>
+      <div
+        ref={trackRef}
+        className="relative aspect-[4/3] touch-pan-y overflow-hidden rounded-2xl bg-slate-100"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onClick={handleClick}
+        role="button"
+        tabIndex={0}
+        aria-label={`Open photo ${active + 1} in fullscreen`}
+      >
+        <div
+          className="flex h-full w-full"
+          style={{
+            transform: `translateX(calc(${-active * 100}% + ${dragX}px))`,
+            transition: isDragging
+              ? 'none'
+              : 'transform 300ms cubic-bezier(0.22, 1, 0.36, 1)',
+          }}
+        >
+          {images.map((url, i) => (
+            <div
+              key={`${url}-mobile-${i}`}
+              className="relative h-full w-full shrink-0"
+            >
+              <Image
+                src={url}
+                alt={`${propertyName} — photo ${i + 1}`}
+                fill
+                className="object-cover"
+                sizes="100vw"
+                priority={i === 0}
+                unoptimized
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Photo counter pill */}
+        <span className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white backdrop-blur">
+          {active + 1} / {images.length}
         </span>
-      </button>
-      {extras.map((url, i) => {
-        const realIndex = i + 1
-        const isLast = i === extras.length - 1 && images.length > 5
-        return (
-          <button
-            key={`${url}-${i}`}
-            type="button"
-            onClick={() => onOpen(realIndex)}
-            className="group relative col-span-2 aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 md:col-span-1"
-            aria-label={`Open photo ${realIndex + 1} in fullscreen`}
-          >
-            <Image
-              src={url}
-              alt={`${propertyName} — photo ${realIndex + 1}`}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.05]"
-              sizes="(max-width: 768px) 50vw, 20vw"
-              unoptimized
+      </div>
+
+      {/* Pagination dots */}
+      {images.length > 1 && (
+        <div className="mt-3 flex items-center justify-center gap-1.5">
+          {showCompactDots ? (
+            <CompactDots
+              total={images.length}
+              index={active}
+              onSelect={goTo}
+              variant="light"
             />
-            {isLast && (
-              <span className="absolute inset-0 flex items-center justify-center bg-black/55 text-sm font-semibold text-white">
-                +{images.length - 5} more
-              </span>
-            )}
-          </button>
-        )
-      })}
+          ) : (
+            images.map((_, i) => (
+              <button
+                key={`m-dot-${i}`}
+                type="button"
+                onClick={() => goTo(i)}
+                className={`h-1.5 rounded-full transition-all ${
+                  i === active
+                    ? 'w-6 bg-[#0B1D3A]'
+                    : 'w-1.5 bg-slate-300 hover:bg-slate-400'
+                }`}
+                aria-label={`Show photo ${i + 1}`}
+                aria-current={i === active ? 'true' : undefined}
+              />
+            ))
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -317,14 +486,66 @@ function Lightbox({
   onNext: () => void
   onSelect: (i: number) => void
 }) {
-  const current = images[index]
-
   // Portal-mount only after hydration to avoid SSR document mismatch.
   const [mounted, setMounted] = useState(false)
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  // Touch-swipe gesture: track the active finger across the viewport and
+  // mirror the slide motion so the photo follows the thumb. Snap to prev /
+  // next on release if the drag passes the threshold.
+  const trackRef = useRef<HTMLDivElement | null>(null)
+  const [dragX, setDragX] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const touchStartX = useRef<number | null>(null)
+  const touchStartY = useRef<number | null>(null)
+  const isHorizontal = useRef<boolean | null>(null)
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+    touchStartY.current = e.touches[0].clientY
+    isHorizontal.current = null
+    setIsDragging(true)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX.current == null || touchStartY.current == null) return
+    const dx = e.touches[0].clientX - touchStartX.current
+    const dy = e.touches[0].clientY - touchStartY.current
+    // Lock direction on first meaningful move so vertical scrolls don't
+    // hijack the slider (and horizontal swipes don't fight the page).
+    if (isHorizontal.current == null) {
+      if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+        isHorizontal.current = Math.abs(dx) > Math.abs(dy)
+      }
+    }
+    if (isHorizontal.current) {
+      setDragX(dx)
+    }
+  }
+
+  const handleTouchEnd = () => {
+    const width = trackRef.current?.clientWidth ?? window.innerWidth
+    const threshold = Math.min(80, width * 0.18)
+    if (isHorizontal.current && Math.abs(dragX) > threshold) {
+      if (dragX < 0) onNext()
+      else onPrev()
+    }
+    setDragX(0)
+    setIsDragging(false)
+    touchStartX.current = null
+    touchStartY.current = null
+    isHorizontal.current = null
+  }
+
   if (!mounted) return null
+
+  // Cap the visible dots so a 30-photo listing doesn't render a 30-dot rail.
+  // Show up to 7 dots; if there are more, render a compact window of 5 dots
+  // with mini end-dots that hint at the longer list.
+  const MAX_DOTS = 7
+  const showCompactDots = images.length > MAX_DOTS
 
   const modal = (
     <div
@@ -347,39 +568,98 @@ function Lightbox({
         </button>
       </div>
 
-      <div className="relative flex flex-1 items-center justify-center px-4">
+      <div className="relative flex flex-1 flex-col">
+        {/* Desktop arrows — hidden on touch-first viewports where swipe wins */}
         <button
           type="button"
           onClick={onPrev}
-          className="absolute left-4 z-10 rounded-full bg-white/10 p-3 text-white hover:bg-white/20"
+          className="absolute left-4 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white/10 p-3 text-white hover:bg-white/20 sm:block"
           aria-label="Previous photo"
         >
           <ChevronLeft className="size-6" />
         </button>
 
-        <div className="relative h-[70vh] w-full max-w-6xl">
-          <Image
-            src={current}
-            alt={`${propertyName} — photo ${index + 1}`}
-            fill
-            className="object-contain"
-            sizes="100vw"
-            unoptimized
-          />
+        {/* Swipeable track: a horizontal row of full-width slides translated
+            by index. Touch handlers add the in-flight drag offset so the
+            slide follows the finger before snapping on release. */}
+        <div
+          ref={trackRef}
+          className="relative flex flex-1 touch-pan-y overflow-hidden"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div
+            className="flex h-full w-full"
+            style={{
+              transform: `translateX(calc(${-index * 100}% + ${dragX}px))`,
+              transition: isDragging
+                ? 'none'
+                : 'transform 300ms cubic-bezier(0.22, 1, 0.36, 1)',
+            }}
+          >
+            {images.map((url, i) => (
+              <div
+                key={`${url}-slide-${i}`}
+                className="relative flex h-full w-full shrink-0 items-center justify-center px-4"
+              >
+                <div className="relative h-full max-h-[70vh] w-full max-w-6xl">
+                  <Image
+                    src={url}
+                    alt={`${propertyName} — photo ${i + 1}`}
+                    fill
+                    className="object-contain"
+                    sizes="100vw"
+                    unoptimized
+                    priority={i === index}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <button
           type="button"
           onClick={onNext}
-          className="absolute right-4 z-10 rounded-full bg-white/10 p-3 text-white hover:bg-white/20"
+          className="absolute right-4 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white/10 p-3 text-white hover:bg-white/20 sm:block"
           aria-label="Next photo"
         >
           <ChevronRight className="size-6" />
         </button>
+
+        {/* Pagination dots */}
+        {images.length > 1 && (
+          <div className="flex items-center justify-center gap-1.5 py-3">
+            {showCompactDots ? (
+              <CompactDots
+                total={images.length}
+                index={index}
+                onSelect={onSelect}
+              />
+            ) : (
+              images.map((_, i) => (
+                <button
+                  key={`dot-${i}`}
+                  type="button"
+                  onClick={() => onSelect(i)}
+                  className={`h-1.5 rounded-full transition-all ${
+                    i === index
+                      ? 'w-6 bg-white'
+                      : 'w-1.5 bg-white/40 hover:bg-white/70'
+                  }`}
+                  aria-label={`Show photo ${i + 1}`}
+                  aria-current={i === index ? 'true' : undefined}
+                />
+              ))
+            )}
+          </div>
+        )}
       </div>
 
-      {/* Thumbnail strip */}
-      <div className="border-t border-white/10 bg-black/60 p-3">
+      {/* Thumbnail strip — desktop only. On mobile the dots + swipe are the
+          primary navigation, and a thumbnail rail would crowd the viewport. */}
+      <div className="hidden border-t border-white/10 bg-black/60 p-3 sm:block">
         <div className="mx-auto flex max-w-6xl gap-2 overflow-x-auto">
           {images.map((url, i) => (
             <button
@@ -411,6 +691,60 @@ function Lightbox({
   return createPortal(modal, document.body)
 }
 
+function CompactDots({
+  total,
+  index,
+  onSelect,
+  variant = 'dark',
+}: {
+  total: number
+  index: number
+  onSelect: (i: number) => void
+  /** 'dark' = dots on a dark surface (lightbox); 'light' = dots on a light surface (page). */
+  variant?: 'dark' | 'light'
+}) {
+  // Sliding 5-dot window centered on the active index, clamped to ends.
+  const windowSize = 5
+  const half = Math.floor(windowSize / 2)
+  let start = Math.max(0, index - half)
+  const end = Math.min(total, start + windowSize)
+  start = Math.max(0, end - windowSize)
+  const dots: number[] = []
+  for (let i = start; i < end; i++) dots.push(i)
+
+  const activeClass =
+    variant === 'dark' ? 'w-6 bg-white' : 'w-6 bg-[#0B1D3A]'
+  const idleClass =
+    variant === 'dark'
+      ? 'w-1.5 bg-white/40 hover:bg-white/70'
+      : 'w-1.5 bg-slate-300 hover:bg-slate-400'
+  const ellipsisClass =
+    variant === 'dark' ? 'bg-white/30' : 'bg-slate-300'
+
+  return (
+    <>
+      {start > 0 && (
+        <span className={`h-1 w-1 rounded-full ${ellipsisClass}`} aria-hidden />
+      )}
+      {dots.map((i) => (
+        <button
+          key={`dot-${i}`}
+          type="button"
+          onClick={() => onSelect(i)}
+          className={`h-1.5 rounded-full transition-all ${
+            i === index ? activeClass : idleClass
+          }`}
+          aria-label={`Show photo ${i + 1}`}
+          aria-current={i === index ? 'true' : undefined}
+        />
+      ))}
+      {end < total && (
+        <span className={`h-1 w-1 rounded-full ${ellipsisClass}`} aria-hidden />
+      )}
+    </>
+  )
+}
+
 // ---------------------------------------------------------------------------
 // Sign-in gate
 // ---------------------------------------------------------------------------
@@ -420,21 +754,62 @@ function SignInGate({
 }: {
   children: React.ReactNode
 }) {
-  // TODO: wire real auth via Revun portal SSO when sign-in flow ships.
-  const [loggedIn, setLoggedIn] = useState(false)
-  const [email, setEmail] = useState('')
+  // Two-step ticket flow:
+  //   1. Card with a single "Create a Ticket" CTA (low-friction entry).
+  //   2. Inline form (name, email, phone, message) — much shorter than the
+  //      portal's full account-creation flow, no password required.
+  //   3. Success state — listing details are revealed.
+  const [step, setStep] = useState<'cta' | 'form' | 'done'>('cta')
+  const [submitting, setSubmitting] = useState(false)
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+  })
 
-  const handleGoogle = () => {
-    setLoggedIn(true)
+  // Format 10-digit phone into the (XXX) XXX-XXXX shape the API expects.
+  const formatPhone = (raw: string) => {
+    const digits = raw.replace(/\D/g, '').slice(0, 10)
+    if (digits.length < 4) return digits
+    if (digits.length < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`
   }
 
-  const handleEmail = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!email) return
-    setLoggedIn(true)
+    if (!form.name || !form.email || !form.phone) return
+    setSubmitting(true)
+    try {
+      const parts = form.name.trim().split(/\s+/)
+      const firstName = parts[0] || form.name
+      const lastName = parts.slice(1).join(' ') || firstName
+      // Fire-and-forget POST to the existing contact endpoint. The visitor
+      // doesn't have to wait — we reveal the listing as soon as it's queued.
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'tenant',
+          firstName,
+          lastName,
+          email: form.email,
+          phone: form.phone,
+          message:
+            form.message ||
+            'Requesting more details on this listing via property page.',
+          source: 'listing-ticket',
+        }),
+      }).catch(() => {
+        /* swallow — non-blocking */
+      })
+    } finally {
+      setSubmitting(false)
+      setStep('done')
+    }
   }
 
-  if (loggedIn) {
+  if (step === 'done') {
     return <>{children}</>
   }
 
@@ -451,96 +826,147 @@ function SignInGate({
       {/* Overlay scrim */}
       <div className="pointer-events-none absolute inset-0 bg-white/40" />
 
-      {/* Sign-in card */}
-      <div className="absolute inset-0 flex items-start justify-center pt-24">
-        <div className="pointer-events-auto sticky top-24 w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-2xl">
+      {/* Ticket card */}
+      <div className="absolute inset-0 flex items-start justify-center px-4 pt-16 sm:pt-24">
+        <div className="pointer-events-auto sticky top-24 w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl sm:p-8">
           <div className="flex items-center gap-3">
             <span className="flex size-10 items-center justify-center rounded-full bg-emerald-100 text-[#10B981]">
-              <Lock className="size-5" />
+              <Ticket className="size-5" />
             </span>
             <div>
-              <h3 className="font-display text-xl text-[#0B1D3A]">
-                Sign in to see full listing details
+              <h3 className="font-display text-lg text-[#0B1D3A] sm:text-xl">
+                {step === 'cta'
+                  ? 'Request full listing details'
+                  : 'Tell us how to reach you'}
               </h3>
               <p className="mt-1 text-xs text-slate-500">
-                MLS data is gated to verified users per RECO requirements.
+                {step === 'cta'
+                  ? 'Open a quick ticket and a leasing specialist will follow up — no account required.'
+                  : 'Takes 30 seconds. We’ll unlock the listing instantly.'}
               </p>
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={handleGoogle}
-            className="mt-6 flex w-full items-center justify-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#0B1D3A] shadow-sm transition hover:bg-slate-50"
-          >
-            <GoogleIcon className="size-4" />
-            Continue with Google
-          </button>
+          {step === 'cta' ? (
+            <>
+              <ul className="mt-5 space-y-2 text-sm text-slate-600">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-[#10B981]" />
+                  <span>Get pricing, address, and full photo set</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-[#10B981]" />
+                  <span>Book a viewing on your schedule</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-[#10B981]" />
+                  <span>A real person responds, usually within an hour</span>
+                </li>
+              </ul>
 
-          <div className="my-5 flex items-center gap-3 text-xs uppercase tracking-wider text-slate-400">
-            <span className="h-px flex-1 bg-slate-200" />
-            <span>or</span>
-            <span className="h-px flex-1 bg-slate-200" />
-          </div>
+              <button
+                type="button"
+                onClick={() => setStep('form')}
+                className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-[#10B981] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#059669]"
+              >
+                <Ticket className="size-4" />
+                Create a Ticket
+              </button>
 
-          <form onSubmit={handleEmail} className="space-y-3">
-            <label className="block">
-              <span className="sr-only">Email</span>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
-                <input
-                  type="email"
-                  required
-                  placeholder="you@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-lg border border-slate-200 bg-white py-3 pl-10 pr-3 text-sm text-[#0B1D3A] outline-none transition focus:border-[#10B981] focus:ring-2 focus:ring-emerald-100"
-                />
-              </div>
-            </label>
-            <button
-              type="submit"
-              className="w-full rounded-lg bg-[#10B981] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#059669]"
-            >
-              Continue with Email
-            </button>
-          </form>
+              <p className="mt-4 text-center text-[11px] leading-relaxed text-slate-500">
+                By submitting a ticket you agree to our Terms. Listing data is
+                provided for personal, non-commercial use only.
+              </p>
+            </>
+          ) : (
+            <form onSubmit={handleSubmit} className="mt-5 space-y-3">
+              <label className="block">
+                <span className="sr-only">Full name</span>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+                  <input
+                    type="text"
+                    required
+                    placeholder="Full name"
+                    value={form.name}
+                    onChange={(e) =>
+                      setForm((f) => ({ ...f, name: e.target.value }))
+                    }
+                    className="w-full rounded-lg border border-slate-200 bg-white py-3 pl-10 pr-3 text-sm text-[#0B1D3A] outline-none transition focus:border-[#10B981] focus:ring-2 focus:ring-emerald-100"
+                  />
+                </div>
+              </label>
 
-          <p className="mt-5 text-center text-[11px] leading-relaxed text-slate-500">
-            By continuing you agree to our Terms and acknowledge that listing
-            data is provided for personal, non-commercial use only.
-          </p>
+              <label className="block">
+                <span className="sr-only">Email</span>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+                  <input
+                    type="email"
+                    required
+                    placeholder="you@example.com"
+                    value={form.email}
+                    onChange={(e) =>
+                      setForm((f) => ({ ...f, email: e.target.value }))
+                    }
+                    className="w-full rounded-lg border border-slate-200 bg-white py-3 pl-10 pr-3 text-sm text-[#0B1D3A] outline-none transition focus:border-[#10B981] focus:ring-2 focus:ring-emerald-100"
+                  />
+                </div>
+              </label>
+
+              <label className="block">
+                <span className="sr-only">Phone</span>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+                  <input
+                    type="tel"
+                    required
+                    placeholder="(123) 456-7890"
+                    value={form.phone}
+                    onChange={(e) =>
+                      setForm((f) => ({ ...f, phone: formatPhone(e.target.value) }))
+                    }
+                    className="w-full rounded-lg border border-slate-200 bg-white py-3 pl-10 pr-3 text-sm text-[#0B1D3A] outline-none transition focus:border-[#10B981] focus:ring-2 focus:ring-emerald-100"
+                  />
+                </div>
+              </label>
+
+              <label className="block">
+                <span className="sr-only">Message (optional)</span>
+                <div className="relative">
+                  <MessageSquare className="absolute left-3 top-3 size-4 text-slate-400" />
+                  <textarea
+                    rows={3}
+                    placeholder="What would you like to know? (optional)"
+                    value={form.message}
+                    onChange={(e) =>
+                      setForm((f) => ({ ...f, message: e.target.value }))
+                    }
+                    className="w-full resize-none rounded-lg border border-slate-200 bg-white py-3 pl-10 pr-3 text-sm text-[#0B1D3A] outline-none transition focus:border-[#10B981] focus:ring-2 focus:ring-emerald-100"
+                  />
+                </div>
+              </label>
+
+              <button
+                type="submit"
+                disabled={submitting}
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#10B981] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#059669] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {submitting ? 'Submitting…' : 'Submit Ticket & Unlock'}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setStep('cta')}
+                className="mt-1 w-full text-center text-xs text-slate-500 hover:text-[#0B1D3A]"
+              >
+                ← Back
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </div>
-  )
-}
-
-function GoogleIcon({ className = '' }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className={className}
-      aria-hidden="true"
-      focusable="false"
-    >
-      <path
-        fill="#4285F4"
-        d="M21.6 12.227c0-.708-.064-1.39-.182-2.045H12v3.868h5.382a4.6 4.6 0 0 1-1.995 3.018v2.51h3.227c1.887-1.74 2.986-4.302 2.986-7.35Z"
-      />
-      <path
-        fill="#34A853"
-        d="M12 22c2.7 0 4.964-.895 6.614-2.422l-3.227-2.51c-.895.6-2.04.954-3.387.954-2.605 0-4.81-1.76-5.6-4.124H3.064v2.59A9.996 9.996 0 0 0 12 22Z"
-      />
-      <path
-        fill="#FBBC05"
-        d="M6.4 13.898A5.99 5.99 0 0 1 6.077 12c0-.66.114-1.3.323-1.898V7.512H3.064a9.996 9.996 0 0 0 0 8.976l3.336-2.59Z"
-      />
-      <path
-        fill="#EA4335"
-        d="M12 5.977c1.468 0 2.786.504 3.823 1.495l2.868-2.868C16.96 2.99 14.695 2 12 2A9.996 9.996 0 0 0 3.064 7.512l3.336 2.59C7.19 7.737 9.395 5.977 12 5.977Z"
-      />
-    </svg>
   )
 }
 
