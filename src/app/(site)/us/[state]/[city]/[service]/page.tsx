@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { z } from 'zod'
 
@@ -175,74 +174,9 @@ export default async function USCityServicePage({
     )
   }
 
-  // Coming-soon fallback: city exists but service missing (or vice versa)
-  if (!cityData) {
-    notFound()
-  }
-
-  const cityTitle = cityData.title
-  const stateName = cityData.province.title
-  const formattedService = service
-    .split('-')
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ')
-
-  return (
-    <main>
-      {/* Breadcrumbs */}
-      <BreadcrumbNav
-        crumbs={[
-          { label: 'Home', href: '/' },
-          { label: 'United States', href: '/us/' },
-          { label: stateName, href: `/us/${state}/` },
-          { label: cityTitle, href: `/us/${state}/${city}/` },
-          {
-            label: formattedService,
-            href: `/us/${state}/${city}/${service}/`,
-          },
-        ]}
-      />
-
-      {/* Editorial hero */}
-      <PageHeroBlock
-        kicker={`${cityTitle}, ${stateName}`}
-        eyebrow="Coming soon"
-        headline={`${formattedService} in ${cityTitle}`}
-        accentLastWord={false}
-        lede={`${formattedService} services are coming soon to ${cityTitle}, ${stateName}. Join our waitlist - priority access for founding landlords and developers.`}
-        cta1={{ label: 'Join the Waitlist', href: '/contact/' }}
-        cta2={{ label: 'See Pricing', href: '/pricing/' }}
-        theme="dark"
-        backgroundImageUrl="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=2400&q=80"
-        backgroundImageAlt="Leasing services in the United States"
-      />
-
-      {/* Coming Soon Notice */}
-      <section className="mx-auto max-w-3xl px-4 py-12 text-center">
-        <div className="rounded-lg border-2 border-dashed border-muted-foreground/25 bg-muted/50 p-12">
-          <h2 className="mb-4 text-2xl font-bold tracking-tight">
-            Coming Soon to {cityTitle}
-          </h2>
-          <p className="mb-6 text-lg text-muted-foreground">
-            We are expanding our {formattedService.toLowerCase()} services to{' '}
-            {cityTitle}, {stateName}. In the meantime, explore what MoveSmart
-            Rentals offers in {cityTitle}.
-          </p>
-          <Link
-            href={`/us/${state}/${city}/`}
-            className="inline-flex items-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            View {cityTitle} Overview
-          </Link>
-        </div>
-      </section>
-
-      {/* CTA Banner */}
-      <CTABannerBlock
-        headline={`Get Started in ${cityTitle}`}
-        description={`Let MoveSmart Rentals run your leasing campaign in ${cityTitle}. Full-service leasing, zero upfront, success-fee pricing.`}
-        primaryCta={{ label: 'Contact Us', href: '/contact/' }}
-      />
-    </main>
-  )
+  // Hard 404 when city or service is missing. Previously this fell through
+  // to a "coming soon" page that returned HTTP 200 with the bad slug echoed
+  // in the body, which Google + browsers interpreted as a soft 404 and tanked
+  // crawl trust. Now any invalid (city, service) combo returns a proper 404.
+  notFound()
 }
