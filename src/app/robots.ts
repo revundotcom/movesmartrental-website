@@ -33,12 +33,10 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'AhrefsBot', allow: '/' },
     ],
     sitemap: [
-      `${SITE_URL}/sitemap.xml`,
+      // Content-type segmented index (auto-discovers every child sitemap)
       `${SITE_URL}/sitemap-index.xml`,
-      `${SITE_URL}/sitemap-core.xml`,
-      `${SITE_URL}/sitemap-ca.xml`,
-      `${SITE_URL}/sitemap-us.xml`,
-      `${SITE_URL}/sitemap-resources.xml`,
+      // Native Next.js generateSitemaps output (kept for redundancy)
+      `${SITE_URL}/sitemap.xml`,
     ],
     host: SITE_URL,
   }
