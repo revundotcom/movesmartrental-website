@@ -244,6 +244,7 @@ export default async function SiloFlatPage({ params }: Params) {
         title: s.service_label || s.title,
         body: s.service_blurb || '',
         tag: 'View service',
+        href: `${s.url}/`,
       })),
     })
   }
@@ -262,6 +263,8 @@ export default async function SiloFlatPage({ params }: Params) {
           title: c.name,
           body: c.context,
           tag: 'External source',
+          href: c.url,
+          external: true,
         })),
     })
   }
