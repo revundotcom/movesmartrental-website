@@ -20,7 +20,14 @@ import { FAQBlock } from '@/components/blocks/faq-block'
 export type SiloSection = {
   title: string
   body?: string
-  items?: Array<{ title?: string; body?: string; description?: string; tag?: string }>
+  items?: Array<{
+    title?: string
+    body?: string
+    description?: string
+    tag?: string
+    href?: string
+    external?: boolean
+  }>
 }
 
 export type SiloBreadcrumb = { label: string; href: string }
@@ -312,28 +319,66 @@ export function SiloPageTemplate(props: Props) {
                   )}
                   {section.items && section.items.length > 0 && (
                     <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                      {section.items.map((item, idx) => (
-                        <div
-                          key={`${item.title ?? 'item'}-${idx}`}
-                          className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
-                        >
-                          {item.tag && (
-                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-700">
-                              {item.tag}
-                            </p>
-                          )}
-                          {item.title && (
-                            <h3 className="mt-2 font-display text-lg font-normal text-[#0B1D3A]">
-                              {item.title}
-                            </h3>
-                          )}
-                          {(item.body || item.description) && (
-                            <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                              {item.body || item.description}
-                            </p>
-                          )}
-                        </div>
-                      ))}
+                      {section.items.map((item, idx) => {
+                        const key = `${item.title ?? 'item'}-${idx}`
+                        const linkClass =
+                          'group block rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-emerald-300 hover:shadow-md'
+                        const inner = (
+                          <>
+                            {item.tag && (
+                              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-700">
+                                {item.tag}
+                              </p>
+                            )}
+                            {item.title && (
+                              <h3 className="mt-2 font-display text-lg font-normal text-[#0B1D3A] group-hover:text-emerald-700">
+                                {item.title}
+                                {item.href && (
+                                  <span
+                                    aria-hidden="true"
+                                    className="ml-1 inline-block transition-transform group-hover:translate-x-0.5"
+                                  >
+                                    &rarr;
+                                  </span>
+                                )}
+                              </h3>
+                            )}
+                            {(item.body || item.description) && (
+                              <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                                {item.body || item.description}
+                              </p>
+                            )}
+                          </>
+                        )
+                        if (item.href && item.external) {
+                          return (
+                            <a
+                              key={key}
+                              href={item.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={linkClass}
+                            >
+                              {inner}
+                            </a>
+                          )
+                        }
+                        if (item.href) {
+                          return (
+                            <Link key={key} href={item.href} className={linkClass}>
+                              {inner}
+                            </Link>
+                          )
+                        }
+                        return (
+                          <div
+                            key={key}
+                            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+                          >
+                            {inner}
+                          </div>
+                        )
+                      })}
                     </div>
                   )}
                 </div>
