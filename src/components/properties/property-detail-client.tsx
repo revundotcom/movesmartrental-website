@@ -776,8 +776,14 @@ function CompactDots({
 
 function SignInGate({
   children,
+  city,
 }: {
   children: React.ReactNode
+  /** City of the property being viewed. Forwarded to the portal lead API
+   *  so the Zoho CRM record carries the location of the listing the
+   *  tenant inquired about. Without this, the lead arrives blank for
+   *  city and routing/segmentation breaks. */
+  city?: string | null
 }) {
   // Two-step ticket flow:
   //   1. Card with a single "Create a Ticket" CTA (low-friction entry).
@@ -820,6 +826,10 @@ function SignInGate({
           lastName,
           email: form.email,
           phone: form.phone,
+          // `city` ships the location of the listing the tenant is
+          // inquiring about — required by the portal lead API so the
+          // Zoho CRM record isn't blank for city.
+          city: city || undefined,
           message:
             form.message ||
             'Requesting more details on this listing via property page.',
@@ -1020,6 +1030,14 @@ export function PropertyMediaTabs(props: {
   )
 }
 
-export function PropertyGate({ children }: { children: React.ReactNode }) {
-  return <SignInGate>{children}</SignInGate>
+export function PropertyGate({
+  children,
+  city,
+}: {
+  children: React.ReactNode
+  /** Forwarded to the listing-ticket POST so every Zoho lead from a
+   *  property page carries the listing's city. */
+  city?: string | null
+}) {
+  return <SignInGate city={city}>{children}</SignInGate>
 }
