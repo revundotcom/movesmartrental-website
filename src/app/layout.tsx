@@ -110,25 +110,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <MobileStickyCTA />
         <Footer />
+        {/* Zoho SalesIQ live chat widget — Canadian region (.ca).
+            Widget code (the `wc=` value) is provided by SalesIQ →
+            Settings → Brands → Installation, set in
+            NEXT_PUBLIC_SALESIQ_WIDGET_CODE. Both scripts injected just
+            before </body>, lazy-loaded so they never block first paint. */}
         {process.env.NEXT_PUBLIC_SALESIQ_WIDGET_CODE && (
-          <Script
-            id="salesiq-widget"
-            strategy="lazyOnload"
-            dangerouslySetInnerHTML={{
-              __html: `
-                var $zoho=$zoho || {};
-                $zoho.salesiq = $zoho.salesiq || {widgetcode: "${process.env.NEXT_PUBLIC_SALESIQ_WIDGET_CODE}", values:{}, ready:function(){}};
-                var d=document;
-                var s=d.createElement("script");
-                s.type="text/javascript";
-                s.id="zsiqscript";
-                s.defer=true;
-                s.src="https://salesiq.zohopublic.com/widget";
-                var t=d.getElementsByTagName("script")[0];
-                t.parentNode.insertBefore(s,t);
-              `,
-            }}
-          />
+          <>
+            <Script id="salesiq-init" strategy="lazyOnload">
+              {`window.$zoho=window.$zoho || {}; $zoho.salesiq=$zoho.salesiq||{ready:function(){}}`}
+            </Script>
+            <Script
+              id="zsiqscript"
+              strategy="lazyOnload"
+              src={`https://salesiq.zohopublic.ca/widget?wc=${process.env.NEXT_PUBLIC_SALESIQ_WIDGET_CODE}`}
+            />
+          </>
         )}
       </body>
     </html>
