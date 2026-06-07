@@ -227,11 +227,7 @@ export function Footer() {
           <div className="border-t border-white/10 py-6">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="flex flex-wrap items-center justify-center gap-6">
-                {['RECO', 'FRPO', 'BBB', 'OREA'].map((badge) => (
-                  <span key={badge} className="text-xs font-bold uppercase tracking-wider text-white/30">
-                    {badge}
-                  </span>
-                ))}
+
               </div>
               <p className="mt-5 text-center text-xs leading-relaxed text-white/40">
                 The trademarks REALTOR&reg;, REALTORS&reg;, and the REALTOR&reg; logo are

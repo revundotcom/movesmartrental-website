@@ -165,7 +165,7 @@ const PAIN_POINTS: Array<{
     problem:
       'Deposit collection and lease execution on behalf of an owner requires RECO registration and TRESA-compliant disclosure. Mistakes invite regulator action.',
     solution:
-      'RECO-registered brokerage, trust-accounted deposits, jurisdiction-specific lease templates, and PIPEDA-compliant tenant data handling end-to-end.',
+      'RECO-registered partner brokerage, trust-accounted deposits, jurisdiction-specific lease templates, and PIPEDA-compliant tenant data handling end-to-end.',
   },
 ]
 
@@ -263,7 +263,7 @@ const PHASES: Array<{
     bullets: [
       'Structured screening file',
       'Trust-accounted deposit',
-      'RECO-registered execution',
+      'execution via our RECO-registered partner brokerage',
       '<72hr decision cycle',
     ],
     imageSrc:
@@ -951,7 +951,7 @@ export default async function DevelopersPage() {
               </h2>
               <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
                 Deposit collection and lease execution on behalf of an owner are regulated
-                activities. We run them as a RECO-registered brokerage with documented trust
+                activities. We run them as a RECO-registered partner brokerage with documented trust
                 accounting, TRESA-compliant disclosure, and lease revenue support your auditor
                 can sign off on.
               </p>

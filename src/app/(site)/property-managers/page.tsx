@@ -29,7 +29,7 @@ const SITE_URL =
 const PAGE_PATH = '/property-managers/'
 const PAGE_TITLE = 'Outsourced Leasing for Property Managers'
 const PAGE_DESCRIPTION =
-  'Outsource the leasing operation, keep the management contract. White-label leasing-as-a-service for PM firms: 24/7 lead capture, structured screening, RECO-registered lease execution, and PMS-integrated handoff to your ongoing ops.'
+  'Outsource the leasing operation, keep the management contract. White-label leasing-as-a-service for PM firms: 24/7 lead capture, structured screening, lease execution via our RECO-registered partner brokerage, and PMS-integrated handoff to your ongoing ops.'
 
 export async function generateMetadata(): Promise<Metadata> {
   return generatePageMetadata({
@@ -146,7 +146,7 @@ const PAIN_POINTS: Array<{
     problem:
       'Every Ontario leasing activity for compensation requires RECO registration under TRESA 2002. Multi-state US operators juggle 5–15 different licensing regimes. Mistakes invite regulator action.',
     solution:
-      'RECO-registered brokerage with broker-of-record coverage in every state where we operate. FINTRAC verification on deposit handling. Trust-accounted, audit-ready.',
+      'RECO-registered partner brokerage with broker-of-record coverage in every state where we operate. FINTRAC verification on deposit handling. Trust-accounted, audit-ready.',
   },
   {
     iconKey: 'TrendingUp',
@@ -331,9 +331,9 @@ const WORKFLOW_STEPS: Array<{
     window: 'Lease execution',
     title: 'E-signed lease + deposit',
     description:
-      'RECO-registered lease execution, first month + LMR collected in trust on signing, all docs e-signed and timestamped, full file pushed back to your PMS.',
+      'lease execution via our RECO-registered partner brokerage, first month + LMR collected in trust on signing, all docs e-signed and timestamped, full file pushed back to your PMS.',
     bullets: [
-      'RECO-registered execution',
+      'execution via our RECO-registered partner brokerage',
       'Trust-accounted deposits',
       'E-signed + timestamped',
       'Full file to your PMS',
@@ -554,7 +554,7 @@ const COMPARISON_ROWS = [
   {
     label: 'Compliance',
     internal: { text: 'You manage RECO + TRESA + E&O + FINTRAC', tone: 'bad' as const },
-    movesmart: { text: 'RECO-registered brokerage, trust-accounted, audit-ready', tone: 'good' as const },
+    movesmart: { text: 'RECO-registered partner brokerage, trust-accounted, audit-ready', tone: 'good' as const },
   },
   {
     label: 'Hiring + retention',
@@ -671,7 +671,7 @@ export default async function PropertyManagersPage() {
         kicker="For Property Managers"
         eyebrow="Outsourced leasing-as-a-service"
         headline="Outsource leasing. Keep the management contract"
-        lede="White-label leasing for third-party PM firms: 24/7 lead capture, structured screening, RECO-registered lease execution, and a clean PMS handoff back to your ongoing ops team. You keep the owner. We deliver the leases."
+        lede="White-label leasing for third-party PM firms: 24/7 lead capture, structured screening, lease execution via our RECO-registered partner brokerage, and a clean PMS handoff back to your ongoing ops team. You keep the owner. We deliver the leases."
         cta1={{ label: 'Talk to an operator', href: '/contact/?type=property-manager' }}
         cta2={{ label: 'See pricing models', href: '/pricing/' }}
         aside={
@@ -1209,7 +1209,7 @@ export default async function PropertyManagersPage() {
               </h2>
               <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
                 Leasing on behalf of your owner clients is a regulated activity. We run it as a
-                RECO-registered brokerage with FINTRAC-verified deposits, PIPEDA-compliant data
+                RECO-registered partner brokerage with FINTRAC-verified deposits, PIPEDA-compliant data
                 residency, and a non-solicit clause baked into every engagement.
               </p>
 

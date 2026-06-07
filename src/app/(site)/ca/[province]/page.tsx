@@ -88,7 +88,7 @@ const PROVINCE_COPY: Record<string, ProvinceCopy> = {
       },
       {
         icon: 'users',
-        title: 'RECO-licensed brokerage',
+        title: 'RECO-licensed partner brokerage',
         description:
           'All showings, offers, and lease negotiations are handled by a brokerage registered with the Real Estate Council of Ontario — not unlicensed leasing agents.',
       },

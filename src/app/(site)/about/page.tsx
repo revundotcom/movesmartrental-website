@@ -191,7 +191,7 @@ export default function AboutPage() {
                 Chapter 04 - Preview
               </p>
               <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
-                A small, RECO-licensed{' '}
+                A small, RECO-partnered{' '}
                 <span className="font-display italic text-brand-emerald">leasing team.</span>
               </h2>
               <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">

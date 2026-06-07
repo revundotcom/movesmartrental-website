@@ -286,7 +286,7 @@ export function Team() {
               <span aria-hidden="true" className="text-brand-gold">.</span>
             </h2>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-600">
-              A small, RECO-licensed leasing team with twenty-plus years of
+              A small, RECO-partnered leasing team with twenty-plus years of
               combined rental brokerage experience across Canada and the United States.
             </p>
           </div>
