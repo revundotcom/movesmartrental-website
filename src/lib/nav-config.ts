@@ -50,15 +50,14 @@ export const NAV_GROUPS = [
   {
     label: 'Services',
     items: [
-      { title: 'All Services', href: '/services/', description: 'Browse the full leasing services menu' },
       { title: 'Tenant Placement', href: '/services/tenant-placement/', description: 'Marketing, showings, and lease signing' },
-      { title: 'Lease Execution', href: '/services/lease-execution/', description: 'Drafting, signing, deposit collection' },
-      { title: 'Rental Pricing and Market Analysis', href: '/services/rental-pricing-and-market-analysis/', description: 'Data driven rent recommendations' },
-      { title: 'Property Marketing and Listings', href: '/services/property-marketing-and-listings/', description: 'Photos, copy, syndication' },
-      { title: 'Tenant Screening', href: '/services/tenant-screening/', description: 'Multi step applicant verification' },
-      { title: 'Property Showings', href: '/services/property-showings/', description: 'In person and virtual tours' },
-      { title: 'Move In Coordination', href: '/services/move-in-coordination/', description: 'Smooth lease to keys handoff' },
-      { title: 'Institutional Lease Up', href: '/services/institutional-lease-up/', description: 'High volume lease up for new builds' },
+      { title: 'Leasing Services', href: '/services/leasing-services/', description: 'Full-service leasing for owners' },
+      { title: 'Tenant Screening', href: '/services/tenant-screening/', description: 'Multi-step applicant verification' },
+      { title: 'Rent Guarantee', href: '/services/rent-guarantee/', description: 'Protection against missed payments' },
+      { title: 'Tenant Insurance', href: '/services/tenant-insurance/', description: 'Coverage for renters and units' },
+      { title: 'Tenant Guarantor', href: '/services/tenant-guarantor/', description: 'Co-signer support for applicants' },
+      { title: 'Rental Preparation', href: '/services/rental-preparation/', description: 'Staging, photography, listing prep' },
+      { title: 'Institutional Lease-Up', href: '/institutional-lease-up/', description: 'Bulk lease-up for new builds' },
     ],
   },
   {
