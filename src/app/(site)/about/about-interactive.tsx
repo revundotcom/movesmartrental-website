@@ -1,10 +1,16 @@
 'use client'
 
+import { ArrowRight, Target, ShieldCheck, Workflow, BarChart3 } from 'lucide-react'
+
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 import { CountUp } from '@/components/ui/count-up'
+import { TeamCard } from '@/components/team/team-card'
+import { TEAM } from '@/data/team'
 
 // ────────────────────────────────────────────────────────────────
-// Founder essay - editorial long-form with drop-cap + pull-quote
+// Our story. Restructured: featured quote (left) + tight prose (right).
+// Tight, modern, two-column layout. No side rail, no drop cap, no
+// stacked pull-quote breaking the flow.
 // ────────────────────────────────────────────────────────────────
 export function FounderEssay() {
   return (
@@ -13,86 +19,128 @@ export function FounderEssay() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
       />
-      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
-        {/* Side label - left rail */}
-        <aside className="lg:col-span-3">
-          <RevealOnScroll variant="slideUp" duration={0.7}>
-            <div className="lg:sticky lg:top-28">
-              <div className="flex items-center gap-3">
-                <span aria-hidden="true" className="h-px w-8 bg-brand-navy/30" />
-                <span className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-navy/60">
-                  Chapter 01
-                </span>
-              </div>
-              <p className="mt-4 font-display text-2xl font-normal leading-tight tracking-tight text-brand-navy">
-                Why we<br />
-                <span className="font-display italic text-brand-emerald">exist</span>
-                <span aria-hidden="true" className="text-brand-gold">.</span>
-              </p>
-              <p className="mt-4 max-w-xs text-sm leading-relaxed text-slate-500">
-                A note from the team on the gap we set out to close in the rental market.
-              </p>
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        {/* Section header */}
+        <RevealOnScroll variant="slideUp" duration={0.7}>
+          <div className="mb-14 max-w-3xl">
+            <div className="flex items-center gap-3">
+              <span aria-hidden="true" className="h-px w-8 bg-brand-navy/30" />
+              <span className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-navy/60">
+                Our story
+              </span>
             </div>
-          </RevealOnScroll>
-        </aside>
+            <h2 className="mt-4 font-display text-4xl font-normal leading-[1.05] tracking-tight text-brand-navy sm:text-5xl md:text-[3.25rem]">
+              Why MoveSmart{' '}
+              <span className="font-display italic text-brand-emerald">
+                exists
+              </span>
+              <span aria-hidden="true" className="text-brand-gold">.</span>
+            </h2>
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
+              A short note on the gap we set out to close in the rental
+              market across Canada and the United States.
+            </p>
+          </div>
+        </RevealOnScroll>
 
-        {/* 7-col prose column */}
-        <article className="lg:col-span-7 lg:col-start-5">
-          <RevealOnScroll variant="slideUp" duration={0.7}>
-            <p className="text-xl leading-relaxed text-slate-700 sm:text-[1.35rem] sm:leading-[1.7]">
+        {/* Two-column: quote card (left) + narrative (right) */}
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
+          {/* LEFT: Featured quote card */}
+          <RevealOnScroll
+            variant="slideUp"
+            duration={0.7}
+            className="lg:col-span-5"
+          >
+            <figure className="relative h-full rounded-sm border border-brand-navy/10 bg-white p-8 shadow-[0_1px_2px_rgba(11,29,58,0.04),0_28px_60px_-30px_rgba(11,29,58,0.18)] sm:p-10">
               <span
                 aria-hidden="true"
-                className="float-left mr-3 mt-2 font-display text-[5rem] font-normal italic leading-[0.85] text-brand-gold"
+                className="absolute -top-4 left-8 font-display text-[5.5rem] leading-none text-brand-gold/85"
               >
-                T
+                &ldquo;
               </span>
-              he Canadian rental market is fragmented. Listings are
-              under-presented, pricing is guessed at instead of analyzed,
-              vacancy turnaround drifts, and tenant screening swings between
-              too lenient and too rigid. Brokers are wired to sell. Property
-              managers are wired to operate the years that follow. Almost
-              nobody is obsessing over the leasing phase itself - the eight
-              to twenty-one days that decide whether the next twelve months
-              go smoothly or go sideways.
-            </p>
+              <blockquote className="relative pt-6">
+                <p className="font-display text-[1.6rem] font-normal italic leading-[1.3] tracking-tight text-brand-navy sm:text-[1.85rem]">
+                  Brokers sell. Managers operate. We built MoveSmart to obsess
+                  over the leasing phase itself.
+                </p>
+              </blockquote>
+              <figcaption className="mt-8 flex items-center gap-3 border-t border-brand-navy/10 pt-5">
+                <span
+                  aria-hidden="true"
+                  className="flex size-10 items-center justify-center rounded-full bg-brand-gold/90 font-display text-sm text-white"
+                >
+                  NL
+                </span>
+                <div>
+                  <p className="font-display text-base font-normal text-brand-navy">
+                    Nathan Levinson
+                  </p>
+                  <p className="text-xs text-slate-500">
+                    Founder, President &amp; CEO
+                  </p>
+                </div>
+              </figcaption>
+            </figure>
           </RevealOnScroll>
 
-          <RevealOnScroll variant="slideUp" duration={0.7}>
-            <p className="mt-8 text-lg leading-[1.8] text-slate-600 sm:text-[1.15rem]">
-              We built MoveSmart Rentals to be that specialist. A full-service
-              leasing and tenant placement company with one job: deliver disciplined,
-              well-documented, market-aware leasing execution for the people
-              who actually own and operate rental inventory. That means
-              individual landlords with one or two doors, property managers
-              who outsource their lease-up, builders handing over fresh
-              inventory, and institutional operators coordinating hundreds of
-              units across multiple buildings.
-            </p>
-          </RevealOnScroll>
-
-          {/* Pull-quote */}
-          <RevealOnScroll variant="slideUp" duration={0.7}>
-            <blockquote className="my-14 border-l-2 border-brand-gold pl-8">
-              <p className="font-display text-3xl font-normal italic leading-[1.3] tracking-tight text-brand-gold sm:text-[2.25rem]">
-                &ldquo;Brokers sell. Managers operate. We built MoveSmart to
-                obsess over the leasing phase itself.&rdquo;
+          {/* RIGHT: 3 tight paragraphs */}
+          <RevealOnScroll
+            variant="slideUp"
+            duration={0.7}
+            className="lg:col-span-7"
+          >
+            <div className="space-y-6 text-lg leading-[1.8] text-slate-700">
+              <p>
+                The rental market across Canada and the United States is
+                busy and fragmented. Brokers are wired to sell. Property
+                managers are wired to operate the years after a tenant
+                moves in. Almost nobody is purpose-built for the leasing
+                phase itself: the short window between vacancy and move-in
+                that quietly decides how the next twelve months will go.
               </p>
-            </blockquote>
-          </RevealOnScroll>
+              <p>
+                We built MoveSmart Rentals for that window. Strategic
+                pricing against live comparables. Polished listing
+                presentation. Structured showings and disciplined
+                applicant qualification. A complete move-in handover that
+                covers utilities, insurance, key delivery, and a
+                documented file the owner can audit.
+              </p>
+              <p className="font-display text-xl font-normal italic text-brand-emerald">
+                Owners do not need warmth alone. They need proof the work
+                was done.
+              </p>
+            </div>
 
-          <RevealOnScroll variant="slideUp" duration={0.7}>
-            <p className="text-lg leading-[1.8] text-slate-600 sm:text-[1.15rem]">
-              Every campaign we run has the same anatomy: strategic pricing
-              against live comparables, polished listing presentation,
-              structured showings, disciplined applicant qualification,
-              optional rental protection, and a complete move-in handover -
-              utilities, insurance, key delivery, and a documented file the
-              owner can audit. Owners do not need warmth alone. They need
-              proof the work was done. That is what we deliver, and it is why
-              serious operators keep handing us the next building.
-            </p>
+            {/* Inline mini stats below the prose */}
+            <dl className="mt-10 grid grid-cols-3 gap-4 border-t border-brand-navy/10 pt-8">
+              <div>
+                <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-navy/55">
+                  Units leased
+                </dt>
+                <dd className="mt-2 font-display text-3xl font-normal text-brand-navy">
+                  500+
+                </dd>
+              </div>
+              <div className="border-l border-brand-navy/10 pl-4">
+                <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-navy/55">
+                  Avg. days to lease
+                </dt>
+                <dd className="mt-2 font-display text-3xl font-normal text-brand-navy">
+                  14
+                </dd>
+              </div>
+              <div className="border-l border-brand-navy/10 pl-4">
+                <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-navy/55">
+                  Approval accuracy
+                </dt>
+                <dd className="mt-2 font-display text-3xl font-normal text-brand-navy">
+                  94%
+                </dd>
+              </div>
+            </dl>
           </RevealOnScroll>
-        </article>
+        </div>
       </div>
       <div
         aria-hidden="true"
@@ -172,74 +220,125 @@ export function Timeline() {
 // Aligned to brand personality: Strategic, Disciplined, Coordinated,
 // Transparent, Performance-driven.
 // ────────────────────────────────────────────────────────────────
-const VALUES = [
+const VALUES: {
+  title: string
+  body: string
+  icon: typeof Target
+}[] = [
   {
     title: 'Strategic before tactical',
     body:
-      'Every campaign starts with live market analysis, comparable pricing, and a positioning plan for the listing. We do not post and pray. We price, present, and target the right tenant pool deliberately - because the first decision sets the next twelve months.',
+      'Every campaign starts with live market analysis, comparable pricing, and a positioning plan. We price, present, and target the right tenant pool deliberately.',
+    icon: Target,
   },
   {
     title: 'Disciplined tenant qualification',
     body:
-      'Screening is the single biggest lever in a rental file, so we treat it like one. Income verification, employment confirmation, credit review, landlord references, and a documented decision trail on every applicant. Consistent standards, no shortcuts, no surprises.',
+      'Income verification, employment confirmation, credit review, landlord references, and a documented decision trail on every applicant. No shortcuts.',
+    icon: ShieldCheck,
   },
   {
     title: 'Coordinated execution, end to end',
     body:
-      'Showings, applications, lease execution, utility transfers, insurance setup, key handover, and the move-in walkthrough - handled by our team and documented for the owner. The owner should not have to chase any thread of the leasing phase.',
+      'Showings, applications, lease execution, utility transfers, insurance, key handover, and the move-in walkthrough. All handled. All documented.',
+    icon: Workflow,
   },
   {
-    title: 'Transparent, performance-driven reporting',
+    title: 'Transparent reporting',
     body:
-      'Owners and institutional partners receive structured updates on activity, applicants, pricing feedback, and time-to-lease. Outcomes are measurable. Files are auditable. Peace of mind comes from proof, not promises.',
+      'Owners get structured updates on activity, applicants, pricing feedback, and time-to-lease. Outcomes are measurable. Files are auditable.',
+    icon: BarChart3,
   },
 ]
 
 export function Values() {
   return (
-    <section className="relative bg-[#FBFAF6] py-20 sm:py-24">
+    <section className="relative bg-white py-20 sm:py-24">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent"
       />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <RevealOnScroll variant="slideUp" duration={0.7}>
-          <div className="mb-14 max-w-2xl">
+          <div className="mb-14 max-w-3xl">
             <div className="flex items-center gap-3">
               <span aria-hidden="true" className="h-px w-8 bg-brand-navy/30" />
               <span className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-navy/60">
-                Chapter 03
+                Our principles
               </span>
             </div>
-            <h2 className="mt-4 font-display text-4xl font-normal leading-[1.08] tracking-tight text-brand-navy sm:text-5xl">
-              What we<br />
-              <span className="font-display italic text-brand-emerald">believe</span>
+            <h2 className="mt-4 font-display text-4xl font-normal leading-[1.05] tracking-tight text-brand-navy sm:text-5xl md:text-[3.25rem]">
+              What we{' '}
+              <span className="font-display italic text-brand-emerald">
+                believe
+              </span>
               <span aria-hidden="true" className="text-brand-gold">.</span>
             </h2>
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
+              Four standards we hold every owner-file to. They are how we
+              decide what to do, what not to do, and what to send the owner
+              at the end of every engagement.
+            </p>
           </div>
         </RevealOnScroll>
 
-        <div className="space-y-14 lg:space-y-16">
-          {VALUES.map((v, i) => (
-            <RevealOnScroll key={v.title} variant="slideUp" duration={0.7}>
-              <div className="grid grid-cols-1 gap-6 border-t border-brand-navy/10 pt-10 md:grid-cols-12 md:gap-10">
-                <div className="md:col-span-3">
-                  <span className="font-display text-[4.5rem] font-normal leading-none text-brand-gold sm:text-[5.5rem]">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                </div>
-                <div className="md:col-span-9">
-                  <h3 className="font-display text-3xl font-normal leading-tight tracking-tight text-brand-navy sm:text-4xl">
+        {/* 4-card grid: 1 col mobile, 2 col tablet, 4 col desktop */}
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {VALUES.map((v, i) => {
+            const Icon = v.icon
+            return (
+              <RevealOnScroll
+                key={v.title}
+                variant="slideUp"
+                duration={0.7}
+                delay={i * 0.05}
+              >
+                <article className="group relative flex h-full flex-col rounded-sm border border-brand-navy/10 bg-white p-7 shadow-[0_1px_2px_rgba(11,29,58,0.04)] transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-navy/20 hover:shadow-[0_18px_40px_-22px_rgba(11,29,58,0.22)]">
+                  {/* Top row: icon + number badge */}
+                  <div className="flex items-center justify-between">
+                    <span
+                      aria-hidden="true"
+                      className="flex size-12 items-center justify-center rounded-sm bg-emerald-50 ring-1 ring-emerald-100"
+                    >
+                      <Icon
+                        className="size-6 text-brand-emerald"
+                        strokeWidth={1.75}
+                        aria-hidden="true"
+                      />
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className="font-display text-2xl font-normal text-brand-gold/80"
+                    >
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="mt-7 font-display text-[1.4rem] font-normal leading-snug tracking-tight text-brand-navy">
                     {v.title}
-                    <span aria-hidden="true" className="text-brand-emerald">.</span>
+                    <span
+                      aria-hidden="true"
+                      className="text-brand-emerald"
+                    >
+                      .
+                    </span>
                   </h3>
-                  <p className="mt-4 max-w-3xl text-lg leading-[1.75] text-slate-600">
+
+                  {/* Body */}
+                  <p className="mt-3 text-sm leading-relaxed text-slate-600">
                     {v.body}
                   </p>
-                </div>
-              </div>
-            </RevealOnScroll>
-          ))}
+
+                  {/* Bottom divider accent */}
+                  <div
+                    aria-hidden="true"
+                    className="mt-6 h-px w-12 bg-brand-gold/60 transition-all duration-300 group-hover:w-20"
+                  />
+                </article>
+              </RevealOnScroll>
+            )
+          })}
         </div>
       </div>
     </section>
@@ -247,75 +346,70 @@ export function Values() {
 }
 
 // ────────────────────────────────────────────────────────────────
-// Team - circle-initials editorial grid
+// Team. Full directory rendered directly on the About page.
 // ────────────────────────────────────────────────────────────────
-// NOTE: team roster placeholder - confirm names with leadership before launch.
-// Roles reframed to match leasing brokerage positioning.
-const TEAM: {
-  initials: string
-  name: string
-  role: string
-  credo?: string
-  tone: 'gold' | 'emerald'
-}[] = [
-  { initials: 'JC', name: 'Jatin Chhabra', role: 'Founder & Principal Broker', credo: 'Owns the standard the team executes against.', tone: 'gold' },
-  { initials: 'AR', name: 'Anika Rao', role: 'Head of Leasing Operations', credo: 'Runs the playbook, writes the playbook.', tone: 'emerald' },
-  { initials: 'DM', name: 'Daniel Mercer', role: 'Institutional Lease-Up Lead', credo: 'Twelve-year veteran of GTA leasing.', tone: 'gold' },
-  { initials: 'SP', name: 'Simran Patel', role: 'Tenant Qualification Analyst', credo: 'Screens like a bank, briefs like a partner.', tone: 'emerald' },
-  { initials: 'KO', name: 'Kwame Owusu', role: 'Showings Manager', credo: 'Keeps every tour on time and on script.', tone: 'gold' },
-  { initials: 'EL', name: 'Emily Larsson', role: 'Owner Success Manager', credo: 'Every owner has her cell number.', tone: 'emerald' },
-  { initials: 'RT', name: 'Ravi Thakur', role: 'Pricing & Market Analyst', credo: 'Where guesswork ends and comparables start.', tone: 'gold' },
-  { initials: 'MB', name: 'Mei Bennett', role: 'Move-In Coordinator', credo: 'Keys, utilities, insurance, walkthrough - all handled.', tone: 'emerald' },
-]
-
+// Pulls every member from src/data/team.ts and renders them as a
+// Fasken-style 3-column grid. To add or remove a person, edit team.ts.
+// No code change needed here.
 export function Team() {
+  const totalCount = TEAM.length
+
   return (
-    <section id="team" className="scroll-mt-24 bg-white py-20 sm:py-24">
+    <section id="team" className="scroll-mt-24 bg-[#FBFAF6] py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <RevealOnScroll variant="slideUp" duration={0.7}>
-          <div className="mb-14 max-w-2xl">
+          <div className="mb-12 max-w-3xl">
             <div className="flex items-center gap-3">
               <span aria-hidden="true" className="h-px w-8 bg-brand-navy/30" />
               <span className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-navy/60">
-                Chapter 04
+                Our team
               </span>
             </div>
-            <h2 className="mt-4 font-display text-4xl font-normal leading-[1.08] tracking-tight text-brand-navy sm:text-5xl">
-              The people behind<br />
-              <span className="font-display italic text-brand-emerald">the campaigns</span>
-              <span aria-hidden="true" className="text-brand-gold">.</span>
+            <h2 className="mt-4 font-display text-4xl font-normal leading-[1.05] tracking-tight text-brand-navy sm:text-5xl md:text-[3.25rem]">
+              Meet our{' '}
+              <span className="font-display italic text-brand-emerald">
+                team
+              </span>
+              <span aria-hidden="true" className="text-brand-gold">
+                .
+              </span>
             </h2>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-600">
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
               A small, RECO-partnered leasing team with twenty-plus years of
-              combined rental brokerage experience across Canada and the United States.
+              combined rental brokerage experience. Every engagement runs
+              through a named lead. No queues, no offshore desks.
             </p>
           </div>
         </RevealOnScroll>
 
+        {/* Results bar. Mirrors Fasken's "Results 1-15 of N" header. */}
         <RevealOnScroll variant="slideUp" duration={0.7}>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-12 border-t border-brand-navy/10 pt-12 sm:grid-cols-3 lg:grid-cols-4">
-            {TEAM.map((p) => (
-              <div key={p.name} className="flex flex-col items-start">
-                <span
-                  aria-hidden="true"
-                  className={
-                    p.tone === 'gold'
-                      ? 'flex size-20 items-center justify-center rounded-full bg-brand-gold/90 font-display text-2xl font-normal text-white'
-                      : 'flex size-20 items-center justify-center rounded-full bg-brand-emerald font-display text-2xl font-normal text-white'
-                  }
-                >
-                  {p.initials}
-                </span>
-                <p className="mt-5 font-display text-xl font-normal leading-tight text-brand-navy">
-                  {p.name}
-                </p>
-                <p className="mt-1 text-sm font-medium text-brand-emerald">{p.role}</p>
-                {p.credo && (
-                  <p className="mt-2 text-sm italic leading-relaxed text-slate-500">
-                    {p.credo}
-                  </p>
-                )}
-              </div>
+          <div className="mb-8 flex items-baseline justify-between border-y border-brand-navy/15 py-4">
+            <p className="text-sm font-medium text-brand-navy/70">
+              Showing{' '}
+              <span className="font-semibold text-brand-navy">
+                1 to {totalCount}
+              </span>{' '}
+              of{' '}
+              <span className="font-semibold text-brand-navy">
+                {totalCount}
+              </span>
+            </p>
+            <a
+              href="#contact-cta"
+              className="hidden items-center gap-1.5 text-xs font-bold uppercase tracking-[0.16em] text-brand-emerald hover:underline sm:inline-flex"
+            >
+              Work with us
+              <ArrowRight className="size-3.5" aria-hidden="true" />
+            </a>
+          </div>
+        </RevealOnScroll>
+
+        {/* The grid. Flat, 3 columns on desktop, just like Fasken. */}
+        <RevealOnScroll variant="slideUp" duration={0.7}>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {TEAM.map((member) => (
+              <TeamCard key={member.slug} member={member} />
             ))}
           </div>
         </RevealOnScroll>

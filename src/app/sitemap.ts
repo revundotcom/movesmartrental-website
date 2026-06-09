@@ -4,6 +4,7 @@ import {
   getFallbackServiceList,
 } from '@/lib/static-fallbacks'
 import { GUIDES } from '@/data/guides'
+import { TEAM } from '@/data/team'
 import { SILO_SERVICE_SLUGS } from '@/data/silo-services'
 import { SILO_INDUSTRY_SLUGS } from '@/data/silo-industries'
 import { SILO_LOCATION_SLUGS } from '@/data/silo-locations'
@@ -118,7 +119,13 @@ function buildStaticSegment(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/pricing/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.7 },
     { url: `${siteUrl}/resources/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.7 },
     { url: `${siteUrl}/franchising/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: `${siteUrl}/about/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.5 },
+    { url: `${siteUrl}/about/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.55 },
+    ...TEAM.map((m) => ({
+      url: `${siteUrl}/about/team/${m.slug}/`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.45,
+    })),
     { url: `${siteUrl}/contact/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.5 },
     { url: `${siteUrl}/faq/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.6 },
     { url: `${siteUrl}/reviews/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 },

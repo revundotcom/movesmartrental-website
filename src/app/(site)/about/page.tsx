@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
+import Link from 'next/link'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
@@ -8,12 +8,9 @@ import { buildOrganizationSchema, buildLocalBusinessSchema } from '@/lib/schema-
 
 import {
   FounderEssay,
-  Timeline,
   Values,
   Team,
   ByTheNumbers,
-  Press,
-  LongTestimonials,
 } from './about-interactive'
 
 const SITE_URL =
@@ -27,14 +24,14 @@ export const metadata: Metadata = {
     canonical: '/about/',
   },
   openGraph: {
-    title: 'About MoveSmart Rentals | Canadian Leasing Brokerage',
+    title: 'About MoveSmart Rentals | Leasing Brokerage Across Canada & the US',
     description:
       'Full-service leasing execution for serious rental operators. Strategic pricing, disciplined tenant qualification, rental protection options, and complete move-in coordination.',
     images: ['/og-default.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'About MoveSmart Rentals | Canadian Leasing Brokerage',
+    title: 'About MoveSmart Rentals | Leasing Brokerage Across Canada & the US',
     description:
       'Full-service leasing execution for serious rental operators. Strategic pricing, disciplined tenant qualification, rental protection options, and complete move-in coordination.',
   },
@@ -94,14 +91,14 @@ function FounderQuoteCard() {
           aria-hidden="true"
           className="flex size-11 items-center justify-center rounded-full bg-brand-gold/90 font-display text-sm text-white"
         >
-          JC
+          NL
         </span>
         <div>
           <p className="font-display text-base font-normal text-brand-navy">
-            Jatin Chhabra
+            Nathan Levinson
           </p>
           <p className="text-xs text-slate-500">
-            Founder &amp; Principal Broker
+            Founder, President &amp; CEO
           </p>
         </div>
       </div>
@@ -124,12 +121,13 @@ export default function AboutPage() {
         />
       </div>
 
+      {/* ── HERO ─────────────────────────────────────────────────── */}
       <PageHeroBlock
         kicker="About"
         eyebrow="Leasing brokerage"
         headline="Full-service leasing execution for serious operators"
         accentLastWord
-        lede="MoveSmart Rentals is a full-service leasing and tenant placement company built for landlords, property managers, builders, and institutional operators who refuse to leave the leasing phase to chance. We execute the full cycle - strategic pricing, disciplined tenant qualification, rental protection options, and complete move-in coordination - so vacancy stays short and approvals stay clean."
+        lede="MoveSmart Rentals is a full-service leasing and tenant placement company built for landlords, property managers, builders, and institutional operators who refuse to leave the leasing phase to chance. Strategic pricing, disciplined tenant qualification, and complete move-in coordination. Every owner-file run by a named lead."
         cta1={{ label: 'Meet the team', href: '#team' }}
         cta2={{ label: 'Contact us', href: '/contact/' }}
         aside={<FounderQuoteCard />}
@@ -138,77 +136,55 @@ export default function AboutPage() {
         backgroundImageAlt="MoveSmart leasing team collaborating in office"
       />
 
+      {/* ── OUR STORY ────────────────────────────────────────────── */}
       <FounderEssay />
 
-      {/* Editorial banner: Toronto - our anchor market */}
-      <section className="bg-white pb-16 sm:pb-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="relative aspect-[16/6] overflow-hidden rounded-3xl shadow-2xl shadow-brand-navy/15">
-            <Image
-              src="https://images.unsplash.com/photo-1517090504586-fde19ea6066f?w=2400&q=80&auto=format&fit=crop"
-              alt="Toronto downtown skyline - MoveSmart Rentals' anchor leasing market"
-              fill
-              className="object-cover"
-              sizes="(max-width: 1280px) 100vw, 1200px"
-              unoptimized
-            />
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-t from-brand-navy/65 via-brand-navy/15 to-transparent"
-            />
-            <div className="absolute inset-x-0 bottom-0 px-8 pb-8 sm:px-12 sm:pb-10">
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-gold">
-                Headquartered in Toronto
-              </p>
-              <p className="mt-2 font-display text-2xl font-normal italic leading-snug text-white sm:text-3xl md:text-4xl">
-                Twenty-plus Canadian cities. A leasing playbook expanding across Canada and the US.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <Timeline />
-
+      {/* ── VALUES ───────────────────────────────────────────────── */}
       <Values />
 
-      {/* Editorial image: the leasing team at work */}
-      <section className="bg-white pt-12 sm:pt-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-            <div className="relative aspect-[5/4] overflow-hidden rounded-2xl shadow-xl shadow-brand-navy/15">
-              <Image
-                src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1600&q=80&auto=format&fit=crop"
-                alt="MoveSmart leasing team in a planning meeting reviewing applicant pipelines"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                unoptimized
-              />
-            </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-navy/60">
-                Chapter 04 - Preview
-              </p>
-              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
-                A small, RECO-partnered{' '}
-                <span className="font-display italic text-brand-emerald">leasing team.</span>
-              </h2>
-              <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
-                Twenty-plus years of combined rental brokerage experience, organised into named owner-files with a single leasing lead per engagement. No call-centre handoffs, no ticket-queue voids - the person who picks up the file is the person you talk to until move-in.
-              </p>
-            </div>
+      {/* ── TEAM (full directory, embedded here per client spec) ── */}
+      <Team />
+
+      {/* ── BY THE NUMBERS ───────────────────────────────────────── */}
+      <ByTheNumbers />
+
+      {/* ── FINAL CTA ────────────────────────────────────────────── */}
+      <section
+        id="contact-cta"
+        className="relative bg-brand-navy py-16 sm:py-20"
+      >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none mx-auto h-px max-w-7xl bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
+        />
+        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
+          <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-gold">
+            Work with us
+          </p>
+          <h2 className="mt-3 font-display text-3xl font-normal leading-tight tracking-tight text-white sm:text-4xl md:text-5xl">
+            Get the right person on your file.
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-white/75 sm:text-lg">
+            Tell us about your property and we&apos;ll route you to the
+            leasing lead with the right market and asset-class fit, usually
+            within one business day.
+          </p>
+          <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Link
+              href="/contact/"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-emerald-600 hover:shadow-md"
+            >
+              Contact our leasing desk
+            </Link>
+            <a
+              href="tel:+18005959755"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-all hover:border-white/50 hover:bg-white/5"
+            >
+              +1 (800) 595-9755
+            </a>
           </div>
         </div>
       </section>
-
-      <Team />
-
-      <ByTheNumbers />
-
-      <Press />
-
-      <LongTestimonials />
     </main>
   )
 }
