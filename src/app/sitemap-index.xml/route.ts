@@ -1,54 +1,27 @@
 /**
  * Sitemap index - Contract §7.6
  *
- * Aggregates all segmented sitemaps so search engines can discover them
- * through a single entry point. Complements the Next.js `generateSitemaps`
- * output at /sitemap.xml; either can be submitted to Search Console.
+ * Content-type segmented index (Yoast / Insight Global style). Each child
+ * sitemap groups one content type and is generated from typed data modules
+ * in src/lib/sitemap/segments.ts. Submit this file to Search Console; it
+ * auto-discovers every child sitemap. A branded XSL stylesheet renders the
+ * raw XML as a styled page in browsers.
  */
-
 import type { NextRequest } from 'next/server'
+
+import { renderIndex } from '@/lib/sitemap/segments'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 3600
 
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
-
-const SEGMENT_SITEMAPS = [
-  'sitemap-core.xml',
-  'sitemap-ca.xml',
-  'sitemap-us.xml',
-  'sitemap-resources.xml',
-  'sitemap-silo.xml',
-]
-
-function escapeXml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;')
-}
-
-function buildSitemapIndex(): string {
-  const lastmod = new Date().toISOString()
-  const entries = SEGMENT_SITEMAPS.map((segment) => {
-    const loc = escapeXml(`${SITE_URL}/${segment}`)
-    return `  <sitemap>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </sitemap>`
-  }).join('\n')
-
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries}\n</sitemapindex>\n`
-}
-
 export async function GET(_request: NextRequest): Promise<Response> {
   void _request
-  const body = buildSitemapIndex()
-  return new Response(body, {
+  return new Response(renderIndex(), {
     status: 200,
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
+      'Cache-Control':
+        'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
     },
   })
 }
