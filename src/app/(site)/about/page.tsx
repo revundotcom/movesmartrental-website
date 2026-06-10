@@ -91,14 +91,14 @@ function FounderQuoteCard() {
           aria-hidden="true"
           className="flex size-11 items-center justify-center rounded-full bg-brand-gold/90 font-display text-sm text-white"
         >
-          NL
+          MS
         </span>
         <div>
           <p className="font-display text-base font-normal text-brand-navy">
-            Nathan Levinson
+            MoveSmart Rentals
           </p>
           <p className="text-xs text-slate-500">
-            Founder, President &amp; CEO
+            Why we built it
           </p>
         </div>
       </div>
