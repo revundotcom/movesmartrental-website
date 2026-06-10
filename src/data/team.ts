@@ -118,65 +118,12 @@ export interface TeamMember {
 }
 
 export const TEAM: TeamMember[] = [
-  {
-    slug: 'nathan-levinson',
-    name: 'Nathan Levinson',
-    role: 'Founder, President & CEO',
-    department: 'Leadership',
-    office: 'Toronto',
-    email: 'nathan@movesmartrentals.com',
-    phone: '+1 416 555 0101',
-    photoUrl: null,
-    photoAlt: 'Nathan Levinson, Founder, President & CEO at MoveSmart Rentals',
-    quote:
-      'Brokers sell. Managers operate. We built MoveSmart to obsess over the leasing phase itself.',
-    shortBio:
-      'Founder, President & CEO of MoveSmart Rentals. Sets the leasing playbook our team executes against: owner-files, single point of contact, no handoffs.',
-    longBio:
-      'Nathan founded MoveSmart Rentals after spending a decade watching landlords get failed by the leasing phase. Brokers were happy to list and managers were happy to operate, but the in-between work of qualification, pricing, and move-in was where good properties got bad tenants.\n\nHe built MoveSmart to obsess over that gap, with one playbook executed consistently across Canada and the United States. Every engagement runs through a named lead. Every applicant is screened against a single bank-grade rubric. Every owner has the same direct line for the full lifecycle. Nathan still personally reviews every institutional placement.',
-    specialties: [
-      'Institutional lease-up strategy',
-      'Owner-side rental pricing',
-      'High-volume tenant qualification',
-      'Cross-border leasing operations',
-      'PMC portfolio onboarding',
-    ],
-    achievements: [
-      'Founded MoveSmart Rentals in 2024 on a thesis of owner-first leasing execution',
-      'Designed the firm’s bank-grade qualification rubric, now used on every placement',
-      'Personally led the lease-up of three institutional new-build absorptions',
-      'Selected RECO continuing-education panel speaker for 2025',
-    ],
-    marketsCovered: ['Toronto', 'Greater Toronto Area', 'Ottawa', 'Select US markets'],
-    careerHistory: [
-      { year: '2024 to Present', role: 'Founder, President & CEO', organization: 'MoveSmart Rentals' },
-      { year: '2019 to 2024', role: 'Senior Leasing Broker', organization: 'GTA boutique brokerage (Toronto)' },
-      { year: '2014 to 2019', role: 'Leasing Specialist', organization: 'National property-management platform' },
-    ],
-    education: [
-      { degree: 'Real Estate Salesperson Programme', school: 'Humber College', year: '2014' },
-      { degree: 'B.Com, Finance', school: 'University of Toronto', year: '2012' },
-    ],
-    knowledge: [
-      'Institutional lease-up strategy',
-      'Brokerage operations and RECO compliance',
-      'Rental pricing models',
-      'Owner-side leasing economics',
-    ],
-    publications: [
-      { title: 'How institutional lease-ups should be priced', publisher: 'REM Magazine', year: '2025' },
-      { title: 'The case for owner-first leasing', publisher: 'Toronto Real Estate Forum Journal', year: '2025' },
-    ],
-    events: [
-      { title: 'Panellist, Owner-Side Leasing in 2025', event: 'Toronto Real Estate Forum', year: '2025' },
-      { title: 'Speaker, RECO Continuing Education Series', event: 'RECO', year: '2025' },
-    ],
-    languages: ['English', 'Hindi', 'Punjabi'],
-    yearsExperience: 12,
-    joinedYear: 2024,
-    licenseNumber: 'RECO 4831-XXXX',
-    linkedinUrl: 'https://www.linkedin.com/company/movesmart-rentals/',
-  },
+  // ─────────────────────────────────────────────────────────────────
+  //  Note: the Founder/President & CEO entry is intentionally omitted
+  //  from the public staff listing per client direction (June 2026).
+  //  Restore by re-adding the member block here when the name is
+  //  cleared to publish.
+  // ─────────────────────────────────────────────────────────────────
   {
     slug: 'anika-rao',
     name: 'Anika Rao',
