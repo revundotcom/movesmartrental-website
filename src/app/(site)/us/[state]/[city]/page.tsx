@@ -13,6 +13,8 @@ import {
 import type { FallbackCity } from '@/lib/static-fallbacks'
 import { generatePageMetadata } from '@/lib/metadata'
 import { buildBreadcrumbListSchema, buildLocalBusinessSchema } from '@/lib/schema-builders'
+import Link from 'next/link'
+import { SILO_PAGES } from '@/lib/silo'
 
 const slugSchema = z.string().regex(/^[a-z0-9-]+$/).max(100)
 
@@ -119,6 +121,14 @@ export default async function USCityPage({
   const stateAbbr = data.province.abbreviation ?? data.province.title
   const descriptionText = data.description
 
+  // Our deep service pages for this city (the silo). Filter to real pages so
+  // every link resolves — this is the city <-> service connection that was
+  // missing, so footer -> state -> city -> service now reaches our content.
+  const cityKey = `${city}-${(data.province.abbreviation ?? '').toLowerCase()}`
+  const cityServices = SILO_PAGES.filter(
+    (p) => p.type === 'service_in_city' && p.city_key === cityKey,
+  )
+
   return (
     <main>
       {/* JSON-LD */}
@@ -209,6 +219,42 @@ export default async function USCityPage({
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+      )}
+
+      {/* Services in this city — links into our deep silo service pages */}
+      {cityServices.length > 0 && (
+        <section className="bg-[#FBFAF6] py-16 sm:py-20">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6">
+            <div className="max-w-2xl">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-emerald">
+                Services in {data.title}
+              </p>
+              <h2 className="mt-3 font-display text-3xl font-normal tracking-tight text-brand-navy sm:text-4xl">
+                Everything we do in{' '}
+                <span className="font-display italic text-brand-emerald">{data.title}</span>
+                <span aria-hidden="true" className="text-brand-gold">.</span>
+              </h2>
+            </div>
+            <div className="mt-10 grid gap-x-10 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+              {cityServices.map((s) => (
+                <Link
+                  key={s.url}
+                  href={`${s.url}/`}
+                  className="group border-t border-brand-navy/10 pt-5 transition-colors"
+                >
+                  <h3 className="font-display text-lg font-normal text-brand-navy group-hover:text-brand-emerald">
+                    {s.service_label || s.title}
+                  </h3>
+                  {s.service_blurb && (
+                    <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                      {s.service_blurb}
+                    </p>
+                  )}
+                </Link>
+              ))}
+            </div>
           </div>
         </section>
       )}

@@ -6,6 +6,7 @@ import {
   SiloPageTemplate,
   type SiloSection,
 } from '@/components/blocks/silo-page-template'
+import { SiloLightTemplate } from '@/components/blocks/silo-light-template'
 import { BRAND } from '@/lib/brand-constants'
 import {
   FLAT_PAGES,
@@ -539,6 +540,48 @@ export default async function SiloFlatPage({ params }: Params) {
     page.type === 'service_in_city'
       ? `Ready to start ${(page.service_label || 'leasing').toLowerCase()} in ${page.city}?`
       : `Ready to lease faster in ${page.city}?`
+
+  // Light editorial variant (preview A/B via NEXT_PUBLIC_SILO_LIGHT=1).
+  // Same content, AJ's airy white styling. Renders sibling services as
+  // internal links so the city <-> service silo actually connects.
+  if (process.env.NEXT_PUBLIC_SILO_LIGHT === '1') {
+    const lightRelated = siblingServices.slice(0, 6).map((s) => ({
+      title: s.service_label || s.title,
+      href: `${s.url}/`,
+      description: s.service_blurb,
+    }))
+    const lightSections = (
+      page as { content_sections?: { title: string; body: string }[] }
+    ).content_sections
+    return (
+      <>
+        <JsonLd data={buildGraph(page, crumbs)} />
+        <SiloLightTemplate
+          breadcrumbs={crumbs}
+          heroKicker={heroKicker}
+          heroEyebrow={heroEyebrow}
+          heroHeadline={heroHeadline}
+          heroLede={heroLede}
+          heroImage={heroImage}
+          city={page.city}
+          serviceWord={svcWord ?? page.service_label ?? 'Leasing'}
+          intro={page.intro}
+          keyTakeaways={page.key_takeaways}
+          sections={lightSections}
+          painPoints={painPoints}
+          neighborhoods={page.neighborhoods}
+          faq={faq}
+          related={lightRelated.length > 0 ? lightRelated : undefined}
+          closing={closing}
+          primaryCta={{ label: 'List my property', href: '/owners/' }}
+          secondaryCta={{
+            label: `Call ${BRAND.phoneDisplay}`,
+            href: `tel:${BRAND.phone}`,
+          }}
+        />
+      </>
+    )
+  }
 
   return (
     <>
