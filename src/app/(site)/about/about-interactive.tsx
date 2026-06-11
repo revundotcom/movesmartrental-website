@@ -366,18 +366,18 @@ export function Team() {
               </span>
             </div>
             <h2 className="mt-4 font-display text-4xl font-normal leading-[1.05] tracking-tight text-brand-navy sm:text-5xl md:text-[3.25rem]">
-              Meet our{' '}
+              Meet Our Leadership{' '}
               <span className="font-display italic text-brand-emerald">
-                team
+                Team
               </span>
               <span aria-hidden="true" className="text-brand-gold">
                 .
               </span>
             </h2>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
-              A small, RECO-partnered leasing team with twenty-plus years of
-              combined rental brokerage experience. Every engagement runs
-              through a named lead. No queues, no offshore desks.
+              Meet the team leading MoveSmart Rentals&rsquo; leasing,
+              operations, and client support with a focus on transparency,
+              efficiency, and a better rental experience.
             </p>
           </div>
         </RevealOnScroll>
