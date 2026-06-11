@@ -55,13 +55,22 @@ export function Header() {
           : 'border-b border-slate-100',
       )}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-[72px] lg:px-8">
+      {/* Container note on the breakpoint switch (lg → xl, June 2026):
+          The desktop nav has 10 NAV_GROUPS plus a Logo, Login, and
+          "List my property" CTA. At 1024–1279px (the old `lg:` range)
+          those items overflowed and the right-side CTA got clipped.
+          We now show the full nav only at `xl:` (≥1280px) and fall
+          back to the hamburger MobileNav below that, guaranteeing the
+          header never overflows on any device. The horizontal padding
+          and height step are also gated on `xl:` so the visual jump
+          matches the layout jump exactly. */}
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 xl:h-[72px] xl:px-8">
         {/* Logo in its true navy + emerald colors */}
         <Logo variant="default" />
 
-        {/* Desktop navigation */}
+        {/* Desktop navigation (xl+ only — see container note above) */}
         <NavigationMenu
-          className="hidden lg:flex"
+          className="hidden xl:flex"
           align="center"
           value={navValue}
           onValueChange={(val) => setNavValue(val)}
@@ -78,7 +87,7 @@ export function Header() {
                     <NavigationMenuLink
                       render={<Link href={only.href} />}
                       active={pathname === only.href}
-                      className="cursor-pointer rounded-lg px-2.5 py-2 text-sm font-medium whitespace-nowrap text-brand-navy/75 transition-all duration-200 hover:bg-slate-100 hover:text-brand-navy data-active:bg-transparent data-active:text-brand-navy"
+                      className="cursor-pointer rounded-lg px-2 py-2 text-sm font-medium whitespace-nowrap text-brand-navy/75 transition-all duration-200 hover:bg-slate-100 hover:text-brand-navy data-active:bg-transparent data-active:text-brand-navy"
                     >
                       {group.label}
                     </NavigationMenuLink>
@@ -88,7 +97,7 @@ export function Header() {
               return (
                 <NavigationMenuItem key={group.label}>
                   <NavigationMenuTrigger
-                    className="cursor-pointer rounded-lg px-2.5 py-2 text-sm font-medium whitespace-nowrap text-brand-navy/75 transition-all duration-200 hover:bg-slate-100 hover:text-brand-navy data-popup-open:bg-slate-100 data-popup-open:text-brand-navy"
+                    className="cursor-pointer rounded-lg px-2 py-2 text-sm font-medium whitespace-nowrap text-brand-navy/75 transition-all duration-200 hover:bg-slate-100 hover:text-brand-navy data-popup-open:bg-slate-100 data-popup-open:text-brand-navy"
                   >
                     {group.label}
                   </NavigationMenuTrigger>
@@ -122,13 +131,13 @@ export function Header() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* Desktop CTA buttons */}
-        <div className="hidden items-center gap-2 lg:flex">
+        {/* Desktop CTA buttons (xl+ only) */}
+        <div className="hidden items-center gap-2 xl:flex">
           <a
             href={PORTAL_LOGIN_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="cursor-pointer whitespace-nowrap rounded-lg border border-slate-200 px-3.5 py-2 text-sm font-medium text-brand-navy/80 transition-all duration-200 hover:border-brand-navy/30 hover:bg-slate-50 hover:text-brand-navy"
+            className="cursor-pointer whitespace-nowrap rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-brand-navy/80 transition-all duration-200 hover:border-brand-navy/30 hover:bg-slate-50 hover:text-brand-navy"
           >
             Login
           </a>
@@ -136,14 +145,14 @@ export function Header() {
             href={PORTAL_OWNER_SIGNUP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="cursor-pointer whitespace-nowrap rounded-lg bg-brand-emerald px-3.5 py-2 text-sm font-semibold text-white shadow-sm shadow-emerald-900/20 transition-all duration-200 hover:-translate-y-px hover:bg-emerald-600 hover:shadow-md"
+            className="cursor-pointer whitespace-nowrap rounded-lg bg-brand-emerald px-3 py-2 text-sm font-semibold text-white shadow-sm shadow-emerald-900/20 transition-all duration-200 hover:-translate-y-px hover:bg-emerald-600 hover:shadow-md"
           >
             List my property
           </a>
         </div>
 
-        {/* Mobile navigation trigger */}
-        <div className="lg:hidden">
+        {/* Mobile navigation trigger (anything below xl) */}
+        <div className="xl:hidden">
           <MobileNav />
         </div>
       </div>

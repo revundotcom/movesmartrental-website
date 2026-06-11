@@ -60,25 +60,14 @@ export const NAV_GROUPS = [
       { title: 'Institutional Lease-Up', href: '/institutional-lease-up/', description: 'Bulk lease-up for new builds' },
     ],
   },
-  {
-    label: 'Resources',
-    items: [
-      { title: 'Resource Hub', href: '/resources/', description: 'All landlord and tenant resources' },
-      { title: 'Blog', href: '/resources/blog/', description: 'Leasing tips and market commentary' },
-      { title: 'Landlord Guides', href: '/resources/landlord-guides/', description: 'Step by step playbooks for owners' },
-      { title: 'Market Reports', href: '/resources/market-reports/', description: 'Quarterly market intelligence' },
-      { title: 'Screening Checklist', href: '/resources/screening-checklist/', description: 'Free tenant screening checklist' },
-      { title: 'Lease Templates', href: '/resources/lease-templates/', description: 'Statutory compliant lease templates' },
-    ],
-  },
-  {
-    label: 'Solutions',
-    items: [
-      { title: 'Developers', href: '/developers/', description: 'Lease-up campaigns, end-to-end execution, on-site leasing teams.' },
-      { title: 'Property Managers', href: '/property-managers/', description: 'Outsource leasing without losing operational control.' },
-      { title: 'Institutional Lease-Up', href: '/institutional-lease-up/', description: 'Pilot-ready leasing for institutional landlords and asset managers.' },
-    ],
-  },
+  // ─────────────────────────────────────────────────────────────────
+  //  Resources & Solutions are hidden from the header nav per client
+  //  direction (June 2026). The underlying pages still exist by
+  //  direct URL but are not surfaced in navigation or main sitemap.
+  //  To restore: re-add the groups here AND re-add the matching
+  //  sections in src/components/layout/mobile-nav.tsx AND re-add the
+  //  `/resources/` static entry in src/app/sitemap.ts.
+  // ─────────────────────────────────────────────────────────────────
   {
     label: 'Pricing',
     items: [

@@ -117,7 +117,9 @@ function buildStaticSegment(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/services/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.8 },
     { url: `${siteUrl}/locations/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.8 },
     { url: `${siteUrl}/pricing/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.7 },
-    { url: `${siteUrl}/resources/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.7 },
+    // /resources/ hub URL intentionally omitted from the sitemap per
+    // client direction (June 2026). The page still resolves by direct
+    // URL but is no longer surfaced in nav or sitemap.
     { url: `${siteUrl}/franchising/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 },
     { url: `${siteUrl}/about/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.55 },
     ...TEAM.map((m) => ({

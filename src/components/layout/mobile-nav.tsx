@@ -84,25 +84,12 @@ const MOBILE_NAV_SECTIONS: ReadonlyArray<NavSectionDef> = [
       { title: 'Markham', href: '/ca/ontario/markham/' },
     ],
   },
-  {
-    label: 'Solutions',
-    items: [
-      { title: 'Developers', href: '/developers/' },
-      { title: 'Property Managers', href: '/property-managers/' },
-      { title: 'Institutional Lease-Up', href: '/institutional-lease-up/' },
-    ],
-  },
+  // ─────────────────────────────────────────────────────────────────
+  //  Solutions & Resources sections are hidden from the mobile nav
+  //  per client direction (June 2026). Must stay in sync with the
+  //  header nav in src/lib/nav-config.ts.
+  // ─────────────────────────────────────────────────────────────────
   { label: 'Pricing', href: '/pricing/' },
-  {
-    label: 'Resources',
-    // TODO(phase-2): real /resources/ hub.
-    items: [
-      { title: 'FAQ', href: '/faq/' },
-      { title: 'Reviews', href: '/reviews/' },
-      { title: 'Tenant Hub', href: '/tenants/' },
-      { title: 'Owner Hub', href: '/owners/' },
-    ],
-  },
   { label: 'Franchising', href: '/franchising/' },
   {
     label: 'About',
