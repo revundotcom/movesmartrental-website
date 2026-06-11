@@ -544,7 +544,7 @@ export default async function SiloFlatPage({ params }: Params) {
   // Light editorial variant (preview A/B via NEXT_PUBLIC_SILO_LIGHT=1).
   // Same content, AJ's airy white styling. Renders sibling services as
   // internal links so the city <-> service silo actually connects.
-  if (process.env.NEXT_PUBLIC_SILO_LIGHT === '1') {
+  if (process.env.NEXT_PUBLIC_SILO_LIGHT !== '0') {
     const lightRelated = siblingServices.slice(0, 6).map((s) => ({
       title: s.service_label || s.title,
       href: `${s.url}/`,
