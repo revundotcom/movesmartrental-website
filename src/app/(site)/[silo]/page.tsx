@@ -7,6 +7,10 @@ import {
   type SiloSection,
 } from '@/components/blocks/silo-page-template'
 import { SiloLightTemplate } from '@/components/blocks/silo-light-template'
+
+// Read at module scope: a local `process` (howto steps) variable shadows
+// Node's process inside the page component, so we capture the flag here.
+const SILO_LIGHT_FLAG = process.env.NEXT_PUBLIC_SILO_LIGHT
 import { BRAND } from '@/lib/brand-constants'
 import {
   FLAT_PAGES,
@@ -544,7 +548,7 @@ export default async function SiloFlatPage({ params }: Params) {
   // Light editorial variant (preview A/B via NEXT_PUBLIC_SILO_LIGHT=1).
   // Same content, AJ's airy white styling. Renders sibling services as
   // internal links so the city <-> service silo actually connects.
-  if (process.env.NEXT_PUBLIC_SILO_LIGHT !== '0') {
+  if (SILO_LIGHT_FLAG !== '0') {
     const lightRelated = siblingServices.slice(0, 6).map((s) => ({
       title: s.service_label || s.title,
       href: `${s.url}/`,
