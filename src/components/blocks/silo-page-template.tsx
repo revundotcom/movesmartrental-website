@@ -308,19 +308,41 @@ export function SiloPageTemplate(props: Props) {
       </div>
 
       {/* ============ HERO ============ */}
-      <section className="relative overflow-hidden" style={{ background: NAVY }}>
+      <section className="relative isolate overflow-hidden">
+        {/* Full-bleed city photo as the hero background, with a heavy navy
+            overlay so the headline stays legible (AJ-style treatment). */}
+        {heroImage?.src ? (
+          <div aria-hidden="true" className="absolute inset-0 -z-10">
+            <Image
+              src={heroImage.src}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/95 via-brand-navy/[0.88] to-brand-navy/70" />
+            <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/85 via-transparent to-brand-navy/30" />
+          </div>
+        ) : (
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 -z-10"
+            style={{ background: NAVY }}
+          />
+        )}
         {/* ə symbol motif */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -bottom-40 -left-32 h-[560px] w-[440px] opacity-[0.10]"
+          className="pointer-events-none absolute -bottom-40 -left-32 h-[560px] w-[440px] opacity-[0.08]"
           style={{
             backgroundImage: 'url(/ds/symbol.svg)',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'contain',
           }}
         />
-        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 pb-20 pt-16 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:pb-24 lg:pt-20">
-          <div>
+        <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-16 sm:px-6 lg:px-8 lg:pb-28 lg:pt-24">
+          <div className="max-w-2xl">
             <Eyebrow light>{heroKicker}</Eyebrow>
             <h1 className="mt-4 font-display text-[46px] font-normal leading-[1.06] tracking-tight text-white sm:text-[60px]">
               {(() => {
@@ -340,7 +362,7 @@ export function SiloPageTemplate(props: Props) {
                 )
               })()}
             </h1>
-            <p className="mt-5 max-w-xl text-[18px] leading-[1.55] text-[#AFBED8]">
+            <p className="mt-5 max-w-xl text-[18px] leading-[1.55] text-[#C7D3E8]">
               {subhead}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -353,17 +375,17 @@ export function SiloPageTemplate(props: Props) {
               </Btn>
             </div>
             {chips && chips.length > 0 && (
-              <div className="mt-9 flex flex-col gap-3 border-t border-white/10 pt-6">
+              <div className="mt-9 flex flex-col gap-3 border-t border-white/15 pt-6 sm:flex-row sm:flex-wrap sm:gap-x-8 sm:gap-y-3">
                 {chips.map((c) => {
                   const Ic = CHIP_ICONS[c.icon] ?? RadioTower
                   return (
                     <div key={c.title} className="flex items-center gap-3">
-                      <span className="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-white/[0.08] text-[#34D399]">
+                      <span className="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-white/[0.12] text-[#34D399]">
                         <Ic className="h-[18px] w-[18px]" strokeWidth={1.75} />
                       </span>
                       <span className="text-[14.5px] text-white">
                         <span className="font-semibold">{c.title}</span>
-                        <span className="text-[#AFBED8]"> · {c.sub}</span>
+                        <span className="text-[#C7D3E8]"> · {c.sub}</span>
                       </span>
                     </div>
                   )
@@ -371,25 +393,6 @@ export function SiloPageTemplate(props: Props) {
               </div>
             )}
           </div>
-          {/* Right: framed city photo */}
-          {heroImage?.src && (
-            <div className="relative">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
-                <Image
-                  src={heroImage.src}
-                  alt={heroImage.alt}
-                  fill
-                  priority
-                  sizes="(min-width:1024px) 600px, 100vw"
-                  className="object-cover object-center"
-                />
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-t from-brand-navy/35 via-transparent to-transparent"
-                />
-              </div>
-            </div>
-          )}
         </div>
       </section>
 
@@ -420,11 +423,19 @@ export function SiloPageTemplate(props: Props) {
                 {city} market snapshot
               </p>
             </div>
-            <div className="mt-9 grid grid-cols-2 gap-y-9 lg:grid-cols-4">
+            <div
+              className={`mt-9 grid grid-cols-2 gap-y-9 ${
+                marketData.length >= 4
+                  ? 'lg:grid-cols-4'
+                  : marketData.length === 3
+                    ? 'lg:grid-cols-3'
+                    : 'lg:grid-cols-2'
+              }`}
+            >
               {marketData.map((m, i) => (
                 <div
                   key={m.label}
-                  className={`px-1 sm:px-6 ${i > 0 ? 'lg:border-l lg:border-slate-200' : ''} ${i === 2 ? 'border-l border-slate-200 lg:border-l' : ''}`}
+                  className={`px-1 sm:px-6 ${i > 0 ? 'lg:border-l lg:border-slate-200' : ''} ${i === 2 && marketData.length >= 4 ? 'border-l border-slate-200 lg:border-l' : ''}`}
                 >
                   <p className="font-display text-[40px] font-normal leading-none tracking-tight text-brand-navy sm:text-5xl md:text-[56px]">
                     {m.value}
@@ -449,7 +460,7 @@ export function SiloPageTemplate(props: Props) {
 
       {/* ============ PAIN POINTS (photo + editorial list) ============ */}
       {painPoints && painPoints.items.length > 0 && (
-        <section className="bg-white py-18 sm:py-24">
+        <section className="bg-white py-12 sm:py-16">
           <div className="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 lg:px-8">
             <div className="lg:sticky lg:top-24 lg:self-start">
               <div className="flex items-center gap-3">
@@ -496,7 +507,7 @@ export function SiloPageTemplate(props: Props) {
 
       {/* ============ SERVICE BENTO (photographic mosaic — moved up) ============ */}
       {bentoServices && bentoServices.length > 0 && (
-        <section className="bg-[#FBFAF6] py-18 sm:py-24">
+        <section className="bg-[#FBFAF6] py-12 sm:py-16">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="mb-12 grid items-end gap-8 md:grid-cols-12">
               <div className="md:col-span-7">
@@ -565,7 +576,7 @@ export function SiloPageTemplate(props: Props) {
 
       {/* ============ DIY vs MOVESMART comparison ============ */}
       {comparison && comparison.rows.length > 0 && (
-        <section className="bg-[#F6F8FB] py-18 sm:py-24">
+        <section className="bg-[#F6F8FB] py-12 sm:py-16">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-2xl">
               <Eyebrow>Self-managed vs MoveSmart</Eyebrow>
@@ -647,7 +658,7 @@ export function SiloPageTemplate(props: Props) {
 
       {/* ============ MARKET CONTEXT + rent-by-bed ============ */}
       {contentSections[0] && (
-        <section className="bg-white py-18 sm:py-24">
+        <section className="bg-white py-12 sm:py-16">
           <div className="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:px-8">
             <div>
               <Eyebrow>Market context</Eyebrow>
@@ -703,7 +714,7 @@ export function SiloPageTemplate(props: Props) {
 
       {/* ============ PROCESS — editorial numbered step flow ============ */}
       {process && process.length > 0 && (
-        <section className="bg-[#FBFAF6] py-18 sm:py-24">
+        <section className="bg-[#FBFAF6] py-12 sm:py-16">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="mb-14 grid items-end gap-8 md:grid-cols-12">
               <div className="md:col-span-7">
@@ -747,7 +758,7 @@ export function SiloPageTemplate(props: Props) {
 
       {/* ============ PHOTO SPLIT 1 ============ */}
       {splitImage && contentSections[1] && (
-        <section className="bg-white py-18 sm:py-24">
+        <section className="bg-white py-12 sm:py-16">
           <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
             <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-lg">
               <Image
@@ -773,7 +784,7 @@ export function SiloPageTemplate(props: Props) {
 
       {/* ============ LOCAL RULES (compliance moat) ============ */}
       {localRules && localRules.items.length > 0 && (
-        <section className="bg-[#F6F8FB] py-18 sm:py-24">
+        <section className="bg-[#F6F8FB] py-12 sm:py-16">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-2xl">
               <Eyebrow>Leasing legally in Ontario</Eyebrow>
@@ -806,7 +817,7 @@ export function SiloPageTemplate(props: Props) {
 
       {/* ============ PHOTO SPLIT 2 (reversed) ============ */}
       {splitImage2 && contentSections[2] && (
-        <section className="bg-white py-18 sm:py-24">
+        <section className="bg-white py-12 sm:py-16">
           <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
             <div className="order-2 lg:order-1">
               <Eyebrow>Defensible &amp; documented</Eyebrow>
@@ -832,7 +843,7 @@ export function SiloPageTemplate(props: Props) {
 
       {/* ============ PULL QUOTE (large serif breathing moment) ============ */}
       {pullQuote && (
-        <section className="bg-[#FBFAF6] py-20 sm:py-28">
+        <section className="bg-[#FBFAF6] py-14 sm:py-18">
           <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
             <span aria-hidden="true" className="mx-auto mb-7 block h-px w-12 bg-brand-gold/60" />
             <p className="font-display text-[28px] font-normal leading-[1.3] tracking-tight text-brand-navy sm:text-[36px] md:text-[42px]">
@@ -849,7 +860,7 @@ export function SiloPageTemplate(props: Props) {
 
       {/* ============ PRICING ============ */}
       {pricing && pricing.cards.length > 0 && (
-        <section className="bg-white py-18 sm:py-24">
+        <section className="bg-white py-12 sm:py-16">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
               <Eyebrow>Transparent pricing</Eyebrow>
@@ -923,7 +934,7 @@ export function SiloPageTemplate(props: Props) {
 
       {/* ============ GUARANTEE (risk reversal) ============ */}
       {guarantee && (
-        <section className="bg-[#F6F8FB] py-16 sm:py-20">
+        <section className="bg-[#F6F8FB] py-12 sm:py-16">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <div className="overflow-hidden rounded-3xl border border-[#10B981]/30 bg-white shadow-sm">
               <div className="grid items-center gap-8 p-8 sm:p-10 lg:grid-cols-[auto_1fr] lg:gap-12">
@@ -958,7 +969,7 @@ export function SiloPageTemplate(props: Props) {
 
       {/* ============ DETAILED GUIDE (remaining prose, designed) ============ */}
       {contentSections.length > 3 && (
-        <section className="bg-white py-18 sm:py-24">
+        <section className="bg-white py-12 sm:py-16">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-2xl">
               <Eyebrow>The detail</Eyebrow>
@@ -1006,7 +1017,7 @@ export function SiloPageTemplate(props: Props) {
 
       {/* ============ EXPLORE RENTALS (silo links into property types) ============ */}
       {exploreLinks && exploreLinks.length > 0 && (
-        <section className="bg-white py-18 sm:py-24">
+        <section className="bg-white py-12 sm:py-16">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-2xl">
               <Eyebrow>Browse {city} rentals</Eyebrow>
@@ -1044,7 +1055,7 @@ export function SiloPageTemplate(props: Props) {
       {/* ============ AREAS WE SERVE (map + districts) ============ */}
       {((neighborhoodLinks && neighborhoodLinks.length > 0) ||
         (neighborhoods && neighborhoods.length > 0)) && (
-        <section className="bg-[#F6F8FB] py-18 sm:py-24">
+        <section className="bg-[#F6F8FB] py-12 sm:py-16">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-2xl">
               <Eyebrow>Areas we serve</Eyebrow>
@@ -1107,7 +1118,7 @@ export function SiloPageTemplate(props: Props) {
 
       {/* ============ NEARBY CITIES (suburb internal links) ============ */}
       {nearbyCities && nearbyCities.length > 0 && (
-        <section className="bg-white py-18 sm:py-24">
+        <section className="bg-white py-12 sm:py-16">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-2xl">
               <Eyebrow>Beyond {city}</Eyebrow>

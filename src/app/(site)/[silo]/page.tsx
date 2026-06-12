@@ -35,8 +35,12 @@ export async function generateMetadata({
   if (!page) return { title: 'Page not found | MoveSmart Rentals' }
 
   // Keyword-tuned title + description (front-load the city+service keyword,
-  // lead the description with the differentiators).
-  const svc = page.service_label || 'Rental Leasing'
+  // lead the description with the differentiators). The leasing service reads
+  // as "Leasing Services" everywhere (title, meta title, meta description).
+  const svc =
+    page.service_slug === 'leasing'
+      ? 'Leasing Services'
+      : page.service_label || 'Rental Leasing'
   // Brand is appended by the layout title template ("%s | MoveSmart Rentals").
   const title =
     page.type === 'service_in_city'
@@ -228,15 +232,20 @@ export default async function SiloFlatPage({ params }: Params) {
   ].filter(Boolean) as Array<{ label: string; href: string }>
 
   // Hero copy — short, punchy. Long intro moves into the market-context section.
+  // The leasing service reads as "Leasing Services" everywhere for keyword consistency.
+  const displayLabel =
+    page.service_slug === 'leasing'
+      ? 'Leasing Services'
+      : page.service_label || 'Rental Leasing'
   const heroKicker =
-    page.type === 'service_in_city' && page.service_label
-      ? `${page.service_label} · ${page.city}, ${page.state_abbr}`
+    page.type === 'service_in_city'
+      ? `${displayLabel} · ${page.city}, ${page.state_abbr}`
       : `Rental leasing · ${page.city}, ${page.state_abbr}`
   const heroEyebrow = `${page.city}, ${page.state_abbr}`
   const svcWord = (page.service_label || 'Leasing').toLowerCase()
   const heroHeadline =
-    page.type === 'service_in_city' && page.service_label
-      ? `${page.service_label} in ${page.city}`
+    page.type === 'service_in_city'
+      ? `${displayLabel} in ${page.city}`
       : `Rental leasing in ${page.city}`
   const heroSubhead = `Full-service ${svcWord} for ${page.city} landlords. We list, market, show, screen, and sign your unit, syndicated to the MLS and 20 portals, with an 18-day average from listing to lease.`
   const heroLede = page.intro || page.meta_description || heroSubhead
@@ -441,51 +450,38 @@ export default async function SiloFlatPage({ params }: Params) {
       })
     }
   }
-  // Service cross-links -> the full services menu (in-city silo pages where
-  // they exist, national /services pages for the rest).
-  const serviceCards = [
-    ...siblingServices.map((s) => ({
-      title: s.service_label || s.title,
-      description: s.service_blurb || '',
-      href: `${s.url}/`,
-    })),
-    {
-      title: 'Rent Guarantee',
-      description: 'Optional rental protection against unpaid rent, eviction costs, and tenant risk.',
-      href: '/services/rent-guarantee/',
-    },
-    {
-      title: 'Tenant Insurance',
-      description: 'Tenant insurance coordination built into the move-in process.',
-      href: '/services/tenant-insurance/',
-    },
-  ]
+  // Service cross-links -> the city's other silo service pages. Use the real
+  // siblings only (no hardcoded duplicate cards).
+  const serviceCards = siblingServices.map((s) => ({
+    title: s.service_label || s.title,
+    description: s.service_blurb || '',
+    href: `${s.url}/`,
+  }))
 
-  // Bento services — same cross-links, but as a photographic mosaic. Map each
-  // service to a real branded photo (service-specific where we have one, else
-  // a rotating set of design-system property photos).
-  // Custom branded imagery (generated via Imagen) keyed to each service.
-  const BENTO_FALLBACKS = [
-    '/msr/svc-marketing.webp',
-    '/msr/svc-moveins.webp',
-    '/msr/split-interior.webp',
-    '/msr/hero-condo.webp',
-    '/msr/svc-leasing.webp',
-  ]
-  function bentoImage(href: string, title: string, i: number): string {
-    const h = (href + ' ' + title).toLowerCase()
-    if (h.includes('placement')) return '/msr/svc-leasing.webp'
-    if (h.includes('screening')) return '/msr/svc-screening.webp'
-    if (h.includes('pricing')) return '/msr/svc-pricing.webp'
-    if (h.includes('insurance') || h.includes('guarantee')) return '/msr/svc-moveins.webp'
-    if (h.includes('marketing') || h.includes('listing')) return '/msr/svc-marketing.webp'
-    if (h.includes('move')) return '/msr/svc-moveins.webp'
-    if (h.includes('leasing') || h.includes('lease')) return '/msr/svc-leasing.webp'
-    return BENTO_FALLBACKS[i % BENTO_FALLBACKS.length]
+  // Bento services — a photographic mosaic. Each service maps to a DISTINCT
+  // branded photo so no two tiles repeat; institutional lease-up uses the
+  // colourful per-city skyline, which keeps the mosaic varied and on-brand.
+  const SERVICE_IMG: Record<string, string> = {
+    leasing: '/msr/svc-leasing.webp',
+    'tenant-placement': '/msr/svc-marketing.webp',
+    'tenant-screening': '/msr/svc-screening.webp',
+    'rental-pricing': '/msr/svc-pricing.webp',
+    'tenant-insurance': '/msr/svc-moveins.webp',
+    'rent-guarantee': '/msr/hero-condo.webp',
+    'tenant-guarantor': '/msr/split-owner.webp',
+    'rental-preparation': '/msr/split-interior.webp',
   }
-  const bentoServices = serviceCards.map((s, i) => ({
+  function bentoImage(href: string): string {
+    const clean = href.replace(/\/$/, '')
+    for (const slug of Object.keys(SERVICE_IMG)) {
+      if (clean.endsWith(`-${slug}`)) return SERVICE_IMG[slug]
+    }
+    // institutional-lease-up (and any future service) -> the city photo
+    return heroImage.src
+  }
+  const bentoServices = serviceCards.map((s) => ({
     ...s,
-    image: bentoImage(s.href, s.title, i),
+    image: bentoImage(s.href),
   }))
 
   // Pull-quote — a large serif breathing moment (the brand promise)
