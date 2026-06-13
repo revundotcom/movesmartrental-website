@@ -1,7 +1,16 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, ChevronDown, Mail, Phone, ExternalLink } from 'lucide-react'
+import {
+  ArrowLeft,
+  Award,
+  Briefcase,
+  ChevronDown,
+  ExternalLink,
+  GraduationCap,
+  Mail,
+} from 'lucide-react'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { JsonLd } from '@/components/json-ld'
@@ -10,6 +19,9 @@ import { TeamAvatar } from '@/components/team/team-avatar'
 import {
   getAllTeamSlugs,
   getTeamMemberBySlug,
+  type CareerEntry,
+  type CertificationEntry,
+  type EducationEntry,
   type TeamMember,
 } from '@/data/team'
 
@@ -103,18 +115,18 @@ export default async function TeamMemberPage({ params }: RouteParams) {
     .filter(Boolean)
 
   // TOC bullets. Only show accordion entries that actually have content.
+  // Knowledge + Events sections removed per client spec (June 2026).
+  // Experience accordion now renders careerHistory (LinkedIn-style).
   const tocItems: Array<{ id: string; label: string }> = [
     { id: 'overview', label: 'Overview' },
   ]
   if (member.specialties.length) tocItems.push({ id: 'related-services', label: 'Related Services' })
   if (member.achievements.length) tocItems.push({ id: 'achievements', label: 'Achievements' })
-  if (member.marketsCovered.length) tocItems.push({ id: 'experience', label: 'Experience' })
-  if (member.careerHistory.length || member.education.length) {
+  if (member.careerHistory.length) tocItems.push({ id: 'experience', label: 'Experience' })
+  if (member.education.length || member.certifications.length) {
     tocItems.push({ id: 'career-education', label: 'Career & Education' })
   }
-  if (member.knowledge.length) tocItems.push({ id: 'knowledge', label: 'Knowledge' })
   if (member.publications.length) tocItems.push({ id: 'publications', label: 'Publications' })
-  if (member.events.length) tocItems.push({ id: 'events', label: 'Events' })
 
   return (
     <main className="bg-white">
@@ -144,64 +156,54 @@ export default async function TeamMemberPage({ params }: RouteParams) {
                 {member.role}
               </p>
 
-              {/* Quote with red quotation marks */}
+              {/* Quote with red quotation marks — tight against the
+                  sentence per client spec (June 2026). Marks are inline,
+                  not absolutely positioned, so they sit flush. */}
               {member.quote && (
-                <blockquote className="relative mt-8 max-w-xl text-[15px] leading-[1.7] text-brand-navy/85 sm:text-base">
-                  <span
-                    aria-hidden="true"
-                    className="absolute -left-1 -top-2 font-display text-3xl leading-none text-[#B33A2E]"
-                  >
-                    “
-                  </span>
-                  <span className="block px-5">{member.quote}</span>
-                  <span
-                    aria-hidden="true"
-                    className="ml-2 inline-block translate-y-2 font-display text-3xl leading-none text-[#B33A2E]"
-                  >
-                    ”
-                  </span>
+                <blockquote className="mt-8 max-w-xl text-[15px] leading-[1.7] text-brand-navy/85 sm:text-base">
+                  <p>
+                    <span
+                      aria-hidden="true"
+                      className="mr-1 font-display text-2xl leading-none text-[#B33A2E]"
+                    >
+                      &ldquo;
+                    </span>
+                    {member.quote}
+                    <span
+                      aria-hidden="true"
+                      className="ml-0.5 font-display text-2xl leading-none text-[#B33A2E]"
+                    >
+                      &rdquo;
+                    </span>
+                  </p>
                 </blockquote>
               )}
 
-              {/* Horizontal data table — JURISDICTION / LANGUAGES / OFFICE / CONTACT */}
+              {/* Horizontal data table — JURISDICTION / LANGUAGES /
+                  CONTACT (email only) per client spec (June 2026). The
+                  former Office(s), Phone, and Licence rows have been
+                  removed; Call action button removed as well. */}
               <dl className="mt-10 divide-y divide-brand-navy/15 border-y border-brand-navy/15">
                 <DataRow label="Jurisdiction">
-                  {member.office}, {member.joinedYear}
+                  {member.province}, {member.country}
                 </DataRow>
                 <DataRow label="Language(s)">
                   <span className="text-brand-gold-dark">
                     {member.languages.join(', ')}
                   </span>
                 </DataRow>
-                <DataRow label="Office(s)">{member.office}</DataRow>
                 <DataRow label="Contact">
-                  <div className="grid grid-cols-[5rem_1fr] gap-x-3 gap-y-1.5">
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-navy/60">
-                      Business
-                    </span>
-                    <a
-                      href={`tel:${member.phone.replace(/\s/g, '')}`}
-                      className="text-brand-navy hover:text-brand-emerald"
-                    >
-                      {member.phone}
-                    </a>
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-navy/60">
-                      Email
-                    </span>
-                    <a
-                      href={`mailto:${member.email}`}
-                      className="truncate text-brand-emerald underline-offset-2 hover:underline"
-                    >
-                      {member.email}
-                    </a>
-                  </div>
+                  <a
+                    href={`mailto:${member.email}`}
+                    className="truncate text-brand-emerald underline-offset-2 hover:underline"
+                  >
+                    {member.email}
+                  </a>
                 </DataRow>
-                {member.licenseNumber && (
-                  <DataRow label="Licence">{member.licenseNumber}</DataRow>
-                )}
               </dl>
 
-              {/* Action buttons */}
+              {/* Action buttons — Email is primary; LinkedIn when present.
+                  The Call button has been removed per client spec. */}
               <div className="mt-8 flex flex-wrap gap-3">
                 <a
                   href={`mailto:${member.email}`}
@@ -209,13 +211,6 @@ export default async function TeamMemberPage({ params }: RouteParams) {
                 >
                   <Mail className="size-4" aria-hidden="true" />
                   Email {member.name.split(' ')[0]}
-                </a>
-                <a
-                  href={`tel:${member.phone.replace(/\s/g, '')}`}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-brand-navy/25 bg-white px-5 py-3 text-sm font-semibold text-brand-navy transition-all hover:border-brand-navy/40 hover:bg-white/90"
-                >
-                  <Phone className="size-4 text-brand-emerald" aria-hidden="true" />
-                  Call
                 </a>
                 {member.linkedinUrl && (
                   <a
@@ -307,109 +302,56 @@ export default async function TeamMemberPage({ params }: RouteParams) {
                 </AccordionSection>
               )}
 
-              {member.marketsCovered.length > 0 && (
+              {/* Experience — LinkedIn-style work-history cards.
+                  Per client spec (June 2026): logo on the left, role +
+                  company + bullets on the right. NO duration shown. */}
+              {member.careerHistory.length > 0 && (
                 <AccordionSection id="experience" title="Experience">
-                  <p className="text-sm leading-relaxed text-slate-700">
-                    Active across the following markets:
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {member.marketsCovered.map((m) => (
-                      <span
-                        key={m}
-                        className="inline-flex items-center rounded-full border border-brand-navy/15 bg-white px-3 py-1.5 text-xs font-semibold text-brand-navy"
-                      >
-                        {m}
-                      </span>
-                    ))}
-                  </div>
-                </AccordionSection>
-              )}
-
-              {(member.careerHistory.length > 0 ||
-                member.education.length > 0) && (
-                <AccordionSection
-                  id="career-education"
-                  title="Career & Education"
-                >
-                  {member.careerHistory.length > 0 && (
-                    <div>
-                      <h4 className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-navy/60">
-                        Career
-                      </h4>
-                      <ul className="mt-4 space-y-4">
-                        {member.careerHistory.map((entry, i) => (
-                          <li
-                            key={i}
-                            className="grid grid-cols-[8rem_1fr] gap-x-4 border-l-2 border-[#B33A2E]/70 pl-4 text-sm sm:grid-cols-[10rem_1fr]"
-                          >
-                            <span className="font-semibold text-brand-navy/80">
-                              {entry.year}
-                            </span>
-                            <span className="text-slate-700">
-                              <span className="block font-semibold text-brand-navy">
-                                {entry.role}
-                              </span>
-                              <span className="text-slate-600">
-                                {entry.organization}
-                              </span>
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {member.education.length > 0 && (
-                    <div className="mt-8">
-                      <h4 className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-navy/60">
-                        Education
-                      </h4>
-                      <ul className="mt-4 space-y-3">
-                        {member.education.map((e, i) => (
-                          <li
-                            key={i}
-                            className="grid grid-cols-[8rem_1fr] gap-x-4 text-sm sm:grid-cols-[10rem_1fr]"
-                          >
-                            <span className="font-semibold text-brand-navy/80">
-                              {e.year}
-                            </span>
-                            <span className="text-slate-700">
-                              <span className="block font-semibold text-brand-navy">
-                                {e.degree}
-                              </span>
-                              <span className="text-slate-600">{e.school}</span>
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </AccordionSection>
-              )}
-
-              {member.knowledge.length > 0 && (
-                <AccordionSection id="knowledge" title="Knowledge">
-                  <p className="text-sm leading-relaxed text-slate-700">
-                    Topics and disciplines this team member writes, advises,
-                    and teaches on.
-                  </p>
-                  <ul className="mt-4 grid grid-cols-1 gap-x-10 gap-y-3 sm:grid-cols-2">
-                    {member.knowledge.map((k) => (
-                      <li
-                        key={k}
-                        className="flex items-start gap-3 text-sm leading-relaxed text-slate-700"
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="mt-2 inline-block size-1.5 shrink-0 rounded-full bg-[#B33A2E]"
-                        />
-                        <span>{k}</span>
-                      </li>
+                  <ul className="space-y-7">
+                    {member.careerHistory.map((entry, i) => (
+                      <ExperienceCard key={i} entry={entry} />
                     ))}
                   </ul>
                 </AccordionSection>
               )}
 
+              {/* Career & Education — Education degrees + certifications.
+                  Per client spec (June 2026): LinkedIn-style cards. */}
+              {(member.education.length > 0 ||
+                member.certifications.length > 0) && (
+                <AccordionSection
+                  id="career-education"
+                  title="Career & Education"
+                >
+                  {member.education.length > 0 && (
+                    <div>
+                      <h4 className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-navy/60">
+                        Education
+                      </h4>
+                      <ul className="mt-5 space-y-5">
+                        {member.education.map((e, i) => (
+                          <EducationCard key={i} entry={e} />
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {member.certifications.length > 0 && (
+                    <div className={member.education.length > 0 ? 'mt-9' : ''}>
+                      <h4 className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-navy/60">
+                        Licenses &amp; certifications
+                      </h4>
+                      <ul className="mt-5 space-y-5">
+                        {member.certifications.map((c, i) => (
+                          <CertificationCard key={i} entry={c} />
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </AccordionSection>
+              )}
+
+              {/* Publications — only renders if the member has any. */}
               {member.publications.length > 0 && (
                 <AccordionSection id="publications" title="Publications">
                   <ul className="space-y-5">
@@ -428,29 +370,6 @@ export default async function TeamMemberPage({ params }: RouteParams) {
                           <span className="italic text-slate-600">
                             {p.publisher}
                           </span>
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </AccordionSection>
-              )}
-
-              {member.events.length > 0 && (
-                <AccordionSection id="events" title="Events">
-                  <ul className="space-y-5">
-                    {member.events.map((e, i) => (
-                      <li
-                        key={i}
-                        className="grid grid-cols-[4rem_1fr] gap-x-4 text-sm sm:grid-cols-[5rem_1fr]"
-                      >
-                        <span className="font-semibold text-brand-navy/80">
-                          {e.year}
-                        </span>
-                        <span className="text-slate-700">
-                          <span className="block font-semibold text-brand-navy">
-                            {e.title}
-                          </span>
-                          <span className="text-slate-600">{e.event}</span>
                         </span>
                       </li>
                     ))}
@@ -481,31 +400,9 @@ export default async function TeamMemberPage({ params }: RouteParams) {
                   </ul>
                 </nav>
 
-                {/* Quick contact card under the TOC */}
-                <div className="mt-10 rounded-sm border border-brand-navy/10 bg-[#FBFAF6] p-6">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
-                    Direct line
-                  </p>
-                  <p className="mt-3 font-display text-xl font-normal leading-snug text-brand-navy">
-                    No call centres. Reach {member.name.split(' ')[0]} directly.
-                  </p>
-                  <div className="mt-5 space-y-3 text-sm">
-                    <a
-                      href={`tel:${member.phone.replace(/\s/g, '')}`}
-                      className="flex items-center gap-2 text-brand-navy hover:text-brand-emerald"
-                    >
-                      <Phone className="size-4 text-brand-gold" aria-hidden="true" />
-                      <span className="font-semibold">{member.phone}</span>
-                    </a>
-                    <a
-                      href={`mailto:${member.email}`}
-                      className="flex items-center gap-2 text-brand-emerald hover:underline"
-                    >
-                      <Mail className="size-4 text-brand-gold" aria-hidden="true" />
-                      <span className="truncate">{member.email}</span>
-                    </a>
-                  </div>
-                </div>
+                {/* The sidebar "Direct line" contact card was removed
+                    per client spec (June 2026). Email is reachable from
+                    the hero action button and the Contact data row. */}
               </div>
             </aside>
           </div>
@@ -579,5 +476,114 @@ function AccordionSection({
       </summary>
       <div className="pb-6 pt-2">{children}</div>
     </details>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// LinkedIn-style cards used in the Experience and Career & Education
+// accordions. Per client spec (June 2026) — no duration displayed.
+// Each card: square logo tile on the left, title + secondary line on
+// the right, optional bullet points underneath.
+// ─────────────────────────────────────────────────────────────────────
+
+function MonogramTile({
+  label,
+  imageUrl,
+  fallbackIcon: FallbackIcon,
+}: {
+  label: string
+  imageUrl?: string | null
+  fallbackIcon: React.ComponentType<{ className?: string; 'aria-hidden'?: boolean }>
+}) {
+  if (imageUrl) {
+    return (
+      <span className="relative size-12 shrink-0 overflow-hidden rounded-sm border border-brand-navy/10 bg-white p-1">
+        <Image
+          src={imageUrl}
+          alt={`${label} logo`}
+          fill
+          sizes="48px"
+          className="object-contain"
+          unoptimized
+        />
+      </span>
+    )
+  }
+  // Fallback: subtle tile with an icon — preserves the LinkedIn layout
+  // even when no logo URL is provided in the data file.
+  return (
+    <span
+      aria-hidden="true"
+      className="flex size-12 shrink-0 items-center justify-center rounded-sm border border-brand-navy/10 bg-[#FBFAF6]"
+    >
+      <FallbackIcon className="size-5 text-brand-navy/55" aria-hidden />
+    </span>
+  )
+}
+
+function ExperienceCard({ entry }: { entry: CareerEntry }) {
+  return (
+    <li className="flex gap-4 sm:gap-5">
+      <MonogramTile
+        label={entry.organization}
+        imageUrl={entry.companyLogoUrl}
+        fallbackIcon={Briefcase}
+      />
+      <div className="min-w-0 flex-1">
+        <p className="font-semibold text-brand-navy">{entry.role}</p>
+        <p className="text-sm text-slate-600">{entry.organization}</p>
+        {entry.bullets && entry.bullets.length > 0 && (
+          <ul className="mt-3 space-y-2">
+            {entry.bullets.map((b, j) => (
+              <li
+                key={j}
+                className="flex items-start gap-2.5 text-sm leading-relaxed text-slate-700"
+              >
+                <span
+                  aria-hidden="true"
+                  className="mt-2 inline-block size-1.5 shrink-0 rounded-full bg-[#B33A2E]"
+                />
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </li>
+  )
+}
+
+function EducationCard({ entry }: { entry: EducationEntry }) {
+  return (
+    <li className="flex gap-4 sm:gap-5">
+      <MonogramTile
+        label={entry.school}
+        imageUrl={entry.schoolLogoUrl}
+        fallbackIcon={GraduationCap}
+      />
+      <div className="min-w-0 flex-1">
+        <p className="font-semibold text-brand-navy">{entry.school}</p>
+        <p className="text-sm text-slate-600">{entry.degree}</p>
+      </div>
+    </li>
+  )
+}
+
+function CertificationCard({ entry }: { entry: CertificationEntry }) {
+  return (
+    <li className="flex gap-4 sm:gap-5">
+      <MonogramTile
+        label={entry.issuer}
+        imageUrl={entry.issuerLogoUrl}
+        fallbackIcon={Award}
+      />
+      <div className="min-w-0 flex-1">
+        <p className="font-semibold text-brand-navy">{entry.name}</p>
+        <p className="text-sm text-slate-600">{entry.issuer}</p>
+        {entry.year && (
+          <p className="mt-1 text-xs text-slate-500">Issued {entry.year}</p>
+        )}
+      </div>
+    </li>
   )
 }

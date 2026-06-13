@@ -1,227 +1,413 @@
-"use client";
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import {
+  ArrowRight,
+  Briefcase,
+  Globe2,
+  HeartHandshake,
+  Laptop2,
+  LineChart,
+  MapPin,
+  Sparkles,
+  Star,
+  Users,
+} from 'lucide-react'
 
-import { useState } from "react";
-import Link from "next/link";
-import { ArrowRight, MapPin, Briefcase, CheckCircle2, Users, TrendingUp, Globe, Star } from "lucide-react";
+import { getRolesByRegion, ROLES } from '@/data/careers'
 
-interface ModalProps {
-  role: string;
-  onClose: () => void;
-}
+/* ═══════════════════════════════════════════════════════════════════
+   MoveSmart Rentals — Careers landing page
+   Per client direction (June 2026):
+     • Reframed copy to "North America" (CA + US).
+     • Sections: Hero, Our Culture, Benefits, Hybrid Work, Teams,
+       Community, Open positions (Province/State → City → Role).
+     • Role data lives in src/data/careers.ts.
+     • Clicking a role navigates to /careers/<slug>/ for the detail
+       page (GE Vernova-style layout). Modal application has moved
+       to the detail page so this listing can be a server component.
+   ═══════════════════════════════════════════════════════════════════ */
 
-function ApplyModal({ role, onClose }: ModalProps) {
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [errorMsg, setErrorMsg] = useState("");
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setStatus("loading");
-    const fd = new FormData(e.currentTarget);
-    const payload = {
-      role,
-      firstName: fd.get("firstName"),
-      lastName: fd.get("lastName"),
-      email: fd.get("email"),
-      phone: fd.get("phone"),
-      linkedin: fd.get("linkedin"),
-      resumeUrl: fd.get("resumeUrl"),
-      whyYou: fd.get("whyYou"),
-      referral: fd.get("referral"),
-    };
-    try {
-      const res = await fetch("/api/careers-apply", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (res.ok) {
-        setStatus("success");
-      } else {
-        const data = await res.json();
-        setErrorMsg(data.error || "Something went wrong.");
-        setStatus("error");
-      }
-    } catch {
-      setErrorMsg("Network error. Please try again.");
-      setStatus("error");
-    }
-  }
-
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--brand-navy)]/70 backdrop-blur-sm"
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-    >
-      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl">
-        <div className="sticky top-0 flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-white rounded-t-2xl z-10">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--brand-emerald)]">Apply Now</p>
-            <h2 className="mt-0.5 text-[18px] font-bold text-[var(--brand-navy)]">{role}</h2>
-          </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-[var(--brand-navy)] p-1 transition-colors" aria-label="Close">
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-          </button>
-        </div>
-        {status === "success" ? (
-          <div className="flex flex-col items-center justify-center gap-4 p-10 text-center">
-            <CheckCircle2 className="h-12 w-12 text-[var(--brand-emerald)]" />
-            <h3 className="text-xl font-bold text-[var(--brand-navy)]">Application received</h3>
-            <p className="text-slate-600 text-sm max-w-sm">Thank you for applying to the {role} position at MoveSmart Rentals. We will be in touch within 5 business days.</p>
-            <button onClick={onClose} className="mt-2 px-6 py-3 bg-[var(--brand-navy)] text-white rounded-full text-sm font-semibold hover:bg-[var(--brand-navy-light)] transition-colors">Close</button>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="p-6 space-y-5">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div><label className="block text-xs font-semibold text-slate-600 mb-1.5">First Name <span className="text-red-500">*</span></label><input name="firstName" required className="w-full border border-slate-200 rounded-lg bg-slate-50 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]" placeholder="Jane" /></div>
-              <div><label className="block text-xs font-semibold text-slate-600 mb-1.5">Last Name <span className="text-red-500">*</span></label><input name="lastName" required className="w-full border border-slate-200 rounded-lg bg-slate-50 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]" placeholder="Smith" /></div>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div><label className="block text-xs font-semibold text-slate-600 mb-1.5">Email <span className="text-red-500">*</span></label><input name="email" type="email" required className="w-full border border-slate-200 rounded-lg bg-slate-50 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]" placeholder="you@email.com" /></div>
-              <div><label className="block text-xs font-semibold text-slate-600 mb-1.5">Phone</label><input name="phone" type="tel" className="w-full border border-slate-200 rounded-lg bg-slate-50 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]" placeholder="+1 416 555 0100" /></div>
-            </div>
-            <div><label className="block text-xs font-semibold text-slate-600 mb-1.5">LinkedIn Profile URL</label><input name="linkedin" type="url" className="w-full border border-slate-200 rounded-lg bg-slate-50 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]" placeholder="https://linkedin.com/in/yourprofile" /></div>
-            <div><label className="block text-xs font-semibold text-slate-600 mb-1.5">Resume URL (Google Drive, Dropbox, etc.)</label><input name="resumeUrl" type="url" className="w-full border border-slate-200 rounded-lg bg-slate-50 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]" placeholder="https://drive.google.com/..." /></div>
-            <div><label className="block text-xs font-semibold text-slate-600 mb-1.5">Why do you want this role? <span className="text-slate-400 font-normal">(optional)</span></label><textarea name="whyYou" rows={3} className="w-full border border-slate-200 rounded-lg bg-slate-50 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)] resize-none" placeholder="What draws you to this position..." /></div>
-            <div><label className="block text-xs font-semibold text-slate-600 mb-1.5">How did you hear about us?</label><select name="referral" className="w-full border border-slate-200 rounded-lg bg-slate-50 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"><option value="">Select one</option><option>Google Search</option><option>LinkedIn</option><option>Indeed</option><option>Referral</option><option>Other</option></select></div>
-            {status === "error" && <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{errorMsg}</p>}
-            <button type="submit" disabled={status === "loading"} className="w-full py-3 bg-[var(--brand-emerald)] text-white rounded-full text-sm font-bold hover:bg-[var(--brand-emerald-hover)] transition-colors disabled:opacity-60 flex items-center justify-center gap-2">
-              {status === "loading" ? "Submitting..." : "Submit Application"}
-            </button>
-          </form>
-        )}
-      </div>
-    </div>
-  );
+export const metadata: Metadata = {
+  title:
+    'Careers | Join the MoveSmart Rentals Leasing Team Across North America',
+  description:
+    'Open roles at MoveSmart Rentals across Canada and the United States. Leasing, operations, marketing, property management, and trade roles. Apply directly.',
+  alternates: { canonical: '/careers/' },
+  openGraph: {
+    title: 'Careers | MoveSmart Rentals',
+    description:
+      'Join the team building a better rental market across North America. Open roles in leasing, operations, marketing, property management, and trades.',
+    images: ['/og-default.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Careers | MoveSmart Rentals',
+    description:
+      'Join the team building a better rental market across North America.',
+  },
 }
 
 const WHY_JOIN = [
-  { Icon: TrendingUp, title: "Scale your career with us", body: "MoveSmart is expanding across North America. The team you join today will be 10x the size in 3 years." },
-  { Icon: Globe, title: "US and Canadian markets", body: "Work across both sides of the border. Toronto is our home base, but Florida, New York, and Chicago are active markets." },
-  { Icon: Users, title: "Landlord-first culture", body: "We take property management seriously. Our team understands the institutional side of the rental market." },
-  { Icon: Star, title: "Performance-backed comp", body: "Strong base salaries, clear performance metrics, and real upside for people who hit their numbers." },
-];
+  {
+    Icon: LineChart,
+    title: 'Scale your career with us',
+    body: 'MoveSmart is expanding across North America. The team you join today will be many times the size in three years.',
+  },
+  {
+    Icon: Globe2,
+    title: 'North American markets',
+    body: 'Work across Canada and the United States. Toronto is our home base, with active US markets including Florida, New York, and Illinois.',
+  },
+  {
+    Icon: Users,
+    title: 'Landlord-first culture',
+    body: 'We take property management seriously. Our team understands the institutional side of the rental market as deeply as the renter side.',
+  },
+  {
+    Icon: Star,
+    title: 'Performance-backed comp',
+    body: 'Strong base salaries, clear performance metrics, and real upside for people who hit their numbers.',
+  },
+]
 
-const JOBS = [
+const BENEFITS = [
   {
-    title: "Senior Leasing Agent",
-    location: "Toronto / Vaughan / Mississauga",
-    type: "Full-time",
-    summary: "You will manage the full leasing cycle for a portfolio of residential properties across the GTA. That means fielding inbound leads, conducting showings, screening tenants, and getting leases signed. You work with property managers to ensure a smooth handoff at move-in. Most of your book will be multifamily and purpose-built rental units.",
-    requirements: ["3 or more years of residential leasing experience in the GTA", "RECO registration current", "Track record of meeting or exceeding leasing targets", "Comfort with digital tools for lead management and application processing"],
-    compensation: "$55,000 to $75,000 base plus leasing incentives",
+    Icon: Sparkles,
+    title: 'Competitive comp and benefits',
+    body: 'Competitive base salaries, retirement savings programs, and performance incentives across every role.',
   },
   {
-    title: "Property Manager",
-    location: "Florida",
-    type: "Full-time",
-    summary: "You will manage a portfolio of residential properties across our Florida markets. Day-to-day responsibilities include tenant relations, maintenance coordination, rent collection, and lease renewals. You are the primary point of contact for both landlords and tenants on your portfolio.",
-    requirements: ["Florida real estate license (active)", "3 or more years of property management experience in Florida", "Familiarity with Florida landlord-tenant law and the eviction process", "Strong organizational skills and comfort managing 100 or more units"],
-    compensation: "$60,000 to $80,000 base",
+    Icon: HeartHandshake,
+    title: 'Health, dental, and wellness',
+    body: 'Comprehensive health and dental coverage, mental-wellness support, and an annual wellness allowance.',
   },
   {
-    title: "Tenant Placement Coordinator",
-    location: "Remote, North America",
-    type: "Full-time",
-    summary: "You will coordinate tenant placement activity across our Canadian and US markets. That means managing the lead-to-lease workflow: fielding inbound applications, scheduling showings, running background checks, and working with local leasing agents to close placements. This is a remote coordination role, not a field role.",
-    requirements: ["2 or more years in property management, leasing, or tenant services", "Strong written and verbal communication skills", "Comfortable working across multiple markets and time zones", "Detail-oriented with strong follow-through on open items"],
-    compensation: "$50,000 to $65,000 base",
+    Icon: Sparkles,
+    title: 'Learning and certification',
+    body: 'Educational reimbursement and professional designation fee coverage. We invest in licenses, certifications, and skills.',
+  },
+]
+
+const HYBRID = [
+  {
+    Icon: Users,
+    title: 'We value in-person connections',
+    body: 'When we are together, we build real relationships, foster cross-collaboration, and move faster as a team.',
   },
   {
-    title: "Marketing Coordinator",
-    location: "Toronto, ON",
-    type: "Full-time",
-    summary: "You will own listings marketing and digital presence for our active portfolio. That means writing listings copy, coordinating photography, managing platforms like Zillow, Rentals.ca, and Facebook Marketplace, and running targeted paid campaigns to drive qualified leads to our leasing team.",
-    requirements: ["2 or more years in marketing, ideally with real estate or property management exposure", "Strong writing skills: you produce listings copy that converts", "Familiarity with major rental listing platforms and social ads", "Organized, proactive, and comfortable with a fast-moving pipeline"],
-    compensation: "$50,000 to $65,000 base",
+    Icon: LineChart,
+    title: 'We challenge the status quo',
+    body: 'Being together turns good ideas into real products and creates the mentorship that helps our people grow.',
   },
   {
-    title: "Director of Leasing Operations",
-    location: "Toronto, ON",
-    type: "Full-time",
-    summary: "You will build and lead our leasing function across North America. That means managing the leasing team, setting process and performance standards, building our landlord acquisition strategy, and working with the broader leadership team on portfolio growth. This is a key hire for MoveSmart and a builder role.",
-    requirements: ["8 or more years in residential leasing or property management, with 3 or more years managing a team", "Track record of building leasing operations from scratch or scaling an existing team significantly", "Deep understanding of North American rental markets, both GTA and major US metros", "Commercially minded with strong analytical instincts and reporting discipline"],
-    compensation: "$110,000 to $145,000 base plus performance bonus",
+    Icon: Laptop2,
+    title: 'The right tech to bring people together',
+    body: 'Modern collaboration tools across every office and every remote workstation, so hybrid teams stay heard and included.',
   },
-];
+]
+
+const TEAMS = [
+  {
+    title: 'Business and Support Services',
+    body: 'Work collaboratively to launch products and services, manage operations, and run the projects that keep our owner-files moving. Marketing, brokerage ops, finance, people and culture, legal, and risk.',
+  },
+  {
+    title: 'Client Service and Sales',
+    body: 'Deliver service that helps Canadian and American renters and landlords find their next placement. You are the voice of MoveSmart on every interaction.',
+  },
+  {
+    title: 'Leasing and Real Estate Agents',
+    body: 'Licensed leasing agents and real estate agents on the ground in our markets. You run showings, qualify tenants, and close placements for landlords across North America.',
+  },
+  {
+    title: 'Engineering and Technology',
+    body: 'The technology our customers rely on is built and maintained in-house. Software engineering, data, AI, and platform reliability.',
+  },
+  {
+    title: 'Trades and Field Services',
+    body: 'Handy workers and technicians who keep our portfolio in showing-ready condition. Move-in prep, turnover work, and on-site visits for owners.',
+  },
+  {
+    title: 'Students and Interns',
+    body: 'Internships and co-op placements across operations, marketing, technology, and the trades. Reach out at careers@movesmartrentals.com.',
+  },
+]
 
 export default function CareersPage() {
-  const [activeRole, setActiveRole] = useState<string | null>(null);
+  const jobsByRegion = getRolesByRegion()
+  const totalRoles = ROLES.length
 
   return (
     <>
-      {/* Hero */}
-      <section className="bg-[var(--brand-navy)] text-white py-20 md:py-28">
-        <div className="max-w-5xl mx-auto px-6">
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--brand-emerald)] mb-4">Careers</p>
-          <h1 className="text-4xl md:text-5xl font-bold text-white text-balance leading-tight">
-            Join the team building a better rental market.
+      {/* ── Hero ────────────────────────────────────────────────── */}
+      <section className="bg-[var(--brand-navy)] py-20 text-white md:py-28">
+        <div className="mx-auto max-w-5xl px-6">
+          <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--brand-emerald)]">
+            Careers
+          </p>
+          <h1 className="text-balance text-4xl font-bold leading-tight text-white md:text-5xl">
+            Join the team building a better rental market across North America.
           </h1>
-          <p className="mt-6 text-lg text-white/80 max-w-2xl">
-            MoveSmart Rentals connects landlords and tenants across Canada and the United States. We are a team of operators who take property management seriously and move fast.
+          <p className="mt-6 max-w-2xl text-lg text-white/80">
+            MoveSmart Rentals connects landlords and tenants across Canada and
+            the United States. We are a team of operators who take property
+            management seriously and move fast.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#positions" className="inline-flex items-center gap-2 bg-[var(--brand-emerald)] text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-[var(--brand-emerald-hover)] transition-colors">
+            <a
+              href="#positions"
+              className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-emerald)] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[var(--brand-emerald-hover)]"
+            >
               See open positions <ArrowRight className="h-4 w-4" />
             </a>
-            <a href="mailto:careers@movesmartrentals.com" className="inline-flex items-center gap-2 border border-white/30 text-white px-6 py-3 rounded-full font-semibold text-sm hover:border-white/60 transition-colors">
+            <a
+              href="mailto:careers@movesmartrentals.com"
+              className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/60"
+            >
               General application
             </a>
           </div>
         </div>
       </section>
 
-      {/* Why join */}
-      <section className="py-16 bg-slate-50">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="mb-10">
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--brand-emerald)] mb-2">Why MoveSmart</p>
-            <h2 className="text-3xl font-bold text-[var(--brand-navy)]">We are building something real.</h2>
+      {/* ── Our Culture ─────────────────────────────────────────── */}
+      <section className="bg-white py-16 md:py-20">
+        <div className="mx-auto grid max-w-5xl gap-10 px-6 lg:grid-cols-2 lg:items-center">
+          <div>
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--brand-emerald)]">
+              Our culture
+            </p>
+            <h2 className="text-3xl font-bold leading-tight text-[var(--brand-navy)] md:text-4xl">
+              People are{' '}
+              <span className="text-[var(--brand-emerald)]">the key</span> to
+              our success.
+            </h2>
+            <p className="mt-6 text-base leading-relaxed text-slate-600">
+              We are a highly collaborative team that cares deeply about our
+              mission and each other. You will conquer challenges, push
+              boundaries, and discover what you are truly capable of.
+            </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {WHY_JOIN.map(({ Icon, title, body }) => (
-              <div key={title} className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
-                <Icon className="h-6 w-6 text-[var(--brand-emerald)] mb-4" strokeWidth={1.5} />
-                <h3 className="text-base font-bold text-[var(--brand-navy)] mb-1.5">{title}</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">{body}</p>
+              <div
+                key={title}
+                className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm"
+              >
+                <Icon
+                  className="mb-3 h-5 w-5 text-[var(--brand-emerald)]"
+                  strokeWidth={1.5}
+                />
+                <h3 className="text-sm font-bold text-[var(--brand-navy)]">
+                  {title}
+                </h3>
+                <p className="mt-1 text-xs leading-relaxed text-slate-600">
+                  {body}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Job listings */}
-      <section id="positions" className="py-16 md:py-24 bg-white">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="mb-10">
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--brand-emerald)] mb-2">Open positions</p>
-            <h2 className="text-3xl font-bold text-[var(--brand-navy)]">Five roles open right now.</h2>
+      {/* ── Benefits ────────────────────────────────────────────── */}
+      <section className="bg-slate-50 py-16 md:py-20">
+        <div className="mx-auto max-w-5xl px-6">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--brand-emerald)]">
+            Our benefits
+          </p>
+          <h2 className="text-3xl font-bold leading-tight text-[var(--brand-navy)] md:text-4xl">
+            Here are some of the reasons why people{' '}
+            <span className="text-[var(--brand-emerald)]">love working</span> at
+            MoveSmart.
+          </h2>
+          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
+            {BENEFITS.map(({ Icon, title, body }) => (
+              <div key={title} className="text-center sm:text-left">
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--brand-emerald)]/10 ring-1 ring-[var(--brand-emerald)]/15">
+                  <Icon
+                    className="h-6 w-6 text-[var(--brand-emerald)]"
+                    strokeWidth={1.6}
+                  />
+                </span>
+                <h3 className="mt-5 text-base font-bold text-[var(--brand-navy)]">
+                  {title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  {body}
+                </p>
+              </div>
+            ))}
           </div>
-          <div className="space-y-4">
-            {JOBS.map((job) => (
-              <div key={job.title} className="rounded-2xl border border-slate-100 bg-white p-6 md:p-8 shadow-sm hover:border-[var(--brand-emerald)]/30 transition-colors">
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-[var(--brand-navy)]">{job.title}</h3>
-                    <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-slate-500 uppercase tracking-wide">
-                      <span className="flex items-center gap-1"><MapPin className="h-3.5 w-3.5" />{job.location}</span>
-                      <span className="flex items-center gap-1"><Briefcase className="h-3.5 w-3.5" />{job.type}</span>
-                      <span className="text-[var(--brand-emerald)] font-bold">{job.compensation}</span>
+          <p className="mt-10 text-center text-xs italic text-slate-500">
+            Benefits may vary by country.
+          </p>
+        </div>
+      </section>
+
+      {/* ── Hybrid work ─────────────────────────────────────────── */}
+      <section className="bg-white py-16 md:py-20">
+        <div className="mx-auto max-w-5xl px-6">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--brand-emerald)]">
+            How we work
+          </p>
+          <h2 className="text-3xl font-bold leading-tight text-[var(--brand-navy)] md:text-4xl">
+            <span className="text-[var(--brand-emerald)]">Hybrid work</span> is
+            the future.
+          </h2>
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600">
+            Our balanced approach brings together people in person, fostering
+            teamwork and innovation, while maintaining the ability to work
+            from home.
+          </p>
+          <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-3">
+            {HYBRID.map(({ Icon, title, body }) => (
+              <div key={title}>
+                <Icon
+                  className="h-7 w-7 text-[var(--brand-emerald)]"
+                  strokeWidth={1.6}
+                />
+                <h3 className="mt-5 text-base font-bold text-[var(--brand-navy)]">
+                  {title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  {body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Teams: choose your path ─────────────────────────────── */}
+      <section className="bg-slate-50 py-16 md:py-20">
+        <div className="mx-auto max-w-5xl px-6">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--brand-emerald)]">
+            Teams
+          </p>
+          <h2 className="text-3xl font-bold leading-tight text-[var(--brand-navy)] md:text-4xl">
+            Choose{' '}
+            <span className="text-[var(--brand-emerald)]">your path</span> with
+            us.
+          </h2>
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600">
+            At MoveSmart, we are one team united by one mission. You bring
+            your talent, and we provide the tools you need to succeed in a
+            highly collaborative environment that will help you grow.
+          </p>
+          <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2">
+            {TEAMS.map((t) => (
+              <div
+                key={t.title}
+                className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm"
+              >
+                <h3 className="text-lg font-bold text-[var(--brand-navy)]">
+                  {t.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  {t.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Community / Charities ───────────────────────────────── */}
+      <section className="bg-white py-16 md:py-20">
+        <div className="mx-auto max-w-5xl px-6">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--brand-emerald)]">
+            Community
+          </p>
+          <h2 className="text-3xl font-bold leading-tight text-[var(--brand-navy)] md:text-4xl">
+            MoveSmart{' '}
+            <span className="text-[var(--brand-emerald)]">cares</span>.
+          </h2>
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600">
+            Our greatest value is caring for one another. We believe the most
+            important investment we can make is in each other. Our community
+            approach is to engage and support the cities we operate in,
+            including paid community-care days for our team.
+          </p>
+        </div>
+      </section>
+
+      {/* ── Open positions — Province / State → City → Role ────── */}
+      <section id="positions" className="bg-slate-50 py-16 md:py-24">
+        <div className="mx-auto max-w-5xl px-6">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--brand-emerald)]">
+            Open positions
+          </p>
+          <h2 className="text-3xl font-bold leading-tight text-[var(--brand-navy)] md:text-4xl">
+            {totalRoles} {totalRoles === 1 ? 'role' : 'roles'} open right now.
+          </h2>
+          <p className="mt-3 max-w-2xl text-sm text-slate-600">
+            Filtered by province or state, then city. Click a role to read the
+            full job description and apply.
+          </p>
+
+          <div className="mt-10 space-y-10">
+            {jobsByRegion.map((region) => (
+              <div
+                key={`${region.country}-${region.region}`}
+                className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm md:p-8"
+              >
+                {/* Region header */}
+                <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-slate-100 pb-4">
+                  <h3 className="flex items-center gap-2 text-xl font-bold text-[var(--brand-navy)]">
+                    <MapPin
+                      className="h-4 w-4 text-[var(--brand-emerald)]"
+                      aria-hidden="true"
+                    />
+                    {region.region}
+                  </h3>
+                  <span className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
+                    {region.country}
+                  </span>
+                </div>
+
+                {/* Cities */}
+                <div className="mt-6 space-y-7">
+                  {region.cities.map((city) => (
+                    <div key={city.city}>
+                      <h4 className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--brand-navy)]/65">
+                        {city.city}
+                      </h4>
+                      <ul className="mt-3 space-y-3">
+                        {city.roles.map((role) => (
+                          <li key={role.slug}>
+                            <Link
+                              href={`/careers/${role.slug}/`}
+                              className="group flex flex-col gap-2 rounded-xl border border-slate-100 bg-slate-50/60 p-4 transition-all hover:-translate-y-0.5 hover:border-[var(--brand-emerald)]/40 hover:bg-white hover:shadow-md md:flex-row md:items-center md:justify-between md:gap-6 md:p-5"
+                            >
+                              <div className="min-w-0 flex-1">
+                                <h5 className="text-base font-bold text-[var(--brand-navy)] transition-colors group-hover:text-[var(--brand-emerald)]">
+                                  {role.title}
+                                </h5>
+                                <div className="mt-2 flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-slate-500">
+                                  <span className="inline-flex items-center gap-1">
+                                    <Briefcase className="h-3.5 w-3.5" />
+                                    {role.type}
+                                  </span>
+                                  <span className="inline-flex items-center gap-1">
+                                    <MapPin className="h-3.5 w-3.5" />
+                                    {role.locationDisplay}
+                                  </span>
+                                  <span className="font-bold text-[var(--brand-emerald)]">
+                                    {role.compensation}
+                                  </span>
+                                </div>
+                              </div>
+                              <span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-bold text-[var(--brand-navy)] transition-colors group-hover:text-[var(--brand-emerald)]">
+                                View role
+                                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                              </span>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <p className="mt-4 text-sm text-slate-600 leading-relaxed max-w-2xl">{job.summary}</p>
-                    <ul className="mt-4 space-y-1.5">
-                      {job.requirements.map((req) => (
-                        <li key={req} className="flex items-start gap-2 text-xs text-slate-600">
-                          <span className="mt-0.5 h-1.5 w-1.5 rounded-full bg-[var(--brand-emerald)] flex-none" />
-                          {req}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="sm:ml-6 flex-none">
-                    <button onClick={() => setActiveRole(job.title)} className="inline-flex items-center gap-2 bg-[var(--brand-navy)] text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-[var(--brand-navy-light)] transition-colors whitespace-nowrap">
-                      Apply <ArrowRight className="h-4 w-4" />
-                    </button>
-                  </div>
+                  ))}
                 </div>
               </div>
             ))}
@@ -229,20 +415,30 @@ export default function CareersPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-16 bg-[var(--brand-navy)] text-white">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">No open role that fits?</h2>
-          <p className="text-white/80 text-base mb-8">We accept general applications year-round. Email us at{" "}
-            <a href="mailto:careers@movesmartrentals.com" className="text-[var(--brand-emerald)] underline">careers@movesmartrentals.com</a>
+      {/* ── Closing CTA ─────────────────────────────────────────── */}
+      <section className="bg-[var(--brand-navy)] py-16 text-white">
+        <div className="mx-auto max-w-3xl px-6 text-center">
+          <h2 className="mb-4 text-3xl font-bold text-white">
+            No open role that fits?
+          </h2>
+          <p className="mb-8 text-base text-white/80">
+            We accept general applications year-round. Email us at{' '}
+            <a
+              href="mailto:careers@movesmartrentals.com"
+              className="text-[var(--brand-emerald)] underline"
+            >
+              careers@movesmartrentals.com
+            </a>
+            .
           </p>
-          <Link href="/contact" className="inline-flex items-center gap-2 bg-[var(--brand-emerald)] text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-[var(--brand-emerald-hover)] transition-colors">
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-emerald)] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[var(--brand-emerald-hover)]"
+          >
             Contact us <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </section>
-
-      {activeRole && <ApplyModal role={activeRole} onClose={() => setActiveRole(null)} />}
     </>
-  );
+  )
 }

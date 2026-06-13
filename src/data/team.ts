@@ -69,12 +69,27 @@ export interface CareerEntry {
   year: string
   role: string
   organization: string
+  /** Optional company logo URL for LinkedIn-style Experience cards. */
+  companyLogoUrl?: string | null
+  /** Optional bullet points describing what the member did at this
+   *  organisation. Renders as a list under the role/company line. */
+  bullets?: string[]
 }
 
 export interface EducationEntry {
   degree: string
   school: string
   year: string
+  /** Optional school crest / logo URL for LinkedIn-style Education cards. */
+  schoolLogoUrl?: string | null
+}
+
+export interface CertificationEntry {
+  name: string
+  issuer: string
+  year: string
+  /** Optional issuer logo URL. */
+  issuerLogoUrl?: string | null
 }
 
 export interface PublicationEntry {
@@ -95,6 +110,10 @@ export interface TeamMember {
   role: string
   department: string
   office: string
+  /** Province (Canada) or state (US) — used in the Jurisdiction row. */
+  province: string
+  /** Country name — used in the Jurisdiction row. */
+  country: string
   email: string
   phone: string
   photoUrl: string | null
@@ -107,6 +126,9 @@ export interface TeamMember {
   marketsCovered: string[]
   careerHistory: CareerEntry[]
   education: EducationEntry[]
+  /** Licenses & certifications — separate from `licenseNumber` (which is
+   *  the single RECO-style number shown in the data table). */
+  certifications: CertificationEntry[]
   knowledge: string[]
   publications: PublicationEntry[]
   events: EventEntry[]
@@ -125,11 +147,167 @@ export const TEAM: TeamMember[] = [
   //  cleared to publish.
   // ─────────────────────────────────────────────────────────────────
   {
+    slug: 'kevin-liu',
+    name: 'Kevin Liu',
+    role: 'Director of Operations',
+    department: 'Operations',
+    office: 'Toronto',
+    province: 'Ontario',
+    country: 'Canada',
+    email: 'kevin@movesmartrentals.com',
+    phone: '+1 416 555 0109',
+    photoUrl: '/team/kevin-liu.jpg',
+    photoAlt: 'Kevin Liu, Director of Operations at MoveSmart Rentals',
+    quote:
+      'Operational performance is built on execution discipline. Nothing falls through the cracks when handoffs, SOPs, and KPIs are all working together.',
+    shortBio:
+      'Director of Operations at MoveSmart Rentals. Owns the operational performance of the leasing division across speed, quality, consistency, and client experience.',
+    longBio:
+      'Kevin leads operations across MoveSmart Rentals, with accountability for the operational performance of the leasing division: speed, quality, consistency, and client experience.\n\nHis remit covers execution discipline across teams and handoffs, SOPs and QA, KPI tracking and performance coaching, continuous improvement of the CRM pipeline and workflows, and the budgeting, forecasting, and capacity planning needed to scale volume without breaking quality.\n\nKevin joined MoveSmart from Embark Student Corp., where he held senior operations roles for over five years, and previously led customer operations at Element Fleet Management, Rogers Communications, and Bell.',
+    specialties: [
+      'Operational performance management',
+      'KPI tracking and performance coaching',
+      'SOPs, QA, and training reinforcement',
+      'CRM pipeline and workflow automation',
+      'Budgeting, forecasting, and capacity planning',
+      'Contact-centre and back-office operations',
+    ],
+    achievements: [
+      'Building the operational backbone of MoveSmart Rentals’ leasing division',
+      'At Embark: delivered the best sales months in 2024 every month since starting in the sales division',
+      'At Embark: implemented quality controls that improved processing errors by 50%',
+      'At Embark: created customer journey programmes that helped 500 additional grant customers per month',
+      'At Bell: improved deact rates by 6% YoY and productivity metrics by 10% leading retention operations',
+    ],
+    marketsCovered: ['Toronto', 'Greater Toronto Area', 'Ontario'],
+    careerHistory: [
+      {
+        year: '2026 to Present',
+        role: 'Director of Operations',
+        organization: 'MoveSmart Rentals',
+        bullets: [
+          'Overall operational performance of the leasing division (speed, quality, consistency, client experience)',
+          'Execution discipline across teams and handoffs (nothing falls through the cracks)',
+          'SOPs, QA, training reinforcement, and escalation systems that prevent repeat issues',
+          'KPI tracking, performance coaching, and accountability at the leadership level',
+          'Continuous improvement of our CRM pipeline, workflows, automations, and system reliability in partnership with tech',
+          'Budgeting, forecasting, and capacity planning to scale volume without breaking quality',
+        ],
+      },
+      {
+        year: '2024 to 2026',
+        role: 'Senior Operations Consultant',
+        organization: 'Embark Student Corp.',
+        bullets: [
+          'Reported directly to the Chief Customer Officer',
+          'Led tech-stack integration and transformation: unified desktop, Salesforce + Genesys connector, appointment-booking software integration',
+          'Sourced and deployed AI enhancements for telephony and CRM (co-pilots, bots, auto-attendants, auto-summarisation, predictive routing)',
+          'Built new Power BI dashboards at the department and employee level to track performance against targets',
+          'Built 2025 sales capacity plans to forecast staffing needs against the sales budget',
+          'Built out the sales and service leaders coaching guild (coaching models, disciplinary management, PIP templates)',
+        ],
+      },
+      {
+        year: '2022 to 2024',
+        role: 'Director of Operations',
+        organization: 'Element Fleet Management',
+        bullets: [
+          'Led a geographically dispersed team of customer-service professionals across a multi-channel contact-centre environment',
+          'Drove improvements to service delivery using Verint, data-driven methods, and Lean Six Sigma',
+          'Owned the annual budget, expenditure scheduling, variance analysis, and corrective actions',
+          'Led 100+ FTE managers and supervisors in a fast-paced, metric-driven remote workforce',
+        ],
+      },
+      {
+        year: '2021 to 2022',
+        role: 'Director of Operations',
+        organization: 'Embark Student Corp.',
+        bullets: [
+          'Promoted to Director of Operations, adding back-office processing, knowledge base & learning, document management, grants, and a brand-new customer success team to accountabilities',
+          'Implemented new workflows that improved transfer-in onboarding turnaround by 15 days',
+          'Implemented quality controls that improved processing errors by 50%',
+          'Sourced a vendor and rolled out a new knowledgebase system for the company',
+          'Created campaign initiatives across the customer journey, including NPS indicators by stage',
+        ],
+      },
+      {
+        year: '2017 to 2022',
+        role: 'Director, Customer Experience',
+        organization: 'Embark Student Corp.',
+        bullets: [
+          'Introduced client experience measures: service-level expectations, quality programme, abandon rates, speed of answer, and email turnaround times',
+          'Introduced WFM concepts for forecasting and staffing; delivered company-best SVLs in 2019',
+          'Brought in two new telephony systems, enabling live chat, screen sharing, and co-browsing',
+          'Closed a 25-year outsourcing relationship and insourced all contact centres for $600K annual savings and a CSAT lift',
+          'Introduced NPS to the company: 29% in year one (#2 in RESP industry, 2018) and 53% by 2020',
+          'Created a retention team and delivered $3.1M in first-year retained savings',
+        ],
+      },
+      {
+        year: '2014 to 2017',
+        role: 'Manager of Operations – The Shopping Channel',
+        organization: 'Rogers Communications',
+        bullets: [
+          'Managed 6 team supervisors and 160 employees across 8 departments',
+          'Redesigned the upsell program, driving YoY revenue from $1.6M (2013) to a $5.1M run-rate (2015)',
+          'Moved 90% of order queues to vendor, reducing OPEX by an average of $2 per call',
+          'Created scorecards across the business aligned to OPEX targets',
+        ],
+      },
+      {
+        year: '2009 to 2013',
+        role: 'Associate Director – Retention Operations',
+        organization: 'Bell',
+        bullets: [
+          'Led Ontario call-centre teams of 10 team leaders and 200+ non-management employees for Bell Mobility’s Consumer, Small Business, and Corporate Care segments',
+          'Delivered 6% YoY improvement in deact rates and 10% productivity lift',
+          'Improved Virgin Mobile reactive churn by 33% in the first 3 weeks of operations',
+          'Accountable for yearly labour and expense budget of over $14M',
+        ],
+      },
+      {
+        year: '1999 to 2009',
+        role: 'Associate Director – Consumer Direct Sales',
+        organization: 'Bell',
+        bullets: [
+          'Managed 4 team managers and 200 agents in Consumer direct sales',
+          'Partnered with marketing on pre-sales strategy that delivered a 35% increase in sales',
+          'Led the "hot leads" project to recover dropped calls in the transfer process',
+          'Built and executed the annual direct-channel budget',
+        ],
+      },
+    ],
+    education: [
+      {
+        degree: 'BBA, Marketing and Finance',
+        school: 'York University',
+        year: '',
+      },
+    ],
+    certifications: [
+      {
+        name: 'Lean Six Sigma White Belt',
+        issuer: 'Element Fleet Management',
+        year: 'Jul 2022',
+      },
+    ],
+    knowledge: [],
+    publications: [],
+    events: [],
+    languages: ['English'],
+    yearsExperience: 25,
+    joinedYear: 2026,
+    licenseNumber: null,
+    linkedinUrl: null,
+  },
+  {
     slug: 'anika-rao',
     name: 'Anika Rao',
     role: 'Head of Leasing Operations',
     department: 'Operations',
     office: 'Toronto',
+    province: 'Ontario',
+    country: 'Canada',
     email: 'anika@movesmartrentals.com',
     phone: '+1 416 555 0102',
     photoUrl: null,
@@ -172,6 +350,7 @@ export const TEAM: TeamMember[] = [
     events: [
       { title: 'Speaker, Operationalising the Owner-File', event: 'PMC Canada Annual Conference', year: '2025' },
     ],
+    certifications: [],
     languages: ['English', 'Hindi'],
     yearsExperience: 9,
     joinedYear: 2024,
@@ -184,6 +363,8 @@ export const TEAM: TeamMember[] = [
     role: 'Institutional Lease-Up Lead',
     department: 'Leasing',
     office: 'Toronto',
+    province: 'Ontario',
+    country: 'Canada',
     email: 'daniel@movesmartrentals.com',
     phone: '+1 416 555 0103',
     photoUrl: null,
@@ -227,6 +408,7 @@ export const TEAM: TeamMember[] = [
       { title: 'Panellist, GTA Multi-Family Summit', event: 'GTA Multi-Family Summit', year: '2025' },
       { title: 'Speaker, Lease-Ups in a Cooling Market', event: 'Toronto Real Estate Forum', year: '2024' },
     ],
+    certifications: [],
     languages: ['English', 'French'],
     yearsExperience: 12,
     joinedYear: 2024,
@@ -239,6 +421,8 @@ export const TEAM: TeamMember[] = [
     role: 'Tenant Qualification Analyst',
     department: 'Underwriting',
     office: 'Toronto',
+    province: 'Ontario',
+    country: 'Canada',
     email: 'simran@movesmartrentals.com',
     phone: '+1 416 555 0104',
     photoUrl: null,
@@ -280,6 +464,7 @@ export const TEAM: TeamMember[] = [
     events: [
       { title: 'Webinar host, How We Screen Applicants', event: 'MoveSmart Owner Webinar Series', year: '2025' },
     ],
+    certifications: [],
     languages: ['English', 'Hindi', 'Gujarati'],
     yearsExperience: 7,
     joinedYear: 2024,
@@ -292,6 +477,8 @@ export const TEAM: TeamMember[] = [
     role: 'Showings Manager',
     department: 'Leasing',
     office: 'Toronto',
+    province: 'Ontario',
+    country: 'Canada',
     email: 'kwame@movesmartrentals.com',
     phone: '+1 416 555 0105',
     photoUrl: null,
@@ -327,6 +514,7 @@ export const TEAM: TeamMember[] = [
     ],
     publications: [],
     events: [],
+    certifications: [],
     languages: ['English', 'Twi'],
     yearsExperience: 5,
     joinedYear: 2024,
@@ -339,6 +527,8 @@ export const TEAM: TeamMember[] = [
     role: 'Owner Success Manager',
     department: 'Owner Success',
     office: 'Toronto',
+    province: 'Ontario',
+    country: 'Canada',
     email: 'emily@movesmartrentals.com',
     phone: '+1 416 555 0106',
     photoUrl: null,
@@ -376,6 +566,7 @@ export const TEAM: TeamMember[] = [
     events: [
       { title: 'Host, Owner Office Hours (monthly webinar)', event: 'MoveSmart Owner Webinar Series', year: '2025' },
     ],
+    certifications: [],
     languages: ['English', 'Swedish'],
     yearsExperience: 8,
     joinedYear: 2024,
@@ -388,6 +579,8 @@ export const TEAM: TeamMember[] = [
     role: 'Pricing & Market Analyst',
     department: 'Strategy',
     office: 'Toronto',
+    province: 'Ontario',
+    country: 'Canada',
     email: 'ravi@movesmartrentals.com',
     phone: '+1 416 555 0107',
     photoUrl: null,
@@ -428,6 +621,7 @@ export const TEAM: TeamMember[] = [
     events: [
       { title: 'Speaker, Real Estate Analytics Summit', event: 'Real Estate Analytics Summit', year: '2025' },
     ],
+    certifications: [],
     languages: ['English', 'Hindi'],
     yearsExperience: 6,
     joinedYear: 2024,
@@ -440,6 +634,8 @@ export const TEAM: TeamMember[] = [
     role: 'Move-In Coordinator',
     department: 'Operations',
     office: 'Toronto',
+    province: 'Ontario',
+    country: 'Canada',
     email: 'mei@movesmartrentals.com',
     phone: '+1 416 555 0108',
     photoUrl: null,
@@ -475,6 +671,7 @@ export const TEAM: TeamMember[] = [
     ],
     publications: [],
     events: [],
+    certifications: [],
     languages: ['English', 'Mandarin'],
     yearsExperience: 6,
     joinedYear: 2024,

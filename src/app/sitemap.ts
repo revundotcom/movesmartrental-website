@@ -5,6 +5,7 @@ import {
 } from '@/lib/static-fallbacks'
 import { GUIDES } from '@/data/guides'
 import { TEAM } from '@/data/team'
+import { ROLES } from '@/data/careers'
 import { SILO_SERVICE_SLUGS } from '@/data/silo-services'
 import { SILO_INDUSTRY_SLUGS } from '@/data/silo-industries'
 import { SILO_LOCATION_SLUGS } from '@/data/silo-locations'
@@ -127,6 +128,13 @@ function buildStaticSegment(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: 'monthly' as const,
       priority: 0.45,
+    })),
+    { url: `${siteUrl}/careers/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.6 },
+    ...ROLES.map((r) => ({
+      url: `${siteUrl}/careers/${r.slug}/`,
+      lastModified: now,
+      changeFrequency: 'weekly' as const,
+      priority: 0.55,
     })),
     { url: `${siteUrl}/contact/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.5 },
     { url: `${siteUrl}/faq/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.6 },
