@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
 
 interface Props {
@@ -75,6 +75,33 @@ function ApplyModal({
     'idle' | 'loading' | 'success' | 'error'
   >('idle')
   const [errorMsg, setErrorMsg] = useState('')
+
+  // Lock background scroll while the modal is open so the page does
+  // not move behind the dialog. Compensate for the scrollbar width to
+  // prevent the layout from jumping when the body overflow toggles.
+  useEffect(() => {
+    const originalOverflow = document.body.style.overflow
+    const originalPaddingRight = document.body.style.paddingRight
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth
+    document.body.style.overflow = 'hidden'
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`
+    }
+    return () => {
+      document.body.style.overflow = originalOverflow
+      document.body.style.paddingRight = originalPaddingRight
+    }
+  }, [])
+
+  // Close on Escape.
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [onClose])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
