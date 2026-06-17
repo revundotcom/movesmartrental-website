@@ -95,6 +95,8 @@ const MOBILE_NAV_SECTIONS: ReadonlyArray<NavSectionDef> = [
     label: 'About',
     items: [
       { title: 'About Us', href: '/about/' },
+      { title: 'Meet the Team', href: '/meet-the-team/' },
+      { title: 'Careers', href: '/careers/' },
       { title: 'Reviews', href: '/reviews/' },
     ],
   },

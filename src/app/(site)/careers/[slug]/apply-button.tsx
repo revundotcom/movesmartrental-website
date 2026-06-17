@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
 
 interface Props {
@@ -75,26 +76,19 @@ function ApplyModal({
     'idle' | 'loading' | 'success' | 'error'
   >('idle')
   const [errorMsg, setErrorMsg] = useState('')
+  const [mounted, setMounted] = useState(false)
 
-  // Lock background scroll while the modal is open so the page does
-  // not move behind the dialog. Compensate for the scrollbar width to
-  // prevent the layout from jumping when the body overflow toggles.
+  // Mark the component as client-mounted so we only create the portal
+  // after hydration (createPortal requires document.body, which does
+  // not exist during server-side rendering).
   useEffect(() => {
-    const originalOverflow = document.body.style.overflow
-    const originalPaddingRight = document.body.style.paddingRight
-    const scrollbarWidth =
-      window.innerWidth - document.documentElement.clientWidth
-    document.body.style.overflow = 'hidden'
-    if (scrollbarWidth > 0) {
-      document.body.style.paddingRight = `${scrollbarWidth}px`
-    }
-    return () => {
-      document.body.style.overflow = originalOverflow
-      document.body.style.paddingRight = originalPaddingRight
-    }
+    setMounted(true)
   }, [])
 
-  // Close on Escape.
+  // Close on Escape. Background scroll is intentionally NOT locked —
+  // the page must remain scrollable behind the dialog so the user can
+  // re-read the job description while the form sits sticky in the
+  // viewport (per client direction, June 2026).
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -138,20 +132,33 @@ function ApplyModal({
     }
   }
 
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--brand-navy)]/70 p-4 backdrop-blur-sm"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose()
-      }}
-    >
-      <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-2xl">
-        <div className="sticky top-0 z-10 flex items-center justify-between rounded-t-2xl border-b border-slate-100 bg-white px-6 py-4">
+  if (!mounted) return null
+
+  return createPortal(
+    <>
+      {/* Backdrop — purely visual, never captures pointer / wheel events
+          so the page underneath can scroll freely while the dialog stays
+          sticky to the viewport (per client direction, June 2026). */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-40 bg-[var(--brand-navy)]/70 backdrop-blur-sm"
+      />
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="apply-modal-title"
+        className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-20 sm:pt-24"
+      >
+        <div className="pointer-events-auto relative w-full max-w-2xl rounded-2xl bg-white shadow-2xl">
+        <div className="flex items-center justify-between rounded-t-2xl border-b border-slate-100 bg-white px-5 py-3">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--brand-emerald)]">
               Apply Now · {jobId}
             </p>
-            <h2 className="mt-0.5 text-[18px] font-bold text-[var(--brand-navy)]">
+            <h2
+              id="apply-modal-title"
+              className="mt-0.5 text-[18px] font-bold text-[var(--brand-navy)]"
+            >
               {role}
             </h2>
           </div>
@@ -189,97 +196,99 @@ function ApplyModal({
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-5 p-6">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <form onSubmit={handleSubmit} className="space-y-3 p-5">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div>
-                <label className="mb-1.5 block text-xs font-semibold text-slate-600">
+                <label className="mb-1 block text-xs font-semibold text-slate-600">
                   First Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   name="firstName"
                   required
-                  className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                  className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
                   placeholder="Jane"
                 />
               </div>
               <div>
-                <label className="mb-1.5 block text-xs font-semibold text-slate-600">
+                <label className="mb-1 block text-xs font-semibold text-slate-600">
                   Last Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   name="lastName"
                   required
-                  className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                  className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
                   placeholder="Smith"
                 />
               </div>
             </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div>
-                <label className="mb-1.5 block text-xs font-semibold text-slate-600">
+                <label className="mb-1 block text-xs font-semibold text-slate-600">
                   Email <span className="text-red-500">*</span>
                 </label>
                 <input
                   name="email"
                   type="email"
                   required
-                  className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                  className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
                   placeholder="you@email.com"
                 />
               </div>
               <div>
-                <label className="mb-1.5 block text-xs font-semibold text-slate-600">
+                <label className="mb-1 block text-xs font-semibold text-slate-600">
                   Phone
                 </label>
                 <input
                   name="phone"
                   type="tel"
-                  className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                  className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
                   placeholder="+1 416 555 0100"
                 />
               </div>
             </div>
-            <div>
-              <label className="mb-1.5 block text-xs font-semibold text-slate-600">
-                LinkedIn Profile URL
-              </label>
-              <input
-                name="linkedin"
-                type="url"
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                placeholder="https://linkedin.com/in/yourprofile"
-              />
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-slate-600">
+                  LinkedIn URL
+                </label>
+                <input
+                  name="linkedin"
+                  type="url"
+                  className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                  placeholder="linkedin.com/in/yourprofile"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-slate-600">
+                  Resume URL
+                </label>
+                <input
+                  name="resumeUrl"
+                  type="url"
+                  className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                  placeholder="Google Drive, Dropbox, etc."
+                />
+              </div>
             </div>
             <div>
-              <label className="mb-1.5 block text-xs font-semibold text-slate-600">
-                Resume URL (Google Drive, Dropbox, etc.)
-              </label>
-              <input
-                name="resumeUrl"
-                type="url"
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                placeholder="https://drive.google.com/..."
-              />
-            </div>
-            <div>
-              <label className="mb-1.5 block text-xs font-semibold text-slate-600">
+              <label className="mb-1 block text-xs font-semibold text-slate-600">
                 Why do you want this role?{' '}
                 <span className="font-normal text-slate-400">(optional)</span>
               </label>
               <textarea
                 name="whyYou"
-                rows={3}
-                className="w-full resize-none rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                rows={2}
+                className="w-full resize-none rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
                 placeholder="What draws you to this position..."
               />
             </div>
             <div>
-              <label className="mb-1.5 block text-xs font-semibold text-slate-600">
+              <label className="mb-1 block text-xs font-semibold text-slate-600">
                 How did you hear about us?
               </label>
               <select
                 name="referral"
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
               >
                 <option value="">Select one</option>
                 <option>Google Search</option>
@@ -290,20 +299,22 @@ function ApplyModal({
               </select>
             </div>
             {status === 'error' && (
-              <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600">
+              <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-600">
                 {errorMsg}
               </p>
             )}
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="flex w-full items-center justify-center gap-2 rounded-full bg-[var(--brand-emerald)] py-3 text-sm font-bold text-white transition-colors hover:bg-[var(--brand-emerald-hover)] disabled:opacity-60"
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-[var(--brand-emerald)] py-2.5 text-sm font-bold text-white transition-colors hover:bg-[var(--brand-emerald-hover)] disabled:opacity-60"
             >
               {status === 'loading' ? 'Submitting...' : 'Submit Application'}
             </button>
           </form>
         )}
+        </div>
       </div>
-    </div>
+    </>,
+    document.body,
   )
 }

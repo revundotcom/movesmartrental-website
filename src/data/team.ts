@@ -115,7 +115,7 @@ export interface TeamMember {
   /** Country name — used in the Jurisdiction row. */
   country: string
   email: string
-  phone: string
+  phone: string | null
   photoUrl: string | null
   photoAlt: string
   quote: string
@@ -154,8 +154,8 @@ export const TEAM: TeamMember[] = [
     office: 'Toronto',
     province: 'Ontario',
     country: 'Canada',
-    email: 'kevin@movesmartrentals.com',
-    phone: '+1 416 555 0109',
+    email: 'kliu@movesmartrentals.com',
+    phone: null,
     photoUrl: '/team/kevin-liu.jpg',
     photoAlt: 'Kevin Liu, Director of Operations at MoveSmart Rentals',
     quote:

@@ -72,7 +72,7 @@ function buildPersonSchema(member: TeamMember) {
     description: member.shortBio,
     image: member.photoUrl ?? undefined,
     email: member.email,
-    telephone: member.phone,
+    telephone: member.phone ?? undefined,
     knowsLanguage: member.languages,
     knowsAbout: member.specialties,
     worksFor: {

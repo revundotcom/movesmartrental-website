@@ -84,8 +84,9 @@ export const NAV_GROUPS = [
     label: 'About',
     items: [
       { title: 'About Us', href: '/about/', description: 'Who we are, what we do, and our full leasing team' },
-      { title: 'Reviews', href: '/reviews/', description: 'What landlords say about MoveSmart' },
+      { title: 'Meet the Team', href: '/meet-the-team/', description: 'The leasing operators behind every owner-file' },
       { title: 'Careers', href: '/careers/', description: 'Join the MoveSmart leasing team' },
+      { title: 'Reviews', href: '/reviews/', description: 'What landlords say about MoveSmart' },
     ],
   },
   {

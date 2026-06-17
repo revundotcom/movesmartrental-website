@@ -123,6 +123,7 @@ function buildStaticSegment(): MetadataRoute.Sitemap {
     // URL but is no longer surfaced in nav or sitemap.
     { url: `${siteUrl}/franchising/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 },
     { url: `${siteUrl}/about/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.55 },
+    { url: `${siteUrl}/meet-the-team/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.55 },
     ...TEAM.map((m) => ({
       url: `${siteUrl}/about/team/${m.slug}/`,
       lastModified: now,

@@ -24,6 +24,24 @@ html {
   padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
 }
 
+/* Lift the Zoho SalesIQ floating chat widget above the MobileStickyCTA
+   bar on mobile so the two no longer overlap (per client direction,
+   June 2026). The sticky CTA is hidden above the `lg` breakpoint
+   (1024px), so the offset is only applied on smaller viewports.
+   Targets both the modern (`siq_bR`, `siqembed`) and legacy
+   (`zsiq_floatmain`) wrapper IDs/classes that Zoho injects.
+   The offset (5.5rem ≈ 88px) clears the 48px CTA bar plus the safe-area
+   inset on notched iPhones with a little visual breathing room. */
+@media (max-width: 1023.98px) {
+  .zsiq_floatmain,
+  .siq_bR,
+  #siqbutton,
+  #zsiq_float,
+  [class*="zsiq_floatmain"] {
+    bottom: calc(5.5rem + env(safe-area-inset-bottom)) !important;
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 /*

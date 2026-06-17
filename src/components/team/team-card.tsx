@@ -86,17 +86,19 @@ export function TeamCard({ member, linkProfile = true }: Props) {
             className="h-px w-full bg-gradient-to-r from-brand-navy/10 via-brand-navy/15 to-transparent"
           />
           <div className="mt-4 space-y-1.5">
-            <a
-              href={`tel:${member.phone.replace(/\s/g, '')}`}
-              className="inline-flex items-center gap-2 text-sm text-slate-700 transition-colors hover:text-brand-emerald"
-            >
-              <Phone
-                className="size-3.5 text-brand-gold"
-                strokeWidth={2.25}
-                aria-hidden="true"
-              />
-              {member.phone}
-            </a>
+            {member.phone && (
+              <a
+                href={`tel:${member.phone.replace(/\s/g, '')}`}
+                className="inline-flex items-center gap-2 text-sm text-slate-700 transition-colors hover:text-brand-emerald"
+              >
+                <Phone
+                  className="size-3.5 text-brand-gold"
+                  strokeWidth={2.25}
+                  aria-hidden="true"
+                />
+                {member.phone}
+              </a>
+            )}
             <a
               href={`mailto:${member.email}`}
               className="block truncate text-sm text-brand-emerald underline-offset-2 hover:underline"
