@@ -88,10 +88,10 @@ export const ROLES: Role[] = [
     city: 'Toronto',
     province: 'Ontario',
     country: 'Canada',
-    locationDisplay: 'Toronto, ON · Canada',
+    locationDisplay: 'Toronto, ON · Canada · Hybrid',
     jobId: 'MSR-2026-001',
     postingStartDate: '2026-06-10',
-    compensation: '$55,000 to $75,000 base plus leasing incentives',
+    compensation: '$75,000 plus commission and benefits',
     summary:
       'We are seeking an experienced Senior Leasing Agent to manage the full leasing cycle for a portfolio of residential properties across the Greater Toronto Area. This role requires strong tenant-screening discipline, comfort with multi-unit pipelines, and the ability to close placements end-to-end without dropping handoffs.',
     responsibilities: [
@@ -124,19 +124,19 @@ export const ROLES: Role[] = [
     relocationAssistance: false,
   },
   {
-    slug: 'director-of-leasing-operations-toronto',
-    title: 'Director of Leasing Operations',
-    department: 'Leasing; Leadership',
+    slug: 'director-of-operations-toronto',
+    title: 'Director of Operations',
+    department: 'Operations; Leadership',
     type: 'Full-time',
     city: 'Toronto',
     province: 'Ontario',
     country: 'Canada',
-    locationDisplay: 'Toronto, ON · Canada',
+    locationDisplay: 'Toronto, ON · Canada · Hybrid',
     jobId: 'MSR-2026-002',
     postingStartDate: '2026-06-10',
-    compensation: '$110,000 to $145,000 base plus performance bonus',
+    compensation: '$145,000 plus performance bonus and benefits',
     summary:
-      'We are seeking an experienced Director of Leasing Operations to build and lead our leasing function across North America. The role owns process and performance standards for every owner-file, drives landlord acquisition strategy, and partners with leadership on portfolio growth. This is a builder role.',
+      'We are seeking an experienced Director of Operations to build and lead our leasing function across North America. The role owns process and performance standards for every owner-file, drives landlord acquisition strategy, and partners with leadership on portfolio growth. This is a builder role.',
     responsibilities: [
       'Build and lead the leasing function across Canadian and US markets.',
       'Set process and performance standards for every owner-file (intake, qualification, showings, move-in handover).',
@@ -177,7 +177,7 @@ export const ROLES: Role[] = [
     locationDisplay: 'Toronto, ON · Canada · Hybrid',
     jobId: 'MSR-2026-003',
     postingStartDate: '2026-06-10',
-    compensation: '$50,000 to $65,000 base',
+    compensation: '$65,000 plus benefits',
     summary:
       'We are seeking a Marketing Coordinator to own listings marketing and digital presence for our active portfolio. The role covers listings copywriting, photography coordination, platform management (Zillow, Rentals.ca, Facebook Marketplace), and targeted paid campaigns that drive qualified leads to our leasing team.',
     responsibilities: [
@@ -208,21 +208,21 @@ export const ROLES: Role[] = [
     relocationAssistance: false,
   },
   {
-    slug: 'field-leasing-agent-vaughan-mississauga',
+    slug: 'field-leasing-agent-vaughan',
     title: 'Field Leasing Agent',
     department: 'Leasing',
     type: 'Full-time',
-    city: 'Vaughan and Mississauga',
+    city: 'Vaughan',
     province: 'Ontario',
     country: 'Canada',
-    locationDisplay: 'Vaughan and Mississauga, ON · Canada · Field',
+    locationDisplay: 'Vaughan, ON · Canada · Hybrid',
     jobId: 'MSR-2026-004',
     postingStartDate: '2026-06-10',
-    compensation: '$50,000 to $70,000 base plus leasing incentives',
+    compensation: '$70,000 plus commission and benefits',
     summary:
-      'We are seeking a Field Leasing Agent to cover showings, qualifications, and lease signings across Vaughan and Mississauga. This is a field role with regular travel between properties; you will be the on-the-ground face of MoveSmart for owners and applicants in this territory.',
+      'We are seeking a Field Leasing Agent based in Vaughan to cover showings, qualifications, and lease signings across York Region. This is a field role with regular travel between properties; you will be the on-the-ground face of MoveSmart for owners and applicants in this territory.',
     responsibilities: [
-      'Conduct in-person showings across active Vaughan and Mississauga units.',
+      'Conduct in-person showings across active Vaughan-area units.',
       'Pre-qualify applicants on-site and feed into the central qualification rubric.',
       'Coordinate move-in walkthroughs and key handovers with the operations team.',
       'Maintain CRM discipline: every showing logged, every applicant tracked.',
@@ -234,7 +234,45 @@ export const ROLES: Role[] = [
       'Strong follow-through and CRM discipline.',
     ],
     goodToHaveSkills: [
-      'Deep familiarity with Peel/York rental sub-markets.',
+      'Deep familiarity with York Region rental sub-markets.',
+      'Experience with virtual-tour platforms.',
+    ],
+    educationAndExperience: [
+      'Active RECO registration (Ontario).',
+      '2 or more years of residential leasing experience in the GTA.',
+    ],
+    additionalInfo:
+      'Field role with daily travel between properties. Mileage reimbursement provided.',
+    relocationAssistance: false,
+  },
+  {
+    slug: 'field-leasing-agent-mississauga',
+    title: 'Field Leasing Agent',
+    department: 'Leasing',
+    type: 'Full-time',
+    city: 'Mississauga',
+    province: 'Ontario',
+    country: 'Canada',
+    locationDisplay: 'Mississauga, ON · Canada · Hybrid',
+    jobId: 'MSR-2026-007',
+    postingStartDate: '2026-06-10',
+    compensation: '$70,000 plus commission and benefits',
+    summary:
+      'We are seeking a Field Leasing Agent based in Mississauga to cover showings, qualifications, and lease signings across Peel Region. This is a field role with regular travel between properties; you will be the on-the-ground face of MoveSmart for owners and applicants in this territory.',
+    responsibilities: [
+      'Conduct in-person showings across active Mississauga-area units.',
+      'Pre-qualify applicants on-site and feed into the central qualification rubric.',
+      'Coordinate move-in walkthroughs and key handovers with the operations team.',
+      'Maintain CRM discipline: every showing logged, every applicant tracked.',
+    ],
+    requiredSkills: [
+      'Active RECO registration.',
+      'Reliable transportation and valid driver’s licence (insurance for business use).',
+      '2 or more years of residential leasing experience in the GTA.',
+      'Strong follow-through and CRM discipline.',
+    ],
+    goodToHaveSkills: [
+      'Deep familiarity with Peel Region rental sub-markets.',
       'Experience with virtual-tour platforms.',
     ],
     educationAndExperience: [
@@ -256,7 +294,7 @@ export const ROLES: Role[] = [
     locationDisplay: 'Remote · North America',
     jobId: 'MSR-2026-005',
     postingStartDate: '2026-06-10',
-    compensation: '$50,000 to $65,000 base',
+    compensation: '$65,000 plus benefits',
     summary:
       'We are seeking a Tenant Placement Coordinator to manage the lead-to-lease workflow across our Canadian and US markets. The role handles inbound applications, scheduling showings, background checks, and working with local leasing agents to close placements. This is a remote coordination role, not a field role.',
     responsibilities: [
@@ -292,10 +330,10 @@ export const ROLES: Role[] = [
     city: 'Miami',
     province: 'Florida',
     country: 'United States',
-    locationDisplay: 'Miami, FL · United States',
+    locationDisplay: 'Miami, FL · United States · Hybrid',
     jobId: 'MSR-2026-006',
     postingStartDate: '2026-06-10',
-    compensation: '$60,000 to $80,000 base',
+    compensation: '$80,000 plus benefits',
     summary:
       'We are seeking a Property Manager to manage a portfolio of residential properties across our Florida markets. The role covers tenant relations, maintenance coordination, rent collection, and lease renewals, with you as the primary point of contact for both landlords and tenants on your portfolio.',
     responsibilities: [

@@ -3,7 +3,6 @@
 import { ArrowRight, Target, ShieldCheck, Workflow, BarChart3 } from 'lucide-react'
 
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
-import { CountUp } from '@/components/ui/count-up'
 import { TeamCard } from '@/components/team/team-card'
 import { TEAM } from '@/data/team'
 
@@ -111,34 +110,6 @@ export function FounderEssay() {
                 was done.
               </p>
             </div>
-
-            {/* Inline mini stats below the prose */}
-            <dl className="mt-10 grid grid-cols-3 gap-4 border-t border-brand-navy/10 pt-8">
-              <div>
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-navy/55">
-                  Units leased
-                </dt>
-                <dd className="mt-2 font-display text-3xl font-normal text-brand-navy">
-                  500+
-                </dd>
-              </div>
-              <div className="border-l border-brand-navy/10 pl-4">
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-navy/55">
-                  Avg. days to lease
-                </dt>
-                <dd className="mt-2 font-display text-3xl font-normal text-brand-navy">
-                  14
-                </dd>
-              </div>
-              <div className="border-l border-brand-navy/10 pl-4">
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-navy/55">
-                  Approval accuracy
-                </dt>
-                <dd className="mt-2 font-display text-3xl font-normal text-brand-navy">
-                  94%
-                </dd>
-              </div>
-            </dl>
           </RevealOnScroll>
         </div>
       </div>
@@ -413,56 +384,6 @@ export function Team() {
             ))}
           </div>
         </RevealOnScroll>
-      </div>
-    </section>
-  )
-}
-
-// ────────────────────────────────────────────────────────────────
-// By the numbers - editorial strip with pipe dividers
-// Reframed to leasing-execution metrics.
-// ────────────────────────────────────────────────────────────────
-const BY_NUMBERS: { value: number; suffix: string; label: string }[] = [
-  { value: 500, suffix: '+', label: 'Units leased' },
-  { value: 14, suffix: '', label: 'Avg days to placement' },
-  { value: 20, suffix: '+', label: 'Cities served' },
-  { value: 94, suffix: '%', label: 'Applicant approval accuracy' },
-]
-
-export function ByTheNumbers() {
-  return (
-    <section className="bg-brand-navy py-16 sm:py-20">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none mx-auto h-px max-w-7xl bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"
-      />
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <RevealOnScroll variant="slideUp" duration={0.7}>
-          <p className="mb-10 text-center text-xs font-semibold uppercase tracking-[0.22em] text-brand-gold">
-            Leasing performance, by the numbers
-          </p>
-        </RevealOnScroll>
-
-        <dl className="grid grid-cols-2 items-center gap-y-10 md:grid-cols-4 md:gap-y-0">
-          {BY_NUMBERS.map((n, i) => (
-            <div
-              key={n.label}
-              className={
-                i > 0
-                  ? 'text-center md:border-l md:border-white/15'
-                  : 'text-center'
-              }
-            >
-              <dt className="sr-only">{n.label}</dt>
-              <dd className="font-display text-5xl font-normal leading-none text-white sm:text-6xl">
-                <CountUp value={n.value} suffix={n.suffix} />
-              </dd>
-              <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/60">
-                {n.label}
-              </p>
-            </div>
-          ))}
-        </dl>
       </div>
     </section>
   )

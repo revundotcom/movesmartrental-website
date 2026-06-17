@@ -10,7 +10,6 @@ import {
   FounderEssay,
   Values,
   Team,
-  ByTheNumbers,
 } from './about-interactive'
 
 const SITE_URL =
@@ -144,9 +143,6 @@ export default function AboutPage() {
 
       {/* ── TEAM (full directory, embedded here per client spec) ── */}
       <Team />
-
-      {/* ── BY THE NUMBERS ───────────────────────────────────────── */}
-      <ByTheNumbers />
 
       {/* ── FINAL CTA ────────────────────────────────────────────── */}
       <section
