@@ -47,6 +47,9 @@ export function ApplyButton({
       <button
         type="button"
         onClick={() => setOpen(true)}
+        // data-apply-trigger lets MobileStickyCTA find this button and
+        // re-open the modal from the bottom of the screen on mobile.
+        data-apply-trigger
         className={`${triggerBase} ${triggerVariant} ${className}`}
       >
         {label}

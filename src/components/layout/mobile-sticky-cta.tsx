@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Phone } from 'lucide-react'
+import { ArrowRight, Phone } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -27,6 +27,23 @@ export function MobileStickyCTA() {
 
   if (shouldHide) return null
 
+  // Careers context: swap the default "List my property" CTA for a
+  // careers-focused action (per client direction, June 2026):
+  //   • /careers/<slug>/  → "Apply Now" — finds the first ApplyButton
+  //                         on the page (tagged with data-apply-trigger)
+  //                         and clicks it, so the same modal opens.
+  //   • /careers/         → "See open roles" — anchor to the positions list.
+  const normalized = (pathname ?? '').replace(/\/$/, '')
+  const isCareersLanding = normalized === '/careers'
+  const isCareersDetail = normalized.startsWith('/careers/') && !isCareersLanding
+
+  const triggerApplyModal = () => {
+    const trigger = document.querySelector<HTMLButtonElement>(
+      'button[data-apply-trigger]',
+    )
+    trigger?.click()
+  }
+
   return (
     <AnimatePresence>
       {visible && (
@@ -45,14 +62,34 @@ export function MobileStickyCTA() {
             >
               <Phone className="w-5 h-5" />
             </Link>
-            <a
-              href={PORTAL_OWNER_SIGNUP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center h-12 rounded-xl bg-brand-emerald text-white font-heading font-semibold text-sm hover:bg-brand-emerald-hover transition-colors"
-            >
-              List my property
-            </a>
+
+            {isCareersDetail ? (
+              <button
+                type="button"
+                onClick={triggerApplyModal}
+                className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-brand-emerald text-white font-heading font-semibold text-sm hover:bg-brand-emerald-hover transition-colors"
+              >
+                Apply Now
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </button>
+            ) : isCareersLanding ? (
+              <Link
+                href="/careers/#positions"
+                className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-brand-emerald text-white font-heading font-semibold text-sm hover:bg-brand-emerald-hover transition-colors"
+              >
+                See open roles
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </Link>
+            ) : (
+              <a
+                href={PORTAL_OWNER_SIGNUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center h-12 rounded-xl bg-brand-emerald text-white font-heading font-semibold text-sm hover:bg-brand-emerald-hover transition-colors"
+              >
+                List my property
+              </a>
+            )}
           </div>
         </motion.div>
       )}
