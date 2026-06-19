@@ -27,15 +27,20 @@ export function MobileStickyCTA() {
 
   if (shouldHide) return null
 
-  // Careers context: swap the default "List my property" CTA for a
-  // careers-focused action (per client direction, June 2026):
-  //   • /careers/<slug>/  → "Apply Now" — finds the first ApplyButton
-  //                         on the page (tagged with data-apply-trigger)
-  //                         and clicks it, so the same modal opens.
-  //   • /careers/         → "See open roles" — anchor to the positions list.
+  // Context-aware CTA — swap the default "List my property" button for a
+  // page-relevant action (per client direction, June 2026):
+  //   • /careers/<slug>/        → "Apply Now" — finds the first ApplyButton
+  //                                on the page (tagged with data-apply-trigger)
+  //                                and clicks it, so the same modal opens.
+  //   • /careers/               → "See open roles" — anchor to the positions list.
+  //   • /meet-the-team/         → "Join the Team" — link to /careers/.
+  //   • /about/team/<slug>/     → "Join the Team" — link to /careers/.
   const normalized = (pathname ?? '').replace(/\/$/, '')
   const isCareersLanding = normalized === '/careers'
   const isCareersDetail = normalized.startsWith('/careers/') && !isCareersLanding
+  const isMeetTheTeam = normalized === '/meet-the-team'
+  const isTeamProfile = normalized.startsWith('/about/team/')
+  const isJoinTheTeamContext = isMeetTheTeam || isTeamProfile
 
   const triggerApplyModal = () => {
     const trigger = document.querySelector<HTMLButtonElement>(
@@ -78,6 +83,14 @@ export function MobileStickyCTA() {
                 className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-brand-emerald text-white font-heading font-semibold text-sm hover:bg-brand-emerald-hover transition-colors"
               >
                 See open roles
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </Link>
+            ) : isJoinTheTeamContext ? (
+              <Link
+                href="/careers/"
+                className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-brand-emerald text-white font-heading font-semibold text-sm hover:bg-brand-emerald-hover transition-colors"
+              >
+                Join the Team
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
             ) : (
