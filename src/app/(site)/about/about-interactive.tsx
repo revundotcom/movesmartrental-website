@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowRight, Target, ShieldCheck, Workflow, BarChart3 } from 'lucide-react'
+import { Target, ShieldCheck, Workflow, BarChart3 } from 'lucide-react'
 
 import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 import { TeamCard } from '@/components/team/team-card'
@@ -323,8 +323,6 @@ export function Values() {
 // Fasken-style 3-column grid. To add or remove a person, edit team.ts.
 // No code change needed here.
 export function Team() {
-  const totalCount = TEAM.length
-
   return (
     <section id="team" className="scroll-mt-24 bg-[#FBFAF6] py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -350,29 +348,6 @@ export function Team() {
               operations, and client support with a focus on transparency,
               efficiency, and a better rental experience.
             </p>
-          </div>
-        </RevealOnScroll>
-
-        {/* Results bar. Mirrors Fasken's "Results 1-15 of N" header. */}
-        <RevealOnScroll variant="slideUp" duration={0.7}>
-          <div className="mb-8 flex items-baseline justify-between border-y border-brand-navy/15 py-4">
-            <p className="text-sm font-medium text-brand-navy/70">
-              Showing{' '}
-              <span className="font-semibold text-brand-navy">
-                1 to {totalCount}
-              </span>{' '}
-              of{' '}
-              <span className="font-semibold text-brand-navy">
-                {totalCount}
-              </span>
-            </p>
-            <a
-              href="#contact-cta"
-              className="hidden items-center gap-1.5 text-xs font-bold uppercase tracking-[0.16em] text-brand-emerald hover:underline sm:inline-flex"
-            >
-              Work with us
-              <ArrowRight className="size-3.5" aria-hidden="true" />
-            </a>
           </div>
         </RevealOnScroll>
 

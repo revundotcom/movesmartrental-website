@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import { PageHeroBlock } from '@/components/blocks/page-hero-block'
@@ -47,88 +46,6 @@ function mapGuide(g: GuideContent): EditorialArticle {
     author: g.author,
     publishedAt: g.publishDate,
   }
-}
-
-function formatShortDate(iso?: string): string {
-  if (!iso) return ''
-  try {
-    return new Date(iso).toLocaleDateString('en-CA', {
-      month: 'short',
-      day: 'numeric',
-    })
-  } catch {
-    return ''
-  }
-}
-
-// ---------------------------------------------------------------------------
-// "What's new this month" aside (Sanity-driven, placeholder fallback)
-// ---------------------------------------------------------------------------
-
-function WhatsNewAside({ items }: { items: EditorialArticle[] }) {
-  // TODO(phase-3): swap placeholder list once Sanity is seeded with guide drops.
-  const placeholders: EditorialArticle[] = [
-    {
-      title: 'Q2 2026 Canadian rental market report',
-      slug: '#',
-      publishedAt: '2026-04-03',
-    },
-    {
-      title: 'Lease-up playbook: the first 30 days',
-      slug: '#',
-      publishedAt: '2026-04-01',
-    },
-    {
-      title: 'Screening a self-employed applicant the right way',
-      slug: '#',
-      publishedAt: '2026-03-28',
-    },
-  ]
-  const picks = (items.length >= 3 ? items.slice(0, 3) : placeholders).slice(
-    0,
-    3,
-  )
-
-  return (
-    <div className="relative overflow-hidden border border-brand-navy/10 bg-white px-6 py-7 shadow-[0_20px_60px_-30px_rgba(10,20,50,0.25)]">
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent"
-      />
-      <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-brand-gold">
-        This month
-      </p>
-      <h3 className="font-display text-xl font-normal text-brand-navy">
-        Freshly{' '}
-        <span className="italic text-brand-emerald">published</span>
-        <span aria-hidden="true" className="text-brand-gold">
-          .
-        </span>
-      </h3>
-      <ul className="mt-5 divide-y divide-brand-navy/10">
-        {picks.map((p, i) => (
-          <li key={`${p.slug}-${i}`} className="py-3">
-            <Link
-              href={
-                p.slug && p.slug !== '#' ? `/resources/${p.slug}/` : '#featured'
-              }
-              className="group flex items-start justify-between gap-4"
-            >
-              <span className="text-sm font-medium leading-snug text-brand-navy transition-colors group-hover:text-brand-emerald">
-                {p.title}
-              </span>
-              <span className="shrink-0 text-[11px] uppercase tracking-wider text-slate-500">
-                {formatShortDate(p.publishedAt)}
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <p className="mt-5 text-[11px] italic text-slate-500">
-        New guides published most weeks. Nothing filler, ever.
-      </p>
-    </div>
-  )
 }
 
 // ---------------------------------------------------------------------------
@@ -318,9 +235,8 @@ export default async function ResourcesPage() {
         eyebrow="The published process"
         headline="Field manuals for serious rental operators"
         lede="Everything we have learned from thousands of leases, 20+ markets, and institutional lease-up campaigns across North America - documented for landlords, tenants, and developers. Peace of mind, through execution you can audit."
-        cta1={{ label: 'Browse the library', href: '#pillars' }}
+        cta1={{ label: 'Browse the library', href: '#featured' }}
         cta2={{ label: 'Talk to the team', href: '/contact/?type=owner' }}
-        aside={<WhatsNewAside items={recent} />}
         theme="dark"
         backgroundImageUrl="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=2400&q=80"
         backgroundImageAlt="Lease documents and paperwork — MoveSmart resource library"

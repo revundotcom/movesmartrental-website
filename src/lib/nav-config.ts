@@ -60,18 +60,18 @@ export const NAV_GROUPS = [
       { title: 'Institutional Lease-Up', href: '/institutional-lease-up/', description: 'Bulk lease-up for new builds' },
     ],
   },
-  // ─────────────────────────────────────────────────────────────────
-  //  Resources & Solutions are hidden from the header nav per client
-  //  direction (June 2026). The underlying pages still exist by
-  //  direct URL but are not surfaced in navigation or main sitemap.
-  //  To restore: re-add the groups here AND re-add the matching
-  //  sections in src/components/layout/mobile-nav.tsx AND re-add the
-  //  `/resources/` static entry in src/app/sitemap.ts.
-  // ─────────────────────────────────────────────────────────────────
   {
     label: 'Pricing',
     items: [
       { title: 'Pricing & Plans', href: '/pricing/', description: 'Transparent leasing fees, no lock-in' },
+    ],
+  },
+  {
+    label: 'Resources',
+    items: [
+      { title: 'Blog', href: '/resources/blog/', description: 'Insights for serious rental operators' },
+      { title: 'News', href: '/resources/news/', description: 'Press, announcements, and milestones' },
+      { title: 'Podcast', href: '/resources/podcast/', description: 'Conversations from the leasing desk' },
     ],
   },
   {
@@ -172,10 +172,12 @@ export const FOOTER_COLUMNS = [
     title: 'Company',
     links: [
       { label: 'About Us', href: '/about/' },
-      { label: 'Franchising', href: '/franchising/' },
+      { label: 'Meet the Team', href: '/meet-the-team/' },
+      { label: 'Careers', href: '/careers/' },
+      { label: 'Blog', href: '/resources/blog/' },
+      { label: 'News', href: '/resources/news/' },
+      { label: 'Podcast', href: '/resources/podcast/' },
       { label: 'Reviews', href: '/reviews/' },
-      // TODO(phase-2): real /blog/ - falling back to FAQ for now.
-      { label: 'Blog & Resources', href: '/faq/' },
       { label: 'Contact', href: '/contact/' },
       { label: 'FAQ', href: '/faq/' },
     ],

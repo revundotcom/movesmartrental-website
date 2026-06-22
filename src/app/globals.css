@@ -473,33 +473,20 @@ body::before {
 }
 
 /* ─── Animated Gradient Text ─── */
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-.text-gradient-animated {
-  background: linear-gradient(270deg, #10B981, #D4A853, #34D399, #10B981);
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradient-shift 6s ease infinite;
-}
-
-/* iOS Safari and mobile fallback: background-clip:text does not propagate
-   through nested VerticalCutReveal character spans on iOS, so "handled"
-   renders invisible. Fall back to a solid emerald on small screens. */
-@media (max-width: 900px) {
-  .text-gradient-animated,
-  .text-gradient-animated * {
-    background: none !important;
-    -webkit-background-clip: initial !important;
-    background-clip: initial !important;
-    -webkit-text-fill-color: #10B981 !important;
-    color: #10B981 !important;
-    animation: none !important;
-  }
+/* background-clip:text does NOT propagate through the nested per-word spans
+   produced by VerticalCutReveal, so a clipped gradient leaves the actual text
+   glyphs transparent — i.e. invisible. This previously only had a mobile-scoped
+   fallback (max-width:900px), so the hero accent word ("handled") rendered
+   invisible on desktop. This variant is ONLY ever applied to nested-reveal text
+   (the hero accent word), so render it as a solid on-brand emerald — guaranteed
+   visible on every browser and viewport. */
+.text-gradient-animated,
+.text-gradient-animated * {
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #10B981;
+  color: #10B981;
 }
 
 /* ─── Conic Gradient Border (Linear-style) ─── */
