@@ -517,7 +517,7 @@ function ApplyModal({
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                       <div>
                         <label className="mb-1 block text-xs font-semibold text-slate-600">
-                          Do you have a valid driver's license? <span className="text-red-500">*</span>
+                          Do you have a valid driver&apos;s license? <span className="text-red-500">*</span>
                         </label>
                         <select
                           name="has_drivers_license"
