@@ -76,6 +76,22 @@ export interface Role {
   workType: 'remote' | 'hybrid'
 }
 
+interface ApiJob {
+  Job_Description?: string
+  Pay_Disclosure?: string
+  Salary?: string
+  Work_Type?: string | null
+  City?: string
+  State?: string
+  Country?: string
+  slug: string
+  Posting_Title?: string
+  Industry?: string
+  Job_Type?: string
+  zoho_id?: string
+  Date_Opened?: string
+}
+
 export async function fetchRolesFromApi(): Promise<Role[]> {
   const baseUrl = process.env.NEXT_PUBLIC_PORTAL_BASE_URL || 'https://portal.revun.com'
   const url = `${baseUrl}/api/v1/job-postings?client_name=MoveSmart+Rentals`
@@ -87,7 +103,7 @@ export async function fetchRolesFromApi(): Promise<Role[]> {
     }
     const json = await res.json()
     const apiJobs = json.data || []
-    return apiJobs.map((job: any) => {
+    return apiJobs.map((job: ApiJob) => {
       let rawHtml = job.Job_Description || ''
       // Selectively strip font-size, font-family, and colors to preserve other formatting (like bold/headings)
       const styleStripRegex = /(font-family|font-size|color|background-color|background|line-height)\s*:[^;]+;?/gi

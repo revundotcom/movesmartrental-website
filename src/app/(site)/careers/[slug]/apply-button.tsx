@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
-import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
+import PhoneInput, { isValidPhoneNumber, type Country } from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 
 interface Props {
@@ -344,7 +344,7 @@ function ApplyModal({
                     <div className="flex w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-50 px-3 focus-within:ring-2 focus-within:ring-[var(--brand-emerald)]">
                       <PhoneInput
                         international
-                        defaultCountry={countryCode as any}
+                        defaultCountry={countryCode as Country}
                         value={phone}
                         onChange={(val) => setPhone(val || '')}
                         className="w-full"
