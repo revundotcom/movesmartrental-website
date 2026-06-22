@@ -105,23 +105,57 @@ export async function fetchRolesFromApi(): Promise<Role[]> {
     const apiJobs = json.data || []
     return apiJobs.map((job: ApiJob) => {
       let rawHtml = job.Job_Description || ''
+
       // Selectively strip font-size, font-family, and colors to preserve other formatting (like bold/headings)
       const styleStripRegex = /(font-family|font-size|color|background-color|background|line-height)\s*:[^;]+;?/gi
-      rawHtml = rawHtml.replace(/style="([^"]*)"/gi, (match, styles) => {
-        const cleaned = styles.replace(styleStripRegex, '').trim()
-        return cleaned ? `style="${cleaned}"` : ''
-      })
-      rawHtml = rawHtml.replace(/style='([^']*)'/gi, (match, styles) => {
-        const cleaned = styles.replace(styleStripRegex, '').trim()
-        return cleaned ? `style='${cleaned}'` : ''
-      })
+
+      const cleanStyles = (html: string) => {
+        let cleanedHtml = html.replace(/style="([^"]*)"/gi, (match, styles) => {
+          const cleaned = styles.replace(styleStripRegex, '').trim()
+          return cleaned ? `style="${cleaned}"` : ''
+        })
+        cleanedHtml = cleanedHtml.replace(/style='([^']*)'/gi, (match, styles) => {
+          const cleaned = styles.replace(styleStripRegex, '').trim()
+          return cleaned ? `style='${cleaned}'` : ''
+        })
+        return cleanedHtml
+      }
+
+      rawHtml = cleanStyles(rawHtml)
+
       // Strip <font> tags but keep the content inside them
       rawHtml = rawHtml.replace(/<\/?font[^>]*>/gi, '')
+
+      // Clean up messy Zoho HTML artifacts (non-breaking spaces, empty trailing br tags)
+      rawHtml = rawHtml.replace(/&nbsp;/gi, ' ')
+      rawHtml = rawHtml.replace(/<br\s*\/?>\s*(?=<\/div>|<\/p>)/gi, '')
+
+      // 1. Convert standalone bold text to <h3> (handles <div><b>Text</b></div> or <br><b>Text</b><br>)
+      rawHtml = rawHtml.replace(/<(div|p)[^>]*>\s*(?:<b>|<strong>)(.*?)(?:<\/b>|<\/strong>)\s*<\/\1>/gi, '\n<h3>$2</h3>\n')
+      rawHtml = rawHtml.replace(/(?:<br\s*\/?>|\n|^)\s*(?:<b>|<strong>)(.*?)(?:<\/b>|<\/strong>)\s*(?=<br\s*\/?>|\n|$)/gi, '\n<h3>$1</h3>\n')
+
+      // 2. Convert plain text ending in colon (like "Requirements:") to <h3>
+      rawHtml = rawHtml.replace(/<(div|p)[^>]*>\s*([A-Za-z0-9 &\/,-]+):\s*<\/\1>/gi, '\n<h3>$2</h3>\n')
+      rawHtml = rawHtml.replace(/(?:<br\s*\/?>|\n|^)\s*([A-Za-z0-9 &\/,-]+):\s*(?=<br\s*\/?>|\n|$)/gi, '\n<h3>$1</h3>\n')
+
+      // 3. Format plain text lists (- item or • item) into HTML <ul><li>
+      rawHtml = rawHtml.replace(/(?:<div[^>]*>|<p[^>]*>|<br\s*\/?>|\n|^)\s*[-•]\s+(.*?)\s*(?:<\/div>|<\/p>|<br\s*\/?>|\n|$)/gi, '\n<li>$1</li>\n')
+      rawHtml = rawHtml.replace(/(?:\n*<li>.*?<\/li>\n*)+/g, (match) => `\n<ul>${match}</ul>\n`)
 
       const hidePay =
         job.Pay_Disclosure === 'Do not disclose pay' ||
         job.Salary === 'Do not disclose pay'
-      const compensation = hidePay ? '' : job.Salary || ''
+      let compensation = hidePay ? '' : job.Salary || ''
+      if (compensation && /\d/.test(compensation)) {
+        compensation = compensation.replace(/\$/g, '').trim()
+
+        // Add commas to numbers 1000 and above
+        compensation = compensation.replace(/\d{4,}/g, (match) => {
+          return Number(match).toLocaleString('en-US')
+        })
+
+        compensation = `$ ${compensation}`
+      }
 
       const isRemote = job.Work_Type == null || String(job.Work_Type).toLowerCase() === 'remote'
       const workTypeSuffix = isRemote ? 'Remote' : 'Hybrid'
@@ -131,7 +165,7 @@ export async function fetchRolesFromApi(): Promise<Role[]> {
       if (job.State) locParts.push(job.State)
       if (job.Country) locParts.push(job.Country)
 
-      const locationDisplay = locParts.length > 0 
+      const locationDisplay = locParts.length > 0
         ? `${locParts.join(', ')} · ${workTypeSuffix}`
         : workTypeSuffix
 

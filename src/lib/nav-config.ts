@@ -41,12 +41,12 @@ export const NAV_GROUPS = [
       { title: 'Tenant FAQ', href: '/faq/', description: 'Answers for renters and applicants' },
     ],
   },
-  {
-    label: 'Properties',
-    items: [
-      { title: 'Browse Properties', href: '/properties/', description: 'Current verified rental listings across Canada and the US' },
-    ],
-  },
+  // {
+  //   label: 'Properties',
+  //   items: [
+  //     { title: 'Browse Properties', href: '/properties/', description: 'Current verified rental listings across Canada and the US' },
+  //   ],
+  // },
   {
     label: 'Services',
     items: [

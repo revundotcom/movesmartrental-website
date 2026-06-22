@@ -245,10 +245,64 @@ export default async function CareerRolePage({ params }: RouteParams) {
             {/* Main content */}
             <article className="min-w-0">
               {role.htmlDescription ? (
-                <div 
-                  className="prose prose-slate max-w-none prose-p:leading-[1.8] prose-p:text-[15px] prose-li:text-[15px]" 
-                  dangerouslySetInnerHTML={{ __html: role.htmlDescription }} 
-                />
+                <>
+                  <style dangerouslySetInnerHTML={{__html: `
+                    .job-desc p > strong:only-child,
+                    .job-desc p > b:only-child,
+                    .job-desc div > strong:only-child,
+                    .job-desc div > b:only-child,
+                    .job-desc p > span > strong:only-child,
+                    .job-desc p > span > b:only-child,
+                    .job-desc h3 {
+                      display: block;
+                      font-size: 1.125rem;
+                      font-weight: 800;
+                      color: var(--brand-navy);
+                      margin-top: 2.5rem;
+                      margin-bottom: 0.75rem;
+                      text-transform: uppercase;
+                      letter-spacing: 0.05em;
+                      border-bottom: 2px solid var(--brand-emerald);
+                      padding-bottom: 0.25rem;
+                      width: fit-content;
+                    }
+                    .job-desc h1, .job-desc h2, .job-desc h4 {
+                      color: var(--brand-navy);
+                      font-weight: 800;
+                      margin-top: 2.5rem;
+                      margin-bottom: 0.75rem;
+                    }
+                    .job-desc ul {
+                      list-style-type: none !important;
+                      padding-left: 0 !important;
+                      margin-top: 0.75rem;
+                      margin-bottom: 1.5rem;
+                    }
+                    .job-desc ul > li {
+                      position: relative;
+                      padding-left: 1.25rem !important;
+                      margin-top: 0.5rem;
+                      margin-bottom: 0.5rem;
+                    }
+                    .job-desc ul > li::before {
+                      content: "";
+                      position: absolute;
+                      left: 0;
+                      top: 0.65rem;
+                      width: 0.375rem;
+                      height: 0.375rem;
+                      border-radius: 9999px;
+                      background-color: #10b981;
+                    }
+                    .job-desc > *:first-child {
+                      margin-top: 0 !important;
+                    }
+                  `}} />
+                  <div 
+                    className="job-desc prose prose-slate max-w-none prose-p:leading-[1.8] prose-p:text-[15px] prose-li:text-[15px]" 
+                    dangerouslySetInnerHTML={{ __html: role.htmlDescription }} 
+                  />
+                </>
               ) : (
                 <>
                   {/* Summary */}

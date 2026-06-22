@@ -67,6 +67,8 @@ function ApplyModal({
   const [num2, setNum2] = useState(0)
   const [phone, setPhone] = useState('')
   const [countryCode, setCountryCode] = useState<string>('US')
+  const [businessType, setBusinessType] = useState('')
+  const [hasVehicle, setHasVehicle] = useState('')
 
   useEffect(() => {
     fetch('https://ipapi.co/json/')
@@ -76,7 +78,7 @@ function ApplyModal({
           setCountryCode(data.country_code)
         }
       })
-      .catch(() => {})
+      .catch(() => { })
   }, [])
 
   useEffect(() => {
@@ -201,9 +203,9 @@ function ApplyModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="apply-modal-title"
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 pb-24 sm:p-6 sm:pb-6"
       >
-        <div className="relative flex w-full max-w-2xl max-h-[90vh] sm:max-h-full flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
+        <div className="relative flex w-full max-w-2xl max-h-full sm:max-h-[90vh] flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
           <div className="flex shrink-0 items-center justify-between border-b border-slate-100 bg-white px-5 py-4">
             <div>
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--brand-emerald)]">
@@ -306,7 +308,8 @@ function ApplyModal({
                     <label className="mb-1 block text-xs font-semibold text-slate-600">
                       Mobile <span className="text-red-500">*</span>
                     </label>
-                    <style dangerouslySetInnerHTML={{__html: `
+                    <style dangerouslySetInnerHTML={{
+                      __html: `
                       .PhoneInput {
                         display: flex;
                         align-items: center;
@@ -398,7 +401,7 @@ function ApplyModal({
                             min="1"
                             required
                             className="w-full rounded-lg border border-slate-200 bg-slate-50 pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                            placeholder="16"
+                            placeholder="e.g., 16 GB"
                           />
                           <span className="absolute inset-y-0 right-3 flex items-center text-sm font-semibold text-slate-400 pointer-events-none">
                             GB
@@ -415,9 +418,199 @@ function ApplyModal({
                           min="1"
                           required
                           className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                          placeholder="100"
+                          placeholder="e.g., 100 Mbps"
                         />
                       </div>
+                    </div>
+                  </>
+                )}
+
+                {workType !== 'remote' && (
+                  <>
+                    <div>
+                      <label className="mb-1 block text-xs font-semibold text-slate-600">
+                        Do you currently operate a business under your name, such as a sole proprietorship, or do you have an incorporated company? <span className="text-red-500">*</span>
+                      </label>
+                      <select
+                        name="business_type"
+                        required
+                        value={businessType}
+                        onChange={(e) => setBusinessType(e.target.value)}
+                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                      >
+                        <option value="">Select an option</option>
+                        <option value="Yes, Sole Proprietorship">Yes, Sole Proprietorship</option>
+                        <option value="Yes, Corporation under my name">Yes, Corporation under my name</option>
+                        <option value="No">No</option>
+                      </select>
+                    </div>
+
+                    {(businessType === 'Yes, Sole Proprietorship' || businessType === 'Yes, Corporation under my name') && (
+                      <>
+                        <div>
+                          <label className="mb-1 block text-xs font-semibold text-slate-600">
+                            Legal Business/Sole Proprietorship Name <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            name="legal_business_name"
+                            type="text"
+                            required
+                            className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                            placeholder="Enter business name"
+                          />
+                        </div>
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                          <div>
+                            <label className="mb-1 block text-xs font-semibold text-slate-600">
+                              WSIB Number <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              name="wsib_number"
+                              type="text"
+                              required
+                              className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                              placeholder="Enter WSIB Number"
+                            />
+                          </div>
+                          <div>
+                            <label className="mb-1 block text-xs font-semibold text-slate-600">
+                              WSIB Clearance Certificate <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              name="wsib_certificate"
+                              type="file"
+                              required
+                              accept=".pdf,.doc,.docx,.jpg,.png"
+                              className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm file:mr-4 file:rounded-full file:border-0 file:bg-[var(--brand-emerald)]/10 file:px-4 file:py-1 file:text-xs file:font-semibold file:text-[var(--brand-emerald)] hover:file:bg-[var(--brand-emerald)]/20 focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                            />
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                          <div>
+                            <label className="mb-1 block text-xs font-semibold text-slate-600">
+                              Business Number <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              name="business_number"
+                              type="text"
+                              required
+                              className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                              placeholder="Enter Business Number"
+                            />
+                          </div>
+                          <div>
+                            <label className="mb-1 block text-xs font-semibold text-slate-600">
+                              HST Number <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              name="hst_number"
+                              type="text"
+                              required
+                              className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                              placeholder="Enter HST Number"
+                            />
+                          </div>
+                        </div>
+                      </>
+                    )}
+
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <div>
+                        <label className="mb-1 block text-xs font-semibold text-slate-600">
+                          Do you have a valid driver&apos;s license? <span className="text-red-500">*</span>
+                        </label>
+                        <select
+                          name="has_drivers_license"
+                          required
+                          className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                        >
+                          <option value="">Select an option</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="mb-1 block text-xs font-semibold text-slate-600">
+                          Do you currently have a reliable vehicle? <span className="text-red-500">*</span>
+                        </label>
+                        <select
+                          name="has_vehicle"
+                          required
+                          value={hasVehicle}
+                          onChange={(e) => setHasVehicle(e.target.value)}
+                          className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                        >
+                          <option value="">Select an option</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {hasVehicle === 'Yes' && (
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div>
+                          <label className="mb-1 block text-xs font-semibold text-slate-600">
+                            Vehicle Make <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            name="vehicle_make"
+                            type="text"
+                            required
+                            className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                            placeholder="e.g. Toyota"
+                          />
+                        </div>
+                        <div>
+                          <label className="mb-1 block text-xs font-semibold text-slate-600">
+                            Vehicle Model <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            name="vehicle_model"
+                            type="text"
+                            required
+                            className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                            placeholder="e.g. Corolla"
+                          />
+                        </div>
+                        <div>
+                          <label className="mb-1 block text-xs font-semibold text-slate-600">
+                            Vehicle Year <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            name="vehicle_year"
+                            type="number"
+                            required
+                            className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                            placeholder="e.g. 2018"
+                          />
+                        </div>
+                        <div>
+                          <label className="mb-1 block text-xs font-semibold text-slate-600">
+                            Approximate Mileage <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            name="vehicle_mileage"
+                            type="text"
+                            required
+                            className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                            placeholder="e.g. 50 kmpl"
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    <div>
+                      <label className="mb-1 block text-xs font-semibold text-slate-600">
+                        What is your current smartphone model? <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        name="smartphone_model"
+                        type="text"
+                        required
+                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                        placeholder="e.g. iPhone 13, Samsung Galaxy S21"
+                      />
                     </div>
                   </>
                 )}
