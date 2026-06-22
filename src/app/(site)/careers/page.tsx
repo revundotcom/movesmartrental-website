@@ -497,6 +497,7 @@ export default async function CareersPage() {
                           <li key={role.slug}>
                             <Link
                               href={`/careers/${role.slug}/`}
+                              scroll={true}
                               className="group flex flex-col gap-2 rounded-xl border border-slate-100 bg-slate-50/60 p-4 transition-all hover:-translate-y-0.5 hover:border-[var(--brand-emerald)]/40 hover:bg-white hover:shadow-md md:flex-row md:items-center md:justify-between md:gap-6 md:p-5"
                             >
                               <div className="min-w-0 flex-1">
