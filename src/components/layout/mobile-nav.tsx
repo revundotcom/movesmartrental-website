@@ -72,16 +72,13 @@ const MOBILE_NAV_SECTIONS: ReadonlyArray<NavSectionDef> = [
   },
   {
     label: 'Locations',
-    // TODO(phase-2): real /locations/ hub.
+    // Simplified to country-level entries per client direction (June 2026).
+    // City-specific links were removed; visitors enter through the country
+    // hub and drill down from there. Canada → primary Ontario hub.
+    // US → primary Florida hub.
     items: [
-      { title: 'All Canadian Locations', href: '/ca/ontario/' },
-      { title: 'Toronto', href: '/ca/ontario/toronto/' },
-      { title: 'Mississauga', href: '/ca/ontario/mississauga/' },
-      { title: 'Brampton', href: '/ca/ontario/brampton/' },
-      { title: 'Hamilton', href: '/ca/ontario/hamilton/' },
-      { title: 'Ottawa', href: '/ca/ontario/ottawa/' },
-      { title: 'Vaughan', href: '/ca/ontario/vaughan/' },
-      { title: 'Markham', href: '/ca/ontario/markham/' },
+      { title: 'Canada', href: '/ca/ontario/' },
+      { title: 'United States', href: '/us/florida/' },
     ],
   },
   // ─────────────────────────────────────────────────────────────────
@@ -90,6 +87,14 @@ const MOBILE_NAV_SECTIONS: ReadonlyArray<NavSectionDef> = [
   //  header nav in src/lib/nav-config.ts.
   // ─────────────────────────────────────────────────────────────────
   { label: 'Pricing', href: '/pricing/' },
+  {
+    label: 'Resources',
+    items: [
+      { title: 'Blog', href: '/resources/blog/' },
+      { title: 'News', href: '/resources/news/' },
+      { title: 'Podcast', href: '/resources/podcast/' },
+    ],
+  },
   { label: 'Franchising', href: '/franchising/' },
   {
     label: 'About',

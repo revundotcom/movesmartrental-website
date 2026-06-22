@@ -124,6 +124,9 @@ function buildStaticSegment(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/franchising/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 },
     { url: `${siteUrl}/about/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.55 },
     { url: `${siteUrl}/meet-the-team/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.55 },
+    { url: `${siteUrl}/resources/blog/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.6 },
+    { url: `${siteUrl}/resources/news/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.55 },
+    { url: `${siteUrl}/resources/podcast/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.55 },
     ...TEAM.map((m) => ({
       url: `${siteUrl}/about/team/${m.slug}/`,
       lastModified: now,
