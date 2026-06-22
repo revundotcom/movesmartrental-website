@@ -5,7 +5,7 @@ import {
 } from '@/lib/static-fallbacks'
 import { GUIDES } from '@/data/guides'
 import { TEAM } from '@/data/team'
-import { ROLES } from '@/data/careers'
+import { fetchRolesFromApi } from '@/data/careers'
 import { SILO_SERVICE_SLUGS } from '@/data/silo-services'
 import { SILO_INDUSTRY_SLUGS } from '@/data/silo-industries'
 import { SILO_LOCATION_SLUGS } from '@/data/silo-locations'
@@ -109,8 +109,10 @@ function isCaCity(provinceSlug: string): boolean {
 /*  Segment builders                                                  */
 /* ------------------------------------------------------------------ */
 
-function buildStaticSegment(): MetadataRoute.Sitemap {
+async function buildStaticSegment(): Promise<MetadataRoute.Sitemap> {
   const now = new Date()
+  const roles = await fetchRolesFromApi()
+
   return [
     { url: `${siteUrl}/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 1.0 },
     { url: `${siteUrl}/owners/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.9 },
@@ -131,7 +133,7 @@ function buildStaticSegment(): MetadataRoute.Sitemap {
       priority: 0.45,
     })),
     { url: `${siteUrl}/careers/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.6 },
-    ...ROLES.map((r) => ({
+    ...roles.map((r) => ({
       url: `${siteUrl}/careers/${r.slug}/`,
       lastModified: now,
       changeFrequency: 'weekly' as const,
@@ -273,14 +275,14 @@ function buildBlogSegment(): MetadataRoute.Sitemap {
 /*  Main sitemap function                                             */
 /* ------------------------------------------------------------------ */
 
-export default function sitemap({
+export default async function sitemap({
   id,
 }: {
   id: string
-}): MetadataRoute.Sitemap {
+}): Promise<MetadataRoute.Sitemap> {
   switch (id) {
     case 'static':
-      return buildStaticSegment()
+      return await buildStaticSegment()
     case 'ca-cities':
       return buildCaCitiesSegment()
     case 'ca-services':
