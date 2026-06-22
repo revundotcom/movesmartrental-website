@@ -14,7 +14,7 @@ import {
   Users,
 } from 'lucide-react'
 
-import { getRolesByRegion, ROLES } from '@/data/careers'
+import { getRolesByRegion, fetchRolesFromApi } from '@/data/careers'
 
 const UNSPLASH = (id: string, w = 1600) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
   title:
     'Careers | Join the MoveSmart Rentals Leasing Team Across North America',
   description:
-    'Open roles at MoveSmart Rentals across Canada and the United States. Leasing, operations, marketing, property management, and trade roles. Apply directly.',
+    'Open roles at MoveSmart Rentals across Canada and the United States. Leasing, operations, marketing, property management, and trades roles. Apply directly.',
   alternates: { canonical: '/careers/' },
   openGraph: {
     title: 'Careers | MoveSmart Rentals',
@@ -164,9 +164,10 @@ const TEAMS = [
   },
 ]
 
-export default function CareersPage() {
-  const jobsByRegion = getRolesByRegion()
-  const totalRoles = ROLES.length
+export default async function CareersPage() {
+  const jobsByRegion = await getRolesByRegion()
+  const allRoles = await fetchRolesFromApi()
+  const totalRoles = allRoles.length
 
   return (
     <>
@@ -496,6 +497,7 @@ export default function CareersPage() {
                           <li key={role.slug}>
                             <Link
                               href={`/careers/${role.slug}/`}
+                              scroll={true}
                               className="group flex flex-col gap-2 rounded-xl border border-slate-100 bg-slate-50/60 p-4 transition-all hover:-translate-y-0.5 hover:border-[var(--brand-emerald)]/40 hover:bg-white hover:shadow-md md:flex-row md:items-center md:justify-between md:gap-6 md:p-5"
                             >
                               <div className="min-w-0 flex-1">
@@ -511,9 +513,11 @@ export default function CareersPage() {
                                     <MapPin className="h-3.5 w-3.5" />
                                     {role.locationDisplay}
                                   </span>
-                                  <span className="font-bold text-[var(--brand-emerald)]">
-                                    {role.compensation}
-                                  </span>
+                                  {role.compensation && (
+                                    <span className="font-bold text-[var(--brand-emerald)]">
+                                      {role.compensation}
+                                    </span>
+                                  )}
                                 </div>
                               </div>
                               <span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-bold text-[var(--brand-navy)] transition-colors group-hover:text-[var(--brand-emerald)]">

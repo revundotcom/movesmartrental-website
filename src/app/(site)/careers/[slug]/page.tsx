@@ -16,14 +16,15 @@ interface RouteParams {
 }
 
 export async function generateStaticParams() {
-  return getAllRoleSlugs().map((slug) => ({ slug }))
+  const slugs = await getAllRoleSlugs()
+  return slugs.map((slug) => ({ slug }))
 }
 
 export async function generateMetadata(
   { params }: RouteParams,
 ): Promise<Metadata> {
   const { slug } = await params
-  const role = getRoleBySlug(slug)
+  const role = await getRoleBySlug(slug)
   if (!role) {
     return {
       title: 'Role Not Found | MoveSmart Rentals',
@@ -31,7 +32,7 @@ export async function generateMetadata(
     }
   }
   const title = `${role.title}, ${role.locationDisplay} | MoveSmart Rentals Careers`
-  const description = `${role.title} (${role.type}) at MoveSmart Rentals in ${role.locationDisplay}. ${role.summary.slice(0, 150)}`
+  const description = `${role.title} (${role.type}) at MoveSmart Rentals in ${role.locationDisplay}. ${role.summary ? role.summary.slice(0, 150) : role.title}`
   return {
     title,
     description,
@@ -51,7 +52,7 @@ function buildJobPostingSchema(role: Role) {
     '@type': 'JobPosting',
     '@id': `${SITE_URL}/careers/${role.slug}/#jobposting`,
     title: role.title,
-    description: [
+    description: role.htmlDescription || [
       role.summary,
       'Key Responsibilities:',
       ...role.responsibilities.map((r) => `• ${r}`),
@@ -86,7 +87,7 @@ function buildJobPostingSchema(role: Role) {
 
 export default async function CareerRolePage({ params }: RouteParams) {
   const { slug } = await params
-  const role = getRoleBySlug(slug)
+  const role = await getRoleBySlug(slug)
   if (!role) notFound()
 
   const shareUrl = `${SITE_URL}/careers/${role.slug}/`
@@ -141,7 +142,9 @@ export default async function CareerRolePage({ params }: RouteParams) {
                   {postingDateDisplay}
                 </MetaRow>
                 <MetaRow label="Job ID">{role.jobId}</MetaRow>
-                <MetaRow label="Compensation">{role.compensation}</MetaRow>
+                {role.compensation && (
+                  <MetaRow label="Compensation">{role.compensation}</MetaRow>
+                )}
               </dl>
 
               {/* Share row */}
@@ -181,7 +184,7 @@ export default async function CareerRolePage({ params }: RouteParams) {
             {/* RIGHT: Apply CTA (sticky on desktop) */}
             <div className="lg:self-start">
               <div className="flex flex-wrap gap-3 lg:flex-col lg:items-end">
-                <ApplyButton role={role.title} jobId={role.jobId} />
+                <ApplyButton role={role.title} jobId={role.jobId} workType={role.workType} />
                 <a
                   href={`mailto:careers@movesmartrentals.com?subject=${encodeURIComponent(`Question — ${shareSubject}`)}`}
                   className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/60"
@@ -241,56 +244,64 @@ export default async function CareerRolePage({ params }: RouteParams) {
 
             {/* Main content */}
             <article className="min-w-0">
-              {/* Summary */}
-              <Block title="Job Description Summary">
-                <p className="text-[15px] leading-[1.8] text-slate-700">
-                  {role.summary}
-                </p>
-              </Block>
+              {role.htmlDescription ? (
+                <div 
+                  className="prose prose-slate max-w-none prose-p:leading-[1.8] prose-p:text-[15px] prose-li:text-[15px]" 
+                  dangerouslySetInnerHTML={{ __html: role.htmlDescription }} 
+                />
+              ) : (
+                <>
+                  {/* Summary */}
+                  <Block title="Job Description Summary">
+                    <p className="text-[15px] leading-[1.8] text-slate-700">
+                      {role.summary}
+                    </p>
+                  </Block>
 
-              {/* Responsibilities */}
-              <Block title="Job Description">
-                <h4 className="text-[12px] font-bold uppercase tracking-[0.18em] text-[var(--brand-navy)]">
-                  Key Responsibilities
-                </h4>
-                <BulletList items={role.responsibilities} />
-              </Block>
+                  {/* Responsibilities */}
+                  <Block title="Job Description">
+                    <h4 className="text-[12px] font-bold uppercase tracking-[0.18em] text-[var(--brand-navy)]">
+                      Key Responsibilities
+                    </h4>
+                    <BulletList items={role.responsibilities} />
+                  </Block>
 
-              {/* Required Skills */}
-              <Block title="Required Skills">
-                <BulletList items={role.requiredSkills} />
-              </Block>
+                  {/* Required Skills */}
+                  <Block title="Required Skills">
+                    <BulletList items={role.requiredSkills} />
+                  </Block>
 
-              {/* Good-to-have */}
-              {role.goodToHaveSkills.length > 0 && (
-                <Block title="Good to have Skills">
-                  <BulletList items={role.goodToHaveSkills} />
-                </Block>
+                  {/* Good-to-have */}
+                  {role.goodToHaveSkills && role.goodToHaveSkills.length > 0 && (
+                    <Block title="Good to have Skills">
+                      <BulletList items={role.goodToHaveSkills} />
+                    </Block>
+                  )}
+
+                  {/* Education and Experience */}
+                  <Block title="Education and Experience">
+                    <BulletList items={role.educationAndExperience} />
+                  </Block>
+
+                  {/* Additional Information */}
+                  <Block title="Additional Information">
+                    {role.additionalInfo && (
+                      <p className="text-[15px] leading-[1.8] text-slate-700">
+                        {role.additionalInfo}
+                      </p>
+                    )}
+                    <p className="mt-3 text-[15px] leading-[1.8] text-slate-700">
+                      <span className="font-bold text-[var(--brand-navy)]">
+                        Relocation Assistance Provided:
+                      </span>{' '}
+                      {role.relocationAssistance ? 'Yes' : 'No'}
+                    </p>
+                  </Block>
+                </>
               )}
 
-              {/* Education and Experience */}
-              <Block title="Education and Experience">
-                <BulletList items={role.educationAndExperience} />
-              </Block>
-
-              {/* Additional Information */}
-              <Block title="Additional Information">
-                {role.additionalInfo && (
-                  <p className="text-[15px] leading-[1.8] text-slate-700">
-                    {role.additionalInfo}
-                  </p>
-                )}
-                <p className="mt-3 text-[15px] leading-[1.8] text-slate-700">
-                  <span className="font-bold text-[var(--brand-navy)]">
-                    Relocation Assistance Provided:
-                  </span>{' '}
-                  {role.relocationAssistance ? 'Yes' : 'No'}
-                </p>
-              </Block>
-
-              {/* Bottom Apply CTA — matches GE Vernova reference */}
               <div className="mt-12 flex flex-wrap gap-3 border-t border-slate-100 pt-10">
-                <ApplyButton role={role.title} jobId={role.jobId} />
+                <ApplyButton role={role.title} jobId={role.jobId} workType={role.workType} />
                 <Link
                   href="/careers/#positions"
                   className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border border-brand-navy/20 bg-white px-6 py-3 text-sm font-bold text-[var(--brand-navy)] transition-colors hover:border-brand-navy/40 hover:bg-slate-50"
