@@ -97,13 +97,29 @@ const nextConfig: NextConfig = {
       },
     ]
 
+    const cityConsolidation: Redirect[] = [
+      // The flat /orlando-fl-leasing landing page is the canonical Orlando
+      // leasing page (real downtown HQ + neighbourhood rent data). Consolidate
+      // the duplicate geo-hierarchy city hub into it.
+      {
+        source: '/us/florida/orlando',
+        destination: '/orlando-fl-leasing',
+        permanent: true,
+      },
+    ]
+
     const legacyRedirects: Redirect[] = LEGACY_REDIRECTS.map((r) => ({
       source: r.source,
       destination: r.destination,
       permanent: r.permanent,
     }))
 
-    return [...rentalsToProperties, ...mistypedCountryRedirects, ...legacyRedirects]
+    return [
+      ...rentalsToProperties,
+      ...mistypedCountryRedirects,
+      ...cityConsolidation,
+      ...legacyRedirects,
+    ]
   },
 }
 

@@ -536,6 +536,50 @@ export default async function SiloFlatPage({ params }: Params) {
       ? `Ready to start ${(page.service_label || 'leasing').toLowerCase()} in ${page.city}?`
       : `Ready to lease faster in ${page.city}?`
 
+  // ── Orlando flagship: real downtown HQ + RentCafe neighbourhood rent data.
+  //    Gated to the single Orlando flat page so no other city is affected. ──
+  const isOrlandoFlagship = page.url === '/orlando-fl-leasing'
+  const orlandoHeroAside = isOrlandoFlagship
+    ? {
+        title: 'Orlando rent by neighbourhood',
+        source: 'RentCafe',
+        asOf: 'June 2026',
+        sourceHref:
+          'https://www.rentcafe.com/average-rent-market-trends/us/fl/orlando/',
+        rows: [
+          { name: 'Baldwin Park', rent: '$2,311', yoy: '-1.2%' },
+          { name: 'Dr. Phillips', rent: '$2,183', yoy: '-0.9%' },
+          { name: 'Downtown', rent: '$2,031', yoy: '-3.9%' },
+          { name: 'Lake Nona', rent: '$2,007', yoy: '-1.2%' },
+          { name: 'Metro West', rent: '$1,750' },
+          { name: 'Citywide avg.', rent: '$1,792', yoy: '-2.8%' },
+        ],
+      }
+    : undefined
+  const orlandoOffice = isOrlandoFlagship
+    ? {
+        eyebrow: 'Our headquarters',
+        title: 'MoveSmart Rentals, Downtown Orlando',
+        name: 'MoveSmart Rentals Headquarters',
+        addressLines: ['111 N Orange Ave, Suite 801', 'Orlando, FL 32801'],
+        mapLatLng: [28.5417, -81.3793] as [number, number],
+        blurb:
+          'Our Orlando team runs leasing across Central Florida from the heart of downtown, on North Orange Avenue between Central and Washington.',
+      }
+    : undefined
+  const orlandoMarketData = isOrlandoFlagship
+    ? [
+        { label: 'Avg. 1-bed rent', value: '$1,580', sub: 'Orlando citywide' },
+        { label: 'Avg. 2-bed rent', value: '$1,926', sub: 'Orlando citywide' },
+        {
+          label: 'Rent year over year',
+          value: '-2.8%',
+          sub: 'Softening, more tenant choice',
+        },
+        { label: 'Avg. time to lease', value: '18 days', sub: 'Listing to signed' },
+      ]
+    : undefined
+
   return (
     <>
       <JsonLd data={buildGraph(page, crumbs)} />
@@ -558,7 +602,9 @@ export default async function SiloFlatPage({ params }: Params) {
         nearbyCities={nearbyCities}
         guarantee={guarantee}
         showForm
-        marketData={marketData}
+        marketData={orlandoMarketData ?? marketData}
+        heroAside={orlandoHeroAside}
+        office={orlandoOffice}
         sections={sections}
         process={process}
         splitImage={splitImage}

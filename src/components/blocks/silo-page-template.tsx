@@ -14,6 +14,7 @@ import {
   RadioTower,
   Check,
   ChevronDown,
+  MapPin,
 } from 'lucide-react'
 
 import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
@@ -222,6 +223,25 @@ type Props = {
   primaryCta?: { label: string; href: string }
   secondaryCta?: { label: string; href: string }
   heroImage?: { src: string; alt: string; caption?: string }
+  /** Optional data card floated on the right of the hero (e.g. neighbourhood
+   *  rent table). When present the hero becomes a two-column layout; when
+   *  absent the hero renders full-width exactly as before. */
+  heroAside?: {
+    title: string
+    source?: string
+    asOf?: string
+    sourceHref?: string
+    rows: Array<{ name: string; rent: string; yoy?: string }>
+  }
+  /** Optional featured office / headquarters block (address + map). */
+  office?: {
+    eyebrow?: string
+    title: string
+    name?: string
+    addressLines: string[]
+    mapLatLng: [number, number]
+    blurb?: string
+  }
 }
 
 const CHIP_ICONS: Record<string, typeof RadioTower> = {
@@ -269,6 +289,8 @@ export function SiloPageTemplate(props: Props) {
     primaryCta = { label: 'List my property', href: '/owners/' },
     secondaryCta = { label: 'Browse rentals', href: '/properties/' },
     heroImage,
+    heroAside,
+    office,
   } = props
 
   const contentSections = sections ?? []
@@ -342,6 +364,13 @@ export function SiloPageTemplate(props: Props) {
           }}
         />
         <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-16 sm:px-6 lg:px-8 lg:pb-28 lg:pt-24">
+          <div
+            className={
+              heroAside
+                ? 'lg:grid lg:grid-cols-[minmax(0,1fr)_clamp(300px,30vw,380px)] lg:items-center lg:gap-12'
+                : ''
+            }
+          >
           <div className="max-w-2xl">
             <Eyebrow light>{heroKicker}</Eyebrow>
             <h1 className="mt-4 font-display text-[46px] font-normal leading-[1.06] tracking-tight text-white sm:text-[60px]">
@@ -393,8 +422,125 @@ export function SiloPageTemplate(props: Props) {
               </div>
             )}
           </div>
+            {heroAside && (
+              <aside className="mt-10 lg:mt-0">
+                <div className="rounded-2xl border border-white/15 bg-white/[0.07] p-5 shadow-xl backdrop-blur-md">
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#34D399]">
+                      {heroAside.title}
+                    </p>
+                    <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-semibold text-[#C7D3E8]">
+                      Avg. asking
+                    </span>
+                  </div>
+                  <ul className="mt-4 divide-y divide-white/10">
+                    {heroAside.rows.map((r) => (
+                      <li
+                        key={r.name}
+                        className="flex items-center justify-between gap-3 py-2.5"
+                      >
+                        <span className="text-[14px] text-white">{r.name}</span>
+                        <span className="flex items-baseline gap-2">
+                          <span className="font-display text-[16px] text-white">
+                            {r.rent}
+                          </span>
+                          {r.yoy && (
+                            <span
+                              className={`text-[12px] font-semibold ${
+                                r.yoy.trim().startsWith('-')
+                                  ? 'text-[#F0A8A8]'
+                                  : 'text-[#34D399]'
+                              }`}
+                            >
+                              {r.yoy}
+                            </span>
+                          )}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  {(heroAside.source || heroAside.asOf) && (
+                    <p className="mt-3 text-[11px] text-[#9FB0CC]">
+                      Source:{' '}
+                      {heroAside.sourceHref ? (
+                        <a
+                          href={heroAside.sourceHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline decoration-white/30 underline-offset-2 hover:text-white"
+                        >
+                          {heroAside.source}
+                        </a>
+                      ) : (
+                        heroAside.source
+                      )}
+                      {heroAside.asOf ? ` · ${heroAside.asOf}` : ''}
+                    </p>
+                  )}
+                </div>
+              </aside>
+            )}
+          </div>
         </div>
       </section>
+
+      {/* ============ FEATURED OFFICE / HQ ============ */}
+      {office && (
+        <section className="border-b border-[#E3E8EF] bg-white py-14 sm:py-16">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
+              <div>
+                {office.eyebrow && <Eyebrow>{office.eyebrow}</Eyebrow>}
+                <H2 className="mt-3">{office.title}</H2>
+                {office.blurb && (
+                  <p className="mt-4 text-[18px] leading-relaxed text-slate-600">
+                    {office.blurb}
+                  </p>
+                )}
+                <div className="mt-6 flex items-start gap-3">
+                  <MapPin
+                    className="mt-0.5 h-5 w-5 flex-none text-[#10B981]"
+                    strokeWidth={1.75}
+                  />
+                  <address className="not-italic text-[16px] leading-relaxed text-[#0B1D3A]">
+                    {office.name && (
+                      <span className="block font-semibold">{office.name}</span>
+                    )}
+                    {office.addressLines.map((l) => (
+                      <span key={l} className="block">
+                        {l}
+                      </span>
+                    ))}
+                  </address>
+                </div>
+                <div className="mt-7 flex flex-wrap gap-3">
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${office.mapLatLng[0]},${office.mapLatLng[1]}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 rounded-[11px] bg-[#10B981] px-6 py-3.5 text-[15px] font-semibold text-white transition hover:bg-[#34D399]"
+                  >
+                    Get directions
+                    <ArrowUpRight className="h-4 w-4" />
+                  </a>
+                  <Btn href={primaryCta.href} variant="outline">
+                    {primaryCta.label}
+                  </Btn>
+                </div>
+              </div>
+              <div className="overflow-hidden rounded-3xl border border-[#E3E8EF] shadow-sm">
+                <iframe
+                  title={office.title}
+                  src={`https://maps.google.com/maps?q=${office.mapLatLng[0]},${office.mapLatLng[1]}&z=15&output=embed`}
+                  loading="lazy"
+                  className="h-full min-h-[360px] w-full"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ============ TRUST STRIP ============ */}
       {trustChips && trustChips.length > 0 && (
