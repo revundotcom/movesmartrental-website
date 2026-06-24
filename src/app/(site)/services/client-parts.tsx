@@ -113,10 +113,15 @@ export function BentoTile({
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 50vw"
             unoptimized
           />
-          {/* Heavy navy gradient at the bottom for legibility */}
+          {/* Bottom half of every tile is FULLY SOLID navy — guarantees
+              the title and summary sit on a clean opaque backdrop with
+              ZERO possibility of underlying image content (blueprint
+              lines, building windows, office detail) showing through and
+              creating ghost-text artifacts. Image remains visible in
+              the top half for the image-led aesthetic. */}
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/55 to-brand-navy/10"
+            className="absolute inset-0 bg-gradient-to-t from-brand-navy from-50% to-transparent"
           />
           {/* Gold hairline at the top */}
           <div
@@ -142,12 +147,16 @@ export function BentoTile({
 
           {/* Bottom content overlay */}
           <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-6 sm:p-7">
-            {/* No italic on the title: DM Serif Display italic has heavy
-                slant + tight kerning that crashes letters visually on the
-                narrow mobile tile (e.g., 'Tenant Placement', 'Institutional
-                Lease-Up'). The display face in roman style reads clean. */}
+            {/* DM Serif Display Regular has TIGHT default kerning designed
+                for large headlines — at mobile sizes adjacent letters'
+                serifs visually merge ("Tenant Placement" reads as if the
+                tops are connected). Fix: `not-italic` (defensive, blocks
+                any inherited italic) + `tracking-[0.01em]` (small positive
+                letter-spacing that breaks the visual merge).
+                Heavy text-shadow gives every letter its own dark halo so
+                the title stays clean even on the most cluttered photos. */}
             <h3
-              className={`font-display font-normal leading-[1.2] text-white ${titleSizeClass}`}
+              className={`font-display font-normal not-italic leading-[1.2] tracking-[0.01em] text-white [text-shadow:_0_2px_8px_rgba(11,29,58,0.9)] ${titleSizeClass}`}
             >
               {title}
               <span aria-hidden="true" className="text-brand-gold">
@@ -266,7 +275,7 @@ export function BentoTile({
           {tag ?? 'Next step'}
         </p>
         <div className="mt-4">
-          <h3 className={`font-display font-normal leading-[1.2] ${titleSizeClass}`}>
+          <h3 className={`font-display font-normal not-italic leading-[1.2] tracking-[0.01em] ${titleSizeClass}`}>
             {title}
             <span aria-hidden="true" className={bg === 'gold' ? 'text-brand-navy' : 'text-brand-gold'}>
               .
@@ -362,7 +371,7 @@ export function ServiceImageCard({
 
         {/* Body */}
         <div className="flex flex-1 flex-col gap-4 p-6 sm:p-7">
-          <h3 className="font-display text-xl font-normal leading-[1.2] text-brand-navy sm:text-2xl">
+          <h3 className="font-display text-xl font-normal not-italic leading-[1.2] tracking-[0.01em] text-brand-navy sm:text-2xl">
             {title}
             <span aria-hidden="true" className="text-brand-gold">
               .
