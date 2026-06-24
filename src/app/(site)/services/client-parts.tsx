@@ -142,14 +142,14 @@ export function BentoTile({
 
           {/* Bottom content overlay */}
           <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-6 sm:p-7">
-            {/* leading-[1.35] is essential here: DM Serif Display italic has
-                heavy descenders ('p', 'g') and slant that, with leading-tight
-                (1.25), crashes wrapped lines together. Bumping to 1.35 gives
-                italic descenders the clearance they need on narrow tiles. */}
+            {/* No italic on the title: DM Serif Display italic has heavy
+                slant + tight kerning that crashes letters visually on the
+                narrow mobile tile (e.g., 'Tenant Placement', 'Institutional
+                Lease-Up'). The display face in roman style reads clean. */}
             <h3
-              className={`pb-0.5 pr-1 font-display font-normal leading-[1.35] text-white ${titleSizeClass}`}
+              className={`font-display font-normal leading-[1.2] text-white ${titleSizeClass}`}
             >
-              <span className="italic">{title}</span>
+              {title}
               <span aria-hidden="true" className="text-brand-gold">
                 .
               </span>
@@ -266,8 +266,8 @@ export function BentoTile({
           {tag ?? 'Next step'}
         </p>
         <div className="mt-4">
-          <h3 className={`pb-0.5 pr-1 font-display font-normal leading-[1.35] ${titleSizeClass}`}>
-            <span className="italic">{title}</span>
+          <h3 className={`font-display font-normal leading-[1.2] ${titleSizeClass}`}>
+            {title}
             <span aria-hidden="true" className={bg === 'gold' ? 'text-brand-navy' : 'text-brand-gold'}>
               .
             </span>
@@ -362,8 +362,8 @@ export function ServiceImageCard({
 
         {/* Body */}
         <div className="flex flex-1 flex-col gap-4 p-6 sm:p-7">
-          <h3 className="pb-0.5 pr-1 font-display text-xl font-normal leading-[1.35] text-brand-navy sm:text-2xl">
-            <span className="italic">{title}</span>
+          <h3 className="font-display text-xl font-normal leading-[1.2] text-brand-navy sm:text-2xl">
+            {title}
             <span aria-hidden="true" className="text-brand-gold">
               .
             </span>

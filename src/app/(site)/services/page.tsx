@@ -348,7 +348,7 @@ export default function ServicesPage() {
       {/* ── 2. BENTO GRID - asymmetric service tiles ──────────────── */}
       <section
         id="services-bento"
-        className="relative scroll-mt-24 overflow-hidden bg-[#FBFAF6] py-20 sm:py-24"
+        className="relative scroll-mt-24 overflow-hidden bg-[#FBFAF6] py-12 sm:py-20 lg:py-24"
       >
         {/* Decorative dot grid */}
         <div
@@ -362,7 +362,7 @@ export default function ServicesPage() {
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <RevealOnScroll variant="clipReveal" duration={0.6}>
-            <div className="mb-12 grid items-end gap-8 md:mb-14 md:grid-cols-12">
+            <div className="mb-8 grid items-end gap-6 sm:mb-12 sm:gap-8 md:mb-14 md:grid-cols-12">
               <div className="md:col-span-7">
                 <p className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-emerald">
                   <span aria-hidden="true" className="block h-px w-8 bg-brand-emerald/60" />
@@ -391,7 +391,10 @@ export default function ServicesPage() {
               Row 5: continued .................................. [Prep col-1] [Portal col-1]
               Row 6: [Rent Guar WIDE col-2] [Stat 18d col-1] [Final CTA col-1]
           ─────────────────────────────────────────────────────────── */}
-          <div className="grid auto-rows-[180px] grid-cols-1 gap-4 sm:auto-rows-[200px] sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
+          {/* grid-flow-dense packs tiles to fill any gaps created by the
+              col-span-2 / row-span-2 mix at sm and lg breakpoints. Without
+              it, the auto-placer can leave a blank cell visible on screen. */}
+          <div className="grid auto-rows-[180px] grid-flow-row-dense grid-cols-1 gap-4 sm:auto-rows-[200px] sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
             {/* TILE 1 - Tenant Placement (LARGE: col-2 row-2) hero of the grid */}
             <BentoTile
               index={0}
@@ -589,7 +592,7 @@ export default function ServicesPage() {
       </section>
 
       {/* ── 3. EDITORIAL BRIDGE - full-service execution photograph ─ */}
-      <section className="relative overflow-hidden bg-white py-20 sm:py-24">
+      <section className="relative overflow-hidden bg-white py-12 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-6xl px-4">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
             <div className="relative aspect-[5/4] overflow-hidden rounded-[2rem] shadow-2xl shadow-brand-navy/20 lg:col-span-7">
@@ -663,7 +666,7 @@ export default function ServicesPage() {
       </section>
 
       {/* ── 4. STATS STRIP - staggered ruled rows (not a uniform 4-up grid) ─ */}
-      <section className="relative isolate overflow-hidden bg-[#0B1D3A] py-20 text-white sm:py-24">
+      <section className="relative isolate overflow-hidden bg-[#0B1D3A] py-12 text-white sm:py-20 lg:py-24">
         {/* Subtle radial accents */}
         <div
           aria-hidden="true"
@@ -685,7 +688,7 @@ export default function ServicesPage() {
 
         <div className="relative mx-auto max-w-6xl px-4">
           <RevealOnScroll variant="clipReveal" duration={0.6}>
-            <div className="mb-12 max-w-2xl">
+            <div className="mb-8 max-w-2xl sm:mb-12">
               <p className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-gold">
                 <span aria-hidden="true" className="block h-px w-8 bg-brand-gold/60" />
                 Proof in numbers
@@ -733,7 +736,7 @@ export default function ServicesPage() {
           </div>
 
           {/* Commitments below the stats - same staggered cadence */}
-          <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
+          <div className="mt-10 grid grid-cols-1 gap-6 sm:mt-16 md:grid-cols-3">
             {COMMITMENTS.map((c, idx) => (
               <RevealRow
                 key={c.number}
@@ -766,7 +769,7 @@ export default function ServicesPage() {
       </div>
 
       {/* ── 6. CUSTOM DARK CTA - replaces killed CTABannerBlock ──── */}
-      <section className="relative isolate overflow-hidden bg-brand-navy py-20 text-white sm:py-24">
+      <section className="relative isolate overflow-hidden bg-brand-navy py-12 text-white sm:py-20 lg:py-24">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -left-24 top-1/2 size-[420px] -translate-y-1/2 rounded-full bg-brand-emerald/15 blur-3xl"
