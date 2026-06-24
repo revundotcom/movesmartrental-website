@@ -683,7 +683,6 @@ export function SiloPageTemplate(props: Props) {
                     variant="image"
                     className={span}
                     href={s.href}
-                    tag={`0${i + 1} / Service`}
                     title={s.title}
                     summary={i === 0 ? s.description : undefined}
                     imageSrc={s.image}
@@ -694,14 +693,14 @@ export function SiloPageTemplate(props: Props) {
                 if (i === 1) {
                   tiles.push(
                     <BentoTile key="stat-lease" index={i + 1} variant="stat"
-                      className="sm:col-span-1 lg:col-span-1" tag={`In ${city}`}
-                      statValue="18d" statLabel="Average listing to signed lease" bg="emerald" />,
+                      className="sm:col-span-1 lg:col-span-1"
+                      statValue="18 Days" statLabel="Average listing to signed lease" bg="emerald" />,
                   )
                 }
                 if (i === 2) {
                   tiles.push(
                     <BentoTile key="stat-fee" index={i + 1} variant="stat"
-                      className="sm:col-span-1 lg:col-span-1" tag="No win, no fee"
+                      className="sm:col-span-1 lg:col-span-1"
                       statValue="$0" statLabel="Upfront — success fee only" bg="gold" />,
                   )
                 }
@@ -709,7 +708,7 @@ export function SiloPageTemplate(props: Props) {
                   tiles.push(
                     <BentoTile key="cta" index={i + 1} variant="cta"
                       className="sm:col-span-1 lg:col-span-1" href={primaryCta.href}
-                      tag="Talk to an advisor" title="List my unit"
+                      title="List my unit"
                       summary={`Get a free ${city} rental analysis.`} ctaLabel="Get started" bg="navy" />,
                   )
                 }

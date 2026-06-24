@@ -39,9 +39,7 @@ export const metadata: Metadata = {
  * ────────────────────────────────────────────────────────────────── */
 
 type ServiceCard = {
-  number: string
   slug: string
-  tag: string
   title: string
   summary: string
   imageId: string
@@ -50,9 +48,7 @@ type ServiceCard = {
 
 const SERVICES: Record<string, ServiceCard> = {
   tenantPlacement: {
-    number: '01',
     slug: 'tenant-placement',
-    tag: 'End-to-end placement',
     title: 'Tenant Placement',
     summary:
       'Pricing, marketing, showings, screening, lease, and move-in - one team running the full placement loop on a single timeline.',
@@ -60,9 +56,7 @@ const SERVICES: Record<string, ServiceCard> = {
     imageAlt: 'Property owner handing house keys to a new tenant on move-in day',
   },
   leasingServices: {
-    number: '02',
     slug: 'leasing-services',
-    tag: 'Marketing & showings',
     title: 'Leasing Services',
     summary:
       'Professional photography, MLS plus Canadian portal syndication, agent-led showings, and offer management for one unit or a portfolio.',
@@ -70,9 +64,7 @@ const SERVICES: Record<string, ServiceCard> = {
     imageAlt: 'Modern Canadian high-rise rental towers from a low-angle perspective',
   },
   tenantScreening: {
-    number: '03',
     slug: 'tenant-screening',
-    tag: 'Risk-graded review',
     title: 'Tenant Screening',
     summary:
       'Credit, income, employment, and reference verification with a written risk summary - a defensible yes or a documented no on every applicant.',
@@ -80,9 +72,7 @@ const SERVICES: Record<string, ServiceCard> = {
     imageAlt: 'MoveSmart leasing team reviewing applicant files at the signing table',
   },
   rentGuarantee: {
-    number: '04',
     slug: 'rent-guarantee',
-    tag: 'Income protection',
     title: 'Rent Guarantee',
     summary:
       'Optional partner pathway that puts a floor under your rental income - guaranteed monthly rent with clear coverage and claim mechanics.',
@@ -90,9 +80,7 @@ const SERVICES: Record<string, ServiceCard> = {
     imageAlt: 'Small-business owner reviewing income statements at her counter',
   },
   tenantInsurance: {
-    number: '05',
     slug: 'tenant-insurance',
-    tag: 'Lease condition',
     title: 'Tenant Insurance',
     summary:
       'Tenant insurance coordinated as a lease condition with certificates confirmed before key release - liability covered from day one.',
@@ -100,9 +88,7 @@ const SERVICES: Record<string, ServiceCard> = {
     imageAlt: 'Bright open-plan Canadian rental living room ready for move-in',
   },
   tenantGuarantor: {
-    number: '06',
     slug: 'tenant-guarantor',
-    tag: 'Application strengthener',
     title: 'Tenant Guarantor',
     summary:
       'Structured guarantor program for newcomers, students, and thin-file applicants - underwriting and documentation handled end to end.',
@@ -110,9 +96,7 @@ const SERVICES: Record<string, ServiceCard> = {
     imageAlt: 'Two professionals in advisory conversation in a bright office',
   },
   rentalPreparation: {
-    number: '07',
     slug: 'rental-preparation',
-    tag: 'Pre-listing prep',
     title: 'Rental Preparation',
     summary:
       'One-time prep work - paint touch-ups, deep clean, light handyman, staging, and landscaping refresh - so the unit shows at its asking rent.',
@@ -120,9 +104,7 @@ const SERVICES: Record<string, ServiceCard> = {
     imageAlt: 'Freshly prepared modern condo ready for the rental market',
   },
   portalTech: {
-    number: '08',
     slug: 'portal-and-technology',
-    tag: 'Owner & tenant portal',
     title: 'Portal & Technology',
     summary:
       'Owner and tenant portals with showings, offers, screening files, lease docs, and live leasing analytics - one place for every decision.',
@@ -130,9 +112,7 @@ const SERVICES: Record<string, ServiceCard> = {
     imageAlt: 'Operator reviewing leasing portal analytics on a tablet device',
   },
   institutionalLeaseUp: {
-    number: '09',
     slug: 'institutional-lease-up',
-    tag: 'Bulk lease-up',
     title: 'Institutional Lease-Up',
     summary:
       'Bulk leasing infrastructure for builders, PMCs, and purpose-built operators - dedicated teams, live reporting, lease-up against pro-forma.',
@@ -393,16 +373,18 @@ export default function ServicesPage() {
           ─────────────────────────────────────────────────────────── */}
           {/* grid-flow-dense packs tiles to fill any gaps created by the
               col-span-2 / row-span-2 mix at sm and lg breakpoints. Without
-              it, the auto-placer can leave a blank cell visible on screen. */}
-          <div className="grid auto-rows-[180px] grid-flow-row-dense grid-cols-1 gap-4 sm:auto-rows-[200px] sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
+              it, the auto-placer can leave a blank cell visible on screen.
+              Row heights tuned per breakpoint: mobile gets 220px so the
+              image (top half) and text overlay (bottom half) both have
+              real estate; tablet/desktop get progressively more so the
+              full-bleed photo reads as the design element it is. */}
+          <div className="grid auto-rows-[220px] grid-flow-row-dense grid-cols-1 gap-4 sm:auto-rows-[230px] sm:grid-cols-2 sm:gap-5 lg:auto-rows-[260px] lg:grid-cols-4 lg:gap-6">
             {/* TILE 1 - Tenant Placement (LARGE: col-2 row-2) hero of the grid */}
             <BentoTile
               index={0}
               variant="image"
               className="sm:col-span-2 sm:row-span-2 lg:col-span-2 lg:row-span-2"
               href={`/services/${SERVICES.tenantPlacement.slug}/`}
-              tag={SERVICES.tenantPlacement.tag}
-              number={SERVICES.tenantPlacement.number}
               title={SERVICES.tenantPlacement.title}
               summary={SERVICES.tenantPlacement.summary}
               imageSrc={unsplash(SERVICES.tenantPlacement.imageId)}
@@ -416,8 +398,6 @@ export default function ServicesPage() {
               variant="image"
               className="sm:col-span-1 sm:row-span-2 lg:col-span-1 lg:row-span-2"
               href={`/services/${SERVICES.leasingServices.slug}/`}
-              tag={SERVICES.leasingServices.tag}
-              number={SERVICES.leasingServices.number}
               title={SERVICES.leasingServices.title}
               summary={SERVICES.leasingServices.summary}
               imageSrc={unsplash(SERVICES.leasingServices.imageId)}
@@ -430,7 +410,6 @@ export default function ServicesPage() {
               index={2}
               variant="stat"
               className="sm:col-span-1 lg:col-span-1"
-              tag="Across Canada"
               statValue="20+"
               statLabel="Cities served"
               summary="GTA-led, expanding west across Ontario, BC, and Alberta."
@@ -443,7 +422,6 @@ export default function ServicesPage() {
               variant="cta"
               className="sm:col-span-1 lg:col-span-1"
               href="/contact/?type=owner&intent=call"
-              tag="Talk to advisor"
               title="Book a 15-min call"
               ctaLabel="Schedule"
               bg="navy"
@@ -455,8 +433,6 @@ export default function ServicesPage() {
               variant="image"
               className="sm:col-span-1 lg:col-span-1"
               href={`/services/${SERVICES.tenantScreening.slug}/`}
-              tag={SERVICES.tenantScreening.tag}
-              number={SERVICES.tenantScreening.number}
               title={SERVICES.tenantScreening.title}
               imageSrc={unsplash(SERVICES.tenantScreening.imageId)}
               imageAlt={SERVICES.tenantScreening.imageAlt}
@@ -469,8 +445,6 @@ export default function ServicesPage() {
               variant="image"
               className="sm:col-span-2 lg:col-span-2"
               href={`/services/${SERVICES.institutionalLeaseUp.slug}/`}
-              tag={SERVICES.institutionalLeaseUp.tag}
-              number={SERVICES.institutionalLeaseUp.number}
               title={SERVICES.institutionalLeaseUp.title}
               summary={SERVICES.institutionalLeaseUp.summary}
               imageSrc={unsplash(SERVICES.institutionalLeaseUp.imageId)}
@@ -484,8 +458,6 @@ export default function ServicesPage() {
               variant="image"
               className="sm:col-span-1 lg:col-span-1"
               href={`/services/${SERVICES.tenantInsurance.slug}/`}
-              tag={SERVICES.tenantInsurance.tag}
-              number={SERVICES.tenantInsurance.number}
               title={SERVICES.tenantInsurance.title}
               imageSrc={unsplash(SERVICES.tenantInsurance.imageId)}
               imageAlt={SERVICES.tenantInsurance.imageAlt}
@@ -498,8 +470,6 @@ export default function ServicesPage() {
               variant="image"
               className="sm:col-span-1 sm:row-span-2 lg:col-span-1 lg:row-span-2"
               href={`/services/${SERVICES.tenantGuarantor.slug}/`}
-              tag={SERVICES.tenantGuarantor.tag}
-              number={SERVICES.tenantGuarantor.number}
               title={SERVICES.tenantGuarantor.title}
               summary={SERVICES.tenantGuarantor.summary}
               imageSrc={unsplash(SERVICES.tenantGuarantor.imageId)}
@@ -513,8 +483,6 @@ export default function ServicesPage() {
               variant="image"
               className="sm:col-span-1 lg:col-span-2"
               href={`/services/${SERVICES.rentalPreparation.slug}/`}
-              tag={SERVICES.rentalPreparation.tag}
-              number={SERVICES.rentalPreparation.number}
               title={SERVICES.rentalPreparation.title}
               summary={SERVICES.rentalPreparation.summary}
               imageSrc={unsplash(SERVICES.rentalPreparation.imageId)}
@@ -527,7 +495,6 @@ export default function ServicesPage() {
               index={9}
               variant="stat"
               className="sm:col-span-1 lg:col-span-1"
-              tag="Fee model"
               statValue="$0"
               statLabel="Upfront cost"
               summary="Success fee on placement - or you pay nothing at all."
@@ -540,8 +507,6 @@ export default function ServicesPage() {
               variant="image"
               className="sm:col-span-1 lg:col-span-1"
               href={`/services/${SERVICES.portalTech.slug}/`}
-              tag={SERVICES.portalTech.tag}
-              number={SERVICES.portalTech.number}
               title={SERVICES.portalTech.title}
               imageSrc={unsplash(SERVICES.portalTech.imageId)}
               imageAlt={SERVICES.portalTech.imageAlt}
@@ -554,8 +519,6 @@ export default function ServicesPage() {
               variant="image"
               className="sm:col-span-2 lg:col-span-2"
               href={`/services/${SERVICES.rentGuarantee.slug}/`}
-              tag={SERVICES.rentGuarantee.tag}
-              number={SERVICES.rentGuarantee.number}
               title={SERVICES.rentGuarantee.title}
               summary={SERVICES.rentGuarantee.summary}
               imageSrc={unsplash(SERVICES.rentGuarantee.imageId)}
@@ -568,7 +531,6 @@ export default function ServicesPage() {
               index={12}
               variant="stat"
               className="sm:col-span-1 lg:col-span-1"
-              tag="Time to lease"
               statValue="18 Days"
               statLabel="Avg pricing-to-key handover"
               summary="On Canadian rental portals, all property types."
@@ -581,7 +543,6 @@ export default function ServicesPage() {
               variant="cta"
               className="sm:col-span-1 lg:col-span-1"
               href="/contact/?type=owner"
-              tag="Ready to list?"
               title="Get a market read"
               summary="Live rent comps for your unit - no obligation."
               ctaLabel="Start now"

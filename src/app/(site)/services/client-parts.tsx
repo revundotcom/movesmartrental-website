@@ -48,8 +48,6 @@ export function BentoTile({
   variant,
   className,
   href,
-  tag,
-  number,
   title,
   summary,
   imageSrc,
@@ -64,8 +62,6 @@ export function BentoTile({
   variant: 'image' | 'stat' | 'cta'
   className?: string
   href?: string
-  tag?: string
-  number?: string
   title?: string
   summary?: string
   imageSrc?: string
@@ -128,22 +124,6 @@ export function BentoTile({
             aria-hidden="true"
             className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/60 to-transparent"
           />
-
-          {tag && (
-            <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white backdrop-blur-md">
-              <span className="size-1.5 rounded-full bg-brand-gold" aria-hidden="true" />
-              <span>{tag}</span>
-            </div>
-          )}
-
-          {number && (
-            <span
-              aria-hidden="true"
-              className="absolute right-5 top-5 font-mono text-[11px] font-semibold tracking-[0.22em] text-white/70"
-            >
-              {number}
-            </span>
-          )}
 
           {/* Bottom content overlay */}
           <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-6 sm:p-7">
@@ -212,19 +192,14 @@ export function BentoTile({
         className={className}
       >
         <div
-          className={`${wrapperBase} flex flex-col justify-between p-6 sm:p-7 ${bgClass}`}
+          className={`${wrapperBase} flex flex-col justify-center p-6 sm:p-7 ${bgClass}`}
         >
           {/* Decorative hairline */}
           <div
             aria-hidden="true"
             className={`absolute inset-x-0 top-0 h-px ${bg === 'gold' || bg === 'cream' ? 'bg-brand-navy/20' : 'bg-white/20'}`}
           />
-          <p
-            className={`text-[10px] font-bold uppercase tracking-[0.22em] ${labelTone}`}
-          >
-            {tag ?? 'By the numbers'}
-          </p>
-          <div className="my-4">
+          <div>
             <p className={`font-display font-normal leading-[1.05] ${statValueSize}`}>
               {statValue}
               <span aria-hidden="true" className={bg === 'gold' ? 'text-brand-navy' : 'text-brand-gold'}>
@@ -237,7 +212,7 @@ export function BentoTile({
           </div>
           {summary && (
             <p
-              className={`text-[12px] leading-relaxed ${bg === 'gold' || bg === 'cream' ? 'text-brand-navy/70' : 'text-white/65'}`}
+              className={`mt-4 text-[12px] leading-relaxed ${bg === 'gold' || bg === 'cream' ? 'text-brand-navy/70' : 'text-white/65'}`}
             >
               {summary}
             </p>
@@ -267,14 +242,9 @@ export function BentoTile({
     >
       <Link
         href={href ?? '#'}
-        className={`${wrapperBase} flex h-full flex-col justify-between p-6 sm:p-7 ${bgClass} hover:-translate-y-1`}
+        className={`${wrapperBase} flex h-full flex-col justify-center p-6 sm:p-7 ${bgClass} hover:-translate-y-1`}
       >
-        <p
-          className={`text-[10px] font-bold uppercase tracking-[0.22em] ${bg === 'gold' || bg === 'cream' ? 'text-brand-navy/65' : 'text-brand-gold'}`}
-        >
-          {tag ?? 'Next step'}
-        </p>
-        <div className="mt-4">
+        <div>
           <h3 className={`font-display font-normal not-italic leading-[1.2] tracking-[0.01em] ${titleSizeClass}`}>
             {title}
             <span aria-hidden="true" className={bg === 'gold' ? 'text-brand-navy' : 'text-brand-gold'}>
