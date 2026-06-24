@@ -218,7 +218,7 @@ const COMMITMENTS = [
 
 const STATS_STRIP = [
   { value: '20+', label: 'Cities served', detail: 'GTA + Ontario priority, expanding west' },
-  { value: '18d', label: 'Avg days to lease', detail: 'Pricing-to-key-handover, on Canadian portals' },
+  { value: '18 Days', label: 'Avg time to lease', detail: 'Pricing-to-key-handover, on Canadian portals' },
   { value: '12+', label: 'Portals syndicated', detail: 'MLS, Realtor.ca, Kijiji, Zumper, Padmapper' },
   { value: '$0', label: 'Upfront cost', detail: 'Success-fee on placement, no retainer' },
 ]
@@ -560,13 +560,13 @@ export default function ServicesPage() {
               bodySize="lg"
             />
 
-            {/* TILE 13 - Stat 18d (SMALL) */}
+            {/* TILE 13 - Stat: avg days to lease (SMALL) */}
             <BentoTile
               index={12}
               variant="stat"
               className="sm:col-span-1 lg:col-span-1"
               tag="Time to lease"
-              statValue="18d"
+              statValue="18 Days"
               statLabel="Avg pricing-to-key handover"
               summary="On Canadian rental portals, all property types."
               bg="cream"

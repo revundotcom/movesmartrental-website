@@ -142,8 +142,12 @@ export function BentoTile({
 
           {/* Bottom content overlay */}
           <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-6 sm:p-7">
+            {/* leading-[1.35] is essential here: DM Serif Display italic has
+                heavy descenders ('p', 'g') and slant that, with leading-tight
+                (1.25), crashes wrapped lines together. Bumping to 1.35 gives
+                italic descenders the clearance they need on narrow tiles. */}
             <h3
-              className={`font-display font-normal leading-tight text-white ${titleSizeClass}`}
+              className={`pb-0.5 pr-1 font-display font-normal leading-[1.35] text-white ${titleSizeClass}`}
             >
               <span className="italic">{title}</span>
               <span aria-hidden="true" className="text-brand-gold">
@@ -182,6 +186,14 @@ export function BentoTile({
           ? 'text-white/80'
           : 'text-white/65'
 
+    // Compact stat values like "20+", "$0", "12+" can render giant
+    // (text-7xl). Word-stats like "18 Days" need a smaller scale so they
+    // don't wrap awkwardly inside a 1-col bento cell at sm/lg breakpoints.
+    const isWordStat = (statValue?.length ?? 0) > 4
+    const statValueSize = isWordStat
+      ? 'text-4xl sm:text-5xl md:text-6xl'
+      : 'text-5xl sm:text-6xl md:text-7xl'
+
     return (
       <motion.div
         ref={ref}
@@ -204,7 +216,7 @@ export function BentoTile({
             {tag ?? 'By the numbers'}
           </p>
           <div className="my-4">
-            <p className="font-display text-5xl font-normal leading-none sm:text-6xl md:text-7xl">
+            <p className={`font-display font-normal leading-[1.05] ${statValueSize}`}>
               {statValue}
               <span aria-hidden="true" className={bg === 'gold' ? 'text-brand-navy' : 'text-brand-gold'}>
                 .
@@ -254,7 +266,7 @@ export function BentoTile({
           {tag ?? 'Next step'}
         </p>
         <div className="mt-4">
-          <h3 className={`font-display font-normal leading-tight ${titleSizeClass}`}>
+          <h3 className={`pb-0.5 pr-1 font-display font-normal leading-[1.35] ${titleSizeClass}`}>
             <span className="italic">{title}</span>
             <span aria-hidden="true" className={bg === 'gold' ? 'text-brand-navy' : 'text-brand-gold'}>
               .
@@ -350,7 +362,7 @@ export function ServiceImageCard({
 
         {/* Body */}
         <div className="flex flex-1 flex-col gap-4 p-6 sm:p-7">
-          <h3 className="font-display text-xl font-normal leading-snug text-brand-navy sm:text-2xl">
+          <h3 className="pb-0.5 pr-1 font-display text-xl font-normal leading-[1.35] text-brand-navy sm:text-2xl">
             <span className="italic">{title}</span>
             <span aria-hidden="true" className="text-brand-gold">
               .
