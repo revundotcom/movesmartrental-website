@@ -501,7 +501,7 @@ export default async function CareersPage() {
                               className="group flex flex-col gap-2 rounded-xl border border-slate-100 bg-slate-50/60 p-4 transition-all hover:-translate-y-0.5 hover:border-[var(--brand-emerald)]/40 hover:bg-white hover:shadow-md md:flex-row md:items-center md:justify-between md:gap-6 md:p-5"
                             >
                               <div className="min-w-0 flex-1">
-                                <h5 className="text-base font-bold text-[var(--brand-navy)] transition-colors group-hover:text-[var(--brand-emerald)]">
+                                <h5 className="text-base font-bold text-[var(--brand-emerald)] transition-colors">
                                   {role.title}
                                 </h5>
                                 <div className="mt-2 flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-slate-500">
@@ -513,11 +513,6 @@ export default async function CareersPage() {
                                     <MapPin className="h-3.5 w-3.5" />
                                     {role.locationDisplay}
                                   </span>
-                                  {role.compensation && (
-                                    <span className="font-bold text-[var(--brand-emerald)]">
-                                      {role.compensation}
-                                    </span>
-                                  )}
                                 </div>
                               </div>
                               <span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-bold text-[var(--brand-navy)] transition-colors group-hover:text-[var(--brand-emerald)]">

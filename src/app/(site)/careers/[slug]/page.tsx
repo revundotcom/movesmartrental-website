@@ -185,12 +185,12 @@ export default async function CareerRolePage({ params }: RouteParams) {
             <div className="lg:self-start">
               <div className="flex flex-wrap gap-3 lg:flex-col lg:items-end">
                 <ApplyButton role={role.title} jobId={role.jobId} workType={role.workType} />
-                <a
+                {/* <a
                   href={`mailto:careers@movesmartrentals.com?subject=${encodeURIComponent(`Question — ${shareSubject}`)}`}
                   className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/60"
                 >
                   Ask a question
-                </a>
+                </a> */}
               </div>
             </div>
           </div>
@@ -246,7 +246,8 @@ export default async function CareerRolePage({ params }: RouteParams) {
             <article className="min-w-0">
               {role.htmlDescription ? (
                 <>
-                  <style dangerouslySetInnerHTML={{__html: `
+                  <style dangerouslySetInnerHTML={{
+                    __html: `
                     .job-desc p > strong:only-child,
                     .job-desc p > b:only-child,
                     .job-desc div > strong:only-child,
@@ -298,9 +299,9 @@ export default async function CareerRolePage({ params }: RouteParams) {
                       margin-top: 0 !important;
                     }
                   `}} />
-                  <div 
-                    className="job-desc prose prose-slate max-w-none prose-p:leading-[1.8] prose-p:text-[15px] prose-li:text-[15px]" 
-                    dangerouslySetInnerHTML={{ __html: role.htmlDescription }} 
+                  <div
+                    className="job-desc prose prose-slate max-w-none prose-p:leading-[1.8] prose-p:text-[15px] prose-li:text-[15px]"
+                    dangerouslySetInnerHTML={{ __html: role.htmlDescription }}
                   />
                 </>
               ) : (

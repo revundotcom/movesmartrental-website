@@ -10,14 +10,22 @@ import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 
 export function MobileStickyCTA() {
   const [visible, setVisible] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
   const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => {
       setVisible(window.scrollY > 500)
     }
+    const handleModal = (e: any) => setModalOpen(e.detail)
+
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener('apply-modal-state', handleModal)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('apply-modal-state', handleModal)
+    }
   }, [])
 
   // `/properties` is excluded because property pages render their own
@@ -25,7 +33,7 @@ export function MobileStickyCTA() {
   const hideOnPaths = ['/tenants', '/contact', '/franchising', '/properties']
   const shouldHide = hideOnPaths.some((p) => pathname?.startsWith(p))
 
-  if (shouldHide) return null
+  if (shouldHide || modalOpen) return null
 
   // Context-aware CTA — swap the default "List my property" button for a
   // page-relevant action (per client direction, June 2026):
@@ -57,7 +65,7 @@ export function MobileStickyCTA() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed bottom-0 left-0 right-0 z-50 lg:hidden p-3 bg-white/90 backdrop-blur-lg border-t border-slate-200 safe-area-pb"
+          className="mobile-sticky-cta fixed bottom-0 left-0 right-0 z-50 lg:hidden p-3 bg-white/90 backdrop-blur-lg border-t border-slate-200 safe-area-pb"
         >
           <div className="flex gap-3">
             <Link
