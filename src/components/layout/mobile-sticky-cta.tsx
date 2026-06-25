@@ -17,14 +17,14 @@ export function MobileStickyCTA() {
     const handleScroll = () => {
       setVisible(window.scrollY > 500)
     }
-    const handleModal = (e: any) => setModalOpen(e.detail)
+    const handleModal = (e: Event) => setModalOpen((e as CustomEvent).detail)
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    window.addEventListener('apply-modal-state', handleModal)
+    window.addEventListener('apply-modal-state', handleModal as EventListener)
 
     return () => {
       window.removeEventListener('scroll', handleScroll)
-      window.removeEventListener('apply-modal-state', handleModal)
+      window.removeEventListener('apply-modal-state', handleModal as EventListener)
     }
   }, [])
 
