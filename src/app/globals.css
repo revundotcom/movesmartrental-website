@@ -728,3 +728,20 @@ body::before {
 .spotlight-card:hover::before {
   opacity: 1;
 }
+
+/* Hide Zoho and sticky CTA when modal is open */
+body.apply-modal-open .zsiq_floatmain,
+body.apply-modal-open .siq_bR,
+body.apply-modal-open #siqbutton,
+body.apply-modal-open #zsiq_float,
+body.apply-modal-open [class*="zsiq_floatmain"] {
+  display: none !important;
+}
+
+body.apply-modal-open .mobile-sticky-cta {
+  display: none !important;
+}
+
+body.apply-modal-open .mobile-sticky-cta {
+  display: none !important;
+}

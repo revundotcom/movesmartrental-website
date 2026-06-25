@@ -61,6 +61,7 @@ function ApplyModal({
   onClose: () => void
 }) {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [errorMsg, setErrorMsg] = useState('')
   const [mounted, setMounted] = useState(false)
   const [num1, setNum1] = useState(0)
@@ -89,10 +90,12 @@ function ApplyModal({
 
   // Lock body scroll while modal is open
   useEffect(() => {
-    document.body.classList.add('overflow-hidden')
+    document.body.classList.add('overflow-hidden', 'apply-modal-open')
+    window.dispatchEvent(new CustomEvent('apply-modal-state', { detail: true }))
     document.documentElement.classList.add('overflow-hidden')
     return () => {
-      document.body.classList.remove('overflow-hidden')
+      document.body.classList.remove('overflow-hidden', 'apply-modal-open')
+      window.dispatchEvent(new CustomEvent('apply-modal-state', { detail: false }))
       document.documentElement.classList.remove('overflow-hidden')
     }
   }, [])
@@ -110,59 +113,83 @@ function ApplyModal({
     e.preventDefault()
     setStatus('loading')
     setErrorMsg('')
+    setFieldErrors({})
     const form = e.currentTarget
     const fd = new FormData(form)
 
-    // Explicit Validation
+    const errors: Record<string, string> = {}
+
     const firstName = fd.get('first_name') as string
+    if (!firstName?.trim()) errors.first_name = 'First name is required'
+
     const lastName = fd.get('last_name') as string
-    if (!firstName?.trim() || !lastName?.trim()) {
-      setErrorMsg('First name and last name are required.')
-      setStatus('error')
-      return
-    }
+    if (!lastName?.trim()) errors.last_name = 'Last name is required'
 
     const email = fd.get('email') as string
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setErrorMsg('Please enter a valid email address.')
-      setStatus('error')
-      return
+      errors.email = 'Please enter a valid email address'
     }
 
     if (!phone || !isValidPhoneNumber(phone)) {
-      setErrorMsg('Please enter a valid phone number.')
-      setStatus('error')
-      return
+      errors.phone = 'Please enter a valid phone number'
     }
 
     const resume = fd.get('resume') as File | null
     if (!resume || resume.size === 0) {
-      setErrorMsg('Please upload a resume.')
-      setStatus('error')
-      return
+      errors.resume = 'Please upload a resume'
     }
 
     if (workType === 'remote') {
-      const workedFromHome = fd.get('worked_from_home')
-      const noiseCancelling = fd.get('noise_cancelling_headset')
-      const ram = fd.get('computer_ram')
-      const internet = fd.get('internet_speed')
+      const workedFromHome = fd.get('worked_from_home') as string
+      if (!workedFromHome) errors.worked_from_home = 'This field is required'
 
-      if (!workedFromHome || !noiseCancelling || !ram || !internet) {
-        setErrorMsg('Please fill out all remote work requirements.')
-        setStatus('error')
-        return
+      const noiseCancelling = fd.get('noise_cancelling_headset') as string
+      if (!noiseCancelling) errors.noise_cancelling_headset = 'This field is required'
+
+      const ram = fd.get('computer_ram') as string
+      if (!ram) errors.computer_ram = 'Computer RAM is required'
+
+      const internet = fd.get('internet_speed') as string
+      if (!internet) errors.internet_speed = 'Internet speed is required'
+    } else {
+      const bType = fd.get('business_type') as string
+      if (!bType) errors.business_type = 'This field is required'
+
+      if (bType === 'Yes, Sole Proprietorship' || bType === 'Yes, Corporation under my name') {
+        if (!fd.get('legal_business_name')) errors.legal_business_name = 'Business name is required'
+        if (!fd.get('wsib_number')) errors.wsib_number = 'WSIB Number is required'
+        const wsibCert = fd.get('wsib_certificate') as File | null
+        if (!wsibCert || wsibCert.size === 0) errors.wsib_certificate = 'WSIB Certificate is required'
+        if (!fd.get('business_number')) errors.business_number = 'Business Number is required'
+        if (!fd.get('hst_number')) errors.hst_number = 'HST Number is required'
       }
+
+      const hasLicense = fd.get('has_drivers_license') as string
+      if (!hasLicense) errors.has_drivers_license = 'This field is required'
+
+      const hasVeh = fd.get('has_vehicle') as string
+      if (!hasVeh) errors.has_vehicle = 'This field is required'
+
+      if (hasVeh === 'Yes') {
+        if (!fd.get('vehicle_make')) errors.vehicle_make = 'Make is required'
+        if (!fd.get('vehicle_model')) errors.vehicle_model = 'Model is required'
+        if (!fd.get('vehicle_year')) errors.vehicle_year = 'Year is required'
+        if (!fd.get('vehicle_mileage')) errors.vehicle_mileage = 'Mileage is required'
+      }
+
+      if (!fd.get('smartphone_model')) errors.smartphone_model = 'Smartphone model is required'
     }
 
-    // Verify Captcha
     const captchaVal = parseInt(fd.get('captcha') as string, 10)
     if (captchaVal !== num1 + num2) {
-      setErrorMsg('Incorrect math verification. Please try again.')
-      setStatus('error')
+      errors.captcha = 'Incorrect math verification'
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors)
+      setStatus('idle')
       return
     }
-    fd.delete('captcha')
 
     // Append hidden fields
     fd.append('job_id', jobId)
@@ -176,7 +203,7 @@ function ApplyModal({
     try {
       const res = await fetch(`${baseUrl}/api/v1/job-postings/apply`, {
         method: 'POST',
-        body: fd, // Browser automatically sets multipart/form-data boundary
+        body: fd,
       })
       if (res.ok) {
         setStatus('success')
@@ -203,10 +230,10 @@ function ApplyModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="apply-modal-title"
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 pb-24 sm:p-6 sm:pb-6"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 pb-8 sm:p-6 sm:pb-6"
       >
         <div className="relative flex w-full max-w-2xl max-h-full sm:max-h-[90vh] flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
-          <div className="flex shrink-0 items-center justify-between border-b border-slate-100 bg-white px-5 py-4">
+          <div className="flex shrink-0 items-center justify-between border-b border-slate-100 bg-white px-5 py-4 pt-6">
             <div>
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--brand-emerald)]">
                 Apply Now · {jobId}
@@ -229,7 +256,7 @@ function ApplyModal({
             </button>
           </div>
 
-          <div className="overflow-y-auto p-5">
+          <div className="overflow-y-auto p-5 pb-8">
             {status === 'success' ? (
               <div className="flex flex-col items-center justify-center gap-4 py-8 text-center">
                 <CheckCircle2 className="h-12 w-12 text-[var(--brand-emerald)]" />
@@ -265,51 +292,59 @@ function ApplyModal({
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div>
-                    <label className="mb-1 block text-xs font-semibold text-slate-600">
-                      First Name <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      name="first_name"
-                      required
-                      className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                      placeholder="Jane"
-                    />
-                  </div>
-                  <div>
-                    <label className="mb-1 block text-xs font-semibold text-slate-600">
-                      Last Name <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      name="last_name"
-                      required
-                      className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                      placeholder="Smith"
-                    />
-                  </div>
-                </div>
+              <> {/* Fragment to satisfy JSX ternary rules while using an IIFE */}
+                {(() => {
+                  const getInputClass = (name: string) => `w-full rounded-lg border ${fieldErrors[name] ? 'border-red-500' : 'border-slate-200'} bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]`
+                  return (
+                    <form onSubmit={handleSubmit} noValidate className="space-y-4">
 
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div>
-                    <label className="mb-1 block text-xs font-semibold text-slate-600">
-                      Email <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      name="email"
-                      type="email"
-                      required
-                      className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                      placeholder="you@email.com"
-                    />
-                  </div>
-                  <div>
-                    <label className="mb-1 block text-xs font-semibold text-slate-600">
-                      Mobile <span className="text-red-500">*</span>
-                    </label>
-                    <style dangerouslySetInnerHTML={{
-                      __html: `
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div>
+                          <label className="mb-1 block text-xs font-semibold text-slate-600">
+                            First Name <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            name="first_name"
+                            required
+                            className={getInputClass('first_name')}
+                            placeholder="Jane"
+                          />
+                          {fieldErrors['first_name'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['first_name']}</p>}
+                        </div>
+                        <div>
+                          <label className="mb-1 block text-xs font-semibold text-slate-600">
+                            Last Name <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            name="last_name"
+                            required
+                            className={getInputClass('last_name')}
+                            placeholder="Smith"
+                          />
+                          {fieldErrors['last_name'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['last_name']}</p>}
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div>
+                          <label className="mb-1 block text-xs font-semibold text-slate-600">
+                            Email <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            name="email"
+                            type="email"
+                            required
+                            className={getInputClass('email')}
+                            placeholder="you@email.com"
+                          />
+                          {fieldErrors['email'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['email']}</p>}
+                        </div>
+                        <div>
+                          <label className="mb-1 block text-xs font-semibold text-slate-600">
+                            Mobile <span className="text-red-500">*</span>
+                          </label>
+                          <style dangerouslySetInnerHTML={{
+                            __html: `
                       .PhoneInput {
                         display: flex;
                         align-items: center;
@@ -344,317 +379,340 @@ function ApplyModal({
                         height: 100%;
                       }
                     `}} />
-                    <div className="flex w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-50 px-3 focus-within:ring-2 focus-within:ring-[var(--brand-emerald)]">
-                      <PhoneInput
-                        international
-                        defaultCountry={countryCode as Country}
-                        value={phone}
-                        onChange={(val) => setPhone(val || '')}
-                        className="w-full"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {workType === 'remote' && (
-                  <>
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                      <div>
-                        <label className="mb-1 block text-xs font-semibold text-slate-600">
-                          Worked from home for a minimum of 2 years? <span className="text-red-500">*</span>
-                        </label>
-                        <select
-                          name="worked_from_home"
-                          required
-                          className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                        >
-                          <option value="">Select an option</option>
-                          <option value="Yes">Yes</option>
-                          <option value="No">No</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="mb-1 block text-xs font-semibold text-slate-600">
-                          Own a noise-cancelling headset? <span className="text-red-500">*</span>
-                        </label>
-                        <select
-                          name="noise_cancelling_headset"
-                          required
-                          className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                        >
-                          <option value="">Select an option</option>
-                          <option value="Yes">Yes</option>
-                          <option value="No">No</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                      <div>
-                        <label className="mb-1 block text-xs font-semibold text-slate-600">
-                          Your Computer RAM (in GB)? <span className="text-red-500">*</span>
-                        </label>
-                        <div className="relative">
-                          <input
-                            name="computer_ram"
-                            type="number"
-                            min="1"
-                            required
-                            className="w-full rounded-lg border border-slate-200 bg-slate-50 pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                            placeholder="e.g., 16 GB"
-                          />
-                          <span className="absolute inset-y-0 right-3 flex items-center text-sm font-semibold text-slate-400 pointer-events-none">
-                            GB
-                          </span>
+                          <div className="flex w-full overflow-hidden rounded-lg border ${fieldErrors['phone'] ? 'border-red-500' : 'border-slate-200'} bg-slate-50 px-3 focus-within:ring-2 focus-within:ring-[var(--brand-emerald)]">
+                            <PhoneInput
+                              international
+                              defaultCountry={countryCode as Country}
+                              value={phone}
+                              onChange={(val) => setPhone(val || '')}
+                              className="w-full"
+                            />
+                          </div>
+                          {fieldErrors['phone'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['phone']}</p>}
                         </div>
                       </div>
+
+                      {workType === 'remote' && (
+                        <>
+                          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <div>
+                              <label className="mb-1 block text-xs font-semibold text-slate-600">
+                                Worked from home for a minimum of 2 years? <span className="text-red-500">*</span>
+                              </label>
+                              <select
+                                name="worked_from_home"
+                                required
+                                className={getInputClass('worked_from_home')}
+                              >
+                                <option value="">Select an option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                              </select>
+                              {fieldErrors['worked_from_home'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['worked_from_home']}</p>}
+                            </div>
+                            <div>
+                              <label className="mb-1 block text-xs font-semibold text-slate-600">
+                                Own a noise-cancelling headset? <span className="text-red-500">*</span>
+                              </label>
+                              <select
+                                name="noise_cancelling_headset"
+                                required
+                                className={getInputClass('noise_cancelling_headset')}
+                              >
+                                <option value="">Select an option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                              </select>
+                              {fieldErrors['noise_cancelling_headset'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['noise_cancelling_headset']}</p>}
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <div>
+                              <label className="mb-1 block text-xs font-semibold text-slate-600">
+                                Your Computer RAM (in GB)? <span className="text-red-500">*</span>
+                              </label>
+                              <div className="relative">
+                                <input
+                                  name="computer_ram"
+                                  type="number"
+                                  min="1"
+                                  required
+                                  className={getInputClass('computer_ram')}
+                                  placeholder="e.g., 16 GB"
+                                />
+                                <span className="absolute inset-y-0 right-3 flex items-center text-sm font-semibold text-slate-400 pointer-events-none">
+                                  GB
+                                </span>
+                              </div>
+                              {fieldErrors['computer_ram'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['computer_ram']}</p>}
+                            </div>
+                            <div>
+                              <label className="mb-1 block text-xs font-semibold text-slate-600">
+                                Home internet speed (Download Mbps)? <span className="text-red-500">*</span>
+                              </label>
+                              <input
+                                name="internet_speed"
+                                type="number"
+                                min="1"
+                                required
+                                className={getInputClass('internet_speed')}
+                                placeholder="e.g., 100 Mbps"
+                              />
+                              {fieldErrors['internet_speed'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['internet_speed']}</p>}
+                            </div>
+                          </div>
+                        </>
+                      )}
+
+                      {workType !== 'remote' && (
+                        <>
+                          <div>
+                            <label className="mb-1 block text-xs font-semibold text-slate-600">
+                              Do you currently operate a business under your name, such as a sole proprietorship, or do you have an incorporated company? <span className="text-red-500">*</span>
+                            </label>
+                            <select
+                              name="business_type"
+                              required
+                              value={businessType}
+                              onChange={(e) => setBusinessType(e.target.value)}
+                              className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                            >
+                              <option value="">Select an option</option>
+                              <option value="Yes, Sole Proprietorship">Yes, Sole Proprietorship</option>
+                              <option value="Yes, Corporation under my name">Yes, Corporation under my name</option>
+                              <option value="No">No</option>
+                            </select>
+                            {fieldErrors['business_type'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['business_type']}</p>}
+                          </div>
+
+                          {(businessType === 'Yes, Sole Proprietorship' || businessType === 'Yes, Corporation under my name') && (
+                            <>
+                              <div>
+                                <label className="mb-1 block text-xs font-semibold text-slate-600">
+                                  Legal Business/Sole Proprietorship Name <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                  name="legal_business_name"
+                                  type="text"
+                                  required
+                                  className={getInputClass('legal_business_name')}
+                                  placeholder="Enter business name"
+                                />
+                                {fieldErrors['legal_business_name'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['legal_business_name']}</p>}
+                              </div>
+                              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <div>
+                                  <label className="mb-1 block text-xs font-semibold text-slate-600">
+                                    WSIB Number <span className="text-red-500">*</span>
+                                  </label>
+                                  <input
+                                    name="wsib_number"
+                                    type="text"
+                                    required
+                                    className={getInputClass('wsib_number')}
+                                    placeholder="Enter WSIB Number"
+                                  />
+                                  {fieldErrors['wsib_number'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['wsib_number']}</p>}
+                                </div>
+                                <div>
+                                  <label className="mb-1 block text-xs font-semibold text-slate-600">
+                                    WSIB Clearance Certificate <span className="text-red-500">*</span>
+                                  </label>
+                                  <input
+                                    name="wsib_certificate"
+                                    type="file"
+                                    required
+                                    accept=".pdf,.doc,.docx,.jpg,.png"
+                                    className={`w-full rounded-lg border ${fieldErrors['wsib_certificate'] ? 'border-red-500' : 'border-slate-200'} bg-slate-50 px-3 py-2 text-sm file:mr-4 file:rounded-full file:border-0 file:bg-[var(--brand-emerald)]/10 file:px-4 file:py-1 file:text-xs file:font-semibold file:text-[var(--brand-emerald)] hover:file:bg-[var(--brand-emerald)]/20 focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]`}
+                                  />
+                                  {fieldErrors['wsib_certificate'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['wsib_certificate']}</p>}
+                                </div>
+                              </div>
+                              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <div>
+                                  <label className="mb-1 block text-xs font-semibold text-slate-600">
+                                    Business Number <span className="text-red-500">*</span>
+                                  </label>
+                                  <input
+                                    name="business_number"
+                                    type="text"
+                                    required
+                                    className={getInputClass('business_number')}
+                                    placeholder="Enter Business Number"
+                                  />
+                                  {fieldErrors['business_number'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['business_number']}</p>}
+                                </div>
+                                <div>
+                                  <label className="mb-1 block text-xs font-semibold text-slate-600">
+                                    HST Number <span className="text-red-500">*</span>
+                                  </label>
+                                  <input
+                                    name="hst_number"
+                                    type="text"
+                                    required
+                                    className={getInputClass('hst_number')}
+                                    placeholder="Enter HST Number"
+                                  />
+                                  {fieldErrors['hst_number'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['hst_number']}</p>}
+                                </div>
+                              </div>
+                            </>
+                          )}
+
+                          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <div>
+                              <label className="mb-1 block text-xs font-semibold text-slate-600">
+                                Do you have a valid driver&apos;s license? <span className="text-red-500">*</span>
+                              </label>
+                              <select
+                                name="has_drivers_license"
+                                required
+                                className={getInputClass('has_drivers_license')}
+                              >
+                                <option value="">Select an option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                              </select>
+                              {fieldErrors['has_drivers_license'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['has_drivers_license']}</p>}
+                            </div>
+                            <div>
+                              <label className="mb-1 block text-xs font-semibold text-slate-600">
+                                Do you currently have a reliable vehicle? <span className="text-red-500">*</span>
+                              </label>
+                              <select
+                                name="has_vehicle"
+                                required
+                                value={hasVehicle}
+                                onChange={(e) => setHasVehicle(e.target.value)}
+                                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                              >
+                                <option value="">Select an option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                              </select>
+                              {fieldErrors['has_vehicle'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['has_vehicle']}</p>}
+                            </div>
+                          </div>
+
+                          {hasVehicle === 'Yes' && (
+                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                              <div>
+                                <label className="mb-1 block text-xs font-semibold text-slate-600">
+                                  Vehicle Make <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                  name="vehicle_make"
+                                  type="text"
+                                  required
+                                  className={getInputClass('vehicle_make')}
+                                  placeholder="e.g. Toyota"
+                                />
+                                {fieldErrors['vehicle_make'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['vehicle_make']}</p>}
+                              </div>
+                              <div>
+                                <label className="mb-1 block text-xs font-semibold text-slate-600">
+                                  Vehicle Model <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                  name="vehicle_model"
+                                  type="text"
+                                  required
+                                  className={getInputClass('vehicle_model')}
+                                  placeholder="e.g. Corolla"
+                                />
+                                {fieldErrors['vehicle_model'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['vehicle_model']}</p>}
+                              </div>
+                              <div>
+                                <label className="mb-1 block text-xs font-semibold text-slate-600">
+                                  Vehicle Year <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                  name="vehicle_year"
+                                  type="number"
+                                  required
+                                  className={getInputClass('vehicle_year')}
+                                  placeholder="e.g. 2018"
+                                />
+                                {fieldErrors['vehicle_year'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['vehicle_year']}</p>}
+                              </div>
+                              <div>
+                                <label className="mb-1 block text-xs font-semibold text-slate-600">
+                                  Approximate Mileage <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                  name="vehicle_mileage"
+                                  type="text"
+                                  required
+                                  className={getInputClass('vehicle_mileage')}
+                                  placeholder="e.g. 50 kmpl"
+                                />
+                                {fieldErrors['vehicle_mileage'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['vehicle_mileage']}</p>}
+                              </div>
+                            </div>
+                          )}
+
+                          <div>
+                            <label className="mb-1 block text-xs font-semibold text-slate-600">
+                              What is your current smartphone model? <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              name="smartphone_model"
+                              type="text"
+                              required
+                              className={getInputClass('smartphone_model')}
+                              placeholder="e.g. iPhone 13, Samsung Galaxy S21"
+                            />
+                            {fieldErrors['smartphone_model'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['smartphone_model']}</p>}
+                          </div>
+                        </>
+                      )}
+
                       <div>
                         <label className="mb-1 block text-xs font-semibold text-slate-600">
-                          Home internet speed (Download Mbps)? <span className="text-red-500">*</span>
+                          Resume / CV <span className="text-red-500">*</span>
                         </label>
                         <input
-                          name="internet_speed"
-                          type="number"
-                          min="1"
+                          name="resume"
+                          type="file"
                           required
-                          className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                          placeholder="e.g., 100 Mbps"
+                          accept=".pdf,.doc,.docx"
+                          className={`w-full rounded-lg border ${fieldErrors['resume'] ? 'border-red-500' : 'border-slate-200'} bg-slate-50 px-3 py-2 text-sm file:mr-4 file:rounded-full file:border-0 file:bg-[var(--brand-emerald)]/10 file:px-4 file:py-1 file:text-xs file:font-semibold file:text-[var(--brand-emerald)] hover:file:bg-[var(--brand-emerald)]/20 focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]`}
                         />
+                        {fieldErrors['resume'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['resume']}</p>}
                       </div>
-                    </div>
-                  </>
-                )}
 
-                {workType !== 'remote' && (
-                  <>
-                    <div>
-                      <label className="mb-1 block text-xs font-semibold text-slate-600">
-                        Do you currently operate a business under your name, such as a sole proprietorship, or do you have an incorporated company? <span className="text-red-500">*</span>
-                      </label>
-                      <select
-                        name="business_type"
-                        required
-                        value={businessType}
-                        onChange={(e) => setBusinessType(e.target.value)}
-                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
+                      <div>
+                        <label className="mb-1 block text-xs font-semibold text-slate-600">
+                          Human Verification: What is {num1} + {num2}? <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          name="captcha"
+                          type="number"
+                          required
+                          className={getInputClass('captcha')}
+                          placeholder="Enter the sum"
+                        />
+                        {fieldErrors['captcha'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['captcha']}</p>}
+                      </div>
+
+                      {status === 'error' && (
+                        <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-600">
+                          {errorMsg}
+                        </p>
+                      )}
+
+                      <button
+                        type="submit"
+                        disabled={status === 'loading'}
+                        className="mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-[var(--brand-emerald)] py-3 text-sm font-bold text-white transition-colors hover:bg-[var(--brand-emerald-hover)] disabled:opacity-60"
                       >
-                        <option value="">Select an option</option>
-                        <option value="Yes, Sole Proprietorship">Yes, Sole Proprietorship</option>
-                        <option value="Yes, Corporation under my name">Yes, Corporation under my name</option>
-                        <option value="No">No</option>
-                      </select>
-                    </div>
-
-                    {(businessType === 'Yes, Sole Proprietorship' || businessType === 'Yes, Corporation under my name') && (
-                      <>
-                        <div>
-                          <label className="mb-1 block text-xs font-semibold text-slate-600">
-                            Legal Business/Sole Proprietorship Name <span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            name="legal_business_name"
-                            type="text"
-                            required
-                            className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                            placeholder="Enter business name"
-                          />
-                        </div>
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                          <div>
-                            <label className="mb-1 block text-xs font-semibold text-slate-600">
-                              WSIB Number <span className="text-red-500">*</span>
-                            </label>
-                            <input
-                              name="wsib_number"
-                              type="text"
-                              required
-                              className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                              placeholder="Enter WSIB Number"
-                            />
-                          </div>
-                          <div>
-                            <label className="mb-1 block text-xs font-semibold text-slate-600">
-                              WSIB Clearance Certificate <span className="text-red-500">*</span>
-                            </label>
-                            <input
-                              name="wsib_certificate"
-                              type="file"
-                              required
-                              accept=".pdf,.doc,.docx,.jpg,.png"
-                              className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm file:mr-4 file:rounded-full file:border-0 file:bg-[var(--brand-emerald)]/10 file:px-4 file:py-1 file:text-xs file:font-semibold file:text-[var(--brand-emerald)] hover:file:bg-[var(--brand-emerald)]/20 focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                            />
-                          </div>
-                        </div>
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                          <div>
-                            <label className="mb-1 block text-xs font-semibold text-slate-600">
-                              Business Number <span className="text-red-500">*</span>
-                            </label>
-                            <input
-                              name="business_number"
-                              type="text"
-                              required
-                              className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                              placeholder="Enter Business Number"
-                            />
-                          </div>
-                          <div>
-                            <label className="mb-1 block text-xs font-semibold text-slate-600">
-                              HST Number <span className="text-red-500">*</span>
-                            </label>
-                            <input
-                              name="hst_number"
-                              type="text"
-                              required
-                              className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                              placeholder="Enter HST Number"
-                            />
-                          </div>
-                        </div>
-                      </>
-                    )}
-
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                      <div>
-                        <label className="mb-1 block text-xs font-semibold text-slate-600">
-                          Do you have a valid driver&apos;s license? <span className="text-red-500">*</span>
-                        </label>
-                        <select
-                          name="has_drivers_license"
-                          required
-                          className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                        >
-                          <option value="">Select an option</option>
-                          <option value="Yes">Yes</option>
-                          <option value="No">No</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="mb-1 block text-xs font-semibold text-slate-600">
-                          Do you currently have a reliable vehicle? <span className="text-red-500">*</span>
-                        </label>
-                        <select
-                          name="has_vehicle"
-                          required
-                          value={hasVehicle}
-                          onChange={(e) => setHasVehicle(e.target.value)}
-                          className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                        >
-                          <option value="">Select an option</option>
-                          <option value="Yes">Yes</option>
-                          <option value="No">No</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    {hasVehicle === 'Yes' && (
-                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                        <div>
-                          <label className="mb-1 block text-xs font-semibold text-slate-600">
-                            Vehicle Make <span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            name="vehicle_make"
-                            type="text"
-                            required
-                            className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                            placeholder="e.g. Toyota"
-                          />
-                        </div>
-                        <div>
-                          <label className="mb-1 block text-xs font-semibold text-slate-600">
-                            Vehicle Model <span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            name="vehicle_model"
-                            type="text"
-                            required
-                            className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                            placeholder="e.g. Corolla"
-                          />
-                        </div>
-                        <div>
-                          <label className="mb-1 block text-xs font-semibold text-slate-600">
-                            Vehicle Year <span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            name="vehicle_year"
-                            type="number"
-                            required
-                            className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                            placeholder="e.g. 2018"
-                          />
-                        </div>
-                        <div>
-                          <label className="mb-1 block text-xs font-semibold text-slate-600">
-                            Approximate Mileage <span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            name="vehicle_mileage"
-                            type="text"
-                            required
-                            className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                            placeholder="e.g. 50 kmpl"
-                          />
-                        </div>
-                      </div>
-                    )}
-
-                    <div>
-                      <label className="mb-1 block text-xs font-semibold text-slate-600">
-                        What is your current smartphone model? <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        name="smartphone_model"
-                        type="text"
-                        required
-                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                        placeholder="e.g. iPhone 13, Samsung Galaxy S21"
-                      />
-                    </div>
-                  </>
-                )}
-
-                <div>
-                  <label className="mb-1 block text-xs font-semibold text-slate-600">
-                    Resume / CV <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    name="resume"
-                    type="file"
-                    required
-                    accept=".pdf,.doc,.docx"
-                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm file:mr-4 file:rounded-full file:border-0 file:bg-[var(--brand-emerald)]/10 file:px-4 file:py-1 file:text-xs file:font-semibold file:text-[var(--brand-emerald)] hover:file:bg-[var(--brand-emerald)]/20 focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                  />
-                </div>
-
-                <div>
-                  <label className="mb-1 block text-xs font-semibold text-slate-600">
-                    Human Verification: What is {num1} + {num2}? <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    name="captcha"
-                    type="number"
-                    required
-                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]"
-                    placeholder="Enter the sum"
-                  />
-                </div>
-
-                {status === 'error' && (
-                  <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-600">
-                    {errorMsg}
-                  </p>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={status === 'loading'}
-                  className="mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-[var(--brand-emerald)] py-3 text-sm font-bold text-white transition-colors hover:bg-[var(--brand-emerald-hover)] disabled:opacity-60"
-                >
-                  {status === 'loading' ? 'Submitting...' : 'Submit Application'}
-                </button>
-              </form>
+                        {status === 'loading' ? 'Submitting...' : 'Submit Application'}
+                      </button>
+                    </form>
+                  )
+                })()}
+              </>
             )}
           </div>
         </div>
