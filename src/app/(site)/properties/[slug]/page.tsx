@@ -82,14 +82,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     openGraph: {
       title,
       description,
-      images: image ? [image] : ['/og-default.png?v=2'],
+      images: image ? [image] : ['/og-default.png?v=3'],
       type: 'website',
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: image ? [image] : ['/og-default.png?v=2'],
+      images: image ? [image] : ['/og-default.png?v=3'],
     },
   }
 }

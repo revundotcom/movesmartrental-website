@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     title: 'Properties & Available Rentals | MoveSmart Rentals',
     description:
       'Browse verified rental homes, condos, and townhouses across Canada and the United States.',
-    images: ['/og-default.png?v=2'],
+    images: ['/og-default.png?v=3'],
   },
   twitter: {
     card: 'summary_large_image',

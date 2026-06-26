@@ -21,14 +21,14 @@ export const metadata: Metadata = {
     title: 'Leasing Brokerage FAQ Canada | MoveSmart Rentals',
     description:
       'Answers to frequently asked questions about MoveSmart Rentals full-service leasing and tenant placement: pricing, tenant qualification, rental protection, cities served, and more.',
-    images: [{ url: '/og-default.png?v=2', width: 1200, height: 630, alt: 'MoveSmart Rentals FAQ' }],
+    images: [{ url: '/og-default.png?v=3', width: 1200, height: 630, alt: 'MoveSmart Rentals FAQ' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Leasing Brokerage FAQ Canada | MoveSmart Rentals',
     description:
       'Answers to frequently asked questions about MoveSmart Rentals full-service leasing and tenant placement: pricing, tenant qualification, rental protection, cities served, and more.',
-    images: ['/og-default.png?v=2'],
+    images: ['/og-default.png?v=3'],
   },
 }
 

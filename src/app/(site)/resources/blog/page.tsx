@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: 'Blog | MoveSmart Rentals',
     description:
       'Field notes on leasing strategy, tenant qualification, pricing, and operations.',
-    images: ['/og-default.png?v=2'],
+    images: ['/og-default.png?v=3'],
   },
 }
 

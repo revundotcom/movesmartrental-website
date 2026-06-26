@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     title: 'Leasing Brokerage Services | MoveSmart Rentals Canada',
     description:
       'Nine end-to-end leasing services - from pricing strategy to move-in coordination - for landlords, PMCs, builders, and purpose-built rental operators.',
-    images: ['/og-default.png?v=2'],
+    images: ['/og-default.png?v=3'],
   },
   twitter: {
     card: 'summary_large_image',

@@ -29,7 +29,7 @@ export async function generateMetadata({
       title: industry.metaTitle,
       description: industry.metaDescription,
       url: `https://movesmartrentals.com/industries/${industry.slug}/`,
-      images: ['/og-default.png?v=2'],
+      images: ['/og-default.png?v=3'],
     },
     twitter: {
       card: 'summary_large_image',

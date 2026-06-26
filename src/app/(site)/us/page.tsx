@@ -28,14 +28,14 @@ export const metadata: Metadata = {
     title: 'Leasing Brokerage Across the United States | MoveSmart Rentals',
     description:
       'Full-service leasing and tenant placement across 10 US states and 57 anchor cities. State-licensed brokerage partners and ZIP-level pricing.',
-    images: [{ url: '/og-default.png?v=2', width: 1200, height: 630, alt: 'MoveSmart Rentals United States' }],
+    images: [{ url: '/og-default.png?v=3', width: 1200, height: 630, alt: 'MoveSmart Rentals United States' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Leasing Brokerage Across the United States | MoveSmart Rentals',
     description:
       'Full-service leasing and tenant placement across 10 US states and 57 anchor cities.',
-    images: ['/og-default.png?v=2'],
+    images: ['/og-default.png?v=3'],
   },
 }
 

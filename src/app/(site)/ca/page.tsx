@@ -28,14 +28,14 @@ export const metadata: Metadata = {
     title: 'Leasing Brokerage Across Canada | MoveSmart Rentals',
     description:
       'Full-service leasing and tenant placement across Canada’s 6 largest provinces and 44 anchor cities. RECO/RECA-compliant lease execution and CMHC-aligned pricing.',
-    images: [{ url: '/og-default.png?v=2', width: 1200, height: 630, alt: 'MoveSmart Rentals Canada' }],
+    images: [{ url: '/og-default.png?v=3', width: 1200, height: 630, alt: 'MoveSmart Rentals Canada' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Leasing Brokerage Across Canada | MoveSmart Rentals',
     description:
       'Full-service leasing and tenant placement across Canada’s 6 largest provinces and 44 anchor cities.',
-    images: ['/og-default.png?v=2'],
+    images: ['/og-default.png?v=3'],
   },
 }
 

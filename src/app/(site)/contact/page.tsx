@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     description:
       'Contact MoveSmart Rentals for a free leasing consultation. Submit a property, book a call, or ask about our Canada-wide full-service leasing and tenant placement.',
     images: [
-      { url: '/og-default.png?v=2', width: 1200, height: 630, alt: 'Contact MoveSmart Rentals' },
+      { url: '/og-default.png?v=3', width: 1200, height: 630, alt: 'Contact MoveSmart Rentals' },
     ],
   },
   twitter: {
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     title: 'Contact MoveSmart Rentals | Free Leasing Consultation',
     description:
       'Contact MoveSmart Rentals for a free leasing consultation. Submit a property, book a call, or ask about our Canada-wide full-service leasing and tenant placement.',
-    images: ['/og-default.png?v=2'],
+    images: ['/og-default.png?v=3'],
   },
 }
 

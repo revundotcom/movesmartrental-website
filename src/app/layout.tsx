@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     siteName: 'MoveSmart Rentals',
     images: [
       {
-        url: '/og-default.png?v=2',
+        url: '/og-default.png?v=3',
         width: 1200,
         height: 630,
         alt: 'MoveSmart Rentals - Full-Service Leasing and Tenant Placement Across Canada and the United States',
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@MoveSmart',
     creator: '@MoveSmart',
-    images: ['/og-default.png?v=2'],
+    images: ['/og-default.png?v=3'],
   },
   alternates: {
     canonical: '/',

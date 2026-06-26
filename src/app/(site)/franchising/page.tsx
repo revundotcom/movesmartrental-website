@@ -37,14 +37,14 @@ export const metadata: Metadata = {
     title: 'Leasing Brokerage Franchise Canada & US | MoveSmart Rentals',
     description:
       'Now awarding territories. Protected market, 6-week training, proven leasing playbook, and ongoing HQ support.',
-    images: [{ url: '/og-default.png?v=2', width: 1200, height: 630, alt: 'MoveSmart Rentals Franchise Opportunity' }],
+    images: [{ url: '/og-default.png?v=3', width: 1200, height: 630, alt: 'MoveSmart Rentals Franchise Opportunity' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Leasing Brokerage Franchise Canada & US | MoveSmart Rentals',
     description:
       'Now awarding territories. Protected market, 6-week training, proven leasing playbook, and ongoing HQ support.',
-    images: ['/og-default.png?v=2'],
+    images: ['/og-default.png?v=3'],
   },
 }
 
