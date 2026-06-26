@@ -1,3 +1,5 @@
+import { OG_IMAGE_URL } from '../brand-constants'
+
 /**
  * JSON-LD: Article / BlogPosting schema
  * Used on: Blog posts, Guides, Case studies
@@ -27,7 +29,7 @@ export function buildArticleSchema(data: {
       url: 'https://movesmartrentals.com',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://movesmartrentals.com/og-share.png',
+        url: `https://movesmartrentals.com${OG_IMAGE_URL}`,
       },
     },
     datePublished: data.datePublished,

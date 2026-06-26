@@ -4,6 +4,39 @@
  * NEVER use "MoveSmart", "MSR", "Move Smart" - always "MoveSmart Rentals".
  */
 
+/**
+ * Build-time OG image version suffix.
+ *
+ * Social-platform link previews (WhatsApp, Microsoft Teams, LinkedIn, etc.)
+ * are cached server-side keyed by the og:image URL — once a platform fetches
+ * the image at a given URL, it serves the cached version for days/weeks
+ * regardless of what bytes actually live at that URL on our server.
+ *
+ * To break this cache automatically on every deploy, we suffix the og:image
+ * URL with a version derived from the Vercel git commit SHA. New commit =
+ * new query string = new cache key on the platform side = they re-fetch.
+ *
+ * - On Vercel: VERCEL_GIT_COMMIT_SHA is provided by the build env.
+ * - Locally: falls back to "dev" (stable across dev sessions).
+ *
+ * This means: client just shares movesmartrentals.com normally. Every time
+ * we deploy a new OG-affecting change, social platforms automatically pull
+ * the fresh image — no manual debugger trips, no waiting for cache TTL.
+ *
+ * IMPORTANT: This only fixes FUTURE cache. If WhatsApp/Teams already have
+ * a cached preview for the URL on the OLD og:image, that stays cached until
+ * its TTL expires (24h-7d) OR is manually refreshed via Meta's Sharing
+ * Debugger (https://developers.facebook.com/tools/debug/). After the
+ * one-time refresh, this versioning keeps things fresh forever.
+ */
+const OG_VERSION =
+  process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 8) ||
+  process.env.NEXT_PUBLIC_OG_VERSION ||
+  'dev'
+
+/** Canonical OG share image — auto-versioned per deploy. */
+export const OG_IMAGE_URL = `/og-share.png?v=${OG_VERSION}`
+
 export const BRAND = {
   /** Always use this exact name for the brand entity */
   name: 'MoveSmart Rentals',
@@ -19,10 +52,10 @@ export const BRAND = {
   email: 'contact@movesmartrentals.com',
   /** Founding year */
   foundingYear: 2024,
-  /** Default OG image path */
-  ogImage: '/og-share.png',
-  /** Logo path */
-  logo: '/og-share.png',
+  /** Default OG image path — auto-versioned per deploy via OG_IMAGE_URL */
+  ogImage: OG_IMAGE_URL,
+  /** Logo path — also versioned so any logo-shaped social embed picks up updates */
+  logo: OG_IMAGE_URL,
   /** Tagline */
   tagline: 'Full-Service Leasing & Tenant Placement Across Canada & the United States',
   /** Short description for schemas */

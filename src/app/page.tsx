@@ -25,6 +25,7 @@ import { buildOrganizationSchema } from '@/lib/schema-builders/organization'
 import { buildWebSiteSchema } from '@/lib/schema-builders/website'
 import { buildLocalBusinessSchema } from '@/lib/schema-builders/local-business'
 import { generatePageMetadata } from '@/lib/metadata'
+import { OG_IMAGE_URL } from '@/lib/brand-constants'
 import { PORTAL_LOGIN_URL, PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 import { BrowserFrame } from '@/components/ui/browser-frame'
 import { OwnerDashboardMockup } from '@/components/portal-mockups/owner-dashboard-mockup'
@@ -50,7 +51,7 @@ export default async function HomePage() {
   const organizationSchema = buildOrganizationSchema({
     name: 'MoveSmart Rentals',
     url: siteUrl,
-    logo: `${siteUrl}/og-share.png`,
+    logo: `${siteUrl}${OG_IMAGE_URL}`,
     description:
       'Full-service leasing and tenant placement company delivering end-to-end leasing execution for individual landlords, builders, PMCs, and institutional rental operators. Listing to move-in, with broad multi-platform advertising, disciplined screening, and rental protection options.',
     contactEmail: 'contact@movesmartrentals.com',
