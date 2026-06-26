@@ -15,7 +15,7 @@ export function buildServiceMetadata(slug: string): Metadata {
       title: service.metaTitle,
       description: service.metaDescription,
       url: `https://movesmartrentals.com/services/${service.slug}/`,
-      images: ['/og-default.png?v=3'],
+      images: ['/og-share.png'],
     },
     twitter: {
       card: 'summary_large_image',

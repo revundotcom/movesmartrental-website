@@ -7,30 +7,28 @@ export const contentType = 'image/png'
 /* ──────────────────────────────────────────────────────────────────
  * OG share image — rendered at 1200×630 via @vercel/og (Satori).
  *
- * Layout budget (kept under 630px total content height):
- *   56px  top padding
- *   40px  brand mark row
- *   40px  gap → gold hairline
- *    2px  gold hairline
- *   28px  gap → headline
- *  ~88px  headline line 1 ("Full-Service")
- *  ~88px  headline line 2 ("Leasing & Placement" — italic gold, fits 1 line at 80px)
- *   24px  gap → subhead
- *  ~70px  subhead (2 lines max at 24px / lh 1.4)
- *  flex   spacer
- *   28px  footer row (tagline + URL)
- *   56px  bottom padding
- *  ──────
- * = ~520px content + 56+56 padding = ~632px, contains within 630px canvas.
+ * Per client direction (Jun 2026): no brand-mark header at the top
+ * (the "M" logo box + "MOVESMART RENTALS" wordmark are gone — they
+ * felt cluttered and conflicted with the editorial style). Identity
+ * is carried entirely by the URL in the footer.
  *
- * Satori gotchas baked into this file:
- *   - Every container is display: flex (Satori requires this).
- *   - Every text node is the ONLY child of its wrapper (no mixed
- *     text+children inside a flex container — Satori renders them weirdly).
- *   - Headline phrasing chosen so "Leasing & Placement" fits one line at 80px.
- *   - Subhead text trimmed to ~80 characters to guarantee ≤2 wrapped lines.
- *   - Footer is in normal flow (NOT position:absolute) so flex spacer
- *     above it can grow/shrink without anything overlapping.
+ * Layout budget (kept under 630px total content height):
+ *   72px  top padding
+ *    2px  gold hairline accent
+ *   40px  gap → headline
+ *  ~104px headline line 1 ("Full-Service" at 96px / lh 1.08)
+ *  ~104px headline line 2 ("Leasing & Placement" italic gold, fits 1 line)
+ *   36px  gap → subhead
+ *  ~70px  subhead (≤2 lines at 24px / lh 1.4)
+ *  flex   spacer (auto)
+ *   30px  footer URL
+ *   72px  bottom padding
+ *  ──────
+ * = ~530px content + 144px padding, fits in 630px with breathing room.
+ *
+ * Satori gotchas: every container has display:flex; text is the only
+ * child of its flex wrapper; footer is in-flow (NOT position:absolute)
+ * so the flex:1 spacer above absorbs any size variance.
  * ────────────────────────────────────────────────────────────────── */
 
 export default function OpengraphImage() {
@@ -44,73 +42,33 @@ export default function OpengraphImage() {
           height: '100%',
           backgroundColor: '#001E57',
           backgroundImage:
-            'radial-gradient(circle at 15% 85%, rgba(0,153,102,0.28) 0%, rgba(0,30,87,0) 55%), radial-gradient(circle at 85% 10%, rgba(212,168,83,0.22) 0%, rgba(0,30,87,0) 55%)',
-          padding: '56px 88px',
+            'radial-gradient(circle at 15% 85%, rgba(0,153,102,0.32) 0%, rgba(0,30,87,0) 55%), radial-gradient(circle at 85% 10%, rgba(212,168,83,0.25) 0%, rgba(0,30,87,0) 55%)',
+          padding: '72px 88px',
           color: '#FBFAF6',
           fontFamily: 'Helvetica, Arial, sans-serif',
         }}
       >
-        {/* Brand mark row */}
+        {/* Gold hairline accent (single visual anchor, no logo) */}
         <div
           style={{
             display: 'flex',
-            alignItems: 'center',
-            gap: 14,
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              width: 40,
-              height: 40,
-              alignItems: 'center',
-              justifyContent: 'center',
-              background: '#FBFAF6',
-              color: '#001E57',
-              fontSize: 26,
-              fontWeight: 800,
-              fontFamily: 'Georgia, serif',
-              borderRadius: 5,
-            }}
-          >
-            M
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              color: '#FBFAF6',
-              fontSize: 20,
-              fontWeight: 600,
-              letterSpacing: 4,
-              textTransform: 'uppercase',
-            }}
-          >
-            MoveSmart Rentals
-          </div>
-        </div>
-
-        {/* Gold hairline */}
-        <div
-          style={{
-            display: 'flex',
-            width: 88,
+            width: 96,
             height: 2,
             background: '#D4A853',
-            marginTop: 40,
           }}
         />
 
-        {/* Editorial headline — two lines, sized to guarantee 1-line wrap each */}
+        {/* Editorial headline — two lines, sized so each fits cleanly */}
         <div
           style={{
             display: 'flex',
             fontFamily: 'Georgia, Times, serif',
-            fontSize: 80,
+            fontSize: 96,
             fontWeight: 400,
             lineHeight: 1.08,
-            letterSpacing: -2,
+            letterSpacing: -2.5,
             color: '#FBFAF6',
-            marginTop: 28,
+            marginTop: 40,
           }}
         >
           Full-Service
@@ -119,25 +77,25 @@ export default function OpengraphImage() {
           style={{
             display: 'flex',
             fontFamily: 'Georgia, Times, serif',
-            fontSize: 80,
+            fontSize: 96,
             fontWeight: 400,
             fontStyle: 'italic',
             lineHeight: 1.08,
-            letterSpacing: -2,
+            letterSpacing: -2.5,
             color: '#D4A853',
           }}
         >
           Leasing & Placement
         </div>
 
-        {/* Subhead — short, ≤2 lines at 1024-ish container width */}
+        {/* Subhead — short, ≤2 lines */}
         <div
           style={{
             display: 'flex',
             fontSize: 24,
             fontWeight: 400,
             color: 'rgba(251,250,246,0.78)',
-            marginTop: 24,
+            marginTop: 36,
             letterSpacing: -0.2,
             lineHeight: 1.4,
             maxWidth: 880,
@@ -146,27 +104,22 @@ export default function OpengraphImage() {
           Full-cycle leasing for landlords and rental operators across Canada and the US.
         </div>
 
-        {/* Spacer — pushes footer to the bottom of the safe area */}
-        <div
-          style={{
-            display: 'flex',
-            flex: 1,
-          }}
-        />
+        {/* Flex spacer pushes footer to the bottom of the safe area */}
+        <div style={{ display: 'flex', flex: 1 }} />
 
-        {/* Footer row — tagline left, URL right */}
+        {/* Footer — just the URL, right-aligned. Identity without clutter. */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end',
           }}
         >
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 12,
+              gap: 14,
             }}
           >
             <div
@@ -181,26 +134,14 @@ export default function OpengraphImage() {
             <div
               style={{
                 display: 'flex',
-                color: 'rgba(251,250,246,0.82)',
-                fontSize: 18,
+                color: '#FBFAF6',
+                fontSize: 22,
                 fontWeight: 500,
-                letterSpacing: 2,
-                textTransform: 'uppercase',
+                letterSpacing: 0.5,
               }}
             >
-              Strategic - Professional - Transparent
+              movesmartrentals.com
             </div>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              color: 'rgba(251,250,246,0.6)',
-              fontSize: 18,
-              fontWeight: 500,
-              letterSpacing: 1,
-            }}
-          >
-            movesmartrentals.com
           </div>
         </div>
       </div>

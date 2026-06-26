@@ -21,7 +21,7 @@ export function generatePageMetadata({
   const description = seo?.metaDescription || fallbackDescription
   const canonicalPath = path.endsWith('/') ? path : `${path}/`
 
-  const ogImageUrl = (seo?.ogImage?.asset as { url?: string } | undefined)?.url || '/og-default.png?v=3'
+  const ogImageUrl = (seo?.ogImage?.asset as { url?: string } | undefined)?.url || '/og-share.png'
   const ogImageAlt = seo?.ogImage?.alt || title
 
   return {

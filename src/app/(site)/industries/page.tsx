@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     title: 'Industries We Serve | MoveSmart Rentals',
     description:
       'Tenant placement and lease execution for every type of rental property owner across the US and Canada.',
-    images: ['/og-default.png?v=3'],
+    images: ['/og-share.png'],
   },
   twitter: {
     card: 'summary_large_image',

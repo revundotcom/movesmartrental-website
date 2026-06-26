@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     title: 'Leasing Resources | MoveSmart Rentals',
     description:
       'Field manuals for serious rental operators. Landlord playbooks, tenant handbooks, institutional lease-up guides, and quarterly market reports.',
-    images: ['/og-default.png?v=3'],
+    images: ['/og-share.png'],
   },
   twitter: {
     card: 'summary_large_image',

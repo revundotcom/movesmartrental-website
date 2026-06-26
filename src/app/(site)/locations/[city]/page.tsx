@@ -29,7 +29,7 @@ export async function generateMetadata({
       title: location.metaTitle,
       description: location.metaDescription,
       url: `https://movesmartrentals.com/locations/${location.slug}/`,
-      images: ['/og-default.png?v=3'],
+      images: ['/og-share.png'],
     },
     twitter: {
       card: 'summary_large_image',

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: 'The Smart Lease Podcast',
     description:
       'Conversations from the leasing desk. Pricing, screening, lease-ups, and operations.',
-    images: ['/og-default.png?v=3'],
+    images: ['/og-share.png'],
   },
 }
 

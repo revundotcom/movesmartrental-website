@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     title: 'Careers | MoveSmart Rentals',
     description:
       'Join the team building a better rental market across North America. Open roles in leasing, operations, marketing, property management, and trades.',
-    images: ['/og-default.png?v=3'],
+    images: ['/og-share.png'],
   },
   twitter: {
     card: 'summary_large_image',

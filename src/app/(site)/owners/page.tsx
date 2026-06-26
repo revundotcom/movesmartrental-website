@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     title: 'Full-Service Leasing for Landlords | MoveSmart Rentals',
     description:
       'Strategic pricing, professional marketing, structured screening, and lease execution for Canadian landlords. Zero upfront cost, success-fee on placement.',
-    images: ['/og-default.png?v=3'],
+    images: ['/og-share.png'],
   },
   twitter: {
     card: 'summary_large_image',

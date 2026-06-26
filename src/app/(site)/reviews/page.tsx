@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     title: 'Reviews & Testimonials | MoveSmart Rentals',
     description:
       'Real results from real property owners. 4.9/5 across 200+ Google reviews. Read what landlords say about MoveSmart Rentals.',
-    images: ['/og-default.png?v=3'],
+    images: ['/og-share.png'],
   },
   twitter: {
     card: 'summary_large_image',

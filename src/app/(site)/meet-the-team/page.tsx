@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     title: 'Meet the Team | MoveSmart Rentals',
     description:
       'The operators, leasing leads, and client-success specialists running the leasing phase for serious rental operators.',
-    images: ['/og-default.png?v=3'],
+    images: ['/og-share.png'],
   },
   twitter: {
     card: 'summary_large_image',
