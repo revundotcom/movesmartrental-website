@@ -20,9 +20,9 @@ export const BRAND = {
   /** Founding year */
   foundingYear: 2024,
   /** Default OG image path */
-  ogImage: '/og-default.png',
+  ogImage: '/og-default.png?v=2',
   /** Logo path */
-  logo: '/og-default.png',
+  logo: '/og-default.png?v=2',
   /** Tagline */
   tagline: 'Full-Service Leasing & Tenant Placement Across Canada & the United States',
   /** Short description for schemas */

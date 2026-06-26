@@ -15,7 +15,7 @@ export function buildResourceMetadata(slug: string): Metadata {
       title: resource.metaTitle,
       description: resource.metaDescription,
       url: `https://movesmartrentals.com/resources/${resource.slug}/`,
-      images: ['/og-default.png'],
+      images: ['/og-default.png?v=2'],
     },
     twitter: {
       card: 'summary_large_image',

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     title: 'Leasing Brokerage Pricing | MoveSmart Rentals',
     description:
       'Zero upfront cost. Success-fee leasing brokerage pricing - pay only when a qualified tenant signs the lease.',
-    images: ['/og-default.png'],
+    images: ['/og-default.png?v=2'],
   },
   twitter: {
     card: 'summary_large_image',

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: 'News | MoveSmart Rentals',
     description:
       'Press coverage, company announcements, and milestones.',
-    images: ['/og-default.png'],
+    images: ['/og-default.png?v=2'],
   },
 }
 

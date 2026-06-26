@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     title: 'Rental Homes Canada | MoveSmart Rentals',
     description:
       'Browse verified rental listings across Canada. Apartments, condos, houses, and townhouses in Toronto, Mississauga, Ottawa, Hamilton, and 160+ cities.',
-    images: ['/og-default.png'],
+    images: ['/og-default.png?v=2'],
   },
   twitter: {
     card: 'summary_large_image',

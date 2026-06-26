@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     title: 'Leasing Coverage - Canada & United States | MoveSmart Rentals',
     description:
       'Same discipline, same full-service execution across Canada and the United States - from a basement unit in Hamilton to a 500-unit lease-up in Miami.',
-    images: ['/og-default.png'],
+    images: ['/og-default.png?v=2'],
   },
   twitter: {
     card: 'summary_large_image',

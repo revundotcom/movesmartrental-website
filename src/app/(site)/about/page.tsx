@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     title: 'About MoveSmart Rentals | Leasing Brokerage Across Canada & the US',
     description:
       'Full-service leasing execution for serious rental operators. Strategic pricing, disciplined tenant qualification, rental protection options, and complete move-in coordination.',
-    images: ['/og-default.png'],
+    images: ['/og-default.png?v=2'],
   },
   twitter: {
     card: 'summary_large_image',
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 const organizationSchema = buildOrganizationSchema({
   name: 'MoveSmart Rentals',
   url: SITE_URL,
-  logo: `${SITE_URL}/og-default.png`,
+  logo: `${SITE_URL}/og-default.png?v=2`,
   description:
     'Full-service rental and leasing company delivering full-cycle leasing execution, strategic pricing, disciplined tenant qualification, and move-in coordination for landlords, PMCs, builders, and institutional operators across Canada and the United States.',
   contactEmail: 'contact@movesmartrentals.com',

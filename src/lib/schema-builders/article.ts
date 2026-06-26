@@ -27,7 +27,7 @@ export function buildArticleSchema(data: {
       url: 'https://movesmartrentals.com',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://movesmartrentals.com/og-default.png',
+        url: 'https://movesmartrentals.com/og-default.png?v=2',
       },
     },
     datePublished: data.datePublished,

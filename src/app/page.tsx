@@ -50,7 +50,7 @@ export default async function HomePage() {
   const organizationSchema = buildOrganizationSchema({
     name: 'MoveSmart Rentals',
     url: siteUrl,
-    logo: `${siteUrl}/og-default.png`,
+    logo: `${siteUrl}/og-default.png?v=2`,
     description:
       'Full-service leasing and tenant placement company delivering end-to-end leasing execution for individual landlords, builders, PMCs, and institutional rental operators. Listing to move-in, with broad multi-platform advertising, disciplined screening, and rental protection options.',
     contactEmail: 'contact@movesmartrentals.com',
