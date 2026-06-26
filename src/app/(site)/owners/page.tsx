@@ -972,12 +972,8 @@ export default async function OwnersPage() {
               >
                 List my property
               </a>
-              <Link
-                href="/properties/"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white transition-all hover:border-white/40 hover:bg-white/10"
-              >
-                Browse rentals
-              </Link>
+              {/* "Browse rentals" CTA removed per client direction
+                  (Jun 2026) — /properties/ is hidden from public surfaces. */}
             </div>
           </RevealOnScroll>
         </div>

@@ -37,7 +37,10 @@ export const NAV_GROUPS = [
     label: 'Tenants',
     items: [
       { title: 'Tenant Hub', href: '/tenants/', description: 'Everything renters need in one place' },
-      { title: 'Browse Properties', href: '/properties/', description: 'Available homes, condos & townhouses' },
+      // 'Browse Properties' removed from public nav per client direction
+      // (Jun 2026): /properties/ is no longer exposed to the public. The
+      // route still resolves by direct URL but is noindexed and absent
+      // from nav, footer, and sitemap.
       { title: 'Tenant FAQ', href: '/faq/', description: 'Answers for renters and applicants' },
     ],
   },
@@ -164,7 +167,8 @@ export const FOOTER_COLUMNS = [
     title: 'Tenant Resources',
     links: [
       { label: 'Tenant Hub', href: '/tenants/' },
-      { label: 'Browse Properties', href: '/properties/' },
+      // 'Browse Properties' removed per client direction (Jun 2026) —
+      // /properties/ is hidden from public surfaces.
       { label: 'Tenant FAQ', href: '/faq/' },
     ],
   },

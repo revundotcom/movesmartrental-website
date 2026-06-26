@@ -67,6 +67,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: unit.unit_name,
     description,
     alternates: { canonical: `/properties/${slug}/` },
+    // Individual /properties/<slug>/ pages inherit the public-hidden
+    // status of /properties/ (client direction, Jun 2026).
+    robots: {
+      index: false,
+      follow: false,
+      nocache: true,
+      googleBot: {
+        index: false,
+        follow: false,
+        noimageindex: true,
+      },
+    },
     openGraph: {
       title,
       description,

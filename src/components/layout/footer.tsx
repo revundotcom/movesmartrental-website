@@ -142,12 +142,8 @@ export function Footer() {
                 >
                   List my property
                 </a>
-                <Link
-                  href="/properties/"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/25 bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-px hover:border-white/50 hover:bg-white/10"
-                >
-                  Browse rentals
-                </Link>
+                {/* "Browse rentals" CTA removed per client direction
+                    (Jun 2026) — /properties/ is hidden from public surfaces. */}
               </div>
               {/* Contact info */}
               <div className="mt-5 space-y-1.5">

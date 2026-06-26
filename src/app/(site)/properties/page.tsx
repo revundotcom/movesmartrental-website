@@ -15,6 +15,21 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/properties/',
   },
+  // /properties/ is hidden from public surfaces per client direction
+  // (Jun 2026). The route still resolves by direct URL but is noindexed,
+  // absent from nav/footer/sitemap, and Disallow'd in robots.txt.
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+      'max-snippet': -1,
+      'max-image-preview': 'none',
+    },
+  },
   openGraph: {
     title: 'Properties & Available Rentals | MoveSmart Rentals',
     description:

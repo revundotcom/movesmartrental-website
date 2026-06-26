@@ -360,13 +360,8 @@ export default async function TenantsPage() {
         </div>
       </div>
 
-      {/* Strong CTA */}
-      <Link
-        href="/properties/"
-        className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-emerald px-4 py-3 text-sm font-bold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-brand-emerald-dark hover:shadow-md"
-      >
-        See all live listings
-      </Link>
+      {/* "See all live listings" CTA removed per client direction
+          (Jun 2026) — /properties/ is hidden from public surfaces. */}
 
       <div className="mt-5 border-t border-brand-navy/10 pt-4">
         <p className="text-[11px] leading-relaxed text-slate-500">
@@ -558,7 +553,7 @@ export default async function TenantsPage() {
                 <span className="text-brand-gold" aria-hidden="true">.</span>
               </h2>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">
-                Four formats, every one of them owner-verified. Pick the layout that fits your life — then filter the live listings.
+                Four formats, every one of them owner-verified. Pick the layout that fits your life.
               </p>
             </div>
           </RevealOnScroll>
@@ -570,9 +565,12 @@ export default async function TenantsPage() {
                 index={idx}
                 className="h-full"
               >
-                <Link
-                  href="/properties/"
-                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-brand-emerald/30 hover:shadow-2xl hover:shadow-brand-navy/10"
+                {/* Property-type cards: previously linked to /properties/.
+                    Per client direction (Jun 2026), /properties/ is hidden
+                    from public surfaces — these cards now render as a
+                    static showcase (no click-through). */}
+                <div
+                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm"
                 >
                   {/* Hero image */}
                   <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
@@ -580,7 +578,7 @@ export default async function TenantsPage() {
                       src={type.imageSrc}
                       alt={type.imageAlt}
                       fill
-                      className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+                      className="object-cover"
                       sizes="(max-width: 1024px) 100vw, 320px"
                       unoptimized
                     />
@@ -604,11 +602,8 @@ export default async function TenantsPage() {
                   {/* Body */}
                   <div className="flex flex-1 flex-col gap-4 p-5 sm:p-6">
                     <p className="text-sm leading-relaxed text-slate-600 sm:text-[15px]">{type.desc}</p>
-                    <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-brand-emerald transition-colors group-hover:text-emerald-700">
-                      Browse {type.title.toLowerCase()}
-                    </span>
                   </div>
-                </Link>
+                </div>
               </FeeTableRow>
             ))}
           </div>

@@ -334,12 +334,8 @@ export default async function HomePage() {
                 >
                   List my property
                 </a>
-                <Link
-                  href="/properties/"
-                  className="inline-flex items-center justify-center rounded-lg border border-brand-navy/15 bg-white px-6 py-3 text-sm font-semibold text-brand-navy transition-all duration-200 hover:-translate-y-px hover:border-brand-navy/30 hover:bg-slate-50"
-                >
-                  Browse rentals
-                </Link>
+                {/* "Browse rentals" CTA removed per client direction
+                    (Jun 2026) — /properties/ is hidden from public surfaces. */}
               </div>
             </div>
           </div>
