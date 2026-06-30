@@ -210,12 +210,12 @@ export default async function CareersPage() {
             >
               See open positions <ArrowRight className="h-4 w-4" />
             </a>
-            <a
+            {/* <a
               href="mailto:careers@movesmartrentals.com"
               className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:border-white/70 hover:bg-white/10"
             >
               General application
-            </a>
+            </a> */}
           </div>
         </div>
       </section>
