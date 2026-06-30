@@ -645,7 +645,7 @@ function ApplyModal({
                                   type="text"
                                   required
                                   className={getInputClass('vehicle_mileage')}
-                                  placeholder="e.g. 50 kmpl"
+                                  placeholder="e.g. 100,000"
                                 />
                                 {fieldErrors['vehicle_mileage'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['vehicle_mileage']}</p>}
                               </div>
