@@ -500,16 +500,3 @@ function XIcon() {
     </svg>
   )
 }
-
-function formatDate(iso: string): string {
-  // Defensive: roles ship hand-typed YYYY-MM-DD strings. If parsing
-  // fails for any reason, fall back to the raw string instead of
-  // rendering "Invalid Date" to the visitor.
-  const date = new Date(iso)
-  if (Number.isNaN(date.getTime())) return iso
-  return date.toLocaleDateString('en-CA', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-}
