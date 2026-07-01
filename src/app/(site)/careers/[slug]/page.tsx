@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, Briefcase, Calendar, Hash, Mail, MapPin } from 'lucide-react'
+import { ArrowLeft, Briefcase, Mail, MapPin } from 'lucide-react'
 
 import { JsonLd } from '@/components/json-ld'
 import { buildBreadcrumbListSchema } from '@/lib/schema-builders'
@@ -102,7 +102,7 @@ export default async function CareerRolePage({ params }: RouteParams) {
   })
 
   // Format the posting date in a friendlier form for the hero meta line.
-  const postingDateDisplay = formatDate(role.postingStartDate)
+  // const postingDateDisplay = formatDate(role.postingStartDate)
 
   return (
     <main className="bg-white">
@@ -124,7 +124,7 @@ export default async function CareerRolePage({ params }: RouteParams) {
             See All Jobs
           </Link>
 
-          <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_auto] lg:gap-12">
+          <div className="mt-8 grid grid-cols-1 gap-10 lg:gap-12">
             {/* LEFT: title + meta + share */}
             <div className="min-w-0">
               <h1 className="font-display text-4xl font-bold uppercase leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4.25rem]">
@@ -138,59 +138,53 @@ export default async function CareerRolePage({ params }: RouteParams) {
               <dl className="mt-8 space-y-2 text-sm sm:text-base">
                 <MetaRow label="Type">{role.type}</MetaRow>
                 <MetaRow label="Location(s)">{role.locationDisplay}</MetaRow>
-                <MetaRow label="Job Posting Start Date">
+                {/* <MetaRow label="Job Posting Start Date">
                   {postingDateDisplay}
-                </MetaRow>
-                <MetaRow label="Job ID">{role.jobId}</MetaRow>
+                </MetaRow> */}
+                {/* <MetaRow label="Job ID">{role.jobId}</MetaRow> */}
                 {role.compensation && (
                   <MetaRow label="Compensation">{role.compensation}</MetaRow>
                 )}
               </dl>
 
               {/* Share row */}
-              <div className="mt-10">
-                <p className="text-sm font-semibold text-white/80">
-                  Share this job:
-                </p>
-                <div className="mt-3 flex items-center gap-2">
-                  <ShareIcon
-                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
-                    label="Share on Facebook"
-                  >
-                    <FacebookIcon />
-                  </ShareIcon>
-                  <ShareIcon
-                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
-                    label="Share on LinkedIn"
-                  >
-                    <LinkedInIcon />
-                  </ShareIcon>
-                  <ShareIcon
-                    href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareSubject)}`}
-                    label="Share on X"
-                  >
-                    <XIcon />
-                  </ShareIcon>
-                  <ShareIcon
-                    href={`mailto:?subject=${encodeURIComponent(shareSubject)}&body=${encodeURIComponent(shareUrl)}`}
-                    label="Share by email"
-                  >
-                    <Mail className="h-4 w-4" aria-hidden="true" />
-                  </ShareIcon>
+              <div className="mt-10 flex flex-col gap-8 lg:flex-row lg:items-end lg:gap-12">
+                <div>
+                  <p className="text-sm font-semibold text-white/80">
+                    Share this job:
+                  </p>
+                  <div className="mt-3 flex items-center gap-2">
+                    <ShareIcon
+                      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
+                      label="Share on Facebook"
+                    >
+                      <FacebookIcon />
+                    </ShareIcon>
+                    <ShareIcon
+                      href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
+                      label="Share on LinkedIn"
+                    >
+                      <LinkedInIcon />
+                    </ShareIcon>
+                    <ShareIcon
+                      href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareSubject)}`}
+                      label="Share on X"
+                    >
+                      <XIcon />
+                    </ShareIcon>
+                    <ShareIcon
+                      href={`mailto:?subject=${encodeURIComponent(shareSubject)}&body=${encodeURIComponent(shareUrl)}`}
+                      label="Share by email"
+                    >
+                      <Mail className="h-4 w-4" aria-hidden="true" />
+                    </ShareIcon>
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            {/* RIGHT: Apply CTA (sticky on desktop) */}
-            <div className="lg:self-start">
-              <div className="flex flex-wrap gap-3 lg:flex-col lg:items-end">
-                <ApplyButton role={role.title} jobId={role.jobId} workType={role.workType} />
-                {/* <a
-                  href={`mailto:careers@movesmartrentals.com?subject=${encodeURIComponent(`Question — ${shareSubject}`)}`}
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/60"
-                >
-                  Ask a question
-                </a> */}
+                {/* Apply CTA */}
+                <div className="flex flex-wrap gap-3 lg:pb-1">
+                  <ApplyButton role={role.title} jobId={role.jobId} workType={role.workType} />
+                </div>
               </div>
             </div>
           </div>
@@ -199,10 +193,10 @@ export default async function CareerRolePage({ params }: RouteParams) {
 
       {/* ── WHITE BODY ────────────────────────────────────────────── */}
       <section className="bg-white py-14 sm:py-20">
-        <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-[14rem_1fr] lg:gap-16">
             {/* Sidebar label */}
-            <aside className="lg:pt-2">
+            <aside className="lg:pt-2 lg:sticky lg:top-24 lg:self-start">
               <h2 className="font-display text-2xl font-bold text-[var(--brand-navy)] sm:text-3xl">
                 Job
                 <br />
@@ -225,21 +219,33 @@ export default async function CareerRolePage({ params }: RouteParams) {
                   />
                   <span>{role.locationDisplay}</span>
                 </li>
-                <li className="flex items-start gap-2">
+                {/* <li className="flex items-start gap-2">
                   <Calendar
                     className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--brand-emerald)]"
                     aria-hidden="true"
                   />
                   <span>{postingDateDisplay}</span>
-                </li>
-                <li className="flex items-start gap-2">
+                </li> */}
+                {/* <li className="flex items-start gap-2">
                   <Hash
                     className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--brand-emerald)]"
                     aria-hidden="true"
                   />
                   <span>{role.jobId}</span>
-                </li>
+                </li> */}
               </ul>
+
+              <div className="mt-8 hidden lg:block rounded-xl bg-slate-50 p-4 border border-slate-100">
+                <h3 className="text-lg font-bold text-[var(--brand-navy)] mb-2 tracking-wider">Important Location Requirement:</h3>
+                <div className="text-sm text-slate-900 space-y-3 tracking-wider">
+                  <p>
+                    This is a remote position; however, candidates must be located in the same country, city, or region where the job is posted. The successful candidate must be available to attend a local office, meeting, training session, or company event if requested.
+                  </p>
+                  <p className="text-sm font-semibold text-slate-900 tracking-wider">
+                    Please only apply if you are based in the location listed on this job posting. Remote does not mean the position is open worldwide.
+                  </p>
+                </div>
+              </div>
             </aside>
 
             {/* Main content */}
@@ -493,17 +499,4 @@ function XIcon() {
       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
     </svg>
   )
-}
-
-function formatDate(iso: string): string {
-  // Defensive: roles ship hand-typed YYYY-MM-DD strings. If parsing
-  // fails for any reason, fall back to the raw string instead of
-  // rendering "Invalid Date" to the visitor.
-  const date = new Date(iso)
-  if (Number.isNaN(date.getTime())) return iso
-  return date.toLocaleDateString('en-CA', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
 }
