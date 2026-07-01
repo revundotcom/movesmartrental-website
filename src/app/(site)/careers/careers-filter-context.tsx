@@ -125,11 +125,27 @@ export function CareersFilterProvider({ allRoles, children }: { allRoles: Role[]
     })
   }, [allRoles, search, selectedCountries, selectedCities, selectedCategories])
 
-  const totalPages = Math.ceil(filteredRoles.length / itemsPerPage)
+  const sortedFilteredRoles = useMemo(() => {
+    return [...filteredRoles].sort((a, b) => {
+      const countryA = a.country || 'Other'
+      const countryB = b.country || 'Other'
+      if (countryA !== countryB) return countryA.localeCompare(countryB)
+      
+      const regionA = a.province || 'Other'
+      const regionB = b.province || 'Other'
+      if (regionA !== regionB) return regionA.localeCompare(regionB)
+
+      const cityA = a.city || 'Remote'
+      const cityB = b.city || 'Remote'
+      return cityA.localeCompare(cityB)
+    })
+  }, [filteredRoles])
+
+  const totalPages = Math.ceil(sortedFilteredRoles.length / itemsPerPage)
   const paginatedRoles = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage
-    return filteredRoles.slice(start, start + itemsPerPage)
-  }, [filteredRoles, currentPage])
+    return sortedFilteredRoles.slice(start, start + itemsPerPage)
+  }, [sortedFilteredRoles, currentPage])
 
   const jobsByCountry = useMemo(() => groupRolesByCountry(paginatedRoles), [paginatedRoles])
 
