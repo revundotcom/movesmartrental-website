@@ -74,6 +74,8 @@ export interface Role {
   htmlDescription?: string
   /** The specific work type to determine which application form to show. */
   workType: 'remote' | 'hybrid'
+  /** Job Category for filtering. */
+  category: string
 }
 
 interface ApiJob {
@@ -90,6 +92,7 @@ interface ApiJob {
   Job_Type?: string
   zoho_id?: string
   Date_Opened?: string
+  Role_Category?: string
 }
 
 export async function fetchRolesFromApi(): Promise<Role[]> {
@@ -190,6 +193,7 @@ export async function fetchRolesFromApi(): Promise<Role[]> {
         relocationAssistance: false,
         htmlDescription: rawHtml,
         workType: isRemote ? 'remote' : 'hybrid',
+        category: job.Role_Category || 'Other',
       }
     })
   } catch (error) {
@@ -210,35 +214,49 @@ export async function getAllRoleSlugs(): Promise<string[]> {
   return roles.map((r) => r.slug)
 }
 
-/** Group roles by region (province/state) → city, in array order. */
 export interface CityGroup {
   city: string
   roles: Role[]
 }
+
 export interface RegionGroup {
   region: string
-  country: string
   cities: CityGroup[]
 }
-export async function getRolesByRegion(): Promise<RegionGroup[]> {
-  const roles = await fetchRolesFromApi()
-  const regionOrder: string[] = []
-  const regionMap = new Map<
+
+export interface CountryGroup {
+  country: string
+  regions: RegionGroup[]
+}
+
+export function groupRolesByCountry(roles: Role[]): CountryGroup[] {
+  const countryOrder: string[] = []
+  const countryMap = new Map<
     string,
-    { country: string; cityOrder: string[]; cityMap: Map<string, Role[]> }
+    { regionOrder: string[]; regionMap: Map<string, { cityOrder: string[]; cityMap: Map<string, Role[]> }> }
   >()
 
   for (const role of roles) {
+    const countryKey = role.country || 'Other'
+    if (!countryMap.has(countryKey)) {
+      countryOrder.push(countryKey)
+      countryMap.set(countryKey, {
+        regionOrder: [],
+        regionMap: new Map(),
+      })
+    }
+    const country = countryMap.get(countryKey)!
+    
     const regionKey = role.province || 'Other'
-    if (!regionMap.has(regionKey)) {
-      regionOrder.push(regionKey)
-      regionMap.set(regionKey, {
-        country: role.country,
+    if (!country.regionMap.has(regionKey)) {
+      country.regionOrder.push(regionKey)
+      country.regionMap.set(regionKey, {
         cityOrder: [],
         cityMap: new Map(),
       })
     }
-    const region = regionMap.get(regionKey)!
+    const region = country.regionMap.get(regionKey)!
+    
     const cityKey = role.city || 'Remote'
     if (!region.cityMap.has(cityKey)) {
       region.cityOrder.push(cityKey)
@@ -247,15 +265,23 @@ export async function getRolesByRegion(): Promise<RegionGroup[]> {
     region.cityMap.get(cityKey)!.push(role)
   }
 
-  return regionOrder.map((regionKey) => {
-    const region = regionMap.get(regionKey)!
+  // Sort countries alphabetically
+  countryOrder.sort((a, b) => a.localeCompare(b))
+
+  return countryOrder.map((countryKey) => {
+    const country = countryMap.get(countryKey)!
     return {
-      region: regionKey,
-      country: region.country,
-      cities: region.cityOrder.map((city) => ({
-        city,
-        roles: region.cityMap.get(city)!,
-      })),
+      country: countryKey,
+      regions: country.regionOrder.map((regionKey) => {
+        const region = country.regionMap.get(regionKey)!
+        return {
+          region: regionKey,
+          cities: region.cityOrder.map((cityKey) => ({
+            city: cityKey,
+            roles: region.cityMap.get(cityKey)!,
+          })),
+        }
+      }),
     }
   })
 }

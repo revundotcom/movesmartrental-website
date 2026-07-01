@@ -157,11 +157,7 @@ function ApplyModal({
 
       if (bType === 'Yes, Sole Proprietorship' || bType === 'Yes, Corporation under my name') {
         if (!fd.get('legal_business_name')) errors.legal_business_name = 'Business name is required'
-        if (!fd.get('wsib_number')) errors.wsib_number = 'WSIB Number is required'
-        const wsibCert = fd.get('wsib_certificate') as File | null
-        if (!wsibCert || wsibCert.size === 0) errors.wsib_certificate = 'WSIB Certificate is required'
         if (!fd.get('business_number')) errors.business_number = 'Business Number is required'
-        if (!fd.get('hst_number')) errors.hst_number = 'HST Number is required'
       }
 
       const hasLicense = fd.get('has_drivers_license') as string
@@ -378,6 +374,16 @@ function ApplyModal({
                         width: 100%;
                         height: 100%;
                       }
+
+                      /* Hide number input arrows */
+                      input[type=number]::-webkit-inner-spin-button, 
+                      input[type=number]::-webkit-outer-spin-button { 
+                        -webkit-appearance: none; 
+                        margin: 0; 
+                      }
+                      input[type=number] {
+                        -moz-appearance: textfield;
+                      }
                     `}} />
                           <div className="flex w-full overflow-hidden rounded-lg border ${fieldErrors['phone'] ? 'border-red-500' : 'border-slate-200'} bg-slate-50 px-3 focus-within:ring-2 focus-within:ring-[var(--brand-emerald)]">
                             <PhoneInput
@@ -504,12 +510,11 @@ function ApplyModal({
                               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                                 <div>
                                   <label className="mb-1 block text-xs font-semibold text-slate-600">
-                                    WSIB Number <span className="text-red-500">*</span>
+                                    WSIB Number (Optional)
                                   </label>
                                   <input
                                     name="wsib_number"
                                     type="text"
-                                    required
                                     className={getInputClass('wsib_number')}
                                     placeholder="Enter WSIB Number"
                                   />
@@ -517,12 +522,11 @@ function ApplyModal({
                                 </div>
                                 <div>
                                   <label className="mb-1 block text-xs font-semibold text-slate-600">
-                                    WSIB Clearance Certificate <span className="text-red-500">*</span>
+                                    WSIB Clearance Certificate (Optional)
                                   </label>
                                   <input
                                     name="wsib_certificate"
                                     type="file"
-                                    required
                                     accept=".pdf,.doc,.docx,.jpg,.png"
                                     className={`w-full rounded-lg border ${fieldErrors['wsib_certificate'] ? 'border-red-500' : 'border-slate-200'} bg-slate-50 px-3 py-2 text-sm file:mr-4 file:rounded-full file:border-0 file:bg-[var(--brand-emerald)]/10 file:px-4 file:py-1 file:text-xs file:font-semibold file:text-[var(--brand-emerald)] hover:file:bg-[var(--brand-emerald)]/20 focus:outline-none focus:ring-2 focus:ring-[var(--brand-emerald)]`}
                                   />
@@ -545,12 +549,11 @@ function ApplyModal({
                                 </div>
                                 <div>
                                   <label className="mb-1 block text-xs font-semibold text-slate-600">
-                                    HST Number <span className="text-red-500">*</span>
+                                    HST Number (Optional)
                                   </label>
                                   <input
                                     name="hst_number"
                                     type="text"
-                                    required
                                     className={getInputClass('hst_number')}
                                     placeholder="Enter HST Number"
                                   />

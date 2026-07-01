@@ -4,17 +4,23 @@ import Link from 'next/link'
 import {
   ArrowRight,
   Briefcase,
+  Building2,
+  CheckCircle2,
+  ChevronRight,
   Globe2,
+  Heart,
   HeartHandshake,
   Laptop2,
   LineChart,
-  MapPin,
   Sparkles,
   Star,
   Users,
 } from 'lucide-react'
 
-import { getRolesByRegion, fetchRolesFromApi } from '@/data/careers'
+import { fetchRolesFromApi } from '@/data/careers'
+import JobFilterList from './job-filter-list'
+import JobFilterControls from './job-filter-controls'
+import { CareersFilterProvider } from './careers-filter-context'
 
 const UNSPLASH = (id: string, w = 1600) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`
@@ -165,12 +171,11 @@ const TEAMS = [
 ]
 
 export default async function CareersPage() {
-  const jobsByRegion = await getRolesByRegion()
   const allRoles = await fetchRolesFromApi()
   const totalRoles = allRoles.length
 
   return (
-    <>
+    <CareersFilterProvider allRoles={allRoles}>
       {/* ── Hero ────────────────────────────────────────────────── */}
       <section className="relative isolate overflow-hidden bg-[var(--brand-navy)] py-24 text-white md:py-32">
         {/* Full-bleed skyline image, kept behind the gradient overlay */}
@@ -217,6 +222,13 @@ export default async function CareersPage() {
               General application
             </a> */}
           </div>
+        </div>
+      </section>
+
+      {/* ── Top Filter Bar ──────────────────────────────────────── */}
+      <section className="bg-slate-50 border-b border-slate-200 py-6">
+        <div className="mx-auto max-w-5xl px-6">
+          <JobFilterControls scrollToId="positions" />
         </div>
       </section>
 
@@ -460,75 +472,16 @@ export default async function CareersPage() {
           <h2 className="text-3xl font-bold leading-tight text-[var(--brand-navy)] md:text-4xl">
             {totalRoles} {totalRoles === 1 ? 'role' : 'roles'} open right now.
           </h2>
-          <p className="mt-3 max-w-2xl text-sm text-slate-600">
+          <p className="mt-3 max-w-2xl text-sm text-slate-600 mb-10">
             Filtered by province or state, then city. Click a role to read the
             full job description and apply.
           </p>
 
-          <div className="mt-10 space-y-10">
-            {jobsByRegion.map((region) => (
-              <div
-                key={`${region.country}-${region.region}`}
-                className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm md:p-8"
-              >
-                {/* Region header */}
-                <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-slate-100 pb-4">
-                  <h3 className="flex items-center gap-2 text-xl font-bold text-[var(--brand-navy)]">
-                    <MapPin
-                      className="h-4 w-4 text-[var(--brand-emerald)]"
-                      aria-hidden="true"
-                    />
-                    {region.region}
-                  </h3>
-                  <span className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
-                    {region.country}
-                  </span>
-                </div>
-
-                {/* Cities */}
-                <div className="mt-6 space-y-7">
-                  {region.cities.map((city) => (
-                    <div key={city.city}>
-                      <h4 className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--brand-navy)]/65">
-                        {city.city}
-                      </h4>
-                      <ul className="mt-3 space-y-3">
-                        {city.roles.map((role) => (
-                          <li key={role.slug}>
-                            <Link
-                              href={`/careers/${role.slug}/`}
-                              scroll={true}
-                              className="group flex flex-col gap-2 rounded-xl border border-slate-100 bg-slate-50/60 p-4 transition-all hover:-translate-y-0.5 hover:border-[var(--brand-emerald)]/40 hover:bg-white hover:shadow-md md:flex-row md:items-center md:justify-between md:gap-6 md:p-5"
-                            >
-                              <div className="min-w-0 flex-1">
-                                <h5 className="text-base font-bold text-[var(--brand-emerald)] transition-colors">
-                                  {role.title}
-                                </h5>
-                                <div className="mt-2 flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-slate-500">
-                                  <span className="inline-flex items-center gap-1">
-                                    <Briefcase className="h-3.5 w-3.5" />
-                                    {role.type}
-                                  </span>
-                                  <span className="inline-flex items-center gap-1">
-                                    <MapPin className="h-3.5 w-3.5" />
-                                    {role.locationDisplay}
-                                  </span>
-                                </div>
-                              </div>
-                              <span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-bold text-[var(--brand-navy)] transition-colors group-hover:text-[var(--brand-emerald)]">
-                                View role
-                                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                              </span>
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
+          <div className="mb-10">
+            <JobFilterControls />
           </div>
+
+          <JobFilterList />
         </div>
       </section>
 
@@ -556,6 +509,6 @@ export default async function CareersPage() {
           </Link>
         </div>
       </section>
-    </>
+    </CareersFilterProvider>
   )
 }
