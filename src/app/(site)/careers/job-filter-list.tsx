@@ -15,11 +15,13 @@ export default function JobFilterList() {
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage)
-    const el = document.getElementById('positions')
-    if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 100
-      window.scrollTo({ top, behavior: 'smooth' })
-    }
+    setTimeout(() => {
+      const el = document.getElementById('positions')
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 100
+        window.scrollTo({ top, behavior: 'smooth' })
+      }
+    }, 100)
   }
 
   return (
