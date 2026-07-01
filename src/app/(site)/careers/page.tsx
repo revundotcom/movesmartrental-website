@@ -3,12 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import {
   ArrowRight,
-  Briefcase,
-  Building2,
-  CheckCircle2,
-  ChevronRight,
   Globe2,
-  Heart,
   HeartHandshake,
   Laptop2,
   LineChart,

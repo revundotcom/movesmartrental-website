@@ -10,10 +10,7 @@ export default function JobFilterList() {
     jobsByCountry, 
     currentPage, 
     setCurrentPage, 
-    totalPages,
-    search,
-    totalLocationSelected,
-    selectedCategories
+    totalPages
   } = useCareersFilter()
 
   return (
@@ -104,7 +101,7 @@ export default function JobFilterList() {
             </div>
             <h3 className="text-lg font-bold text-slate-900 mb-2">No positions found</h3>
             <p className="text-slate-500 max-w-md mx-auto">
-              We couldn't find any open positions matching your search criteria. 
+              We couldn&apos;t find any open positions matching your search criteria. 
               Try adjusting your filters or check back later.
             </p>
           </div>

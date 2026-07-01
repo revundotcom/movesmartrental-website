@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, Briefcase, Calendar, Hash, Mail, MapPin } from 'lucide-react'
+import { ArrowLeft, Briefcase, Mail, MapPin } from 'lucide-react'
 
 import { JsonLd } from '@/components/json-ld'
 import { buildBreadcrumbListSchema } from '@/lib/schema-builders'
@@ -102,7 +102,7 @@ export default async function CareerRolePage({ params }: RouteParams) {
   })
 
   // Format the posting date in a friendlier form for the hero meta line.
-  const postingDateDisplay = formatDate(role.postingStartDate)
+  // const postingDateDisplay = formatDate(role.postingStartDate)
 
   return (
     <main className="bg-white">
