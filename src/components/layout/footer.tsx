@@ -219,23 +219,6 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Trust certifications */}
-          <div className="border-t border-white/10 py-6">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <div className="flex flex-wrap items-center justify-center gap-6">
-
-              </div>
-              <p className="mt-5 text-center text-xs leading-relaxed text-white/40">
-                The trademarks REALTOR&reg;, REALTORS&reg;, and the REALTOR&reg; logo are
-                controlled by The Canadian Real Estate Association (CREA) and identify
-                real estate professionals who are members of CREA. The trademarks MLS&reg;,
-                Multiple Listing Service&reg; and the associated logos are owned by CREA
-                and identify the quality of services provided by real estate professionals
-                who are members of CREA. Used under license by Valery Real Estate Inc., Brokerage.
-              </p>
-            </div>
-          </div>
-
           {/* Bottom bar */}
           <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/8 pt-8 sm:flex-row">
             <p className="text-sm text-slate-500">
