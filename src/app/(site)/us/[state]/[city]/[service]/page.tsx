@@ -155,7 +155,7 @@ export default async function USCityServicePage({
 
         <PageHeroBlock
           kicker={`${serviceTitle} · ${cityTitle}`}
-          eyebrow="Local leasing brokerage"
+          eyebrow="Local leasing platform"
           headline={`${serviceTitle} in ${cityTitle}`}
           accentLastWord={false}
           lede={serviceData.heroLede}

@@ -224,7 +224,7 @@ const legalQuestions: FaqItem[] = [
   {
     question: 'Will my accountant get clean records for T776 filing?',
     answer:
-      'Yes. Our placement summary is formatted so a CPA can drop the success-fee invoice, HST disclosure, and deposit trust ledger directly into a T776 - Statement of Real Estate Rentals. We do not file taxes on your behalf, and we do not run ongoing bookkeeping (we are a leasing brokerage, not a property manager) - but the leasing-engagement records are clean and audit-ready.',
+      'Yes. Our placement summary is formatted so a CPA can drop the success-fee invoice, HST disclosure, and deposit trust ledger directly into a T776 - Statement of Real Estate Rentals. We do not file taxes on your behalf, and we do not run ongoing bookkeeping (we are a leasing platform, not a property manager) - but the leasing-engagement records are clean and audit-ready.',
   },
   {
     question: 'Can you liaise with the condo board, HOA, or building management at move-in?',

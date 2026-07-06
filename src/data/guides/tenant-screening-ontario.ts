@@ -197,7 +197,7 @@ MoveSmart offers **Tenant Guarantor Services** as a dedicated track for applican
     {
       id: 'how-movesmart-runs-it',
       heading: 'How MoveSmart structures this for clients',
-      body: `MoveSmart is a leasing brokerage, not a property management firm. We screen applicants because the screening decision is inseparable from the placement decision - our success fee only earns out if the tenancy performs, so our interests and the landlord\'s interests are structurally aligned.
+      body: `MoveSmart is a leasing platform, not a property management firm. We screen applicants because the screening decision is inseparable from the placement decision - our success fee only earns out if the tenancy performs, so our interests and the landlord\'s interests are structurally aligned.
 
 The MoveSmart screening workflow runs every applicant through the same documented sequence:
 

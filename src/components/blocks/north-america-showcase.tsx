@@ -109,7 +109,7 @@ export function NorthAmericaShowcase() {
             <span aria-hidden="true" className="text-brand-gold">.</span>
           </h2>
           <p className="mt-5 text-base leading-relaxed text-white/70 md:text-lg">
-            MoveSmart Rentals is a leasing brokerage operating across Canada and
+            MoveSmart Rentals is a leasing platform operating across Canada and
             the United States. Same disciplined playbook, same technology stack,
             same standard of execution — coast to coast, border to border.
           </p>

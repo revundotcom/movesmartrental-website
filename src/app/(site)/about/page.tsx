@@ -23,14 +23,14 @@ export const metadata: Metadata = {
     canonical: '/about/',
   },
   openGraph: {
-    title: 'About MoveSmart Rentals | Leasing Brokerage Across Canada & the US',
+    title: 'About MoveSmart Rentals | Leasing Platform Across Canada & the US',
     description:
       'Full-service leasing execution for serious rental operators. Strategic pricing, disciplined tenant qualification, rental protection options, and complete move-in coordination.',
     images: ['/og-share.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'About MoveSmart Rentals | Leasing Brokerage Across Canada & the US',
+    title: 'About MoveSmart Rentals | Leasing Platform Across Canada & the US',
     description:
       'Full-service leasing execution for serious rental operators. Strategic pricing, disciplined tenant qualification, rental protection options, and complete move-in coordination.',
   },
@@ -123,7 +123,7 @@ export default function AboutPage() {
       {/* ── HERO ─────────────────────────────────────────────────── */}
       <PageHeroBlock
         kicker="About"
-        eyebrow="Leasing brokerage"
+        eyebrow="Leasing platform"
         headline="Full-service leasing execution for serious operators"
         accentLastWord
         lede="MoveSmart Rentals is a full-service leasing and tenant placement company built for landlords, property managers, builders, and institutional operators who refuse to leave the leasing phase to chance. Strategic pricing, disciplined tenant qualification, and complete move-in coordination. Every owner-file run by a named lead."

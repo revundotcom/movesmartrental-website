@@ -7,7 +7,7 @@ import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 export const metadata: Metadata = {
   title: 'Privacy Policy | MoveSmart Rentals',
   description:
-    'How MoveSmart Rentals collects, uses, shares, and protects personal information across our Canadian leasing brokerage operations and US service areas.',
+    'How MoveSmart Rentals collects, uses, shares, and protects personal information across our Canadian leasing platform operations and US service areas.',
   alternates: {
     canonical: '/privacy/',
   },

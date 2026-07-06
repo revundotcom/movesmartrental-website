@@ -3,23 +3,23 @@ import Script from 'next/script'
 import { PricingContent } from './pricing-content'
 
 export const metadata: Metadata = {
-  title: 'Leasing Brokerage Pricing Canada | Zero Upfront, Success-Fee Only',
+  title: 'Leasing Platform Pricing Canada | Zero Upfront, Success-Fee Only',
   description:
-    'Transparent leasing brokerage pricing. Zero upfront cost, no monthly retainer, no setup fee. Pay a one-time success fee only when a qualified tenant signs the lease. Custom pricing for institutional lease-up.',
+    'Transparent leasing platform pricing. Zero upfront cost, no monthly retainer, no setup fee. Pay a one-time success fee only when a qualified tenant signs the lease. Custom pricing for institutional lease-up.',
   alternates: {
     canonical: '/pricing/',
   },
   openGraph: {
-    title: 'Leasing Brokerage Pricing | MoveSmart Rentals',
+    title: 'Leasing Platform Pricing | MoveSmart Rentals',
     description:
-      'Zero upfront cost. Success-fee leasing brokerage pricing - pay only when a qualified tenant signs the lease.',
+      'Zero upfront cost. Success-fee leasing platform pricing - pay only when a qualified tenant signs the lease.',
     images: ['/og-share.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Leasing Brokerage Pricing | MoveSmart Rentals',
+    title: 'Leasing Platform Pricing | MoveSmart Rentals',
     description:
-      'Zero upfront cost. Success-fee leasing brokerage pricing - pay only when a qualified tenant signs.',
+      'Zero upfront cost. Success-fee leasing platform pricing - pay only when a qualified tenant signs.',
   },
 }
 
@@ -27,7 +27,7 @@ const PRODUCT_JSONLD = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   name: 'MoveSmart Rentals - Full-Service Leasing and Tenant Placement',
-  serviceType: 'Residential Leasing Brokerage',
+  serviceType: 'Residential Leasing Platform',
   provider: {
     '@type': 'Organization',
     name: 'MoveSmart Rentals',

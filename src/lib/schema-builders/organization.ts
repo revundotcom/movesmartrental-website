@@ -23,7 +23,7 @@ export interface OrganizationSchemaInput {
    */
   areaServed?: string[]
   /**
-   * Optional override for knowsAbout list - defaults to leasing brokerage topics.
+   * Optional override for knowsAbout list - defaults to leasing platform topics.
    */
   knowsAbout?: string[]
   /**

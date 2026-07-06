@@ -11,21 +11,21 @@ import { PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
 import { BentoTile, RevealRow } from './client-parts'
 
 export const metadata: Metadata = {
-  title: 'Leasing Brokerage Services | MoveSmart Rentals Canada',
+  title: 'Leasing Platform Services | MoveSmart Rentals Canada',
   description:
     'Full-service leasing execution for individual landlords and institutional operators - strategic pricing, professional marketing, tenant qualification, and lease execution. No upfront fees, success-based pricing.',
   alternates: {
     canonical: '/services/',
   },
   openGraph: {
-    title: 'Leasing Brokerage Services | MoveSmart Rentals Canada',
+    title: 'Leasing Platform Services | MoveSmart Rentals Canada',
     description:
       'Nine end-to-end leasing services - from pricing strategy to move-in coordination - for landlords, PMCs, builders, and purpose-built rental operators.',
     images: ['/og-share.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Leasing Brokerage Services | MoveSmart Rentals Canada',
+    title: 'Leasing Platform Services | MoveSmart Rentals Canada',
     description:
       'Strategic, full-service leasing execution for individual landlords and institutional operators across Canada.',
   },

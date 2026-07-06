@@ -386,7 +386,7 @@ export default async function HomePage() {
                 <span className="font-display italic text-brand-emerald">to Your Market</span>
               </h2>
               <p className="mt-5 text-lg leading-relaxed text-white/65">
-                MoveSmart Rentals is expanding across Canada and the United States. Join the franchise network and operate the same disciplined leasing brokerage model in your local market.
+                MoveSmart Rentals is expanding across Canada and the United States. Join the franchise network and operate the same disciplined tenant placement model in your local market.
               </p>
 
               <div className="mt-8 space-y-3">
@@ -512,7 +512,7 @@ export default async function HomePage() {
           {
             question: 'Are you a brokerage or a property manager?',
             answer:
-              'We are a full-service leasing and tenant placement brokerage. We do NOT handle ongoing property management — no rent collection, no maintenance dispatch, no repairs. Our scope is listing through move-in. We partner with brokerages such as Valery Real Estate Inc. for the brokerage relationship that the IDX feed requires.',
+              'MoveSmart is a technology and service platform. We do NOT handle ongoing property management — no rent collection, no maintenance dispatch, no repairs. Our scope is listing through move-in. We partner with registered brokerages, such as Valery Real Estate Inc., Brokerage in Ontario, to provide the regulated trading services that the process requires.',
           },
           {
             question: 'Can a tenant apply online?',
@@ -532,7 +532,7 @@ export default async function HomePage() {
           {
             question: 'Are you licensed and regulated?',
             answer:
-              'Yes. In Canada we operate under Valery Real Estate Inc. Brokerage and comply with provincial regulators such as the Real Estate Council of Ontario (RECO) and the Residential Tenancies Act. In the US we operate through licensed brokerage partners in each state we serve.',
+              'MoveSmart is a technology and service platform. All regulated real estate trading services are provided by our licensed partner brokerages. In Ontario, this is Valery Real Estate Inc., Brokerage, which is regulated by the Real Estate Council of Ontario (RECO). In the US and other provinces, we similarly operate exclusively through licensed brokerage partners.',
           },
           {
             question: 'How is technology built into the service?',

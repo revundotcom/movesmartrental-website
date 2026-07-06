@@ -231,7 +231,7 @@ export function Footer() {
                 real estate professionals who are members of CREA. The trademarks MLS&reg;,
                 Multiple Listing Service&reg; and the associated logos are owned by CREA
                 and identify the quality of services provided by real estate professionals
-                who are members of CREA. Used under license by MoveSmart Rentals.
+                who are members of CREA. Used under license by Valery Real Estate Inc., Brokerage.
               </p>
             </div>
           </div>

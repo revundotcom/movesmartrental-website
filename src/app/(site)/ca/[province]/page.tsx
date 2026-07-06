@@ -51,7 +51,7 @@ export async function generateMetadata({
 
   return generatePageMetadata({
     path: `/ca/${province}`,
-    fallbackTitle: `Leasing Brokerage in ${provinceName}`,
+    fallbackTitle: `Leasing Platform in ${provinceName}`,
     fallbackDescription: `Full-service leasing across ${provinceName}: tenant placement, screening, lease execution, and move-in coordination with zero upfront cost.`,
   })
 }

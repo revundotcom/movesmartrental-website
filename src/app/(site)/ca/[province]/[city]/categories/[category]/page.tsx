@@ -231,7 +231,7 @@ function buildFaq(
     },
     {
       question: `Do you handle the unit after the lease is signed?`,
-      answer: `MoveSmart Rentals is a leasing brokerage - the lease, deposit, and move-in are handled end-to-end. Ongoing operational work after move-in is coordinated with the owner's preferred operator or in-house team.`,
+      answer: `MoveSmart Rentals is a leasing platform - the lease, deposit, and move-in are handled end-to-end. Ongoing operational work after move-in is coordinated with the owner's preferred operator or in-house team.`,
     },
     {
       question: `Can I list my ${unit} on multiple portals?`,

@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   },
   description:
     'Full-service leasing and tenant placement across Canada and the United States. Strategic pricing, professional marketing, tenant qualification, and lease execution with zero upfront cost. Get your free rental analysis.',
-  keywords: ['leasing brokerage Canada', 'rental leasing services', 'tenant qualification', 'lease execution', 'landlord services', 'leasing services Ontario', 'tenant screening Canada'],
+  keywords: ['leasing platform Canada', 'rental leasing services', 'tenant qualification', 'lease execution', 'landlord services', 'leasing services Ontario', 'tenant screening Canada'],
   authors: [{ name: 'MoveSmart Rentals', url: 'https://movesmartrentals.com' }],
   creator: 'MoveSmart Rentals',
   publisher: 'MoveSmart Rentals',

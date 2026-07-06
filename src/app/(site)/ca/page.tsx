@@ -18,21 +18,21 @@ import { CanadaCitiesFilter } from './canada-cities-filter'
 // ---------------------------------------------------------------------------
 
 export const metadata: Metadata = {
-  title: 'Leasing Brokerage Across Canada | MoveSmart Rentals',
+  title: 'Leasing Platform Across Canada | MoveSmart Rentals',
   description:
     'Full-service leasing and tenant placement across Canada’s 6 largest provinces and 44 anchor cities. RECO/RECA-compliant lease execution, CMHC-aligned pricing, transparent success-fee terms.',
   alternates: {
     canonical: '/ca/',
   },
   openGraph: {
-    title: 'Leasing Brokerage Across Canada | MoveSmart Rentals',
+    title: 'Leasing Platform Across Canada | MoveSmart Rentals',
     description:
       'Full-service leasing and tenant placement across Canada’s 6 largest provinces and 44 anchor cities. RECO/RECA-compliant lease execution and CMHC-aligned pricing.',
     images: [{ url: '/og-share.png', width: 1200, height: 630, alt: 'MoveSmart Rentals Canada' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Leasing Brokerage Across Canada | MoveSmart Rentals',
+    title: 'Leasing Platform Across Canada | MoveSmart Rentals',
     description:
       'Full-service leasing and tenant placement across Canada’s 6 largest provinces and 44 anchor cities.',
     images: ['/og-share.png'],

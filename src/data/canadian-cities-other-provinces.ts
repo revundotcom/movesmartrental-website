@@ -4,12 +4,12 @@
  * Tier-1 city content for MoveSmart Rentals' Canadian priority
  * provinces outside Ontario: Quebec, British Columbia, Alberta,
  * and Nova Scotia. Per contract §9.1, each of these provinces
- * receives five anchor cities with full-depth leasing brokerage
+ * receives five anchor cities with full-depth leasing platform
  * content (market summary, landlord problem, MoveSmart narrative,
  * neighborhoods, eight localized FAQs, and a province-specific
  * regulatory note).
  *
- * Positioning throughout: leasing brokerage / tenant placement /
+ * Positioning throughout: leasing platform / tenant placement /
  * rent guarantee - NOT property management. MoveSmart is a
  * leasing-and-placement house, not an operator.
  */
@@ -112,7 +112,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart collect rent monthly after the lease is signed?',
         answer:
-          'No - MoveSmart is a leasing brokerage, not a property manager. We place the tenant and exit at signed lease. The Rent Guarantee add-on means missed rent becomes our issue for the coverage term; day-to-day rent receipt and building operations remain with you.',
+          'No - MoveSmart is a leasing platform, not a property manager. We place the tenant and exit at signed lease. The Rent Guarantee add-on means missed rent becomes our issue for the coverage term; day-to-day rent receipt and building operations remain with you.',
       },
       {
         question: 'What happens if a tenant I place assigns the lease to someone else under Quebec rules?',
@@ -202,7 +202,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Is MoveSmart a property manager?',
         answer:
-          'No. We are a leasing brokerage. We place the tenant, execute the lease, and - if you add Rent Guarantee - cover missed rent for the coverage term. Ongoing operations and maintenance decisions remain with you.',
+          'No. We are a leasing platform. We place the tenant, execute the lease, and - if you add Rent Guarantee - cover missed rent for the coverage term. Ongoing operations and maintenance decisions remain with you.',
       },
     ],
     primaryKeyword: 'leasing services Quebec City',
@@ -287,7 +287,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart collect the rent after lease signing?',
         answer:
-          'No. We are a leasing brokerage. We place the tenant and exit at lease execution. The Rent Guarantee add-on covers missed rent during the coverage term; ongoing receipt and operations stay with you.',
+          'No. We are a leasing platform. We place the tenant and exit at lease execution. The Rent Guarantee add-on covers missed rent during the coverage term; ongoing receipt and operations stay with you.',
       },
     ],
     primaryKeyword: 'leasing services Laval',
@@ -372,7 +372,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart act as the landlord contact after signing?',
         answer:
-          'No. MoveSmart is a leasing brokerage - we place the tenant and exit at signed lease. The owner remains the landlord of record. Rent Guarantee covers missed rent for the coverage term; day-to-day operations stay with you.',
+          'No. MoveSmart is a leasing platform - we place the tenant and exit at signed lease. The owner remains the landlord of record. Rent Guarantee covers missed rent for the coverage term; day-to-day operations stay with you.',
       },
     ],
     primaryKeyword: 'leasing services Gatineau',
@@ -457,7 +457,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart manage the property after signing?',
         answer:
-          'No. We are a leasing brokerage. We place the tenant, execute the lease, and - with Rent Guarantee - cover missed rent for the coverage term. Ongoing building operations remain with you.',
+          'No. We are a leasing platform. We place the tenant, execute the lease, and - with Rent Guarantee - cover missed rent for the coverage term. Ongoing building operations remain with you.',
       },
     ],
     primaryKeyword: 'leasing services Longueuil',
@@ -542,7 +542,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart manage the property after signing?',
         answer:
-          'No. MoveSmart is a leasing brokerage - we place the tenant and exit at signed lease. Rent Guarantee covers missed rent during the coverage term. Ongoing operations, RTB filings during the tenancy, and maintenance stay with you or your chosen operator.',
+          'No. MoveSmart is a leasing platform - we place the tenant and exit at signed lease. Rent Guarantee covers missed rent during the coverage term. Ongoing operations, RTB filings during the tenancy, and maintenance stay with you or your chosen operator.',
       },
     ],
     primaryKeyword: 'leasing services Vancouver',
@@ -627,7 +627,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart continue to manage after lease signing?',
         answer:
-          'No. MoveSmart is a leasing brokerage, not a property manager. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent during the coverage term; operations remain with you.',
+          'No. MoveSmart is a leasing platform, not a property manager. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent during the coverage term; operations remain with you.',
       },
     ],
     primaryKeyword: 'leasing services Surrey',
@@ -712,7 +712,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart handle monthly rent collection?',
         answer:
-          'No. We are a leasing brokerage. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent for the coverage term; ongoing rent receipt and operations stay with you.',
+          'No. We are a leasing platform. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent for the coverage term; ongoing rent receipt and operations stay with you.',
       },
     ],
     primaryKeyword: 'leasing services Burnaby',
@@ -797,7 +797,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart manage the property after signing?',
         answer:
-          'No. MoveSmart is a leasing brokerage - we place the tenant and exit at signed lease. Rent Guarantee covers missed rent for the coverage term. Ongoing building operations remain with you.',
+          'No. MoveSmart is a leasing platform - we place the tenant and exit at signed lease. Rent Guarantee covers missed rent for the coverage term. Ongoing building operations remain with you.',
       },
     ],
     primaryKeyword: 'leasing services Richmond',
@@ -882,7 +882,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart manage the unit after signing?',
         answer:
-          'No. MoveSmart is a leasing brokerage - we place the tenant and exit at signed lease. Rent Guarantee covers missed rent during the coverage term. Ongoing building operations and RTB filings stay with you.',
+          'No. MoveSmart is a leasing platform - we place the tenant and exit at signed lease. Rent Guarantee covers missed rent during the coverage term. Ongoing building operations and RTB filings stay with you.',
       },
     ],
     primaryKeyword: 'leasing services Victoria',
@@ -967,7 +967,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart handle the unit after lease signing?',
         answer:
-          'No. MoveSmart is a leasing brokerage - we place the tenant and exit at signed lease. Rent Guarantee covers missed rent for the coverage term. Ongoing operations remain with you.',
+          'No. MoveSmart is a leasing platform - we place the tenant and exit at signed lease. Rent Guarantee covers missed rent for the coverage term. Ongoing operations remain with you.',
       },
     ],
     primaryKeyword: 'leasing services Calgary',
@@ -1052,7 +1052,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart manage after lease signing?',
         answer:
-          'No. We are a leasing brokerage. We place the tenant, execute the lease, and - with Rent Guarantee - cover missed rent for the coverage term. Operations stay with you.',
+          'No. We are a leasing platform. We place the tenant, execute the lease, and - with Rent Guarantee - cover missed rent for the coverage term. Operations stay with you.',
       },
     ],
     primaryKeyword: 'leasing services Edmonton',
@@ -1137,7 +1137,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart handle the property after signing?',
         answer:
-          'No. MoveSmart is a leasing brokerage. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent for the coverage term; ongoing operations stay with you.',
+          'No. MoveSmart is a leasing platform. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent for the coverage term; ongoing operations stay with you.',
       },
     ],
     primaryKeyword: 'leasing services Red Deer',
@@ -1222,7 +1222,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart manage after lease signing?',
         answer:
-          'No. MoveSmart is a leasing brokerage. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent for the coverage term; operations remain with you.',
+          'No. MoveSmart is a leasing platform. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent for the coverage term; operations remain with you.',
       },
     ],
     primaryKeyword: 'leasing services Lethbridge',
@@ -1307,7 +1307,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart manage the property after signing?',
         answer:
-          'No. MoveSmart is a leasing brokerage. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent for the coverage term; operations remain with you.',
+          'No. MoveSmart is a leasing platform. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent for the coverage term; operations remain with you.',
       },
     ],
     primaryKeyword: 'leasing services Sherwood Park',
@@ -1392,7 +1392,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart manage after lease signing?',
         answer:
-          'No. MoveSmart is a leasing brokerage. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent for the coverage term; ongoing operations stay with you.',
+          'No. MoveSmart is a leasing platform. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent for the coverage term; ongoing operations stay with you.',
       },
     ],
     primaryKeyword: 'leasing services Halifax',
@@ -1477,7 +1477,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart manage after signing?',
         answer:
-          'No. MoveSmart is a leasing brokerage. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent during the coverage term; operations stay with you.',
+          'No. MoveSmart is a leasing platform. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent during the coverage term; operations stay with you.',
       },
     ],
     primaryKeyword: 'leasing services Dartmouth',
@@ -1562,7 +1562,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart manage after signing?',
         answer:
-          'No. MoveSmart is a leasing brokerage. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent during the coverage term; operations remain with you.',
+          'No. MoveSmart is a leasing platform. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent during the coverage term; operations remain with you.',
       },
     ],
     primaryKeyword: 'leasing services Sydney',
@@ -1647,7 +1647,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart manage after signing?',
         answer:
-          'No. MoveSmart is a leasing brokerage. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent during the coverage term; operations stay with you.',
+          'No. MoveSmart is a leasing platform. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent during the coverage term; operations stay with you.',
       },
     ],
     primaryKeyword: 'leasing services Truro',
@@ -1732,7 +1732,7 @@ export const CANADIAN_OTHER_CITIES: Record<string, CanadianCityContent> = {
       {
         question: 'Does MoveSmart manage after signing?',
         answer:
-          'No. MoveSmart is a leasing brokerage. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent during the coverage term; operations remain with you.',
+          'No. MoveSmart is a leasing platform. We place the tenant and exit at signed lease. Rent Guarantee covers missed rent during the coverage term; operations remain with you.',
       },
     ],
     primaryKeyword: 'leasing services New Glasgow',
