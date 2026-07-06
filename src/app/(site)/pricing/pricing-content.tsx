@@ -241,7 +241,7 @@ const HOW_WE_CHARGE: Array<{
       'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1600&q=80',
     imageAlt: 'Owner and tenant signing a residential lease at a table',
     body:
-      'When a qualified tenant signs a lease we negotiated, you pay a single one-time success fee \u2014 typically equivalent to one month of contracted rent. Invoiced once, on placement. We are a leasing brokerage, not an ongoing manager: there is no monthly percentage, ever.',
+      'When a qualified tenant signs a lease we negotiated, you pay a single one-time success fee \u2014 typically equivalent to one month of contracted rent. Invoiced once, on placement. We are a leasing platform, not an ongoing manager: there is no monthly percentage, ever.',
   },
   {
     tag: 'No surprises',
@@ -499,7 +499,7 @@ const FEE_SCHEDULE: FeeRow[] = [
   },
   {
     label: 'Monthly retainer or management %',
-    detail: 'We are a leasing brokerage. There is no recurring fee.',
+    detail: 'We are a leasing platform. There is no recurring fee.',
     value: 'Not charged',
   },
   {
@@ -1130,7 +1130,7 @@ function PricingTestimonials() {
               <span className="text-brand-gold">.</span>
             </h2>
             <p className="mt-4 font-serif text-base leading-relaxed text-slate-600">
-              What owners say about engaging a success-fee leasing brokerage instead of a
+              What owners say about engaging a success-fee leasing platform instead of a
               percentage-based property manager.
             </p>
           </div>
@@ -1151,7 +1151,7 @@ const PRICING_FAQS = [
   {
     question: 'Do you charge a monthly management percentage?',
     answer:
-      'No. We are a leasing brokerage, not an ongoing property manager. There is no recurring monthly fee. Once we place a qualified tenant, the engagement is complete unless you specifically engage us for a separate scope.',
+      'No. We are a leasing platform, not an ongoing property manager. There is no recurring monthly fee. Once we place a qualified tenant, the engagement is complete unless you specifically engage us for a separate scope.',
   },
   {
     question: 'When exactly do I pay the success fee?',

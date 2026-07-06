@@ -46,7 +46,7 @@ export function GuaranteeSection() {
               The MoveSmart Guarantee
             </h2>
             <p className="text-slate-300 text-lg max-w-2xl mx-auto">
-              We put our money where our mouth is. No other leasing brokerage operating across Canada and the United States writes these guarantees into the engagement.
+              We put our money where our mouth is. No other leasing platform operating across Canada and the United States writes these guarantees into the engagement.
             </p>
           </div>
         </RevealOnScroll>

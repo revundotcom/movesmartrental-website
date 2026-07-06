@@ -80,7 +80,7 @@ export const NAV_GROUPS = [
   {
     label: 'Franchising',
     items: [
-      { title: 'Franchising', href: '/franchising/', description: 'Build a leasing brokerage with MoveSmart' },
+      { title: 'Franchising', href: '/franchising/', description: 'Build a leasing platform with MoveSmart' },
     ],
   },
   {

@@ -162,7 +162,7 @@ A perfect applicant is rare. A **consistently documented** applicant is common, 
     {
       id: 'how-movesmart-applies-it',
       heading: 'How MoveSmart applies the checklist',
-      body: `MoveSmart is a leasing brokerage, not a property management firm - our success fee only earns out if the tenancy performs, so our interests and the landlord's interests are structurally aligned at the screening stage. Every file we put in front of an owner has already been through the twelve points above.
+      body: `MoveSmart is a leasing platform, not a property management firm - our success fee only earns out if the tenancy performs, so our interests and the landlord's interests are structurally aligned at the screening stage. Every file we put in front of an owner has already been through the twelve points above.
 
 The workflow is linear: portal-based application intake with written consent, credit file pull with full-history review, income documentation against a documented multiplier, independent employer verification using contact details we source ourselves, past-landlord verification including a title-roll check that the reference is real, and a written file summary delivered to the owner with a documented recommendation.
 

@@ -6,7 +6,7 @@ import { ArrowRight, ArrowUpRight, Newspaper } from 'lucide-react'
 export const metadata: Metadata = {
   title: 'News | Press, Announcements & Milestones | MoveSmart Rentals',
   description:
-    'Press coverage, company announcements, market milestones, and product launches from MoveSmart Rentals — the full-service leasing brokerage operating across Canada and the United States.',
+    'Press coverage, company announcements, market milestones, and product launches from MoveSmart Rentals — the full-service leasing platform operating across Canada and the United States.',
   alternates: { canonical: '/resources/news/' },
   openGraph: {
     title: 'News | MoveSmart Rentals',
@@ -137,7 +137,7 @@ export default function NewsPage() {
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/80">
             What we are doing, where we have been featured, and the milestones
-            we are hitting as we build a full-service leasing brokerage across
+            we are hitting as we build a full-service leasing platform across
             North America.
           </p>
         </div>

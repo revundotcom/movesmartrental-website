@@ -18,21 +18,21 @@ import { UsCitiesFilter } from './us-cities-filter'
 // ---------------------------------------------------------------------------
 
 export const metadata: Metadata = {
-  title: 'Leasing Brokerage Across the United States | MoveSmart Rentals',
+  title: 'Leasing Platform Across the United States | MoveSmart Rentals',
   description:
     'Full-service leasing and tenant placement across 10 US states and 57 anchor cities. State-licensed brokerage partners, ZIP-level pricing, transparent success-fee terms.',
   alternates: {
     canonical: '/us/',
   },
   openGraph: {
-    title: 'Leasing Brokerage Across the United States | MoveSmart Rentals',
+    title: 'Leasing Platform Across the United States | MoveSmart Rentals',
     description:
       'Full-service leasing and tenant placement across 10 US states and 57 anchor cities. State-licensed brokerage partners and ZIP-level pricing.',
     images: [{ url: '/og-share.png', width: 1200, height: 630, alt: 'MoveSmart Rentals United States' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Leasing Brokerage Across the United States | MoveSmart Rentals',
+    title: 'Leasing Platform Across the United States | MoveSmart Rentals',
     description:
       'Full-service leasing and tenant placement across 10 US states and 57 anchor cities.',
     images: ['/og-share.png'],

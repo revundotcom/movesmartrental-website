@@ -2,7 +2,7 @@
  * Ontario Tier-3 City Stubs
  * -------------------------------------------------------------
  * Stub list of additional Ontario communities served by
- * MoveSmart Rentals' leasing brokerage. Used for sitemap
+ * MoveSmart Rentals' leasing platform. Used for sitemap
  * enumeration, internal-link planning, and as the source list
  * for future content generation. No long-form copy here - that
  * lives in `ontario-cities-tier2.ts` and the Tier-1

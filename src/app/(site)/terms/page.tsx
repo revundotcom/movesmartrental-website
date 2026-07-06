@@ -7,7 +7,7 @@ import { PageHeroBlock } from '@/components/blocks/page-hero-block'
 export const metadata: Metadata = {
   title: 'Terms of Service | MoveSmart Rentals',
   description:
-    'Terms of Service for MoveSmart Rentals, a multi-jurisdictional leasing brokerage. Read the terms governing your use of our website and services.',
+    'Terms of Service for MoveSmart Rentals, a multi-jurisdictional leasing platform. Read the terms governing your use of our website and services.',
   alternates: {
     canonical: '/terms/',
   },

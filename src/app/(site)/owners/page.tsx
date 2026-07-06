@@ -908,7 +908,7 @@ export default async function OwnersPage() {
           {
             question: 'What happens after the tenant moves in?',
             answer:
-              'Our scope is leasing execution - from listing to move-in. Once the lease is signed, deposits collected, and the move-in inspection is complete, the engagement is fulfilled. We are a leasing brokerage, not a property management firm.',
+              'Our scope is leasing execution - from listing to move-in. Once the lease is signed, deposits collected, and the move-in inspection is complete, the engagement is fulfilled. We are a leasing platform, not a property management firm.',
           },
           {
             question: 'Will I get a proper invoice and HST/GST receipt for the success fee?',

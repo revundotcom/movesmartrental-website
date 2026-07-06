@@ -338,7 +338,7 @@ const LEASING_SERVICES: ServicePageContent = {
     {
       question: 'Do you handle rent collection or maintenance after move-in?',
       answer:
-        'No. MoveSmart is a leasing brokerage, not a property manager. The engagement closes at move-in. We will happily refer you to trusted property management firms if you need ongoing operations support.',
+        'No. MoveSmart is a leasing platform, not a property manager. The engagement closes at move-in. We will happily refer you to trusted property management firms if you need ongoing operations support.',
     },
     {
       question: 'How much does it cost?',
@@ -370,12 +370,12 @@ const LEASING_SERVICES: ServicePageContent = {
   primaryKeyword: 'leasing services Ontario',
   secondaryKeywords: [
     'white glove leasing services Canada',
-    'full service leasing brokerage',
+    'full service leasing platform',
     'rental leasing agent Toronto',
     'landlord leasing services GTA',
     'full-service leasing Ontario',
     'end to end leasing Canada',
-    'leasing brokerage for landlords',
+    'leasing platform for landlords',
   ],
 }
 

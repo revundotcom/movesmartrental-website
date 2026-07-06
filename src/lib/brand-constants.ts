@@ -114,7 +114,7 @@ export const BRAND = {
 } as const
 
 /** Canonical service names - always use these exact strings.
- *  MoveSmart Rentals is a leasing brokerage, NOT a property management company.
+ *  MoveSmart Rentals is a leasing platform, NOT a property management company.
  *  These map 1:1 to the 9 leasing-execution services in the brand brief. */
 export const SERVICES = {
   strategicPricing: 'Strategic Rental Pricing',

@@ -7,7 +7,7 @@
  * them into a lookup map for the route handler and the /resources/ index.
  *
  * Voice: Strategic, Professional, Transparent - MoveSmart is a full-service
- * leasing brokerage, not a property management firm.
+ * leasing platform, not a property management firm.
  */
 
 export interface GuideContent {

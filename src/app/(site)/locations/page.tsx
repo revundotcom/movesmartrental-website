@@ -761,7 +761,7 @@ export default function LocationsPage() {
                   </span>
                 </h2>
                 <p className="mt-5 text-base leading-relaxed text-slate-600 md:text-lg">
-                  MoveSmart is one of the few leasing brokerages that runs
+                  MoveSmart is one of the few leasing platforms that runs
                   institutional lease-up campaigns on both sides of the border -
                   Canadian PMCs absorbing new Sunbelt acquisitions, U.S. builders
                   opening Ontario and Quebec stock, and cross-listed REITs that

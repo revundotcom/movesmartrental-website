@@ -249,7 +249,7 @@ function CityServiceView({
       {/* Editorial hero */}
       <PageHeroBlock
         kicker={`${serviceTitle} · ${cityTitle}`}
-        eyebrow="Local leasing brokerage"
+        eyebrow="Local leasing platform"
         headline={heroHeadline}
         accentLastWord={false}
         lede={heroSubheadline}

@@ -50,7 +50,7 @@ export async function generateMetadata({
 
   return generatePageMetadata({
     path: `/us/${state}`,
-    fallbackTitle: `Leasing Brokerage in ${title}`,
+    fallbackTitle: `Leasing Platform in ${title}`,
     fallbackDescription: `Full-service leasing across ${title}: strategic pricing, multi-channel marketing, state-compliant tenant qualification, and lease execution. Zero upfront cost, success-fee on placement.`,
   })
 }

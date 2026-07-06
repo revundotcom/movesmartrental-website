@@ -158,7 +158,7 @@ There is also the occasional strategic move of listing **slightly below market**
     {
       id: 'how-movesmart-prices',
       heading: 'How MoveSmart prices - strategic rental pricing as a service',
-      body: `MoveSmart is a leasing brokerage. Pricing a unit correctly is not a value-add; it is a core part of the mandate.
+      body: `MoveSmart is a leasing platform. Pricing a unit correctly is not a value-add; it is a core part of the mandate.
 
 Every new listing MoveSmart takes on goes through a documented pricing workflow:
 

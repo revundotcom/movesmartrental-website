@@ -177,7 +177,7 @@ A landlord or brokerage that runs this process as a default - whether or not ren
     {
       id: 'movesmart-pathway',
       heading: 'The MoveSmart pathway - how we handle rent guarantee for clients',
-      body: `MoveSmart is a leasing brokerage. We do not underwrite rent guarantee policies directly - that is the role of licensed insurance partners. What we do is make sure the screening process we run on every placement produces a file that is audit-ready against the standards insurers want to see.
+      body: `MoveSmart is a leasing platform. We do not underwrite rent guarantee policies directly - that is the role of licensed insurance partners. What we do is make sure the screening process we run on every placement produces a file that is audit-ready against the standards insurers want to see.
 
 In practice that means:
 

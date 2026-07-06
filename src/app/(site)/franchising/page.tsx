@@ -27,21 +27,21 @@ import {
 } from './franchising-client'
 
 export const metadata: Metadata = {
-  title: 'Leasing Brokerage Franchise Opportunity Canada & US',
+  title: 'Leasing Platform Franchise Opportunity Canada & US',
   description:
     'Start your own full-service leasing and tenant placement business with MoveSmart Rentals. Protected territory, 6-week training, proven leasing playbook, and ongoing HQ support.',
   alternates: {
     canonical: '/franchising/',
   },
   openGraph: {
-    title: 'Leasing Brokerage Franchise Canada & US | MoveSmart Rentals',
+    title: 'Leasing Platform Franchise Canada & US | MoveSmart Rentals',
     description:
       'Now awarding territories. Protected market, 6-week training, proven leasing playbook, and ongoing HQ support.',
     images: [{ url: '/og-share.png', width: 1200, height: 630, alt: 'MoveSmart Rentals Franchise Opportunity' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Leasing Brokerage Franchise Canada & US | MoveSmart Rentals',
+    title: 'Leasing Platform Franchise Canada & US | MoveSmart Rentals',
     description:
       'Now awarding territories. Protected market, 6-week training, proven leasing playbook, and ongoing HQ support.',
     images: ['/og-share.png'],
@@ -302,7 +302,7 @@ const FRANCHISE_FAQS = [
   {
     question: 'Do I need a real estate background to qualify?',
     answer:
-      'A real estate, leasing, or sales operations background is strongly preferred and accelerates ramp time. It is not strictly required - we have onboarded franchisees from financial services and small-business ownership - but you must hold (or be willing to obtain) the real estate or leasing brokerage licence required in your province or state. We help you navigate licensing during onboarding.',
+      'A real estate, leasing, or sales operations background is strongly preferred and accelerates ramp time. It is not strictly required - we have onboarded franchisees from financial services and small-business ownership - but you must hold (or be willing to obtain) the real estate or leasing platform licence required in your province or state. We help you navigate licensing during onboarding.',
   },
   {
     question: 'Can I run this as a semi-absentee owner?',
@@ -774,7 +774,7 @@ export default function FranchisingPage() {
               </h2>
             </RevealOnScroll>
             <p className="mt-6 text-base leading-relaxed text-white/65 md:text-lg">
-              From signing day to your first thirty owner conversations. Structured, supported, and built for someone who has never run a leasing brokerage before.
+              From signing day to your first thirty owner conversations. Structured, supported, and built for someone who has never run a leasing platform before.
             </p>
           </div>
 
@@ -875,7 +875,7 @@ export default function FranchisingPage() {
 
           <div className="space-y-24 sm:space-y-32">
             <PullQuote
-              quote="I came from residential sales, not leasing brokerage. The 6-week onboarding gave me a full operating system on day one."
+              quote="I came from residential sales, not leasing platform. The 6-week onboarding gave me a full operating system on day one."
               attribution="D. Patel"
               market="Calgary franchisee since 2024"
             />

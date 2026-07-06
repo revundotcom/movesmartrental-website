@@ -5,7 +5,7 @@
  * Rentals' full-service leasing and tenant placement. Tier-1 cities (Toronto,
  * Mississauga, etc.) are handled in scripts/city-content/*.
  *
- * Positioning throughout: leasing brokerage / tenant placement /
+ * Positioning throughout: leasing platform / tenant placement /
  * rent guarantee - NOT property management. MoveSmart is a
  * leasing-and-placement house, not an operator.
  */
@@ -110,7 +110,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
       'rent guarantee Whitby',
       'Brooklin leasing',
       'Whitby GO condo leasing',
-      'Durham Region leasing brokerage',
+      'Durham Region leasing platform',
       'Whitby landlord services',
     ],
   },
@@ -177,7 +177,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
       {
         question: 'Do you manage the property after the tenant moves in?',
         answer:
-          'No - MoveSmart is a leasing brokerage, not a property manager. We place the tenant and, under the Rent Guarantee option, cover missed rent for the coverage period. Ongoing maintenance and owner-tenant communication stay with you (or your operator of choice).',
+          'No - MoveSmart is a leasing platform, not a property manager. We place the tenant and, under the Rent Guarantee option, cover missed rent for the coverage period. Ongoing maintenance and owner-tenant communication stay with you (or your operator of choice).',
       },
       {
         question: 'How far in advance should I start marketing a Bowmanville closing?',
@@ -292,7 +292,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
     tier: 2,
     seoTitle: 'Leasing Services in Windsor | MoveSmart Rentals',
     metaDescription:
-      'Leasing brokerage for Windsor landlords - automotive and battery-plant tenant base, University of Windsor placements, and cross-border applicant screening done properly.',
+      'Leasing platform for Windsor landlords - automotive and battery-plant tenant base, University of Windsor placements, and cross-border applicant screening done properly.',
     heroHeadline: 'Windsor Leasing, Built for the Border Economy',
     heroLede:
       'Windsor\'s rental market is shaped by the auto sector, the NextStar battery plant, the University of Windsor, and a steady flow of cross-border professionals. MoveSmart speaks all four audiences and screens every applicant to Ontario standards.',
@@ -457,7 +457,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
     tier: 2,
     seoTitle: 'Leasing Services in Niagara Falls | MoveSmart Rentals',
     metaDescription:
-      'Leasing brokerage for Niagara Falls landlords - hospitality and casino workforce rentals, cross-border applicants, and GO extension upside positioned correctly.',
+      'Leasing platform for Niagara Falls landlords - hospitality and casino workforce rentals, cross-border applicants, and GO extension upside positioned correctly.',
     heroHeadline: 'Niagara Falls Leasing, Built for the Tourism Engine',
     heroLede:
       'Niagara Falls rentals serve a workforce that keeps the hospitality and gaming economy running, plus a growing GTA spillover. MoveSmart prices, markets, and screens for that reality rather than defaulting to generic Niagara comps.',
@@ -851,7 +851,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
       'Southlake Hospital rental',
       'Newmarket landlord services',
       'Yonge-Davis condo leasing',
-      'York Region leasing brokerage',
+      'York Region leasing platform',
       'rent guarantee Newmarket',
     ],
   },
@@ -919,7 +919,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
       {
         question: 'Do you handle tenant communications after move-in?',
         answer:
-          'No. MoveSmart is a leasing brokerage. We place the tenant and, if Rent Guarantee is active, cover missed rent during the coverage term. Ongoing day-to-day tenant relations remain with you or your chosen operator.',
+          'No. MoveSmart is a leasing platform. We place the tenant and, if Rent Guarantee is active, cover missed rent during the coverage term. Ongoing day-to-day tenant relations remain with you or your chosen operator.',
       },
       {
         question: 'Is Rent Guarantee available on Aurora executive placements?',
@@ -1606,7 +1606,7 @@ export const ONTARIO_TIER_2_CITIES: Record<string, OntarioCityContent> = {
     tier: 2,
     seoTitle: 'Leasing Services in Thunder Bay | MoveSmart Rentals',
     metaDescription:
-      'Leasing brokerage for Thunder Bay landlords - Lakehead University, Thunder Bay Regional Health, Bombardier, and Confederation College tenants placed with Northwestern Ontario expertise.',
+      'Leasing platform for Thunder Bay landlords - Lakehead University, Thunder Bay Regional Health, Bombardier, and Confederation College tenants placed with Northwestern Ontario expertise.',
     heroHeadline: 'Thunder Bay Leasing, For the Northwestern Hub',
     heroLede:
       'Thunder Bay is the economic centre of Northwestern Ontario - Lakehead University, Thunder Bay Regional Health Sciences, Bombardier, and a critical shipping and logistics corridor. MoveSmart reads all four streams and screens tenants accordingly.',

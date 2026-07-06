@@ -2,7 +2,7 @@
  * JSON-LD: Service schema
  * Used on: /services/{slug}/ pages, CityService pages, Service hub pages
  *
- * For MoveSmart Rentals (a leasing brokerage), `serviceType` should be
+ * For MoveSmart Rentals (a leasing platform), `serviceType` should be
  * specific to the offering - e.g. "Tenant Placement Service",
  * "Tenant Screening Service", "Rent Guarantee Service",
  * "Institutional Lease-Up Service", "Rental Preparation Service".
