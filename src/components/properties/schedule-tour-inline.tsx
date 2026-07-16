@@ -65,7 +65,7 @@ export function ScheduleTourInline({
           unitId={unitId}
           initialSelectedDate={selectedDate || (dynamicDates.length > 0 ? dynamicDates[0].date : '')}
           prefetchedDates={dynamicDates}
-          prefetchedSlots={allSlots}
+          prefetchedSlots={allSlots || undefined}
         />
       )}
     </div>
