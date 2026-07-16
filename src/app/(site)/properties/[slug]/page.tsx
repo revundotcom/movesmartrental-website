@@ -57,8 +57,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = `${unit.unit_name} | MoveSmart Rentals`
   const description =
     unit.description?.slice(0, 200) ||
-    `${unit.number_of_bedrooms || unit.bedrooms || ''} bed, ${unit.number_of_bathrooms || unit.bathrooms || ''} bath ${
-      unit.property_sub_type || 'rental'
+    `${unit.number_of_bedrooms || unit.bedrooms || ''} bed, ${unit.number_of_bathrooms || unit.bathrooms || ''} bath ${unit.property_sub_type || 'rental'
     } at ${unit.unit_address}.`
 
   const image = resolvePropertyImage(unit.cover_image ?? unit.cover_thumb)
@@ -353,20 +352,20 @@ export default async function PropertyDetailPage({ params }: PageProps) {
     geo:
       unit.latitude && unit.longitude
         ? {
-            '@type': 'GeoCoordinates',
-            latitude: unit.latitude,
-            longitude: unit.longitude,
-          }
+          '@type': 'GeoCoordinates',
+          latitude: unit.latitude,
+          longitude: unit.longitude,
+        }
         : undefined,
     offers: unit.website_price
       ? {
-          '@type': 'Offer',
-          price: unit.website_price,
-          priceCurrency: 'CAD',
-          availability: isAvailable
-            ? 'https://schema.org/InStock'
-            : 'https://schema.org/OutOfStock',
-        }
+        '@type': 'Offer',
+        price: unit.website_price,
+        priceCurrency: 'CAD',
+        availability: isAvailable
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/OutOfStock',
+      }
       : undefined,
   }
 
@@ -629,188 +628,187 @@ export default async function PropertyDetailPage({ params }: PageProps) {
 
   return (
     <>
-    <main className="bg-white pb-24 lg:pb-0">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
-      />
-
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <BreadcrumbNav
-          crumbs={[
-            { label: 'Home', href: '/' },
-            { label: 'Properties', href: '/properties/' },
-            { label: unit.unit_name, href: `/properties/${slug}/` },
-          ]}
+      <main className="bg-white pb-24 lg:pb-0">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
         />
 
-        {/* Photos / Map / Street View tabs (client) */}
-        <section className="mt-6">
-          <PropertyMediaTabs
-            images={galleryImages}
-            propertyName={unit.unit_name}
-            address={unit.unit_address}
-            lat={unit.latitude}
-            lng={unit.longitude}
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          <BreadcrumbNav
+            crumbs={[
+              { label: 'Home', href: '/' },
+              { label: 'Properties', href: '/properties/' },
+              { label: unit.unit_name, href: `/properties/${slug}/` },
+            ]}
           />
-        </section>
 
-        {/* Hero info bar: Price · Beds/Baths/SqFt · Address · MLS status */}
-        <section
-          aria-label="Listing summary"
-          className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 px-6 py-5"
-        >
-          <div className="flex flex-wrap items-center gap-3">
-            <span
-              className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${
-                isAvailable
+          {/* Photos / Map / Street View tabs (client) */}
+          <section className="mt-6">
+            <PropertyMediaTabs
+              images={galleryImages}
+              propertyName={unit.unit_name}
+              address={unit.unit_address}
+              lat={unit.latitude}
+              lng={unit.longitude}
+            />
+          </section>
+
+          {/* Hero info bar: Price · Beds/Baths/SqFt · Address · MLS status */}
+          <section
+            aria-label="Listing summary"
+            className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 px-6 py-5"
+          >
+            <div className="flex flex-wrap items-center gap-3">
+              <span
+                className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${isAvailable
                   ? 'bg-emerald-100 text-emerald-700'
                   : 'bg-slate-200 text-slate-600'
-              }`}
-            >
-              {isAvailable ? 'Active' : unit.availability || 'Status —'}
-            </span>
-            {unit.property_sub_type && (
-              <span className="inline-block rounded-full bg-white px-3 py-1 text-xs font-medium text-[#0B1D3A]">
-                {unit.property_sub_type}
+                  }`}
+              >
+                {isAvailable ? 'Active' : unit.availability || 'Status —'}
               </span>
-            )}
-            {unit.furnished && (
-              <span className="inline-block rounded-full bg-white px-3 py-1 text-xs font-medium text-[#0B1D3A]">
-                {unit.furnished}
-              </span>
-            )}
-          </div>
-
-          <div className="mt-3 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h1 className="font-display text-3xl text-[#0B1D3A] md:text-4xl">
-                {unit.unit_name}
-              </h1>
-              <p className="mt-2 flex items-center gap-1.5 text-sm text-slate-500">
-                <MapPin className="size-4 text-slate-400" />
-                {unit.unit_address}
-              </p>
-            </div>
-            <div className="text-left md:text-right">
-              <p className="text-xs uppercase tracking-wider text-slate-500">
-                Monthly rent
-              </p>
-              <p className="font-display text-3xl text-[#10B981]">
-                {formatPrice(unit.website_price)}
-                {unit.website_price != null && (
-                  <span className="text-base text-slate-500">/mo</span>
-                )}
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-4 flex flex-wrap gap-x-6 gap-y-3 border-t border-slate-200 pt-4 text-sm text-[#0B1D3A]">
-            <span className="inline-flex items-center gap-1.5">
-              <Bed className="size-4 text-[#10B981]" />
-              {unit.number_of_bedrooms || unit.bedrooms || EMPTY} Beds
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <Bath className="size-4 text-[#10B981]" />
-              {unit.number_of_bathrooms || unit.bathrooms || EMPTY} Baths
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <Maximize className="size-4 text-[#10B981]" />
-              {sqftDisplay || EMPTY}
-            </span>
-            {unit.total_parking_spaces && (
-              <span className="inline-flex items-center gap-1.5">
-                <Car className="size-4 text-[#10B981]" />
-                {unit.total_parking_spaces} Parking
-              </span>
-            )}
-            {availableDate && (
-              <span className="inline-flex items-center gap-1.5">
-                <Calendar className="size-4 text-[#10B981]" />
-                Available {availableDate}
-              </span>
-            )}
-          </div>
-        </section>
-
-        <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-3">
-          {/* Main column — gated body */}
-          <div className="lg:col-span-2">
-            <PropertyGate city={building?.city ?? null}>{gatedBody}</PropertyGate>
-          </div>
-
-          {/* Sidebar (kept outside the gate so the conversion CTA is always visible) */}
-          <aside className="lg:col-span-1">
-            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6 lg:sticky lg:top-24">
-              <p className="font-display text-3xl text-[#0B1D3A]">
-                {formatPrice(unit.website_price)}
-                {unit.website_price != null && (
-                  <span className="text-base font-normal text-slate-500">
-                    /month
-                  </span>
-                )}
-              </p>
-              {availableDate && (
-                <p className="mt-1 text-sm text-slate-500">
-                  Available {availableDate}
-                </p>
+              {unit.property_sub_type && (
+                <span className="inline-block rounded-full bg-white px-3 py-1 text-xs font-medium text-[#0B1D3A]">
+                  {unit.property_sub_type}
+                </span>
               )}
+              {unit.furnished && (
+                <span className="inline-block rounded-full bg-white px-3 py-1 text-xs font-medium text-[#0B1D3A]">
+                  {unit.furnished}
+                </span>
+              )}
+            </div>
 
-              <div className="my-5 border-t border-slate-100" />
+            <div className="mt-3 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <h1 className="font-display text-3xl text-[#0B1D3A] md:text-4xl">
+                  {unit.unit_name}
+                </h1>
+                <p className="mt-2 flex items-center gap-1.5 text-sm text-slate-500">
+                  <MapPin className="size-4 text-slate-400" />
+                  {unit.unit_address}
+                </p>
+              </div>
+              <div className="text-left md:text-right">
+                <p className="text-xs uppercase tracking-wider text-slate-500">
+                  Monthly rent
+                </p>
+                <p className="font-display text-3xl text-[#10B981]">
+                  {formatPrice(unit.website_price)}
+                  {unit.website_price != null && (
+                    <span className="text-base text-slate-500">/mo</span>
+                  )}
+                </p>
+              </div>
+            </div>
 
-              {/* Inline interest prompt + CTAs — desktop only. On mobile the
+            <div className="mt-4 flex flex-wrap gap-x-6 gap-y-3 border-t border-slate-200 pt-4 text-sm text-[#0B1D3A]">
+              <span className="inline-flex items-center gap-1.5">
+                <Bed className="size-4 text-[#10B981]" />
+                {unit.number_of_bedrooms || unit.bedrooms || EMPTY} Beds
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Bath className="size-4 text-[#10B981]" />
+                {unit.number_of_bathrooms || unit.bathrooms || EMPTY} Baths
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Maximize className="size-4 text-[#10B981]" />
+                {sqftDisplay || EMPTY}
+              </span>
+              {unit.total_parking_spaces && (
+                <span className="inline-flex items-center gap-1.5">
+                  <Car className="size-4 text-[#10B981]" />
+                  {unit.total_parking_spaces} Parking
+                </span>
+              )}
+              {availableDate && (
+                <span className="inline-flex items-center gap-1.5">
+                  <Calendar className="size-4 text-[#10B981]" />
+                  Available {availableDate}
+                </span>
+              )}
+            </div>
+          </section>
+
+          <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-3">
+            {/* Main column — gated body */}
+            <div className="lg:col-span-2">
+              <PropertyGate city={building?.city ?? null}>{gatedBody}</PropertyGate>
+            </div>
+
+            {/* Sidebar (kept outside the gate so the conversion CTA is always visible) */}
+            <aside className="lg:col-span-1">
+              <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6 lg:sticky lg:top-24">
+                <p className="font-display text-3xl text-[#0B1D3A]">
+                  {formatPrice(unit.website_price)}
+                  {unit.website_price != null && (
+                    <span className="text-base font-normal text-slate-500">
+                      /month
+                    </span>
+                  )}
+                </p>
+                {availableDate && (
+                  <p className="mt-1 text-sm text-slate-500">
+                    Available {availableDate}
+                  </p>
+                )}
+
+                <div className="my-5 border-t border-slate-100" />
+
+                {/* Inline interest prompt + CTAs — desktop only. On mobile the
                   PropertyStickyCTA at the bottom of the viewport handles these
                   actions, so we hide the inline duplicate to avoid two stacked
                   Apply Now buttons in the same scroll. */}
-              <div className="hidden lg:block">
-                <p className="text-sm font-medium text-[#0B1D3A]">
-                  Interested in this property?
-                </p>
-                <p className="mt-1 text-xs text-slate-500">
-                  Schedule a viewing or reserve this unit through the secure
-                  MoveSmart portal — sign in or create an account in seconds.
-                </p>
+                <div className="hidden lg:block">
+                  <p className="text-sm font-medium text-[#0B1D3A]">
+                    Interested in this property?
+                  </p>
+                  <p className="mt-1 text-xs text-slate-500">
+                    Schedule a viewing or reserve this unit through the secure
+                    MoveSmart portal — sign in or create an account in seconds.
+                  </p>
 
-                <div className="mt-4 space-y-2">
-                  {/* Apply Now — primary CTA, routes to portal apply/reserve flow */}
-                  {reserveUrl ? (
-                    <a
-                      href={reserveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex w-full items-center justify-center rounded-lg bg-[#10B981] px-4 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#059669]"
-                    >
-                      Apply Now
-                    </a>
-                  ) : (
-                    <Link
-                      href={`/contact/?type=tenant&intent=apply&property=${encodeURIComponent(slug)}`}
-                      className="flex w-full items-center justify-center rounded-lg bg-[#10B981] px-4 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#059669]"
-                    >
-                      Apply Now
-                    </Link>
-                  )}
-                  {scheduleUrl ? (
-                    <a
-                      href={scheduleUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex w-full items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#0B1D3A] transition-colors hover:border-[#10B981]/40 hover:bg-emerald-50"
-                    >
-                      Schedule a Tour
-                    </a>
-                  ) : (
-                    <Link
-                      href={`/contact/?type=tenant&property=${encodeURIComponent(slug)}`}
-                      className="flex w-full items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#0B1D3A] transition-colors hover:border-[#10B981]/40 hover:bg-emerald-50"
-                    >
-                      Request a Viewing
-                    </Link>
-                  )}
+                  <div className="mt-4 space-y-2">
+                    {/* Apply Now — primary CTA, routes to portal apply/reserve flow */}
+                    {reserveUrl ? (
+                      <a
+                        href={reserveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex w-full items-center justify-center rounded-lg bg-[#10B981] px-4 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#059669]"
+                      >
+                        Apply Now
+                      </a>
+                    ) : (
+                      <Link
+                        href={`/contact/?type=tenant&intent=apply&property=${encodeURIComponent(slug)}`}
+                        className="flex w-full items-center justify-center rounded-lg bg-[#10B981] px-4 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#059669]"
+                      >
+                        Apply Now
+                      </Link>
+                    )}
+                    {scheduleUrl ? (
+                      <a
+                        href={scheduleUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex w-full items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#0B1D3A] transition-colors hover:border-[#10B981]/40 hover:bg-emerald-50"
+                      >
+                        Schedule a Tour
+                      </a>
+                    ) : (
+                      <Link
+                        href={`/contact/?type=tenant&property=${encodeURIComponent(slug)}`}
+                        className="flex w-full items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#0B1D3A] transition-colors hover:border-[#10B981]/40 hover:bg-emerald-50"
+                      >
+                        Request a Viewing
+                      </Link>
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              <div className="mt-5 rounded-xl bg-slate-50 p-4 text-xs text-slate-500">
+                {/* <div className="mt-5 rounded-xl bg-slate-50 p-4 text-xs text-slate-500">
                 <p>
                   Listing brokered by{' '}
                   <span className="font-semibold text-[#0B1D3A]">
@@ -819,56 +817,56 @@ export default async function PropertyDetailPage({ params }: PageProps) {
                   . MoveSmart Rentals is the marketing partner — screening,
                   lease execution, and move-in coordination are included.
                 </p>
+              </div> */}
               </div>
-            </div>
-          </aside>
+            </aside>
+          </div>
+
+          {similar.length > 0 && (
+            <section className="mt-16" aria-label="Similar properties">
+              <h2 className="font-display text-2xl text-[#0B1D3A] md:text-3xl">
+                Similar properties
+              </h2>
+              <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {similar.map((p) => (
+                  <SimilarPropertyCard key={p.id} property={p} />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* RECO / IDX legal disclaimer footer */}
+          {/* <section
+            aria-label="Listing disclaimer"
+            className="mt-16 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-xs leading-relaxed text-slate-600"
+          >
+            <p>
+              Listing data sourced from TREB IDX feed. This listing is brokered
+              by{' '}
+              <span className="font-semibold text-[#0B1D3A]">
+                Valery Real Estate Inc., Brokerage
+              </span>
+              . MoveSmart Rentals is a marketing partner. Information deemed
+              reliable but not guaranteed. The trademarks REALTOR&reg;,
+              REALTORS&reg;, and the REALTOR&reg; logo are controlled by The
+              Canadian Real Estate Association (CREA) and identify real estate
+              professionals who are members of CREA.
+            </p>
+          </section> */}
         </div>
 
-        {similar.length > 0 && (
-          <section className="mt-16" aria-label="Similar properties">
-            <h2 className="font-display text-2xl text-[#0B1D3A] md:text-3xl">
-              Similar properties
-            </h2>
-            <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {similar.map((p) => (
-                <SimilarPropertyCard key={p.id} property={p} />
-              ))}
-            </div>
-          </section>
-        )}
+      </main>
 
-        {/* RECO / IDX legal disclaimer footer */}
-        <section
-          aria-label="Listing disclaimer"
-          className="mt-16 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-xs leading-relaxed text-slate-600"
-        >
-          <p>
-            Listing data sourced from TREB IDX feed. This listing is brokered
-            by{' '}
-            <span className="font-semibold text-[#0B1D3A]">
-              Valery Real Estate Inc., Brokerage
-            </span>
-            . MoveSmart Rentals is a marketing partner. Information deemed
-            reliable but not guaranteed. The trademarks REALTOR&reg;,
-            REALTORS&reg;, and the REALTOR&reg; logo are controlled by The
-            Canadian Real Estate Association (CREA) and identify real estate
-            professionals who are members of CREA.
-          </p>
-        </section>
-      </div>
-
-    </main>
-
-    {/* Mobile sticky CTA — Apply Now + Schedule a Tour. Rendered as a
+      {/* Mobile sticky CTA — Apply Now + Schedule a Tour. Rendered as a
         sibling of <main> (not inside it) so position:fixed always
         anchors to the viewport, never to a transformed ancestor.
         Always rendered on every property page — even leased units can
         capture waitlist / future-availability leads via these buttons. */}
-    <PropertyStickyCTA
-      reserveUrl={reserveUrl}
-      scheduleUrl={scheduleUrl}
-      slug={slug}
-    />
+      <PropertyStickyCTA
+        reserveUrl={reserveUrl}
+        scheduleUrl={scheduleUrl}
+        slug={slug}
+      />
     </>
   )
 }

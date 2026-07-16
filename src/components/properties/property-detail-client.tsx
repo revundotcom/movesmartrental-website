@@ -1039,5 +1039,5 @@ export function PropertyGate({
    *  property page carries the listing's city. */
   city?: string | null
 }) {
-  return <SignInGate city={city}>{children}</SignInGate>
+  return <>{children}</>
 }
