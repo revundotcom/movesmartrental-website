@@ -12,9 +12,9 @@ export interface ShowingDate {
   month: string;
 }
 
-export function useShowingSlots(unitId: string, fetchCondition: boolean = true, initialDates?: ShowingDate[], initialSlots?: any) {
+export function useShowingSlots(unitId: string, fetchCondition: boolean = true, initialDates?: ShowingDate[], initialSlots?: Record<string, any>) {
   const [dynamicDates, setDynamicDates] = useState<ShowingDate[]>(initialDates || []);
-  const [allSlots, setAllSlots] = useState<any>(initialSlots || null);
+  const [allSlots, setAllSlots] = useState<Record<string, any> | null>(initialSlots || null);
   const [isLoading, setIsLoading] = useState<boolean>(!initialDates || !initialSlots);
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -81,6 +81,7 @@ export function useShowingSlots(unitId: string, fetchCondition: boolean = true, 
     return () => {
       isMounted = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unitId, fetchCondition, refreshKey]);
 
   const getSlotsForDate = (date: string): SlotData[] => {
@@ -91,7 +92,7 @@ export function useShowingSlots(unitId: string, fetchCondition: boolean = true, 
     if (json && typeof json === 'object' && !Array.isArray(json) && !json.data) {
        const dateData = json[date];
        if (dateData && Array.isArray(dateData.slots)) {
-          slots = dateData.slots.map((s: any) => ({
+          slots = dateData.slots.map((s: Record<string, any>) => ({
              time: s.time || s.showing_time || s.raw_time || '',
              agent_id: (s.agents && s.agents.length > 0) ? s.agents[0] : (s.agent_id || 0)
           }));

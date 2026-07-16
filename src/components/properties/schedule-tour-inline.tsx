@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react'
 import { ScheduleTourModal } from './schedule-tour-modal'
-import { cn } from '@/lib/utils'
 
 import { useShowingSlots } from './use-showing-slots'
 

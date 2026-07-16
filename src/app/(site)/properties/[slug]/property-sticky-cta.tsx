@@ -50,8 +50,6 @@ export function PropertyStickyCTA({
   const applyHref =
     reserveUrl ??
     `/contact/?type=tenant&intent=apply&property=${encodeURIComponent(slug)}`
-  const scheduleHref =
-    scheduleUrl ?? `/contact/?type=tenant&property=${encodeURIComponent(slug)}`
 
   const stickyStyle: React.CSSProperties = {
     position: 'fixed',

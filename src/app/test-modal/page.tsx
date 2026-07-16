@@ -13,7 +13,7 @@ export default function TestModalPage() {
         <h1 className="text-3xl font-bold text-slate-800">Test Schedule Tour Modal</h1>
         <p className="text-slate-600">
           This is a dummy page to test the UI of the Schedule Tour Modal. 
-          You can change the initial date passed from the "Unit Details Page" below.
+          You can change the initial date passed from the &quot;Unit Details Page&quot; below.
         </p>
 
         <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">

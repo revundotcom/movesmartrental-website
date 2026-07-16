@@ -1,22 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { X, Calendar, Clock, Loader2, CheckCircle2 } from 'lucide-react';
+import { X, Clock, Loader2, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import PhoneInput, { isValidPhoneNumber, type Country } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
+import { useShowingSlots, type SlotData, type ShowingDate } from './use-showing-slots';
+
 interface ScheduleTourModalProps {
   isOpen: boolean;
   onClose: () => void;
   unitId: string;
   initialSelectedDate?: string;
-  prefetchedDates?: any[];
-  prefetchedSlots?: any;
+  prefetchedDates?: ShowingDate[];
+  prefetchedSlots?: Record<string, any>;
 }
-
-import { useShowingSlots, type SlotData } from './use-showing-slots';
 
 export function ScheduleTourModal({
   isOpen,
@@ -27,7 +27,6 @@ export function ScheduleTourModal({
   prefetchedSlots
 }: ScheduleTourModalProps) {
   const { dynamicDates, isLoading: isLoadingSlots, getSlotsForDate, refreshSlots } = useShowingSlots(unitId, isOpen, prefetchedDates, prefetchedSlots);
-  const defaultDate = initialSelectedDate || (dynamicDates.length > 0 ? dynamicDates[0].date : '');
 
   const [mounted, setMounted] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>(initialSelectedDate || '');
@@ -125,10 +124,11 @@ export function ScheduleTourModal({
     setAvailableSlots(slots);
     
     // Try to keep same time selected if available in new date
-    if (selectedSlot) {
-      const stillAvailable = slots.find(s => s.time === selectedSlot.time);
-      setSelectedSlot(stillAvailable || null);
-    }
+    setSelectedSlot(prev => {
+      if (!prev) return null;
+      const stillAvailable = slots.find(s => s.time === prev.time);
+      return stillAvailable || null;
+    });
   }, [selectedDate, isOpen, getSlotsForDate]);
 
   // Disable background scrolling when modal is open
@@ -189,8 +189,9 @@ export function ScheduleTourModal({
       }
       
       setSubmitSuccess(true);
-    } catch (err: any) {
-      setSubmitError(err.message || 'Failed to submit the request.');
+    } catch (err: unknown) {
+      const error = err as Error;
+      setSubmitError(error.message || 'Failed to submit the request.');
     } finally {
       setIsSubmitting(false);
     }
