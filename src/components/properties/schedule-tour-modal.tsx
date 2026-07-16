@@ -42,15 +42,15 @@ export function ScheduleTourModal({
       setSelectedDate(dynamicDates[0].date);
     }
   }, [initialSelectedDate, dynamicDates, selectedDate]);
-  
+
   const [phone, setPhone] = useState<string>('');
   const [countryCode, setCountryCode] = useState<string>('CA');
   const [expectedMoveIn, setExpectedMoveIn] = useState<Date | null>(null);
-  
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
@@ -58,7 +58,7 @@ export function ScheduleTourModal({
   // Drag to scroll refs and state
   const dateScrollRef = useRef<HTMLDivElement>(null);
   const slotsScrollRef = useRef<HTMLDivElement>(null);
-  
+
   const isDragging = useRef(false);
   const startX = useRef(0);
   const scrollLeft = useRef(0);
@@ -111,7 +111,7 @@ export function ScheduleTourModal({
           setCountryCode(data.country_code);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   // Extract slots for selected date
@@ -120,10 +120,10 @@ export function ScheduleTourModal({
       setAvailableSlots([]);
       return;
     }
-    
+
     const slots = getSlotsForDate(selectedDate);
     setAvailableSlots(slots);
-    
+
     // Try to keep same time selected if available in new date
     setSelectedSlot(prev => {
       if (!prev) return null;
@@ -144,7 +144,7 @@ export function ScheduleTourModal({
       document.body.style.position = '';
       document.body.style.width = '';
     }
-    
+
     return () => {
       document.body.style.overflow = '';
       document.body.style.position = '';
@@ -154,10 +154,10 @@ export function ScheduleTourModal({
 
   const handleSubmit = async () => {
     if (!selectedSlot) return;
-    
+
     setIsSubmitting(true);
     setSubmitError('');
-    
+
     const payload = {
       first_name: firstName,
       last_name: lastName,
@@ -179,16 +179,16 @@ export function ScheduleTourModal({
         },
         body: JSON.stringify(payload)
       });
-      
+
       const data = await res.json().catch(() => ({}));
-      
+
       if (!res.ok) {
         if (res.status === 409) {
           refreshSlots();
         }
         throw new Error(data.message || data.error || 'Something went wrong while booking the tour.');
       }
-      
+
       setSubmitSuccess(true);
     } catch (err: unknown) {
       const error = err as Error;
@@ -223,7 +223,7 @@ export function ScheduleTourModal({
           .react-datepicker__header { background-color: #f8fafc; border-bottom-color: #e2e8f0; border-top-left-radius: 0.75rem !important; border-top-right-radius: 0.75rem !important; }
         `
       }} />
-      
+
       <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-full sm:max-h-[90vh]">
         {/* Header */}
         <div className="bg-[#0f2540] px-5 py-4 text-white flex items-start justify-between shrink-0">
@@ -240,17 +240,17 @@ export function ScheduleTourModal({
 
         {submitSuccess ? (
           <div className="p-10 flex flex-col items-center justify-center text-center flex-1">
-             <CheckCircle2 className="w-16 h-16 text-[#10B981] mb-4" />
-             <h3 className="text-2xl font-bold text-[#0B1D3A]">Tour Scheduled Successfully!</h3>
-             <p className="text-slate-600 mt-2 max-w-md">
-               Thank you for requesting a tour. We have locked in your slot for <span className="font-semibold">{selectedDate}</span> at <span className="font-semibold">{selectedSlot?.time}</span>. You will receive a confirmation email shortly.
-             </p>
-             <button 
-               onClick={onClose}
-               className="mt-8 px-8 py-3 bg-[#0f2540] text-white font-semibold rounded-lg shadow-md hover:bg-[#1a385e] transition-colors"
-             >
-               Done
-             </button>
+            <CheckCircle2 className="w-16 h-16 text-[#10B981] mb-4" />
+            <h3 className="text-2xl font-bold text-[#0B1D3A]">Tour Scheduled Successfully!</h3>
+            <p className="text-slate-600 mt-2 max-w-md">
+              Thank you for requesting a tour. We have locked in your slot for <span className="font-semibold">{selectedDate}</span> at <span className="font-semibold">{selectedSlot?.time}</span>. You will receive a confirmation email shortly.
+            </p>
+            <button
+              onClick={onClose}
+              className="mt-8 px-8 py-3 bg-[#0f2540] text-white font-semibold rounded-lg shadow-md hover:bg-[#1a385e] transition-colors"
+            >
+              Done
+            </button>
           </div>
         ) : (
           <>
@@ -261,12 +261,12 @@ export function ScheduleTourModal({
                 <h3 className="text-base font-semibold text-slate-800 mb-3">
                   Choose Date & Time
                 </h3>
-                
+
                 <div className="space-y-4">
                   {/* Date Selection */}
                   <div>
                     <label className="block text-xs font-medium text-slate-600 mb-2">Showing Date <span className="text-red-500">*</span></label>
-                    <div 
+                    <div
                       ref={dateScrollRef}
                       onMouseDown={(e) => handleMouseDown(e, dateScrollRef)}
                       onMouseLeave={handleMouseLeave}
@@ -305,14 +305,14 @@ export function ScheduleTourModal({
                   {/* Time Slots */}
                   <div>
                     <label className="block text-xs font-medium text-slate-600 mb-2">Showing Time <span className="text-red-500">*</span></label>
-                    
+
                     {isLoadingSlots ? (
                       <div className="flex items-center justify-center p-6 border border-slate-100 rounded-xl bg-slate-50/50">
                         <Loader2 className="w-6 h-6 animate-spin text-[#0f2540] mr-2" />
                         <span className="text-sm font-medium text-slate-600">Loading available timeslots...</span>
                       </div>
                     ) : availableSlots.length > 0 ? (
-                      <div 
+                      <div
                         ref={slotsScrollRef}
                         onMouseDown={(e) => handleMouseDown(e, slotsScrollRef)}
                         onMouseLeave={handleMouseLeave}
@@ -365,39 +365,39 @@ export function ScheduleTourModal({
                 <h3 className="text-base font-semibold text-slate-800 mb-4">
                   Your Information
                 </h3>
-                
+
                 <form className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-3.5">
                   <div className="space-y-1">
                     <label className="text-xs font-medium text-slate-700">First Name <span className="text-red-500">*</span></label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      placeholder="Jane"
+                      placeholder="Jon"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-[#0f2540] focus:ring-1 focus:ring-[#0f2540] outline-none transition-all text-sm"
                     />
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-medium text-slate-700">Last Name <span className="text-red-500">*</span></label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      placeholder="Smith"
+                      placeholder="Doe"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-[#0f2540] focus:ring-1 focus:ring-[#0f2540] outline-none transition-all text-sm"
                     />
                   </div>
                   <div className="space-y-1 md:col-span-2">
                     <label className="text-xs font-medium text-slate-700">Email Address <span className="text-red-500">*</span></label>
-                    <input 
-                      type="email" 
+                    <input
+                      type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="demotenantportalcrm1@gmail.com"
+                      placeholder="yourmail@email.com"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-[#0f2540] focus:ring-1 focus:ring-[#0f2540] outline-none transition-all text-sm"
                     />
                   </div>
-                  
+
                   <div className="space-y-1 md:col-span-1">
                     <label className="text-xs font-medium text-slate-700">Phone Number <span className="text-red-500">*</span></label>
                     <div className="flex w-full overflow-hidden rounded-lg border border-slate-200 bg-white px-3 focus-within:ring-1 focus-within:ring-[#0f2540] focus-within:border-[#0f2540]">
@@ -440,14 +440,14 @@ export function ScheduleTourModal({
 
             {/* Footer */}
             <div className="p-4 sm:p-5 bg-slate-50 border-t border-slate-100 flex justify-end gap-3 shrink-0 rounded-b-2xl">
-              <button 
+              <button
                 onClick={onClose}
                 disabled={isSubmitting}
                 className="px-5 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors disabled:opacity-50"
               >
                 Cancel
               </button>
-              <button 
+              <button
                 className="px-6 py-2 bg-[#0f2540] hover:bg-[#1a385e] flex items-center justify-center text-white text-sm font-semibold rounded-lg shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={!isFormValid || isLoadingSlots || isSubmitting}
                 onClick={handleSubmit}
