@@ -63,7 +63,7 @@ export function ScheduleTourModal({
   const startX = useRef(0);
   const scrollLeft = useRef(0);
 
-  const handleMouseDown = (e: React.MouseEvent, ref: React.RefObject<HTMLDivElement>) => {
+  const handleMouseDown = (e: React.MouseEvent, ref: React.RefObject<HTMLDivElement | null>) => {
     if (!ref.current) return;
     isDragging.current = true;
     startX.current = e.pageX - ref.current.offsetLeft;
@@ -71,7 +71,7 @@ export function ScheduleTourModal({
   };
   const handleMouseLeave = () => { isDragging.current = false; };
   const handleMouseUp = () => { isDragging.current = false; };
-  const handleMouseMove = (e: React.MouseEvent, ref: React.RefObject<HTMLDivElement>) => {
+  const handleMouseMove = (e: React.MouseEvent, ref: React.RefObject<HTMLDivElement | null>) => {
     if (!isDragging.current || !ref.current) return;
     e.preventDefault();
     const x = e.pageX - ref.current.offsetLeft;
