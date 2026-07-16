@@ -15,6 +15,7 @@ interface ScheduleTourModalProps {
   unitId: string;
   initialSelectedDate?: string;
   prefetchedDates?: ShowingDate[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   prefetchedSlots?: Record<string, any>;
 }
 

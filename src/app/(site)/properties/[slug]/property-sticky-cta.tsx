@@ -31,7 +31,6 @@ import { ScheduleTourButton } from '@/components/properties/schedule-tour-button
 
 export function PropertyStickyCTA({
   reserveUrl,
-  scheduleUrl,
   slug,
   unitId,
 }: Props) {

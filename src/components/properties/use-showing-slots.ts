@@ -12,8 +12,10 @@ export interface ShowingDate {
   month: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useShowingSlots(unitId: string, fetchCondition: boolean = true, initialDates?: ShowingDate[], initialSlots?: Record<string, any>) {
   const [dynamicDates, setDynamicDates] = useState<ShowingDate[]>(initialDates || []);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [allSlots, setAllSlots] = useState<Record<string, any> | null>(initialSlots || null);
   const [isLoading, setIsLoading] = useState<boolean>(!initialDates || !initialSlots);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -92,6 +94,7 @@ export function useShowingSlots(unitId: string, fetchCondition: boolean = true, 
     if (json && typeof json === 'object' && !Array.isArray(json) && !json.data) {
        const dateData = json[date];
        if (dateData && Array.isArray(dateData.slots)) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           slots = dateData.slots.map((s: Record<string, any>) => ({
              time: s.time || s.showing_time || s.raw_time || '',
              agent_id: (s.agents && s.agents.length > 0) ? s.agents[0] : (s.agent_id || 0)
