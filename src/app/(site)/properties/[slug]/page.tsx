@@ -734,7 +734,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
           <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-3">
             {/* Main column — gated body */}
             <div className="lg:col-span-2">
-              <PropertyGate city={building?.city ?? null}>{gatedBody}</PropertyGate>
+              <PropertyGate>{gatedBody}</PropertyGate>
             </div>
 
             {/* Sidebar (kept outside the gate so the conversion CTA is always visible) */}
