@@ -11,6 +11,8 @@ interface Props {
   scheduleUrl: string | null
   /** Property slug — used for the contact-form fallback links. */
   slug: string
+  /** Unit ID for the Schedule Tour modal. */
+  unitId: string
 }
 
 /**
@@ -25,10 +27,13 @@ interface Props {
  * the component is rendered as a sibling of <main> so any transformed
  * ancestor inside the page body cannot become its containing block.
  */
+import { ScheduleTourButton } from '@/components/properties/schedule-tour-button'
+
 export function PropertyStickyCTA({
   reserveUrl,
   scheduleUrl,
   slug,
+  unitId,
 }: Props) {
   // Mount via React portal to <body> AFTER hydration. This guarantees that:
   //   1. No transformed / filtered / clipped ancestor in the page tree
@@ -88,23 +93,10 @@ export function PropertyStickyCTA({
         )}
 
         {/* Schedule a Tour — secondary */}
-        {scheduleUrl ? (
-          <a
-            href={scheduleHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex h-12 flex-1 items-center justify-center rounded-xl border border-slate-200 bg-white font-heading text-sm font-semibold text-[#0B1D3A] transition-colors hover:border-[#10B981]/40 hover:bg-emerald-50"
-          >
-            Schedule a Tour
-          </a>
-        ) : (
-          <Link
-            href={scheduleHref}
-            className="flex h-12 flex-1 items-center justify-center rounded-xl border border-slate-200 bg-white font-heading text-sm font-semibold text-[#0B1D3A] transition-colors hover:border-[#10B981]/40 hover:bg-emerald-50"
-          >
-            Schedule a Tour
-          </Link>
-        )}
+        <ScheduleTourButton 
+          unitId={unitId}
+          className="flex h-12 flex-1 items-center justify-center rounded-xl border border-slate-200 bg-white font-heading text-sm font-semibold text-[#0B1D3A] transition-colors hover:border-[#10B981]/40 hover:bg-emerald-50"
+        />
       </div>
     </div>
   )

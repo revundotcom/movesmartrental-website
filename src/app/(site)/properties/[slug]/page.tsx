@@ -30,6 +30,8 @@ import {
 } from '@/components/properties/property-detail-client'
 import { RentCalculator } from '@/components/blocks/rent-calculator'
 import { PropertyStickyCTA } from './property-sticky-cta'
+import { ScheduleTourInline } from '@/components/properties/schedule-tour-inline'
+import { ScheduleTourButton } from '@/components/properties/schedule-tour-button'
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
@@ -734,6 +736,11 @@ export default async function PropertyDetailPage({ params }: PageProps) {
           <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-3">
             {/* Main column — gated body */}
             <div className="lg:col-span-2">
+              {/* Inline Tour Scheduler */}
+              <section aria-label="Schedule a tour" className="mb-8">
+                <ScheduleTourInline unitId={unit.id?.toString() || unit.zcrm_id?.toString() || ''} />
+              </section>
+
               <PropertyGate>{gatedBody}</PropertyGate>
             </div>
 
@@ -788,23 +795,9 @@ export default async function PropertyDetailPage({ params }: PageProps) {
                         Apply Now
                       </Link>
                     )}
-                    {scheduleUrl ? (
-                      <a
-                        href={scheduleUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex w-full items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#0B1D3A] transition-colors hover:border-[#10B981]/40 hover:bg-emerald-50"
-                      >
-                        Schedule a Tour
-                      </a>
-                    ) : (
-                      <Link
-                        href={`/contact/?type=tenant&property=${encodeURIComponent(slug)}`}
-                        className="flex w-full items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#0B1D3A] transition-colors hover:border-[#10B981]/40 hover:bg-emerald-50"
-                      >
-                        Request a Viewing
-                      </Link>
-                    )}
+                    <ScheduleTourButton 
+                      unitId={unit.id?.toString() || unit.zcrm_id?.toString() || ''} 
+                    />
                   </div>
                 </div>
 
@@ -866,6 +859,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         reserveUrl={reserveUrl}
         scheduleUrl={scheduleUrl}
         slug={slug}
+        unitId={unit.id?.toString() || unit.zcrm_id?.toString() || ''}
       />
     </>
   )
