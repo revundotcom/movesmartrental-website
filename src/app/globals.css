@@ -745,3 +745,11 @@ body.apply-modal-open .mobile-sticky-cta {
 body.apply-modal-open .mobile-sticky-cta {
   display: none !important;
 }
+
+/* Ensure images from portal.revun.com/images/tenant/ use object-fit: fill instead of cover */
+.properties-page img[src*="portal.revun.com/images/tenant/"],
+.properties-page img[src*="portal.revun.com%2Fimages%2Ftenant"],
+img[src*="portal.revun.com/images/tenant/"],
+img[src*="portal.revun.com%2Fimages%2Ftenant"] {
+  object-fit: fill !important;
+}

@@ -50,8 +50,10 @@ export interface Role {
   country: string
   /** Display location string used in the hero. */
   locationDisplay: string
-  /** Job opening ID. */
+  /** Job ID (internal Zoho ID) */
   jobId: string
+  /** Job opening ID (display ID). */
+  jobOpeningId?: string
   /** ISO date — YYYY-MM-DD. Shown in the hero. */
   postingStartDate: string
   /** Display string — e.g. "$55,000 to $75,000 base". */
@@ -93,6 +95,7 @@ interface ApiJob {
   zoho_id?: string
   Date_Opened?: string
   Role_Category?: string
+  Job_Opening_ID?: string
 }
 
 export async function fetchRolesFromApi(): Promise<Role[]> {
@@ -182,6 +185,7 @@ export async function fetchRolesFromApi(): Promise<Role[]> {
         country: job.Country || '',
         locationDisplay,
         jobId: job.zoho_id || '',
+        jobOpeningId: job.Job_Opening_ID || '',
         postingStartDate: job.Date_Opened ? job.Date_Opened.split('T')[0] : '',
         compensation,
         summary: '',

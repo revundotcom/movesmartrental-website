@@ -9,6 +9,7 @@ import 'react-phone-number-input/style.css'
 interface Props {
   role: string
   jobId: string
+  jobOpeningId?: string
   workType: 'remote' | 'hybrid'
   className?: string
   variant?: 'primary' | 'ghost'
@@ -18,6 +19,7 @@ interface Props {
 export function ApplyButton({
   role,
   jobId,
+  jobOpeningId,
   workType,
   className = '',
   variant = 'primary',
@@ -44,7 +46,7 @@ export function ApplyButton({
         <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </button>
 
-      {open && <ApplyModal role={role} jobId={jobId} workType={workType} onClose={() => setOpen(false)} />}
+      {open && <ApplyModal role={role} jobId={jobId} jobOpeningId={jobOpeningId} workType={workType} onClose={() => setOpen(false)} />}
     </>
   )
 }
@@ -52,11 +54,13 @@ export function ApplyButton({
 function ApplyModal({
   role,
   jobId,
+  jobOpeningId,
   workType,
   onClose,
 }: {
   role: string
   jobId: string
+  jobOpeningId?: string
   workType: 'remote' | 'hybrid'
   onClose: () => void
 }) {
@@ -232,7 +236,7 @@ function ApplyModal({
           <div className="flex shrink-0 items-center justify-between border-b border-slate-100 bg-white px-5 py-4 pt-6">
             <div>
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--brand-emerald)]">
-                Apply Now · {jobId}
+                Apply Now{jobOpeningId ? ` · ${jobOpeningId}` : ''}
               </p>
               <h2
                 id="apply-modal-title"
