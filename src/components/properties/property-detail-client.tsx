@@ -252,7 +252,7 @@ function PhotosPanel({
   }
 
   const cover = images[0]
-  const extras = images.slice(1, 5)
+  const extras = images.slice(1, 7)
 
   return (
     <>
@@ -266,7 +266,7 @@ function PhotosPanel({
         />
       </div>
 
-      {/* Desktop: cover + 4-thumb mosaic */}
+      {/* Desktop: cover + 6-thumb mosaic */}
       <div className="hidden grid-cols-4 gap-3 md:grid">
         <button
           type="button"
@@ -289,7 +289,7 @@ function PhotosPanel({
         </button>
         {extras.map((url, i) => {
           const realIndex = i + 1
-          const isLast = i === extras.length - 1 && images.length > 5
+          const isLast = i === extras.length - 1 && images.length > 7
           return (
             <button
               key={`${url}-${i}`}
@@ -308,7 +308,7 @@ function PhotosPanel({
               />
               {isLast && (
                 <span className="absolute inset-0 flex items-center justify-center bg-black/55 text-sm font-semibold text-white">
-                  +{images.length - 5} more
+                  +{images.length - 7} more
                 </span>
               )}
             </button>
