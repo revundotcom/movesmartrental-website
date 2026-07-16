@@ -183,7 +183,7 @@ export default async function CareerRolePage({ params }: RouteParams) {
 
                 {/* Apply CTA */}
                 <div className="flex flex-wrap gap-3 lg:pb-1">
-                  <ApplyButton role={role.title} jobId={role.jobId} workType={role.workType} />
+                  <ApplyButton role={role.title} jobId={role.jobId} jobOpeningId={role.jobOpeningId} workType={role.workType} />
                 </div>
               </div>
             </div>
