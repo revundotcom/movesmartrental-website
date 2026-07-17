@@ -207,11 +207,16 @@ function FactCard({
   title,
   rows,
   id,
+  singleColumn,
 }: {
   title: string
-  rows: Array<{ label: string; value?: string | number | null }>
+  rows: Array<{ label: string; value?: string | number | null; fullWidth?: boolean }>
   id?: string
+  singleColumn?: boolean
 }) {
+  const visibleRows = rows.filter(({ value }) => value != null && value !== '')
+  if (visibleRows.length === 0) return null
+
   return (
     <section
       id={id}
@@ -221,15 +226,15 @@ function FactCard({
       <h3 className="font-heading text-base font-bold uppercase tracking-wider text-[#0B1D3A]">
         {title}
       </h3>
-      <dl className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 text-sm sm:grid-cols-2">
-        {rows.map(({ label, value }) => (
+      <dl className={`mt-4 grid grid-cols-1 gap-x-8 gap-y-3 text-sm ${singleColumn ? '' : 'sm:grid-cols-2'}`}>
+        {visibleRows.map(({ label, value, fullWidth }) => (
           <div
             key={label}
-            className="flex items-start justify-between gap-3 border-b border-slate-100 pb-2 last:border-0 sm:last:border-b"
+            className={`flex items-start justify-between gap-3 border-b border-slate-100 pb-2 last:border-0 sm:last:border-b ${fullWidth ? 'sm:col-span-2' : ''}`}
           >
             <dt className="shrink-0 text-slate-500">{label}</dt>
             <dd className="min-w-0 break-words text-right font-medium text-[#0B1D3A]">
-              {value != null && value !== '' ? value : EMPTY}
+              {value}
             </dd>
           </div>
         ))}
@@ -242,15 +247,9 @@ function FactCard({
  * Room Info table. Structure required even when empty — IDX feed fills in
  * room-level data (Living Room / Bedroom / Kitchen, etc) post-approval.
  */
-function RoomInfoTable() {
-  const rows = [
-    'Living Room',
-    'Dining Room',
-    'Kitchen',
-    'Primary Bedroom',
-    'Bedroom 2',
-    'Bathroom',
-  ]
+function RoomInfoTable({ rooms }: { rooms?: any[] }) {
+  if (!rooms || rooms.length === 0) return null
+
   return (
     <details
       id="room-information"
@@ -271,20 +270,14 @@ function RoomInfoTable() {
           <thead>
             <tr className="border-b border-slate-200 text-xs uppercase tracking-wider text-slate-500">
               <th className="py-2 pr-4 font-medium">Room</th>
-              <th className="py-2 pr-4 font-medium">Level</th>
-              <th className="py-2 pr-4 font-medium">Dimensions (m)</th>
-              <th className="py-2 pr-4 font-medium">Dimensions (ft)</th>
-              <th className="py-2 font-medium">Features</th>
+              <th className="py-2 font-medium">Washroom/Ensuite</th>
             </tr>
           </thead>
           <tbody>
-            {rows.map((room) => (
-              <tr key={room} className="border-b border-slate-100 last:border-0">
-                <td className="py-2 pr-4 font-medium text-[#0B1D3A]">{room}</td>
-                <td className="py-2 pr-4 text-slate-500">{EMPTY}</td>
-                <td className="py-2 pr-4 text-slate-500">{EMPTY}</td>
-                <td className="py-2 pr-4 text-slate-500">{EMPTY}</td>
-                <td className="py-2 text-slate-500">{EMPTY}</td>
+            {rooms.map((room, i) => (
+              <tr key={i} className="border-b border-slate-100 last:border-0 hover:bg-slate-50">
+                <td className="py-2 pr-4 font-medium text-[#0B1D3A]">{room.room_type || room.name || '—'}</td>
+                <td className="py-2 text-slate-500">{room.ensuite_type || '—'}</td>
               </tr>
             ))}
           </tbody>
@@ -413,37 +406,42 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         </section>
       )}
 
-      {/* Key Facts (IDX) */}
+      {/* Listing Information */}
       <FactCard
-        id="key-facts"
-        title="Key Facts"
+        id="listing-information"
+        title="Key FACTS"
         rows={[
+          { label: 'Status', value: isAvailable ? 'Active' : unit.status || unit.availability || undefined },
+          { label: 'Price', value: unit.website_price ? `$ ${unit.website_price.toLocaleString('en-CA')}/month` : 'Price TBD/month' },
+          { label: 'Listed by', value: undefined },
+          { label: 'Days on Market', value: unit.created_at ? `${Math.floor((new Date().getTime() - new Date(unit.created_at).getTime()) / (1000 * 3600 * 24))} days` : undefined },
+          { label: 'Listing Start Date', value: formatAvailableDate(unit.created_at) },
           { label: 'Data Source', value: undefined },
-          { label: 'MLS ID', value: undefined },
-          { label: 'Price', value: formatPrice(unit.website_price) },
-          { label: 'Listed By', value: undefined },
-          { label: 'Days on Market', value: undefined },
-          { label: 'Property Tax / annum', value: undefined },
-          { label: 'Listing Date', value: undefined },
-          {
-            label: 'Status',
-            value: isAvailable
-              ? 'Active'
-              : unit.status || unit.availability || undefined,
-          },
         ]}
       />
 
-      {/* Property Details */}
+      {/* Property Info */}
       <FactCard
-        id="property-details"
-        title="Property Details"
+        id="property-info"
+        title="Property Info"
         rows={[
+          { label: 'Unit No.', value: unit.unit_number },
+          { label: 'Address', value: `${building?.street_number || ''} ${building?.street_name || ''}`.trim() || undefined },
+          { label: 'City', value: building?.city },
+          { label: 'Province', value: building?.province },
+          { label: 'Postal/Zip Code', value: building?.postal_code },
+          { label: 'Country', value: 'Canada' },
+          { label: 'Community', value: building?.neighbourhood },
+          { label: 'Municipality', value: building?.municipality },
+          { label: 'Category', value: unit.ownership_type },
           { label: 'Type', value: unit.property_type || unit.property_sub_type },
           { label: 'Style', value: unit.style },
+          { label: 'Attached', value: unit.property_attached },
           { label: 'Size', value: sqftDisplay },
-          { label: 'Lot Size', value: undefined },
+          { label: 'Building Age', value: building?.year_built ? `${new Date().getFullYear() - parseInt(building.year_built, 10)}+` : undefined },
           { label: 'Year Built', value: building?.year_built },
+          { label: 'Construction', value: Array.isArray(building?.construction_materials) ? building.construction_materials.join(', ') : (building?.construction_materials as string | undefined) },
+          { label: 'Fronting on', value: building?.fronting_on ? ({ N: 'North', E: 'East', S: 'South', W: 'West' } as Record<string, string>)[building.fronting_on] || building.fronting_on : undefined },
           {
             label: 'Heating',
             value: Array.isArray(unit.heating)
@@ -460,156 +458,162 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         ]}
       />
 
-      {/* Room Info */}
-      <RoomInfoTable />
+      {/* Parking & Land Info */}
+      <FactCard
+        id="parking-info"
+        title="Parking Info"
+        rows={[
+          {
+            label: 'Type',
+            fullWidth: true,
+            value: Array.isArray(unit.parking_type)
+              ? unit.parking_type.filter(Boolean).join(', ') || undefined
+              : undefined,
+          },
+          { label: 'Spaces', value: unit.number_of_parking_spots },
+          { label: 'Garage', value: unit.garage_type },
+          { label: 'Lot Size Area', fullWidth: true, value: unit.lot_size_area },
+          { label: 'Lot Size Units', fullWidth: true, value: unit.lot_size_units },
+          { label: 'Property Access', fullWidth: true, value: Array.isArray(building?.property_access) ? building.property_access.join(', ') : (building?.property_access as string | undefined) },
+        ]}
+      />
 
       {/* Utilities */}
       <FactCard
         id="utilities"
         title="Utilities"
         rows={[
-          { label: 'Electricity', value: undefined },
-          { label: 'Gas', value: undefined },
-          { label: 'Water', value: undefined },
-          { label: 'Sewage', value: undefined },
+          { label: 'Electricity', value: unit.checkin_detail?.electricity_included === 1 ? 'Included' : (unit.checkin_detail?.electricity_included === 0 ? (unit.checkin_detail?.electricity_provider || 'Not Included') : undefined) },
+          { label: 'Gas', value: unit.checkin_detail?.gas_included === 1 ? 'Included' : (unit.checkin_detail?.gas_included === 0 ? (unit.checkin_detail?.gas_provider || 'Not Included') : undefined) },
+          { label: 'Water', value: unit.checkin_detail?.water_included === 1 ? 'Included' : (unit.checkin_detail?.water_included === 0 ? (unit.checkin_detail?.water_provider || 'Not Included') : undefined) },
+          { label: 'Sewage', value: unit.checkin_detail?.sewage_included === 1 ? 'Included' : (unit.checkin_detail?.sewage_included === 0 ? (unit.checkin_detail?.sewage_provider || 'Not Included') : undefined) },
+          { label: 'Internet', value: unit.checkin_detail?.internet_included === 1 ? 'Included' : (unit.checkin_detail?.internet_included === 0 ? (unit.checkin_detail?.internet_provider || 'Not Included') : undefined) },
+          { label: 'Cable', value: unit.checkin_detail?.cable_included === 1 ? 'Included' : (unit.checkin_detail?.cable_included === 0 ? (unit.checkin_detail?.cable_provider || 'Not Included') : undefined) },
         ]}
       />
 
-      {/* Parking */}
-      <FactCard
-        title="Parking"
-        rows={[
-          {
-            label: 'Type',
-            value: Array.isArray(unit.parking_type)
-              ? unit.parking_type.filter(Boolean).join(', ') || undefined
-              : undefined,
-          },
-          { label: 'Spaces', value: unit.total_parking_spaces },
-          { label: 'Garage', value: building?.garage as string | undefined },
-          { label: 'Driveway', value: undefined },
-        ]}
-      />
-
-      {/* Existing feature lists — kept so we don't lose data the API DOES return today */}
-      <section className="grid grid-cols-1 gap-8 sm:grid-cols-2">
-        <FeatureList
-          title="Interior features"
-          items={unit.interior_features}
-          icon={Building2}
-        />
-        <FeatureList title="Heating" items={unit.heating} icon={Flame} />
-        <FeatureList title="Cooling" items={unit.cooling} icon={Snowflake} />
-        <FeatureList title="Parking" items={unit.parking_type} icon={Car} />
-        <FeatureList
-          title="Included in lease cost"
-          items={unit.included_in_lease_cost}
-          icon={CheckCircle2}
-        />
-        <FeatureList
-          title="Laundry"
-          items={unit.laundry_features}
-          icon={CheckCircle2}
-        />
-        <FeatureList
-          title="Security"
-          items={unit.security_features}
-          icon={CheckCircle2}
-        />
-        <FeatureList
-          title="Accessibility"
-          items={unit.accessible_features}
-          icon={CheckCircle2}
-        />
-      </section>
-
-      {/* Building information (kept from the prior layout) */}
-      {building && (
-        <section aria-label="Building information">
-          <h2 className="font-display text-2xl text-[#0B1D3A]">
-            Building information
-          </h2>
-          <dl className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 text-sm sm:grid-cols-2">
-            {building.neighbourhood && (
-              <div>
-                <dt className="text-slate-500">Neighbourhood</dt>
-                <dd className="font-medium text-[#0B1D3A]">
-                  {building.neighbourhood}
-                </dd>
-              </div>
-            )}
-            {building.cross_street && (
-              <div>
-                <dt className="text-slate-500">Cross street</dt>
-                <dd className="font-medium text-[#0B1D3A]">
-                  {building.cross_street}
-                </dd>
-              </div>
-            )}
-            {building.year_built && (
-              <div>
-                <dt className="text-slate-500">Year built</dt>
-                <dd className="font-medium text-[#0B1D3A]">
-                  {building.year_built}
-                </dd>
-              </div>
-            )}
-            {building.condo_level && (
-              <div>
-                <dt className="text-slate-500">Floor / level</dt>
-                <dd className="font-medium text-[#0B1D3A]">
-                  {building.condo_level}
-                </dd>
-              </div>
-            )}
-            {building.pets_allowed && (
-              <div>
-                <dt className="text-slate-500">Pets</dt>
-                <dd className="inline-flex items-center gap-1 font-medium text-[#0B1D3A]">
-                  <PawPrint className="size-4 text-[#10B981]" />
-                  {building.pets_allowed}
-                </dd>
-              </div>
-            )}
-            {building.elementary_school && (
-              <div>
-                <dt className="text-slate-500">Elementary school</dt>
-                <dd className="font-medium text-[#0B1D3A]">
-                  {building.elementary_school}
-                </dd>
-              </div>
-            )}
-            {building.high_school && (
-              <div>
-                <dt className="text-slate-500">High school</dt>
-                <dd className="font-medium text-[#0B1D3A]">
-                  {building.high_school}
-                </dd>
-              </div>
-            )}
-          </dl>
-
-          {Array.isArray(building.condo_amenities) &&
-            building.condo_amenities.length > 0 && (
-              <div className="mt-6">
-                <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-[#0B1D3A]">
-                  Building amenities
-                </h3>
-                <ul className="mt-3 flex flex-wrap gap-2">
-                  {building.condo_amenities.map((amenity) => (
-                    <li
-                      key={amenity}
-                      className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-[#0B1D3A]"
-                    >
-                      <CheckCircle2 className="size-3.5 text-[#10B981]" />
-                      {amenity}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+      {/* Room Info */}
+      <RoomInfoTable rooms={(unit as any).unitRooms} />
+        {/* Existing feature lists — kept so we don't lose data the API DOES return today */}
+        <section className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+          <FeatureList
+            title="Interior features"
+            items={unit.interior_features}
+            icon={Building2}
+          />
+          <FeatureList title="Heating" items={unit.heating} icon={Flame} />
+          <FeatureList title="Cooling" items={unit.cooling} icon={Snowflake} />
+          <FeatureList title="Parking" items={unit.parking_type} icon={Car} />
+          <FeatureList
+            title="Included in lease cost"
+            items={unit.included_in_lease_cost}
+            icon={CheckCircle2}
+          />
+          <FeatureList
+            title="Laundry"
+            items={unit.laundry_features}
+            icon={CheckCircle2}
+          />
+          <FeatureList
+            title="Security"
+            items={unit.security_features}
+            icon={CheckCircle2}
+          />
+          <FeatureList
+            title="Accessibility"
+            items={unit.accessible_features}
+            icon={CheckCircle2}
+          />
         </section>
-      )}
+
+        <div className="mt-8"></div>
+        {/* Building information (kept from the prior layout) */}
+        {building && (
+          <section aria-label="Building information">
+            <h2 className="font-display text-2xl text-[#0B1D3A]">
+              Building information
+            </h2>
+            <dl className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 text-sm sm:grid-cols-2">
+              {building.neighbourhood && (
+                <div>
+                  <dt className="text-slate-500">Neighbourhood</dt>
+                  <dd className="font-medium text-[#0B1D3A]">
+                    {building.neighbourhood}
+                  </dd>
+                </div>
+              )}
+              {building.cross_street && (
+                <div>
+                  <dt className="text-slate-500">Cross street</dt>
+                  <dd className="font-medium text-[#0B1D3A]">
+                    {building.cross_street}
+                  </dd>
+                </div>
+              )}
+              {building.year_built && (
+                <div>
+                  <dt className="text-slate-500">Year built</dt>
+                  <dd className="font-medium text-[#0B1D3A]">
+                    {building.year_built}
+                  </dd>
+                </div>
+              )}
+              {building.condo_level && (
+                <div>
+                  <dt className="text-slate-500">Floor / level</dt>
+                  <dd className="font-medium text-[#0B1D3A]">
+                    {building.condo_level}
+                  </dd>
+                </div>
+              )}
+              {building.pets_allowed && (
+                <div>
+                  <dt className="text-slate-500">Pets</dt>
+                  <dd className="inline-flex items-center gap-1 font-medium text-[#0B1D3A]">
+                    <PawPrint className="size-4 text-[#10B981]" />
+                    {building.pets_allowed}
+                  </dd>
+                </div>
+              )}
+              {building.elementary_school && (
+                <div>
+                  <dt className="text-slate-500">Elementary school</dt>
+                  <dd className="font-medium text-[#0B1D3A]">
+                    {building.elementary_school}
+                  </dd>
+                </div>
+              )}
+              {building.high_school && (
+                <div>
+                  <dt className="text-slate-500">High school</dt>
+                  <dd className="font-medium text-[#0B1D3A]">
+                    {building.high_school}
+                  </dd>
+                </div>
+              )}
+            </dl>
+
+            {Array.isArray(building.condo_amenities) &&
+              building.condo_amenities.length > 0 && (
+                <div className="mt-6">
+                  <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-[#0B1D3A]">
+                    Building amenities
+                  </h3>
+                  <ul className="mt-3 flex flex-wrap gap-2">
+                    {building.condo_amenities.map((amenity) => (
+                      <li
+                        key={amenity}
+                        className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-[#0B1D3A]"
+                      >
+                        <CheckCircle2 className="size-3.5 text-[#10B981]" />
+                        {amenity}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+          </section>
+        )}
 
       {/* Rent vs Buy calculator — embedded so visitors can comparison-shop
           without leaving the listing. */}

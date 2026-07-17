@@ -114,6 +114,7 @@ export interface Property {
   media?: PropertyMedia[]
   videos?: PropertyMedia[]
   building?: PropertyBuilding
+  checkin_detail?: Record<string, any> | null
   created_at?: string
   updated_at?: string
   [key: string]: unknown

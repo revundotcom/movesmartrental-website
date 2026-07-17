@@ -38,7 +38,7 @@ export function ScheduleTourInline({
             <button
               key={d.date}
               onClick={() => handleDateClick(d.date)}
-              className="snap-start flex-shrink-0 flex flex-col items-center justify-center w-16 h-20 border border-slate-200 rounded-xl transition-all duration-200 hover:border-[#0f2540]/50 hover:bg-slate-50 bg-white"
+              className="snap-start flex-[1_0_4rem] flex flex-col items-center justify-center h-20 border border-slate-200 rounded-xl transition-all duration-200 hover:border-[#0f2540]/50 hover:bg-slate-50 bg-white"
             >
               <span className="text-[10px] font-bold tracking-wider text-slate-500">
                 {d.dayName}
