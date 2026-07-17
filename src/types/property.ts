@@ -139,6 +139,12 @@ export interface Property {
     internet_provider?: string | null
     cable_included?: number | null
     cable_provider?: string | null
+    hwt_included?: number | null
+    hwt_provider?: string | null
+    ac_power_maint?: number | null
+    heat_power_maint?: number | null
+    phone_included?: number | null
+    water_filtration_rental?: number | null
     [key: string]: unknown
   } | null
   created_at?: string

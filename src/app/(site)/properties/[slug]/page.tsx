@@ -287,6 +287,12 @@ function RoomInfoTable({ rooms }: { rooms?: PropertyRoom[] | null }) {
   )
 }
 
+const checkIncluded = (val: unknown) => {
+  if ([1, true, '1', 'true'].includes(val as string | number | boolean)) return 'Included'
+  if ([0, false, '0', 'false'].includes(val as string | number | boolean)) return 'Not Included'
+  return undefined
+}
+
 export default async function PropertyDetailPage({ params }: PageProps) {
   const { slug } = await params
   const detail = await getProperty(slug)
@@ -378,10 +384,13 @@ export default async function PropertyDetailPage({ params }: PageProps) {
       >
         <div className="-mx-1 flex items-center gap-2 overflow-x-auto px-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {[
-            { label: 'Key Facts', href: '#key-facts' },
-            { label: 'Property Details', href: '#property-details' },
-            { label: 'Room Information', href: '#room-information' },
+            { label: 'Key Facts', href: '#listing-information' },
+            { label: 'Property Details', href: '#property-info' },
+            { label: 'Parking Info', href: '#parking-info' },
             { label: 'Utilities', href: '#utilities' },
+            ...(unit.unitRooms && unit.unitRooms.length > 0
+              ? [{ label: 'Room Information', href: '#room-information' }]
+              : []),
           ].map((item) => (
             <a
               key={item.href}
@@ -483,137 +492,147 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         id="utilities"
         title="Utilities"
         rows={[
-          { label: 'Electricity', value: unit.checkin_detail?.electricity_included === 1 ? 'Included' : (unit.checkin_detail?.electricity_included === 0 ? (unit.checkin_detail?.electricity_provider || 'Not Included') : undefined) },
-          { label: 'Gas', value: unit.checkin_detail?.gas_included === 1 ? 'Included' : (unit.checkin_detail?.gas_included === 0 ? (unit.checkin_detail?.gas_provider || 'Not Included') : undefined) },
-          { label: 'Water', value: unit.checkin_detail?.water_included === 1 ? 'Included' : (unit.checkin_detail?.water_included === 0 ? (unit.checkin_detail?.water_provider || 'Not Included') : undefined) },
-          { label: 'Sewage', value: unit.checkin_detail?.sewage_included === 1 ? 'Included' : (unit.checkin_detail?.sewage_included === 0 ? (unit.checkin_detail?.sewage_provider || 'Not Included') : undefined) },
-          { label: 'Internet', value: unit.checkin_detail?.internet_included === 1 ? 'Included' : (unit.checkin_detail?.internet_included === 0 ? (unit.checkin_detail?.internet_provider || 'Not Included') : undefined) },
-          { label: 'Cable', value: unit.checkin_detail?.cable_included === 1 ? 'Included' : (unit.checkin_detail?.cable_included === 0 ? (unit.checkin_detail?.cable_provider || 'Not Included') : undefined) },
+          { label: 'Electricity', value: checkIncluded(unit.checkin_detail?.electricity_included) },
+          { label: 'Electricity Provider', value: unit.checkin_detail?.electricity_provider },
+          { label: 'Water', value: checkIncluded(unit.checkin_detail?.water_included) },
+          { label: 'Water Provider', value: unit.checkin_detail?.water_provider },
+          { label: 'Gas', value: checkIncluded(unit.checkin_detail?.gas_included) },
+          { label: 'Gas Provider', value: unit.checkin_detail?.gas_provider },
+          { label: 'Hot Water Tank', value: checkIncluded(unit.checkin_detail?.hwt_included) },
+          { label: 'Hot Water Tank Provider', value: unit.checkin_detail?.hwt_provider },
+          { label: 'Cable', value: checkIncluded(unit.checkin_detail?.cable_included) },
+          { label: 'Cable Provider', value: unit.checkin_detail?.cable_provider },
+          { label: 'Internet', value: checkIncluded(unit.checkin_detail?.internet_included) },
+          { label: 'Internet Provider', value: unit.checkin_detail?.internet_provider },
+          { label: 'Phone', value: checkIncluded(unit.checkin_detail?.phone_included) },
+          { label: 'Sewage', value: checkIncluded(unit.checkin_detail?.sewage_included) },
+          { label: 'Sewage Provider', value: unit.checkin_detail?.sewage_provider },
+          { label: 'Water Filtration Rental', value: checkIncluded(unit.checkin_detail?.water_filtration_rental) },
         ]}
       />
 
       {/* Room Info */}
       <RoomInfoTable rooms={unit.unitRooms} />
-        {/* Existing feature lists — kept so we don't lose data the API DOES return today */}
-        <section className="grid grid-cols-1 gap-8 sm:grid-cols-2">
-          <FeatureList
-            title="Interior features"
-            items={unit.interior_features}
-            icon={Building2}
-          />
-          <FeatureList title="Heating" items={unit.heating} icon={Flame} />
-          <FeatureList title="Cooling" items={unit.cooling} icon={Snowflake} />
-          <FeatureList title="Parking" items={unit.parking_type} icon={Car} />
-          <FeatureList
-            title="Included in lease cost"
-            items={unit.included_in_lease_cost}
-            icon={CheckCircle2}
-          />
-          <FeatureList
-            title="Laundry"
-            items={unit.laundry_features}
-            icon={CheckCircle2}
-          />
-          <FeatureList
-            title="Security"
-            items={unit.security_features}
-            icon={CheckCircle2}
-          />
-          <FeatureList
-            title="Accessibility"
-            items={unit.accessible_features}
-            icon={CheckCircle2}
-          />
+      {/* Existing feature lists — kept so we don't lose data the API DOES return today */}
+      <section className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+        <FeatureList
+          title="Interior features"
+          items={unit.interior_features}
+          icon={Building2}
+        />
+        <FeatureList title="Heating" items={unit.heating} icon={Flame} />
+        <FeatureList title="Cooling" items={unit.cooling} icon={Snowflake} />
+        <FeatureList title="Parking" items={unit.parking_type} icon={Car} />
+        <FeatureList
+          title="Included in lease cost"
+          items={unit.included_in_lease_cost}
+          icon={CheckCircle2}
+        />
+        <FeatureList
+          title="Laundry"
+          items={unit.laundry_features}
+          icon={CheckCircle2}
+        />
+        <FeatureList
+          title="Security"
+          items={unit.security_features}
+          icon={CheckCircle2}
+        />
+        <FeatureList
+          title="Accessibility"
+          items={unit.accessible_features}
+          icon={CheckCircle2}
+        />
+      </section>
+
+      <div className="mt-8"></div>
+      {/* Building information (kept from the prior layout) */}
+      {building && (
+        <section aria-label="Building information">
+          <h2 className="font-display text-2xl text-[#0B1D3A]">
+            Building information
+          </h2>
+          <dl className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 text-sm sm:grid-cols-2">
+            {building.neighbourhood && (
+              <div>
+                <dt className="text-slate-500">Neighbourhood</dt>
+                <dd className="font-medium text-[#0B1D3A]">
+                  {building.neighbourhood}
+                </dd>
+              </div>
+            )}
+            {building.cross_street && (
+              <div>
+                <dt className="text-slate-500">Cross street</dt>
+                <dd className="font-medium text-[#0B1D3A]">
+                  {building.cross_street}
+                </dd>
+              </div>
+            )}
+            {building.year_built && (
+              <div>
+                <dt className="text-slate-500">Year built</dt>
+                <dd className="font-medium text-[#0B1D3A]">
+                  {building.year_built}
+                </dd>
+              </div>
+            )}
+            {building.condo_level && (
+              <div>
+                <dt className="text-slate-500">Floor / level</dt>
+                <dd className="font-medium text-[#0B1D3A]">
+                  {building.condo_level}
+                </dd>
+              </div>
+            )}
+            {building.pets_allowed && (
+              <div>
+                <dt className="text-slate-500">Pets</dt>
+                <dd className="inline-flex items-center gap-1 font-medium text-[#0B1D3A]">
+                  <PawPrint className="size-4 text-[#10B981]" />
+                  {building.pets_allowed}
+                </dd>
+              </div>
+            )}
+            {building.elementary_school && (
+              <div>
+                <dt className="text-slate-500">Elementary school</dt>
+                <dd className="font-medium text-[#0B1D3A]">
+                  {building.elementary_school}
+                </dd>
+              </div>
+            )}
+            {building.high_school && (
+              <div>
+                <dt className="text-slate-500">High school</dt>
+                <dd className="font-medium text-[#0B1D3A]">
+                  {building.high_school}
+                </dd>
+              </div>
+            )}
+          </dl>
+
+          {Array.isArray(building.condo_amenities) &&
+            building.condo_amenities.length > 0 && (
+              <div className="mt-6">
+                <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-[#0B1D3A]">
+                  Building amenities
+                </h3>
+                <ul className="mt-3 flex flex-wrap gap-2">
+                  {building.condo_amenities.map((amenity) => (
+                    <li
+                      key={amenity}
+                      className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-[#0B1D3A]"
+                    >
+                      <CheckCircle2 className="size-3.5 text-[#10B981]" />
+                      {amenity}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
         </section>
-
-        <div className="mt-8"></div>
-        {/* Building information (kept from the prior layout) */}
-        {building && (
-          <section aria-label="Building information">
-            <h2 className="font-display text-2xl text-[#0B1D3A]">
-              Building information
-            </h2>
-            <dl className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 text-sm sm:grid-cols-2">
-              {building.neighbourhood && (
-                <div>
-                  <dt className="text-slate-500">Neighbourhood</dt>
-                  <dd className="font-medium text-[#0B1D3A]">
-                    {building.neighbourhood}
-                  </dd>
-                </div>
-              )}
-              {building.cross_street && (
-                <div>
-                  <dt className="text-slate-500">Cross street</dt>
-                  <dd className="font-medium text-[#0B1D3A]">
-                    {building.cross_street}
-                  </dd>
-                </div>
-              )}
-              {building.year_built && (
-                <div>
-                  <dt className="text-slate-500">Year built</dt>
-                  <dd className="font-medium text-[#0B1D3A]">
-                    {building.year_built}
-                  </dd>
-                </div>
-              )}
-              {building.condo_level && (
-                <div>
-                  <dt className="text-slate-500">Floor / level</dt>
-                  <dd className="font-medium text-[#0B1D3A]">
-                    {building.condo_level}
-                  </dd>
-                </div>
-              )}
-              {building.pets_allowed && (
-                <div>
-                  <dt className="text-slate-500">Pets</dt>
-                  <dd className="inline-flex items-center gap-1 font-medium text-[#0B1D3A]">
-                    <PawPrint className="size-4 text-[#10B981]" />
-                    {building.pets_allowed}
-                  </dd>
-                </div>
-              )}
-              {building.elementary_school && (
-                <div>
-                  <dt className="text-slate-500">Elementary school</dt>
-                  <dd className="font-medium text-[#0B1D3A]">
-                    {building.elementary_school}
-                  </dd>
-                </div>
-              )}
-              {building.high_school && (
-                <div>
-                  <dt className="text-slate-500">High school</dt>
-                  <dd className="font-medium text-[#0B1D3A]">
-                    {building.high_school}
-                  </dd>
-                </div>
-              )}
-            </dl>
-
-            {Array.isArray(building.condo_amenities) &&
-              building.condo_amenities.length > 0 && (
-                <div className="mt-6">
-                  <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-[#0B1D3A]">
-                    Building amenities
-                  </h3>
-                  <ul className="mt-3 flex flex-wrap gap-2">
-                    {building.condo_amenities.map((amenity) => (
-                      <li
-                        key={amenity}
-                        className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-[#0B1D3A]"
-                      >
-                        <CheckCircle2 className="size-3.5 text-[#10B981]" />
-                        {amenity}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-          </section>
-        )}
+      )}
 
       {/* Rent vs Buy calculator — embedded so visitors can comparison-shop
           without leaving the listing. */}
@@ -799,8 +818,8 @@ export default async function PropertyDetailPage({ params }: PageProps) {
                         Apply Now
                       </Link>
                     )}
-                    <ScheduleTourButton 
-                      unitId={unit.id?.toString() || unit.zcrm_id?.toString() || ''} 
+                    <ScheduleTourButton
+                      unitId={unit.id?.toString() || unit.zcrm_id?.toString() || ''}
                     />
                   </div>
                 </div>
