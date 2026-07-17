@@ -23,7 +23,7 @@ import {
   portalShowingScheduleUrl,
   resolvePropertyImage,
 } from '@/lib/portal-api'
-import type { Property, PropertyMedia } from '@/types/property'
+import type { Property, PropertyMedia, PropertyRoom } from '@/types/property'
 import {
   PropertyGate,
   PropertyMediaTabs,
@@ -207,11 +207,16 @@ function FactCard({
   title,
   rows,
   id,
+  singleColumn,
 }: {
   title: string
-  rows: Array<{ label: string; value?: string | number | null }>
+  rows: Array<{ label: string; value?: string | number | null; fullWidth?: boolean }>
   id?: string
+  singleColumn?: boolean
 }) {
+  const visibleRows = rows.filter(({ value }) => value != null && value !== '')
+  if (visibleRows.length === 0) return null
+
   return (
     <section
       id={id}
@@ -221,15 +226,15 @@ function FactCard({
       <h3 className="font-heading text-base font-bold uppercase tracking-wider text-[#0B1D3A]">
         {title}
       </h3>
-      <dl className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 text-sm sm:grid-cols-2">
-        {rows.map(({ label, value }) => (
+      <dl className={`mt-4 grid grid-cols-1 gap-x-8 gap-y-3 text-sm ${singleColumn ? '' : 'sm:grid-cols-2'}`}>
+        {visibleRows.map(({ label, value, fullWidth }) => (
           <div
             key={label}
-            className="flex items-start justify-between gap-3 border-b border-slate-100 pb-2 last:border-0 sm:last:border-b"
+            className={`flex items-start justify-between gap-3 border-b border-slate-100 pb-2 last:border-0 sm:last:border-b ${fullWidth ? 'sm:col-span-2' : ''}`}
           >
             <dt className="shrink-0 text-slate-500">{label}</dt>
             <dd className="min-w-0 break-words text-right font-medium text-[#0B1D3A]">
-              {value != null && value !== '' ? value : EMPTY}
+              {value}
             </dd>
           </div>
         ))}
@@ -242,15 +247,9 @@ function FactCard({
  * Room Info table. Structure required even when empty — IDX feed fills in
  * room-level data (Living Room / Bedroom / Kitchen, etc) post-approval.
  */
-function RoomInfoTable() {
-  const rows = [
-    'Living Room',
-    'Dining Room',
-    'Kitchen',
-    'Primary Bedroom',
-    'Bedroom 2',
-    'Bathroom',
-  ]
+function RoomInfoTable({ rooms }: { rooms?: PropertyRoom[] | null }) {
+  if (!rooms || rooms.length === 0) return null
+
   return (
     <details
       id="room-information"
@@ -271,20 +270,14 @@ function RoomInfoTable() {
           <thead>
             <tr className="border-b border-slate-200 text-xs uppercase tracking-wider text-slate-500">
               <th className="py-2 pr-4 font-medium">Room</th>
-              <th className="py-2 pr-4 font-medium">Level</th>
-              <th className="py-2 pr-4 font-medium">Dimensions (m)</th>
-              <th className="py-2 pr-4 font-medium">Dimensions (ft)</th>
-              <th className="py-2 font-medium">Features</th>
+              <th className="py-2 font-medium">Washroom/Ensuite</th>
             </tr>
           </thead>
           <tbody>
-            {rows.map((room) => (
-              <tr key={room} className="border-b border-slate-100 last:border-0">
-                <td className="py-2 pr-4 font-medium text-[#0B1D3A]">{room}</td>
-                <td className="py-2 pr-4 text-slate-500">{EMPTY}</td>
-                <td className="py-2 pr-4 text-slate-500">{EMPTY}</td>
-                <td className="py-2 pr-4 text-slate-500">{EMPTY}</td>
-                <td className="py-2 text-slate-500">{EMPTY}</td>
+            {rooms.map((room, i) => (
+              <tr key={i} className="border-b border-slate-100 last:border-0 hover:bg-slate-50">
+                <td className="py-2 pr-4 font-medium text-[#0B1D3A]">{room.room_type || room.name || '—'}</td>
+                <td className="py-2 text-slate-500">{room.ensuite_type || '—'}</td>
               </tr>
             ))}
           </tbody>
@@ -292,6 +285,12 @@ function RoomInfoTable() {
       </div>
     </details>
   )
+}
+
+const checkIncluded = (val: unknown) => {
+  if ([1, true, '1', 'true'].includes(val as string | number | boolean)) return 'Included'
+  if ([0, false, '0', 'false'].includes(val as string | number | boolean)) return 'Not Included'
+  return undefined
 }
 
 export default async function PropertyDetailPage({ params }: PageProps) {
@@ -385,10 +384,13 @@ export default async function PropertyDetailPage({ params }: PageProps) {
       >
         <div className="-mx-1 flex items-center gap-2 overflow-x-auto px-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {[
-            { label: 'Key Facts', href: '#key-facts' },
-            { label: 'Property Details', href: '#property-details' },
-            { label: 'Room Information', href: '#room-information' },
+            { label: 'Key Facts', href: '#listing-information' },
+            { label: 'Property Details', href: '#property-info' },
+            { label: 'Parking Info', href: '#parking-info' },
             { label: 'Utilities', href: '#utilities' },
+            ...(unit.unitRooms && unit.unitRooms.length > 0
+              ? [{ label: 'Room Information', href: '#room-information' }]
+              : []),
           ].map((item) => (
             <a
               key={item.href}
@@ -413,37 +415,42 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         </section>
       )}
 
-      {/* Key Facts (IDX) */}
+      {/* Listing Information */}
       <FactCard
-        id="key-facts"
-        title="Key Facts"
+        id="listing-information"
+        title="Key FACTS"
         rows={[
+          { label: 'Status', value: isAvailable ? 'Active' : unit.status || unit.availability || undefined },
+          { label: 'Price', value: unit.website_price ? `$ ${unit.website_price.toLocaleString('en-CA')}/month` : 'Price TBD/month' },
+          { label: 'Listed by', value: undefined },
+          { label: 'Days on Market', value: unit.created_at ? `${Math.floor((new Date().getTime() - new Date(unit.created_at).getTime()) / (1000 * 3600 * 24))} days` : undefined },
+          { label: 'Listing Start Date', value: formatAvailableDate(unit.created_at) },
           { label: 'Data Source', value: undefined },
-          { label: 'MLS ID', value: undefined },
-          { label: 'Price', value: formatPrice(unit.website_price) },
-          { label: 'Listed By', value: undefined },
-          { label: 'Days on Market', value: undefined },
-          { label: 'Property Tax / annum', value: undefined },
-          { label: 'Listing Date', value: undefined },
-          {
-            label: 'Status',
-            value: isAvailable
-              ? 'Active'
-              : unit.status || unit.availability || undefined,
-          },
         ]}
       />
 
-      {/* Property Details */}
+      {/* Property Info */}
       <FactCard
-        id="property-details"
-        title="Property Details"
+        id="property-info"
+        title="Property Info"
         rows={[
+          { label: 'Unit No.', value: unit.unit_number },
+          { label: 'Address', value: `${building?.street_number || ''} ${building?.street_name || ''}`.trim() || undefined },
+          { label: 'City', value: building?.city },
+          { label: 'Province', value: building?.province },
+          { label: 'Postal/Zip Code', value: building?.postal_code },
+          { label: 'Country', value: 'Canada' },
+          { label: 'Community', value: building?.neighbourhood },
+          { label: 'Municipality', value: building?.municipality },
+          { label: 'Category', value: unit.ownership_type },
           { label: 'Type', value: unit.property_type || unit.property_sub_type },
           { label: 'Style', value: unit.style },
+          { label: 'Attached', value: unit.property_attached },
           { label: 'Size', value: sqftDisplay },
-          { label: 'Lot Size', value: undefined },
+          { label: 'Building Age', value: building?.year_built ? `${new Date().getFullYear() - parseInt(building.year_built, 10)}+` : undefined },
           { label: 'Year Built', value: building?.year_built },
+          { label: 'Construction', value: Array.isArray(building?.construction_materials) ? building.construction_materials.join(', ') : (building?.construction_materials as string | undefined) },
+          { label: 'Fronting on', value: building?.fronting_on ? ({ N: 'North', E: 'East', S: 'South', W: 'West' } as Record<string, string>)[building.fronting_on] || building.fronting_on : undefined },
           {
             label: 'Heating',
             value: Array.isArray(unit.heating)
@@ -460,37 +467,52 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         ]}
       />
 
-      {/* Room Info */}
-      <RoomInfoTable />
+      {/* Parking & Land Info */}
+      <FactCard
+        id="parking-info"
+        title="Parking Info"
+        rows={[
+          {
+            label: 'Type',
+            fullWidth: true,
+            value: Array.isArray(unit.parking_type)
+              ? unit.parking_type.filter(Boolean).join(', ') || undefined
+              : undefined,
+          },
+          { label: 'Spaces', value: unit.number_of_parking_spots },
+          { label: 'Garage', value: unit.garage_type },
+          { label: 'Lot Size Area', fullWidth: true, value: unit.lot_size_area },
+          { label: 'Lot Size Units', fullWidth: true, value: unit.lot_size_units },
+          { label: 'Property Access', fullWidth: true, value: Array.isArray(building?.property_access) ? building.property_access.join(', ') : (building?.property_access as string | undefined) },
+        ]}
+      />
 
       {/* Utilities */}
       <FactCard
         id="utilities"
         title="Utilities"
         rows={[
-          { label: 'Electricity', value: undefined },
-          { label: 'Gas', value: undefined },
-          { label: 'Water', value: undefined },
-          { label: 'Sewage', value: undefined },
+          { label: 'Electricity', value: checkIncluded(unit.checkin_detail?.electricity_included) },
+          { label: 'Electricity Provider', value: unit.checkin_detail?.electricity_provider },
+          { label: 'Water', value: checkIncluded(unit.checkin_detail?.water_included) },
+          { label: 'Water Provider', value: unit.checkin_detail?.water_provider },
+          { label: 'Gas', value: checkIncluded(unit.checkin_detail?.gas_included) },
+          { label: 'Gas Provider', value: unit.checkin_detail?.gas_provider },
+          { label: 'Hot Water Tank', value: checkIncluded(unit.checkin_detail?.hwt_included) },
+          { label: 'Hot Water Tank Provider', value: unit.checkin_detail?.hwt_provider },
+          { label: 'Cable', value: checkIncluded(unit.checkin_detail?.cable_included) },
+          { label: 'Cable Provider', value: unit.checkin_detail?.cable_provider },
+          { label: 'Internet', value: checkIncluded(unit.checkin_detail?.internet_included) },
+          { label: 'Internet Provider', value: unit.checkin_detail?.internet_provider },
+          { label: 'Phone', value: checkIncluded(unit.checkin_detail?.phone_included) },
+          { label: 'Sewage', value: checkIncluded(unit.checkin_detail?.sewage_included) },
+          { label: 'Sewage Provider', value: unit.checkin_detail?.sewage_provider },
+          { label: 'Water Filtration Rental', value: checkIncluded(unit.checkin_detail?.water_filtration_rental) },
         ]}
       />
 
-      {/* Parking */}
-      <FactCard
-        title="Parking"
-        rows={[
-          {
-            label: 'Type',
-            value: Array.isArray(unit.parking_type)
-              ? unit.parking_type.filter(Boolean).join(', ') || undefined
-              : undefined,
-          },
-          { label: 'Spaces', value: unit.total_parking_spaces },
-          { label: 'Garage', value: building?.garage as string | undefined },
-          { label: 'Driveway', value: undefined },
-        ]}
-      />
-
+      {/* Room Info */}
+      <RoomInfoTable rooms={unit.unitRooms} />
       {/* Existing feature lists — kept so we don't lose data the API DOES return today */}
       <section className="grid grid-cols-1 gap-8 sm:grid-cols-2">
         <FeatureList
@@ -523,6 +545,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         />
       </section>
 
+      <div className="mt-8"></div>
       {/* Building information (kept from the prior layout) */}
       {building && (
         <section aria-label="Building information">
@@ -795,8 +818,8 @@ export default async function PropertyDetailPage({ params }: PageProps) {
                         Apply Now
                       </Link>
                     )}
-                    <ScheduleTourButton 
-                      unitId={unit.id?.toString() || unit.zcrm_id?.toString() || ''} 
+                    <ScheduleTourButton
+                      unitId={unit.id?.toString() || unit.zcrm_id?.toString() || ''}
                     />
                   </div>
                 </div>

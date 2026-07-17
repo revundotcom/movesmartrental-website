@@ -281,7 +281,7 @@ export function ScheduleTourModal({
                             key={d.date}
                             onClick={() => setSelectedDate(d.date)}
                             className={cn(
-                              "snap-start flex-shrink-0 flex flex-col items-center justify-center w-20 h-24 border rounded-xl transition-all duration-200",
+                              "snap-start flex-[1_0_5rem] flex flex-col items-center justify-center h-24 border rounded-xl transition-all duration-200",
                               isSelected
                                 ? "border-[#0f2540] bg-[#0f2540]/5 ring-1 ring-[#0f2540]/20 shadow-sm"
                                 : "border-slate-200 hover:border-[#0f2540]/50 hover:bg-slate-50"
