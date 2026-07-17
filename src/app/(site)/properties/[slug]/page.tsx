@@ -243,11 +243,13 @@ function FactCard({
   )
 }
 
+import type { Property, PropertyRoom } from '@/types/property'
+
 /**
  * Room Info table. Structure required even when empty — IDX feed fills in
  * room-level data (Living Room / Bedroom / Kitchen, etc) post-approval.
  */
-function RoomInfoTable({ rooms }: { rooms?: any[] }) {
+function RoomInfoTable({ rooms }: { rooms?: PropertyRoom[] | null }) {
   if (!rooms || rooms.length === 0) return null
 
   return (
@@ -493,7 +495,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
       />
 
       {/* Room Info */}
-      <RoomInfoTable rooms={(unit as any).unitRooms} />
+      <RoomInfoTable rooms={unit.unitRooms} />
         {/* Existing feature lists — kept so we don't lose data the API DOES return today */}
         <section className="grid grid-cols-1 gap-8 sm:grid-cols-2">
           <FeatureList

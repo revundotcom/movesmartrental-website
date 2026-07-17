@@ -23,6 +23,14 @@ export interface PropertyMedia {
   updated_at: string
 }
 
+export interface PropertyRoom {
+  id?: number
+  room_type?: string | null
+  name?: string | null
+  ensuite_type?: string | null
+  [key: string]: unknown
+}
+
 export interface PropertyBuilding {
   id: number
   building_key?: string | null
@@ -114,7 +122,8 @@ export interface Property {
   media?: PropertyMedia[]
   videos?: PropertyMedia[]
   building?: PropertyBuilding
-  checkin_detail?: Record<string, any> | null
+  unitRooms?: PropertyRoom[] | null
+  checkin_detail?: Record<string, unknown> | null
   created_at?: string
   updated_at?: string
   [key: string]: unknown
