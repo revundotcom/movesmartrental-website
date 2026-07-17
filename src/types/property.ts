@@ -112,6 +112,9 @@ export interface Property {
   longitude?: string | null
   total_parking_spaces?: string | null
   balcony_type?: string | null
+  garage_type?: string | null
+  lot_size_area?: string | null
+  lot_size_units?: string | null
   condo_fee_includes?: string[] | null
   bedrooms: number | null
   bathrooms: number | null
@@ -123,7 +126,21 @@ export interface Property {
   videos?: PropertyMedia[]
   building?: PropertyBuilding
   unitRooms?: PropertyRoom[] | null
-  checkin_detail?: Record<string, unknown> | null
+  checkin_detail?: {
+    electricity_included?: number | null
+    electricity_provider?: string | null
+    gas_included?: number | null
+    gas_provider?: string | null
+    water_included?: number | null
+    water_provider?: string | null
+    sewage_included?: number | null
+    sewage_provider?: string | null
+    internet_included?: number | null
+    internet_provider?: string | null
+    cable_included?: number | null
+    cable_provider?: string | null
+    [key: string]: unknown
+  } | null
   created_at?: string
   updated_at?: string
   [key: string]: unknown
