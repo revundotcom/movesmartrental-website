@@ -23,7 +23,7 @@ import {
   portalShowingScheduleUrl,
   resolvePropertyImage,
 } from '@/lib/portal-api'
-import type { Property, PropertyMedia } from '@/types/property'
+import type { Property, PropertyMedia, PropertyRoom } from '@/types/property'
 import {
   PropertyGate,
   PropertyMediaTabs,
@@ -242,8 +242,6 @@ function FactCard({
     </section>
   )
 }
-
-import type { Property, PropertyRoom } from '@/types/property'
 
 /**
  * Room Info table. Structure required even when empty — IDX feed fills in
