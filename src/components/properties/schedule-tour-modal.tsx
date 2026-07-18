@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Clock, Loader2, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -29,19 +29,50 @@ export function ScheduleTourModal({
 }: ScheduleTourModalProps) {
   const { dynamicDates, isLoading: isLoadingSlots, getSlotsForDate, refreshSlots } = useShowingSlots(unitId, isOpen, prefetchedDates, prefetchedSlots);
 
+  // Fallback dates in case API returns empty
+  const fallbackDates = useMemo(() => {
+    const dates = []
+    const current = new Date()
+    current.setHours(12, 0, 0, 0)
+    let added = 0
+    while (added < 5) {
+      current.setDate(current.getDate() + 1)
+      const day = current.getDay()
+      if (day !== 0 && day !== 6) {
+        const yyyy = current.getFullYear()
+        const mm = String(current.getMonth() + 1).padStart(2, '0')
+        const dd = String(current.getDate()).padStart(2, '0')
+        const dateKey = `${yyyy}-${mm}-${dd}`
+
+        const formatter = new Intl.DateTimeFormat('en-US', { weekday: 'short', day: '2-digit', month: 'short' }).formatToParts(current);
+        const dayName = formatter.find(p => p.type === 'weekday')?.value.toUpperCase() || '';
+        const dayNum = formatter.find(p => p.type === 'day')?.value || '';
+        const month = formatter.find(p => p.type === 'month')?.value || '';
+
+        dates.push({ date: dateKey, dayName, dayNum, month })
+        added++
+      }
+    }
+    return dates
+  }, [])
+
+  const displayDates = dynamicDates.length > 0 ? dynamicDates : fallbackDates;
+
+  const [fakeLoading, setFakeLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>(initialSelectedDate || '');
   const [selectedSlot, setSelectedSlot] = useState<SlotData | null>(null);
   const [availableSlots, setAvailableSlots] = useState<SlotData[]>([]);
+  const [customTime, setCustomTime] = useState<string>('');
 
-  // Update selectedDate if initialSelectedDate changes or dynamicDates load
+  // Update selectedDate if initialSelectedDate changes or displayDates load
   useEffect(() => {
     if (initialSelectedDate && !selectedDate) {
       setSelectedDate(initialSelectedDate);
-    } else if (!selectedDate && dynamicDates.length > 0) {
-      setSelectedDate(dynamicDates[0].date);
+    } else if (!selectedDate && displayDates.length > 0) {
+      setSelectedDate(displayDates[0].date);
     }
-  }, [initialSelectedDate, dynamicDates, selectedDate]);
+  }, [initialSelectedDate, displayDates, selectedDate]);
 
   const [phone, setPhone] = useState<string>('');
   const [countryCode, setCountryCode] = useState<string>('CA');
@@ -99,7 +130,7 @@ export function ScheduleTourModal({
       if (dateEl) dateEl.removeEventListener('wheel', handleWheel);
       if (slotsEl) slotsEl.removeEventListener('wheel', handleWheel);
     };
-  }, [availableSlots, isOpen]);
+  }, [availableSlots, isOpen, fakeLoading, isLoadingSlots]);
 
   // Fetch Country Code
   useEffect(() => {
@@ -118,11 +149,20 @@ export function ScheduleTourModal({
   useEffect(() => {
     if (!isOpen || !selectedDate) {
       setAvailableSlots([]);
+      setFakeLoading(false);
       return;
     }
 
     const slots = getSlotsForDate(selectedDate);
     setAvailableSlots(slots);
+
+    if (slots.length === 0 && !isLoadingSlots) {
+      setFakeLoading(true);
+      const timer = setTimeout(() => setFakeLoading(false), 600 + Math.random() * 400);
+      return () => clearTimeout(timer);
+    } else {
+      setFakeLoading(false);
+    }
 
     // Try to keep same time selected if available in new date
     setSelectedSlot(prev => {
@@ -130,7 +170,7 @@ export function ScheduleTourModal({
       const stillAvailable = slots.find(s => s.time === prev.time);
       return stillAvailable || null;
     });
-  }, [selectedDate, isOpen, getSlotsForDate]);
+  }, [selectedDate, isOpen, getSlotsForDate, isLoadingSlots]);
 
   // Disable background scrolling when modal is open
   useEffect(() => {
@@ -153,7 +193,10 @@ export function ScheduleTourModal({
   }, [isOpen]);
 
   const handleSubmit = async () => {
-    if (!selectedSlot) return;
+    const timeToSubmit = availableSlots.length > 0 ? selectedSlot?.time : customTime;
+    const agentToSubmit = availableSlots.length > 0 ? selectedSlot?.agent_id : 0;
+
+    if (!timeToSubmit) return;
 
     setIsSubmitting(true);
     setSubmitError('');
@@ -165,13 +208,17 @@ export function ScheduleTourModal({
       phone,
       move_in_date: expectedMoveIn ? expectedMoveIn.toISOString().split('T')[0] : '',
       showing_date: selectedDate,
-      showing_time: selectedSlot.time,
+      showing_time: timeToSubmit,
       unit_id: unitId,
-      agent_id: selectedSlot.agent_id
+      ...(availableSlots.length > 0 && { agent_id: agentToSubmit }) // Only include agent_id for real slots
     };
 
+    const apiUrl = availableSlots.length === 0
+      ? 'https://portal.revun.com/api/v1/showing/submit-lead'
+      : 'https://portal.revun.com/api/v1/showing/store';
+
     try {
-      const res = await fetch('https://portal.revun.com/api/v1/showing/store', {
+      const res = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -201,7 +248,13 @@ export function ScheduleTourModal({
   if (!mounted) return null;
   if (!isOpen) return null;
 
-  const isFormValid = selectedDate && selectedSlot && firstName && lastName && email && phone && isValidPhoneNumber(phone) && expectedMoveIn;
+  const hasTimeSelected = availableSlots.length > 0 ? !!selectedSlot : !!customTime;
+  const isFormValid = selectedDate && hasTimeSelected && firstName && lastName && email && phone && isValidPhoneNumber(phone) && expectedMoveIn;
+
+  const isFallback = !isLoadingSlots && availableSlots.length === 0;
+  const titleText = isFallback ? "Request a Tour" : "Schedule a Tour";
+  const successTitleText = isFallback ? "Tour Requested Successfully!" : "Tour Scheduled Successfully!";
+  const submitText = isFallback ? "Request Tour" : "Schedule Tour";
 
   return createPortal(
     <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-6">
@@ -228,7 +281,7 @@ export function ScheduleTourModal({
         {/* Header */}
         <div className="bg-[#0f2540] px-5 py-4 text-white flex items-start justify-between shrink-0">
           <div>
-            <h2 className="text-xl font-bold">Schedule a Showing</h2>
+            <h2 className="text-xl font-bold">{titleText}</h2>
             {!submitSuccess && (
               <p className="text-blue-100 text-xs mt-1">Select a date and time to book your unit tour.</p>
             )}
@@ -241,9 +294,9 @@ export function ScheduleTourModal({
         {submitSuccess ? (
           <div className="p-10 flex flex-col items-center justify-center text-center flex-1">
             <CheckCircle2 className="w-16 h-16 text-[#10B981] mb-4" />
-            <h3 className="text-2xl font-bold text-[#0B1D3A]">Tour Scheduled Successfully!</h3>
+            <h3 className="text-2xl font-bold text-[#0B1D3A]">{successTitleText}</h3>
             <p className="text-slate-600 mt-2 max-w-md">
-              Thank you for requesting a tour. We have locked in your slot for <span className="font-semibold">{selectedDate}</span> at <span className="font-semibold">{selectedSlot?.time}</span>. You will receive a confirmation email shortly.
+              Thank you for requesting a tour. We have received your request for <span className="font-semibold">{selectedDate}</span> at <span className="font-semibold">{availableSlots.length > 0 ? selectedSlot?.time : customTime}</span>. {isFallback ? 'We will contact you shortly.' : 'You will receive a confirmation shortly.'}
             </p>
             <button
               onClick={onClose}
@@ -274,7 +327,7 @@ export function ScheduleTourModal({
                       onMouseMove={(e) => handleMouseMove(e, dateScrollRef)}
                       className="flex gap-2.5 overflow-x-auto pb-2 snap-x hide-scrollbar cursor-grab active:cursor-grabbing"
                     >
-                      {dynamicDates.map((d) => {
+                      {displayDates.map((d) => {
                         const isSelected = selectedDate === d.date;
                         return (
                           <button
@@ -302,11 +355,11 @@ export function ScheduleTourModal({
                     </div>
                   </div>
 
-                  {/* Time Slots */}
+                  {/* Time Slots or Fallback Time Input */}
                   <div>
                     <label className="block text-xs font-medium text-slate-600 mb-2">Showing Time <span className="text-red-500">*</span></label>
 
-                    {isLoadingSlots ? (
+                    {isLoadingSlots || fakeLoading ? (
                       <div className="flex items-center justify-center p-6 border border-slate-100 rounded-xl bg-slate-50/50">
                         <Loader2 className="w-6 h-6 animate-spin text-[#0f2540] mr-2" />
                         <span className="text-sm font-medium text-slate-600">Loading available timeslots...</span>
@@ -340,18 +393,42 @@ export function ScheduleTourModal({
                         })}
                       </div>
                     ) : (
-                      <div className="p-4 border border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center text-center bg-slate-50">
-                        {selectedDate ? (
-                          <>
-                            <span className="text-slate-500 text-sm font-medium">No available timeslots for this date.</span>
-                            <span className="text-slate-400 text-xs mt-1">Please select another date from the calendar above.</span>
-                          </>
-                        ) : (
-                          <>
-                            <span className="text-slate-500 text-sm font-medium">No date selected.</span>
-                            <span className="text-slate-400 text-xs mt-1">Please select a date from the calendar above.</span>
-                          </>
-                        )}
+                      <div
+                        ref={slotsScrollRef}
+                        onMouseDown={(e) => handleMouseDown(e, slotsScrollRef)}
+                        onMouseLeave={handleMouseLeave}
+                        onMouseUp={handleMouseUp}
+                        onMouseMove={(e) => handleMouseMove(e, slotsScrollRef)}
+                        className="flex gap-2 overflow-x-auto pb-2 snap-x hide-scrollbar cursor-grab active:cursor-grabbing"
+                      >
+                        {[
+                          "10:00 AM - 10:20 AM", "10:20 AM - 10:40 AM", "10:40 AM - 11:00 AM",
+                          "11:00 AM - 11:20 AM", "11:20 AM - 11:40 AM", "11:40 AM - 12:00 PM",
+                          "12:00 PM - 12:20 PM", "12:20 PM - 12:40 PM", "12:40 PM - 01:00 PM",
+                          "01:00 PM - 01:20 PM", "01:20 PM - 01:40 PM", "01:40 PM - 02:00 PM",
+                          "02:00 PM - 02:20 PM", "02:20 PM - 02:40 PM", "02:40 PM - 03:00 PM",
+                          "03:00 PM - 03:20 PM", "03:20 PM - 03:40 PM", "03:40 PM - 04:00 PM",
+                          "04:00 PM - 04:20 PM", "04:20 PM - 04:40 PM", "04:40 PM - 05:00 PM",
+                          "05:00 PM - 05:20 PM", "05:20 PM - 05:40 PM", "05:40 PM - 06:00 PM"
+                        ].map((time, i) => {
+                          const isSelected = customTime === time;
+                          return (
+                            <button
+                              key={i}
+                              type="button"
+                              onClick={() => setCustomTime(time)}
+                              className={cn(
+                                "snap-start flex-shrink-0 py-2 px-3.5 rounded-lg border text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1.5 whitespace-nowrap",
+                                isSelected
+                                  ? "border-[#0f2540] bg-[#0f2540] text-white shadow-md"
+                                  : "border-slate-200 text-slate-700 hover:border-[#0f2540]/50 hover:bg-slate-50 bg-white"
+                              )}
+                            >
+                              {isSelected && <Clock className="w-3.5 h-3.5" />}
+                              {time}
+                            </button>
+                          );
+                        })}
                       </div>
                     )}
                   </div>
@@ -449,7 +526,7 @@ export function ScheduleTourModal({
               </button>
               <button
                 className="px-6 py-2 bg-[#0f2540] hover:bg-[#1a385e] flex items-center justify-center text-white text-sm font-semibold rounded-lg shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={!isFormValid || isLoadingSlots || isSubmitting}
+                disabled={!isFormValid || isSubmitting}
                 onClick={handleSubmit}
               >
                 {isSubmitting ? (
@@ -458,7 +535,7 @@ export function ScheduleTourModal({
                     Submitting...
                   </>
                 ) : (
-                  'Schedule Tour'
+                  submitText
                 )}
               </button>
             </div>

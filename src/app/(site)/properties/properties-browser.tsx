@@ -51,18 +51,18 @@ type SortKey = 'newest' | 'price-asc' | 'price-desc'
 const BED_OPTIONS: { value: BedFilter; label: string }[] = [
   { value: 'any', label: 'Any' },
   { value: '0', label: 'Studio' },
-  { value: '1', label: '1' },
-  { value: '2', label: '2' },
-  { value: '3', label: '3' },
+  { value: '1', label: '1+' },
+  { value: '2', label: '2+' },
+  { value: '3', label: '3+' },
   { value: '4+', label: '4+' },
 ]
 
 const BATH_OPTIONS: { value: BathFilter; label: string }[] = [
   { value: 'any', label: 'Any' },
-  { value: '1', label: '1' },
-  { value: '1.5', label: '1.5' },
-  { value: '2', label: '2' },
-  { value: '2.5', label: '2.5' },
+  { value: '1', label: '1+' },
+  { value: '1.5', label: '1.5+' },
+  { value: '2', label: '2+' },
+  { value: '2.5', label: '2.5+' },
   { value: '3+', label: '3+' },
 ]
 
@@ -137,19 +137,14 @@ function matchesBeds(p: Property, f: BedFilter): boolean {
   if (f === 'any') return true
   const b = bedsOf(p)
   if (f === '4+') return b >= 4
-  return b === parseInt(f, 10)
+  return b >= parseInt(f, 10)
 }
 
 function matchesBaths(p: Property, f: BathFilter): boolean {
   if (f === 'any') return true
   const b = bathsOf(p)
   if (f === '3+') return b >= 3
-  return b === parseFloat(f)
-}
-
-function matchesType(p: Property, f: TypeFilter): boolean {
-  if (f === 'any') return true
-  return typeKey(p) === f
+  return b >= parseFloat(f)
 }
 
 function chipClass(active: boolean): string {
@@ -290,14 +285,60 @@ export function PropertiesBrowser({ properties }: Props) {
   const [cityFilter, setCityFilter] = useState<string>('any')
   const [bedFilter, setBedFilter] = useState<BedFilter>('any')
   const [bathFilter, setBathFilter] = useState<BathFilter>('any')
-  const [typeFilter, setTypeFilter] = useState<TypeFilter>('any')
-  const [minPrice, setMinPrice] = useState<string>('')
-  const [maxPrice, setMaxPrice] = useState<string>('')
-  const [minSqft, setMinSqft] = useState<string>('')
-  const [maxSqft, setMaxSqft] = useState<string>('')
+  const [typeFilters, setTypeFilters] = useState<TypeFilter[]>([])
+  const [minPrice, setMinPrice] = useState('')
+  const [maxPrice, setMaxPrice] = useState('')
+  const [minSqft, setMinSqft] = useState('')
+  const [maxSqft, setMaxSqft] = useState('')
   const [sortKey, setSortKey] = useState<SortKey>('newest')
-  const [moreOpen, setMoreOpen] = useState<boolean>(false)
+  const [moreOpen, setMoreOpen] = useState(false)
   const [view, setView] = useState<ViewMode>('list')
+
+  const availableBeds = useMemo(() => {
+    const set = new Set<number>()
+    properties.forEach(p => set.add(bedsOf(p)))
+    return set
+  }, [properties])
+
+  const availableBaths = useMemo(() => {
+    const set = new Set<number>()
+    properties.forEach(p => set.add(bathsOf(p)))
+    return set
+  }, [properties])
+
+  const availableTypes = useMemo(() => {
+    const set = new Set<TypeFilter>()
+    properties.forEach(p => {
+      const t = typeKey(p)
+      if (t) set.add(t)
+    })
+    return set
+  }, [properties])
+
+  const activeBedOptions = useMemo(() => {
+    return BED_OPTIONS.filter(o => {
+      if (o.value === 'any') return true
+      if (o.value === '4+') return Array.from(availableBeds).some(b => b >= 4)
+      const v = parseInt(o.value, 10)
+      return Array.from(availableBeds).some(b => b >= v)
+    })
+  }, [availableBeds])
+
+  const activeBathOptions = useMemo(() => {
+    return BATH_OPTIONS.filter(o => {
+      if (o.value === 'any') return true
+      if (o.value === '3+') return Array.from(availableBaths).some(b => b >= 3)
+      const v = parseFloat(o.value)
+      return Array.from(availableBaths).some(b => b >= v)
+    })
+  }, [availableBaths])
+
+  const activeTypeOptions = useMemo(() => {
+    return TYPE_OPTIONS.filter(o => {
+      if (o.value === 'any') return true
+      return availableTypes.has(o.value)
+    })
+  }, [availableTypes])
 
   const cities = useMemo(() => {
     const set = new Set<string>()
@@ -319,7 +360,7 @@ export function PropertiesBrowser({ properties }: Props) {
       if (cityFilter !== 'any' && p.building?.city !== cityFilter) return false
       if (!matchesBeds(p, bedFilter)) return false
       if (!matchesBaths(p, bathFilter)) return false
-      if (!matchesType(p, typeFilter)) return false
+      if (typeFilters.length > 0 && !typeFilters.includes(typeKey(p) as TypeFilter)) return false
 
       const price = p.website_price ?? 0
       if (min != null && (price === 0 || price < min)) return false
@@ -366,7 +407,7 @@ export function PropertiesBrowser({ properties }: Props) {
     cityFilter,
     bedFilter,
     bathFilter,
-    typeFilter,
+    typeFilters,
     minPrice,
     maxPrice,
     minSqft,
@@ -379,7 +420,7 @@ export function PropertiesBrowser({ properties }: Props) {
     cityFilter !== 'any' ||
     bedFilter !== 'any' ||
     bathFilter !== 'any' ||
-    typeFilter !== 'any' ||
+    typeFilters.length > 0 ||
     minPrice !== '' ||
     maxPrice !== '' ||
     minSqft !== '' ||
@@ -390,7 +431,7 @@ export function PropertiesBrowser({ properties }: Props) {
     setCityFilter('any')
     setBedFilter('any')
     setBathFilter('any')
-    setTypeFilter('any')
+    setTypeFilters([])
     setMinPrice('')
     setMaxPrice('')
     setMinSqft('')
@@ -515,7 +556,7 @@ export function PropertiesBrowser({ properties }: Props) {
               <span className="w-16 shrink-0 text-xs font-semibold uppercase tracking-wider text-slate-500">
                 Beds
               </span>
-              {BED_OPTIONS.map((o) => (
+              {activeBedOptions.map((o) => (
                 <button
                   key={o.value}
                   type="button"
@@ -533,7 +574,7 @@ export function PropertiesBrowser({ properties }: Props) {
               <span className="w-16 shrink-0 text-xs font-semibold uppercase tracking-wider text-slate-500">
                 Baths
               </span>
-              {BATH_OPTIONS.map((o) => (
+              {activeBathOptions.map((o) => (
                 <button
                   key={o.value}
                   type="button"
@@ -551,17 +592,34 @@ export function PropertiesBrowser({ properties }: Props) {
               <span className="w-16 shrink-0 text-xs font-semibold uppercase tracking-wider text-slate-500">
                 Type
               </span>
-              {TYPE_OPTIONS.map((o) => (
-                <button
-                  key={o.value}
-                  type="button"
-                  onClick={() => setTypeFilter(o.value)}
-                  className={chipClass(typeFilter === o.value)}
-                  aria-pressed={typeFilter === o.value}
-                >
-                  {o.label}
-                </button>
-              ))}
+              <button
+                type="button"
+                onClick={() => setTypeFilters([])}
+                className={chipClass(typeFilters.length === 0)}
+                aria-pressed={typeFilters.length === 0}
+              >
+                Any
+              </button>
+              {activeTypeOptions.filter(o => o.value !== 'any').map((o) => {
+                const isActive = typeFilters.includes(o.value)
+                return (
+                  <button
+                    key={o.value}
+                    type="button"
+                    onClick={() => {
+                      setTypeFilters(prev => 
+                        isActive 
+                          ? prev.filter(t => t !== o.value)
+                          : [...prev, o.value]
+                      )
+                    }}
+                    className={chipClass(isActive)}
+                    aria-pressed={isActive}
+                  >
+                    {o.label}
+                  </button>
+                )
+              })}
             </div>
 
             {/* Price + square footage */}

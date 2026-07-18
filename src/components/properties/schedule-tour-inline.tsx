@@ -1,8 +1,7 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { ScheduleTourModal } from './schedule-tour-modal'
-
 import { useShowingSlots } from './use-showing-slots'
 
 export function ScheduleTourInline({
@@ -12,8 +11,44 @@ export function ScheduleTourInline({
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedDate, setSelectedDate] = useState<string>('')
-  
+
   const { dynamicDates, allSlots, isLoading } = useShowingSlots(unitId);
+
+  // Compute next 5 working days (excluding today, Sat, Sun) as fallback
+  const fallbackDates = useMemo(() => {
+    const dates = []
+    const current = new Date()
+    current.setHours(12, 0, 0, 0)
+    let added = 0
+    while (added < 5) {
+      current.setDate(current.getDate() + 1)
+      const day = current.getDay()
+      if (day !== 0 && day !== 6) { // Not Sunday and Not Saturday
+        const yyyy = current.getFullYear()
+        const mm = String(current.getMonth() + 1).padStart(2, '0')
+        const dd = String(current.getDate()).padStart(2, '0')
+        const dateKey = `${yyyy}-${mm}-${dd}`
+        
+        const formatter = new Intl.DateTimeFormat('en-US', { weekday: 'short', day: '2-digit', month: 'short' }).formatToParts(current);
+        const dayName = formatter.find(p => p.type === 'weekday')?.value.toUpperCase() || '';
+        const dayNum = formatter.find(p => p.type === 'day')?.value || '';
+        const month = formatter.find(p => p.type === 'month')?.value || '';
+        
+        dates.push({
+          date: dateKey,
+          dayName,
+          dayNum,
+          month
+        })
+        added++
+      }
+    }
+    return dates
+  }, [])
+
+  const isFallback = dynamicDates.length === 0 && !isLoading;
+  const displayDates = dynamicDates.length > 0 ? dynamicDates : fallbackDates;
+  const headingText = isFallback ? "Request a Tour" : "Schedule a Tour";
 
   const handleDateClick = (dateValue: string) => {
     setSelectedDate(dateValue)
@@ -23,18 +58,18 @@ export function ScheduleTourInline({
   return (
     <div className="w-full">
       <h2 className="font-display text-2xl text-[#0B1D3A] mb-4">
-        Request a Tour
+        {headingText}
       </h2>
-      
+
       {isLoading ? (
         <div className="flex gap-2 overflow-x-auto pb-3 mb-2 animate-pulse">
-          {[1,2,3,4].map(i => (
-             <div key={i} className="flex-shrink-0 w-16 h-20 bg-slate-100 rounded-xl"></div>
+          {[1, 2, 3, 4].map(i => (
+            <div key={i} className="flex-shrink-0 w-16 h-20 bg-slate-100 rounded-xl"></div>
           ))}
         </div>
-      ) : dynamicDates.length > 0 ? (
+      ) : (
         <div className="flex gap-2 overflow-x-auto pb-3 snap-x hide-scrollbar mb-2">
-          {dynamicDates.map((d) => (
+          {displayDates.map((d) => (
             <button
               key={d.date}
               onClick={() => handleDateClick(d.date)}
@@ -52,10 +87,6 @@ export function ScheduleTourInline({
             </button>
           ))}
         </div>
-      ) : (
-        <div className="p-4 border border-dashed border-slate-300 rounded-xl text-center bg-slate-50 mb-4">
-          <span className="text-slate-500 text-sm font-medium">No available showing dates at this time.</span>
-        </div>
       )}
 
       {isOpen && (
@@ -63,8 +94,8 @@ export function ScheduleTourInline({
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
           unitId={unitId}
-          initialSelectedDate={selectedDate || (dynamicDates.length > 0 ? dynamicDates[0].date : '')}
-          prefetchedDates={dynamicDates}
+          initialSelectedDate={selectedDate || displayDates[0].date}
+          prefetchedDates={displayDates}
           prefetchedSlots={allSlots || undefined}
         />
       )}
