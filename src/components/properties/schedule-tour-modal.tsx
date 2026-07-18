@@ -32,7 +32,7 @@ export function ScheduleTourModal({
   // Fallback dates in case API returns empty
   const fallbackDates = useMemo(() => {
     const dates = []
-    let current = new Date()
+    const current = new Date()
     current.setHours(12, 0, 0, 0)
     let added = 0
     while (added < 5) {

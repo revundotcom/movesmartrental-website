@@ -17,7 +17,7 @@ export function ScheduleTourInline({
   // Compute next 5 working days (excluding today, Sat, Sun) as fallback
   const fallbackDates = useMemo(() => {
     const dates = []
-    let current = new Date()
+    const current = new Date()
     current.setHours(12, 0, 0, 0)
     let added = 0
     while (added < 5) {
