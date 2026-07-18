@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export interface SlotData {
   time: string;
@@ -86,7 +86,7 @@ export function useShowingSlots(unitId: string, fetchCondition: boolean = true, 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unitId, fetchCondition, refreshKey]);
 
-  const getSlotsForDate = (date: string): SlotData[] => {
+  const getSlotsForDate = useCallback((date: string): SlotData[] => {
     if (!allSlots || !date) return [];
     
     let slots: SlotData[] = [];
@@ -102,11 +102,11 @@ export function useShowingSlots(unitId: string, fetchCondition: boolean = true, 
        }
     }
     return slots;
-  };
+  }, [allSlots]);
 
-  const refreshSlots = () => {
+  const refreshSlots = useCallback(() => {
     setRefreshKey(prev => prev + 1);
-  };
+  }, []);
 
   return { dynamicDates, allSlots, isLoading, getSlotsForDate, refreshSlots };
 }

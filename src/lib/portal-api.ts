@@ -273,18 +273,18 @@ export async function getProperty(
       console.warn(
         `[portal-api] getProperty(${slug}) failed: ${res.status} ${res.statusText}`,
       )
-      throw new Error(`[portal-api] getProperty failed: ${res.status}`);
+      return null
     }
 
     const json = (await res.json()) as PropertyDetailResponse
     if (!json?.status || !json?.data?.unit) {
       console.warn(`[portal-api] getProperty(${slug}) returned invalid data:`, json)
-      throw new Error(`[portal-api] getProperty returned invalid data for slug: ${slug}`);
+      return null
     }
     return json
   } catch (err) {
     console.warn(`[portal-api] getProperty(${slug}) threw:`, err)
-    throw err
+    return null
   }
 }
 
