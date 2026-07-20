@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Clock, Loader2, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import PhoneInput, { isValidPhoneNumber, type Country } from 'react-phone-number-input';
+import PhoneInput, { isValidPhoneNumber, parsePhoneNumber, type Country } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -76,7 +76,13 @@ export function ScheduleTourModal({
 
   const [phone, setPhone] = useState<string>('');
   const [countryCode, setCountryCode] = useState<string>('CA');
-  const [expectedMoveIn, setExpectedMoveIn] = useState<Date | null>(null);
+  const [expectedMoveIn, setExpectedMoveIn] = useState<Date | null>(() => {
+    const today = new Date();
+    if (today.getDate() === 1) {
+      return new Date(today.getFullYear(), today.getMonth(), 1);
+    }
+    return new Date(today.getFullYear(), today.getMonth() + 1, 1);
+  });
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -257,7 +263,7 @@ export function ScheduleTourModal({
   const submitText = isFallback ? "Request Tour" : "Schedule Tour";
 
   return createPortal(
-    <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-6">
+    <div className="fixed inset-0 z-[99999] flex items-end sm:items-center justify-center bg-black/60 sm:backdrop-blur-sm p-0 sm:p-6">
       <style dangerouslySetInnerHTML={{
         __html: `
           .PhoneInput { display: flex; align-items: center; }
@@ -277,9 +283,9 @@ export function ScheduleTourModal({
         `
       }} />
 
-      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-full sm:max-h-[90vh]">
+      <div className="w-full h-[100dvh] sm:h-auto max-w-2xl bg-white sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col sm:max-h-[90vh] transition-all">
         {/* Header */}
-        <div className="bg-[#0f2540] px-5 py-4 text-white flex items-start justify-between shrink-0">
+        <div className="bg-[#10B981] px-5 py-4 text-white flex items-start justify-between shrink-0">
           <div>
             <h2 className="text-xl font-bold">{titleText}</h2>
             {!submitSuccess && (
@@ -300,7 +306,7 @@ export function ScheduleTourModal({
             </p>
             <button
               onClick={onClose}
-              className="mt-8 px-8 py-3 bg-[#0f2540] text-white font-semibold rounded-lg shadow-md hover:bg-[#1a385e] transition-colors"
+              className="mt-8 px-8 py-3 bg-[#10B981] text-white font-semibold rounded-lg shadow-md hover:bg-[#059669] transition-colors"
             >
               Done
             </button>
@@ -450,7 +456,7 @@ export function ScheduleTourModal({
                       type="text"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      placeholder="Jon"
+                      placeholder="John"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-[#0f2540] focus:ring-1 focus:ring-[#0f2540] outline-none transition-all text-base"
                     />
                   </div>
@@ -482,7 +488,24 @@ export function ScheduleTourModal({
                         international
                         defaultCountry={countryCode as Country}
                         value={phone}
-                        onChange={(val) => setPhone(val || '')}
+                        onChange={(val) => {
+                          if (val) {
+                            // Specific override for India: STRICT 10 digit national limit (2 country code + 10 mobile)
+                            if (val.startsWith('+91') && val.replace(/\D/g, '').length > 12) {
+                              return;
+                            }
+
+                            if (phone && val.length > phone.length) {
+                              // Universal validation:
+                              // If the current number is perfectly valid (button enabled),
+                              // and the user types an extra digit making it invalid, block it!
+                              if (isValidPhoneNumber(phone) && !isValidPhoneNumber(val)) {
+                                return;
+                              }
+                            }
+                          }
+                          setPhone(val || '');
+                        }}
                         limitMaxLength={true}
                         className="w-full"
                       />
@@ -516,7 +539,7 @@ export function ScheduleTourModal({
             </div>
 
             {/* Footer */}
-            <div className="p-4 sm:p-5 bg-slate-50 border-t border-slate-100 flex justify-end gap-3 shrink-0 rounded-b-2xl">
+            <div className="p-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:p-5 sm:pb-5 bg-white sm:bg-slate-50 border-t border-slate-100 flex justify-end gap-3 shrink-0 sm:rounded-b-2xl">
               <button
                 onClick={onClose}
                 disabled={isSubmitting}
@@ -525,7 +548,7 @@ export function ScheduleTourModal({
                 Cancel
               </button>
               <button
-                className="px-6 py-2 bg-[#0f2540] hover:bg-[#1a385e] flex items-center justify-center text-white text-sm font-semibold rounded-lg shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-2 bg-[#10B981] hover:bg-[#059669] flex items-center justify-center text-white text-sm font-semibold rounded-lg shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={!isFormValid || isSubmitting}
                 onClick={handleSubmit}
               >
