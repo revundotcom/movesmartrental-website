@@ -261,7 +261,7 @@ export function ScheduleTourModal({
       <style dangerouslySetInnerHTML={{
         __html: `
           .PhoneInput { display: flex; align-items: center; }
-          .PhoneInputInput { flex: 1; border: none; background: transparent; outline: none; padding: 0.5rem; font-size: 0.875rem; }
+          .PhoneInputInput { flex: 1; border: none; background: transparent; outline: none; padding: 0.5rem; font-size: 16px; }
           .PhoneInputCountry { display: flex; align-items: center; margin-right: 0.5rem; }
           .PhoneInputCountryIcon { width: 1.5rem; height: 1rem; }
           .PhoneInputCountryIcon--square { width: 1rem; }
@@ -270,7 +270,7 @@ export function ScheduleTourModal({
           input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
           input[type=number] { -moz-appearance: textfield; }
           .react-datepicker-wrapper { width: 100%; }
-          .react-datepicker__input-container input { width: 100%; padding: 0.5rem 0.75rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; font-size: 0.875rem; color: #334155; outline: none; transition: all 0.2s; }
+          .react-datepicker__input-container input { width: 100%; padding: 0.5rem 0.75rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; font-size: 16px; color: #334155; outline: none; transition: all 0.2s; }
           .react-datepicker__input-container input:focus { border-color: #0f2540; box-shadow: 0 0 0 1px #0f2540; }
           .react-datepicker { font-family: inherit; border-color: #e2e8f0; border-radius: 0.75rem; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
           .react-datepicker__header { background-color: #f8fafc; border-bottom-color: #e2e8f0; border-top-left-radius: 0.75rem !important; border-top-right-radius: 0.75rem !important; }
@@ -387,7 +387,7 @@ export function ScheduleTourModal({
                               )}
                             >
                               {isSelected && <Clock className="w-3.5 h-3.5" />}
-                              {slot.time}
+                              {slot.time.split(' - ')[0]}
                             </button>
                           );
                         })}
@@ -425,7 +425,7 @@ export function ScheduleTourModal({
                               )}
                             >
                               {isSelected && <Clock className="w-3.5 h-3.5" />}
-                              {time}
+                              {time.split(' - ')[0]}
                             </button>
                           );
                         })}
@@ -451,7 +451,7 @@ export function ScheduleTourModal({
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       placeholder="Jon"
-                      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-[#0f2540] focus:ring-1 focus:ring-[#0f2540] outline-none transition-all text-sm"
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-[#0f2540] focus:ring-1 focus:ring-[#0f2540] outline-none transition-all text-base"
                     />
                   </div>
                   <div className="space-y-1">
@@ -461,7 +461,7 @@ export function ScheduleTourModal({
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                       placeholder="Doe"
-                      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-[#0f2540] focus:ring-1 focus:ring-[#0f2540] outline-none transition-all text-sm"
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-[#0f2540] focus:ring-1 focus:ring-[#0f2540] outline-none transition-all text-base"
                     />
                   </div>
                   <div className="space-y-1 md:col-span-2">
@@ -471,7 +471,7 @@ export function ScheduleTourModal({
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="yourmail@email.com"
-                      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-[#0f2540] focus:ring-1 focus:ring-[#0f2540] outline-none transition-all text-sm"
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:border-[#0f2540] focus:ring-1 focus:ring-[#0f2540] outline-none transition-all text-base"
                     />
                   </div>
 
