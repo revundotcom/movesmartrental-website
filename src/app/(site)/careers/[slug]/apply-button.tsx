@@ -243,7 +243,7 @@ function ApplyModal({
           <div className="flex shrink-0 items-center justify-between border-b border-slate-100 bg-white px-5 py-4 pt-6">
             <div>
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--brand-emerald)]">
-                Apply Now{jobOpeningId ? ` · ${jobOpeningId}` : ''}
+                Apply Now
               </p>
               <h2
                 id="apply-modal-title"
