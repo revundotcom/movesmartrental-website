@@ -131,12 +131,14 @@ export default async function CareerRolePage({ params }: RouteParams) {
                 {role.title}
               </h1>
 
-              <p className="mt-5 text-sm font-bold uppercase tracking-[0.16em] text-white/85">
-                {role.department}
+              <p className="mt-4 text-xs font-bold capitalize tracking-wider text-white/85">
+                {Array.isArray(role.category)
+                  ? role.category.join(', ')
+                  : (role.category && role.category !== 'Other' ? role.category : role.department)}
               </p>
 
               <dl className="mt-8 space-y-2 text-sm sm:text-base">
-                <MetaRow label="Type">{role.type}</MetaRow>
+                <MetaRow label="Type">{role.type || role.workTypeDisplay}</MetaRow>
                 <MetaRow label="Location(s)">{role.locationDisplay}</MetaRow>
                 {/* <MetaRow label="Job Posting Start Date">
                   {postingDateDisplay}
@@ -183,7 +185,7 @@ export default async function CareerRolePage({ params }: RouteParams) {
 
                 {/* Apply CTA */}
                 <div className="flex flex-wrap gap-3 lg:pb-1">
-                  <ApplyButton role={role.title} jobId={role.jobId} jobOpeningId={role.jobOpeningId} workType={role.workType} />
+                  <ApplyButton role={role.title} jobId={role.jobId} jobOpeningId={role.jobOpeningId} locId={role.locId} workType={role.jobType} />
                 </div>
               </div>
             </div>
@@ -210,7 +212,7 @@ export default async function CareerRolePage({ params }: RouteParams) {
                     className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--brand-emerald)]"
                     aria-hidden="true"
                   />
-                  <span>{role.type}</span>
+                  <span>{role.type || role.workTypeDisplay}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <MapPin
@@ -254,18 +256,15 @@ export default async function CareerRolePage({ params }: RouteParams) {
                 <>
                   <style dangerouslySetInnerHTML={{
                     __html: `
-                    .job-desc p > strong:only-child,
-                    .job-desc p > b:only-child,
-                    .job-desc div > strong:only-child,
-                    .job-desc div > b:only-child,
-                    .job-desc p > span > strong:only-child,
-                    .job-desc p > span > b:only-child,
-                    .job-desc h3 {
+                    .job-desc h1,
+                    .job-desc h2,
+                    .job-desc h3,
+                    .job-desc h4 {
                       display: block;
                       font-size: 1.125rem;
                       font-weight: 800;
                       color: var(--brand-navy);
-                      margin-top: 2.5rem;
+                      margin-top: 2.25rem;
                       margin-bottom: 0.75rem;
                       text-transform: uppercase;
                       letter-spacing: 0.05em;
@@ -273,11 +272,23 @@ export default async function CareerRolePage({ params }: RouteParams) {
                       padding-bottom: 0.25rem;
                       width: fit-content;
                     }
-                    .job-desc h1, .job-desc h2, .job-desc h4 {
-                      color: var(--brand-navy);
-                      font-weight: 800;
-                      margin-top: 2.5rem;
-                      margin-bottom: 0.75rem;
+                    .job-desc p strong,
+                    .job-desc p b,
+                    .job-desc div strong,
+                    .job-desc div b,
+                    .job-desc li strong,
+                    .job-desc li b,
+                    .job-desc span strong,
+                    .job-desc span b {
+                      display: inline !important;
+                      font-size: inherit !important;
+                      font-weight: 700 !important;
+                      color: inherit !important;
+                      margin: 0 !important;
+                      padding: 0 !important;
+                      border: none !important;
+                      text-transform: none !important;
+                      width: auto !important;
                     }
                     .job-desc ul {
                       list-style-type: none !important;

@@ -34,6 +34,10 @@ const nextConfig: NextConfig = {
         hostname: 'images.unsplash.com',
       },
       {
+        protocol: 'https',
+        hostname: 'phpstack-1217932-6516253.cloudwaysapps.com',
+      },
+      {
         // Portal-hosted property media (cover_image.file_path served from
         // /storage/...). Allow both production and any dev/staging subdomain.
         protocol: 'https',

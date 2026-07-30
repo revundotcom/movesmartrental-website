@@ -10,7 +10,8 @@ interface Props {
   role: string
   jobId: string
   jobOpeningId?: string
-  workType: 'remote' | 'hybrid'
+  locId?: string | number
+  workType?: string
   className?: string
   variant?: 'primary' | 'ghost'
   label?: string
@@ -20,6 +21,7 @@ export function ApplyButton({
   role,
   jobId,
   jobOpeningId,
+  locId,
   workType,
   className = '',
   variant = 'primary',
@@ -46,7 +48,7 @@ export function ApplyButton({
         <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </button>
 
-      {open && <ApplyModal role={role} jobId={jobId} jobOpeningId={jobOpeningId} workType={workType} onClose={() => setOpen(false)} />}
+      {open && <ApplyModal role={role} jobId={jobId} jobOpeningId={jobOpeningId} locId={locId} workType={workType} onClose={() => setOpen(false)} />}
     </>
   )
 }
@@ -55,13 +57,15 @@ function ApplyModal({
   role,
   jobId,
   jobOpeningId,
+  locId,
   workType,
   onClose,
 }: {
   role: string
   jobId: string
   jobOpeningId?: string
-  workType: 'remote' | 'hybrid'
+  locId?: string | number
+  workType?: string
   onClose: () => void
 }) {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
@@ -74,6 +78,8 @@ function ApplyModal({
   const [countryCode, setCountryCode] = useState<string>('US')
   const [businessType, setBusinessType] = useState('')
   const [hasVehicle, setHasVehicle] = useState('')
+
+  const isRemoteOrHybrid = !workType || /remote|hybrid/i.test(String(workType))
 
   useEffect(() => {
     fetch('https://ipapi.co/json/')
@@ -143,7 +149,7 @@ function ApplyModal({
       errors.resume = 'Please upload a resume'
     }
 
-    if (workType === 'remote') {
+    if (isRemoteOrHybrid) {
       const workedFromHome = fd.get('worked_from_home') as string
       if (!workedFromHome) errors.worked_from_home = 'This field is required'
 
@@ -193,12 +199,13 @@ function ApplyModal({
 
     // Append hidden fields
     fd.append('job_id', jobId)
+    fd.append('loc_id', String(locId || ''))
     fd.append('source', 'movesmart')
 
     // Process mobile
     fd.set('mobile', phone)
 
-    const baseUrl = process.env.NEXT_PUBLIC_PORTAL_BASE_URL || 'https://portal.revun.com'
+    const baseUrl = process.env.NEXT_PUBLIC_PORTAL_BASE_URL || 'https://phpstack-1217932-6516253.cloudwaysapps.com'
 
     try {
       const res = await fetch(`${baseUrl}/api/v1/job-postings/apply`, {
@@ -402,7 +409,7 @@ function ApplyModal({
                         </div>
                       </div>
 
-                      {workType === 'remote' && (
+                      {isRemoteOrHybrid && (
                         <>
                           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                             <div>
@@ -475,7 +482,7 @@ function ApplyModal({
                         </>
                       )}
 
-                      {workType !== 'remote' && (
+                      {!isRemoteOrHybrid && (
                         <>
                           <div>
                             <label className="mb-1 block text-xs font-semibold text-slate-600">
