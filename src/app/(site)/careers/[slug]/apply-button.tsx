@@ -9,7 +9,6 @@ import 'react-phone-number-input/style.css'
 interface Props {
   role: string
   jobId: string
-  jobOpeningId?: string
   locId?: string | number
   workType?: string
   className?: string
@@ -20,7 +19,6 @@ interface Props {
 export function ApplyButton({
   role,
   jobId,
-  jobOpeningId,
   locId,
   workType,
   className = '',
@@ -48,7 +46,7 @@ export function ApplyButton({
         <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </button>
 
-      {open && <ApplyModal role={role} jobId={jobId} jobOpeningId={jobOpeningId} locId={locId} workType={workType} onClose={() => setOpen(false)} />}
+      {open && <ApplyModal role={role} jobId={jobId} locId={locId} workType={workType} onClose={() => setOpen(false)} />}
     </>
   )
 }
@@ -56,14 +54,12 @@ export function ApplyButton({
 function ApplyModal({
   role,
   jobId,
-  jobOpeningId,
   locId,
   workType,
   onClose,
 }: {
   role: string
   jobId: string
-  jobOpeningId?: string
   locId?: string | number
   workType?: string
   onClose: () => void
