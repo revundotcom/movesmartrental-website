@@ -172,6 +172,7 @@ export async function fetchRolesFromApi(): Promise<Role[]> {
       const jobTypeRaw = job.Job_Type ? String(job.Job_Type).trim() : ''
 
       const workTypeDisplay = workTypeRaw || 'Full time'
+      const jobModeDisplay = jobTypeRaw || workTypeRaw || 'Full time'
 
       const locParts = []
       if (job.City) locParts.push(job.City)
@@ -179,8 +180,8 @@ export async function fetchRolesFromApi(): Promise<Role[]> {
       if (job.Country) locParts.push(job.Country)
 
       const locationDisplay = locParts.length > 0
-        ? `${locParts.join(', ')} · ${workTypeDisplay}`
-        : workTypeDisplay
+        ? `${locParts.join(', ')} · ${jobModeDisplay}`
+        : jobModeDisplay
 
       const industryVal = job.Industry || 'Careers'
       const departmentDisplay = Array.isArray(industryVal) ? industryVal.join(', ') : industryVal
