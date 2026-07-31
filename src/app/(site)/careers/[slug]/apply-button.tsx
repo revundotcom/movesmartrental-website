@@ -195,7 +195,17 @@ function ApplyModal({
 
     // Append hidden fields
     fd.append('job_id', jobId)
-    fd.append('loc_id', String(locId || ''))
+    if (locId) {
+      fd.append('location_id', String(locId))
+      fd.append('loc_id', String(locId))
+      fd.append('job_location_id', String(locId))
+      fd.append('location', String(locId))
+      fd.append('location_Id', String(locId))
+    }
+    if (workType) {
+      fd.append('job_type', workType)
+      fd.append('work_type', workType)
+    }
     fd.append('source', 'movesmart')
 
     // Process mobile
