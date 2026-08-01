@@ -25,7 +25,7 @@ const AUDIENCES = [
     title: 'For Tenants',
     description: 'Find your next home from our pipeline of professionally listed rentals across Canada and the United States. Verified listings, transparent pricing, and a smooth application-to-move-in experience.',
     features: ['Verified Listings', 'Online Applications', 'Online Payments', 'Transparent Pricing', 'Responsive Leasing Team', 'Secure E-Sign'],
-    cta: 'Browse rentals',
+    cta: 'Browse Rentals',
     href: '/properties/',
     accent: 'gold' as const,
   },
@@ -141,10 +141,10 @@ function AudienceCard({
   const cardTransition = prefersReducedMotion
     ? { duration: 0 }
     : {
-        duration: 0.7,
-        ease,
-        delay: Math.min(index * 0.12, 0.3),
-      }
+      duration: 0.7,
+      ease,
+      delay: Math.min(index * 0.12, 0.3),
+    }
 
   return (
     <motion.article
