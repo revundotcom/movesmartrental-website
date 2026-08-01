@@ -98,8 +98,8 @@ export default async function HomePage() {
         <HeroBlock
           headline="Leasing, handled"
           subheadline="MoveSmart Rentals is a full-service leasing partner powered by our proprietary technology — built to help landlords lease faster, reduce vacancy, and screen every applicant. We syndicate your unit to the MLS and 20+ platforms and handle every step from listing to move-in."
-          cta1={{ label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL }}
-          cta2={{ label: 'Browse rentals', href: '/properties/' }}
+          cta1={{ label: 'List my Property', href: PORTAL_OWNER_SIGNUP_URL }}
+          cta2={{ label: 'Browse Rentals', href: '/properties/' }}
           statStrip={[
             { value: 'MLS', valueAccent: '+ Rental Network', label: 'Broad listing exposure' },
             { value: 'Live Owner', valueAccent: 'Portal', label: 'Real-time leasing visibility' },
@@ -333,7 +333,7 @@ export default async function HomePage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-emerald px-6 py-3 text-sm font-bold text-white shadow-sm shadow-emerald-900/20 transition-all duration-200 hover:-translate-y-px hover:bg-emerald-600 hover:shadow-md"
                 >
-                  List my property
+                  List my Property
                 </a>
                 {/* "Browse rentals" CTA removed per client direction
                     (Jun 2026) — /properties/ is hidden from public surfaces. */}

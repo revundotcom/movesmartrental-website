@@ -147,7 +147,7 @@ export function Header() {
             rel="noopener noreferrer"
             className="cursor-pointer whitespace-nowrap rounded-lg bg-brand-emerald px-3 py-2 text-sm font-semibold text-white shadow-sm shadow-emerald-900/20 transition-all duration-200 hover:-translate-y-px hover:bg-emerald-600 hover:shadow-md"
           >
-            List my property
+            List my Property
           </a>
         </div>
 

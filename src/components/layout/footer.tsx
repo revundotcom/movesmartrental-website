@@ -140,7 +140,7 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-emerald px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-emerald-900/20 transition-all duration-200 hover:-translate-y-px hover:bg-emerald-600 hover:shadow-md"
                 >
-                  List my property
+                  List my Property
                 </a>
                 {/* "Browse rentals" CTA removed per client direction
                     (Jun 2026) — /properties/ is hidden from public surfaces. */}
