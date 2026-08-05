@@ -161,7 +161,7 @@ function ApplyModal({
       const portfolioFile = fd.get('attached_portfolio') as File | null
       const hasPortfolio = Boolean(portfolioFile && portfolioFile.size > 0)
 
-      let behanceUrl = (fd.get('behance_url') as string || '').trim()
+      const behanceUrl = (fd.get('behance_url') as string || '').trim()
       const hasBehance = behanceUrl.length > 0
 
       if (!hasPortfolio && !hasBehance) {
