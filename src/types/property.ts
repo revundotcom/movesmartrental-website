@@ -177,3 +177,12 @@ export interface PropertyDetailResponse {
     similar_properties?: Property[]
   }
 }
+
+/** Shape returned by new building APIs */
+export interface BuildingDetailResponse {
+  status: boolean
+  data?: {
+    building: PropertyBuilding
+    units: Property[]
+  }
+}

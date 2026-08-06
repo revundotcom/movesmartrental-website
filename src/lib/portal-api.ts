@@ -288,6 +288,49 @@ export async function getProperty(
   }
 }
 
+/**
+ * Fetch a building by one of the specific hardcoded slugs.
+ * Falls back to null if it fails or if the slug is not recognized.
+ */
+export async function getFixedBuildingData(
+  slug: string,
+  options: { revalidate?: number; signal?: AbortSignal } = {},
+): Promise<import('@/types/property').BuildingDetailResponse | null> {
+  const { revalidate = 300, signal } = options
+
+  let endpoint = ''
+  if (slug === '294-chandler-drive-kitchener-on-n2e-2k1') {
+    endpoint = '/api/building-294'
+  } else if (slug === '286-chandler-drive-kitchener-on-n2e-3j8') {
+    endpoint = '/api/building-286'
+  } else {
+    return null
+  }
+
+  try {
+    const res = await fetch(`${PORTAL_BASE_URL}${endpoint}`, {
+      method: 'GET',
+      headers: JSON_HEADERS,
+      next: { revalidate },
+      signal,
+    })
+
+    if (!res.ok) {
+      console.warn(`[portal-api] getFixedBuildingData(${endpoint}) failed: ${res.status}`)
+      return null
+    }
+
+    const json = await res.json()
+    if (!json?.status || !json?.data) {
+      return null
+    }
+    return json
+  } catch (err) {
+    console.warn(`[portal-api] getFixedBuildingData(${endpoint}) threw:`, err)
+    return null
+  }
+}
+
 // ----------------------------------------------------------------------------
 // Image URL helper
 // ----------------------------------------------------------------------------
