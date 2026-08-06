@@ -47,6 +47,22 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
+
+  if (slug === '294-chandler-drive-kitchener-on-n2e-2k1' || slug === '286-chandler-drive-kitchener-on-n2e-3j8') {
+    const buildingData = await import('@/lib/portal-api').then(m => m.getFixedBuildingData(slug))
+    if (!buildingData) {
+      return {
+        title: 'Building not found',
+        robots: { index: false, follow: false },
+      }
+    }
+    const bTitle = `${buildingData.data?.building.building_name || 'Building'} | MoveSmart Rentals`
+    return {
+      title: bTitle,
+      robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
+    }
+  }
+
   const detail = await getProperty(slug)
   if (!detail) {
     return {
@@ -295,6 +311,31 @@ const checkIncluded = (val: unknown) => {
 
 export default async function PropertyDetailPage({ params }: PageProps) {
   const { slug } = await params
+  
+  if (slug === '294-chandler-drive-kitchener-on-n2e-2k1' || slug === '286-chandler-drive-kitchener-on-n2e-3j8') {
+    const buildingData = await import('@/lib/portal-api').then(m => m.getFixedBuildingData(slug))
+    if (!buildingData || !buildingData.data) {
+      notFound()
+    }
+    const BuildingDetailClient = await import('@/components/properties/building-detail-client').then(m => m.BuildingDetailClient)
+    return (
+      <main className="bg-white pb-24 lg:pb-0">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          <BreadcrumbNav
+            crumbs={[
+              { label: 'Home', href: '/' },
+              { label: 'Properties', href: '/properties/' },
+              { label: buildingData.data.building.building_name || 'Building', href: `/properties/${slug}/` },
+            ]}
+          />
+          <div className="mt-6">
+            <BuildingDetailClient building={buildingData.data.building} units={buildingData.data.units} />
+          </div>
+        </div>
+      </main>
+    )
+  }
+
   const detail = await getProperty(slug)
 
   if (!detail) {
