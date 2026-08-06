@@ -48,15 +48,21 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
 
-  if (slug === '294-chandler-drive-kitchener-on-n2e-2k1' || slug === '286-chandler-drive-kitchener-on-n2e-3j8') {
-    const buildingData = await import('@/lib/portal-api').then(m => m.getFixedBuildingData(slug))
-    if (!buildingData) {
-      return {
-        title: 'Building not found',
-        robots: { index: false, follow: false },
+  if (slug === '294-chandler-drive-kitchener-on-n2e-2k1' || slug === '286-chandler-drive-kitchener-on-n2e-3j8' || slug === 'chandler-drive-kitchener-on') {
+    let buildingName = 'Building'
+    if (slug === 'chandler-drive-kitchener-on') {
+      buildingName = '294 & 286 Chandler Drive'
+    } else {
+      const buildingData = await import('@/lib/portal-api').then(m => m.getFixedBuildingData(slug))
+      if (!buildingData) {
+        return {
+          title: 'Building not found',
+          robots: { index: false, follow: false },
+        }
       }
+      buildingName = buildingData.data?.building.building_name || 'Building'
     }
-    const bTitle = `${buildingData.data?.building.building_name || 'Building'} | MoveSmart Rentals`
+    const bTitle = `${buildingName} | MoveSmart Rentals`
     return {
       title: bTitle,
       robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
@@ -312,11 +318,34 @@ const checkIncluded = (val: unknown) => {
 export default async function PropertyDetailPage({ params }: PageProps) {
   const { slug } = await params
   
-  if (slug === '294-chandler-drive-kitchener-on-n2e-2k1' || slug === '286-chandler-drive-kitchener-on-n2e-3j8') {
-    const buildingData = await import('@/lib/portal-api').then(m => m.getFixedBuildingData(slug))
-    if (!buildingData || !buildingData.data) {
-      notFound()
+  if (slug === '294-chandler-drive-kitchener-on-n2e-2k1' || slug === '286-chandler-drive-kitchener-on-n2e-3j8' || slug === 'chandler-drive-kitchener-on') {
+    let combinedUnits: import('@/types/property').Property[] = []
+    let buildingObj: import('@/types/property').PropertyBuilding | null = null
+
+    if (slug === 'chandler-drive-kitchener-on') {
+      const b1 = await import('@/lib/portal-api').then(m => m.getFixedBuildingData('294-chandler-drive-kitchener-on-n2e-2k1'))
+      const b2 = await import('@/lib/portal-api').then(m => m.getFixedBuildingData('286-chandler-drive-kitchener-on-n2e-3j8'))
+      if (b1?.data) combinedUnits.push(...b1.data.units)
+      if (b2?.data) combinedUnits.push(...b2.data.units)
+      
+      buildingObj = {
+        id: 'combined-chandler',
+        building_name: '294 & 286 Chandler Drive',
+        street_number: '286 & 294',
+        street_name: 'Chandler Drive',
+        city: 'Kitchener',
+        province: 'ON',
+        postal_code: ''
+      } as unknown as import('@/types/property').PropertyBuilding
+    } else {
+      const buildingData = await import('@/lib/portal-api').then(m => m.getFixedBuildingData(slug))
+      if (!buildingData || !buildingData.data) {
+        notFound()
+      }
+      combinedUnits = buildingData.data.units
+      buildingObj = buildingData.data.building
     }
+
     const BuildingDetailClient = await import('@/components/properties/building-detail-client').then(m => m.BuildingDetailClient)
     return (
       <main className="bg-white pb-24 lg:pb-0">
@@ -325,11 +354,11 @@ export default async function PropertyDetailPage({ params }: PageProps) {
             crumbs={[
               { label: 'Home', href: '/' },
               { label: 'Properties', href: '/properties/' },
-              { label: buildingData.data.building.building_name || 'Building', href: `/properties/${slug}/` },
+              { label: buildingObj.building_name || 'Building', href: `/properties/${slug}/` },
             ]}
           />
           <div className="mt-6">
-            <BuildingDetailClient building={buildingData.data.building} units={buildingData.data.units} />
+            <BuildingDetailClient building={buildingObj} units={combinedUnits} />
           </div>
         </div>
       </main>
