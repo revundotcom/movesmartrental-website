@@ -258,8 +258,9 @@ export default async function CareerRolePage({ params }: RouteParams) {
                     controls
                     preload="metadata"
                     className="w-full aspect-video object-cover bg-black"
+                    poster="https://portal.revun.com/video/movesmart_image.jpg"
                   >
-                    <source src="https://portal.revun.com/video/MoveSmart%20Rentals%20Career%20Opportunity%20Overview.mp4#t=0.001" type="video/mp4" />
+                    <source src="https://portal.revun.com/video/MoveSmart%20Rentals%20Career%20Opportunity%20Overview.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 </div>
