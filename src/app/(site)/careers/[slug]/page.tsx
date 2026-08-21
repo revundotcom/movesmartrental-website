@@ -252,6 +252,19 @@ export default async function CareerRolePage({ params }: RouteParams) {
 
             {/* Main content */}
             <article className="min-w-0">
+              {role.title.toLowerCase().includes('account manager') && (
+                <div className="mb-10 overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-900/5 shadow-sm">
+                  <video 
+                    controls
+                    preload="metadata"
+                    className="w-full aspect-video object-cover bg-black"
+                    poster="https://portal.revun.com/video/movesmart_image.jpg"
+                  >
+                    <source src="https://portal.revun.com/video/MoveSmart%20Rentals%20Career%20Opportunity%20Overview.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              )}
               {role.htmlDescription ? (
                 <>
                   <style dangerouslySetInnerHTML={{
