@@ -227,6 +227,8 @@ export default async function CareersPage() {
         </div>
       </section>
 
+
+
       {/* ── Our Culture ─────────────────────────────────────────── */}
       <section className="bg-white py-16 md:py-20">
         <div className="mx-auto max-w-5xl px-6">
@@ -430,30 +432,48 @@ export default async function CareersPage() {
 
       {/* ── Community / Charities ───────────────────────────────── */}
       <section className="bg-white py-16 md:py-20">
-        <div className="mx-auto grid max-w-5xl gap-10 px-6 lg:grid-cols-12 lg:items-center">
-          <div className="lg:col-span-6">
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--brand-emerald)]">
-              Community
-            </p>
-            <h2 className="text-3xl font-bold leading-tight text-[var(--brand-navy)] md:text-4xl">
-              MoveSmart{' '}
-              <span className="text-[var(--brand-emerald)]">cares</span>.
-            </h2>
-            <p className="mt-5 text-base leading-relaxed text-slate-600">
-              Our greatest value is caring for one another. We believe the most
-              important investment we can make is in each other. Our community
-              approach is to engage and support the cities we operate in,
-              including paid community-care days for our team.
-            </p>
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
+            <div className="lg:col-span-6">
+              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--brand-emerald)]">
+                Community
+              </p>
+              <h2 className="text-3xl font-bold leading-tight text-[var(--brand-navy)] md:text-4xl">
+                MoveSmart{' '}
+                <span className="text-[var(--brand-emerald)]">cares</span>.
+              </h2>
+              <p className="mt-5 text-base leading-relaxed text-slate-600">
+                Our greatest value is caring for one another. We believe the most
+                important investment we can make is in each other. Our community
+                approach is to engage and support the cities we operate in,
+                including paid community-care days for our team.
+              </p>
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-lg ring-1 ring-slate-200 lg:col-span-6">
+              <Image
+                src={IMG.communityOffice.src}
+                alt={IMG.communityOffice.alt}
+                fill
+                sizes="(max-width: 1024px) 100vw, 480px"
+                className="object-cover"
+              />
+            </div>
           </div>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-lg ring-1 ring-slate-200 lg:col-span-6">
-            <Image
-              src={IMG.communityOffice.src}
-              alt={IMG.communityOffice.alt}
-              fill
-              sizes="(max-width: 1024px) 100vw, 480px"
-              className="object-cover"
-            />
+
+          <div className="mt-16">
+            <h3 className="mb-8 text-center text-2xl font-bold text-[var(--brand-navy)] md:text-3xl">
+              Life at MoveSmart
+            </h3>
+            <div className="mx-auto max-w-4xl overflow-hidden rounded-2xl shadow-lg ring-1 ring-slate-900/5 aspect-video relative">
+              <iframe 
+                className="absolute top-0 left-0 w-full h-full"
+                src="https://www.youtube.com/embed/rx5RxKKJTIc" 
+                title="MoveSmart Rentals Careers" 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowFullScreen
+              ></iframe>
+            </div>
           </div>
         </div>
       </section>
