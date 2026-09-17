@@ -223,37 +223,37 @@ const HOW_WE_CHARGE: Array<{
   tag: string
   highlight: string
 }> = [
-  {
-    tag: 'Zero upfront',
-    highlight: '$0',
-    title: 'Nothing to engage us.',
-    imageSrc:
-      'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&q=80&auto=format&fit=crop',
-    imageAlt: 'Owner handing over keys to a new tenant on move-in day',
-    body:
-      'No setup fee, no onboarding fee, no monthly retainer. Photography, syndication, screening, and lease preparation are all carried by us until a tenant is in place. If we do not place a qualified tenant, we do not earn a dollar.',
-  },
-  {
-    tag: 'One success fee',
-    highlight: 'Once',
-    title: 'Paid only when a lease is signed.',
-    imageSrc:
-      'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1600&q=80',
-    imageAlt: 'Owner and tenant signing a residential lease at a table',
-    body:
-      'When a qualified tenant signs a lease we negotiated, you pay a single one-time success fee \u2014 typically equivalent to one month of contracted rent. Invoiced once, on placement. We are a leasing platform, not an ongoing manager: there is no monthly percentage, ever.',
-  },
-  {
-    tag: 'No surprises',
-    highlight: 'Nothing',
-    title: 'And nothing in between.',
-    imageSrc:
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1600&q=80&auto=format&fit=crop',
-    imageAlt: 'Bright modern living room in a recently leased condo',
-    body:
-      'No vendor markups. No marketing surcharges. No listing-prep surcharges. No clawbacks. Optional add-ons (Rent Protection, paid advertising beyond standard syndication) are clearly named and owner-approved. Institutional lease-up engagements are quoted per RFP. Everything else is on this page.',
-  },
-]
+    {
+      tag: 'Zero upfront',
+      highlight: '$0',
+      title: 'Nothing to engage us.',
+      imageSrc:
+        'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&q=80&auto=format&fit=crop',
+      imageAlt: 'Owner handing over keys to a new tenant on move-in day',
+      body:
+        'No setup fee, no onboarding fee, no monthly retainer, syndication, screening, and lease preparation are all carried by us until a tenant is in place. If we do not place a qualified tenant, we do not earn a dollar.',
+    },
+    {
+      tag: 'One success fee',
+      highlight: 'Once',
+      title: 'Paid only when a lease is signed.',
+      imageSrc:
+        'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1600&q=80',
+      imageAlt: 'Owner and tenant signing a residential lease at a table',
+      body:
+        'When a qualified tenant signs a lease we negotiated, you pay a single one-time success fee \u2014 typically equivalent to one month of contracted rent. Invoiced once, on placement. We are a leasing platform, not an ongoing manager: there is no monthly percentage, ever.',
+    },
+    {
+      tag: 'No surprises',
+      highlight: 'Nothing',
+      title: 'And nothing in between.',
+      imageSrc:
+        'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1600&q=80&auto=format&fit=crop',
+      imageAlt: 'Bright modern living room in a recently leased condo',
+      body:
+        'No vendor markups. No marketing surcharges. No listing-prep surcharges. No clawbacks. Optional add-ons (Rent Protection, paid advertising beyond standard syndication) are clearly named and owner-approved. Institutional lease-up engagements are quoted per RFP. Everything else is on this page.',
+    },
+  ]
 
 function HowWeCharge() {
   return (
@@ -413,7 +413,6 @@ function ZeroUpfrontBridge() {
 
             <ul className="mt-6 divide-y divide-brand-navy/10 border-y border-brand-navy/10">
               {[
-                ['Professional photography & video', 'Camera, wide-angle lens, edited gallery.'],
                 ['MLS + 40-portal syndication', 'Realtor.ca, Zumper, Zolo, Kijiji, Marketplace.'],
                 ['Applicant screening & references', 'Credit, employment, income, prior-tenancy.'],
                 ['Lease drafting & e-signing', 'Provincially compliant lease and addenda.'],
@@ -492,8 +491,8 @@ const FEE_SCHEDULE: FeeRow[] = [
     emphasis: true,
   },
   {
-    label: 'Setup, onboarding, photography, syndication',
-    detail: 'Account creation, document collection, professional photos, 40+ portal listing.',
+    label: 'Setup, onboarding, syndication',
+    detail: 'Account creation, document collection, 40+ portal listing.',
     value: '$0',
     emphasis: true,
   },
@@ -835,8 +834,7 @@ function OutcomeGuaranteeBand() {
                 <span className="text-brand-gold">.</span>
               </h2>
               <p className="mt-5 font-serif text-base leading-[1.75] text-slate-700 sm:text-[17px]">
-                Our model is contractually risk-shifted. Every cost we carry &mdash; photography,
-                syndication, screening, lease prep &mdash; is on our balance sheet until your unit
+                Our model is contractually risk-shifted. Every cost we carry &mdash; syndication, screening, lease prep &mdash; is on our balance sheet until your unit
                 is leased. No clawbacks, no kill-fee, no time-and-materials hidden in a footer.
               </p>
               <p className="mt-4 font-serif text-base leading-[1.75] text-slate-700 sm:text-[17px]">
@@ -862,73 +860,73 @@ const TRANSPARENCY_ROWS: Array<{
   policy: Policy
   cost: string
 }> = [
-  {
-    icon: Camera,
-    item: 'Marketing photography & video',
-    detail: 'Professional camera, wide-angle lens, edited gallery, optional 3D walkthrough.',
-    policy: 'included',
-    cost: 'Included in success fee',
-  },
-  {
-    icon: ScrollText,
-    item: 'MLS + 40+ portal syndication',
-    detail: 'Realtor.ca, Zumper, Zolo, Kijiji, Facebook Marketplace, and our agent network.',
-    policy: 'included',
-    cost: 'Included in success fee',
-  },
-  {
-    icon: FileSearch,
-    item: 'Tenant screening & background',
-    detail: 'Credit, employment, income, reference, and prior-tenancy verification.',
-    policy: 'included',
-    cost: 'Included in success fee',
-  },
-  {
-    icon: PhoneCall,
-    item: 'Showings & applicant management',
-    detail: 'Coordinated viewings, qualification calls, applicant shortlist with our recommendation.',
-    policy: 'included',
-    cost: 'Included in success fee',
-  },
-  {
-    icon: HandCoins,
-    item: 'Lease drafting & e-signing',
-    detail: 'Provincially compliant lease, schedules, addenda, and digital execution.',
-    policy: 'included',
-    cost: 'Included in success fee',
-  },
-  {
-    icon: Home,
-    item: 'Move-in coordination & key handover',
-    detail: 'Move-in inspection, condition report, key/fob delivery to tenant.',
-    policy: 'included',
-    cost: 'Included in success fee',
-  },
-  {
-    icon: ShieldCheck,
-    item: 'Rent Protection package',
-    detail:
-      'Optional guaranteed rental income coverage underwritten through our insurance partner.',
-    policy: 'add-on',
-    cost: 'Quoted separately by partner',
-  },
-  {
-    icon: CalendarClock,
-    item: 'Paid advertising beyond standard',
-    detail:
-      'Optional boosted listings, premium portal placements, or targeted social campaigns.',
-    policy: 'pass-through',
-    cost: 'At cost - owner pre-approves',
-  },
-  {
-    icon: Building2,
-    item: 'Institutional lease-up engagements',
-    detail:
-      'Multi-unit programs for property management companies, builders, and developers.',
-    policy: 'add-on',
-    cost: 'Custom RFP - contact for quote',
-  },
-]
+    {
+      icon: ScrollText,
+      item: 'MLS + 40+ portal syndication',
+      detail: 'Realtor.ca, Zumper, Zolo, Kijiji, Facebook Marketplace, and our agent network.',
+      policy: 'included',
+      cost: 'Included in success fee',
+    },
+    {
+      icon: FileSearch,
+      item: 'Tenant screening & background',
+      detail: 'Credit, employment, income, reference, and prior-tenancy verification.',
+      policy: 'included',
+      cost: 'Included in success fee',
+    },
+    {
+      icon: PhoneCall,
+      item: 'Showings & applicant management',
+      detail: 'Coordinated viewings, qualification calls, applicant shortlist with our recommendation.',
+      policy: 'included',
+      cost: 'Included in success fee',
+    },
+    {
+      icon: HandCoins,
+      item: 'Lease drafting & e-signing',
+      detail: 'Provincially compliant lease, schedules, addenda, and digital execution.',
+      policy: 'included',
+      cost: 'Included in success fee',
+    },
+    {
+      icon: Home,
+      item: 'Move-in coordination & key handover',
+      detail: 'Move-in inspection, condition report, key/fob delivery to tenant.',
+      policy: 'included',
+      cost: 'Included in success fee',
+    },
+    {
+      icon: ShieldCheck,
+      item: 'Rent Protection package',
+      detail:
+        'Optional guaranteed rental income coverage underwritten through our insurance partner.',
+      policy: 'add-on',
+      cost: 'Quoted separately by partner',
+    },
+    {
+      icon: Camera,
+      item: 'Marketing photography & video',
+      detail: 'Professional camera, wide-angle lens, edited gallery, optional 3D walkthrough.',
+      policy: 'pass-through',
+      cost: 'At cost - owner pre-approves',
+    },
+    {
+      icon: CalendarClock,
+      item: 'Paid advertising beyond standard',
+      detail:
+        'Optional boosted listings, premium portal placements, or targeted social campaigns.',
+      policy: 'pass-through',
+      cost: 'At cost - owner pre-approves',
+    },
+    {
+      icon: Building2,
+      item: 'Institutional lease-up engagements',
+      detail:
+        'Multi-unit programs for property management companies, builders, and developers.',
+      policy: 'add-on',
+      cost: 'Custom RFP - contact for quote',
+    },
+  ]
 
 function PolicyChip({ policy }: { policy: Policy }) {
   const map: Record<Policy, { label: string; color: string }> = {
@@ -1146,7 +1144,7 @@ const PRICING_FAQS = [
   {
     question: 'Are there setup fees, onboarding fees, or any cost to get started?',
     answer:
-      'No. Engaging MoveSmart is free. There is no setup fee, no onboarding fee, no monthly retainer, and no cost for photography, syndication, or screening. The only fee on a standard engagement is a one-time leasing success fee, charged when a qualified tenant signs the lease.',
+      'No. Engaging MoveSmart is free. There is no setup fee, no onboarding fee, no monthly retainer, and no cost for syndication, or screening. The only fee on a standard engagement is a one-time leasing success fee, charged when a qualified tenant signs the lease.',
   },
   {
     question: 'Do you charge a monthly management percentage?',
@@ -1161,7 +1159,7 @@ const PRICING_FAQS = [
   {
     question: 'What is included in the leasing success fee?',
     answer:
-      'All nine pillars of our service: professional photography and video, MLS plus 40+ portal syndication, applicant screening (credit, employment, income, references, prior tenancy), coordinated showings, lease drafting and e-signing, move-in coordination, key handover, condition reporting, and the Tenant Replacement Guarantee.',
+      'All eight pillars of our service: MLS plus 40+ portal syndication, applicant screening (credit, employment, income, references, prior tenancy), coordinated showings, lease drafting and e-signing, move-in coordination, key handover, condition reporting, and the Tenant Replacement Guarantee.',
   },
   {
     question: 'What costs extra?',
