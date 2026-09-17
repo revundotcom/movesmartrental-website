@@ -66,7 +66,7 @@ function buildJobPostingSchema(role: Role) {
     },
     datePosted: role.postingStartDate,
     employmentType:
-      role.type.toLowerCase() === 'full-time' ? 'FULL_TIME' : 'OTHER',
+      role.type.toLowerCase().includes('full-time') || (role.workType && role.workType.toLowerCase().includes('full-time')) ? 'FULL_TIME' : 'OTHER',
     hiringOrganization: {
       '@type': 'Organization',
       name: 'MoveSmart Rentals',
