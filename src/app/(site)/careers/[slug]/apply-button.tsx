@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom'
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
 import PhoneInput, { isValidPhoneNumber, type Country } from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
+import { LocationSelector, type LocationValue } from '@/components/careers/location-selector'
 
 interface Props {
   role: string
@@ -72,6 +73,13 @@ function ApplyModal({
   const [num2, setNum2] = useState(0)
   const [phone, setPhone] = useState('')
   const [countryCode, setCountryCode] = useState<string>('US')
+  const [location, setLocation] = useState<LocationValue>({
+    country: '',
+    countryCode: '',
+    state: '',
+    stateCode: '',
+    city: '',
+  })
   const [businessType, setBusinessType] = useState('')
   const [hasVehicle, setHasVehicle] = useState('')
 
@@ -138,6 +146,10 @@ function ApplyModal({
 
     if (!phone || !isValidPhoneNumber(phone)) {
       errors.phone = 'Please enter a valid phone number'
+    }
+
+    if (!location.city?.trim()) {
+      errors.city = 'Please select your city'
     }
 
     const resume = fd.get('resume') as File | null
@@ -250,6 +262,18 @@ function ApplyModal({
 
     // Process mobile
     fd.set('mobile', phone)
+
+    // Set candidate residential location fields
+    fd.set('country', location.country)
+    fd.set('country_code', location.countryCode)
+    fd.set('state', location.state)
+    fd.set('province', location.state)
+    fd.set('state_province', location.state)
+    fd.set('city', location.city)
+    fd.set(
+      'residential_location',
+      [location.city, location.state, location.country].filter(Boolean).join(', '),
+    )
 
     const baseUrl = process.env.NEXT_PUBLIC_PORTAL_BASE_URL || 'https://phpstack-1217932-6516253.cloudwaysapps.com'
 
@@ -454,6 +478,24 @@ function ApplyModal({
                           {fieldErrors['phone'] && <p className="mt-1 text-xs text-red-500">{fieldErrors['phone']}</p>}
                         </div>
                       </div>
+
+                      {/* Residential Location: Single Google Autocomplete Field */}
+                      <LocationSelector
+                        value={location}
+                        onChange={(newLoc) => {
+                          setLocation(newLoc)
+                          setFieldErrors((prev) => {
+                            const updated = { ...prev }
+                            if (newLoc.city) delete updated.city
+                            return updated
+                          })
+                        }}
+                        errors={{
+                          city: fieldErrors['city'],
+                        }}
+                        defaultCountryCode={countryCode}
+                        required
+                      />
 
                       {isRemoteOrHybrid && (
                         <>
