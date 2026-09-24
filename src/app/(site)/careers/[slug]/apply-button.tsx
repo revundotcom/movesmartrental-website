@@ -148,8 +148,8 @@ function ApplyModal({
       errors.phone = 'Please enter a valid phone number'
     }
 
-    if (!location.city?.trim()) {
-      errors.city = 'Please select your city'
+    if (!location.city?.trim() && !location.state?.trim()) {
+      errors.city = 'Please select your city or province'
     }
 
     const resume = fd.get('resume') as File | null
@@ -486,7 +486,7 @@ function ApplyModal({
                           setLocation(newLoc)
                           setFieldErrors((prev) => {
                             const updated = { ...prev }
-                            if (newLoc.city) delete updated.city
+                            if (newLoc.city || newLoc.state) delete updated.city
                             return updated
                           })
                         }}
