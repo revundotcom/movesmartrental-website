@@ -170,6 +170,21 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── SECTION 2.25: Explainer Video ── */}
+      <section className="relative overflow-hidden bg-white pt-16 pb-0 sm:pt-20 sm:pb-0 md:pt-24 md:pb-0">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="relative mx-auto aspect-video w-full max-w-4xl overflow-hidden rounded-2xl shadow-2xl shadow-brand-navy/15 ring-1 ring-slate-200">
+            <iframe
+              className="absolute inset-0 size-full border-0"
+              src="https://www.youtube.com/embed/qxYRRr9EHLM?rel=0"
+              title="MoveSmart Rentals Explainer Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      </section>
+
       {/* ── SECTION 2.5: Audience Segmentation (landlords / builders / PMCs / institutional) ── */}
       <AudienceSegmentation />
 
