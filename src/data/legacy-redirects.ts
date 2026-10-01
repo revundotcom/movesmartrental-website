@@ -103,6 +103,12 @@ export const LEGACY_REDIRECTS: LegacyRedirect[] = [
     permanent: true,
     reason: 'Shortcut slug -> canonical services route',
   },
+  {
+    source: '/services/institutional-lease-up/',
+    destination: '/institutional-lease-up/',
+    permanent: true,
+    reason: 'Consolidate institutional lease-up to root standalone page',
+  },
 
   // --- Audience hubs ---
   {
