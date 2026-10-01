@@ -41,6 +41,7 @@ const MOBILE_NAV_SECTIONS: ReadonlyArray<NavSectionDef> = [
     label: 'Owners',
     items: [
       { title: 'Owner Hub', href: '/owners/' },
+      { title: 'Multifamily Leasing Services', href: '/institutional-lease-up/' },
       { title: 'Pricing', href: '/pricing/' },
       { title: 'Portal & Technology', href: '/portal-and-technology/' },
       { title: 'Reviews', href: '/reviews/' },
@@ -59,6 +60,7 @@ const MOBILE_NAV_SECTIONS: ReadonlyArray<NavSectionDef> = [
     label: 'Services',
     items: [
       { title: 'Tenant Placement', href: '/services/tenant-placement/' },
+      { title: 'Institutional Lease-Up', href: '/institutional-lease-up/' },
       { title: 'Leasing Services', href: '/services/leasing-services/' },
       { title: 'Tenant Screening', href: '/services/tenant-screening/' },
       { title: 'Rent Guarantee', href: '/services/rent-guarantee/' },
@@ -66,7 +68,6 @@ const MOBILE_NAV_SECTIONS: ReadonlyArray<NavSectionDef> = [
       { title: 'Tenant Guarantor', href: '/services/tenant-guarantor/' },
       { title: 'Rental Preparation', href: '/services/rental-preparation/' },
       { title: 'Portal & Technology', href: '/portal-and-technology/' },
-      { title: 'Institutional Lease-Up', href: '/institutional-lease-up/' },
     ],
   },
   {

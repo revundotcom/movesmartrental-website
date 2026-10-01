@@ -28,6 +28,7 @@ export const NAV_GROUPS = [
     label: 'Owners',
     items: [
       { title: 'Owner Hub', href: '/owners/', description: 'Landlord and operator command centre' },
+      { title: 'Multifamily Leasing Services', href: '/institutional-lease-up/', description: 'Bulk lease-up for apartment buildings' },
       { title: 'Pricing', href: '/pricing/', description: 'Transparent leasing fees, no monthly lock-in' },
       { title: 'Portal & Technology', href: '/portal-and-technology/', description: 'Owner portal and reporting tools' },
       { title: 'Reviews', href: '/reviews/', description: 'See what landlords say about MoveSmart' },
@@ -54,13 +55,13 @@ export const NAV_GROUPS = [
     label: 'Services',
     items: [
       { title: 'Tenant Placement', href: '/services/tenant-placement/', description: 'Marketing, showings, and lease signing' },
+      { title: 'Institutional Lease-Up', href: '/institutional-lease-up/', description: 'Bulk lease-up for new builds' },
       { title: 'Leasing Services', href: '/services/leasing-services/', description: 'Full-service leasing for owners' },
       { title: 'Tenant Screening', href: '/services/tenant-screening/', description: 'Multi-step applicant verification' },
       { title: 'Rent Guarantee', href: '/services/rent-guarantee/', description: 'Protection against missed payments' },
       { title: 'Tenant Insurance', href: '/services/tenant-insurance/', description: 'Coverage for renters and units' },
       { title: 'Tenant Guarantor', href: '/services/tenant-guarantor/', description: 'Co-signer support for applicants' },
       { title: 'Rental Preparation', href: '/services/rental-preparation/', description: 'Staging, photography, listing prep' },
-      { title: 'Institutional Lease-Up', href: '/institutional-lease-up/', description: 'Bulk lease-up for new builds' },
     ],
   },
   {
@@ -116,6 +117,7 @@ export const FOOTER_COLUMNS = [
     title: 'Core Services',
     links: [
       { label: 'Tenant Placement', href: '/services/tenant-placement/' },
+      { label: 'Institutional Lease-Up', href: '/institutional-lease-up/' },
       { label: 'Leasing Services', href: '/services/leasing-services/' },
       { label: 'Tenant Screening', href: '/services/tenant-screening/' },
       { label: 'Rent Guarantee', href: '/services/rent-guarantee/' },
@@ -123,7 +125,6 @@ export const FOOTER_COLUMNS = [
       { label: 'Tenant Guarantor', href: '/services/tenant-guarantor/' },
       { label: 'Rental Preparation', href: '/services/rental-preparation/' },
       { label: 'Portal & Technology', href: '/portal-and-technology/' },
-      { label: 'Institutional Lease-Up', href: '/institutional-lease-up/' },
     ],
   },
   {
@@ -158,6 +159,7 @@ export const FOOTER_COLUMNS = [
     title: 'Owner Resources',
     links: [
       { label: 'Owner Hub', href: '/owners/' },
+      { label: 'Multifamily Leasing Services', href: '/institutional-lease-up/' },
       { label: 'Pricing', href: '/pricing/' },
       { label: 'Owner FAQ', href: '/faq/' },
       { label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL },

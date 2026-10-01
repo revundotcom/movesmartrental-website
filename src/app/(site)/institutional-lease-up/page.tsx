@@ -141,6 +141,21 @@ export default async function InstitutionalLeaseUpPage() {
         </div>
       </section>
 
+      {/* ─── VIDEO SHOWCASE ────────────────────────────────────────────── */}
+      <section className="bg-[#FBFAF6] py-12 sm:py-16">
+        <div className="mx-auto max-w-5xl px-4">
+          <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-slate-200 shadow-xl shadow-brand-navy/10">
+            <iframe
+              src="https://www.youtube.com/embed/md1ozX7Zun0?rel=0&modestbranding=1"
+              title="MoveSmart Institutional Leasing"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 size-full"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* ─── EDITORIAL IMAGE BRIDGE ────────────────────── */}
       <section className="bg-white py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4">
@@ -171,21 +186,6 @@ export default async function InstitutionalLeaseUpPage() {
                 We plug our technology, lead management, and overflow support directly into your existing on-site property teams, or deploy fully dedicated on-site staff to run your centralized portfolio leasing.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── VIDEO SHOWCASE ────────────────────────────────────────────── */}
-      <section className="bg-[#FBFAF6] py-12 sm:py-16">
-        <div className="mx-auto max-w-5xl px-4">
-          <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-slate-200 shadow-xl shadow-brand-navy/10">
-            <iframe
-              src="https://www.youtube.com/embed/md1ozX7Zun0?rel=0&modestbranding=1"
-              title="MoveSmart Institutional Leasing"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="absolute inset-0 size-full"
-            />
           </div>
         </div>
       </section>
