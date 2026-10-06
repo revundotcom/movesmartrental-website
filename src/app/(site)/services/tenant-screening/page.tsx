@@ -170,6 +170,21 @@ export default function TenantScreeningPage() {
         }
       />
 
+      {/* ─── VIDEO SHOWCASE ────────────────────────────────────────────── */}
+      <section className="bg-[#FBFAF6] py-12 sm:py-16">
+        <div className="mx-auto max-w-5xl px-4">
+          <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-slate-200 shadow-xl shadow-brand-navy/10">
+            <iframe
+              src="https://www.youtube.com/embed/_LHfZ6wwmqQ?rel=0&modestbranding=1"
+              title="MoveSmart Tenant Screening"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 size-full"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* ─── CENTERPIECE — Layered documents collage + intro copy ─────────── */}
       <section className="relative overflow-hidden bg-white py-20 sm:py-24">
         {/* Faint grid backdrop for forensic feel */}

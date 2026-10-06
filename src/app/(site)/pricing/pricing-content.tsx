@@ -1042,11 +1042,6 @@ function TransparencyTable() {
 
 const PRICING_GUARANTEES = [
   {
-    title: 'Tenant Replacement Guarantee.',
-    body:
-      'If a tenant we placed breaks the lease in the first six months, we re-lease the unit at no additional success fee. We carry advertising, screening, and lease prep again. Our economics absorb the cost, not yours.',
-  },
-  {
     title: 'No-Placement, No-Fee Promise.',
     body:
       'You owe nothing if we fail to place a qualified tenant. There is no kill-fee, no time-and-materials clawback, no minimum spend. Our risk is real and contractual - spelled out in writing before you sign anything.',
@@ -1188,6 +1183,26 @@ const PRICING_FAQS = [
   },
 ]
 
+/* ─── VIDEO SHOWCASE ────────────────────────────────────────────── */
+
+function PricingVideoShowcase() {
+  return (
+    <section className="bg-[#FBFAF6] py-12 sm:py-16">
+      <div className="mx-auto max-w-5xl px-4">
+        <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-slate-200 shadow-xl shadow-brand-navy/10">
+          <iframe
+            src="https://www.youtube.com/embed/ywd9ZJmJMzI?rel=0&modestbranding=1"
+            title="MoveSmart Pricing Explained"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="absolute inset-0 size-full"
+          />
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ─── Page ───────────────────────────────────────────────────────────────────── */
 
 export function PricingContent() {
@@ -1195,6 +1210,9 @@ export function PricingContent() {
     <main>
       {/* 1. Hero - dark photographic backdrop with split-pane $0 / One-time spec */}
       <PricingHero />
+
+      {/* 1.5. Video Showcase */}
+      <PricingVideoShowcase />
 
       {/* 2. How we charge - numbered editorial paragraphs */}
       <HowWeCharge />
