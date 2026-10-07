@@ -5,6 +5,7 @@ import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { OwnersFeaturesBento } from '@/components/blocks/owners-features-bento'
 import { generatePageMetadata } from '@/lib/metadata'
+import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
 
 import {
   NotificationTimeline,
@@ -174,6 +175,21 @@ export default function PortalAndTechnologyPage() {
       {/* SECTION 2 - Press logos */}
       <PressLogos />
 
+      {/* ─── Video Section ──────────────────────────────────────────────────────── */}
+      <section className="bg-white py-12 sm:py-16">
+        <div className="mx-auto max-w-5xl px-4">
+          <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-slate-200 shadow-xl shadow-brand-navy/10">
+            <iframe
+              src="https://www.youtube.com/embed/Z1KqBEtVDM8?rel=0&modestbranding=1"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 size-full"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* SECTION 3 - Philosophy: 01 / 02 / 03 numbered editorial */}
       <PhilosophyManifesto />
 
@@ -204,7 +220,7 @@ export default function PortalAndTechnologyPage() {
       {/* SECTION 13 - Testimonials wall */}
       <TestimonialsWall />
 
-      {/* SECTION 14 - Portal-specific FAQ */}
+      {/* SECTION 15 - Portal-specific FAQ */}
       <FAQBlock
         title="Portal & Technology FAQ"
         showQuestionsCta={false}

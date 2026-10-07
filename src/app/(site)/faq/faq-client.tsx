@@ -181,6 +181,19 @@ export function FAQCategoryBlock({
 
           {/* Q/A column */}
           <div className="lg:col-span-8">
+            {category.videoUrl && (
+              <div className="mb-10 aspect-video w-full overflow-hidden rounded-3xl border border-slate-200 shadow-xl shadow-brand-navy/10">
+                <iframe 
+                  width="100%" 
+                  height="100%" 
+                  src={category.videoUrl} 
+                  title={`${category.heading} video`}
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  allowFullScreen
+                ></iframe>
+              </div>
+            )}
             <RevealOnScroll variant="slideUp" stagger={0.06} duration={0.45}>
               {category.questions.map((item, i) => (
                 <QARow
