@@ -5,7 +5,7 @@ import { CTABannerBlock } from '@/components/blocks/cta-banner-block'
 import { FAQBlock } from '@/components/blocks/faq-block'
 import { OwnersFeaturesBento } from '@/components/blocks/owners-features-bento'
 import { generatePageMetadata } from '@/lib/metadata'
-import { RevealOnScroll } from '@/components/ui/reveal-on-scroll'
+
 
 import {
   NotificationTimeline,
