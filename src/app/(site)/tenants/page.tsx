@@ -404,8 +404,23 @@ export default async function TenantsPage() {
         backgroundImageAlt="Couple settling into a bright modern rental apartment"
       />
 
+      {/* ─── Video Section ──────────────────────────────────────────────────────── */}
+      <section className="bg-white py-12 sm:py-16">
+        <div className="mx-auto max-w-5xl px-4">
+          <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-slate-200 shadow-xl shadow-brand-navy/10">
+            <iframe
+              src="https://www.youtube.com/embed/7hOxI8ZVD7Q?rel=0&modestbranding=1"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 size-full"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* ─── Editorial image bridge: happy new tenants moving in ───────── */}
-      <section className="bg-white pt-16">
+      <section className="bg-[#FBFAF6] py-20 sm:py-24">
         <div className="mx-auto max-w-6xl px-4">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
             <div className="relative aspect-[5/4] overflow-hidden rounded-2xl shadow-xl shadow-brand-navy/10">

@@ -20,6 +20,8 @@ export interface FaqCategory {
   /** Single-line deck/standfirst, editorial feel */
   deck: string
   questions: FaqItem[]
+  /** Optional YouTube video URL to embed for this category */
+  videoUrl?: string
 }
 
 /* ------------------------------------------------------------------ */
@@ -244,6 +246,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
     heading: 'For owners',
     deck: 'How MoveSmart works if you own one unit or a hundred - from listing night one to a documented move-in.',
     questions: ownersQuestions,
+    videoUrl: 'https://www.youtube.com/embed/4mWgZSpyqnM',
   },
   {
     id: 'tenants',
@@ -251,6 +254,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
     heading: 'For tenants',
     deck: 'Applying, living in the home, and moving out - the rules, the process, and your rights under provincial law.',
     questions: tenantsQuestions,
+    videoUrl: 'https://www.youtube.com/embed/uL21v80alaQ',
   },
   {
     id: 'pricing',
