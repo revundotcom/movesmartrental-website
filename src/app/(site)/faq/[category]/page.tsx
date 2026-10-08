@@ -13,8 +13,9 @@ export function generateStaticParams() {
   }))
 }
 
-export function generateMetadata({ params }: { params: { category: string } }): Metadata {
-  const cat = FAQ_CATEGORIES.find((c) => c.id === params.category)
+export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
+  const { category } = await params;
+  const cat = FAQ_CATEGORIES.find((c) => c.id === category)
   if (!cat) return {}
   
   return {
@@ -37,8 +38,9 @@ export function generateMetadata({ params }: { params: { category: string } }): 
   }
 }
 
-export default function CategoryFAQPage({ params }: { params: { category: string } }) {
-  const cat = FAQ_CATEGORIES.find((c) => c.id === params.category)
+export default async function CategoryFAQPage({ params }: { params: Promise<{ category: string }> }) {
+  const { category } = await params;
+  const cat = FAQ_CATEGORIES.find((c) => c.id === category)
   
   if (!cat) {
     notFound()
