@@ -38,11 +38,6 @@ export const NAV_GROUPS = [
     label: 'Tenants',
     items: [
       { title: 'Tenant Hub', href: '/tenants/', description: 'Everything renters need in one place' },
-      // 'Browse Properties' removed from public nav per client direction
-      // (Jun 2026): /properties/ is no longer exposed to the public. The
-      // route still resolves by direct URL but is noindexed and absent
-      // from nav, footer, and sitemap.
-      { title: 'Tenant FAQ', href: '/faq/', description: 'Answers for renters and applicants' },
     ],
   },
   // {
@@ -79,9 +74,14 @@ export const NAV_GROUPS = [
     ],
   },
   {
-    label: 'Franchising',
+    label: 'FAQs',
     items: [
-      { title: 'Franchising', href: '/franchising/', description: 'Build a leasing platform with MoveSmart' },
+      { title: 'For Owners', href: '/faq/owners/', description: 'Common questions from property owners' },
+      { title: 'For Tenants', href: '/faq/tenants/', description: 'Common questions from renters' },
+      { title: 'Pricing', href: '/faq/pricing/', description: 'Questions about fees and plans' },
+      { title: 'Services', href: '/faq/services/', description: 'Questions about our services' },
+      { title: 'Portal', href: '/faq/portal/', description: 'Questions about the MoveSmart portal' },
+      { title: 'Legal & Compliance', href: '/faq/legal/', description: 'Questions about compliance and legal' },
     ],
   },
   {
@@ -91,6 +91,7 @@ export const NAV_GROUPS = [
       { title: 'Meet the Team', href: '/meet-the-team/', description: 'The leasing operators behind every owner-file' },
       { title: 'Careers', href: '/careers/', description: 'Join the MoveSmart leasing team' },
       { title: 'Reviews', href: '/reviews/', description: 'What landlords say about MoveSmart' },
+      { title: 'Franchising', href: '/franchising/', description: 'Build a leasing platform with MoveSmart' },
     ],
   },
   {
@@ -161,7 +162,7 @@ export const FOOTER_COLUMNS = [
       { label: 'Owner Hub', href: '/owners/' },
       { label: 'Multifamily Leasing Services', href: '/institutional-lease-up/' },
       { label: 'Pricing', href: '/pricing/' },
-      { label: 'Owner FAQ', href: '/faq/' },
+      { label: 'Owner FAQ', href: '/faq/owners/' },
       { label: 'List my property', href: PORTAL_OWNER_SIGNUP_URL },
     ],
   },
@@ -171,7 +172,7 @@ export const FOOTER_COLUMNS = [
       { label: 'Tenant Hub', href: '/tenants/' },
       // 'Browse Properties' removed per client direction (Jun 2026) —
       // /properties/ is hidden from public surfaces.
-      { label: 'Tenant FAQ', href: '/faq/' },
+      { label: 'Tenant FAQ', href: '/faq/tenants/' },
     ],
   },
   {
