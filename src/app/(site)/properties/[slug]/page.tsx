@@ -380,10 +380,13 @@ export default async function PropertyDetailPage({ params }: PageProps) {
     (unit.status ?? '').toLowerCase() === 'available'
 
   // Portal deep links (User Action Flow §2 in the API doc).
-  // Both buttons require unit.zcrm_id; when missing we fall back to the
-  // contact form so the lead isn't dropped.
-  const scheduleUrl = portalShowingScheduleUrl(unit.zcrm_id)
-  const reserveUrl = portalReserveOfferUrl(unit.zcrm_id)
+  //
+  // Built from the slug, not the CRM id. The id is an internal reference and
+  // putting one in every listing's buttons is what put a row of them in the
+  // page source; the slug says the same thing in the address already on screen.
+  // When it is missing we fall back to the contact form so the lead isn't dropped.
+  const scheduleUrl = portalShowingScheduleUrl(unit.slug)
+  const reserveUrl = portalReserveOfferUrl(unit.slug)
 
   // Collect every gallery image for the new lightbox-capable tabs panel.
   const galleryImages: string[] = []
