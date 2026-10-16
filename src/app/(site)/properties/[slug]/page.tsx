@@ -20,7 +20,6 @@ import { BreadcrumbNav } from '@/components/layout/breadcrumb-nav'
 import {
   getProperty,
   portalReserveOfferUrl,
-  portalShowingScheduleUrl,
   resolvePropertyImage,
 } from '@/lib/portal-api'
 import type { Property, PropertyMedia, PropertyRoom } from '@/types/property'
@@ -379,13 +378,13 @@ export default async function PropertyDetailPage({ params }: PageProps) {
     (unit.availability ?? '').toLowerCase() === 'available' ||
     (unit.status ?? '').toLowerCase() === 'available'
 
-  // Portal deep links (User Action Flow §2 in the API doc).
-  //
-  // Built from the slug, not the CRM id. The id is an internal reference and
-  // putting one in every listing's buttons is what put a row of them in the
-  // page source; the slug says the same thing in the address already on screen.
+  // Apply Now goes to the portal (User Action Flow §2 in the API doc), built
+  // from the slug rather than the CRM id: the id is an internal reference, and
+  // one in every listing's markup is what a reader of the page source found.
   // When it is missing we fall back to the contact form so the lead isn't dropped.
-  const scheduleUrl = portalShowingScheduleUrl(unit.slug)
+  //
+  // There is no portal link for booking a showing. That is this site's own modal,
+  // which works from the unit id and the slots API.
   const reserveUrl = portalReserveOfferUrl(unit.slug)
 
   // Collect every gallery image for the new lightbox-capable tabs panel.
@@ -953,7 +952,6 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         capture waitlist / future-availability leads via these buttons. */}
       <PropertyStickyCTA
         reserveUrl={reserveUrl}
-        scheduleUrl={scheduleUrl}
         slug={slug}
         unitId={unit.id?.toString() || unit.zcrm_id?.toString() || ''}
       />
