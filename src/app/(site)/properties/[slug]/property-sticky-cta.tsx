@@ -5,10 +5,8 @@ import { createPortal } from 'react-dom'
 import Link from 'next/link'
 
 interface Props {
-  /** Portal reserve/offer deep link, or null when zcrm_id is missing. */
+  /** Portal reserve/offer deep link, or null when the unit has no slug. */
   reserveUrl: string | null
-  /** Portal showing-schedule deep link, or null when zcrm_id is missing. */
-  scheduleUrl: string | null
   /** Property slug — used for the contact-form fallback links. */
   slug: string
   /** Unit ID for the Schedule Tour modal. */

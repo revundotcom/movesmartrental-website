@@ -37,19 +37,20 @@ export const PORTAL_LOGIN_URL = `${PORTAL_BASE_URL}/login`
 export const PORTAL_OWNER_SIGNUP_URL = `${PORTAL_REGISTER_URL}?type=owner`
 
 /**
- * Property-interaction deep links. The portal handles auth + restores
- * the original intent after login (see "User Action Flow" in the API doc).
- * Both helpers require the unit's `zcrm_id` returned by the listing /
- * detail APIs.
+ * Apply Now: the portal handles auth and restores the original intent after
+ * login (see "User Action Flow" in the API doc).
+ *
+ * It takes the unit's slug. The portal also accepts a CRM id, and did only that
+ * until now — which is why one sat in every listing on this site for anyone
+ * reading the page source. The slug is the address, and already public.
+ *
+ * There was a matching helper for booking a showing. Nothing rendered what it
+ * built: that button is this site'''s own modal, which works from the unit id and
+ * the slots API and never touched the portal.
  */
-export function portalShowingScheduleUrl(zcrmId: string | number | null | undefined): string | null {
-  if (zcrmId == null || zcrmId === '') return null
-  return `${PORTAL_BASE_URL}/showing/schedule/${encodeURIComponent(String(zcrmId))}`
-}
-
-export function portalReserveOfferUrl(zcrmId: string | number | null | undefined): string | null {
-  if (zcrmId == null || zcrmId === '') return null
-  return `${PORTAL_BASE_URL}/offer/reserve/${encodeURIComponent(String(zcrmId))}`
+export function portalReserveOfferUrl(slug: string | number | null | undefined): string | null {
+  if (slug == null || slug === '') return null
+  return `${PORTAL_BASE_URL}/offer/reserve/${encodeURIComponent(String(slug))}`
 }
 
 const JSON_HEADERS = {
