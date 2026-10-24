@@ -164,7 +164,17 @@ function PropertyCard({ property }: { property: Property }) {
   const sqftLabel =
     property.approximate_square_footage ||
     (sqft > 0 ? sqft.toLocaleString('en-CA') : '')
-  const type = displayType(property)
+  /*
+   * An advert is a listing standing for every room of one kind in a shared
+   * building: forty identical bedrooms are one thing to advertise, not forty.
+   * So the card says what it covers and how many are left, where a unit's says
+   * its type and its rooms — the portal's own card reads the same way.
+   */
+  const isAdvert = property.kind === 'advert'
+  const free = property.available_count ?? 0
+  const coming = property.upcoming_count ?? 0
+
+  const type = isAdvert ? (property.describes ?? 'Shared suite') : displayType(property)
   const neighbourhood = property.building?.neighbourhood
   const city = property.building?.city
 
@@ -175,20 +185,9 @@ function PropertyCard({ property }: { property: Property }) {
       ? `https://www.google.com/maps?layer=c&cbll=${property.latitude},${property.longitude}&cbp=11,0,0,0,0&output=svembed`
       : `https://maps.google.com/maps?q=&layer=c&cbll=&cbp=&output=svembed&q=${encodeURIComponent(property.unit_address || property.unit_name)}`
 
-  /*
-   * A unit has a page here. An advert does not: it stands for every room of one
-   * kind in a shared building, and its page is the portal's, which the card
-   * carries in `url`. Sent to /properties/{slug} it asked this site for a unit
-   * by that slug, and there is none — the visitor got a 404.
-   */
-  const href =
-    property.kind === 'advert' && property.url
-      ? property.url
-      : `/properties/${property.slug}/`
-
   return (
     <Link
-      href={href}
+      href={`/properties/${property.slug}/`}
       target="_blank"
       rel="noopener noreferrer"
       className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-[#10B981] focus-visible:ring-offset-2 rounded-xl"
@@ -247,6 +246,12 @@ function PropertyCard({ property }: { property: Property }) {
             </p>
           </div>
 
+          {isAdvert && (
+            <p className="mt-1 line-clamp-2 text-base font-semibold text-[#0B1D3A]">
+              {property.unit_name}
+            </p>
+          )}
+
           <p className="mt-2 flex items-start gap-1.5 text-sm font-medium text-[#0B1D3A]">
             <MapPin className="mt-0.5 size-4 shrink-0 text-slate-400" />
             <span className="line-clamp-2">{property.unit_address}</span>
@@ -258,6 +263,20 @@ function PropertyCard({ property }: { property: Property }) {
           )}
 
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-slate-100 pt-4 text-sm text-[#0B1D3A]">
+            {isAdvert && (
+              <>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="font-semibold text-[#10B981]">{free}</span>
+                  <span className="text-slate-500">available</span>
+                </span>
+                {coming > 0 && (
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="font-semibold">{coming}</span>
+                    <span className="text-slate-500">coming free</span>
+                  </span>
+                )}
+              </>
+            )}
             <span className="inline-flex items-center gap-1.5">
               <Bed className="size-4 text-slate-400" />
               <span className="font-semibold">{beds || '—'}</span>
