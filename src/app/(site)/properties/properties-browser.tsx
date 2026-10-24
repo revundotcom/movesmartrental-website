@@ -175,9 +175,20 @@ function PropertyCard({ property }: { property: Property }) {
       ? `https://www.google.com/maps?layer=c&cbll=${property.latitude},${property.longitude}&cbp=11,0,0,0,0&output=svembed`
       : `https://maps.google.com/maps?q=&layer=c&cbll=&cbp=&output=svembed&q=${encodeURIComponent(property.unit_address || property.unit_name)}`
 
+  /*
+   * A unit has a page here. An advert does not: it stands for every room of one
+   * kind in a shared building, and its page is the portal's, which the card
+   * carries in `url`. Sent to /properties/{slug} it asked this site for a unit
+   * by that slug, and there is none — the visitor got a 404.
+   */
+  const href =
+    property.kind === 'advert' && property.url
+      ? property.url
+      : `/properties/${property.slug}/`
+
   return (
     <Link
-      href={`/properties/${property.slug}/`}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-[#10B981] focus-visible:ring-offset-2 rounded-xl"

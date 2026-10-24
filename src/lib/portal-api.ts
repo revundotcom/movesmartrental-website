@@ -235,12 +235,21 @@ export async function getAllProperties(
     }
   }
 
-  // De-dupe by id (in case the API returns overlapping pages).
-  const seen = new Set<number>()
+  /*
+   * De-dupe in case the API returns overlapping pages.
+   *
+   * Keyed on what a card is as well as on its id. A card is either a unit or an
+   * advert — a listing standing for every room of one kind — and those ids come
+   * from different tables, so the same number means two different things. Keyed
+   * on the number alone, a unit and an advert that happened to share one would
+   * have left one of them off the page with nothing to show for it.
+   */
+  const seen = new Set<string>()
   const unique: Property[] = []
   for (const p of collected) {
-    if (!seen.has(p.id)) {
-      seen.add(p.id)
+    const key = `${p.kind ?? 'unit'}:${p.id}`
+    if (!seen.has(key)) {
+      seen.add(key)
       unique.push(p)
     }
   }

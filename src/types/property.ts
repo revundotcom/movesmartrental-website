@@ -71,6 +71,29 @@ export interface PropertyBuilding {
 }
 
 export interface Property {
+  /*
+   * What this card is.
+   *
+   * 'unit' is one property, as it has always been. 'advert' is a listing in a
+   * shared building: one card standing for every room of one kind in it —
+   * forty identical bedrooms are one thing to advertise, not forty. Its id is an
+   * advert's, from another table, so it is only unique alongside the kind.
+   *
+   * Absent on an older portal, where every card was a unit.
+   */
+  kind?: 'unit' | 'advert'
+
+  /* An advert card only: how many of its rooms can be had, and how many soon. */
+  advert_id?: number
+  advert_code?: string
+  available_count?: number
+  upcoming_count?: number
+  describes?: string
+  show_unit_id?: number | null
+
+  /* Where the listing's own page is: the portal's, not this site's. */
+  url?: string
+
   id: number
   building_id: number
   unit_name: string
