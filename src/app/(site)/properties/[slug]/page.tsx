@@ -387,6 +387,20 @@ export default async function PropertyDetailPage({ params }: PageProps) {
   // which works from the unit id and the slots API.
   const reserveUrl = portalReserveOfferUrl(unit.slug)
 
+  /*
+   * What the tour endpoints are asked for.
+   *
+   * A listing is not a unit. Its id belongs to another table and is a small
+   * number like any unit id, so sending it asked the portal for a unit that is
+   * not there — "Selected unit not found" — and, where the numbers happened to
+   * meet, would have booked a tour in an unrelated property. Its slug is its
+   * own, and the portal takes a visitor to the flat kept for viewing.
+   */
+  const tourUnitId =
+    unit.kind === 'advert'
+      ? (unit.slug ?? '')
+      : unit.id?.toString() || unit.zcrm_id?.toString() || ''
+
   // Collect every gallery image for the new lightbox-capable tabs panel.
   const galleryImages: string[] = []
   const cover = resolvePropertyImage(unit.cover_image ?? unit.cover_thumb)
@@ -833,7 +847,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
             <div className="lg:col-span-2">
               {/* Inline Tour Scheduler */}
               <section aria-label="Schedule a tour" className="mb-8">
-                <ScheduleTourInline unitId={unit.id?.toString() || unit.zcrm_id?.toString() || ''} />
+                <ScheduleTourInline unitId={tourUnitId} />
               </section>
 
               <PropertyGate>{gatedBody}</PropertyGate>
@@ -891,7 +905,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
                       </Link>
                     )}
                     <ScheduleTourButton
-                      unitId={unit.id?.toString() || unit.zcrm_id?.toString() || ''}
+                      unitId={tourUnitId}
                     />
                   </div>
                 </div>
@@ -953,7 +967,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
       <PropertyStickyCTA
         reserveUrl={reserveUrl}
         slug={slug}
-        unitId={unit.id?.toString() || unit.zcrm_id?.toString() || ''}
+        unitId={tourUnitId}
       />
     </>
   )
