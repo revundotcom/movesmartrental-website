@@ -165,16 +165,12 @@ function PropertyCard({ property }: { property: Property }) {
     property.approximate_square_footage ||
     (sqft > 0 ? sqft.toLocaleString('en-CA') : '')
   /*
-   * An advert is a listing standing for every room of one kind in a shared
-   * building: forty identical bedrooms are one thing to advertise, not forty.
-   * So the card says what it covers and how many are left, where a unit's says
-   * its type and its rooms — the portal's own card reads the same way.
+   * A listing in a shared building is still a place to live, and the office
+   * asked for it to read exactly like any other: the same label, the same
+   * rooms, no count of what is left and no second title above the address.
+   * What it covers is already in the address line — "Tower B, floors 1 to 5".
    */
-  const isAdvert = property.kind === 'advert'
-  const free = property.available_count ?? 0
-  const coming = property.upcoming_count ?? 0
-
-  const type = isAdvert ? (property.describes ?? 'Shared suite') : displayType(property)
+  const type = displayType(property)
   const neighbourhood = property.building?.neighbourhood
   const city = property.building?.city
 
@@ -246,12 +242,6 @@ function PropertyCard({ property }: { property: Property }) {
             </p>
           </div>
 
-          {isAdvert && (
-            <p className="mt-1 line-clamp-2 text-base font-semibold text-[#0B1D3A]">
-              {property.unit_name}
-            </p>
-          )}
-
           <p className="mt-2 flex items-start gap-1.5 text-sm font-medium text-[#0B1D3A]">
             <MapPin className="mt-0.5 size-4 shrink-0 text-slate-400" />
             <span className="line-clamp-2">{property.unit_address}</span>
@@ -263,20 +253,6 @@ function PropertyCard({ property }: { property: Property }) {
           )}
 
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-slate-100 pt-4 text-sm text-[#0B1D3A]">
-            {isAdvert && (
-              <>
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="font-semibold text-[#10B981]">{free}</span>
-                  <span className="text-slate-500">available</span>
-                </span>
-                {coming > 0 && (
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="font-semibold">{coming}</span>
-                    <span className="text-slate-500">coming free</span>
-                  </span>
-                )}
-              </>
-            )}
             <span className="inline-flex items-center gap-1.5">
               <Bed className="size-4 text-slate-400" />
               <span className="font-semibold">{beds || '—'}</span>
