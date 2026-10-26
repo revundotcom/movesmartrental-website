@@ -144,6 +144,11 @@ export interface Property {
   status?: string | null
   description?: string | null
   cover_thumb?: string | null
+  /*
+   * The cover at full size, which is the same picture cover_thumb is a thumbnail
+   * of — and the same file as the first row of `media`. A gallery wants this one.
+   */
+  cover_photo_url?: string | null
   cover_image?: PropertyMedia | string | null
   media?: PropertyMedia[]
   videos?: PropertyMedia[]
