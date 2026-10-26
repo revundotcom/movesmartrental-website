@@ -83,7 +83,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     `${unit.number_of_bedrooms || unit.bedrooms || ''} bed, ${unit.number_of_bathrooms || unit.bathrooms || ''} bath ${unit.property_sub_type || 'rental'
     } at ${unit.unit_address}.`
 
-  const image = resolvePropertyImage(unit.cover_image ?? unit.cover_thumb)
+  // The picture a share card shows, so the full-size one: a thumbnail is a few
+  // hundred pixels and every social preview is a thousand or more.
+  const image = resolvePropertyImage(unit.cover_image ?? unit.cover_photo_url ?? unit.cover_thumb)
 
   return {
     title: unit.unit_name,
@@ -401,9 +403,17 @@ export default async function PropertyDetailPage({ params }: PageProps) {
       ? (unit.slug ?? '')
       : unit.id?.toString() || unit.zcrm_id?.toString() || ''
 
-  // Collect every gallery image for the new lightbox-capable tabs panel.
+  /*
+   * Collect every gallery image for the lightbox-capable tabs panel.
+   *
+   * The cover at full size, not its thumbnail. The thumbnail is the same picture
+   * under a different address (…/thumbs/x.webp against …/x.webp), so the check
+   * below could not see that the first row of `media` was already it: a property
+   * with 39 photographs showed 40, the first two were the same, and the big one
+   * was a thumbnail blown up.
+   */
   const galleryImages: string[] = []
-  const cover = resolvePropertyImage(unit.cover_image ?? unit.cover_thumb)
+  const cover = resolvePropertyImage(unit.cover_image ?? unit.cover_photo_url ?? unit.cover_thumb)
   if (cover) galleryImages.push(cover)
   const media: PropertyMedia[] = Array.isArray(unit.media) ? unit.media : []
   for (const m of media) {
