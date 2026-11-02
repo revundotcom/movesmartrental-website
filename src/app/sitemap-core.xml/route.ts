@@ -58,6 +58,7 @@ const CORE_URLS: UrlEntry[] = [
     priority: 0.8,
   })),
   { path: '/locations/', changefreq: 'weekly', priority: 0.8 },
+  { path: '/properties/', changefreq: 'daily', priority: 0.9 },
   { path: '/pricing/', changefreq: 'monthly', priority: 0.8 },
   { path: '/resources/', changefreq: 'weekly', priority: 0.75 },
   { path: '/franchising/', changefreq: 'monthly', priority: 0.7 },

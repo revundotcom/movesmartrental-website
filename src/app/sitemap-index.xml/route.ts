@@ -16,6 +16,7 @@ const SITE_URL =
 
 const SEGMENT_SITEMAPS = [
   'sitemap-core.xml',
+  'sitemap-properties.xml',
   'sitemap-ca.xml',
   'sitemap-us.xml',
   'sitemap-resources.xml',

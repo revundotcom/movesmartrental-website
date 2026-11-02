@@ -15,12 +15,6 @@ export default function robots(): MetadataRoute.Robots {
           '/_next/',
           '/*.json$',
           '/draft/',
-          // /properties/ hidden from the public per client direction
-          // (Jun 2026). Disallow at the crawler level so no engine
-          // surfaces it in results — the page itself is also noindexed
-          // and individual /properties/<slug>/ detail pages inherit.
-          '/properties/',
-          '/properties/*',
         ],
       },
       // Explicitly allow major AI / LLM crawlers so MoveSmart content is
@@ -42,6 +36,7 @@ export default function robots(): MetadataRoute.Robots {
       `${SITE_URL}/sitemap.xml`,
       `${SITE_URL}/sitemap-index.xml`,
       `${SITE_URL}/sitemap-core.xml`,
+      `${SITE_URL}/sitemap-properties.xml`,
       `${SITE_URL}/sitemap-ca.xml`,
       `${SITE_URL}/sitemap-us.xml`,
       `${SITE_URL}/sitemap-resources.xml`,
