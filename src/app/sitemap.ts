@@ -11,6 +11,7 @@ import { SILO_INDUSTRY_SLUGS } from '@/data/silo-industries'
 import { SILO_LOCATION_SLUGS } from '@/data/silo-locations'
 import { SILO_RESOURCE_SLUGS } from '@/data/silo-resources'
 import { FLAT_PAGES, SILO_BLOGS } from '@/lib/silo'
+import { getAllProperties } from '@/lib/portal-api'
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
@@ -22,6 +23,7 @@ const siteUrl =
 export async function generateSitemaps() {
   return [
     { id: 'static' },
+    { id: 'properties' },
     { id: 'ca-cities' },
     { id: 'ca-services' },
     { id: 'us-cities' },
@@ -119,6 +121,7 @@ async function buildStaticSegment(): Promise<MetadataRoute.Sitemap> {
     { url: `${siteUrl}/tenants/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.9 },
     { url: `${siteUrl}/services/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.8 },
     { url: `${siteUrl}/locations/`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.8 },
+    { url: `${siteUrl}/properties/`, lastModified: now, changeFrequency: 'daily' as const, priority: 0.9 },
     { url: `${siteUrl}/pricing/`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.7 },
     // /resources/ hub URL intentionally omitted from the sitemap per
     // client direction (June 2026). The page still resolves by direct
@@ -274,6 +277,47 @@ function buildBlogSegment(): MetadataRoute.Sitemap {
   }))
 }
 
+async function buildPropertiesSegment(): Promise<MetadataRoute.Sitemap> {
+  const now = new Date()
+  const entries: MetadataRoute.Sitemap = [
+    {
+      url: `${siteUrl}/properties/294-chandler-drive-kitchener-on-n2e-2k1/`,
+      lastModified: now,
+      changeFrequency: 'weekly' as const,
+      priority: 0.85,
+    },
+    {
+      url: `${siteUrl}/properties/286-chandler-drive-kitchener-on-n2e-3j8/`,
+      lastModified: now,
+      changeFrequency: 'weekly' as const,
+      priority: 0.85,
+    },
+    {
+      url: `${siteUrl}/properties/chandler-drive-kitchener-on/`,
+      lastModified: now,
+      changeFrequency: 'weekly' as const,
+      priority: 0.85,
+    },
+  ]
+
+  try {
+    const properties = await getAllProperties({ revalidate: 1800 })
+    for (const p of properties) {
+      if (!p.slug) continue
+      entries.push({
+        url: `${siteUrl}/properties/${p.slug}/`,
+        lastModified: p.updated_at ? new Date(p.updated_at) : p.created_at ? new Date(p.created_at) : now,
+        changeFrequency: 'daily' as const,
+        priority: 0.8,
+      })
+    }
+  } catch (err) {
+    console.warn('[sitemap] Failed to fetch properties:', err)
+  }
+
+  return entries
+}
+
 /* ------------------------------------------------------------------ */
 /*  Main sitemap function                                             */
 /* ------------------------------------------------------------------ */
@@ -286,6 +330,8 @@ export default async function sitemap({
   switch (id) {
     case 'static':
       return await buildStaticSegment()
+    case 'properties':
+      return await buildPropertiesSegment()
     case 'ca-cities':
       return buildCaCitiesSegment()
     case 'ca-services':
