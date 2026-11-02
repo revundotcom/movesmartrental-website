@@ -215,23 +215,21 @@ export async function getAllProperties(
       ? Math.min(first.last_page, MAX_PAGES)
       : MAX_PAGES
 
-  // Already have page 1. Fetch the rest in parallel for speed.
+  // Fetch remaining pages in small batches to prevent overloading upstream PHP-FPM pool
   if (totalPages > 1) {
-    const pageNumbers = Array.from(
-      { length: totalPages - 1 },
-      (_, i) => i + 2,
-    )
-    const results = await Promise.all(
-      pageNumbers.map((p) => getProperties({ page: p, revalidate })),
-    )
-    for (const r of results) {
-      if (!r || !Array.isArray(r.data) || r.data.length === 0) {
-        // For APIs that lie about `last_page`, an empty page is the
-        // real stop signal. We still keep what came before.
-        if (typeof first.last_page !== 'number') break
-        continue
+    for (let p = 2; p <= totalPages; p += 2) {
+      const batch = [getProperties({ page: p, revalidate })]
+      if (p + 1 <= totalPages) {
+        batch.push(getProperties({ page: p + 1, revalidate }))
       }
-      collected.push(...r.data)
+      const results = await Promise.all(batch)
+      for (const r of results) {
+        if (!r || !Array.isArray(r.data) || r.data.length === 0) continue
+        collected.push(...r.data)
+      }
+      if (p + 2 <= totalPages) {
+        await new Promise((resolve) => setTimeout(resolve, 80))
+      }
     }
   }
 
@@ -248,8 +246,10 @@ export async function getAllProperties(
 }
 
 /**
- * Fetch a single property by slug. Returns `null` for 404/network
- * failures so the caller can call `notFound()` cleanly.
+ * Fetch a single property by slug.
+ * Returns null ONLY when upstream genuinely returns 404 (property not found).
+ * For 5xx errors or network glitches, retries automatically. If it still fails,
+ * throws an error so Next.js ISR preserves the existing valid page instead of caching a false 404!
  */
 export async function getProperty(
   slug: string,
@@ -258,35 +258,59 @@ export async function getProperty(
   const { revalidate = 300, signal } = options
   if (!slug) return null
 
-  try {
-    const res = await fetch(
-      `${PORTAL_BASE_URL}/api/property/${encodeURIComponent(slug)}`,
-      {
-        method: 'GET',
-        headers: JSON_HEADERS,
-        next: { revalidate },
-        signal,
-      },
-    )
+  let lastError: Error | null = null
 
-    if (res.status === 404) return null
-    if (!res.ok) {
-      console.warn(
-        `[portal-api] getProperty(${slug}) failed: ${res.status} ${res.statusText}`,
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch(
+        `${PORTAL_BASE_URL}/api/property/${encodeURIComponent(slug)}`,
+        {
+          method: 'GET',
+          headers: JSON_HEADERS,
+          next: { revalidate },
+          signal,
+        },
       )
-      return null
-    }
 
-    const json = (await res.json()) as PropertyDetailResponse
-    if (!json?.status || !json?.data?.unit) {
-      console.warn(`[portal-api] getProperty(${slug}) returned invalid data:`, json)
-      return null
+      if (res.status === 404) {
+        // Genuine 404 - Property does not exist
+        return null
+      }
+
+      if (!res.ok) {
+        console.warn(
+          `[portal-api] getProperty(${slug}) attempt ${attempt + 1} failed: ${res.status} ${res.statusText}`,
+        )
+        if (attempt === 0) {
+          await new Promise((r) => setTimeout(r, 600))
+          continue
+        }
+        throw new Error(`Upstream portal error ${res.status} fetching property ${slug}`)
+      }
+
+      const json = (await res.json()) as PropertyDetailResponse
+      if (!json?.status || !json?.data?.unit) {
+        console.warn(`[portal-api] getProperty(${slug}) returned invalid data:`, json)
+        if (attempt === 0) {
+          await new Promise((r) => setTimeout(r, 600))
+          continue
+        }
+        throw new Error(`Invalid property data payload for ${slug}`)
+      }
+      return json
+    } catch (err) {
+      lastError = err instanceof Error ? err : new Error(String(err))
+      console.warn(`[portal-api] getProperty(${slug}) attempt ${attempt + 1} error:`, err)
+      if (attempt === 0) {
+        await new Promise((r) => setTimeout(r, 600))
+        continue
+      }
     }
-    return json
-  } catch (err) {
-    console.warn(`[portal-api] getProperty(${slug}) threw:`, err)
-    return null
   }
+
+  // If we reach here, it failed due to upstream network/5xx error (NOT 404).
+  // Throwing ensures Next.js ISR serves the stale valid page instead of caching a false 404!
+  throw (lastError || new Error(`Failed to fetch property ${slug} after retries`))
 }
 
 /**
