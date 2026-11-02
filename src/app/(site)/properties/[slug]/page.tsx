@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { cache } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
@@ -35,8 +36,12 @@ import { ScheduleTourButton } from '@/components/properties/schedule-tour-button
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
 
-// Per-slug pages refresh every 5 minutes via the lib's default revalidate.
-export const revalidate = 300
+// Cache the property fetch per request so generateMetadata and the page component
+// share the same in-memory response without firing duplicate requests to portal.revun.com
+const getCachedProperty = cache((slug: string) => getProperty(slug))
+
+// Per-slug pages refresh every 30 minutes via ISR.
+export const revalidate = 1800
 // Allow on-demand rendering for slugs not in generateStaticParams (none).
 export const dynamicParams = true
 
@@ -69,7 +74,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
   }
 
-  const detail = await getProperty(slug)
+  let detail: import('@/types/property').PropertyDetailResponse | null = null
+  try {
+    detail = await getCachedProperty(slug)
+  } catch (err) {
+    console.warn(`[metadata] getCachedProperty(${slug}) error:`, err)
+    return {
+      title: 'MoveSmart Rentals',
+    }
+  }
+
   if (!detail) {
     return {
       title: 'Property not found',
@@ -366,7 +380,15 @@ export default async function PropertyDetailPage({ params }: PageProps) {
     )
   }
 
-  const detail = await getProperty(slug)
+  let detail: import('@/types/property').PropertyDetailResponse | null = null
+  try {
+    detail = await getCachedProperty(slug)
+  } catch (err) {
+    console.warn(`[page] getCachedProperty(${slug}) error:`, err)
+    // Throwing error allows Next.js ISR to keep serving the previous valid cached version
+    // instead of replacing it with a false 404!
+    throw err
+  }
 
   if (!detail) {
     notFound()

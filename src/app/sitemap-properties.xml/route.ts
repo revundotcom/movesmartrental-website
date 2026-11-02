@@ -6,8 +6,7 @@
 import type { NextRequest } from 'next/server'
 import { getAllProperties } from '@/lib/portal-api'
 
-export const dynamic = 'force-dynamic'
-export const revalidate = 1800
+export const revalidate = 43200 // Cache for 12 hours to avoid spamming portal API
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
