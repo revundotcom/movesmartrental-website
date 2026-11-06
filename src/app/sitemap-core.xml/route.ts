@@ -67,6 +67,7 @@ const CORE_URLS: UrlEntry[] = [
   { path: '/faq/', changefreq: 'weekly', priority: 0.7 },
   { path: '/reviews/', changefreq: 'monthly', priority: 0.65 },
   { path: '/portal-and-technology/', changefreq: 'monthly', priority: 0.7 },
+  { path: '/login/', changefreq: 'yearly', priority: 0.4 },
   { path: '/privacy/', changefreq: 'yearly', priority: 0.3 },
   { path: '/terms/', changefreq: 'yearly', priority: 0.3 },
   // Silo A: new service pages
