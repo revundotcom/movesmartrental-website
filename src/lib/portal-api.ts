@@ -37,6 +37,29 @@ export const PORTAL_LOGIN_URL = `${PORTAL_BASE_URL}/login`
 export const PORTAL_OWNER_SIGNUP_URL = `${PORTAL_REGISTER_URL}?type=owner`
 
 /**
+ * Account types offered on this site's own /login/ page, and where each one
+ * signs in. Landlords and tenants share the portal login, told apart by
+ * `?type=`; staff and institutions have their own logins on the CRM.
+ */
+export type PortalLoginRole = 'landlord' | 'staff' | 'tenant' | 'institution'
+
+const CRM_BASE_URL = 'https://crm.movesmartrentals.com'
+
+const LOGIN_URLS: Record<PortalLoginRole, string> = {
+  landlord: `${PORTAL_LOGIN_URL}`,
+  tenant: `${PORTAL_LOGIN_URL}`,
+  staff: `${CRM_BASE_URL}/staff/login`,
+  institution: `${CRM_BASE_URL}/institution/login`,
+}
+
+export function portalLoginUrl(role: PortalLoginRole): string {
+  return LOGIN_URLS[role]
+}
+
+/** This site's login chooser page (header + mobile nav "Login"). */
+export const SITE_LOGIN_PATH = '/login/'
+
+/**
  * Apply Now: the portal handles auth and restores the original intent after
  * login (see "User Action Flow" in the API doc).
  *

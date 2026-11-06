@@ -15,7 +15,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
-import { PORTAL_LOGIN_URL, PORTAL_OWNER_SIGNUP_URL } from '@/lib/portal-api'
+import { PORTAL_OWNER_SIGNUP_URL, SITE_LOGIN_PATH } from '@/lib/portal-api'
 
 /** Absolute http(s) URLs (e.g. the owner portal) open in a new tab. */
 function isExternalUrl(href: string): boolean {
@@ -301,15 +301,13 @@ export function MobileNav() {
 
         {/* Bottom CTA */}
         <div className="border-t border-border/60 p-5 space-y-3">
-          <a
-            href={PORTAL_LOGIN_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href={SITE_LOGIN_PATH}
             onClick={handleNavigate}
             className="flex w-full items-center justify-center rounded-lg border border-[#0B1D3A]/20 px-4 py-3 text-sm font-medium text-[#0B1D3A] transition-colors hover:border-[#0B1D3A]/40 hover:bg-[#0B1D3A]/5"
           >
             Login
-          </a>
+          </Link>
           <a
             href={PORTAL_OWNER_SIGNUP_URL}
             target="_blank"
