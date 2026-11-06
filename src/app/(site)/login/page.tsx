@@ -29,6 +29,8 @@ export const metadata: Metadata = {
 type LoginOption = {
   role: PortalLoginRole
   title: string
+  /** Shown in brackets after the title, e.g. portfolio size. */
+  note?: string
   description: string
   icon: LucideIcon
 }
@@ -37,6 +39,7 @@ const LOGIN_OPTIONS: LoginOption[] = [
   {
     role: 'landlord',
     title: 'Landlord',
+    note: '1 - 10 Properties',
     description: 'Track showings, review applicants, approve leases, and see your documents.',
     icon: Home,
   },
@@ -49,6 +52,7 @@ const LOGIN_OPTIONS: LoginOption[] = [
   {
     role: 'institution',
     title: 'Institutions',
+    note: '10+ Properties',
     description: 'Portfolio and lease-up reporting across every building and unit.',
     icon: Building2,
   },
@@ -75,7 +79,7 @@ export default function LoginPage() {
             Secure portal login
           </span>
           <h1 className="mt-4 font-display text-3xl font-semibold tracking-tight text-brand-navy sm:text-4xl">
-            Log in to MoveSmart
+            Login to MoveSmart Rentals
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-base text-slate-600">
             Choose your account type to continue to the portal.
@@ -83,7 +87,7 @@ export default function LoginPage() {
         </div>
 
         <ul className="mt-10 grid gap-4 sm:grid-cols-2">
-          {LOGIN_OPTIONS.map(({ role, title, description, icon: Icon }) => (
+          {LOGIN_OPTIONS.map(({ role, title, note, description, icon: Icon }) => (
             <li key={role}>
               <a
                 href={portalLoginUrl(role)}
@@ -94,7 +98,14 @@ export default function LoginPage() {
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="flex items-center justify-between gap-2">
-                    <span className="text-lg font-semibold text-brand-navy">{title}</span>
+                    <span className="text-lg font-semibold text-brand-navy">
+                      {title}
+                      {note && (
+                        <span className="ml-1.5 text-sm font-medium text-slate-500">
+                          ({note})
+                        </span>
+                      )}
+                    </span>
                     <ArrowUpRight
                       className="size-4 shrink-0 text-slate-400 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-emerald-600"
                       aria-hidden="true"
