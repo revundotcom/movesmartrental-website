@@ -421,6 +421,55 @@ export async function getOldCarriageProperties(
   })
 }
 
+/** 200 Old Carriage Drive as a building: photos, location, details, amenities. */
+export interface BuildingProfile {
+  street_number?: string | null
+  street_name?: string | null
+  city?: string | null
+  province?: string | null
+  postal_code?: string | null
+  latitude?: string | null
+  longitude?: string | null
+  towers?: string[]
+  images: string[]
+  details: { label: string; value: string | number }[]
+  amenities: string[]
+}
+
+/**
+ * The building profile for 200 Old Carriage Drive (portal: both towers' records
+ * at that address, shown as one). Returns null when the portal does not answer:
+ * the page still has its units and falls back to the single cover photo.
+ */
+export async function getOldCarriageBuildingProfile(
+  options: { revalidate?: number } = {},
+): Promise<BuildingProfile | null> {
+  const { revalidate = 1800 } = options
+  try {
+    const res = await fetch(`${PORTAL_BASE_URL}/api/building-old-carriage`, {
+      method: 'GET',
+      headers: JSON_HEADERS,
+      next: { revalidate },
+    })
+    if (!res.ok) {
+      console.warn(`[portal-api] getOldCarriageBuildingProfile failed: ${res.status}`)
+      return null
+    }
+    const json = await res.json()
+    const b = json?.data?.building
+    if (!json?.status || !b) return null
+    return {
+      ...b,
+      images: Array.isArray(b.images) ? b.images : [],
+      details: Array.isArray(b.details) ? b.details : [],
+      amenities: Array.isArray(b.amenities) ? b.amenities : [],
+    }
+  } catch (err) {
+    console.warn('[portal-api] getOldCarriageBuildingProfile threw:', err)
+    return null
+  }
+}
+
 /**
  * Fetch a building by one of the specific hardcoded slugs.
  * Falls back to null if it fails or if the slug is not recognized.
