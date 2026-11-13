@@ -167,6 +167,14 @@ export async function submitLead(
 
 export interface GetPropertiesOptions {
   page?: number
+  /**
+   * Cards per page. The portal defaults to 9 (the site's grid) and caps at
+   * 100; a portal that predates `per_page` ignores it and pages by 9, which
+   * the page loop in getAllProperties copes with either way.
+   */
+  perPage?: number
+  /** The portal's `search` filter: building name, address, city. */
+  search?: string
   /** seconds to cache the listing response; default 5 minutes. */
   revalidate?: number
   /** AbortSignal forwarded to fetch. */
@@ -180,10 +188,16 @@ export interface GetPropertiesOptions {
 export async function getProperties(
   options: GetPropertiesOptions = {},
 ): Promise<PropertyListResponse | null> {
-  const { page, revalidate = 300, signal } = options
+  const { page, perPage, search, revalidate = 300, signal } = options
   const url = new URL(`${PORTAL_BASE_URL}/api/properties`)
   if (typeof page === 'number' && page > 0) {
     url.searchParams.set('page', String(page))
+  }
+  if (typeof perPage === 'number' && perPage > 0) {
+    url.searchParams.set('per_page', String(perPage))
+  }
+  if (search) {
+    url.searchParams.set('search', search)
   }
 
   try {
@@ -219,16 +233,29 @@ export async function getProperties(
  *   3. Cap at MAX_PAGES so we can't burn the request loop on a
  *      misbehaving upstream.
  *
- * Returns whatever properties we managed to gather; never throws.
+ * Pages are asked for 100 at a time, so the whole catalogue is normally one
+ * request (it was eight at the portal's default of 9 a page).
+ *
+ * By default it returns whatever it managed to gather and never throws. With
+ * `strict`, a page that fails throws instead, so a caller never mistakes a
+ * failed request for "nothing listed".
  */
 const MAX_PAGES = 100
+const PAGE_SIZE = 100
 
 export async function getAllProperties(
-  options: { revalidate?: number } = {},
+  options: { revalidate?: number; search?: string; strict?: boolean } = {},
 ): Promise<Property[]> {
-  const { revalidate = 300 } = options
+  const { revalidate = 300, search, strict = false } = options
+  const fetchPage = async (page: number) => {
+    const res = await getProperties({ page, perPage: PAGE_SIZE, search, revalidate })
+    if (strict && (!res || !Array.isArray(res.data))) {
+      throw new Error(`Portal listing page ${page} failed${search ? ` (search "${search}")` : ''}`)
+    }
+    return res
+  }
 
-  const first = await getProperties({ page: 1, revalidate })
+  const first = await fetchPage(1)
   if (!first || !Array.isArray(first.data)) return []
 
   const collected: Property[] = [...first.data]
@@ -241,9 +268,9 @@ export async function getAllProperties(
   // Fetch remaining pages in small batches to prevent overloading upstream PHP-FPM pool
   if (totalPages > 1) {
     for (let p = 2; p <= totalPages; p += 2) {
-      const batch = [getProperties({ page: p, revalidate })]
+      const batch = [fetchPage(p)]
       if (p + 1 <= totalPages) {
-        batch.push(getProperties({ page: p + 1, revalidate }))
+        batch.push(fetchPage(p + 1))
       }
       const results = await Promise.all(batch)
       for (const r of results) {
@@ -347,13 +374,24 @@ export async function getProperty(
 
 /**
  * Fetch and combine all units for 200 Old Carriage Drive (Tower A & Tower B).
- * Queries the property catalog and filters/sorts all units for 200 Old Carriage Drive.
+ *
+ * The portal has no endpoint for this building, so the listing is asked for
+ * with its `search` filter: one request with `per_page`, rather than every
+ * page of the whole catalogue. The filter below stays as a guard against
+ * anything else the search happens to match.
+ *
+ * Throws when the portal fails, so a failed request is never shown as
+ * "No units are currently available".
  */
 export async function getOldCarriageProperties(
   options: { revalidate?: number } = {},
 ): Promise<Property[]> {
   const { revalidate = 300 } = options
-  const properties = await getAllProperties({ revalidate })
+  const properties = await getAllProperties({
+    revalidate,
+    search: 'old carriage',
+    strict: true,
+  })
 
   const filtered = properties.filter((p) => {
     const s = (p.slug || '').toLowerCase()

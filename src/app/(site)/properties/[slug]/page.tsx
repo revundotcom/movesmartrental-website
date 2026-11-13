@@ -58,6 +58,18 @@ export const revalidate = 1800
 // Allow on-demand rendering for slugs not in generateStaticParams (none).
 export const dynamicParams = true
 
+/*
+ * Nothing is prerendered at build time, but declaring this is what makes the
+ * route ISR. Without it Next built /properties/[slug] as a dynamic route:
+ * every visit went to the portal, `revalidate` above did nothing, and a
+ * portal error had no earlier good page to fall back on. Now each slug is
+ * rendered on its first visit, cached, and refreshed in the background; when
+ * a refresh throws, the cached page keeps being served.
+ */
+export function generateStaticParams() {
+  return []
+}
+
 interface PageProps {
   params: Promise<{ slug: string }>
 }
@@ -369,8 +381,13 @@ export default async function PropertyDetailPage({ params }: PageProps) {
     if (isChandler) {
       const b1 = await import('@/lib/portal-api').then(m => m.getFixedBuildingData('294-chandler-drive-kitchener-on-n2e-2k1'))
       const b2 = await import('@/lib/portal-api').then(m => m.getFixedBuildingData('286-chandler-drive-kitchener-on-n2e-3j8'))
-      if (b1?.data) combinedUnits.push(...b1.data.units)
-      if (b2?.data) combinedUnits.push(...b2.data.units)
+      // null here is a failed request, not an empty building: both endpoints
+      // exist. Throwing keeps the last good page (ISR) rather than rendering
+      // "No units are currently available" for a portal that did not answer.
+      if (!b1?.data || !b2?.data) {
+        throw new Error('Portal building endpoints for Chandler Drive did not answer')
+      }
+      combinedUnits.push(...b1.data.units, ...b2.data.units)
 
       buildingObj = {
         id: 'combined-chandler',
