@@ -12,9 +12,8 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
 
 const FIXED_BUILDING_SLUGS = [
-  '294-chandler-drive-kitchener-on-n2e-2k1',
-  '286-chandler-drive-kitchener-on-n2e-3j8',
   'chandler-drive-kitchener-on',
+  '200-old-carriage-drive-kitchener-on',
 ]
 
 function escapeXml(value: string): string {
