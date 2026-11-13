@@ -377,6 +377,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
   if (isChandler || isOldCarriage) {
     let combinedUnits: import('@/types/property').Property[] = []
     let buildingObj: import('@/types/property').PropertyBuilding | null = null
+    let profile: import('@/lib/portal-api').BuildingProfile | null = null
 
     if (isChandler) {
       const b1 = await import('@/lib/portal-api').then(m => m.getFixedBuildingData('294-chandler-drive-kitchener-on-n2e-2k1'))
@@ -399,8 +400,11 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         postal_code: ''
       } as unknown as import('@/types/property').PropertyBuilding
     } else if (isOldCarriage) {
-      const { getOldCarriageProperties } = await import('@/lib/portal-api')
-      combinedUnits = await getOldCarriageProperties()
+      const { getOldCarriageProperties, getOldCarriageBuildingProfile } = await import('@/lib/portal-api')
+      ;[combinedUnits, profile] = await Promise.all([
+        getOldCarriageProperties(),
+        getOldCarriageBuildingProfile(),
+      ])
 
       buildingObj = {
         id: 463,
@@ -410,7 +414,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         street_name: 'Old Carriage Drive',
         city: 'Kitchener',
         province: 'Ontario',
-        postal_code: 'N2P 1Z7',
+        postal_code: profile?.postal_code || 'N2P 1Z7',
         cover_photo_url: '/storage/property-media/463/6ae226ec653a9.webp',
         cover_thumb: '/storage/property-media/463/thumbs/6ae226ec653a9.webp',
       } as unknown as import('@/types/property').PropertyBuilding
@@ -421,6 +425,18 @@ export default async function PropertyDetailPage({ params }: PageProps) {
     }
 
     const BuildingDetailClient = await import('@/components/properties/building-detail-client').then(m => m.BuildingDetailClient)
+
+    // Old Carriage gets the unit page's photo / map / street view header, from
+    // the building's own photos in the portal (the cover alone if it is down).
+    const buildingAddress = `${buildingObj.street_number ?? ''} ${buildingObj.street_name ?? ''}, ${buildingObj.city ?? ''}, ${buildingObj.province ?? ''} ${buildingObj.postal_code ?? ''}`.trim()
+    const buildingImages: string[] = []
+    if (isOldCarriage) {
+      for (const src of [...(profile?.images ?? []), buildingObj.cover_photo_url as string | undefined]) {
+        const url = resolvePropertyImage(src ?? null)
+        if (url && !buildingImages.includes(url)) buildingImages.push(url)
+      }
+    }
+
     return (
       <main className="bg-white pb-24 lg:pb-0">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -431,8 +447,24 @@ export default async function PropertyDetailPage({ params }: PageProps) {
               { label: buildingObj.building_name || 'Building', href: `/properties/${slug}/` },
             ]}
           />
+          {isOldCarriage && (
+            <section className="mt-6">
+              <PropertyMediaTabs
+                images={buildingImages}
+                propertyName={buildingObj.building_name || 'Building'}
+                address={buildingAddress}
+                lat={profile?.latitude ?? null}
+                lng={profile?.longitude ?? null}
+              />
+            </section>
+          )}
           <div className="mt-6">
-            <BuildingDetailClient building={buildingObj} units={combinedUnits} />
+            <BuildingDetailClient
+              building={buildingObj}
+              units={combinedUnits}
+              details={profile?.details}
+              amenities={profile?.amenities}
+            />
           </div>
         </div>
       </main>

@@ -3,16 +3,20 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Bed, Bath, MapPin, Building2, Maximize, Car, Box, Calendar, Flame, Snowflake } from 'lucide-react'
+import { Bed, Bath, MapPin, Building2, Maximize, Car, Box, Calendar, Flame, Snowflake, CheckCircle2 } from 'lucide-react'
 import type { Property, PropertyBuilding } from '@/types/property'
 import { resolvePropertyImage } from '@/lib/portal-api'
 
 interface BuildingDetailProps {
   building: PropertyBuilding
   units: Property[]
+  /** Building facts from the portal (year built, parking, …). */
+  details?: { label: string; value: string | number }[]
+  /** Building amenities from the portal. */
+  amenities?: string[]
 }
 
-export function BuildingDetailClient({ building, units }: BuildingDetailProps) {
+export function BuildingDetailClient({ building, units, details = [], amenities = [] }: BuildingDetailProps) {
   const address = `${building.street_number || ''} ${building.street_name || ''}, ${building.city || ''}, ${building.province || ''} ${building.postal_code || ''}`.trim()
 
   const [activeTab, setActiveTab] = React.useState<string>('all')
@@ -77,6 +81,38 @@ export function BuildingDetailClient({ building, units }: BuildingDetailProps) {
           </div>
         </div>
       </section>
+
+      {/* Building features & amenities (shown only when the portal has some) */}
+      {(details.length > 0 || amenities.length > 0) && (
+        <section
+          aria-label="Building features and amenities"
+          className="rounded-2xl border border-slate-200 bg-white px-6 py-7 shadow-sm"
+        >
+          <h2 className="font-display text-2xl text-[#0B1D3A]">Building Features &amp; Amenities</h2>
+
+          {details.length > 0 && (
+            <dl className="mt-5 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
+              {details.map((d) => (
+                <div key={d.label} className="flex items-baseline justify-between gap-3 border-b border-slate-100 pb-2">
+                  <dt className="text-sm text-slate-500">{d.label}</dt>
+                  <dd className="text-right text-sm font-semibold text-[#0B1D3A]">{String(d.value)}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+
+          {amenities.length > 0 && (
+            <ul className="mt-6 grid grid-cols-1 gap-x-6 gap-y-2.5 sm:grid-cols-2 lg:grid-cols-3">
+              {amenities.map((a) => (
+                <li key={a} className="flex items-start gap-2 text-sm text-slate-700">
+                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-[#10B981]" aria-hidden="true" />
+                  {a}
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      )}
 
       {/* Available Units Grid */}
       <section aria-label="Available Units">
