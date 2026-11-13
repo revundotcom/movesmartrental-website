@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { cache } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import {
   Bed,
   Bath,
@@ -36,6 +36,19 @@ import { ScheduleTourButton } from '@/components/properties/schedule-tour-button
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://movesmartrentals.com'
 
+const PRIMARY_OLD_CARRIAGE_SLUG = '200-old-carriage-drive-kitchener-on'
+const OLD_CARRIAGE_ALIASES = [
+  'old-carriage-drive-kitchener-on',
+  '200-old-carriage-drive-kitchener-on-n2p-1z7',
+  '200-old-carriage-drive',
+]
+
+const PRIMARY_CHANDLER_SLUG = 'chandler-drive-kitchener-on'
+const CHANDLER_ALIASES = [
+  '294-chandler-drive-kitchener-on-n2e-2k1',
+  '286-chandler-drive-kitchener-on-n2e-3j8',
+]
+
 // Cache the property fetch per request so generateMetadata and the page component
 // share the same in-memory response without firing duplicate requests to portal.revun.com
 const getCachedProperty = cache((slug: string) => getProperty(slug))
@@ -52,25 +65,31 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
 
-  if (slug === '294-chandler-drive-kitchener-on-n2e-2k1' || slug === '286-chandler-drive-kitchener-on-n2e-3j8' || slug === 'chandler-drive-kitchener-on') {
-    let buildingName = 'Building'
-    if (slug === 'chandler-drive-kitchener-on') {
-      buildingName = '294 & 286 Chandler Drive'
-    } else {
-      const buildingData = await import('@/lib/portal-api').then(m => m.getFixedBuildingData(slug))
-      if (!buildingData) {
-        return {
-          title: 'Building not found',
-          robots: { index: false, follow: false },
-        }
-      }
-      buildingName = buildingData.data?.building.building_name || 'Building'
-    }
+  if (OLD_CARRIAGE_ALIASES.includes(slug)) {
+    permanentRedirect(`/properties/${PRIMARY_OLD_CARRIAGE_SLUG}/`)
+  }
+  if (CHANDLER_ALIASES.includes(slug)) {
+    permanentRedirect(`/properties/${PRIMARY_CHANDLER_SLUG}/`)
+  }
+
+  const isOldCarriage = slug === PRIMARY_OLD_CARRIAGE_SLUG
+  const isChandler = slug === PRIMARY_CHANDLER_SLUG
+
+  if (isChandler || isOldCarriage) {
+    const buildingName = isChandler
+      ? '294 & 286 Chandler Drive'
+      : '200 Old Carriage Drive (Tower A & Tower B)'
     const bTitle = `${buildingName} | MoveSmart Rentals`
+    const description = isChandler
+      ? 'Browse all available rental apartments and suites at 294 & 286 Chandler Drive, Kitchener, Ontario.'
+      : 'Browse all available rental suites and private rooms in Tower A and Tower B at 200 Old Carriage Drive, Kitchener, Ontario N2P 1Z7.'
+    const canonicalSlug = isChandler ? PRIMARY_CHANDLER_SLUG : PRIMARY_OLD_CARRIAGE_SLUG
+
     return {
       title: bTitle,
+      description,
       robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
-      alternates: { canonical: `/properties/${slug}/` },
+      alternates: { canonical: `/properties/${canonicalSlug}/` },
     }
   }
 
@@ -332,17 +351,27 @@ const checkIncluded = (val: unknown) => {
 
 export default async function PropertyDetailPage({ params }: PageProps) {
   const { slug } = await params
-  
-  if (slug === '294-chandler-drive-kitchener-on-n2e-2k1' || slug === '286-chandler-drive-kitchener-on-n2e-3j8' || slug === 'chandler-drive-kitchener-on') {
+
+  if (OLD_CARRIAGE_ALIASES.includes(slug)) {
+    permanentRedirect(`/properties/${PRIMARY_OLD_CARRIAGE_SLUG}/`)
+  }
+  if (CHANDLER_ALIASES.includes(slug)) {
+    permanentRedirect(`/properties/${PRIMARY_CHANDLER_SLUG}/`)
+  }
+
+  const isOldCarriage = slug === PRIMARY_OLD_CARRIAGE_SLUG
+  const isChandler = slug === PRIMARY_CHANDLER_SLUG
+
+  if (isChandler || isOldCarriage) {
     let combinedUnits: import('@/types/property').Property[] = []
     let buildingObj: import('@/types/property').PropertyBuilding | null = null
 
-    if (slug === 'chandler-drive-kitchener-on') {
+    if (isChandler) {
       const b1 = await import('@/lib/portal-api').then(m => m.getFixedBuildingData('294-chandler-drive-kitchener-on-n2e-2k1'))
       const b2 = await import('@/lib/portal-api').then(m => m.getFixedBuildingData('286-chandler-drive-kitchener-on-n2e-3j8'))
       if (b1?.data) combinedUnits.push(...b1.data.units)
       if (b2?.data) combinedUnits.push(...b2.data.units)
-      
+
       buildingObj = {
         id: 'combined-chandler',
         building_name: '294 & 286 Chandler Drive',
@@ -352,13 +381,26 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         province: 'ON',
         postal_code: ''
       } as unknown as import('@/types/property').PropertyBuilding
-    } else {
-      const buildingData = await import('@/lib/portal-api').then(m => m.getFixedBuildingData(slug))
-      if (!buildingData || !buildingData.data) {
-        notFound()
-      }
-      combinedUnits = buildingData.data.units
-      buildingObj = buildingData.data.building
+    } else if (isOldCarriage) {
+      const { getOldCarriageProperties } = await import('@/lib/portal-api')
+      combinedUnits = await getOldCarriageProperties()
+
+      buildingObj = {
+        id: 463,
+        building_name: '200 Old Carriage Drive (Tower A & Tower B)',
+        property_name: 'The Bellmont',
+        street_number: '200',
+        street_name: 'Old Carriage Drive',
+        city: 'Kitchener',
+        province: 'Ontario',
+        postal_code: 'N2P 1Z7',
+        cover_photo_url: '/storage/property-media/463/6ae226ec653a9.webp',
+        cover_thumb: '/storage/property-media/463/thumbs/6ae226ec653a9.webp',
+      } as unknown as import('@/types/property').PropertyBuilding
+    }
+
+    if (!buildingObj) {
+      notFound()
     }
 
     const BuildingDetailClient = await import('@/components/properties/building-detail-client').then(m => m.BuildingDetailClient)

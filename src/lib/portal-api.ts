@@ -346,6 +346,44 @@ export async function getProperty(
 }
 
 /**
+ * Fetch and combine all units for 200 Old Carriage Drive (Tower A & Tower B).
+ * Queries the property catalog and filters/sorts all units for 200 Old Carriage Drive.
+ */
+export async function getOldCarriageProperties(
+  options: { revalidate?: number } = {},
+): Promise<Property[]> {
+  const { revalidate = 300 } = options
+  const properties = await getAllProperties({ revalidate })
+
+  const filtered = properties.filter((p) => {
+    const s = (p.slug || '').toLowerCase()
+    const address = (p.unit_address || '').toLowerCase()
+    const name = (p.unit_name || '').toLowerCase()
+    return (
+      s.includes('old-carriage') ||
+      s.includes('old_carriage') ||
+      address.includes('old carriage') ||
+      name.includes('old carriage')
+    )
+  })
+
+  return filtered.sort((a, b) => {
+    const aIsTowerA =
+      /tower[- ]?a/i.test(a.slug || '') || /tower a/i.test(a.unit_address || '')
+    const bIsTowerA =
+      /tower[- ]?a/i.test(b.slug || '') || /tower a/i.test(b.unit_address || '')
+    if (aIsTowerA && !bIsTowerA) return -1
+    if (!aIsTowerA && bIsTowerA) return 1
+
+    const priceA = parseFloat(String(a.website_price || '0')) || 0
+    const priceB = parseFloat(String(b.website_price || '0')) || 0
+    if (priceA !== priceB) return priceA - priceB
+
+    return (a.unit_name || '').localeCompare(b.unit_name || '')
+  })
+}
+
+/**
  * Fetch a building by one of the specific hardcoded slugs.
  * Falls back to null if it fails or if the slug is not recognized.
  */
@@ -354,6 +392,28 @@ export async function getFixedBuildingData(
   options: { revalidate?: number; signal?: AbortSignal } = {},
 ): Promise<import('@/types/property').BuildingDetailResponse | null> {
   const { revalidate = 300, signal } = options
+
+  if (slug === '200-old-carriage-drive-kitchener-on') {
+    const units = await getOldCarriageProperties({ revalidate })
+    return {
+      status: true,
+      data: {
+        building: {
+          id: 463,
+          building_name: '200 Old Carriage Drive (Tower A & Tower B)',
+          property_name: 'The Bellmont',
+          street_number: '200',
+          street_name: 'Old Carriage Drive',
+          city: 'Kitchener',
+          province: 'Ontario',
+          postal_code: 'N2P 1Z7',
+          cover_photo_url: '/storage/property-media/463/6ae226ec653a9.webp',
+          cover_thumb: '/storage/property-media/463/thumbs/6ae226ec653a9.webp',
+        } as unknown as import('@/types/property').PropertyBuilding,
+        units,
+      },
+    }
+  }
 
   let endpoint = ''
   if (slug === '294-chandler-drive-kitchener-on-n2e-2k1') {

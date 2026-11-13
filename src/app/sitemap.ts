@@ -281,19 +281,13 @@ async function buildPropertiesSegment(): Promise<MetadataRoute.Sitemap> {
   const now = new Date()
   const entries: MetadataRoute.Sitemap = [
     {
-      url: `${siteUrl}/properties/294-chandler-drive-kitchener-on-n2e-2k1/`,
-      lastModified: now,
-      changeFrequency: 'weekly' as const,
-      priority: 0.85,
-    },
-    {
-      url: `${siteUrl}/properties/286-chandler-drive-kitchener-on-n2e-3j8/`,
-      lastModified: now,
-      changeFrequency: 'weekly' as const,
-      priority: 0.85,
-    },
-    {
       url: `${siteUrl}/properties/chandler-drive-kitchener-on/`,
+      lastModified: now,
+      changeFrequency: 'weekly' as const,
+      priority: 0.85,
+    },
+    {
+      url: `${siteUrl}/properties/200-old-carriage-drive-kitchener-on/`,
       lastModified: now,
       changeFrequency: 'weekly' as const,
       priority: 0.85,
